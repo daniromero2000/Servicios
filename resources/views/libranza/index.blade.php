@@ -40,7 +40,7 @@
 			<h2 class="creditoLibranza-title text-center">Todo lo que puedes hacer con <br> nuestro <strong>crédito de libranza</strong></h2>
 			<div class="row" id="creditoLibranza-slider">
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('public/images/libranza-creditoElectrodomestico.png') }}" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
+					<img src="{{ asset('images/libranza-creditoElectrodomestico.png') }}" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito para <br> electrodomésticos</h3>
 					<p class="creditoLibranza-text">
 						A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
@@ -48,7 +48,7 @@
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('public/images/libranza-creditoMotos.png') }}" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
+					<img src="{{ asset('images/libranza-creditoMotos.png') }}" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
 					<p class="creditoLibranza-text">
 						Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
@@ -56,7 +56,7 @@
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('public/images/libranza-creditoViajes.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+					<img src="{{ asset('images/libranza-creditoViajes.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito <br> para viajes</h3>
 					<p class="creditoLibranza-text">
 						Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
@@ -68,7 +68,7 @@
 	</div>
 
 	<div id="creoToServicios">
-		<img src="{{ asset('public/images/libranza-creoToServiciosV2.jpg') }}" alt="Creo to Servicios" class="img-fluid" />
+		<img src="{{ asset('images/libranza-creoToServiciosV2.jpg') }}" alt="Creo to Servicios" class="img-fluid" />
 	</div>
 
 	<div id="formularioSimulador">
@@ -85,7 +85,7 @@
 				</div>
 				<div class="formularioSimulador-containerFormulario">
 					<h3 class="formularioSimulador-titleForm">
-						<img src="{{ asset('public/images/libranza-formularioPesos.png') }}" alt="Simula tu crédito" class="img-fluid formularioSimulador-imgPesos">
+						<img src="{{ asset('images/libranza-formularioPesos.png') }}" alt="Simula tu crédito" class="img-fluid formularioSimulador-imgPesos">
 						Simula tu Crédito
 					</h3>
 					<div class="containerFormulario">
@@ -159,21 +159,21 @@
 			<h2 class="credibilidad-title text-center">Experiencia <strong>Credibilidad</strong></h2>
 			<div class="row">
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('public/images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						56 puntos de atención  <br>
 						al público
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('public/images/libranza-experienciaAliados.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="{{ asset('images/libranza-experienciaAliados.png') }}" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						Más de 40 Aliados estratégicos <br>
 						en todo el territorio nacional
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('public/images/libranza-experienciaClientes.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="{{ asset('images/libranza-experienciaClientes.png') }}" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						Más de 500.000 clientes <br>
 						atendidos en los últimos 5 años

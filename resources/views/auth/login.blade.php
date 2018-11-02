@@ -10,7 +10,7 @@
                 		<p> {{ __('Login') }} </p>	
                 	</div>
                 	<div class="col-6 loginLogo">
-                		<img src="{{ asset('public/images/logoDashboard.png')}}">
+                		<img src="{{ asset('images/logoDashboard.png')}}">
                 	</div>
                 	
                 </div>

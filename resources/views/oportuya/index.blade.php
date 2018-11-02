@@ -77,7 +77,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageGray">
 							<div class="side">
-								<img src="{{ asset('public/images/tarjetaGray.png') }}" class="img-fluid">
+								<img src="{{ asset('images/tarjetaGray.png') }}" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -109,7 +109,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageBlue ">
 							<div class="side">
-								<img src="{{ asset('public/images/tarjetaBlue.png') }}" class="img-fluid">
+								<img src="{{ asset('images/tarjetaBlue.png') }}" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -145,7 +145,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageBlack ">
 							<div class="side">
-								<img src="{{ asset('public/images/tarjetaBlack.png') }}" class="img-fluid">
+								<img src="{{ asset('images/tarjetaBlack.png') }}" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -395,7 +395,7 @@
 				</div>
 				<div class=" col-md-4 contentFeatures oportuyaContentImage">
 
-					<img src="{{ asset('public/images/oportuyaModeloV2.png')}}" class="img-fluid">	
+					<img src="{{ asset('images/oportuyaModeloV2.png')}}" class="img-fluid">	
 
 				</div>
 			</div>

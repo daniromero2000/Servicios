@@ -13,7 +13,7 @@
            <div class="row navContainer">
               <div class="col-sm-3 dashboardLogo">
                 <a href="/">
-                  <img src="{{ asset('public/images/logoDashboard.png')}}" class="img-fluid">  
+                  <img src="{{ asset('images/logoDashboard.png')}}" class="img-fluid">  
                 </a>
                 
               </div>
