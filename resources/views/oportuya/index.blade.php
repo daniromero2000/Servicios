@@ -19,7 +19,7 @@
 	<div id="oportuyaSlider">
 		@foreach($images as $slider)
 			<div class="containImg">
-				<img src="public/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
+				<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
 				<div class="oportuyaSliderContent">
 					<div class="oportuyaSliderTitle">
 							@php
@@ -497,11 +497,11 @@ $arraySliderOffer=[
 						<div class="offersContent">	
 							<div class="offersImageContent">
 								<div class="imageOffer">
-									<img src="public/images/{{ $arrayOffer['img'] }}" class="img-fluid">
+									<img src="/images/{{ $arrayOffer['img'] }}" class="img-fluid">
 								</div>
 								<br>
 								<div class="offersPrice{{$offer+1}}">
-									<img src="public/images/{{ $arrayOffer['imgBackground'] }}" class="img-fluid">
+									<img src="/images/{{ $arrayOffer['imgBackground'] }}" class="img-fluid">
 									<span>{{ $arrayOffer['price'] }}</span>
 								</div>
 								<br>

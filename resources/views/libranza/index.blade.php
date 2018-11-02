@@ -16,8 +16,8 @@
 <div ng-app="appLibranzaLiquidador" ng-controller="libranzaLiquidadorCtrl">
 	<div id="sliderPrincipalLibranza">
 			<div class="containImg">
-				<img src="public/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
-				<img src="public/images/libranza-slider.jpg" class="img-fluid img-responsive" title="Libranza">
+				<img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
+				<img src="/images/libranza-slider.jpg" class="img-fluid img-responsive" title="Libranza">
 				<div class="sliderPrincipal-containTextLeft">
 					<p class="sliderPrincipalLibranza-text">
 						{{-- @php
