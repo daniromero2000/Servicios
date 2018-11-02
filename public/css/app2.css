@@ -1,8 +1,23 @@
+/* Menu */
+.imgSombraMenu{
+	left: 0;
+	top: 0;
+	position: absolute;
+}
+.header-containerItemsResponsive{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 2;
+}
+
 /* Slider */
 .sliderPrincipalLibranza-text{
-	font-size: 25px;
-	color: #fff;
-	font-weight: 300;
+	font-size: 21px;
+	font-weight: 400;
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 .sliderPrincipalLibranza-text > strong{
@@ -11,14 +26,22 @@
 
 .sliderPrincipalLibranza-button{
 	background: #1a59a0;
-	border-radius: 20px;
-	color: #fff !important;
 	cursor: pointer;
-	font-size: 18px;
-	padding: 10px 40px;
+	border-radius: 40px;
+    display: inline-block;
+    color: white;
+    font-size: 18px;
+    padding: 15px 40px;
+}
+
+.sliderPrincipalLibranza-button:hover, .sliderPrincipalLibranza-button:active, .sliderPrincipalLibranza-button:visited, .sliderPrincipalLibranza-button:focus{
+	color: #fff;
 }
 
 /* Credito Libranza */
+#creditoLibranza{
+	padding-bottom: 90px;
+}
 .creditoLibranza-title, .credibilidad-title{
 	color: #348dc7;
 	font-size: 20px;
@@ -64,15 +87,82 @@
     text-align: justify;
 }
 
+.creoToServicios-img{
+	position: absolute;
+	bottom: 0;
+}
+
 /* Fomulario */
+.text-small{
+	color: #c4c6c7;
+	font-size: 11px;
+	font-style: italic;
+	font-weight: 400;
+}
+
 #formularioSimulador{
-	background: #f5f5f5;
-	padding: 10px 0 40px 0;
+	background: url('../images/libranza-formularioSimuladorFondo.jpg');
+	padding: 80px 0;
+	position: relative;
+}
+
+.textModalSimular{
+	padding: 0 20px;
+	font-size: 13px;
+	line-height: 15px;
+	font-style : italic;
 }
 
 .containerFormulario{
+	background: #fff;
+	border-radius: 0 0 15px 15px;
+	padding: 15px 20px;
+}
+
+.formularioSimulador-containInput{
+	margin-bottom: 5px;
+}
+
+.formularioSimulador-containInput > input, .formularioSimulador-containInput > select{
+	height: 35px !important;
+}
+
+.formularioSimulador-containerFormulario{
+	border-radius: 15px;
+	-webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.33);
+	-moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.33);
+	box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.33);
+	position: absolute;
+    min-width: 550px;
+    max-width: 550px;
+	right: 14%;
+	top: -18%;
+}
+
+.formularioSimulador-container{
+	max-width: 1200px;
 	margin: auto;
-	max-width: 865px;
+}
+
+
+.formularioSimulador-titleForm{
+	background: url(../images/libranza-formularioEncabezado.png) no-repeat center center;
+	color: #fff;
+	border-radius: 15px 15px 0 0;
+	margin: 0;
+	padding: 20px 30px;
+	position: relative;
+}
+
+.formularioSimulador-inputCupoDisponible{
+	font-weight: 700;
+	font-size: 20px;
+}
+
+.formularioSimulador-imgPesos{
+	position: absolute;
+	right:  10px;
+	top: 10px;
 }
 
 .formularioSimulador-title{
@@ -98,9 +188,9 @@
 }
 
 .formularioSimulador-textPrincipal{
-	margin: 30px 0 20px 0;
-    line-height: 20px;
-    font-size: 17px;
+	margin: 30px 0 0 0;
+	line-height: 20px;
+	font-size: 15px;
 }
 
 .formularioSimulador-labelFormulario{
@@ -112,7 +202,7 @@
 	background: #1a59a0;
 	border-radius: 30px;
 	color: #fff;
-	font-size: 20px;
+    font-size: 18px;
 	padding: 5px 60px;
 }
 
@@ -121,6 +211,10 @@
 }
 
 /* Credibilidad */
+
+#credibilidad{
+	padding: 50px 0;
+}
 
 .credibilidad-text{
 	color: #348dc7;
@@ -153,4 +247,79 @@
 .textThankYou{
 	font-size: 30px;
 	padding: 100px;
+}
+
+
+/* Formulario Modal */
+
+.modalFormulario > .modal-dialog{
+	max-width: 816px;
+	min-height: 551px;
+}
+
+.modalFormulario-body{
+	background: url(../images/formulario-fondo.png) no-repeat center left;
+	border: 1px solid #f5f4fe;
+	border-radius: 20px;
+	-webkit-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	max-width: 816px;
+	min-height: 552px;
+	padding: 0;
+	position: relative;
+}
+
+.modal-containerFormulario{
+	min-width: 450px;
+	right: 0;
+	position: absolute;
+}
+
+.modal-titleForm{
+	color: #fff;
+	background: #2dade0;
+	border-radius: 50px 0 0 50px;
+	padding: 20px 0px 20px 50px;
+	font-size: 22px;
+}
+
+.modal-containerFormulario > form {
+	padding: 0 40px;
+}
+
+.buttonFormModal{
+	border-radius: 20px;
+	padding: 5px 40px;
+}
+
+.modalLabelForm{
+	font-weight: 700;
+}
+
+/* Construccion */
+#construccion{
+	padding: 0 0 40px 0;
+}
+
+
+@media(max-width: 991px){
+	.formularioSimulador-textPrincipal{
+		padding: 0 30px;
+	}
+	.formularioSimulador-containerFormulario{
+		margin-top: 40px;
+	}
+}
+
+@media(max-width: 550px){
+	.modal-containerFormulario, .formularioSimulador-containerFormulario{
+		min-width: 320px;
+	}
+
+	.modal-containerFormulario{
+		background: rgba(238, 238, 238,.7);
+		margin: auto;
+		position: relative;
+	}
 }

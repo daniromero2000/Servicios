@@ -56,7 +56,7 @@
 					<br>
 					<div class="oportuyaSliderButton">
 						<p>
-							<a href="">
+							<a href="" data-toggle="modal" data-target="#oportuyaModal">
 								@php
 								  echo $slider['textButton'];
 								@endphp
@@ -155,7 +155,6 @@
 									<li>Tiene avance en efectivo hasta $500.000.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li> Puede diferir el avance desde 6 hasta 9 meses.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Todas las compras tienen un descuento del 10%.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
-									<li>Cupo rotativo.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Tiempo de estudio y aprobación de 20 minutos. (aplica para 
 									entrega inmediata).</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Promociones y descuentos en temporadas especiales en nuestras 
@@ -192,13 +191,13 @@
 				</p>
 				<p class="descriptionRequirements">
 					<ul class="requirementsList">
-						<li>Se empleado o independiente con un tiempo mínimo de cuatro (4) meses</li>
-						<li>No presentar reportes negativos en las centrales de riesgo</li>
-						<li>Tener ingresos iguales o superior a 1 SMMLV</li>
-						<li>No haber cumplido los 70 años de edad</li>
-						<li>Si tiene entre 70 y 80 años debe ser pensionado</li>
-						<li>Presentar un buen historial de crédito en el sector financiero</li>
-						<li>Ser mayor de edad</li>
+						<li>Ser empleado o independiente con un tiempo mínimo de cuatro (4) meses.</li>
+						<li>No presentar reportes negativos en las centrales de riesgo.</li>
+						<li>Tener ingresos iguales o superior a 1 SMMLV.</li>
+						<li>No haber cumplido los 70 años de edad.</li>
+						<li>Si tiene entre 70 y 80 años debe ser pensionado.</li>
+						<li>Presentar un buen historial de crédito en el sector financiero.</li>
+						<li>Ser mayor de edad.</li>
 					</ul>
 				</p>
 			</div>
@@ -217,7 +216,7 @@
 
 					<b>Estas interesado en obtenerla?	</b> <br>
 					<br>	
-					solo debes ingresar los datos y te llamaremos en menos de 2 horas, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
+					Solo debes ingresar los datos y te llamaremos en menos de 2 horas, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
 
 				</p>
 
@@ -322,28 +321,28 @@
 										<ul class="list-group">
 											<li >Descuentos especiales en 
 												<br>
-												compra de electrodomésticos
+												compra de electrodomésticos.
 											</li>
 											<li >
 												Crédito en establecimientos
 												<br>
-												con convenio oportuya
+												con convenio oportuya.
 											</li>
 											<li >
-												Crédito sin codeudor
+												Crédito sin codeudor.
 											</li>
 										</ul>
 									</div>
 									<div class="col-md-6">
 										<ul class="list-group">
 											<li >
-												Cupo rotativo en productos y avances
+												Cupo rotativo en productos y avances.
 											</li>
 											<li >
-												Promociones permanentes
+												Promociones permanentes.
 											</li>
 											<li >
-												Historial crediticio
+												Historial crediticio.
 											</li>
 										</ul>
 									</div>
@@ -353,24 +352,24 @@
 										<li >
 											Descuentos especiales en 
 											<br>
-											compra de electrodomésticos
+											compra de electrodomésticos.
 										</li>
 										<li >
 											Crédito en establecimientos
 											<br>
-											con convenio oportuya
+											con convenio oportuya.
 										</li>
 										<li >
-											Crédito sin codeudor
+											Crédito sin codeudor.
 										</li>
 										<li >
-											Cupo rotativo en productos y avances
+											Cupo rotativo en productos y avances.
 										</li>
 										<li >
-											Promociones permanentes
+											Promociones permanentes.
 										</li>
 										<li >
-											Historial crediticio
+											Historial crediticio.
 										</li>
 									</ul>
 								</div>
@@ -389,7 +388,7 @@
 						</div>
 					</div>
 					<div class="row buttonOportuyaSection responsiveButtonOportuya">
-						<a href="#">
+						<a href="" data-toggle="modal" data-target="#oportuyaModal">
 							¡Solicita la tuya ahora!
 						</a>
 					</div>

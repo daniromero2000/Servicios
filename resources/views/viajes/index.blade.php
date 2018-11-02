@@ -33,7 +33,7 @@
 							<input type="text" name="lastName" class="form-control" id="lastName" required="true" />
 						</div>
 						<div class="form-group">
-							<label for="email" class="control-label">Correo electronico</label>
+							<label for="email" class="control-label">Correo electrónico</label>
 							<input type="email" name="email" class="form-control" id="email" required="true" />
 						</div>
 						<div class="form-group">
