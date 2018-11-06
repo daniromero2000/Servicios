@@ -25,6 +25,33 @@
 					<a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
 				</div>
 			</div>
+			<div class="containImg">
+				<img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
+				<img src="/images/creditoLibranzaDocentes.jpg" class="img-fluid img-responsive" title="Libranza">
+				<div class="sliderPrincipal-containTextLeft">
+					<h2 class="sliderPrincipal-titleSlider">Crédito para<strong> Docentes</strong></h2>
+					<p class="sliderPrincipalLibranza-text">
+						
+						Lo hacemos a tu medida, <br> crédito de <strong>libranzas para docentes</strong>
+					</p>
+
+					
+					<a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
+				</div>
+			</div>
+			<div class="containImg">
+				<img src="/images/sombraV2.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
+				<img src="/images/creditoLibranzaSuenos.jpg" class="img-fluid img-responsive" title="Libranza">
+				<div class="sliderPrincipal-containTextRigth">
+					<p class="sliderPrincipalLibranza-text">
+						
+						¿Soñando con remodelar tu casa? <br> hazlo realidad con nuestro <strong>crédito de libranza</strong>
+					</p>
+
+					
+					<a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
+				</div>
+			</div>
 	
 	</div>
 
