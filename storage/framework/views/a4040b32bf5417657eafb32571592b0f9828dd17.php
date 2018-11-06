@@ -1,18 +1,15 @@
-@extends('layouts.app')
 
-@section('title', 'Crédito de Libranzas para pensionados, docentes y militares.')
 
-@section('metaTags')
+<?php $__env->startSection('title', 'Crédito de Libranzas para pensionados, docentes y militares.'); ?>
+
+<?php $__env->startSection('metaTags'); ?>
 	<meta name="description" content="El Crédito de libranza con el que podrás disfrutar de todas nuestras opciones, compra electrodomésticos, viaja, adquiere tu moto, compra tu cartera o remodela tu casa; sin costos ocultos y con el descuento a tu nomina.">
 	<meta name="keywords" content="Libranzas, credito para docentes, crédito para docentes, credito de libranzas, crédito de libranzas, pensionados, crédito para pensionados, credito para pensionados, prestamos para pensionados, préstamos para pensionados, libre inversión, libre inversion, crédito de libre inversión para pensionados, credito de libre inversion para pensionados, prestamos para jubilados, préstamos para jubilados, prestamos a pensionados, préstamos a pensionados, crédito fácil para pensionados, credito facil para pensionados, prestamos para profesores, préstamos para profesores, profesores, prestamo a pensionados y jubilados, préstamo a pensionados y jubilados, crédito para militares, credito para militares, crédito para policías, credito para policias, crédito para casas, credito para casas, pensionados de la policia, pensionados de la policía, pensionados militares, pensionados por la policia, pensionados por la policía, pensionados por las fuerzas armadas, jubilados de casur, jubilados policía, jubilados policia.">
 	<meta property="og:title" content="Crédito de Libranzas para pensionados, docentes y militares." />
-	{{-- <meta property="og:url" content="" />
-	<meta property="og:type" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:description" content="El Crédito de libranza con el que podrás disfrutar de todas nuestras opciones, compra electrodomésticos, viaja, adquiere tu moto, compra tu cartera o remodela tu casa; sin costos ocultos y con el descuento a tu nomina."> --}}
-@endsection()
+	
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div ng-app="appLibranzaLiquidador" ng-controller="libranzaLiquidadorCtrl">
 	<div id="sliderPrincipalLibranza">
 			<div class="containImg">
@@ -20,18 +17,15 @@
 				<img src="/images/creditoLibranza.jpg" class="img-fluid img-responsive" title="Libranza">
 				<div class="sliderPrincipal-containTextLeft">
 					<p class="sliderPrincipalLibranza-text">
-						{{-- @php
-							echo $slider['description'];
-						@endphp --}}
+						
 						Te damos <strong>más</strong> que <strong>Crédito,</strong>  te damos la <br><strong>Oportunidad</strong> de vivir viajando
 					</p>
 
-					{{-- <a href="#formularioSimulador" class="sliderPrincipalLibranza-button">@php echo $slider['textButton']; @endphp</a> --}}
+					
 					<a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
 				</div>
 			</div>
-	{{-- 	@foreach($images as $slider)
-		@endforeach --}}
+	
 	</div>
 
 
@@ -40,7 +34,7 @@
 			<h2 class="creditoLibranza-title text-center">Todo lo que puedes hacer con <br> nuestro <strong>crédito de libranza</strong></h2>
 			<div class="row" id="creditoLibranza-slider">
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('images/libranza-creditoElectrodomestico.png') }}" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
+					<img src="<?php echo e(asset('images/libranza-creditoElectrodomestico.png')); ?>" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito para <br> electrodomésticos</h3>
 					<p class="creditoLibranza-text">
 						A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
@@ -48,7 +42,7 @@
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('images/libranza-creditoMotos.png') }}" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
+					<img src="<?php echo e(asset('images/libranza-creditoMotos.png')); ?>" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
 					<p class="creditoLibranza-text">
 						Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
@@ -56,7 +50,7 @@
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="{{ asset('images/libranza-creditoViajes.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+					<img src="<?php echo e(asset('images/libranza-creditoViajes.png')); ?>" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
 					<h3 class="creditoLibranza-titleText">Crédito <br> para viajes</h3>
 					<p class="creditoLibranza-text">
 						Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
@@ -68,7 +62,7 @@
 	</div>
 
 	<div id="creoToServicios">
-		<img src="{{ asset('images/libranza-creoToServiciosV2.jpg') }}" alt="Creo to Servicios" class="img-fluid" />
+		<img src="<?php echo e(asset('images/libranza-creoToServiciosV2.jpg')); ?>" alt="Creo to Servicios" class="img-fluid" />
 	</div>
 
 	<div id="formularioSimulador">
@@ -85,7 +79,7 @@
 				</div>
 				<div class="formularioSimulador-containerFormulario">
 					<h3 class="formularioSimulador-titleForm">
-						<img src="{{ asset('images/libranza-formularioPesos.png') }}" alt="Simula tu crédito" class="img-fluid formularioSimulador-imgPesos">
+						<img src="<?php echo e(asset('images/libranza-formularioPesos.png')); ?>" alt="Simula tu crédito" class="img-fluid formularioSimulador-imgPesos">
 						Simula tu Crédito
 					</h3>
 					<div class="containerFormulario">
@@ -159,21 +153,21 @@
 			<h2 class="credibilidad-title text-center">Experiencia <strong>Credibilidad</strong></h2>
 			<div class="row">
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="<?php echo e(asset('images/libranza-experienciaMapa.png')); ?>" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						56 puntos de atención  <br>
 						al público
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('images/libranza-experienciaAliados.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="<?php echo e(asset('images/libranza-experienciaAliados.png')); ?>" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						Más de 40 Aliados estratégicos <br>
 						en todo el territorio nacional
 					</p>
 				</div>
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('images/libranza-experienciaClientes.png') }}" alt="" class="img-fluid credibilidad-img">
+					<img src="<?php echo e(asset('images/libranza-experienciaClientes.png')); ?>" alt="" class="img-fluid credibilidad-img">
 					<p class="credibilidad-text ">
 						Más de 500.000 clientes <br>
 						atendidos en los últimos 5 años
@@ -198,8 +192,8 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="plazo in plazos">
-									<td>$@{{ plazo.amount | number:0 }}</td>
-									<td>@{{ plazo.timeLimit }}</td>
+									<td>${{ plazo.amount | number:0 }}</td>
+									<td>{{ plazo.timeLimit }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -259,4 +253,5 @@
 		</div>
 	</div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
