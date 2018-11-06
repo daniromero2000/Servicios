@@ -278,10 +278,41 @@
 
 .modal-titleForm{
 	color: #fff;
-	background: #2dade0;
-	border-radius: 50px 0 0 50px;
-	padding: 20px 0px 20px 50px;
-	font-size: 22px;
+    padding: 20px 0px 20px 30px;
+    font-size: 22px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.modal-titleForm:before{
+	content: "";
+	height: 66px;
+	position: absolute;
+	top: 0;
+	left: -14px;
+	transform: skew(384deg);
+	width: 37px;
+	z-index: 2;
+}
+
+.titleForm-libranza, .titleForm-libranza:before{
+	background: #FDBF3D;
+}
+
+.titleForm-oportuya, .titleForm-oportuya:before{
+	background: #1d84c3;
+}
+
+.titleForm-motos, .titleForm-motos:before{
+	background: #ec2d35;
+}
+
+.titleForm-seguros, .titleForm-seguros:before{
+	background: #2aace0;
+}
+
+.titleForm-viajes, .titleForm-viajes:before{
+	background: #3fcf64;
 }
 
 .modal-containerFormulario > form {

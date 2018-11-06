@@ -29,7 +29,6 @@ class SegurosController extends Controller
             [ 'label' => 'CARTAGENA', 'value' => 'CARTAGENA' ],
             [ 'label' => 'LA DORADA', 'value' => 'LA DORADA' ],
             [ 'label' => 'IBAGUÉ', 'value' => 'IBAGUÉ' ],
-            [ 'label' => 'BOGOTÁ', 'value' => 'BOGOTÁ' ],
             [ 'label' => 'MONTERÍA', 'value' => 'MONTERÍA' ],
             [ 'label' => 'MAGANGUÉ', 'value' => 'MAGANGUÉ' ],
             [ 'label' => 'PEREIRA', 'value' => 'PEREIRA' ],

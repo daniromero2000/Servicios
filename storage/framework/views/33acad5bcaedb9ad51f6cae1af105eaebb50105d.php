@@ -1,18 +1,12 @@
-@extends('layouts.app')
 
-@section('title', 'Seguros')
 
-@section('metaTags')
-	{{-- <meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta property="og:title" content="" />
-	<meta property="og:url" content="" />
-	<meta property="og:type" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:description" content=""> --}}
-@endsection()
+<?php $__env->startSection('title', 'Seguros'); ?>
 
-@section('content')
+<?php $__env->startSection('metaTags'); ?>
+	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 	<div id="construccion">
 		<div class="container">
 			<h2 class="creditoLibranza-title text-center">Esta sección está actualmente en construcción</h2>
@@ -20,8 +14,9 @@
 			<div class="modalFormulario-body" style="margin: auto;">
 				<div class="modal-containerFormulario">
 					<h3 class="modal-titleForm titleForm-seguros">Seguros</h3>
-					<form role=form method="POST" id="saveLeadSeguros" action="{{ route('seguros.store') }}">
-						{{ csrf_field() }}
+					<form role=form method="POST" id="saveLeadSeguros" action="<?php echo e(route('seguros.store')); ?>">
+						<?php echo e(csrf_field()); ?>
+
 						<input type="hidden" name="typeProduct" value="Seguros">
 						<input type="hidden" name="typeService" value="Seguros">
 						<div class="form-group">
@@ -43,9 +38,9 @@
 						<div class="form-group">
 							<label for="city class="control-label">Ciudad</label>
 							<select name="city" id="city" class="form-control" >
-								@foreach($cities as $city)
-									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
-								@endforeach
+								<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</select>
 						</div>
 						<div class="form-group text-right">
@@ -58,4 +53,5 @@
 			</div>
 		</div>
 	</div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

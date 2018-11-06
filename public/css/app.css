@@ -43,28 +43,6 @@ a:hover, a:active, a:focus, a:visited{
 	position: relative;
 }
 
-.activeMenu:after{
-	background: #000;
-	bottom: 0;
-	content: '';
-	left: 0;
-	height: 4px;
-	position: absolute;
-	width: 100%;
-	z-index: 2;
-}
-
-.activeMenuOportuya:after{
-	background: #000;
-	bottom: 0;
-	content: '';
-	left: -39px;
-	height: 4px;
-	position: absolute;
-	width: 5%;
-	z-index: 2;
-}
-
 .header-menu{
 	height: 100%;
 	padding: 0 !important;
@@ -154,6 +132,24 @@ a:hover, a:active, a:focus, a:visited{
     font-size: 13px;
     font-weight: bold !important;
     height: 25px;
+}
+
+.activeMenu:after{
+	background: url(../images/menu-idintifier.png) no-repeat center center;
+	bottom: -35px;
+	content: "";
+	height: 40px;
+	position: absolute;
+	width: 40px;
+	z-index: 2;
+}
+
+.activeMenu:after{
+	left: 40%;
+}
+
+.activeMenuOportuya:after{
+	left: 30%;
 }
 
 /* Slider */
@@ -508,28 +504,32 @@ a:hover, a:active, a:focus, a:visited{
 	color: #005DAF;
 }
 
-.featuresfirstText{
-	margin-top: 2em;
-	font-size: 1.2em;
-	font-weight: 700;
-	margin-left: 1em;
+.bestPricesImg img{
+	padding: 4% 0;
 }
 
-.featuresfirstText + p{
+.featuresfirstText{
+	margin-top: 1.5em;
+	font-size: 1.5em;
+	font-weight: 700;
+}
+
+.contentFeatures > div > div.row + p{
 	font-weight: 800;
 	font-size: 1.2em;
 	margin-left: 2em;
-	margin-bottom: 0.4em;
+	margin-bottom: 1em;
+	margin-top: 0.5em;
 }
 
 .contentListFeatures div ul li{
-	margin-bottom: 1em;
-	height: 2em;
+	margin-bottom: 0.5em;
+	height: 1.5em;
 	font-weight:500;
 }
 
 .soatImageContainer{
-	margin: 2em 0 1.5em 0;
+	margin: 4em 0 3em 0;
 }
 
 .soatImageContainer div{
@@ -566,18 +566,26 @@ a:hover, a:active, a:focus, a:visited{
 
 .cardImage .side {
   backface-visibility: hidden;
+  -webkit- 	backface-visibility: hidden;
   height: 100%;
- 
+ -webkit-overflow: hidden;
   overflow: hidden;
   width: 100%;
 }
 
 .cardImage .back {
- position: absolute;
- top: 30px;
-  text-align: center;
-  transform: rotateY(180deg);
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	top:50px;
+	transform:rotateY(180deg) translate(50%);
+	max-width:80%;
+	left:50%;
 }
+
+.cardImage .back ul {
+	padding-left:1em;
+} 
 
 .cardImage .back p {
 	font-size: 12px;
@@ -593,8 +601,9 @@ a:hover, a:active, a:focus, a:visited{
 
 .back ul li{
 	text-align: justify;
-	font-size: 12px;
-	line-height: 1;
+	font-size: 13px;
+	line-height: 1.3;
+	font-weight: 500;
 }
 
 .hrcards{
@@ -839,239 +848,131 @@ a:hover, a:active, a:focus, a:visited{
 
 
 .conoce-title{
-
 	color: #348dc7;
-
 	font-size: 22px;
-
 	font-weight: bold;
-
 	line-height: 20px;
-
 	margin-bottom: 60px;
-
 	position: relative;
-
 	text-align: center;
-
 }
-
-
 
 .conoce-title:before{
-
 	background: #348dc7;
-
 	border-radius: 70px;
-
 	bottom: -14px;
-
 	content: "";
-
 	height: 4px;
-
 	left: 45%;
-
 	position: absolute;
-
 	width: 10%;
-
 }
-
-
 
 .conoce-TarjetaOportuya{
-
 	background: #1d84c3; 
-
 }
-
-
 
 .conoce-creditoMotos{
-
 	background: #ec2d35;
-
 }
-
-
 
 .conoce-creditoLibranza{
-
 	background: #fdbf3c;
-
 }
-
-
 
 .conoce-seguros{
-
 	background: #2aace0;
-
 }
-
-
 
 .conoce-viajes{
-
 	background: #3fcf64;
-
 }
-
-
 
 .conoce-titleTarjeta{
-
 	color: white;
-
 	font-size: 22px;
-
 	font-weight: 300;
-
 	margin: 10px 0 20px 0;
-
 }
-
-
 
 .conoce-tarjetasTexto{
-
     color: white;
-
     font-size: 12px;
-
     font-weight: 300;
-
     line-height: 13px;
-
     margin-top: 20px;
-
 }
-
-
 
 .conoce-titleTarjetaMotos{
-
 	color: white;
-
 	font-size: 22px;
-
 	font-weight: 300;
-
 	margin: 10px 0 54px 0;
-
 }
-
-
 
 .conoce-titleTarjetaSeguros{
-
 	color: white;
-
 	font-size: 22px;
-
 	font-weight: 300;
-
 	margin: 10px 0 80px 0;
-
 }
-
-
 
 .conoce-titleTarjeta > strong, .conoce-titleTarjetaMotos > strong, .conoce-titleTarjetaSeguros > strong{
-
 	font-size: 25px;
-
 	font-weight: 500;
-
 }
 
 
+.conoce-containTarjeta > img{
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+}
 
 .conoce-TarjetaOportuya, .conoce-creditoMotos, .conoce-creditoLibranza, .conoce-seguros, .conoce-viajes{
-
+	border-radius: 5px 0 0 5px;
 	height: 100%;
-
 	padding: 0 5px;
-
 	position: absolute;
-
 	width: 35%;
-
 }
-
-
 
 .conoce-containButton{
-
 	position: absolute;
-
 	right: 15%;
-
 	top: 85%;
-
 }
-
-
 
 .conoce-button{
-
 	border-radius: 20px;
-
 	color: white;
-
 	font-size: 13px;
-
 	padding: 5px 25px;
-
 }
-
-
 
 .conoce-button:hover, .conoce-button:active, .conoce-button:visited, .conoce-button:focus{
-
 	color: white;
-
 }
-
-
 
 .button-oportuya{
-
 	background: #1d84c3;
-
 }
-
-
 
 .button-creditoMotos{
-
 	background: #ec2d35;
-
 }
-
-
 
 .button-creditoLibranza{
-
 	background: #fdbf3c;
-
 }
-
-
 
 .button-seguros{
-
 	background: #2aace0;
-
 }
 
-
-
 .button-viajes{
-
 	background: #3fcf64;
-
 }
 
 
@@ -1177,359 +1078,180 @@ a:hover, a:active, a:focus, a:visited{
 
 
 .video-text{
-
 	color: #3c9cd8;
-
 	text-shadow: -1px 0px 15px rgba(60, 156, 216, 0.6);
-
 }
-
-
 
 /* Convenios */
 
-
-
 #convenios{
-
 	padding: 40px 0;
-
 }
-
-
 
 .containerConvenios{
-
 	max-width: 1200px;
-
 	margin: auto;
-
 }
-
-
 
 .convenios-title{
-
 	color: #348dc7;
-
 	font-size: 25px;
-
 	font-weight: normal;
-
 	margin-bottom: 40px;
-
 	position: relative;
-
 }
-
-
 
 .convenios-title:after {
-
     background: #348dc7;
-
     border-radius: 70px;
-
     bottom: -6px;
-
     content: "";
-
     height: 4px;
-
     left: 42%;
-
     position: absolute;
-
     width: 17%;
-
     -webkit-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
-
     -moz-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
-
     box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
-
 }
-
-
-
-.convenios-title > strong{
-
-}
-
-
 
 .convenios-text{
-
 	margin-bottom: 40px;
-
 	padding: 0 110px;
-
 }
-
-
 
 .convenios-titleInfo{
-
 	color: #1d84c3;
-
 	font-size: 20px;
-
 	font-weight: bold;
-
 }
-
-
 
 .convenios-textInfo{
-
 	line-height: 17px;
-
 	margin: 10px 0 25px;
-
 	padding: 0 50px;
-
 }
-
-
 
 .convenios-button{
-
 	color: #1d84c3;
-
 	border: 1px solid #1d84c3;
-
 	border-radius: 35px;
-
 	font-size: 18px;
-
 	padding: 7px 45px;
-
 	transition: all .3s ease-in-out;
-
 }
-
-
 
 .convenios-button:hover{
-
 	background: #1d84c3;
-
 	color: white;
-
 }
-
-
 
 /* Footer */
 
-
-
 #footer{
-
 	background: #1d84c3;
-
 	padding: 20px 0 0;
-
 }
-
-
 
 .footer-contianerLogo{
-
+	margin-top: 30px;
 	text-align: center;
-
 }
-
-
 
 .footer-title{
-
 	color: white;
-
 	font-size: 25px;
-
 	font-weight: normal;
-
 	position: relative;
-
 }
-
-
 
 .footer-title:after{
-
     background: #fff;
-
     border-radius: 70px;
-
     bottom: -14px;
-
     content: "";
-
     height: 4px;
-
     left: 39%;
-
     position: absolute;
-
     width: 21%;
-
 }
-
-
 
 .footer-contianerTelefonos{
-
-    margin-bottom: 35px;
-
-	margin-left: 20%;
-
-    margin-top: 40px;
-
-    position: relative;
-
+	margin-left: 22%;
+	margin-top: 40px;
+	position: relative;
 }
-
-
 
 .footer-contianerNosotros{
-
 	margin-left: 20%;
-
 }
-
-
 
 .footer-textTelefonos{
-
 	color: #fff;
-
 	line-height: 20px;
-
-	padding-left: 45px;
-
+	padding-left: 30px;
 }
-
-
 
 .footer-textTelefonosNal{
-
 	font-weight: 500;
-
 }
-
-
 
 .footer-imgNosotros{
-
 	position: absolute;
-
 	top: 5px;
-
 }
-
-
 
 .footer-containerServicioCliente{
-
 	border-left: 1px solid #77b5db;
-
 	border-right: 1px solid #77b5db;
-
 }
-
-
 
 .footer-menu{
-
 	color: #fff;
-
 	margin-left: 25%;
-
-	padding: 145px 0 50px 0;
-
+	padding: 18px 0 20px 0;
 }
-
-
 
 .footer-menuNosotros{
-
 	color: #fff;
-
+	margin-top: 35px;
 }
-
-
 
 .footer-menuItem{
-
 	color: #fff;
-
 	font-weight: 200;
-
 }
-
-
 
 .footer-menuTitle{
-
 	font-weight: 600;
-
 	font-size: 15px;
-
 }
-
-
 
 .footer-menuItem:hover, .footer-menuItem:active, .footer-menuItem:visited, .footer-menuItem:focus{
-
 	color: #fff; 
-
 }
-
-
 
 .footer-menu > li, .footer-menuNosotros > li{
-
 	font-size: 13px;
-
 }
-
-
 
 .footer-containerNewsletter{
-
     top: 40%;
-
 	padding: 0 10%;
-
 	position: absolute;
-
     width: 100%;
-
 }
-
-
 
 .footer-titleNewsLetter{
-
 	color: #fff;
-
 	font-weight: 600;
-
 	font-size: 15px;
-
 }
-
-
 
 .footer-menuText{
-
 	color: #fff;
-
 	font-weight: 600;
-
 }
-
 
 /*Administrador de páginas*/
 
@@ -1843,6 +1565,17 @@ a[data-toggle="collapse"] {
 	margin:auto;
 }
 
+
+.iconUserImg,.iconLeadsImg{
+	width: 50px;
+
+}
+
+.modulesText{
+	font-weight: 600;
+}
+
+
 /*thank you pages*/
 
 .thankContainer{
@@ -2035,6 +1768,10 @@ a[data-toggle="collapse"] {
 
 	}
 
+	.back ul li{
+		line-height: 1;
+	}
+
 
 
 	.conoce-button{
@@ -2066,6 +1803,21 @@ a[data-toggle="collapse"] {
 
 
 @media(max-width: 1300px){
+
+	.dialogThakPage p{
+
+		font-size: 1em;
+		font-size: 12px;
+	}
+
+	.bestPricesImg img{
+		    padding: 7% 0;
+	}
+
+	.cardImage .back{
+		max-width: 100%;
+		top: 30px;
+	}
 
 	.conoce-TarjetaOportuya, .conoce-creditoMotos, .conoce-creditoLibranza, .conoce-seguros, .conoce-viajes{
 
@@ -2130,6 +1882,10 @@ a[data-toggle="collapse"] {
 
 
 @media(max-width: 1200px){
+
+	.bestPricesImg img{
+		    padding: 11% 0;
+	}
 
 	.tarjetaLAst{
 
@@ -2253,6 +2009,10 @@ a[data-toggle="collapse"] {
 .dialogThakPage p{
 
 		font-size: 1.2em;
+	}
+
+	.contentListFeatures div ul li{
+		height: unset;
 	}
 
 
@@ -2547,6 +2307,10 @@ a[data-toggle="collapse"] {
 
 	}
 
+	.bestPricesImg img{
+		display: none;
+	}
+
 
 
 }
@@ -2696,6 +2460,16 @@ a[data-toggle="collapse"] {
 	.side.back ul {
 		width: 70%;
 		margin: auto;
+	}
+
+	.cardImage .back{
+		max-width: 80%;
+		top: 50px;
+	}
+
+	.back ul li{
+		line-height: 1;
+		font-size: 14px;
 	}
 }
 
