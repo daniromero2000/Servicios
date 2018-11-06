@@ -21,7 +21,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../serviciosoportunidades.com/vendor/autoload.php';
+require __DIR__.'/../serviciosoportunidades/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ require __DIR__.'/../serviciosoportunidades.com/vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../serviciosoportunidades.com/bootstrap/app.php';
+$app = require_once __DIR__.'/../serviciosoportunidades/bootstrap/app.php';
 
 $app->bind('path.public', function() {
     return __DIR__;
