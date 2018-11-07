@@ -9,6 +9,8 @@
 	<meta property="og:url" content="www.serviciosoportunidades.com/libranza" />
 	<meta property="og:type" content="Website" />
 	<meta property="og:image" content="{{ asset('images/LibranzasPortadaOg.png') }}" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:description" content="El Crédito de libranza con el que podrás disfrutar de todas nuestras opciones, compra electrodomésticos, viaja, adquiere tu moto, compra tu cartera o remodela tu casa; sin costos ocultos y con el descuento a tu nomina.">
 @endsection()
 

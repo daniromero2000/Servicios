@@ -11,6 +11,8 @@
 	<meta property="og:url" content="www.serviciosoportunidades.com/oportuya" />
 	<meta property="og:type" content="Website" />
 	<meta property="og:image" content="{{ asset('images/OportuyaPortadaOg.png') }}" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:description" content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades">
 @endsection()
 
