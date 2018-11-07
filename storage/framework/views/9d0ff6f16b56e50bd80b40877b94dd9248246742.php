@@ -436,7 +436,10 @@
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</select>
 						</div>
-						<div class="form-group text-right">
+						<p class="textCityForm">
+							*Válido solo para ciudades que se desplieguen en la casilla.
+						</p>
+						<div class="form-group text-center">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 								Guardar
 							</button>
@@ -456,23 +459,37 @@
 <?php
 
 $arraySliderOffer=[
+	
 	[
-		'nameProduct'=>'Televisor LG 43lk5700 ',
-		'img'=>'aprovechaTelevisor.png',
+		'nameProduct'=>'Lavadora WA17J6730LV Activ DualWash 17 kg carga ',
+		'img'=>'lavaderoWA17J6730LV.png',
+		'type'=>'Lavadora',
 		'imgBackground'=>'aprovechaFondoPrecio.png',
-		'price'=>'$900.000',
-		'description'=>'<p>Televisor LG 43 pulgadas 43lk5700 Fhd Smart-Internet +</p>
-					    <p>Microcomponente LG $2.409.900$1.199.900</p>',
+		'price'=>'$1.499.900',
+		'description'=>'<p>Lavadora WA17J6730LV Activ DualWash</p>
+					    <p>Capacidad de 17 Kg. carga - Automatica - Control dígital</p>',
 		'buttonText'=>'Comprar a crédito',
 		'buttonLink'=>'#'
 	],
 	[
-		'nameProduct'=>'Celular Q6 Prime LGM700F',
-		'img'=>'aprovechaCelular.png',
+		'nameProduct'=>'Galaxy J7 Neo Samsung',
+		'img'=>'celularSamsung_J7NEO.png',
+		'type'=>'celular',
 		'imgBackground'=>'aprovechaFondoPrecio.png',
-		'price'=>'$999.000',
-		'description'=>'<p>Celular Q6 Prime LGM700F.ACOLPL</p>
-						<p>LG $899.900$519.900</p>',
+		'price'=>'$429.900',
+		'description'=>'<p>Celular Galaxy J7 Neo Samsung</p>
+					    <p>Pantalla de 5.5 Pulgadas - RAM 2 GB - Cámara principal de 13 Mp</p>',
+		'buttonText'=>'Comprar a crédito',
+		'buttonLink'=>'#'
+	],
+	[
+		'nameProduct'=>'Televisor Samsung E310LT',
+		'img'=>'televisorLG_E310LT.png',
+		'imgBackground'=>'aprovechaFondoPrecio.png',
+		'type'=>'televisor',
+		'price'=>'$599.900',
+		'description'=>'<p>Televisor 28" E310LT Led Samsung</p>
+					    <p>1.366x768 - HD - HDMI:2 - Sí TDT</p>',
 		'buttonText'=>'Comprar a crédito',
 		'buttonLink'=>'#'
 	]
@@ -495,7 +512,10 @@ $arraySliderOffer=[
 									<img src="/images/<?php echo e($arrayOffer['img']); ?>" class="img-fluid">
 								</div>
 								<br>
-								<div class="offersPrice<?php echo e($offer+1); ?>">
+								<?php
+									$typeProduct=($arrayOffer['type']=='televisor')?1:2;
+								?>
+								<div class="offersPrice<?php echo $typeProduct; ?>">
 									<img src="/images/<?php echo e($arrayOffer['imgBackground']); ?>" class="img-fluid">
 									<span><?php echo e($arrayOffer['price']); ?></span>
 								</div>
@@ -506,7 +526,7 @@ $arraySliderOffer=[
 									?>
 								</div>
 								<p class="buttonOffers">
-									<a href="<?php echo e($arrayOffer['buttonLink']); ?>">
+									<a href="" data-toggle="modal" data-target="#offerProduct<?php echo e($offer); ?>">
 										<?php echo e($arrayOffer['buttonText']); ?>
 
 									</a>
@@ -515,9 +535,67 @@ $arraySliderOffer=[
 						</div>
 					</div>
 
+				
+
+
 
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
 			</div>	
+
+			<?php $__currentLoopData = $arraySliderOffer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $offerItem => $arrayOfferItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					 <div class="modal modalFormulario fade hide" id="offerProduct<?php echo e($offerItem); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body modalFormulario-body">
+				<div class="modal-containerFormulario">
+					<h3 class="modal-titleForm titleForm-oportuya">
+						Aprovecha nuestras ofertas
+					</h3>
+					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
+						<?php echo e(csrf_field()); ?>
+
+						<input type="hidden" name="typeProduct" value="<?php echo e($arrayOfferItem['nameProduct']); ?>">
+						<div class="form-group">
+							<label for="name" class="control-label">Nombres</label>
+							<input type="text" name="name" class="form-control" id="name" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="lastName" class="control-label">Apellidos</label>
+							<input type="text" name="lastName" class="form-control" id="lastName" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label">Correo electronico</label>
+							<input type="email" name="email" class="form-control" id="email" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="telephone class="control-label">Teléfono</label>
+							<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="city class="control-label">Ciudad</label>
+							<select name="city" id="city" class="form-control" >
+								<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</select>
+						</div>
+						<div class="form-group text-right">
+							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
+								Guardar
+							</button>
+							<button type="button" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
+								Cerrar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>	
 	</div>
 <?php $__env->stopSection(); ?>

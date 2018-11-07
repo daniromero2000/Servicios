@@ -43,6 +43,9 @@
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</select>
 						</div>
+						<p class="textCityForm">
+							*Válido solo para ciudades que se desplieguen en la casilla.
+						</p>
 						<div class="form-group text-right">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 								Guardar

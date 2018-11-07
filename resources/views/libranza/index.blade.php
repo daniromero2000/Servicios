@@ -297,7 +297,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group text-right">
+						<p class="textCityForm">
+							*Válido solo para ciudades que se desplieguen en la casilla.
+						</p>
+						<div class="form-group text-center">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 								Guardar
 							</button>

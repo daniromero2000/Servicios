@@ -320,7 +320,7 @@
 	-moz-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
 	max-width: 816px;
-    min-height: 575px;
+    min-height: 600px;
 	padding: 0;
 	position: relative;
 }
@@ -378,10 +378,18 @@
 	border-radius: 20px;
 	padding: 5px 40px;
 	margin-top: 10px;
+	margin-left: 15px;
 }
 
 .modalLabelForm{
 	font-weight: 700;
+}
+
+.textCityForm{
+	color: #000;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
 }
 
 /* Construccion */
