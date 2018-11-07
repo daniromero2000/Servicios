@@ -50,6 +50,56 @@
 #creditoLibranza{
 	padding-bottom: 90px;
 }
+
+.containerCreditoLibranza{
+	max-width: 1360px;
+	margin: auto;
+}
+
+.container-creditoLibranzaCards{
+	padding: 30px;
+}
+
+.creditoLibranza-contianerTexto{
+	background: #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+    min-height: 260px;
+    position: relative;
+}
+
+.creditoLibranza-contianerTexto:before{
+	content: "";
+	border-bottom: 80px solid transparent;
+	border-left: 80px solid;
+	border-radius: 10px 0 0 0;
+	border-right: 80px solid transparent;
+	border-top: 80px solid;
+	height: 0;
+	position: absolute;
+	width: 0;
+}
+.containerText-creditoLibranzaCards{
+	padding: 60px 30px 10px 130px;
+}
+
+.creditoLibranza-electrodomesticos:before{
+	border-left-color: #348dc7;
+	border-top-color: #348dc7;
+}
+
+.creditoLibranza-motos:before{
+	border-left-color: #ec2d35;
+	border-top-color: #ec2d35;
+}
+
+.creditoLibranza-viajes:before{
+	border-left-color: #3fcf64;
+	border-top-color: #3fcf64;
+}
+
 .creditoLibranza-title, .credibilidad-title{
 	color: #348dc7;
 	font-size: 20px;
@@ -73,25 +123,22 @@
 	width: 15%;
 }
 
-.creditoLibranza-contianerTexto{
-	padding: 30px 0 0 100px;
-}
-
 .creditoLibranza-img{
-	left: 0;
+	left: 15px;
 	position: absolute;
-	top: 0;
+	top: 20px;
+	width: 70px;
 }
 
 .creditoLibranza-titleText{
 	color: #348dc7;
 	font-size: 18px;
+	font-weight: 600;
 }
 
 .creditoLibranza-text{
     font-size: 15px;
     line-height: 20px;
-	padding: 0 40px 0 0;
     text-align: justify;
 }
 

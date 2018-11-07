@@ -57,32 +57,44 @@
 
 
 	<div id="creditoLibranza">
-		<div class="container">
+		<div class="containerCreditoLibranza">
 			<h2 class="creditoLibranza-title text-center">Todo lo que puedes hacer con <br> nuestro <strong>crédito de libranza</strong></h2>
 			<div class="row" id="creditoLibranza-slider">
-				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="<?php echo e(asset('images/libranza-creditoElectrodomestico.png')); ?>" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
-					<h3 class="creditoLibranza-titleText">Crédito para <br> electrodomésticos</h3>
-					<p class="creditoLibranza-text">
-						A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
-						<strong>¡Compralo a crédito!</strong>
-					</p>
+				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
+					<div class="creditoLibranza-contianerTexto creditoLibranza-electrodomesticos">
+						<img src="<?php echo e(asset('images/libranza-creditoElectrodomestico.png')); ?>" alt="Crédito para electrodomésticos" class="img-fluid creditoLibranza-img">
+						<div class="containerText-creditoLibranzaCards">
+							<h3 class="creditoLibranza-titleText">Crédito para <br> electrodomésticos</h3>
+							<p class="creditoLibranza-text">
+								A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
+								<strong>¡Compralo a crédito!</strong>
+							</p>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="<?php echo e(asset('images/libranza-creditoMotos.png')); ?>" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
-					<h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
-					<p class="creditoLibranza-text">
-						Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
-						<strong>¡Compra tu moto a crédito!</strong>
-					</p>
+				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
+					<div class="creditoLibranza-contianerTexto creditoLibranza-motos">
+						<img src="<?php echo e(asset('images/libranza-creditoMotos.png')); ?>" alt="Crédito para motos" class="img-fluid creditoLibranza-img">
+						<div class="containerText-creditoLibranzaCards">
+							<h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
+							<p class="creditoLibranza-text">
+								Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
+								<strong>¡Compra tu moto a crédito!</strong>
+							</p>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-12 col-lg-4 creditoLibranza-contianerTexto">
-					<img src="<?php echo e(asset('images/libranza-creditoViajes.png')); ?>" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
-					<h3 class="creditoLibranza-titleText">Crédito <br> para viajes</h3>
-					<p class="creditoLibranza-text">
-						Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
-						<strong>¡Viaja Ahora!</strong>
-					</p>
+				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
+					<div class="creditoLibranza-contianerTexto creditoLibranza-viajes">
+						<img src="<?php echo e(asset('images/libranza-creditoViajes.png')); ?>" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<div class="containerText-creditoLibranzaCards">
+							<h3 class="creditoLibranza-titleText">Crédito <br> para viajes</h3>
+							<p class="creditoLibranza-text">
+								Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
+								<strong>¡Viaja Ahora!</strong>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
