@@ -57,6 +57,23 @@ angular.module('appLibranzaLiquidador', [])
 		{ label : 'LORICA',value: 'LORICA' },
 		{ label : 'AGUAZUL', value: 'AGUAZUL' }
 	];
+	$scope.typeProducts = [
+		{
+			label: 'Crédito para electrodomésticos', value: 'Crédito para electrodomésticos'
+		},
+		{
+			label: 'Crédito para motos', value:'Crédito para motos'
+		},
+		{
+			label: 'Credito para viajes', value: 'Credito para viajes'
+		},
+		{
+			label: 'Compra de cartera', value: 'Compra de cartera'
+		},
+		{
+			label: 'Libre inversión', value:'Libre inversión'
+		}
+	];
 	$scope.tipoCliente = [
 		{
 			label : 'Pensionado',
@@ -89,7 +106,7 @@ angular.module('appLibranzaLiquidador', [])
 		telephone: '',
 		city: '',
 		typeService: 'Credito libranza',
-		typeProduct: 'Credito libranza'
+		typeProduct: ''
 	};
 
 	$scope.validateInt = function(){

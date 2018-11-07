@@ -283,9 +283,19 @@
 							<label class="control-label modalLabelForm">Teléfono</label>
 							<input type="text" ng-model="libranza.telephone" class="form-control" id="nameForm" required="true" />
 						</div>
-						<div class="form-group">
-							<label class="control-label modalLabelForm" for="city">Ciudad</label>
-							<select class="form-control" id="city" ng-model="libranza.city" ng-options="city.value as city.label for city in cities" ng-change="selectPagaduria()" required="true" ></select>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="control-label modalLabelForm" for="city">Ciudad</label>
+									<select class="form-control" id="city" ng-model="libranza.city" ng-options="city.value as city.label for city in cities" required="true" ></select>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="control-label modalLabelForm" for="city">Que te interesa</label>
+									<select class="form-control" id="city" ng-model="libranza.typeProduct" ng-options="product.value as product.label for product in typeProducts" required="true" ></select>
+								</div>
+							</div>
 						</div>
 						<div class="form-group text-right">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">

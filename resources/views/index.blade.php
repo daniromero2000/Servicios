@@ -131,7 +131,7 @@
 		<div class="col-12 col-sm-12 col-md-8 offset-md-2 col-lg-4 video-containText text-left">
 			<p>
 				<img src="/images/video-ubicacionIcon.png" alt=Ubicación" class="img-fluid video-img">
-				<span class="video-text">46 Almacenes respaldan su compra.</span>
+				<span class="video-text">46 Almacenes respaldan tu compra.</span>
 			</p>
 			<p>
 				<img src="/images/video-antiguedadIcon.png" alt="49 años de servicio" class="img-fluid video-img">

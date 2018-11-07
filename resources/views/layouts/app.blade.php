@@ -42,6 +42,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
 		<script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+		<link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/oportunidadesServicios.ico') }}' />
 	</head>
 	<body>
 		<div id="preHeader">

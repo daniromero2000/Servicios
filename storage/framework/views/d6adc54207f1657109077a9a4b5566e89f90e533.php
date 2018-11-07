@@ -42,6 +42,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<script type="text/javascript" src="<?php echo e(asset('js/validateV2.js')); ?>"></script>
 		<script type="text/javascript" src="<?php echo e(asset('js/script.js')); ?>"></script>
+		<link rel='shortcut icon' type='image/x-icon' href='<?php echo e(asset('images/oportunidadesServicios.ico')); ?>' />
 	</head>
 	<body>
 		<div id="preHeader">
