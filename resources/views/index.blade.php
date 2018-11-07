@@ -11,6 +11,8 @@
 	<meta property="og:url" content="www.serviciosoportunidades.com/" />
 	<meta property="og:type" content="Website" />
 	<meta property="og:image" content="{{ asset('images/OportunidadesservicioPortadaOg.png') }}" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:description" content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, crédito moto, crédito viajes, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
 @endsection()
 
