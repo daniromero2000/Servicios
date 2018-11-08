@@ -13,7 +13,7 @@
 			<p class="text-center">Si te interesa conocer más sobre seguros, déjanos tus datos y un asesor se pondrá en contacto</p>
 			<div class="modalFormulario-body" style="margin: auto;">
 				<div class="modal-containerFormulario">
-					<h3 class="modal-titleForm">Seguros</h3>
+					<h3 class="modal-titleForm titleForm-seguros">Seguros</h3>
 					<form role=form method="POST" id="saveLeadSeguros" action="<?php echo e(route('seguros.store')); ?>">
 						<?php echo e(csrf_field()); ?>
 
@@ -43,6 +43,9 @@
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</select>
 						</div>
+						<p class="textCityForm">
+							*Válido solo para ciudades que se desplieguen en la casilla.
+						</p>
 						<div class="form-group text-right">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 								Guardar

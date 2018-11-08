@@ -1,27 +1,21 @@
 <?php $__env->startSection('content'); ?>
-<div class="container containerLogin">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header row">
-                	<div class="col-6 loginText">
-                		<p> <?php echo e(__('Login')); ?> </p>	
-                	</div>
-                	<div class="col-6 loginLogo">
-                		<img src="<?php echo e(asset('images/logoDashboard.png')); ?>">
-                	</div>
-                	
-                </div>
+                <div class="card-header"><?php echo e(__('Reset Password')); ?></div>
 
                 <div class="card-body">
-                    <form method="POST" action="<?php echo e(route('login')); ?>" id="loginForm">
+                    <form method="POST" action="<?php echo e(route('password.update')); ?>">
                         <?php echo csrf_field(); ?>
 
+                        <input type="hidden" name="token" value="<?php echo e($token); ?>">
+
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right"><?php echo e(__('Correo Electrónico')); ?></label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right"><?php echo e(__('E-Mail Address')); ?></label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
+                                <input id="email" type="email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e($email ?? old('email')); ?>" required autofocus>
 
                                 <?php if($errors->has('email')): ?>
                                     <span class="invalid-feedback" role="alert">
@@ -32,7 +26,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Contraseña')); ?></label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Password')); ?></label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
@@ -46,29 +40,19 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Confirm Password')); ?></label>
 
-                                    <label class="form-check-label" for="remember">
-                                        <?php echo e(__('Recordar')); ?>
-
-                                    </label>
-                                </div>
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <?php echo e(__('Iniciar sesión')); ?>
+                                    <?php echo e(__('Reset Password')); ?>
 
                                 </button>
-
-                                <a class="btn btn-link" href="<?php echo e(route('password.request')); ?>">
-                                    <?php echo e(__('¿ Olvidaste tu contraseña ?')); ?>
-
-                                </a>
                             </div>
                         </div>
                     </form>

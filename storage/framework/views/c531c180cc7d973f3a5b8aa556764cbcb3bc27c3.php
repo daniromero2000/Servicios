@@ -42,6 +42,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<script type="text/javascript" src="<?php echo e(asset('js/validateV2.js')); ?>"></script>
 		<script type="text/javascript" src="<?php echo e(asset('js/script.js')); ?>"></script>
+		<link rel='shortcut icon' type='image/x-icon' href='<?php echo e(asset('images/oportunidadesServicios.ico')); ?>' />
 	</head>
 	<body>
 		<div id="preHeader">
@@ -138,13 +139,6 @@
 					<div class="footer-contianerLogo">
 						<img src="<?php echo e(asset('images/footer-oportunidadesServiciosFinancierosLogo.png')); ?>" title="Oportunidades Servicios Financieros" class="img-fluid">
 					</div>
-					<div class="footer-contianerTelefonos">
-						<img src="<?php echo e(asset('images/footer-telefonoIcon.png')); ?>" alt="Línea Nacional" class="img-fluid footer-imgNosotros" />
-						<p class="footer-textTelefonos">
-							<span class="footer-textTelefonosNal">Línea nacional: 57 (1)484 2122</span> <br />
-							<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
-						</p>
-					</div>
 					<div class="footer-contianerNosotros">
 						<ul class="footer-menuNosotros">
 							<h5 class="footer-menuTitle">NOSOTROS</h5>
@@ -158,6 +152,13 @@
 				<div class="col-12 col-md-12 col-lg-6 resetCol footer-containMenu">
 					<h4 class="text-center footer-title">Si tienes alguna inquietud <strong>¡Contáctanos!</strong></h4>
 					<div class="footer-containerServicioCliente">
+						<div class="footer-contianerTelefonos">
+							<img src="<?php echo e(asset('images/footer-telefonoIcon.png')); ?>" alt="Línea Nacional" class="img-fluid footer-imgNosotros" />
+							<p class="footer-textTelefonos">
+								<span class="footer-textTelefonosNal">Línea nacional: 57 (1)484 2122</span> <br />
+								<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
+							</p>
+						</div>
 						<ul class="footer-menu">
 							<h5 class="footer-menuTitle" >SERVICIO AL CLIENTE</h5>
 							<li><a href="#" class="footer-menuItem" title="Por qué comprar con nosotros">Por qué comprar con nosotros</a></li>
