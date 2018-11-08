@@ -259,7 +259,7 @@ class Application extends SymfonyApplication implements ApplicationContract
     }
 
     /**
-     * Get the default input definition for the application.
+     * Get the default input definitions for the applications.
      *
      * This is used to add the --env option to every available command.
      *

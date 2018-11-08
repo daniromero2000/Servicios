@@ -478,7 +478,7 @@ trait HasAttributes
             case 'real':
             case 'float':
             case 'double':
-                return $this->fromFloat($value);
+                return (float) $value;
             case 'string':
                 return (string) $value;
             case 'bool':
@@ -678,26 +678,6 @@ trait HasAttributes
     protected function asJson($value)
     {
         return json_encode($value);
-    }
-
-    /**
-     * Decode the given float.
-     *
-     * @param  mixed  $value
-     * @return mixed
-     */
-    public function fromFloat($value)
-    {
-        switch ((string) $value) {
-            case 'Infinity':
-                return INF;
-            case '-Infinity':
-                return -INF;
-            case 'NaN':
-                return NAN;
-            default:
-                return (float) $value;
-        }
     }
 
     /**

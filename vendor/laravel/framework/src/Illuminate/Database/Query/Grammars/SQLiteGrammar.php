@@ -144,21 +144,6 @@ class SQLiteGrammar extends Grammar
     }
 
     /**
-     * Compile a "JSON length" statement into SQL.
-     *
-     * @param  string  $column
-     * @param  string  $operator
-     * @param  string  $value
-     * @return string
-     */
-    protected function compileJsonLength($column, $operator, $value)
-    {
-        list($field, $path) = $this->wrapJsonFieldAndPath($column);
-
-        return 'json_array_length('.$field.$path.') '.$operator.' '.$value;
-    }
-
-    /**
      * Compile an insert statement into SQL.
      *
      * @param  \Illuminate\Database\Query\Builder  $query

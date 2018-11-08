@@ -282,7 +282,7 @@ class UrlGenerator implements UrlGeneratorContract
      * @param  bool|null  $secure
      * @return string
      */
-    public function formatScheme($secure = null)
+    public function formatScheme($secure)
     {
         if (! is_null($secure)) {
             return $secure ? 'https://' : 'http://';
@@ -301,10 +301,9 @@ class UrlGenerator implements UrlGeneratorContract
      * @param  string  $name
      * @param  array  $parameters
      * @param  \DateTimeInterface|int  $expiration
-     * @param  bool  $absolute
      * @return string
      */
-    public function signedRoute($name, $parameters = [], $expiration = null, $absolute = true)
+    public function signedRoute($name, $parameters = [], $expiration = null)
     {
         $parameters = $this->formatParameters($parameters);
 
@@ -318,7 +317,7 @@ class UrlGenerator implements UrlGeneratorContract
 
         return $this->route($name, $parameters + [
             'signature' => hash_hmac('sha256', $this->route($name, $parameters), $key),
-        ], $absolute);
+        ]);
     }
 
     /**
@@ -327,12 +326,11 @@ class UrlGenerator implements UrlGeneratorContract
      * @param  string  $name
      * @param  \DateTimeInterface|int  $expiration
      * @param  array  $parameters
-     * @param  bool  $absolute
      * @return string
      */
-    public function temporarySignedRoute($name, $expiration, $parameters = [], $absolute = true)
+    public function temporarySignedRoute($name, $expiration, $parameters = [])
     {
-        return $this->signedRoute($name, $parameters, $expiration, $absolute);
+        return $this->signedRoute($name, $parameters, $expiration);
     }
 
     /**
@@ -343,7 +341,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function hasValidSignature(Request $request)
     {
-        $original = rtrim($request->url().'?'.Arr::query(
+        $original = rtrim($request->url().'?'.http_build_query(
             Arr::except($request->query(), 'signature')
         ), '?');
 
@@ -394,7 +392,7 @@ class UrlGenerator implements UrlGeneratorContract
     /**
      * Get the URL to a controller action.
      *
-     * @param  string|array  $action
+     * @param  string  $action
      * @param  mixed   $parameters
      * @param  bool    $absolute
      * @return string
@@ -413,15 +411,11 @@ class UrlGenerator implements UrlGeneratorContract
     /**
      * Format the given controller action.
      *
-     * @param  string|array  $action
+     * @param  string  $action
      * @return string
      */
     protected function formatAction($action)
     {
-        if (is_array($action)) {
-            $action = '\\'.implode('@', $action);
-        }
-
         if ($this->rootNamespace && ! (strpos($action, '\\') === 0)) {
             return $this->rootNamespace.'\\'.$action;
         } else {
@@ -493,19 +487,18 @@ class UrlGenerator implements UrlGeneratorContract
      *
      * @param  string  $root
      * @param  string  $path
-     * @param  \Illuminate\Routing\Route|null  $route
      * @return string
      */
-    public function format($root, $path, $route = null)
+    public function format($root, $path)
     {
         $path = '/'.trim($path, '/');
 
         if ($this->formatHostUsing) {
-            $root = call_user_func($this->formatHostUsing, $root, $route);
+            $root = call_user_func($this->formatHostUsing, $root);
         }
 
         if ($this->formatPathUsing) {
-            $path = call_user_func($this->formatPathUsing, $path, $route);
+            $path = call_user_func($this->formatPathUsing, $path);
         }
 
         return trim($root.$path, '/');

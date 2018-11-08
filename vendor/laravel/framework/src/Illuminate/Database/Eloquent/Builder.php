@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Database\Concerns\BuildsQueries;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -18,7 +17,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 class Builder
 {
-    use BuildsQueries, Concerns\QueriesRelationships, ForwardsCalls;
+    use BuildsQueries, Concerns\QueriesRelationships;
 
     /**
      * The base query builder instance.
@@ -248,40 +247,6 @@ class Builder
     }
 
     /**
-     * Add an "order by" clause for a timestamp to the query.
-     *
-     * @param  string  $column
-     * @return $this
-     */
-    public function latest($column = null)
-    {
-        if (is_null($column)) {
-            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
-        }
-
-        $this->query->latest($column);
-
-        return $this;
-    }
-
-    /**
-     * Add an "order by" clause for a timestamp to the query.
-     *
-     * @param  string  $column
-     * @return $this
-     */
-    public function oldest($column = null)
-    {
-        if (is_null($column)) {
-            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
-        }
-
-        $this->query->oldest($column);
-
-        return $this;
-    }
-
-    /**
      * Create a collection of models from plain arrays.
      *
      * @param  array  $items
@@ -373,7 +338,7 @@ class Builder
      *
      * @param  mixed  $id
      * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOrNew($id, $columns = ['*'])
     {
@@ -389,7 +354,7 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrNew(array $attributes, array $values = [])
     {
@@ -405,7 +370,7 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrCreate(array $attributes, array $values = [])
     {
@@ -423,7 +388,7 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function updateOrCreate(array $attributes, array $values = [])
     {
@@ -508,7 +473,7 @@ class Builder
      * Get the hydrated models without eager loading.
      *
      * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Model[]|static[]
+     * @return \Illuminate\Database\Eloquent\Model[]
      */
     public function getModels($columns = ['*'])
     {
@@ -1094,7 +1059,7 @@ class Builder
      * Create a new instance of the model being queried.
      *
      * @param  array  $attributes
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function newModelInstance($attributes = [])
     {
@@ -1237,7 +1202,7 @@ class Builder
     /**
      * Get the model instance being queried.
      *
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function getModel()
     {
@@ -1318,7 +1283,7 @@ class Builder
             return $this->toBase()->{$method}(...$parameters);
         }
 
-        $this->forwardCallTo($this->query, $method, $parameters);
+        $this->query->{$method}(...$parameters);
 
         return $this;
     }
@@ -1341,7 +1306,9 @@ class Builder
         }
 
         if (! isset(static::$macros[$method])) {
-            static::throwBadMethodCallException($method);
+            throw new BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.', static::class, $method
+            ));
         }
 
         if (static::$macros[$method] instanceof Closure) {

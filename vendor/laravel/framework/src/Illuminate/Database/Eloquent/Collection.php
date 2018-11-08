@@ -478,7 +478,6 @@ class Collection extends BaseCollection implements QueueableCollection
      * Get the type of the entities being queued.
      *
      * @return string|null
-     *
      * @throws \LogicException
      */
     public function getQueueableClass()
@@ -528,7 +527,6 @@ class Collection extends BaseCollection implements QueueableCollection
      * Get the connection of the entities being queued.
      *
      * @return string|null
-     *
      * @throws \LogicException
      */
     public function getQueueableConnection()

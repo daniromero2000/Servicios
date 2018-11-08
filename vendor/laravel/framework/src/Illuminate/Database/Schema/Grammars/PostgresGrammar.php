@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Schema\Grammars;
 
+use RuntimeException;
 use Illuminate\Support\Fluent;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -724,11 +725,11 @@ class PostgresGrammar extends Grammar
      * Create the column definition for a spatial Geometry type.
      *
      * @param  \Illuminate\Support\Fluent  $column
-     * @return string
+     * @throws \RuntimeException
      */
     protected function typeGeometry(Fluent $column)
     {
-        return $this->formatPostGisType('geometry');
+        throw new RuntimeException('The database driver in use does not support the Geometry spatial column type.');
     }
 
     /**

@@ -126,7 +126,11 @@ class SqlServerGrammar extends Grammar
      */
     protected function compileJsonContains($column, $value)
     {
-        list($field, $path) = $this->wrapJsonFieldAndPath($column);
+        $parts = explode('->', $column, 2);
+
+        $field = $this->wrap($parts[0]);
+
+        $path = count($parts) > 1 ? ', '.$this->wrapJsonPath($parts[1]) : '';
 
         return $value.' in (select [value] from openjson('.$field.$path.'))';
     }
@@ -140,21 +144,6 @@ class SqlServerGrammar extends Grammar
     public function prepareBindingForJsonContains($binding)
     {
         return is_bool($binding) ? json_encode($binding) : $binding;
-    }
-
-    /**
-     * Compile a "JSON length" statement into SQL.
-     *
-     * @param  string  $column
-     * @param  string  $operator
-     * @param  string  $value
-     * @return string
-     */
-    protected function compileJsonLength($column, $operator, $value)
-    {
-        list($field, $path) = $this->wrapJsonFieldAndPath($column);
-
-        return '(select count(*) from openjson('.$field.$path.')) '.$operator.' '.$value;
     }
 
     /**
@@ -491,11 +480,7 @@ class SqlServerGrammar extends Grammar
      */
     public function wrapTable($table)
     {
-        if (! $this->isExpression($table)) {
-            return $this->wrapTableValuedFunction(parent::wrapTable($table));
-        }
-
-        return $this->getValue($table);
+        return $this->wrapTableValuedFunction(parent::wrapTable($table));
     }
 
     /**

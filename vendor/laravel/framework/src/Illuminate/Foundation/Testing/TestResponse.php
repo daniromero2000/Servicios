@@ -9,7 +9,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert as PHPUnit;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Foundation\Testing\Constraints\SeeInOrder;
 
 /**
@@ -27,13 +26,6 @@ class TestResponse
      * @var \Illuminate\Http\Response
      */
     public $baseResponse;
-
-    /**
-     * The streamed content of the response.
-     *
-     * @var string
-     */
-    protected $streamedContent;
 
     /**
      * Create a new test response instance.
@@ -770,19 +762,6 @@ class TestResponse
     }
 
     /**
-     * Get a piece of data from the original view.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function viewData($key)
-    {
-        $this->ensureResponseHasView();
-
-        return $this->original->$key;
-    }
-
-    /**
      * Assert that the response view is missing a piece of bound data.
      *
      * @param  string  $key
@@ -955,28 +934,6 @@ class TestResponse
         }
 
         dd($content);
-    }
-
-    /**
-     * Get the streamed content from the response.
-     *
-     * @return string
-     */
-    public function streamedContent()
-    {
-        if (! is_null($this->streamedContent)) {
-            return $this->streamedContent;
-        }
-
-        if (! $this->baseResponse instanceof StreamedResponse) {
-            PHPUnit::fail('The response is not a streamed response.');
-        }
-
-        ob_start();
-
-        $this->sendContent();
-
-        return $this->streamedContent = ob_get_clean();
     }
 
     /**
