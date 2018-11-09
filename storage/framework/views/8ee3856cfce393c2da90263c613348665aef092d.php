@@ -1,17 +1,16 @@
-@extends('layouts.app')
-<script src="{{ asset('/appCanalDigital/app.js') }}"></script>
-<script src="{{ asset('/appCanalDigital/services/myService.js') }}"></script>
+<script src="<?php echo e(asset('/appCanalDigital/app.js')); ?>"></script>
+<script src="<?php echo e(asset('/appCanalDigital/services/myService.js')); ?>"></script>
 <!-- App Controller -->
-<script src="{{ asset('/appCanalDigital/controllers/ItemController.js') }}"></script>
-@section('content')
+<script src="<?php echo e(asset('/appCanalDigital/controllers/ItemController.js')); ?>"></script>
+<?php $__env->startSection('content'); ?>
 
     <div class="containerleads container">
         <br>
-        @if (Session::get('success'))
+        <?php if(Session::get('success')): ?>
             <div class="alert alert-success">
-                <p>{{ Session::get('success') }}</p>
+                <p><?php echo e(Session::get('success')); ?></p>
             </div>
-        @endif
+        <?php endif; ?>
     ------------------------------------------------------------------------------------------------------------------------------------------------------
 	<div class="row tituloLeads">
 		<div class="col-12">
@@ -36,28 +35,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($leadsQuery as $key => $lead)
+                    <?php $__currentLoopData = $leadsQuery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $lead): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         
 
                        
-                        <td>{{ $lead->name }}</td>
-                        <td>{{$lead->lastName}}</td>
-                        <td>{{$lead->telephone}}</td>
-                        <td>{{$lead->city}}</td>
-                        <td>{{$lead->typeService}}</td>
-			<td>{{$lead->typeProduct}}</td>
-                        <td> {{$lead->created_at}}</td>
+                        <td><?php echo e($lead->name); ?></td>
+                        <td><?php echo e($lead->lastName); ?></td>
+                        <td><?php echo e($lead->telephone); ?></td>
+                        <td><?php echo e($lead->city); ?></td>
+                        <td><?php echo e($lead->typeService); ?></td>
+			<td><?php echo e($lead->typeProduct); ?></td>
+                        <td> <?php echo e($lead->created_at); ?></td>
                         <td class="leadTableOptions" >
 
                             <div class="row rowAdjust">
                                 <div class="col-12">
-                                    @if ($lead->idLead != NULL)    
-                                            <a href="" class="btn" data-toggle="modal" data-target="#leadModal@php echo $lead->id @endphp" ><i class="fa fa-eye"></i></a><br>
-                                    @else
+                                    <?php if($lead->idLead != NULL): ?>    
+                                            <a href="" class="btn" data-toggle="modal" data-target="#leadModal<?php echo $lead->id ?>" ><i class="fa fa-eye"></i></a><br>
+                                    <?php else: ?>
                                             
                                             <span> <i class="fas fa-eye-slash"></i> </span> 
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                               
                                 
@@ -68,7 +67,7 @@
                         </td>
                     </tr>
 
-			<div class="modal fade hide" id="leadModal@php echo $lead->id @endphp" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal fade hide" id="leadModal<?php echo $lead->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
 
                                 <div class="modal-dialog">
                                     
@@ -88,14 +87,16 @@
                                                     <div class="form-group">
                                                         <strong>Nombre</strong>
 							<br>
-                                                        {{ $lead->name }}
+                                                        <?php echo e($lead->name); ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                                     <div class="form-group">
                                                         <strong>Apellido</strong>
 							<br>
-                                                        {{ $lead->lastName }}
+                                                        <?php echo e($lead->lastName); ?>
+
                                                     </div>
                                                 </div>
 					    </div>
@@ -104,7 +105,8 @@
                                                     <div class="form-group">
                                                         <strong>Email</strong>
 							<br>
-                                                        {{ $lead->email }}
+                                                        <?php echo e($lead->email); ?>
+
                                                     </div>
                                                 </div>
 
@@ -112,7 +114,8 @@
                                                     <div class="form-group">
                                                         <strong>tel&eacutefono</strong>
 							<br>
-                                                        {{ $lead->telephone }}
+                                                        <?php echo e($lead->telephone); ?>
+
                                                     </div>
                                                 </div>
 					    </div>
@@ -122,7 +125,8 @@
                                                     <div class="form-group">
                                                         <strong>Ciudad</strong>
 							<br>
-                                                        {{ $lead->city }}
+                                                        <?php echo e($lead->city); ?>
+
                                                     </div>
                                                 </div>
 					    </div>
@@ -132,7 +136,8 @@
                                                     <div class="form-group">
                                                         <strong>Servicio</strong>
 							<br>
-                                                        {{ $lead->typeService }}
+                                                        <?php echo e($lead->typeService); ?>
+
                                                     </div>
                                                 </div>
 
@@ -140,7 +145,8 @@
                                                     <div class="form-group">
                                                         <strong>Producto</strong>
 							<br>
-                                                        {{ $lead->typeProduct }}
+                                                        <?php echo e($lead->typeProduct); ?>
+
                                                     </div>
                                                 </div>
 					   </div>
@@ -151,7 +157,8 @@
                                                     <div class="form-group">
                                                         <strong>L&iacutenea de Credito</strong>
 							<br>
-                                                        {{ $lead->creditLine }}
+                                                        <?php echo e($lead->creditLine); ?>
+
                                                     </div>
                                                 </div>
 
@@ -159,7 +166,8 @@
                                                     <div class="form-group">
                                                         <strong>Pagadur&iacutea</strong>
 							<br>
-                                                        {{ $lead->pagaduria }}
+                                                        <?php echo e($lead->pagaduria); ?>
+
                                                     </div>
                                                 </div>
 
@@ -170,14 +178,16 @@
                                                     <div class="form-group">
                                                         <strong>Edad</strong>
 							<br>
-                                                        {{ $lead->age }}
+                                                        <?php echo e($lead->age); ?>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                                     <div class="form-group">
                                                         <strong>Tipo de cliente</strong>
 							<br>
-                                                        {{ $lead->customerType }}
+                                                        <?php echo e($lead->customerType); ?>
+
                                                     </div>
                                                 </div>
 					</div>
@@ -187,7 +197,8 @@
                                                     <div class="form-group">
                                                         <strong>Salario</strong>
 							<br>
-                                                        {{ $lead->salary }}
+                                                        <?php echo e($lead->salary); ?>
+
                                                     </div>
                                                 </div>
 
@@ -202,11 +213,13 @@
                                 </div>
                                 
                             </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
            
-     {{$leadsQuery->links()}}
+     <?php echo e($leadsQuery->links()); ?>
+
         </div>
     </div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
