@@ -22,6 +22,8 @@ class CreateLeadsTable extends Migration
             $table->string('city')->nullable();
             $table->string('typeService')->nullable();
             $table->string('typeProduct')->nullable();
+            $table->tinyInteger('state');
+            $table->tinyInteger('channel');   
             $table->timestamps();
         });
     }

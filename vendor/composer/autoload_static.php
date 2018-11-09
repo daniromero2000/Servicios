@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
+class ComposerStaticInit3e4ae33f1aa7b70c988f3623e710eac6
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -417,6 +417,7 @@ class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\GenerateSitemap' => __DIR__ . '/../..' . '/app/Console/Commands/GenerateSitemap.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Fee' => __DIR__ . '/../..' . '/app/Fee.php',
@@ -1832,6 +1833,8 @@ class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
         'Illuminate\\Support\\Carbon' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Carbon.php',
         'Illuminate\\Support\\Collection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Collection.php',
         'Illuminate\\Support\\Composer' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Composer.php',
+        'Illuminate\\Support\\Debug\\Dumper' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Debug/Dumper.php',
+        'Illuminate\\Support\\Debug\\HtmlDumper' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Debug/HtmlDumper.php',
         'Illuminate\\Support\\Facades\\App' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Facades/App.php',
         'Illuminate\\Support\\Facades\\Artisan' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Facades/Artisan.php',
         'Illuminate\\Support\\Facades\\Auth' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/Facades/Auth.php',
@@ -2292,6 +2295,7 @@ class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
         'Monolog\\Handler\\HandlerWrapper' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/HandlerWrapper.php',
         'Monolog\\Handler\\HipChatHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/HipChatHandler.php',
         'Monolog\\Handler\\IFTTTHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/IFTTTHandler.php',
+        'Monolog\\Handler\\InsightOpsHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/InsightOpsHandler.php',
         'Monolog\\Handler\\LogEntriesHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/LogEntriesHandler.php',
         'Monolog\\Handler\\LogglyHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/LogglyHandler.php',
         'Monolog\\Handler\\MailHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/MailHandler.php',
@@ -2330,11 +2334,15 @@ class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
         'Monolog\\Processor\\MemoryUsageProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MemoryUsageProcessor.php',
         'Monolog\\Processor\\MercurialProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/MercurialProcessor.php',
         'Monolog\\Processor\\ProcessIdProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/ProcessIdProcessor.php',
+        'Monolog\\Processor\\ProcessorInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/ProcessorInterface.php',
         'Monolog\\Processor\\PsrLogMessageProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/PsrLogMessageProcessor.php',
         'Monolog\\Processor\\TagProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/TagProcessor.php',
         'Monolog\\Processor\\UidProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
+        'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
+        'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
+        'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Inspector' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Inspector.php',
@@ -4158,10 +4166,10 @@ class ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit1f9bc93cc6cd2b52476a599da857d752::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3e4ae33f1aa7b70c988f3623e710eac6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3e4ae33f1aa7b70c988f3623e710eac6::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit3e4ae33f1aa7b70c988f3623e710eac6::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3e4ae33f1aa7b70c988f3623e710eac6::$classMap;
 
         }, null, ClassLoader::class);
     }
