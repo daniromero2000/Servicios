@@ -159,3 +159,8 @@ Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaControl
 
 
 
+Route::group(array('prefix'=>'/canalDigital/'),function(){
+    Route::get('/', function(){
+        return view('leads.leads');
+    });
+});
