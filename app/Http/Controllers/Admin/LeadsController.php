@@ -21,17 +21,20 @@ class LeadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $leads=Lead::all();
-        $leadsLiquidator=Liquidator::all();
 
-        $leadsQuery = Lead::selectRaw('leads.*,liquidator.*')
-                    ->leftjoin('liquidator','leads.id','=','liquidator.idLead')
-                    ->orderBy('leads.id','desc')->paginate(10);
+        $leadsQuery = Lead::selectRaw('leads.id, leads.name, leads.lastName, leads.email, leads.telephone, leads.city, leads.typeService, leads.typeProduct, leads. created_at,
+                                    liquidator.creditLine, liquidator.pagaduria, liquidator.age, liquidator.customerType, liquidator.salary');
+        $leadsQuery = Lead::leftjoin('liquidator','leads.id','=','liquidator.idLead');
+        if($request->get('q')){
+            $leadsQuery = Lead::whereRaw("leads.name LIKE '%".$request->get('q')."%' OR leads.lastName LIKE '%".$request->get('q')."%' ")
+                ->orderBy('leads.id','desc')->paginate(3);
+        }else{
+            $leadsQuery = Lead::orderBy('leads.id','desc')->paginate(3);
+        }
 
-
-        return view('leads.index ',['leads'=>$leads,'leadsLiquidator'=>$leadsLiquidator,'leadsQuery'=>$leadsQuery]);
+        return response($leadsQuery);
     }
 
     /**

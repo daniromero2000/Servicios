@@ -22,8 +22,6 @@
 
 */
 
-
-
 Route::get('/', function () {
 
 	$sliders = collect([
@@ -38,117 +36,60 @@ Route::get('/', function () {
 
 	]);
 
-
-
-
-
     return view('index')
-
     		->with('sliderPrincipal', $sliders->all());
-
 });
-
-
 
 Route::get('/LIB_gracias_FRM', function(){
-
 	return view('libranza.thankYouPage');
-
 });
 
-
-
 Route::get('/OP_gracias_FRM',function(){
-
 	return view('oportuya.thankYouPage');
-
 })->name('thankYouPageOportuya');
 
-
-
 Route::get('/SG_gracias_FRM',function(){
-
 	return view('seguros.thankYouPage');
-
 })->name('thankYouPageSeguros');
 
-
-
 Route::get('/MT_gracias_FRM',function(){
-
 	return view('motos.thankYouPage');
-
 })->name('thankYouPageMotos');
 
-
-
 Route::get('/VJ_gracias_FRM',function(){
-
 	return view('viajes.thankYouPage');
-
 })->name('thankYouPageViajes');
 
-
-
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-
 Route::post('login', 'Auth\LoginController@login');
-
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-
 
 // Registration Routes...
 
 if ($options['register'] ?? true) {
-
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-
     Route::post('register', 'Auth\RegisterController@register');
-
 }
-
-
 
 // Password Reset Routes...
-
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-
-
 // Email Verification Routes...
-
 if ($options['verify'] ?? false) {
-
     Route::emailVerification();
-
 }
 
-        
-
-
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::resource('pages','Admin\PageController');
-
 Route::resource('oportuya','Admin\OportuyaController');
-
 Route::resource('libranza','Admin\LibranzaController');
-
 Route::resource('motos','Admin\MotosController');
-
-Route::resource('seguros','Admin\SegurosController');
-
-Route::resource('viajes','Admin\ViajesController');
-
 Route::resource('leads','Admin\LeadsController');
+Route::resource('seguros','Admin\SegurosController');
+Route::resource('viajes','Admin\ViajesController');
 Route::resource('dashboard','Admin\DashboardController');
 Route::resource('users','Admin\UserController');
 
@@ -157,10 +98,13 @@ Route::get('api/libranza/test/{precio1}', 'Admin\LibranzaController@test');
 
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
-
+Route::get("/canalDigital",function(){
+	return view('leads.index');
+});
 
 Route::group(array('prefix'=>'/canalDigital/'),function(){
-    Route::get('/', function(){
+
+    Route::get('/leads', function(){
         return view('leads.leads');
     });
 });
