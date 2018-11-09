@@ -116,10 +116,7 @@
 					<h3 class="conoce-titleTarjetaSeguros"><strong>Viajes</strong></h3>
 					<img src="/images/servicios_viajesIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
 					<p class="conoce-tarjetasTexto">
-						Asegura tu patrimonio
-						y el bienestar de 
-						quienes están 
-						a t​u lado.​​​​​​
+						No te pierdas el viaje de tus sueños, te damos crédito para viajar.
 					</p>
 				</div>
 				<div class="conoce-containButton">

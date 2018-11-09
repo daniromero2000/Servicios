@@ -114,10 +114,7 @@
 					<h3 class="conoce-titleTarjetaSeguros"><strong>Viajes</strong></h3>
 					<img src="/images/servicios_viajesIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
 					<p class="conoce-tarjetasTexto">
-						Asegura tu patrimonio
-						y el bienestar de 
-						quienes están 
-						a t​u lado.​​​​​​
+						No te pierdas el viaje de tus sueños, te damos crédito para viajar.
 					</p>
 				</div>
 				<div class="conoce-containButton">
@@ -179,4 +176,4 @@
 	</div>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
