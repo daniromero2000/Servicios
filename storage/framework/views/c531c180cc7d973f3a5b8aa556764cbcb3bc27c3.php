@@ -43,8 +43,47 @@
 		<script type="text/javascript" src="<?php echo e(asset('js/validateV2.js')); ?>"></script>
 		<script type="text/javascript" src="<?php echo e(asset('js/script.js')); ?>"></script>
 		<link rel='shortcut icon' type='image/x-icon' href='<?php echo e(asset('images/oportunidadesServicios.ico')); ?>' />
+		<script> 
+
+			function hideLoader(){
+				
+				$('#ex-global-content').removeClass('ex-loader-blur'); 
+				$(".ex-loader").fadeOut(1000,function(){
+					$(".ex-loader").remove();
+					
+				}); 
+			};
+
+			window.onload = function(){			
+
+				hideLoader();
+			
+				
+			};
+
+			$(document).ready(function($) {
+				
+					hideLoader();
+				setTimeout(function(){
+				},800);
+
+				
+				
+			});
+
+		</script>
+		<style>
+			#ex-global-content{transition: all .5s ease-out; }
+			.ex-loader{position: fixed; width: 100%; height: 100%; background-color: rgba(227,238,243,0.8); z-index: 9999999999;}
+			.ex-loader-blur{filter: blur(10px); -webkit-filter: blur(10px);z-index: 9999999 }
+			#loader{transition: all .5 ease-out;z-index: 99999999;top: 40%;left: 50%;margin-left: -20px;margin-top: -20px;position: absolute ;margin:6em auto;font-size:10px;text-indent:-9999em;border-top:1.1em solid rgba(42,172,224,.5);display:block;border-right:1.1em solid rgba(42,172,224,.2);border-bottom:1.1em solid rgba(42,172,224,.2);border-left:1.1em solid #2aace0;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}
+			#loader,#loader::after{border-radius:50%;width:40px;height:40px}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes  load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
+		</style>
 	</head>
 	<body>
+		<div class="ex-loader"><div id="loader"></div></div>
+		<div id="ex-global-content" class="ex-loader-blur">
+	
 		<div id="preHeader">
 			<div class="container-itemsPreHeader">
 				<a class="preHeader-item  borderLeftItems" href="#">Quiénes somos</a>
@@ -182,6 +221,7 @@
 			</div>
 
 		</div>
+		</div>
 		<script src="<?php echo e(asset('editor/contentbuilder/jquery-ui.min.js')); ?>" type="text/javascript"></script>
 		<script src="<?php echo e(asset('editor/contentbuilder/contentbuilder.js')); ?>" type="text/javascript"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
@@ -200,6 +240,8 @@
 				 var sHTML = $('#contentarea').data('contentbuilder').viewHtml();
 			 }
 		</script>
+
+		
 
 	</body>
 

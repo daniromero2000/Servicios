@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
     
-    <loc>http://localhost/libranza</loc>
-        <lastmod>2018-11-08T16:31:51+00:00</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-    
-    <loc>http://localhost/oportuya</loc>
-        <lastmod>2018-11-08T16:31:51+00:00</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.5</priority>
-    </url>
-    <url>
-    
-    <loc>http://localhost/</loc>
-        <lastmod>2018-11-08T16:31:51+00:00</lastmod>
+    <loc>http://www.serviciosoportunidades.com</loc>
+        <lastmod>2018-11-08T19:09:58+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
+    </url>
+    <url>
+    
+    <loc>http://www.serviciosoportunidades.com/libranza</loc>
+        <lastmod>2018-11-08T19:09:58+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+    
+    <loc>http://www.serviciosoportunidades.com/oportuya</loc>
+        <lastmod>2018-11-08T19:09:58+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.5</priority>
     </url>
 </urlset>
