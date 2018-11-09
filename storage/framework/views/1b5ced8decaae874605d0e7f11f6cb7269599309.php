@@ -35,6 +35,8 @@
 		<link rel="stylesheet" href="<?php echo e(asset('css/slick-theme.css')); ?>">
 		<link rel="stylesheet" href="<?php echo e(asset('css/slick.css')); ?>">
 		<link href="<?php echo e(asset('editor/contentbuilder/codemirror/lib/codemirror.css')); ?>" rel="stylesheet" type="text/css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script type="text/javascript" src="<?php echo e(asset('js/slick.min.js')); ?>"></script>
 		<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -224,7 +226,6 @@
 		</div>
 		<script src="<?php echo e(asset('editor/contentbuilder/jquery-ui.min.js')); ?>" type="text/javascript"></script>
 		<script src="<?php echo e(asset('editor/contentbuilder/contentbuilder.js')); ?>" type="text/javascript"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
 		<script type="text/javascript" src="<?php echo e(asset('js/libranza.js')); ?>"></script>
 		
 		<link href="<?php echo e(asset('editor/contentbuilder/contentbuilder.css')); ?>" rel="stylesheet" type="text/css" />

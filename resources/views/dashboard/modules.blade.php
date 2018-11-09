@@ -6,9 +6,18 @@
            @if($currentUser->idProfile == 1 )
                 @include('profiles.adminUser')
 
-            @else
+            @elseif($currentUser->idProfile == 2)
 
                 @include('profiles.digitalUser')
-           @endif
+            
+            @elseif($currentUser->idProfile == 3)
+
+                @include('profiles.libranzaUser')
+                
+             @else
+
+                @include('profiles.communityUser')
+
+           	@endif
 
         </div>

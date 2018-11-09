@@ -1,32 +1,31 @@
-@extends('layouts.app')
  
-@section('content')
+<?php $__env->startSection('content'); ?>
     <h2> Crear Nuevo Usuario </h2>
     <hr>
  
-    @if ($errors->any())
+    <?php if($errors->any()): ?>
         <div class="alert alert-danger">
             <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
         </div>
-    @endif
-    <form method="POST" action="{{ route('users.store') }}">
-                        @csrf
+    <?php endif; ?>
+    <form method="POST" action="<?php echo e(route('users.store')); ?>">
+                        <?php echo csrf_field(); ?>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Nombre de Usuario</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control<?php echo e($errors->has('name') ? ' is-invalid' : ''); ?>" name="name" value="<?php echo e(old('name')); ?>" required autofocus>
 
-                                @if ($errors->has('name'))
+                                <?php if($errors->has('name')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong><?php echo e($errors->first('name')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -34,13 +33,13 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">Correo Electronico</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required>
 
-                                @if ($errors->has('email'))
+                                <?php if($errors->has('email')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong><?php echo e($errors->first('email')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -48,13 +47,13 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
 
-                                @if ($errors->has('password'))
+                                <?php if($errors->has('password')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong><?php echo e($errors->first('password')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -71,7 +70,7 @@
 
                             <div class="col-md-6">
 
-                                <select id="idProfile" type="text" class="form-controll{{ $errors->has('password') ? ' is-invalid' : '' }}" name="idProfile" required>
+                                <select id="idProfile" type="text" class="form-controll<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="idProfile" required>
                                     <option value="admin">Administrador</option>
                                     <option value="digital">Canal digital</option>
                                     <option value="community">community</option>
@@ -79,11 +78,11 @@
                                 </select>
                                
 
-                                @if ($errors->has('idProfile'))
+                                <?php if($errors->has('idProfile')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('idProfile') }}</strong>
+                                        <strong><?php echo e($errors->first('idProfile')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -96,4 +95,5 @@
                         </div>
                     </form>
  
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

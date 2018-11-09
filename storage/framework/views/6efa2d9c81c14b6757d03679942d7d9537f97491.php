@@ -4,14 +4,14 @@
 			
 			<div class="col-6">
 				<div class="iconModule">
-					<a href="{{route('users.index')}}"><span><i class="fas fa-users"></i></span></a>
+					<a href="<?php echo e(route('users.index')); ?>"><span><i class="fas fa-users"></i></span></a>
 					<span>Gestión de Usuarios</span>
 				</div>
 			</div>
 
 			<div class="col-6">
 				<div class="iconModule">
-					<a href="/canalDigital"><span><i class="fas fa-file-medical-alt"></i></span>
+					<a href="<?php echo e(route('leads.index')); ?>"><span><i class="fas fa-file-medical-alt"></i></span>
 					<span>Gestión de Leads</span>
 					</a>
 				</div>

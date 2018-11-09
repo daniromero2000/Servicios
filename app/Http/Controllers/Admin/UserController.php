@@ -66,8 +66,10 @@ class UserController extends Controller
                 $user->idProfile=1;
         }elseif($request->get('idProfile') == "digital"){
                 $user->idProfile=2;
-        }else{
+        }elseif($request->get('idProfile') == "libranza"){
                 $user->idProfile=3;            
+        }else{
+                $user->idProfile=4; 
         }    
         
         $user->save();
