@@ -8,12 +8,11 @@
                 <p>{{ Session::get('success') }}</p>
             </div>
         @endif
-    	<div class="container">
+        <div class="container">
             <ng-view></ng-view>
         </div>
 
     </div>
-
     <script src="{{ asset('/appCanalDigital/app.js') }}"></script>
     <script src="{{ asset('/appCanalDigital/services/myService.js') }}"></script>
     <script src="{{ asset('/appCanalDigital/controllers/leadsController.js') }}"></script>

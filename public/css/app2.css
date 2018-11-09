@@ -419,6 +419,14 @@
 	border: 1px solid #ddd;
 }
 
+.labelViewLead{
+	margin: 0;
+	display: block;
+}
+
+.textViewLead{
+	font-weight: 700;
+}
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
