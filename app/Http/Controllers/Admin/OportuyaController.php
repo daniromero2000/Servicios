@@ -91,8 +91,10 @@ class OportuyaController extends Controller
         $lead->email=$request->get('email');
         $lead->telephone=$request->get('telephone');
         $lead->city=$request->get('city');
-        $lead->typeService="Tarjeto de crédito oportuya";
+        $lead->typeService=$request->get('typeService');
         $lead->typeProduct=$request->get('typeProduct');
+        $lead->state=intval($request->get('state'));
+        $lead->channel=intval($request->get('channel'));
 
 
         $lead->save();

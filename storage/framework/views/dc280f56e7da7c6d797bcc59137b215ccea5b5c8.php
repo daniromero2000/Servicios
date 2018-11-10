@@ -215,55 +215,7 @@
 		</div>
 
 	</div>
-<!-- Requirements Modal -->
-<div class="modal fade hide" id="requirementsModal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4>Tarjeta Oportuya Gray</h4>
-			</div>
-			<div class="modal-body">
-				<form role=form method="POST" action="<?php echo e(route('oportuya.store')); ?>">
-					<?php echo e(csrf_field()); ?>
 
-					<input type="hidden" name="typeProduct" value="Tarjeta de Crédito Oportuya">
-					<div class="form-group">
-						<label for="name" class="control-label">Nombres</label>
-						<input type="text" name="name" class="form-control" id="name" />
-					</div>
-					<div class="form-group">
-						<label for="lastName" class="control-label">Apellidos</label>
-						<input type="text" name="lastName" class="form-control" id="lastName" />
-					</div>
-					<div class="form-group">
-						<label for="email" class="control-label">Correo electronico</label>
-						<input type="email" name="email" class="form-control" id="email" />
-					</div>
-					<div class="form-group">
-						<label for="telephone class="control-label">Teléfono</label>
-						<input type="tel" name="telephone" class="form-control" id="telephone" />
-					</div>
-					<div class="form-group">
-						<label for="city class="control-label">Ciudad</label>
-						<select name="city" id="city" class="form-control" >
-							<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-						</select>
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary">
-							Guardar
-						</button>
-						<button type="button" class=" btn btn-danger" data-dismiss="modal" aria-label="Close">
-							Cerrar
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- Oportuya section -->
 	<div id="oportuyaSection">
 		<div class="oportuyaContent">
@@ -417,7 +369,10 @@
 					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
 						<?php echo e(csrf_field()); ?>
 
-						<input type="hidden" name="typeProduct" value="">
+						<input type="hidden" name="state" value="0">
+						<input type="hidden" name="channel" value="1">
+						<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
+
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
 							<input type="text" name="name" class="form-control" id="name" required="true"/>
@@ -434,14 +389,37 @@
 							<label for="telephone class="control-label">Teléfono</label>
 							<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
 						</div>
-						<div class="form-group">
-							<label for="city class="control-label">Ciudad</label>
-							<select name="city" id="city" class="form-control" >
-								<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
-								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-							</select>
-						</div>
+
+						<div class="row">
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="control-label">Tipo de tarjeta que te interesa</label>
+									<select class="form-control"  id="typeProduct" name="typeProduct" required="true">
+										<option value="tarjeta Gray">GRAY</option>
+										<option value="tarjeta Blue">BLUE</option>
+										<option value="tarjeta Black">BLACK</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="city" class="control-label">Ciudad</label>
+									<select name="city" id="city" class="form-control" >
+										<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									</select>
+								</div>
+							</div>
+
+						</div>	
+						
+						
+						
+
+						
 						<p class="textCityForm">
 							*Válido solo para ciudades que se desplieguen en la casilla.
 						</p>
@@ -562,6 +540,7 @@ $arraySliderOffer=[
 					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
 						<?php echo e(csrf_field()); ?>
 
+						<input type="hidden" name="typeService" value="oportuya">
 						<input type="hidden" name="typeProduct" value="<?php echo e($arrayOfferItem['nameProduct']); ?>">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
