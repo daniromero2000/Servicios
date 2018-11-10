@@ -99,7 +99,7 @@ class SegurosController extends Controller
 
         $lead->save();
 
-        return redirect()->route('seguros.thankYouPageSeguros');
+        return redirect()->route('thankYouPageSeguros');
     }
 
     /**
