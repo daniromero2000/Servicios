@@ -17,8 +17,8 @@
 
 						<input type="hidden" name="typeProduct" value="Seguros">
 						<input type="hidden" name="typeService" value="Seguros">
-						<input type="hidden" name="state" value="pendiente">
-						<input type="hidden" name="state" value="web">
+						<input type="hidden" name="state" value="0">
+						<input type="hidden" name="state" value="1">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
 							<input type="text" name="name" class="form-control" id="name" required="true"/>
