@@ -42,7 +42,7 @@ Route::get('/', function () {
 
 Route::get('/LIB_gracias_FRM', function(){
 	return view('libranza.thankYouPage');
-});
+})->name('thankYouPageLibranza');
 
 Route::get('/OP_gracias_FRM',function(){
 	return view('oportuya.thankYouPage');
