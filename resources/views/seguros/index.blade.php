@@ -24,6 +24,8 @@
 						{{ csrf_field() }}
 						<input type="hidden" name="typeProduct" value="Seguros">
 						<input type="hidden" name="typeService" value="Seguros">
+						<input type="hidden" name="state" value="pendiente">
+						<input type="hidden" name="state" value="web">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
 							<input type="text" name="name" class="form-control" id="name" required="true"/>
