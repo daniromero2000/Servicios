@@ -219,7 +219,7 @@
 		</div>
 
 	</div>
-
+	
 <!-- Oportuya section -->
 	<div id="oportuyaSection">
 		<div class="oportuyaContent">
