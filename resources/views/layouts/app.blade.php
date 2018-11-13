@@ -117,7 +117,7 @@
 				<div class="col-12 col-sm-12 col-lg-6 resetCol headerImage">
 					<div class="header-containerLogo">
 						<a href="/">
-							<img src="{{ asset('images/opottunidadesServiciosFinancierosLogo.png')}}" title="Oportunidades Servicios Financieros" class="img-fluid">
+							<img src="{{ asset('images/oportunidadesServiciosFinancierosLogo.png')}}" title="Oportunidades Servicios Financieros" class="img-fluid">
 						</a>
 					</div>
 				</div>

@@ -22,6 +22,12 @@
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KV55LLG"
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<!-- End Google Tag Manager (noscript) -->
+		<script>
+			(function(h,e,a,t,m,p) {
+			m=e.createElement(a);m.async=!0;m.src=t;
+			p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
+			})(window,document,'script','https://u.heatmap.it/log.js');
+		</script>
 		<title><?php echo $__env->yieldContent('title'); ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="robots" content="noindex">
@@ -112,7 +118,7 @@
 				<div class="col-12 col-sm-12 col-lg-6 resetCol headerImage">
 					<div class="header-containerLogo">
 						<a href="/">
-							<img src="<?php echo e(asset('images/opottunidadesServiciosFinancierosLogo.png')); ?>" title="Oportunidades Servicios Financieros" class="img-fluid">
+							<img src="<?php echo e(asset('images/oportunidadesServiciosFinancierosLogo.png')); ?>" title="Oportunidades Servicios Financieros" class="img-fluid">
 						</a>
 					</div>
 				</div>
