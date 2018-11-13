@@ -405,23 +405,37 @@
 
 
 /* Admin */
-.disabled{
-	display: none !important;
-}
 #searchIcon{
 	cursor: pointer;
 }
-.pageList{
-	cursor: pointer;
-	position: relative;
-	float: left;
-	padding: 6px 12px;
-	margin-left: -1px;
-	line-height: 1.42857143;
-	color: #337ab7;
-	text-decoration: none;
-	background-color: #fff;
-	border: 1px solid #ddd;
+
+.contianerCommentLead{
+	border-bottom: 1px solid #eee;
+}
+
+.iconoUserLead{
+	color: #b7b8b9;
+	font-size: 30px;
+}
+
+.nameAdminLead{
+	color: #717171;
+	font-size: 23px;
+}
+
+.commentUserLead{
+	padding: 10px 0;
+	margin: 0;
+}
+
+.fechaUserLead{
+	color: #b7b8b9;
+	font-size: 13px;
+}
+
+.containerCommentsLeads{
+	border-top: 1px solid #eee;
+	padding: 10px 0;
 }
 
 .labelViewLead{

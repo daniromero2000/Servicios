@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Lead;
 use App\Liquidator;
+use App\Comments;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +16,7 @@ class LeadsController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth')->except('logout');
+        $this->middleware('auth')->except('logout');
     }
     
     /**
@@ -59,6 +61,14 @@ class LeadsController extends Controller
         $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));
 
         $resp = DB::select($query);
+
+        foreach ($resp as $key => $value) {
+            $query2 = sprintf("SELECT comments.`comment`, comments.`created_at`, users.`name` FROM `comments` 
+                LEFT JOIN `users` ON comments.`idLogin` = users.`id`
+                WHERE `idLead` = %s
+                ORDER BY comments.`id` DESC ", $resp[$key]->id);
+            $resp[$key]->comments = DB::select($query2);
+        }
 
         return $resp;
     }
@@ -134,5 +144,21 @@ class LeadsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function addComent(Request $request){
+        $comment= new Comments;
+        
+        $currentUser=\Auth::user();
+        $comment->idLogin = $currentUser->id;
+        $comment->idLead = $request->get('idLead');
+        $comment->comment = $request->get('comment');
+
+        $comment->save();
+
+        return response()->json([true]);
+
+
     }
 }

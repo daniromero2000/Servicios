@@ -9,7 +9,14 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
+	$scope.viewAddComent = false;
 	$scope.lead = {};
+	$scope.idLead = '';
+	$scope.comment = {
+		comment: '',
+		idLead: 0
+	};
+	$scope.comments = [];
 	$scope.leads = [];
 	$scope.cities = [
 		{ label : 'ARMENIA',value: 'ARMENIA' },
@@ -87,6 +94,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data != false){
 				$scope.q.initFrom += response.data.length;
 				angular.forEach(response.data, function(value, key) {
@@ -107,9 +115,37 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 
 	$scope.vewLead = function(lead){
 		$scope.lead = lead;
-		console.log(lead);
 		$("#viewLead").modal("show");
 	}
+
+	$scope.viewComments = function(comments, name, lastName, idLead){
+		angular.forEach(comments, function(value, key) {
+			$scope.comments.push(value);
+		});
+		$scope.comments = comments;
+		$scope.nameLead = name;
+		$scope.idLead = idLead;
+		$scope.lastNameLead = lastName;
+		$("#viewComments").modal("show");
+	};
+
+	$scope.addComment = function(){
+		$scope.comment.idLead = $scope.idLead;
+		$http({
+		  method: 'POST',
+		  url: 'api/leads/addComent/',
+		  data: $scope.comment
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				$scope.searchLeads();
+				$scope.comment.comment = "";
+				$scope.viewAddComent = false;
+				$("#viewComments").modal("hide");			
+			}
+		}, function errorCallback(response) {
+		    
+		});
+	};
 
 	$scope.getLeads();
 })

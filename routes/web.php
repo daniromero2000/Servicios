@@ -93,15 +93,14 @@ Route::resource('viajes','Admin\ViajesController');
 Route::resource('dashboard','Admin\DashboardController');
 Route::resource('users','Admin\UserController');
 
-
-Route::get('api/libranza/test/{precio1}', 'Admin\LibranzaController@test');
-
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
 Route::get("/canalDigital",function(){
 	return view('leads.index');
 });
 
+/* Admin Leads */
+Route::post('api/leads/addComent/', 'Admin\LeadsController@addComent');
 Route::group(array('prefix'=>'/canalDigital/'),function(){
 
     Route::get('/leads', function(){

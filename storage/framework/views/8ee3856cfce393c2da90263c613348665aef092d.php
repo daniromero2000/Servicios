@@ -1,5 +1,4 @@
 <?php $__env->startSection('linkStyleSheets'); ?>
-    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-switcher/master/dist/angular-switcher.min.css">
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>

@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('linkStyleSheets')
-    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-switcher/master/dist/angular-switcher.min.css">
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
