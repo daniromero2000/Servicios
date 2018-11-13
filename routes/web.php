@@ -100,7 +100,7 @@ Route::get("/canalDigital",function(){
 });
 
 /* Admin Leads */
-Route::post('api/leads/addComent/', 'Admin\LeadsController@addComent');
+Route::post('api/leads/addComent', 'Admin\LeadsController@addComent');
 Route::group(array('prefix'=>'/canalDigital/'),function(){
 
     Route::get('/leads', function(){
