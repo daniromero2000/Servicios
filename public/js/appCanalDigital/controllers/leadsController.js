@@ -94,7 +94,6 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService,
 		}).then(function successCallback(response) {
-			console.log(response);
 			if(response.data != false){
 				$scope.q.initFrom += response.data.length;
 				angular.forEach(response.data, function(value, key) {
