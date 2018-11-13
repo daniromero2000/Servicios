@@ -196,6 +196,8 @@
                     <div class="row resetRow " ng-if="viewAddComent">
                         <div class="col-12 form-group">
                             <form ng-submit="addComment()">
+                                <?php echo e(csrf_field()); ?>
+
                                 <div class="form-group">
                                     <label for="comment">Comentario</label>
                                     <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
