@@ -6,6 +6,7 @@ use App\Lead;
 use App\Liquidator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class LeadsController extends Controller
 {
@@ -13,7 +14,7 @@ class LeadsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('logout');
+        // $this->middleware('auth')->except('logout');
     }
     
     /**
@@ -24,17 +25,22 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
-        $leadsQuery = Lead::selectRaw('leads.id, leads.name, leads.lastName, leads.email, leads.telephone, leads.city, leads.typeService, leads.typeProduct, leads. created_at,
-                                    liquidator.creditLine, liquidator.pagaduria, liquidator.age, liquidator.customerType, liquidator.salary');
-        $leadsQuery = Lead::leftjoin('liquidator','leads.id','=','liquidator.idLead');
+        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
+            FROM leads 
+            LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`
+            WHERE 1";
+
         if($request->get('q')){
-            $leadsQuery = Lead::whereRaw("leads.name LIKE '%".$request->get('q')."%' OR leads.lastName LIKE '%".$request->get('q')."%' ")
-                ->orderBy('leads.id','desc')->paginate(3);
-        }else{
-            $leadsQuery = Lead::orderBy('leads.id','desc')->paginate(3);
+            $query .= sprintf(" AND (leads.`name` LIKE '%s' OR leads.`lastName` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
         }
 
-        return response($leadsQuery);
+        $query .= " ORDER BY leads.`id` DESC";
+
+        $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));
+
+        $resp = DB::select($query);
+
+        return $resp;
     }
 
     /**

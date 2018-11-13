@@ -24,13 +24,13 @@
         </thead>
         <tbody>
             <tr ng-repeat="lead in leads">
-                <td>@{{ lead.name }}</td>
-                <td>@{{ lead.lastName }}</td>
-                <td>@{{ lead.telephone }}</td>
-                <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeService }}</td>
-                <td>@{{ lead.typeProduct }}</td>
-                <td>@{{ lead.created_at }}</td>
+                <td>{{ lead.name }}</td>
+                <td>{{ lead.lastName }}</td>
+                <td>{{ lead.telephone }}</td>
+                <td>{{ lead.city }}</td>
+                <td>{{ lead.typeService }}</td>
+                <td>{{ lead.typeProduct }}</td>
+                <td>{{ lead.created_at }}</td>
                 <td>
                     <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
                     <i class="far fa-eye-slash" ng-if="lead.typeService != 'Credito libranza'"></i>
@@ -57,67 +57,67 @@
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Nombre:</label>
-                            <span class="textViewLead">@{{ lead.name }}</span>
+                            <span class="textViewLead">{{ lead.name }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Apellido:</label>
-                            <span class="textViewLead">@{{ lead.lastName }}</span>
+                            <span class="textViewLead">{{ lead.lastName }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Teléfono:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
+                            <span class="textViewLead">{{ lead.telephone }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Correo Electrónico:</label>
-                            <span class="textViewLead">@{{ lead.email }}</span>
+                            <span class="textViewLead">{{ lead.email }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Ciudad:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
+                            <span class="textViewLead">{{ lead.telephone }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Fecha registro:</label>
-                            <span class="textViewLead">@{{ lead.created_at }}</span>
+                            <span class="textViewLead">{{ lead.created_at }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Servicio:</label>
-                            <span class="textViewLead">@{{ lead.typeService }}</span>
+                            <span class="textViewLead">{{ lead.typeService }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Producto:</label>
-                            <span class="textViewLead">@{{ lead.typeProduct }}</span>
+                            <span class="textViewLead">{{ lead.typeProduct }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Edad:</label>
-                            <span class="textViewLead">@{{ lead.age }}</span>
+                            <span class="textViewLead">{{ lead.age }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Tipo de Cliente:</label>
-                            <span class="textViewLead">@{{ lead.customerType }}</span>
+                            <span class="textViewLead">{{ lead.customerType }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Pagaduría:</label>
-                            <span class="textViewLead">@{{ lead.pagaduria }}</span>
+                            <span class="textViewLead">{{ lead.pagaduria }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Línea de Crédito:</label>
-                            <span class="textViewLead">@{{ lead.creditLine }}</span>
+                            <span class="textViewLead">{{ lead.creditLine }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Salario:</label>
-                            <span class="textViewLead">$@{{ lead.salary | number:0 }}</span>
+                            <span class="textViewLead">${{ lead.salary | number:0 }}</span>
                         </div>
                     </div>
                 </div>

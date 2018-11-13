@@ -1,3 +1,7 @@
+.cursor{
+	cursor: pointer;
+}
+
 .sliderPrincipal-containTextRigth{
 	color: black;
 	position: absolute;

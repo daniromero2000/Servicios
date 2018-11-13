@@ -1,30 +1,26 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.'); ?>
 
-
-
-@section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
-
-@section('metaTags')
+<?php $__env->startSection('metaTags'); ?>
 	<meta name="description" content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades.">
 	<meta name="keywords" content="Tarjeta de credito, Tarjeta de crédito, solicitar tarjeta de credito, solicitar tarjeta de crédito, tarjeta de credito online, tarjeta de crédito online, su tarjeta de crédito, su tarjeta de credito, como sacar una tarjeta de credito, como sacar una tarjeta de crédito, como tramitar una tarjeta de credito, como tramitar una tarjeta de crédito, requisitos para tarjeta de crédito, requisitos para tarjeta de credito, obtén una tarjeta de credito, obtén una tarjeta de crédito, requisitos tarjeta de credito, requisitos tarjeta de crédito, quiero una tarjeta de credito, quiero una tarjeta de crédito, tarjeta oportunidades, oportunidades, tarjeta con credito para compras, tarjeta con crédito para compras, credito en tarjeta, crédito en tarjeta.">
 	<meta property="og:title" content="Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta." />
 	<meta property="og:url" content="www.serviciosoportunidades.com/oportuya" />
 	<meta property="og:type" content="Website" />
-	<meta property="og:image" content="{{ asset('images/OportuyaPortadaOg.png') }}" />
+	<meta property="og:image" content="<?php echo e(asset('images/OportuyaPortadaOg.png')); ?>" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:description" content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades">
-@endsection()
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- Slider Section Oportuya Page -->
 	<div id="oportuyaSlider">
-		@foreach($images as $slider)
+		<?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 			<div class="containImg">
-				<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
+				<img src="/images/<?php echo e($slider['img']); ?>" class="img-fluid img-responsive" title="<?php echo e($slider['title']); ?>" />
 				<div class="oportuyaSliderContent">
 					<div class="oportuyaSliderTitle">
-							@php
+							<?php
 								$titleChunk=explode("-",$slider['title'],2);								
 								$chunkOne= @$titleChunk[0];
 								$chunkTwo= @$titleChunk[1];
@@ -34,24 +30,24 @@
 								$chunkExplodeTwo=@$chunkOneExplode[1];
 								$chunkExplodeThree=@$chunkTwoExplode[0];
 								$chunkExplodeFour=@$chunkTwoExplode[1];
-							@endphp
+							?>
 						<p>
-							@php
+							<?php
 								echo $chunkExplodeOne.' <span class="textTitleSliderPink">'.$chunkExplodeTwo.'</span>';
-							@endphp							
+							?>							
 						</p>
 						<p>
-							@php
+							<?php
 								echo $chunkExplodeThree.' <span class="textTitleSliderBlue">'.$chunkExplodeFour.'</span>';
-							@endphp							
+							?>							
 						</p>
 					</div>
 					<br>
 					<div class="oportuyaSliderDescription">
 						<p>
-							@php
+							<?php
 							  echo $slider['description'];
-							@endphp
+							?>
 						</p>
 					</div>
 					<br>
@@ -59,15 +55,15 @@
 					<div class="oportuyaSliderButton">
 						<p>
 							<a href="" data-toggle="modal" data-target="#oportuyaModal">
-								@php
+								<?php
 								  echo $slider['textButton'];
-								@endphp
+								?>
 							</a>
 						</p>
 					</div>
 				</div>
 			</div>
-		@endforeach
+		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 	</div>
 
 <!-- Credit Card Section -->
@@ -79,7 +75,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageGray">
 							<div class="side">
-								<img src="{{ asset('/images/tarjetaGray.png') }}" class="img-fluid">
+								<img src="<?php echo e(asset('/images/tarjetaGray.png')); ?>" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -109,7 +105,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageBlue ">
 							<div class="side">
-								<img src="{{ asset('/images/tarjetaBlue.png') }}" class="img-fluid">
+								<img src="<?php echo e(asset('/images/tarjetaBlue.png')); ?>" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -142,7 +138,7 @@
 					<div class="cardImageContainer">
 						<div class="cardImage cardImageBlack ">
 							<div class="side">
-								<img src="{{ asset('/images/tarjetaBlack.png') }}" class="img-fluid">
+								<img src="<?php echo e(asset('/images/tarjetaBlack.png')); ?>" class="img-fluid">
 							</div>
 							<div class="side back">
 								<ul>
@@ -179,7 +175,7 @@
 	<div id="requirements">
 		<div class="row requirementsContent">
 			<div class="col-md-6 col-xs-12 contentRequirements ">
-				<img src="{{asset('/images/requirementsIcon.png')}}" class="img-responsive">
+				<img src="<?php echo e(asset('/images/requirementsIcon.png')); ?>" class="img-responsive">
 				<p class="titleRequirements">
 					Requisitos
 				</p>
@@ -198,7 +194,7 @@
 
 			<div class="col-md-6 col-xs-12 contentRequirements requirementsLine">
 
-				<img src="{{asset('/images/howGetIcon.png')}}" class="img-responsive">
+				<img src="<?php echo e(asset('/images/howGetIcon.png')); ?>" class="img-responsive">
 
 				<p class="titleRequirements">
 
@@ -238,7 +234,7 @@
 					</span>
 				</p>
 				<div class="col-md-3 col-sm-3 oportuyaHeaderImage">
-					<img src="{{asset('/images/tarjetaOportuyaLogo.png')}}" class="img-fluid">
+					<img src="<?php echo e(asset('/images/tarjetaOportuyaLogo.png')); ?>" class="img-fluid">
 				</div>
 				<div class="col-sm-9 col-md-9 oportuyaTextResponsive">
 					<p class="textOportuyaHeader">
@@ -263,7 +259,7 @@
 							<div>
 								<div class="row">
 									<div class="col-lg-6 bestPricesImg">
-										<img src="{{asset('/images/mejoresPreciosOportuya.jpeg')}}" class="img-fluid">
+										<img src="<?php echo e(asset('/images/mejoresPreciosOportuya.jpeg')); ?>" class="img-fluid">
 									</div>
 									<div class="col-sm-12 col-lg-6">
 										<p class="featuresfirstText text-center">El crédito para lo que más te guste</p>		
@@ -349,7 +345,7 @@
 				</div>
 				<div class=" col-md-4 contentFeatures oportuyaContentImage">
 
-					<img src="{{ asset('/images/oportuyaModeloV2.png')}}" class="img-fluid">	
+					<img src="<?php echo e(asset('/images/oportuyaModeloV2.png')); ?>" class="img-fluid">	
 
 				</div>
 			</div>
@@ -370,8 +366,9 @@
 					<h3 class="modal-titleForm titleForm-oportuya">
 						Tarjeta de Crédito Oportuya
 					</h3>
-					<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuya.store') }}">
-						{{ csrf_field() }}
+					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
+						<?php echo e(csrf_field()); ?>
+
 						<input type="hidden" name="state" value="0">
 						<input type="hidden" name="channel" value="1">
 						<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
@@ -410,9 +407,9 @@
 								<div class="form-group">
 									<label for="city" class="control-label">Ciudad</label>
 									<select name="city" id="city" class="form-control" >
-										@foreach($cities as $city)
-											<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
-										@endforeach
+										<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</select>
 								</div>
 							</div>
@@ -443,7 +440,7 @@
 
 <!-- Offers section -->
 
-@php
+<?php
 
 $arraySliderOffer=[
 	
@@ -482,7 +479,7 @@ $arraySliderOffer=[
 	]
 ];
 
-@endphp
+?>
 <div id="offers">
 		<div class="offers">
 			<div class="row">
@@ -491,30 +488,31 @@ $arraySliderOffer=[
 				</div>			
 			</div>
 			<div class="row offersDescription sliderOffer">	
-				@foreach($arraySliderOffer as $offer => $arrayOffer)
+				<?php $__currentLoopData = $arraySliderOffer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $offer => $arrayOffer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<div class="col-md-12 col-lg-6">
 						<div class="offersContent">	
 							<div class="offersImageContent">
 								<div class="imageOffer">
-									<img src="/images/{{ $arrayOffer['img'] }}" class="img-fluid">
+									<img src="/images/<?php echo e($arrayOffer['img']); ?>" class="img-fluid">
 								</div>
 								<br>
-								@php
+								<?php
 									$typeProduct=($arrayOffer['type']=='televisor')?1:2;
-								@endphp
-								<div class="offersPrice@php echo $typeProduct; @endphp">
-									<img src="/images/{{ $arrayOffer['imgBackground'] }}" class="img-fluid">
-									<span>{{ $arrayOffer['price'] }}</span>
+								?>
+								<div class="offersPrice<?php echo $typeProduct; ?>">
+									<img src="/images/<?php echo e($arrayOffer['imgBackground']); ?>" class="img-fluid">
+									<span><?php echo e($arrayOffer['price']); ?></span>
 								</div>
 								<br>
 								<div>
-									@php
+									<?php
 										echo $arrayOffer['description'];
-									@endphp
+									?>
 								</div>
 								<p class="buttonOffers">
-									<a href="" data-toggle="modal" data-target="#offerProduct{{$offer}}">
-										{{ $arrayOffer['buttonText']}}
+									<a href="" data-toggle="modal" data-target="#offerProduct<?php echo e($offer); ?>">
+										<?php echo e($arrayOffer['buttonText']); ?>
+
 									</a>
 								</p>
 							</div>
@@ -525,13 +523,13 @@ $arraySliderOffer=[
 
 
 
-				@endforeach
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 			</div>	
 
-			@foreach($arraySliderOffer as $offerItem => $arrayOfferItem)
-					 <div class="modal modalFormulario fade hide" id="offerProduct{{$offerItem}}" tabindex="-1" role="dialog" aria-hidden="true">
+			<?php $__currentLoopData = $arraySliderOffer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $offerItem => $arrayOfferItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					 <div class="modal modalFormulario fade hide" id="offerProduct<?php echo e($offerItem); ?>" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body modalFormulario-body">
@@ -539,10 +537,11 @@ $arraySliderOffer=[
 					<h3 class="modal-titleForm titleForm-oportuya">
 						Aprovecha nuestras ofertas
 					</h3>
-					<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuya.store') }}">
-						{{ csrf_field() }}
+					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
+						<?php echo e(csrf_field()); ?>
+
 						<input type="hidden" name="typeService" value="oportuya">
-						<input type="hidden" name="typeProduct" value="{{$arrayOfferItem['nameProduct']}}">
+						<input type="hidden" name="typeProduct" value="<?php echo e($arrayOfferItem['nameProduct']); ?>">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
 							<input type="text" name="name" class="form-control" id="name" required="true"/>
@@ -562,9 +561,9 @@ $arraySliderOffer=[
 						<div class="form-group">
 							<label for="city class="control-label">Ciudad</label>
 							<select name="city" id="city" class="form-control" >
-								@foreach($cities as $city)
-									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
-								@endforeach
+								<?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($city['value']); ?>"><?php echo e($city['label']); ?></option>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</select>
 						</div>
 						<div class="form-group text-right">
@@ -581,7 +580,8 @@ $arraySliderOffer=[
 		</div>
 	</div>
 </div>
-			@endforeach
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>	
 	</div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
