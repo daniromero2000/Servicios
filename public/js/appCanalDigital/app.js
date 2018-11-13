@@ -1,4 +1,4 @@
-var app =  angular.module('leadsApp',['ngRoute']);
+var app =  angular.module('leadsApp',['ngRoute', 'moment-picker']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

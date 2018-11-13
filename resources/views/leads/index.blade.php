@@ -1,6 +1,9 @@
 @extends('layouts.app')
+@section('linkStyleSheets')
+    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-switcher/master/dist/angular-switcher.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+@endsection
 @section('content')
-
     <div ng-app="leadsApp" class="containerleads container">
         <br>
         @if (Session::get('success'))
@@ -17,3 +20,7 @@
     <script src="{{ asset('js/appCanalDigital/services/myService.js') }}"></script>
     <script src="{{ asset('js/appCanalDigital/controllers/leadsController.js') }}"></script>
 @stop
+@section('scriptsJs')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+        <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+@endsection
