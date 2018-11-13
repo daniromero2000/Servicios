@@ -116,7 +116,7 @@ a:hover, a:active, a:focus, a:visited{
 .header-menu:before{
 	background: #1d84c3;
 	content: "";
-	height: 79px;
+	height: 72px;
 	position: absolute;
 	top: 0;
 	left: -23px;
@@ -1636,6 +1636,435 @@ a[data-toggle="collapse"] {
 }
 
 
+/*Viajes*/
+
+#viajesHeader{
+	background-color: #3fcf64;	
+	color: #FFF;
+	padding: 8px 0;
+}
+
+#viajesHeader .row {
+	width: 100%;
+}
+
+.viajesListItems ul{
+	margin-top: 1rem !important;
+	float: right;
+	padding: 0;
+}
+
+.viajesListItems li {
+    display: inline-block;
+    padding: 0 2%;
+
+}
+
+.viajesListItems li:not(:last-child){
+	border-right: solid 1px;
+} 
+
+.viajesListItems li a{
+	color: #FFF;
+	font-weight: 500;
+}
+
+.viajesWhatsappButton{
+	position: relative;
+	padding-top:1rem;
+	text-align: center;
+}
+.viajesWhatsappButton a {
+	padding: 13px 25px;
+	background-color: #E3EEF2;
+	border-radius: 20px;
+	font-weight: 500;
+	font-size: 12px;
+}
+
+.viajesWhatsappButton a i {
+	font-weight: 700;
+	font-size: 18px;
+	margin-left: 4px;
+}
+
+.viajesContactenosLink{
+	padding-top: 1rem;
+	text-align: center;
+}
+
+.viajesContactenosLink a {
+	color: #FFF;
+	font-weight: 500;
+	float: left;
+
+}
+
+.viajesSliderContent{
+	position: absolute;
+    bottom: 15%;
+    left: 20%;
+    text-align: center;
+}
+ 
+.viajesSliderTitle,.viajesSliderDescription{
+	font-size: 25px;
+	text-transform: uppercase;
+	font-weight: 500;
+	
+}
+.viajesSliderTitle p,.viajesSliderDescription p{
+	line-height: 1;
+}
+
+.viajesSliderTitle span,.viajesSliderDescription{
+	font-weight: 800 !important;
+}
+
+.viajesSliderTitle p {
+	margin-bottom: 0;
+}
+
+.viajesSliderButton p a{
+	background-color: #3fcf64;
+    padding: 10px 45px;
+    color: #FFF;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.viajesSliderButton{
+	margin-top: 2rem;
+}
+
+#conoceViajes{
+	position: relative;
+}
+
+.conoceViajesContent{
+	position: absolute;
+    top: 10%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%);
+}
+
+.conoceViajesTitle{
+	color: #FFF;
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 10rem;
+    position: relative;
+}
+
+.conoceViajesTitle::after{
+	position: absolute;
+	content: " ";
+	width: 60%;
+	height: 5px;
+	bottom: -1em;
+	left: 50%;
+	transform: translate(-50%);
+	background-color: #FFF;
+	border-radius: 20px;
+}
+
+#bustour .row {
+	width: 100%;
+	margin: 0;
+}
+
+.imagesBustour{
+	padding: 0;
+}
+
+.conoceViajesTitle p{
+	line-height: 0.5;
+}
+
+.conoceViajesPlay img{
+	width: 4em;
+}
+
+.imagesBustour div.row div.col-sm-4{
+	padding: 0;
+}
+
+.imagesBustour div.row div.col-sm-4 img{
+	height: 100%;
+    max-height: 500px;
+}
+
+.busTourContent{
+	text-align: center;
+	padding: 3em;
+}
+
+.busTourMainTitle{
+	color:#4900C0;
+	font-size: 3em;
+	font-weight: 800;
+	margin:0;
+	line-height: 1;
+	font-style: italic;
+	
+}
+
+.busTourSubtitle{
+	font-size: 2em;
+	font-weight: 700;
+	font-style: italic;
+	margin: 0;
+	line-height: 1;
+	color: #03aa07;
+	position: relative;
+}
+
+.busTourSubtitle:after{
+	position: absolute;
+	content: '';
+	bottom: -15px;
+	left: 50%;
+	transform:translate(-50%);
+	height: 5px;
+	width: 35%;
+	border-radius: 20px;
+	background-color: #03aa07;
+}
+
+.busTourText{
+	margin-top: 2em;
+}
+
+.busTourText p{
+	font-size: 1em;
+	font-weight: 500;
+	line-height: 1;
+	margin:0;
+	font-style:italic;
+
+}
+
+.busTourPrice{
+	font-weight: 800 !important;
+	font-size: 1.5em !important;
+}
+
+.busTourText p span{
+	font-weight: 700;
+}
+
+.busTourButton p{
+	position: relative;
+}
+
+.busTourButton p a {
+	position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #ffcc00;
+    padding: 8px 35px;
+    font-style: italic;
+    border-radius: 20px;
+    text-transform: none;
+    color: #6b5600;
+    font-weight: 800; 
+}
+
+.plansTitle{
+	margin-bottom: 3em;
+}
+
+.plansMainTitle{
+	color: #427C42;
+	font-weight: 500;	
+	margin-bottom: 0;
+}
+
+.plansSubtitle{
+	position: relative;
+	color: #00C600;
+	font-weight: 500;
+}
+
+.plansSubtitle:after{
+	position: absolute;
+	content: ' ';
+	height: 5px;
+	width: 70%;
+	background-color: #00C600;
+	left:50%;
+	transform: translate(-50%);
+	bottom: -20px;
+	border-radius: 20px;
+}
+
+.plansSubtitle span{
+	font-weight: 800;
+}
+
+#plans{
+	margin-top: 3em;
+}
+
+#plans .row{
+	width: 100%;
+}
+
+.plansTitle{
+	margin-left: 50%;
+	transform: translate(-50%);
+}
+
+.plansTitle h3{
+	text-align: center;
+}
+
+.plansContent{
+	padding: 0 3%;
+	text-align: center;
+	margin: 0;
+}
+
+.plansContent section{
+	padding-bottom: 1em;
+	box-shadow: 1px 1px 10px -3px;
+    border-radius: 6px;
+}
+
+.plansdate{
+	margin-top: 1em;
+	margin-bottom: 0;
+}
+
+.plansdate p {
+	font-weight: 500;
+	font-style: italic;
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.plansDescription{
+	font-weight: 700;
+	color: #9D9D9D;
+	font-style: italic;
+	margin: 0;
+}
+
+.planPrice{
+	font-size: 2em;
+	font-weight: 800;
+	color: #000;
+	font-style: italic;
+}
+.planButton{
+	position: relative;
+}
+.planButton a{
+	
+	background-color: #ffef02;
+	color: #797979;
+	
+	border-radius: 20px;
+	max-width: 300px;
+	padding: 8px 35PX;
+	font-weight: 600;
+}
+
+.planButton a span{
+	color: #000;
+}
+
+#travelOffers{
+	background-color: #F1F1F1;
+	padding: 2em 0;
+    margin-top: 4em;
+}
+
+.travelOffersImg img{
+	float: right;
+}
+
+.travelOffersText{
+	text-align: center;
+}
+
+.travelOffersText p {
+	margin-bottom: 0;
+}
+
+.travelMainText{
+	text-transform: uppercase;
+}
+
+.travelSecondText{
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.travelAnyText{
+	font-weight: 500;
+	font-size: 18px;
+}
+
+.travelOffersButton,.travelOffersText{
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+	
+}
+
+.travelOffersButton p a{
+
+	background-color: #ffef02;
+    padding: 7px 30px;
+    border-radius: 20px;
+    color: #000;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+p.wantToMainTex {
+    font-size: 5em;
+    font-weight: 800;
+    font-style: italic;
+    color: #9000ff;
+    margin: 0;
+}
+
+p.wantToSecondTex{
+	font-size: 20px;
+    color: #560099;
+    font-weight: 700;
+}
+
+#wantToTravel{
+	position: relative;
+} 
+
+.wantToContent{
+	position: absolute;
+	top: 50%;
+	left: 35%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+
+}
+
+.wantToButton{
+	margin-top: 6em;
+}
+
+.wantToButton p a{
+	background-color: #ffef02;
+    padding: 7px 50px;
+    border-radius: 20px;
+    font-size: 18px;
+    color: #9000ff;
+    font-weight: 700;
+}
 
 /* Media Queries */
 
@@ -1873,6 +2302,14 @@ a[data-toggle="collapse"] {
 
 	}
 
+	.viajesListItems{
+		padding: 0;
+	}
+
+	.viajesListItems li{
+		padding: 0 0.5em;
+	}
+
 
 
 
@@ -2015,6 +2452,14 @@ a[data-toggle="collapse"] {
 		height: unset;
 	}
 
+.viajesWhatsappButton{
+	padding-left: 0;
+	padding-right: : 0;
+}
+
+.viajesListItems li{
+	padding: 0 0.3em;
+}
 
 }
 
