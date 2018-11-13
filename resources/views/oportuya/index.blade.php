@@ -96,7 +96,7 @@
 						</div>	
 					</div>
 					<h1 class="titleContentCard">
-						<span>Tarjeta de crédito gray<i class="fa fa-check-square-o checkIcon"></i></span>  
+						<span>Tarjeta de crédito Gray<i class="fa fa-check-square-o checkIcon"></i></span>  
 					</h1>
 					<p class="descriptionContentCard">
 						Ofertas especiales permanentes

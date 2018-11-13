@@ -1,24 +1,23 @@
 app.controller('leadsController', function($scope, $http, $rootScope){
 	$scope.q = {
-		'q': ''
+		'q': '',
+		'initFrom': 0
 	};
+	$scope.cargando = true;
 	$scope.lead = {};
 	$scope.leads = [];
-	$scope.totalPages = 0;
-	$scope.pages = [];
-	$scope.current_page = 0;
-	$scope.getLeads = function(page, init = false){
+	$scope.getLeads = function(){
+		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&page='+page,
-		  data: $scope.libranza
+		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom,
 		}).then(function successCallback(response) {
-			$scope.totalPages = response.data.last_page;
-			$scope.leads = response.data.data;
-			$scope.current_page = response.data.current_page;
-			console.log(response);
-			if(init == true){
-				$scope.calculateTotalPages();
+			if(response.data != false){
+				$scope.q.initFrom += response.data.length;
+				angular.forEach(response.data, function(value, key) {
+					$scope.leads.push(value);
+				});
+				$scope.cargando = false;
 			}
 		}, function errorCallback(response) {
 		    
@@ -26,24 +25,9 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	};
 
 	$scope.searchLeads = function(){
+		$scope.q.initFrom = 0;
 		$scope.leads = [];
-		$scope.totalPages = 0;
-		$scope.pages = [];
-		$scope.current_page = 0;
-		$scope.getLeads(1, true);
-	};
-
-	$scope.setCurrentPage = function(page, sumaResta = false){
-		if(sumaResta == true){
-			if(page == 'suma'){
-				$scope.current_page = $scope.current_page +1;
-			}else{
-				$scope.current_page = $scope.current_page -1;
-			}
-		}else{
-			$scope.current_page = page;
-		}
-		$scope.getLeads($scope.current_page);
+		$scope.getLeads();
 	};
 
 	$scope.vewLead = function(lead){
@@ -52,10 +36,5 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$("#viewLead").modal("show");
 	}
 
-	$scope.calculateTotalPages = function(){
-		for(var i=0;i<$scope.totalPages;i++) {
-			$scope.pages.push(i+1);
-		}
-	}
-	$scope.getLeads(1, true);
+	$scope.getLeads();
 })
