@@ -94,7 +94,8 @@ class SegurosController extends Controller
         $lead->typeService=$request->get('typeService');
         $lead->typeProduct=$request->get('typeProduct');
         $lead->state=intval($request->get('state'));
-        $lead->channel=intval($request->get('channel'));      
+        $lead->channel=intval($request->get('channel'));
+        $lead->termsAndConditions=$request->get('termsAndConditions');
 
 
         $lead->save();

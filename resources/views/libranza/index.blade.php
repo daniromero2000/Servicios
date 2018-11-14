@@ -122,7 +122,7 @@
 				<div class="col-12 col-md-12 col-lg-4 resetCol">
 					<h2 class="formularioSimulador-title text-center"><strong>Libranza</strong> para pensionados y docentes</h2>
 					<p class="formularioSimulador-textPrincipal text-justify">
-						Con nuestro simulador puedes calcular el monto y plazo que se ajuste a tus necesidades y estarás un paso más cerca de realizar tus sueños. Te invitamos para que dejes tus datos después de simular tu crédito y uno de nuestros asesores se comunicará con tigo para acompañarte en el proceso de aprobación.
+						Con nuestro simulador puedes calcular el monto y plazo que se ajuste a tus necesidades y estarás un paso más cerca de realizar tus sueños. Te invitamos para que dejes tus datos después de simular tu crédito y uno de nuestros asesores se comunicará contigo para acompañarte en el proceso de aprobación.
 					</p>
 					<p class="formularioSimulador-textPrincipal text-justify">
 						El cupo y cuota del crédito, producto de esta simulación, son aproximados e informativos y podrán variar de acuerdo a las políticas de financiación y de crédito vigentes al momento de su estudio y aprobación por parte de Lagobo.
@@ -301,6 +301,12 @@
 									<select class="form-control" id="city" ng-model="libranza.typeProduct" ng-options="product.value as product.label for product in typeProducts" required="true" ></select>
 								</div>
 							</div>
+						</div>
+						<div class="form-group">
+							<input type="checkbox" ng-model="libranza.termsAndConditions" id="termsAndConditions" ng-true-value="1" ng-false-value="0" required>
+							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
+								<a style="color: black" href="/Terminos-y-condiciones" target="_blank">Aceptar términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" style="color: black" target="_blank">política de tratamiento de datos</a>
+							</label>
 						</div>
 						<p class="textCityForm">
 							*Válido solo para ciudades que se desplieguen en la casilla.

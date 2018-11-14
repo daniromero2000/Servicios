@@ -106,7 +106,8 @@ angular.module('appLibranzaLiquidador', [])
 		telephone: '',
 		city: '',
 		typeService: 'Credito libranza',
-		typeProduct: ''
+		typeProduct: '',
+		termsAndConditions: 0
 	};
 
 	$scope.validateInt = function(){
@@ -161,7 +162,6 @@ angular.module('appLibranzaLiquidador', [])
 	};
 
 	$scope.calculateData = function(){
-		console.log($scope.libranza);
 		$scope.libranza.lawDesc = $scope.libranza.salary * 0.12;
 		$scope.libranza.segMargen = ($scope.libranza.salary > 781242) ? 5300 : 2000 ;
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen-$scope.libranza.quotaBuy;
@@ -204,14 +204,18 @@ angular.module('appLibranzaLiquidador', [])
 	};
 
 	$scope.addLead = function(){
-		$http({
-		  method: 'POST',
-		  url: '/libranza',
-		  data: $scope.libranza
-		}).then(function successCallback(response) {
-			window.location = "/LIB_gracias_FRM";
-		}, function errorCallback(response) {
-		    
-		});
+		if($scope.libranza.termsAndConditions == false){
+			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
+		}else{
+			$http({
+			  method: 'POST',
+			  url: '/libranza',
+			  data: $scope.libranza
+			}).then(function successCallback(response) {
+				window.location = "/LIB_gracias_FRM";
+			}, function errorCallback(response) {
+			    
+			});
+		}
 	};
 });

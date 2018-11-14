@@ -51,6 +51,7 @@ class LibranzaController extends Controller
         $lead->typeProduct=$request->get('typeProduct');
         $lead->state=intval($request->get('state'));
         $lead->channel=intval($request->get('channel'));
+        $lead->termsAndConditions=$request->get('termsAndConditions');
 
         $lead->save();
 
