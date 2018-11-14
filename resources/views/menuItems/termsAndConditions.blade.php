@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Oportunidades Sevicios - Politícas de Tratamiento de la Información y Protección de Datos Personales.')
+@section('title', 'Oportunidades Sevicios - Términos y condiciones generales.')
 
 @section('content')
 	<div id="termsAndConditions">
@@ -153,6 +153,143 @@
 			<p class="menuItem-text">
 				El producto adquirido no debe ser perecedero, de uso personal o íntimo.
 			</p>
+			<h2 class="menuItem-subtitle">CONDICIONES DE LOGÍSTICA DEL RETRACTO:</h2>
+			<p class="menuItem-text">
+				Por regla general el cliente debe acercarse al punto indicado con la guía enviada por LAGOBO para proceder a devolver el producto.
+			</p>
+			<p class="menuItem-text">
+				Cuando el producto supere 20 kg su recolección será realizada directamente en el lugar en donde el producto se entregó.
+			</p>
+			<p class="menuItem-text">
+				El personal encargado de la recolección del producto no se encuentra facultado para desarmar ni manipular el producto, su única función será la de recogerlo.
+			</p>
+			<p class="menuItem-text">
+				Si el producto no se encuentra empacado en su empaque original, no se procederá con la recolección.
+			</p>
+			<h2 class="menuItem-subtitle">CONDICIONES DE REEMBOLSO DEL RETRACTO:</h2>
+			<p class="menuItem-text">
+				Si el producto fue pagado con tarjeta de crédito, se hará reversión a su tarjeta de crédito, se reembolsará el dinero a la tarjeta utilizada hasta en 30 días calendario después que LAGOBO acepte el retracto. Estos tiempos de reversión dependen directamente de la entidad bancaria del consumidor.
+			</p>
+			<p class="menuItem-text">
+				Solo cumpliendo estas condiciones el cliente recibirá la totalidad del dinero del producto. En caso contrario el producto será retornado al cliente y no habrá reembolso.
+			</p>
+			<h2 class="menuItem-subtitle">POLITICA DE GARANTÍAS:</h2>
+			<p class="menuItem-text">
+				En caso que un producto adquirido a través de LAGOBO presente problemas de funcionamiento o daños después de su recepción, el cliente podrá contactar a LAGOBO, con el fin de que se le brinde un soporte adecuado a su solicitud de garantía. Todas las solicitudes de garantías deben cumplir con las siguientes condiciones:
+			</p>
+			<p class="menuItem-text">
+				La garantía del producto debe estar vigente.
+			</p>
+			<p class="menuItem-text">
+				El producto debe contar con la factura y documentos de garantía. En caso en que el producto no tenga un documento que certifique un período de garantía éste debe tener menos de 12 meses de entregado.
+			</p>
+			<p class="menuItem-text">
+				El daño del producto debe ser por un defecto de fabricación, falla técnica o irregularidad. Ninguna garantía aplicará si el producto presenta señales de mal uso por parte del cliente.
+			</p>
+			<p class="menuItem-text">
+				El proveedor tiene derecho a reponer, reparar o reembolsar el dinero del producto.
+			</p>
+			<p class="menuItem-text">
+				A elección del consumidor, el Proveedor recogerá el producto donde fue entregado o éste podrá solicitar al consumidor dejarlo en el punto de atención dispuesto para el efecto. Para este último caso el Proveedor correrá con todos los gastos de envío. Si se requiere transporte para el bien, los costos deberán ser asumidos por Proveedor.
+			</p>
+			<p class="menuItem-text">
+				El producto reparado o el de reposición deberán ser entregados al consumidor en el mismo sitio en donde solicitó la garantía legal, salvo que el consumidor solicite otro sitio y el proveedor así lo acepte. Si se requiere transporte para el bien, los costos deberán ser asumidos por proveedor.
+			</p>
+			<p class="menuItem-text">
+				En el caso en que se deba reponer el bien por otro igual o de las mismas características, el proveedor procederá a su reposición dentro de los diez (10) días hábiles siguientes, después de la recepción del producto por parte del proveedor.
+			</p>
+			<p class="menuItem-text">
+				La reparación se realizará dentro de los treinta (30) días hábiles siguientes, contados a partir del día siguiente a la entrega del bien al proveedor para la reparación.
+			</p>
+			<p class="menuItem-text">
+				En caso en que se deba hacer la devolución de dinero, este se realizara de la siguiente manera:
+			</p>
+			<p class="menuItem-text">
+				A partir del día siguiente de la aceptación de la garantía por parte del proveedor y su posterior comunicación con LAGOBO y el cliente, LAGOBO tiene hasta 25 días para efectuar el reembolso.
+			</p>
+			<p class="menuItem-text">
+				En caso que el bien no admita reparación o se repita la falla del producto, el proveedor procederá a informar al consumidor su decisión sobre la forma de hacer efectiva la garantía, ya sea con la devolución del dinero o con el cambio del bien por otro idéntico o por uno de las mismas características.
+			</p>
+			<h2 class="menuItem-subtitle">TENGA EN CUENTA QUE LA GARANTÍA NO PODRÍA APLICAR CUANDO:</h2>
+			<p class="menuItem-text">
+				El equipo presente maltrato, accidente, catástrofes naturales o como consecuencias de estas, uso distinto al indicado en las instrucciones de manejo (ejemplo: comercial) uso en condiciones ambientales deficientes, instalación y/o programación deficiente del producto.
+			</p>
+			<p class="menuItem-text">
+				Presente daños causados por fluctuaciones de voltaje de la energía eléctrica o descargas eléctricas atmosféricas.
+			</p>
+			<p class="menuItem-text">
+				El producto haya sido abierto o manipulado por personal no autorizado por la marca.
+			</p>
+			<p class="menuItem-text">
+				Son daños ocasionados por la adaptación e instalación de piezas o accesorios no genuinos, no autorizados por la marca.
+			</p>
+			<p class="menuItem-text">
+				Son daños ocasionados por insectos o roedores.
+			</p>
+			<p class="menuItem-text">
+				Son daños ocasionados por la falta de cuidado con el producto o factores ajenos (oxidación, decoloración, ralladuras, exceso de polvo, golpes ruptura de mueble o gabinete exterior.
+			</p>
+			<p class="menuItem-text">
+				El producto no presente número de serie de la fabricación o este se encuentre alterado.
+			</p>
+			<p class="menuItem-text">
+				El equipo se somete a sobre saturación ejemplo: (alquiler de lavadoras).
+			</p>
+			<p class="menuItem-text">
+				Si el producto es intervenido o manipulado por un tercero o un técnico no autorizado esto será causal de perdida de la garantía del producto.
+			</p>
+			<p class="menuItem-text">
+				La pantalla tenga menos de (5) pixeles defectuosos.
+			</p>
+			<p class="menuItem-text">
+				Sea requerida fuera del territorio nacional donde fue adquirido el producto de Hardware.
+			</p>
+			<p class="menuItem-text">
+				El sello de garantía esté roto.
+			</p>
+			<h2 class="menuItem-subtitle">MODIFICACIONES DEL ACUERDO:</h2>
+			<p class="menuItem-text">
+				LAGOBO podrá modificar los términos y condiciones generales en cualquier momento, haciendo públicos en la página web los términos modificados.. Todos los términos modificados entrarán en vigencia a los diez (10) días siguientes a la publicación. Dentro de los cinco (5) días siguientes el usuario podrá rechazar las mismas; en ese caso quedará disuelto el vínculo contractual y será inhabilitado como usuario. Vencido este plazo, se considera que el Usuario acepta los nuevos términos y el contrato continuará vinculado a ambas partes.
+			</p>
+			<p class="menuItem-text">
+				A su vez, LAGOBO podrá modificar el diseño, la presentación o configuración, los requisitos de registro o utilización del sitio Web, sin que ello genere derecho a reclamo o indemnización alguna a favor del usuario.
+			</p>
+			<h3 class="menuItem-subtitle">PRIVACIDAD:</h3>
+			<p class="menuItem-text">
+				LAGOBO cuenta con una “Política de tratamiento de información y protección de datos personales” las cuales hacen parte integral de estos términos y condiciones de uso, los cuales podrá consultar en el siguiente enlace AQUÍ
+			</p>
+			<h2 class="menuItem-subtitle">LINKS HACIA OTROS SITIOS:</h2>
+			<p class="menuItem-text">
+				El sitio web cuenta con links hacia otros sitios web de terceros, los cuales son provistos para que el usuario pueda ampliar la información sobre determinado tema. En la medida que estos sitios web de terceros no se encuentran bajo el control de LAGOBO, no nos hacemos responsables de su contenido. Es responsabilidad del usuario aplicar su juicio para evaluar la interacción con estas páginas de terceros.
+			</p>
+			<h2 class="menuItem-subtitle">LIMITACIÓN DE RESPONSABILIDAD:</h2>
+			<p class="menuItem-text">
+				El usuario acepta y reconoce que LAGOBO no se hace responsable por los riesgos a los que se encuentra expuesta su infraestructura tecnológica y el sitio web. Esta exención de responsabilidad se extiende entre otras materias, sin limitarse a ellas, a los riesgos tecnológicos derivados de errores lógicos en los aplicativos, paradojas derivadas de su integración, huecos, gusanos o virus, sabotajes en los soportes lógicos, bases de datos, y otros delitos informáticos. Como usuario aceptas irrevocablemente y exoneras a LAGOBO de toda responsabilidad pecuniaria derivada de éstos hechos.
+			</p>
+			<p class="menuItem-text">
+				LAGOBO se reserva el derecho de realizar en cualquier momento, sin previo aviso, por cualquier motivo y sin que ello derive en derecho a compensación, actividades de mantenimiento, correcciones o cambios que incluyen:
+			</p>
+			<p class="menuItem-text">
+				Modificar o cambiar el Sitio Web o una parte del mismo.
+			</p>
+			<p class="menuItem-text">
+				Interrumpir la operación del Sitio Web, de forma programada o no.
+			</p>
+			<p class="menuItem-text">
+				Suspender o terminar la operación o el acceso al Sitio Web o una parte del mismo.
+			</p>
+			<h2 class="menuItem-subtitle">MARCAS REGISTRADAS Y DERECHOS DE AUTOR:</h2>
+			<p class="menuItem-text">
+				Debido a que el contenido sitio Web está protegido con derechos de autor, el uso no autorizado de los materiales que se encuentren en el sitio Web puede representar una infracción de las leyes de derechos de autor, de marcas registradas y de leyes de otro tipo.
+			</p>
+			<p class="menuItem-text">
+				En caso que un usuario baje los materiales del Sitio Web para uso personal o no comercial, éste ha de retener todos los avisos de derechos de autor, marcas registradas o de tipo similar que se encuentren en los materiales originales o en las copias de los materiales.
+			</p>
+			<p class="menuItem-text">
+				No se permite modificar ni reproducir los contenidos de este sitio Web, ni mostrarlos en público, usarlos o distribuirlos para fines públicos o comerciales.
+			</p>
+			<h2 class="menuItem-subtitle">MANEJO DE USUARIO Y CONTRASEÑA:</h2>
+			<p class="menuItem-text">El usuario se compromete a guardar de forma confidencial y con la máxima diligencia su clave de acceso personal al Sitio Web.</p>
 		</div>
 	</div>
 @endsection

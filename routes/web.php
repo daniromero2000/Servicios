@@ -116,6 +116,16 @@ Route::get('/Terminos-y-condiciones', function(){
 	return view('menuItems.termsAndConditions');
 })->name('termsAndConditions');
 
+Route::get('/Cambios-devoluciones-y-atencion-de-garantias', function(){
+	return view('menuItems.warranties');
+})->name('warranties');
+
+Route::get('/Por-que-comprar-con-nosotros', function(){
+	return view('menuItems.buyWithUs');
+})->name('buyWithUs');
+
+
+
 Route::get('/googledd6db54bffdd55e4.html', function(){
 	return view('autoridad.googledd6db54bffdd55e4');
 })->name('termsAndConditions');

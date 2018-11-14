@@ -215,10 +215,10 @@
 					<div class="footer-contianerNosotros">
 						<ul class="footer-menuNosotros">
 							<h5 class="footer-menuTitle">NOSOTROS</h5>
-							<li><a href="#" class="footer-menuItem" title="Preguntas frecuentes">Catálogo almacenes @php echo date("Y") @endphp</a></li>
-							<li><a href="#" class="footer-menuItem" title="Por qué comprar con nosotros">Quiénes somos</a></li>
-							<li><a href="#" class="footer-menuItem" title="Protección al consumidor">Protección de datos personales</a></li>
-							<li><a href="#" class="footer-menuItem" title="“Todo lo que debe saber sobre la TDT”">Términos y condiciones</a></li>
+							<li><a href="/codigo-etica" class="footer-menuItem" title="Código de ética y buen gobierno corporativo">Código de ética y buen gobierno corporativo</a></li>
+							<li><a href="/quienes-somos" class="footer-menuItem" title="Quiénes somos">Quiénes somos</a></li>
+							<li><a href="/Proteccion-de-datos-personales" class="footer-menuItem" title="Protección de datos personales">Protección de datos personales</a></li>
+							<li><a href="/Terminos-y-condiciones" class="footer-menuItem" title="Términos y condiciones">Términos y condiciones</a></li>
 						</ul>
 					</div>
 				</div>
@@ -234,9 +234,9 @@
 						</div>
 						<ul class="footer-menu">
 							<h5 class="footer-menuTitle" >SERVICIO AL CLIENTE</h5>
-							<li><a href="#" class="footer-menuItem" title="Por qué comprar con nosotros">Por qué comprar con nosotros</a></li>
-							<li><a href="#" class="footer-menuItem" title="Cambios , devoluciones y atención de garantias">Cambios , devoluciones y atención de garantias</a></li>
-							<li><a href="#" class="footer-menuItem" title="Protección al consumidor">Protección al consumidor</a></li>
+							<li><a href="/Por-que-comprar-con-nosotros" class="footer-menuItem" title="Por qué comprar con nosotros">Por qué comprar con nosotros</a></li>
+							<li><a href="/Cambios-devoluciones-y-atencion-de-garantias" class="footer-menuItem" title="Cambios , devoluciones y atención de garantías">Cambios , devoluciones y atención de garantías</a></li>
+							<li><a href="http://www.sic.gov.co/proteccion-del-consumidor" target="_blank" class="footer-menuItem" title="Protección al consumidor">Protección al consumidor</a></li>
 						</ul>
 					</div>
 				</div>
