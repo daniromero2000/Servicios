@@ -112,10 +112,23 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$scope.getLeads();
 	};
 
+	$scope.resetFiltros = function (){
+		$scope.q = {
+			'q': '',
+			'initFrom': 0,
+			'city': '',
+			'fecha_ini': '',
+			'fecha_fin': '',
+			'typeService': ''
+		};
+		$scope.filtros = false;
+		$scope.getLeads();
+	};
+
 	$scope.vewLead = function(lead){
 		$scope.lead = lead;
 		$("#viewLead").modal("show");
-	}
+	};
 
 	$scope.viewComments = function(name, lastName, idLead, init=true){
 		$scope.comments = [];

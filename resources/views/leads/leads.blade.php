@@ -44,6 +44,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
+                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
                             <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
                         </div>
                     </div>
