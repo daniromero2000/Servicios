@@ -99,6 +99,27 @@ Route::get("/canalDigital",function(){
 	return view('leads.index');
 });
 
+/* Menu Items */
+Route::get('/quienes-somos', function(){
+	return view('menuItems.aboutUs');
+})->name('aboutUs');
+
+Route::get('/codigo-etica', function(){
+	return view('menuItems.ethicsCode');
+})->name('ethicsCode');
+
+Route::get('/Proteccion-de-datos-personales', function(){
+	return view('menuItems.personalInformation');
+})->name('personalInformation');
+
+Route::get('/Terminos-y-condiciones', function(){
+	return view('menuItems.termsAndConditions');
+})->name('termsAndConditions');
+
+Route::get('/googledd6db54bffdd55e4.html', function(){
+	return view('autoridad.googledd6db54bffdd55e4');
+})->name('termsAndConditions');
+
 /* Admin Leads */
 Route::post('api/leads/addComent', 'Admin\LeadsController@addComent');
 Route::group(array('prefix'=>'/canalDigital/'),function(){

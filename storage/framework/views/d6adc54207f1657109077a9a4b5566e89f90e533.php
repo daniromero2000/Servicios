@@ -37,10 +37,27 @@
 			p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
 			})(window,document,'script','https://u.heatmap.it/log.js');
 		</script>
+		<!-- Facebook Pixel Code -->
+		<script>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window,document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		 fbq('init', '406230336580137'); 
+		fbq('track', 'PageView');
+		</script>
+		<noscript>
+		 <img height="1" width="1" 
+		src="https://www.facebook.com/tr?id=406230336580137&ev=PageView
+		&noscript=1"/>
+		</noscript>
+		<!-- End Facebook Pixel Code -->
 		<title><?php echo $__env->yieldContent('title'); ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="robots" content="noindex">
-		<meta name="googlebot" content="noindex">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<?php echo $__env->yieldContent('metaTags'); ?>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -133,7 +150,7 @@
 					</div>
 				</div>
 
-				<div class="col-12 col-sm-12 col-lg-6 resetCol toggleResponsive">
+				<div class="col-12 col-sm-12  col-lg-6 resetCol toggleResponsive">
 					<div class="buttonResponsive">
 						<div class="innerButtonResponsive"></div>
 						<div class="innerButtonResponsive1"></div>

@@ -447,6 +447,75 @@
 	font-weight: 700;
 }
 
+/* Internas Menu Items */
+#aboutUs, #ethicsCode, #peronalInformation, #termsAndConditions{
+	padding: 20px 0;
+}
+.menuItem-title{
+	color: #348dc7;
+	font-size: 25px;
+	font-weight: normal;
+	margin-bottom: 40px;
+	position: relative;
+}
+
+.menuItem-title:after {
+    background: #348dc7;
+    border-radius: 70px;
+    bottom: -6px;
+    content: "";
+    height: 4px;
+    left: 46%;
+    position: absolute;
+    width: 8%;
+    -webkit-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+    -moz-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+    box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+}
+
+.menuItem-subtitle{
+	color: #348dc7;
+	font-size: 28px;
+}
+
+.menuItem-subTitle2{
+	color: #348dc7;
+	font-size: 22px;	
+}
+
+.menuItem-text{
+	font-size: 16px;
+	margin-bottom: 30px;
+}
+
+.menuItem-text2{
+	font-size: 16px;
+	margin-bottom: 20px;
+	padding-left: 30px;
+}
+
+.ethicsCode-title{
+	color: #348dc7;
+	font-size: 25px;
+	font-weight: normal;
+	margin-bottom: 40px;
+	position: relative;
+}
+
+.ethicsCode-title:after {
+    background: #348dc7;
+    border-radius: 70px;
+    bottom: -6px;
+    content: "";
+    height: 4px;
+    left: 36%;
+    position: absolute;
+    width: 28%;
+    -webkit-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+    -moz-box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+    box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
+}
+
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;
