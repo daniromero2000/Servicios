@@ -91,7 +91,7 @@
                 <td>
                     <i class="fas fa-eye cursor mr5" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
                     <i class="far fa-eye-slash mr5" ng-if="lead.typeService != 'Credito libranza'"></i>
-                    <i class="fas fa-comment cursor mr5" ng-click="viewComments(lead.comments, lead.name, lead.lastName, lead.id)"></i>
+                    <i class="fas fa-comment cursor mr5" ng-click="viewComments(lead.name, lead.lastName, lead.id)"></i>
                 </td>
             </tr>
         </tbody>

@@ -62,14 +62,6 @@ class LeadsController extends Controller
 
         $resp = DB::select($query);
 
-        foreach ($resp as $key => $value) {
-            $query2 = sprintf("SELECT comments.`comment`, comments.`created_at`, users.`name` FROM `comments` 
-                LEFT JOIN `users` ON comments.`idLogin` = users.`id`
-                WHERE `idLead` = %s
-                ORDER BY comments.`id` DESC ", $resp[$key]->id);
-            $resp[$key]->comments = DB::select($query2);
-        }
-
         return $resp;
     }
 
@@ -158,7 +150,16 @@ class LeadsController extends Controller
         $commentNew->save();
 
         return response()->json([true]);
+    }
 
 
+    public function getComentsLeads($idLead){
+        $query = sprintf("SELECT comments.`comment`, comments.`created_at`, users.`name` FROM `comments` 
+                LEFT JOIN `users` ON comments.`idLogin` = users.`id`
+                WHERE `idLead` = %s
+                ORDER BY comments.`id` DESC", $idLead);
+        $resp = DB::select($query);
+
+        return $resp;
     }
 }

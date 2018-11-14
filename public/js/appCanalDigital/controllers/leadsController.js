@@ -117,15 +117,26 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$("#viewLead").modal("show");
 	}
 
-	$scope.viewComments = function(comments, name, lastName, idLead){
-		angular.forEach(comments, function(value, key) {
-			$scope.comments.push(value);
-		});
-		$scope.comments = comments;
-		$scope.nameLead = name;
+	$scope.viewComments = function(name, lastName, idLead, init=true){
+		$scope.comments = [];
 		$scope.idLead = idLead;
-		$scope.lastNameLead = lastName;
-		$("#viewComments").modal("show");
+		$http({
+		  method: 'GET',
+		  url: 'api/leads/getComentsLeads/'+idLead
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				angular.forEach(response.data, function(value, key) {
+					$scope.comments.push(value);
+				});
+			}
+			if(init){
+				$("#viewComments").modal("show");
+				$scope.nameLead = name;
+				$scope.lastNameLead = lastName;
+			}
+		}, function errorCallback(response) {
+		    
+		});
 	};
 
 	$scope.addComment = function(){
@@ -135,10 +146,9 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
-				$scope.searchLeads();
+				$scope.viewComments("","",$scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
-				$("#viewComments").modal("hide");			
 			}
 		}, function errorCallback(response) {
 		    

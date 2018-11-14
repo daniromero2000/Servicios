@@ -132,6 +132,7 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 
 /* Admin Leads */
 Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
+Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 Route::group(array('prefix'=>'/canalDigital/'),function(){
 
     Route::get('/leads', function(){
