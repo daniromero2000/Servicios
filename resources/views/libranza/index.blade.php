@@ -108,6 +108,28 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
+					<div class="creditoLibranza-contianerTexto creditoLibranza-libreInversion">
+						<img src="{{ asset('images/libranza-libreinversion.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<div class="containerText-creditoLibranzaCards">
+							<h3 class="creditoLibranza-titleText">Crédito <br> libre inversión</h3>
+							<p class="creditoLibranza-text">
+								Es un préstamo de Libre Destino que se aprueba a personas naturales, vinculadas a entidades con las cuales existen convenios previamente establecido con LAGOBO y cuyas cuotas se descuentan mensualmente del pago de nómina.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
+					<div class="creditoLibranza-contianerTexto creditoLibranza-motos">
+						<img src="{{ asset('images/libranza-compraCartera.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<div class="containerText-creditoLibranzaCards">
+							<h3 class="creditoLibranza-titleText">Compra <br> de cartera</h3>
+							<p class="creditoLibranza-text">
+								Sabemos lo importante administrar mejor tu dinero. Por eso, te ofrecemos unificar tus deudas que presentas con otras entidades en un solo crédito con Tasa y Plazo Fijo para mejorar tu flujo de caja.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

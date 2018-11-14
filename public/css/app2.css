@@ -107,6 +107,7 @@
 }
 .containerText-creditoLibranzaCards{
 	padding: 60px 30px 10px 130px;
+	min-height: 280px;
 }
 
 .creditoLibranza-electrodomesticos:before{
@@ -122,6 +123,11 @@
 .creditoLibranza-viajes:before{
 	border-left-color: #3fcf64;
 	border-top-color: #3fcf64;
+}
+
+.creditoLibranza-libreInversion:before{
+	border-left-color: #fdbf3c;
+	border-top-color: #fdbf3c;
 }
 
 .creditoLibranza-title, .credibilidad-title{
