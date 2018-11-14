@@ -131,7 +131,7 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 })->name('termsAndConditions');
 
 /* Admin Leads */
-Route::post('api/leads/addComent', 'Admin\LeadsController@addComent');
+Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::group(array('prefix'=>'/canalDigital/'),function(){
 
     Route::get('/leads', function(){

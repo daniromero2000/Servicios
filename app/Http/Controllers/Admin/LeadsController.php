@@ -147,15 +147,15 @@ class LeadsController extends Controller
     }
 
 
-    public function addComent(Request $request){
-        $comment= new Comments;
+    public function addComent($lead, $comment){
+        $commentNew= new Comments;
         
         $currentUser=\Auth::user();
-        $comment->idLogin = $currentUser->id;
-        $comment->idLead = $request->get('idLead');
-        $comment->comment = $request->get('comment');
+        $commentNew->idLogin = $currentUser->id;
+        $commentNew->idLead = $lead;
+        $commentNew->comment = $comment;
 
-        $comment->save();
+        $commentNew->save();
 
         return response()->json([true]);
 
