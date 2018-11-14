@@ -12,8 +12,8 @@
                             <select id="city" class="form-control" ng-model="q.city" ng-options="city.value as city.label for city in cities"></select>
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label for="typeProduct">Tipo de Producto</label>
-                            <select id="typeProduct" class="form-control" ng-model="q.typeProduct"></select>
+                            <label for="typeService">Tipo de Servicio</label>
+                            <select id="typeService" class="form-control" ng-model="q.typeService" ng-options="service.value as service.label for service in typeServices"></select>
                         </div>
                     </div>
                     <div class="row form-group">
