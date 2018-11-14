@@ -157,13 +157,13 @@
 					<img src="/images/convenios-credibilidadIcon.png" alt="Credibilidad" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Credibilidad</h3>
 					<p class="convenios-textInfo">49 Años trabajando para llevar las mejores Oportunidades a nuestros clientes.</p>
-					<a href="" class="convenios-button">Ver más</a>
+					<a href="/quienes-somos" class="convenios-button">Ver más</a>
 				</div>
 				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
 					<img src="/images/convenios-confianzaIcon.png" alt="Confianza" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Confianza</h3>
 					<p class="convenios-textInfo">Confiamos en nuestros clientes, por eso te ofrecemos crédito para todo.</p>
-					<a href="" class="convenios-button">Ver más</a>
+					<a href="/Por-que-comprar-con-nosotros" class="convenios-button">Ver más</a>
 				</div>
 				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
 					<img src="/images/convenios-puntosServicioIcon.png" alt="Puntos de Servicio" class="img-fluid" />
