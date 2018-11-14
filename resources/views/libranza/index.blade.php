@@ -110,7 +110,7 @@
 				</div>
 				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
 					<div class="creditoLibranza-contianerTexto creditoLibranza-libreInversion">
-						<img src="{{ asset('images/libranza-libreinversion.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<img src="{{ asset('images/libranza-libreInversion.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
 						<div class="containerText-creditoLibranzaCards">
 							<h3 class="creditoLibranza-titleText">Crédito <br> libre inversión</h3>
 							<p class="creditoLibranza-text">
