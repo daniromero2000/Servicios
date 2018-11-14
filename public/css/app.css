@@ -41,6 +41,12 @@ a:hover, a:active, a:focus, a:visited{
 #header{
 	margin-top: 10px;
 	position: relative;
+	background-color: #F5F4FE;
+}
+
+#header .row.resetRow, #viajesHeader .row,.containImg,#bustour .row,.plansContent,#travelOffers .row{
+	max-width: 1960px;
+	margin: auto !important;
 }
 
 .header-menu{
@@ -230,6 +236,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .sliderPrincipal-button{
+	font-weight: 600;
 	border-radius: 40px;
 	display: inline-block;
 	color: white;
@@ -278,6 +285,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaSliderButton p a{
+	font-weight: 600;
 	background-color: #F1C53B;
     color: #000;
     padding: 12px 50px;
@@ -945,6 +953,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .conoce-button{
+	font-weight: 600;
 	border-radius: 20px;
 	color: white;
 	font-size: 13px;
@@ -1648,6 +1657,14 @@ a[data-toggle="collapse"] {
 	width: 100%;
 }
 
+.buttonResponsiveViajes{
+	display: none;
+}
+
+.viajesListItems{
+	padding: 0;
+}
+
 .viajesListItems ul{
 	margin-top: 1rem !important;
 	float: right;
@@ -1664,9 +1681,12 @@ a[data-toggle="collapse"] {
 	border-right: solid 1px;
 } 
 
-.viajesListItems li a{
+.viajesListItems li a,.viajesListItems li span{
 	color: #FFF;
 	font-weight: 500;
+}
+.viajesHeaderButtonResponsive{
+	display: none;
 }
 
 .viajesWhatsappButton{
@@ -1782,17 +1802,22 @@ a[data-toggle="collapse"] {
 	line-height: 0.5;
 }
 
+.conoceViajesPlay{
+	display: none;
+}
+
 .conoceViajesPlay img{
 	width: 4em;
 }
 
 .imagesBustour div.row div.col-sm-4{
-	padding: 0;
+	padding: 0 3px;
 }
 
 .imagesBustour div.row div.col-sm-4 img{
 	height: 100%;
     max-height: 500px;
+    width: 100%;
 }
 
 .busTourContent{
@@ -2007,7 +2032,7 @@ a[data-toggle="collapse"] {
 	font-size: 18px;
 }
 
-.travelOffersButton,.travelOffersText{
+.travelOffersButton,.travelOffersText,.bustourMainContent{
 
     display: flex;
     justify-content: center;
@@ -2065,6 +2090,7 @@ p.wantToSecondTex{
     color: #9000ff;
     font-weight: 700;
 }
+
 
 /* Media Queries */
 
@@ -2225,6 +2251,15 @@ p.wantToSecondTex{
 
 	}
 
+	.viajesHeaderContent{
+
+	}
+
+	.viajesWhatsappButton a{
+
+		padding: 13px 19px;
+		font-size: 10px;
+	}
 
 
 }
@@ -2319,6 +2354,10 @@ p.wantToSecondTex{
 
 
 @media(max-width: 1200px){
+
+	.planButton a{
+		font-size: 12px;
+	}
 
 	.bestPricesImg img{
 		    padding: 11% 0;
@@ -2467,6 +2506,21 @@ p.wantToSecondTex{
 
 @media(max-width: 991px){
 
+	.wantToContent {
+    position: relative;
+    top: unset;
+    left: unset;
+    transform: unset;
+    text-align: center;
+	}
+
+	p.wantToMainTex{
+		font-size: 3em;
+	}
+	.wantToButton {
+    margin-top: 2em;
+}
+
 	.dialogThakPage p{
 
 		font-size: 1em;
@@ -2474,6 +2528,9 @@ p.wantToSecondTex{
     
     transform: translate(-50%,60%);
 
+	}
+	.helperRow{
+		display: none;
 	}
 
 	.conoce-titleTarjeta{
@@ -2642,7 +2699,7 @@ p.wantToSecondTex{
 
 	.toggleResponsive{
 
-		background-color: #F5F4FE;
+		background-color: transparent;
 
 	}
 
@@ -2664,11 +2721,16 @@ p.wantToSecondTex{
 
 		display: block;
 
-		position: absolute;
-
-    	right: 80px;
-
-    	top: -45px;
+		margin-right: 0px;
+	    position: fixed;
+	    top: 90%;
+	    right: 4%;
+	    z-index: 999999;
+	    height: 50px;
+	    width: 50px;
+	    background: #ffc100;
+	    border-radius: 100%;
+	    padding-left: 13px;
 
 
 
@@ -2732,8 +2794,12 @@ p.wantToSecondTex{
 
 	.headerImage{
 
-		z-index: -1;
+		z-index: 1;
 
+	}
+
+	.header-containerLogo{
+		text-align: center;
 	}
 
 
@@ -2765,6 +2831,28 @@ p.wantToSecondTex{
 
 
 @media(max-width: 991px){
+
+	.plansContent section{
+		width: 60%;
+   		margin: 20px auto;
+	}
+
+	.viajesSliderContent {
+    
+    bottom: 10%;
+    left: 8%;
+    
+	}
+
+	.conoceViajesTitle p{
+		line-height:1;
+	}
+
+	.conoceViajesTitle{
+		margin-bottom: 5rem;
+		font-size: 1.5em;
+	}
+
 	.imgSombraMenu{
 		display: none;
 	}
@@ -2920,11 +3008,72 @@ p.wantToSecondTex{
 
 @media(max-width: 768px){
 
+	.conoceViajesTitle{
+		
+		font-size: 1em;
+		margin-bottom: 3rem;
+	}
+
+	.conoceViajesPlay img{
+		width: 2em;
+	}
+
+	.conoceViajesTitle p{
+		line-height: 0;
+	}
+
+
+
+	.viajesSliderContent {
+		position: unset;
+	}
+
+	.viajesListItems li a,.viajesContactenosLink a{
+		font-size: 12px;
+	}
+
 	.dialogThakPage p {
     
     transform: translate(-50%,60%);
     
     font-size: 0.8em;
+}
+
+.viajesHeaderButtonResponsive{
+	display: block;
+
+}
+
+.viajesHeaderButton{
+	display: none;
+}
+
+.viajesWhatsappButton{
+	padding: 0;
+}
+
+.viajesWhatsappButton a{
+	    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 50%;
+    right: 4%;
+    background-color: #3fcf64;
+    color: #FFF;
+    border-radius: 50px;
+    border: solid 1px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;;
+
+}
+
+.viajesHeaderButtonResponsive .fa-whatsapp:before{
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
 
 	.sliderPrincipal-button {
@@ -3033,11 +3182,60 @@ p.wantToSecondTex{
 		
 	}
 
+	.viajesListItems li a, .viajesListItems li span{
+		font-size: 14px;
+	}
+
 }
 
 
 
 @media(max-width: 576px){
+
+	.imagesBustour div.row div.col-sm-4{
+		text-align: center;
+		margin: 20px 0;
+	}
+	.imagesBustour div.row div.col-sm-4 img{
+		width: 60%;
+	}
+	.buttonResponsiveViajes{
+		display: none;
+		z-index: 9;
+	}
+
+	.viajesListItems li{
+		display: inline-block;
+	}
+
+	.viajesListItems li:not(:last-child){
+		border-right: unset;
+	}
+
+	.viajesListItems ul{
+		display: block;
+		float: left;
+    	margin-left: unset;
+    	transform: unset;
+	}
+	.viajesListItems ul li{
+		text-align: center;
+		position: relative;
+		margin-bottom: 1em;
+	}
+
+	.viajesListItems ul li:not(:first-child):after{
+		position: absolute;
+		content: ' ';
+		width: 2px;
+		background-color: rgba(255,255,255,0.5);
+		height: 100%;
+		border-radius: 20px;
+		bottom: 0;
+    	left: -2px;
+    	
+
+	}
 
 	.tarjetaLAst{
 		margin-left: 0;
@@ -3050,6 +3248,76 @@ p.wantToSecondTex{
 	.offersPrice2{
 		transform: translate(-1em,1.5em);
 	}
+	.viajesContactenosLink a{
+		float: unset;
+	}
+
+
+	.viajesHeaderButton{
+		display: none;
+	}
+
+	.viajesHeaderButtonResponsive{
+		display: block;
+	}
+
+	.buttonResponsiveViajes{
+		position: relative;
+		display: none;
+		z-index: 9;
+	}
+
+	.buttonResponsiveViajes .innerButtonResponsive{
+		top: 13px;
+	}
+
+
+	.buttonResponsiveViajes.open .innerButtonResponsive {
+
+    transform: translate3d(0,10px,0) rotate(45deg);
+
+	}
+
+	.buttonResponsiveViajes.open .innerButtonResponsive1{
+
+    transform: translate3d(0,0px,0) rotate(-45deg);
+
+	}
+
+	.buttonResponsiveViajes.open .innerButtonResponsive2 {
+
+    transform: translate3d(0,-10px,0) rotate(135deg);
+
+	}
+
+
+	
+
+	.buttonResponsiveViajes .innerButtonResponsive,.buttonResponsiveViajes  .innerButtonResponsive1,.buttonResponsiveViajes  .innerButtonResponsive2 {
+
+		background-color: #FFF;
+		position: absolute;
+		width: 25px;
+		height: 4px;
+		border-radius: 5px;
+		content: " ";
+		transition-timing-function: ease;
+		transition-duration: .2s;
+		transition-property: transform,opacity;
+
+	}
+
+	.buttonResponsiveViajes .innerButtonResponsive1 {
+
+        top: 23px;
+
+	}
+
+	.buttonResponsiveViajes .innerButtonResponsive2 {
+
+        top: 32px;
+
+    }
 
 	.buttonResponsive{
 		margin-right: 0px;
@@ -3070,11 +3338,31 @@ p.wantToSecondTex{
 		
 	}
 
+	.buttonResponsiveViajes{
+		margin-top: 30px;
+	}
+
+	.viajesContactenosLink{
+		display: none;
+	}
+
+	.offersTitle p{
+		font-size: 1.5em;
+	}
+
+
+
 }
 
 
 
 @media(max-width: 500px){
+
+	.sliderPrincipal-textSlider{
+		font-weight: 500;
+		color: #000;
+		text-shadow: unset;
+	}
 
 	.convenios-text{
 		padding: 0 20px;
