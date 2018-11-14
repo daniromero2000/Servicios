@@ -134,7 +134,6 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
-			console.log(response);
 			if(response.data != false){
 				$scope.searchLeads();
 				$scope.comment.comment = "";
