@@ -151,7 +151,6 @@
 	<div id="convenios">
 		<div class="containerConvenios">
 			<h3 class="convenios-title text-center">Conoce nuestros <strong>Convenios</strong></h3>
-
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
 					<img src="/images/convenios-credibilidadIcon.png" alt="Credibilidad" class="img-fluid" />
