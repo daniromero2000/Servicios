@@ -36,9 +36,11 @@ class GenerateSitemap extends Command
                
                return strpos($url->getPath(), '/seguros') === false;
             })
+            ->shouldCrawl(function (UriInterface $url) {
+               
+               return strpos($url->getPath(), '/viajes') === false;
+            })
             ->getSitemap()
-            ->add(Url::create('/')->setPriority(0.8))
-            ->add(Url::create('/libranza')->setPriority(0.5)) 
             ->writeToFile(public_path('sitemap.xml'));
     }
 }
