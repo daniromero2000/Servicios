@@ -70,18 +70,26 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Teléfono</th>
-                <th>Ciudad</th>
-                <th>Servicio</th>
-                <th>Producto</th>
-                <th>Fecha de registro</th>
-                <th>Acciones</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Servicio</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Fecha de registro</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="lead in leads">
+                <td scope="row">
+                    <i class="fas fa-hand-paper" ng-if="lead.state==0" style="color: yellow; font-size: 22px;" title="Pendiente"></i>
+                    <i class="far fa-bell" ng-if="lead.state==1" style="color: gray; font-size: 22px;" title="En estudio"></i>
+                    <i class="fas fa-stopwatch" ng-if="lead.state==2" style="color: orange; font-size: 22px;" title="Es Espera"></i>
+                    <i class="fas fa-clipboard-check" ng-if="lead.state==3" style="color: orange; font-size: 22px;" title="Aprobado"></i>
+                    <i class="fas fa-ban" ng-if="lead.state==4" style="color: red; font-size: 22px;" title="Negado"></i>
+                </td>
                 <td>@{{ lead.name }}</td>
                 <td>@{{ lead.lastName }}</td>
                 <td>@{{ lead.telephone }}</td>
