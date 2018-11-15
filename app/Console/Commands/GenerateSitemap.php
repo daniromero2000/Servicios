@@ -32,14 +32,12 @@ class GenerateSitemap extends Command
     {
         // modify this to your own needs
         SitemapGenerator::create(config('app.url'))
-            ->shouldCrawl(function (UriInterface $url) {
+            ->hasCrawled(function (Url $url) {
+             if ($url->segment(1) === 'viajes') {
+               return;
+             }
 
-                $avoidUrls=['/viajes','/seguros','/motos'];
-                $i=0;
-                for($i;$i<count($avoidUrls); $i++){
-                    return strpos($url->getPath(), $avoidUrls[$i])==false;
-                    
-                }
+            return $url;
             })
             ->getSitemap()
             ->writeToFile(public_path('sitemap.xml'));
