@@ -145,7 +145,7 @@
 				<div class="col-12 col-sm-12 col-lg-6 resetCol headerImage">
 					<div class="header-containerLogo">
 						<a href="/">
-							<img src="<?php echo e(asset('images/oportunidadesServiciosFinancierosLogo.png')); ?>" title="Oportunidades Servicios Financieros" class="img-fluid">
+							<img src="<?php echo e(asset('images/oportunidadesServiciosFinancierosLogo.png')); ?>" alt="Oportunidades Servicios Financieros" class="img-fluid">
 						</a>
 					</div>
 				</div>
@@ -211,7 +211,7 @@
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-3 resetCol footer-containMenu">
 					<div class="footer-contianerLogo">
-						<img src="<?php echo e(asset('images/footer-oportunidadesServiciosFinancierosLogo.png')); ?>" title="Oportunidades Servicios Financieros" class="img-fluid">
+						<img src="<?php echo e(asset('images/footer-oportunidadesServiciosFinancierosLogo.png')); ?>" alt="Oportunidades Servicios Financieros" class="img-fluid">
 					</div>
 					<div class="footer-contianerNosotros">
 						<ul class="footer-menuNosotros">

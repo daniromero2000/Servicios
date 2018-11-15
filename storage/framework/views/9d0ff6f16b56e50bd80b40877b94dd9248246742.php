@@ -1,10 +1,11 @@
 <?php $__env->startSection('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.'); ?>
 
 <?php $__env->startSection('metaTags'); ?>
+	<link rel="canonical" href="https://www.serviciosoportunidades.com/oportuya" />
 	<meta name="description" content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades.">
 	<meta name="keywords" content="Tarjeta de credito, Tarjeta de crédito, solicitar tarjeta de credito, solicitar tarjeta de crédito, tarjeta de credito online, tarjeta de crédito online, su tarjeta de crédito, su tarjeta de credito, como sacar una tarjeta de credito, como sacar una tarjeta de crédito, como tramitar una tarjeta de credito, como tramitar una tarjeta de crédito, requisitos para tarjeta de crédito, requisitos para tarjeta de credito, obtén una tarjeta de credito, obtén una tarjeta de crédito, requisitos tarjeta de credito, requisitos tarjeta de crédito, quiero una tarjeta de credito, quiero una tarjeta de crédito, tarjeta oportunidades, oportunidades, tarjeta con credito para compras, tarjeta con crédito para compras, credito en tarjeta, crédito en tarjeta.">
 	<meta property="og:title" content="Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta." />
-	<meta property="og:url" content="www.serviciosoportunidades.com/oportuya" />
+	<meta property="og:url" content="https://www.serviciosoportunidades.com/oportuya" />
 	<meta property="og:type" content="Website" />
 	<meta property="og:image" content="<?php echo e(asset('images/OportuyaPortadaOg.png')); ?>" />
 	<meta property="og:image:width" content="1200" />
@@ -369,7 +370,6 @@
 					<form role=form method="POST" id="saveLeadOportuya" action="<?php echo e(route('oportuya.store')); ?>">
 						<?php echo e(csrf_field()); ?>
 
-						<input type="hidden" name="state" value="0">
 						<input type="hidden" name="channel" value="1">
 						<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
 
@@ -532,6 +532,7 @@ $arraySliderOffer=[
 										<?php echo e(csrf_field()); ?>
 
 										<input type="hidden" name="typeService" value="oportuya">
+										<input type="hidden" name="channel" value="1">
 										<input type="hidden" name="typeProduct" value="<?php echo e($arrayOfferItem['nameProduct']); ?>">
 										<div class="form-group">
 											<label for="name" class="control-label">Nombres</label>

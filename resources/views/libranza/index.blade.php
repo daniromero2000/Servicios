@@ -296,9 +296,8 @@
 							<label class="control-label modalLabelForm">Nombres</label>
 							<input type="text" ng-model="libranza.name" class="form-control" id="nameForm" required="true" />
 						</div>
-						<input type="hidden" ng.model="libranza.typeService" value="libranza">		
-						<input type="hidden" ng.model="libranza.state" value="0">	
-						<input type="hidden" ng.model="libranza.channel" value="1">	
+						<input type="hidden" ng.model="libranza.typeService" value="libranza">
+						<input type="hidden" ng.model="libranza.channel" value="1">
 						<div class="form-group">
 							<label class="control-label modalLabelForm">Apellidos</label>
 							<input type="text" ng-model="libranza.lastName" class="form-control" id="nameForm" />
