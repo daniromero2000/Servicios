@@ -107,7 +107,8 @@ angular.module('appLibranzaLiquidador', [])
 		city: '',
 		typeService: 'Credito libranza',
 		typeProduct: '',
-		termsAndConditions: 0
+		termsAndConditions: 0,
+		channel: 1
 	};
 
 	$scope.validateInt = function(){

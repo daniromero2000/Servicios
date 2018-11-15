@@ -23,7 +23,6 @@
 						{{ csrf_field() }}
 						<input type="hidden" name="typeProduct" value="Motos">
 						<input type="hidden" name="typeService" value="Motos">
-						<input type="hidden" name="state" value="0">
 						<input type="hidden" name="channel" value="1">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
