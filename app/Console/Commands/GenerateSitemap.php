@@ -34,11 +34,11 @@ class GenerateSitemap extends Command
         SitemapGenerator::create(config('app.url'))
             ->shouldCrawl(function (UriInterface $url) {
                
-               return strpos($url->getPath(), '/seguros') === false;
+               return strpos($url->getPath(), '/viajes') === false;
             })
             ->shouldCrawl(function (UriInterface $url) {
                
-               return strpos($url->getPath(), '/viajes') === false;
+               return (strpos($url->getPath(), '/seguros') === false);
             })
             ->getSitemap()
             ->writeToFile(public_path('sitemap.xml'));
