@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
+use Psr\Http\Message\UriInterface;
 
 class GenerateSitemap extends Command
 {
@@ -31,10 +32,13 @@ class GenerateSitemap extends Command
     {
         // modify this to your own needs
         SitemapGenerator::create(config('app.url'))
+            ->shouldCrawl(function (UriInterface $url) {
+               
+               return strpos($url->getPath(), '/seguros') === false;
+            })
             ->getSitemap()
             ->add(Url::create('/')->setPriority(0.8))
-            ->add(Url::create('/libranza')->setPriority(0.5))
-            ->add(Url::create('/oportuya')->setPriority(0.5))
+            ->add(Url::create('/libranza')->setPriority(0.5)) 
             ->writeToFile(public_path('sitemap.xml'));
     }
 }
