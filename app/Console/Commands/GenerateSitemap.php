@@ -33,8 +33,13 @@ class GenerateSitemap extends Command
         // modify this to your own needs
         SitemapGenerator::create(config('app.url'))
             ->shouldCrawl(function (UriInterface $url) {
-               
-               return strpos($url->getPath(), '/viajes') === false;
+
+                $avoidUrls=['/viajes','/seguros','/motos'];
+                $i=0;
+                for($i;$i<count($avoidUrls); $i++){
+                    return strpos($url->getPath(), $avoidUrls[$i])==false;
+                    
+                }
             })
             ->shouldCrawl(function (UriInterface $url) {
                
