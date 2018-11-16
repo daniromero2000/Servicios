@@ -3358,6 +3358,10 @@ p.wantToSecondTex{
 
 @media(max-width: 500px){
 
+	.conoceViajesContent{
+		width: 100%;
+	}
+
 	.sliderPrincipal-textSlider{
 		font-weight: 500;
 		color: #000;
