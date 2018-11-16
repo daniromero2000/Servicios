@@ -92,12 +92,21 @@ Route::resource('seguros','Admin\SegurosController');
 Route::resource('viajes','Admin\ViajesController');
 Route::resource('dashboard','Admin\DashboardController');
 Route::resource('users','Admin\UserController');
+Route::resource('campaign','Admin\CampaignController');
+
+
 
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
 Route::get("/canalDigital",function(){
 	return view('leads.index');
 });
+
+Route::get("/community",function(){
+	return view('campaign.index');
+});
+
+
 
 /* Menu Items */
 Route::get('/quienes-somos', function(){
@@ -133,9 +142,19 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 /* Admin Leads */
 Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
-Route::group(array('prefix'=>'/canalDigital/'),function(){
+Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
+Route::post('community/addCampaign','Admin\CampaignController@store');
+
+Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
     Route::get('/leads', function(){
         return view('leads.leads');
+    });
+});
+
+Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
+
+    Route::get('/campaigns', function(){
+        return view('campaign.campaign');
     });
 });
