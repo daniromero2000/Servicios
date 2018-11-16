@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
 use App\Lead;
+use App\Viajes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -63,7 +64,19 @@ class ViajesController extends Controller
             [ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
         ];
         $images=Imagenes::all();
-        return view('viajes.index',['images'=>$images, 'cities' => $cities]);
+
+        $plans=Viajes::selectRaw('imagenes.img,viajes.destination,viajes.beginDate,viajes.endingDate,viajes.isLocal,viajes.price,viajes.description,viajes.textButton')
+        ->leftjoin('imagenes','viajes.idImg','=','imagenes.id')
+        ->where('imagenes.category','=','2')
+        ->where('imagenes.isSlide','=','0')
+        ->orderBy('viajes.id')->get();
+
+        $imagesViajes= Imagenes::selectRaw('*')
+                        ->where('category','=','2')
+                        ->where('isSlide','=','1')
+                        ->get();
+
+        return view('viajes.index',['images'=>$images, 'cities' => $cities,'imagesViajes'=>$imagesViajes,'plans'=>$plans]);
     }
 
     /**
@@ -95,6 +108,7 @@ class ViajesController extends Controller
         $lead->typeProduct=$request->get('typeProduct');
         $lead->state=intval($request->get('state'));
         $lead->channel=intval($request->get('channel'));
+        $lead->termsAndConditions=$request->get('termsAndConditions');
 
 
         $lead->save();
