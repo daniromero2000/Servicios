@@ -33,7 +33,7 @@ class GenerateSitemap extends Command
         // modify this to your own needs
         SitemapGenerator::create(config('app.url'))
             ->hasCrawled(function (Url $url) {
-             if (($url->segment(1) === 'viajes') || ($url->segment(1) === 'seguros') || ($url->segment(1) === 'motos')){
+             if (($url->segment(1) === 'seguros') || ($url->segment(1) === 'motos')){
                return;
              }
 
