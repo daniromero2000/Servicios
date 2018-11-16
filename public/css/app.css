@@ -1663,11 +1663,11 @@ a[data-toggle="collapse"] {
 
 .viajesListItems{
 	padding: 0;
+	text-align: center;
 }
 
 .viajesListItems ul{
 	margin-top: 1rem !important;
-	float: right;
 	padding: 0;
 }
 
@@ -1680,6 +1680,8 @@ a[data-toggle="collapse"] {
 .viajesListItems li:not(:last-child){
 	border-right: solid 1px;
 } 
+
+
 
 .viajesListItems li a,.viajesListItems li span{
 	color: #FFF;
@@ -3219,7 +3221,7 @@ p.wantToSecondTex{
 	}
 
 	.viajesListItems li{
-		display: inline-block;
+		display: inline;
 	}
 
 	.viajesListItems li:not(:last-child){
