@@ -4,7 +4,6 @@ Disallow:/home/
 Disallow:/login/
 Disallow:/pages/
 Disallow:/seguros/
-Disallow:/viajes/
 Disallow:/users/
 Disallow:/register/
 Disallow:/motos/
