@@ -14,7 +14,8 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	$scope.idLead = '';
 	$scope.comment = {
 		comment: '',
-		idLead: 0
+		idLead: 0,
+		state: 0
 	};
 	$scope.comments = [];
 	$scope.leads = [];
@@ -162,6 +163,30 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 				$scope.viewComments("","",$scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
+			}
+		}, function errorCallback(response) {
+		    
+		});
+	};
+
+	$scope.changeStateLead = function(name, lastName, idLead, state, title){
+		$scope.title = title;
+		$scope.nameLead = name;
+		$scope.lastNameLead = lastName;
+		$scope.comment.idLead = idLead;
+		$scope.comment.state = state;
+		$("#changeStateLead").modal("show");
+	};
+
+	$scope.changeStateLeadComment = function(){
+		$http({
+		  method: 'GET',
+		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				$scope.comment.comment = "";
+				$scope.searchLeads();
+				$("#changeStateLead").modal("hide");			
 			}
 		}, function errorCallback(response) {
 		    

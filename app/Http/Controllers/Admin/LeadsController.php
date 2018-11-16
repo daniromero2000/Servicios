@@ -162,4 +162,24 @@ class LeadsController extends Controller
 
         return $resp;
     }
+
+    public function deniedRequest($idLead, $comment){
+        $employee = Lead::find($idLead);
+        $employee->state = 4;
+        $employee->save();
+
+        $this->addComent($idLead, $comment);
+
+        return response()->json([true]);
+    }
+
+    public function cahngeStateLead($idLead, $comment, $state){
+        $employee = Lead::find($idLead);
+        $employee->state = $state;
+        $employee->save();
+
+        $this->addComent($idLead, $comment);
+
+        return response()->json([true]);
+    }
 }
