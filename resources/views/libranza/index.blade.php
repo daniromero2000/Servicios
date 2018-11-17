@@ -82,6 +82,7 @@
 								A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
 								<strong>¡Compralo a crédito!</strong>
 							</p>
+							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20electrodoméstico" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
 						</div>
 					</div>
 				</div>
@@ -94,6 +95,7 @@
 								Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
 								<strong>¡Compra tu moto a crédito!</strong>
 							</p>
+							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20una%20moto" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
 						</div>
 					</div>
 				</div>
@@ -106,28 +108,31 @@
 								Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
 								<strong>¡Viaja Ahora!</strong>
 							</p>
+							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20viaje" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
 					<div class="creditoLibranza-contianerTexto creditoLibranza-libreInversion">
-						<img src="{{ asset('images/libranza-libreInversion.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<img src="{{ asset('images/libranza-libreInversion.png') }}" alt="Crédito Libre Inversión" class="img-fluid creditoLibranza-img">
 						<div class="containerText-creditoLibranzaCards">
 							<h3 class="creditoLibranza-titleText">Crédito <br> libre inversión</h3>
 							<p class="creditoLibranza-text">
 								Es un préstamo de Libre Destino que se aprueba a personas naturales, vinculadas a entidades con las cuales existen convenios previamente establecido con LAGOBO y cuyas cuotas se descuentan mensualmente del pago de nómina.
 							</p>
+							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20libre%20inversión" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
 					<div class="creditoLibranza-contianerTexto creditoLibranza-motos">
-						<img src="{{ asset('images/libranza-compraCartera.png') }}" alt="Crédito para viajes" class="img-fluid creditoLibranza-img">
+						<img src="{{ asset('images/libranza-compraCartera.png') }}" alt="Compra de cartera" class="img-fluid creditoLibranza-img">
 						<div class="containerText-creditoLibranzaCards">
 							<h3 class="creditoLibranza-titleText">Compra <br> de cartera</h3>
 							<p class="creditoLibranza-text">
 								Sabemos lo importante administrar mejor tu dinero. Por eso, te ofrecemos unificar tus deudas que presentas con otras entidades en un solo crédito con Tasa y Plazo Fijo para mejorar tu flujo de caja.
 							</p>
+							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20por%20medio%20de%20compra%20de%20cartera" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
 						</div>
 					</div>
 				</div>
@@ -205,10 +210,6 @@
 								<label for="quotaBuy" class="formularioSimulador-labelFormulario">Valor Cuota Compra :</label>
 								<input type="text" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="calculateData()" ng-change="validateInt()" />
 							</div>
-							<div class="formularioSimulador-containInput">
-								<label for="quaotaAvailable" class="formularioSimulador-labelFormulario">Cupo disponible :</label>
-								<input type="text" id="quaotaAvailable" class="form-control formularioSimulador-inputCupoDisponible" ng-model="libranza.quaotaAvailable" ng-disabled="true"/>
-							</div>
 							<div class="formularioSimulador-containInput text-center">
 								<button type="submit" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Simular</button>
 							</div>
@@ -256,6 +257,17 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body simularModal-modalBody">
+					<div class="row resetRow">
+						<i class="fas fa-times cursor formularioSimulador-closeModal" data-dismiss="modal"></i>
+						<div class="col-12 text-center form-group">
+							<h3 class="formularioSimulador-title"><strong>Cuota Disponible</strong></h3>
+							<br>
+							<span class="simularModal-quaotaAvailable">$ @{{ libranza.quaotaAvailable | number:0 }}</span>
+						</div>
+						<div class="col-12 text-center form-group text-center">
+							<button class="btn formularioSimulador-buttonForm" ng-click="solicitar()">Solicitar</button>
+						</div>
+					</div>
 					<div class="table">
 						<table class="table table-hover">
 							<thead class="simularModal-thead">
@@ -272,8 +284,10 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="text-center form-group">
-						<button class="btn formularioSimulador-buttonForm" ng-click="solicitar()">Solicitar</button>
+					<div class="row">
+						<div class="col-12 text-center" style="padding: 20px 0">
+							<a href="https://api.whatsapp.com/send?phone=573105216830&amp;text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza" class="creditoLibranza-buttonWhatsAppmodal" target="_blank" tabindex="0">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
 					</div>
 					<div class="text-justify textModalSimular">
 						*El cupo y cuota del crédito, producto de esta simulación, son aproximados e informativos y podrán variar de acuerdo a las políticas de financiación y de crédito vigentes al momento de su estudio y aprobación por parte de Lagobo.
