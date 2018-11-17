@@ -13,8 +13,12 @@
             @elseif($currentUser->idProfile == 3)
 
                 @include('profiles.libranzaUser')
+
+            @elseif($currentUser->idProfile == 5)
+
+                @include('profiles.fabricaUser')
                 
-             @else
+            @else
 
                 @include('profiles.communityUser')
 

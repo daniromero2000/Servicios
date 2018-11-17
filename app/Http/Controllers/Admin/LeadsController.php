@@ -36,6 +36,10 @@ class LeadsController extends Controller
             $query .= sprintf(" AND (leads.`name` LIKE '%s' OR leads.`lastName` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
         }
 
+        if($request->get('state')){
+            $query .= sprintf(" AND leads.`state` = %s ", $request->get('state'));
+        }
+
         if($request->get('city')){
             $query .= sprintf(" AND leads.`city` = '%s' ", $request->get('city'));
         }
@@ -56,6 +60,10 @@ class LeadsController extends Controller
             $query .= sprintf(" AND leads.`created_at` < '%s' ", $request->get('fecha_fin').' 23:59:59');
         }
 
+        if($request->get('libranzaLead')){
+            $query .= sprintf(" AND leads.`state` != 0 ");
+        }
+        
         $query .= " ORDER BY leads.`id` DESC";
 
         $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));

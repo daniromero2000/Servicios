@@ -37,6 +37,10 @@
                             <td>Administrador</td>
                         @elseif($user->idProfile == 2)
                             <td>Líder Canal Dígital</td>
+                        @elseif($user->idProfile == 3)
+                            <td>Libranza</td>
+                        @elseif($user->idProfile == 5)
+                            <td>Fábrica de crédito</td>
                         @else
                             <td>Community Manager</td>
                         @endif

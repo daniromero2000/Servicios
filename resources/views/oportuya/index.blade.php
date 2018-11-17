@@ -532,7 +532,7 @@ $arraySliderOffer=[
 									</h3>
 									<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuya.store') }}">
 										{{ csrf_field() }}
-										<input type="hidden" name="typeService" value="oportuya">
+										<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
 										<input type="hidden" name="channel" value="1">
 										<input type="hidden" name="typeProduct" value="{{$arrayOfferItem['nameProduct']}}">
 										<div class="form-group">

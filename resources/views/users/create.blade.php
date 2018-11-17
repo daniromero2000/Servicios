@@ -74,8 +74,9 @@
                                 <select id="idProfile" type="text" class="form-controll{{ $errors->has('password') ? ' is-invalid' : '' }}" name="idProfile" required>
                                     <option value="admin">Administrador</option>
                                     <option value="digital">Canal digital</option>
-                                    <option value="community">community</option>
+                                    <option value="community">Community</option>
                                     <option value="libranza">Libranza</option>
+                                    <option value="fabrica">Fábrica de crédito</option>
                                 </select>
                                
 
