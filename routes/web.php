@@ -168,6 +168,7 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     Route::get('/leads', function(){
         return view('fabricaLeads.leads');
     });
+});
 
 Route::get("/libranzaLeads",function(){
 	return view('libranzaLeads.index');
