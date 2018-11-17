@@ -62,7 +62,10 @@ class OportuyaController extends Controller
             [ 'label' => 'LORICA', 'value' => 'LORICA' ],
             [ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
         ];
-        $images=Imagenes::all();
+        $images=Imagenes::selectRaw('*')
+                        ->where('category','=','1')
+                        ->where('isSlide','=','1')
+                        ->get();
         return view('oportuya.index',['images'=>$images, 'cities' => $cities]);
     }
 
