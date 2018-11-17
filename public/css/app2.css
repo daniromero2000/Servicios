@@ -108,7 +108,7 @@
 }
 .containerText-creditoLibranzaCards{
 	padding: 60px 30px 10px 110px;
-	min-height: 320px;
+	min-height: 280px;
 }
 
 .creditoLibranza-buttonWhatsApp{
@@ -118,8 +118,6 @@
 	padding: 8px 10px 8px 10px;
 	background: #3fcf64;
 	color: white;
-	position: absolute;
-	bottom: 20px;
 }
 
 .creditoLibranza-buttonWhatsApp:hover, .creditoLibranza-buttonWhatsApp:visited, .creditoLibranza-buttonWhatsApp:focus, .creditoLibranza-buttonWhatsApp:active{

@@ -82,7 +82,11 @@
 								A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
 								<strong>¡Compralo a crédito!</strong>
 							</p>
-							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20electrodoméstico" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
+						<div class="row" style="padding-bottom: 15px;">
+							<div class="col-12 text-center">
+								<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20electrodoméstico" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -95,7 +99,11 @@
 								Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
 								<strong>¡Compra tu moto a crédito!</strong>
 							</p>
-							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20una%20moto" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
+						<div class="row" style="padding-bottom: 15px;">
+							<div class="col-12 text-center">
+								<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20una%20moto" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -108,7 +116,11 @@
 								Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
 								<strong>¡Viaja Ahora!</strong>
 							</p>
-							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20viaje" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
+						<div class="row" style="padding-bottom: 15px;">
+							<div class="col-12 text-center">
+								<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20viaje" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -120,7 +132,11 @@
 							<p class="creditoLibranza-text">
 								Es un préstamo de Libre Destino que se aprueba a personas naturales, vinculadas a entidades con las cuales existen convenios previamente establecido con LAGOBO y cuyas cuotas se descuentan mensualmente del pago de nómina.
 							</p>
-							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20libre%20inversión" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
+						<div class="row" style="padding-bottom: 15px;">
+							<div class="col-12 text-center">
+								<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20libre%20inversión" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -132,7 +148,11 @@
 							<p class="creditoLibranza-text">
 								Sabemos lo importante administrar mejor tu dinero. Por eso, te ofrecemos unificar tus deudas que presentas con otras entidades en un solo crédito con Tasa y Plazo Fijo para mejorar tu flujo de caja.
 							</p>
-							<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20por%20medio%20de%20compra%20de%20cartera" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+						</div>
+						<div class="row" style="padding-bottom: 15px;">
+							<div class="col-12 text-center">
+								<a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20por%20medio%20de%20compra%20de%20cartera" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
