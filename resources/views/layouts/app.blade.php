@@ -249,7 +249,7 @@
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>
 						</div>
-						<span class="footer-menuText">SÍGUENOS:</span> <a href="#"><img src="{{ asset('images/footer-facebookIcon.png')}}" alt="Facebook Oportunidades Servicios Financieros" class="img-fluid"></a>
+						<span class="footer-menuText">SÍGUENOS:</span> <a href="https://www.facebook.com/almacenes.oportunidades/" target="_blank"><img src="{{ asset('images/footer-facebookIcon.png')}}" alt="Facebook Oportunidades Servicios Financieros" class="img-fluid"></a>
 					</div>
 				</div>
 			</div>
