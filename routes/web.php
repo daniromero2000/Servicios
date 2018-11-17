@@ -143,7 +143,11 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
+
+
 Route::post('community/addCampaign','Admin\CampaignController@store');
+Route::post('community/deleteCampaign/{idCampaign}','Admin\CampaignController@destroy');
+Route::post('community/updateCampaign/{idCampaign}','Admin\CampaignController@update');
 
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
@@ -151,6 +155,29 @@ Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
         return view('leads.leads');
     });
 });
+
+Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
+
+    Route::get('/leads', function(){
+        return view('libranzaLeads.leads');
+    });
+});
+
+Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
+
+    Route::get('/leads', function(){
+        return view('fabricaLeads.leads');
+    });
+
+Route::get("/libranzaLeads",function(){
+	return view('libranzaLeads.index');
+});
+
+Route::get("/fabricaLeads",function(){
+	return view('fabricaLeads.index');
+});
+
+
 
 Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
 
