@@ -10,7 +10,7 @@
 			<p class="menuItem-text">
 				Satisfacer las necesidades de nuestros clientes a través de la comercialización y distribución de soluciones para el hogar en electrodomésticos, gasodomésticos, muebles, tecnologías y servicios financieros, generando experiencias positivas por medio de un excelente servicio, calidad e innovación en nuestros productos, mejorando continuamente los procesos e integrando políticas de sostenibilidad ambiental, apoyados por un talento humano capacitado y motivado.
 			</p>
-			<h2 class="menuItem-subtitle">Visón</h2>
+			<h2 class="menuItem-subtitle">Visión</h2>
 			<p class="menuItem-text">
 				Continuar siendo en el 2020 una empresa reconocida en la comercialización y distribución de electrodomésticos, gasodomésticos, muebles, tecnologías y servicios financieros; líder a nivel nacional, caracterizados por la excelencia del servicio, la calidad e innovación de los productos que impactan positivamente a nuestros clientes, fomentando continuamente políticas medioambientales que contribuyan al desarrollo sostenible y bienestar de todos nuestros colaboradores.
 			</p>

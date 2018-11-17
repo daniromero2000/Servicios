@@ -7,13 +7,17 @@
             <div class="card-body">
                 <form ng-submit="searchLeads()">
                     <div class="row form-group">
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-4">
                             <label for="city">Ciudad</label>
                             <select id="city" class="form-control" ng-model="q.city" ng-options="city.value as city.label for city in cities"></select>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-4">
                             <label for="typeService">Tipo de Servicio</label>
                             <select id="typeService" class="form-control" ng-model="q.typeService" ng-options="service.value as service.label for service in typeServices"></select>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for="state">Estado</label>
+                            <select id="state" class="form-control" ng-model="q.state" ng-options="state.value as state.label for state in typeStates"></select>
                         </div>
                     </div>
                     <div class="row form-group">
