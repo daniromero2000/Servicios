@@ -67,7 +67,9 @@ class UserController extends Controller
         }elseif($request->get('idProfile') == "digital"){
                 $user->idProfile=2;
         }elseif($request->get('idProfile') == "libranza"){
-                $user->idProfile=3;            
+                $user->idProfile=3;
+        }elseif($request->get('idProfile') == "fabrica"){
+                $user->idProfile=5;
         }else{
                 $user->idProfile=4; 
         }    

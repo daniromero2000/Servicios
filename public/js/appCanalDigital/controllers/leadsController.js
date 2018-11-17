@@ -5,7 +5,8 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
-		'typeService': ''
+		'typeService': '',
+		'state': ''
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
@@ -89,11 +90,34 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		},
 	];
 
+	$scope.typeStates = [
+		{
+			label: 'Pendiente',
+			value: 0
+		},
+		{
+			label: 'En estudio',
+			value: 1
+		},
+		{
+			label: 'En espera',
+			value: 2
+		},
+		{
+			label: 'Aprobado',
+			value: 3
+		},
+		{
+			label: 'Negado',
+			value: 4
+		}
+	];
+
 	$scope.getLeads = function(){
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService,
+		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state,
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.q.initFrom += response.data.length;
@@ -120,7 +144,8 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',
-			'typeService': ''
+			'typeService': '',
+			'state': ''
 		};
 		$scope.filtros = false;
 		$scope.getLeads();
