@@ -1,3 +1,5 @@
+
+
 app.controller('campaignsController', function($scope, $http, $rootScope){
 	$scope.q = {
 		'q': '',
@@ -47,7 +49,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		$scope.q.initFrom = 0;
 		$scope.campaigns = [];
 		$scope.getCampaigns();
-		console.log($scope.campaigns);
+		//console.log($scope.campaigns);
 	};
 
 	$scope.resetFiltros = function (){
@@ -67,13 +69,35 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 	$scope.addCampaignForm = function(){
 		
 		$("#addCampaign").modal("show");
+		
+    // not need Jquery for doing that
+    	
+
+	
 	};
 
 	$scope.addCampaign = function(){
 	
+	
+	var csrftoken= '';
+	var metas = window.document.getElementsByTagName('meta');
+
+    // finding one has csrf token 
+	    for(var i=0 ; i < metas.length ; i++) {
+
+	        if ( metas[i].name === "csrf-token") {
+
+	            metas[i].content;       
+	        }
+	    }  
+
 		$http({
 		  method: 'POST',
 		  url: 'community/addCampaign',
+		  headers: {
+		     'X-CSRF-TOKEN': csrftoken
+
+		   },
 		  data:$scope.campaign
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -81,7 +105,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 				$("#addCampaign").modal("hide");
 			}
 		}, function errorCallback(response) {
-		    console.log($scope.campaign);
+		   // console.log($scope.campaign);
 		});
 	};
 
