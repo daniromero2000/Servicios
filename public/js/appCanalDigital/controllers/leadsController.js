@@ -156,7 +156,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$("#viewLead").modal("show");
 	};
 
-	$scope.viewComments = function(name, lastName, idLead, init=true){
+	$scope.viewComments = function(name, lastName, state, idLead, init=true){
 		$scope.comments = [];
 		$scope.idLead = idLead;
 		$http({
@@ -172,6 +172,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 				$("#viewComments").modal("show");
 				$scope.nameLead = name;
 				$scope.lastNameLead = lastName;
+				$scope.state = state;
 			}
 		}, function errorCallback(response) {
 		    

@@ -98,7 +98,7 @@
                 <td>@{{ lead.created_at }}</td>
                 <td>
                     <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
-                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.id)"></i>
+                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-check-double cursor"
                     ng-if="lead.state == 1 || lead.state == 2"
@@ -256,7 +256,7 @@
                         </div>
                         <hr>
                     </div>
-                    <div class="row resetRow">
+                    <div class="row resetRow" ng-if="state != 4">
                         <div class="col-12 text-right form-group">
                             <button type="button" ng-click="viewAddComent = !viewAddComent" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                         </div>

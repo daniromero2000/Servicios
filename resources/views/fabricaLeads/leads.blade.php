@@ -97,7 +97,7 @@
                 <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
                 <td>
-                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.id)"></i>
+                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-check-double cursor"
                     ng-if="lead.state == 1 || lead.state == 2"
@@ -235,8 +235,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
            </div>
            <div class="modal-body">
                 <div class="container">
@@ -255,7 +255,7 @@
                         </div>
                         <hr>
                     </div>
-                    <div class="row resetRow">
+                    <div class="row resetRow " ng-if="state != 4">
                         <div class="col-12 text-right form-group">
                             <button type="button" ng-click="viewAddComent = !viewAddComent" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                         </div>
