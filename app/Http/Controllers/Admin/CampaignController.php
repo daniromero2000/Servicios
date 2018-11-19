@@ -25,6 +25,14 @@ class CampaignController extends Controller
             $query .= sprintf(" AND (`name` LIKE '%s') ", '%'.$request->get('q').'%');
         }
 
+        if($request->get('socialNetwork')){
+            $query .= sprintf(" AND `socialNetwork` = '%s' ", $request->get('socialNetwork'));
+        }
+
+        if($request->get('budget')){
+            $query .= sprintf(" AND `budget` = '%s' ", $request->get('budget'));
+        }
+
         if($request->get('beginDate')){
             $query .= sprintf(" AND `beginDate` = '%s' ", $request->get('beginDate'));
         }
@@ -63,7 +71,20 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $campaign = new Campaigns;
+        $campaign->name = $request->get('name');
+        $campaign->socialNetwork = $request->get('socialNetwork');
+        $campaign->description = $request->get('description');
+        $campaign->beginDate = $request->get('beginDate');
+        $campaign->endingDate = $request->get('endingDate');
+        $campaign->budget = intval($request->get('budget'));
+        $campaign->usedBudget = intval($request->get('usedBudget'));
+
+        $campaign->save();
+
+        return response()->json([true]);
+
     }
 
     /**
@@ -74,7 +95,9 @@ class CampaignController extends Controller
      */
     public function show($id)
     {
-        //
+        $campaign=Campaigns::findOrfail($id);
+
+        return response()->json($campaign);
     }
 
     /**
@@ -95,9 +118,21 @@ class CampaignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $campaign=Campaigns::findOrfail($request->get('id'));
+        $campaign->name = $request->get('name');
+        $campaign->socialNetwork = $request->get('socialNetwork');
+        $campaign->description = $request->get('description');
+        $campaign->beginDate = $request->get('beginDate');
+        $campaign->endingDate = $request->get('endingDate');
+        $campaign->budget = intval($request->get('budget'));
+        $campaign->usedBudget = intval($request->get('usedBudget'));
+        $campaign->save();
+
+        return response()->json([true]);
+
     }
 
     /**
@@ -108,6 +143,10 @@ class CampaignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+            $Campaign=Campaigns::findOrfail($id);
+            $Campaign->delete();
+
+            return response()->json([true]);
     }
 }
