@@ -135,6 +135,7 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 	};
 
 	$scope.resetFiltros = function (){
+		$scope.leads = [];
 		$scope.q = {
 			'q': '',
 			'initFrom': 0,

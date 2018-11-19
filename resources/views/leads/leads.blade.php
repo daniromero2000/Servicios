@@ -167,9 +167,9 @@
             <div class="modal-header">
                <h4 class="modal-title" id="myModalLabel">Ver Contacto</h4>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
-               <div class="container">
+            </div>
+            <div class="modal-body">
+                <div class="container">
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Nombre:</label>
