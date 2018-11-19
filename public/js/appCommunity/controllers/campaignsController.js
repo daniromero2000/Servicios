@@ -69,27 +69,14 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 	$scope.addCampaignForm = function(){
 		
 		$("#addCampaign").modal("show");
-		
-    // not need Jquery for doing that
-    	
-
 	
 	};
 
-	$scope.addCampaign = function(){
-	
-	
-	var csrftoken= '';
-	var metas = window.document.getElementsByTagName('meta');
 
-    // finding one has csrf token 
-	    for(var i=0 ; i < metas.length ; i++) {
 
-	        if ( metas[i].name === "csrf-token") {
+	$scope.addCampaign = function(){	
 
-	            metas[i].content;       
-	        }
-	    }  
+	var csrftoken = document.getElementById('addForm').children[0].value;	
 
 		$http({
 		  method: 'POST',
