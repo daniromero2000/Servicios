@@ -93,6 +93,7 @@ Route::resource('viajes','Admin\ViajesController');
 Route::resource('dashboard','Admin\DashboardController');
 Route::resource('users','Admin\UserController');
 Route::resource('campaign','Admin\CampaignController');
+Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 
 
 
@@ -144,11 +145,12 @@ Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addC
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
-
+/*Community routes*/
 Route::get('community/viewCampaign/{lead}','Admin\CampaignController@show');
 Route::post('community/addCampaign','Admin\CampaignController@store');
 Route::post('community/deleteCampaign/{idCampaign}','Admin\CampaignController@destroy');
 Route::post('community/updateCampaign','Admin\CampaignController@update');
+
 
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
@@ -178,6 +180,7 @@ Route::get("/libranzaLeads",function(){
 Route::get("/fabricaLeads",function(){
 	return view('fabricaLeads.index');
 });
+
 
 
 
