@@ -153,7 +153,7 @@
                 <div class="container">
                     <div class="row resetRow " >
                         <div class="col-12 form-group">
-                            <form ng-submit="addCampaign()">
+                            <form ng-submit="addCampaign()" id="addForm">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="name">Nombre de campaña</label>

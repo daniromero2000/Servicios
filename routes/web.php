@@ -147,9 +147,9 @@ Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsC
 
 /*Community routes*/
 Route::get('community/viewCampaign/{lead}','Admin\CampaignController@show');
-Route::post('community/addCampaign','Admin\CampaignController@store');
+Route::post('community/addCampaign','Admin\CampaignController@store')->middleware('cors');;
 Route::post('community/deleteCampaign/{idCampaign}','Admin\CampaignController@destroy');
-Route::post('community/updateCampaign','Admin\CampaignController@update');
+Route::post('community/updateCampaign','Admin\CampaignController@update')->middleware('cors');;
 
 
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
