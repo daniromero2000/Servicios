@@ -588,6 +588,18 @@
     box-shadow: 0px 2px 26px -1px rgba(60,156,216,1);
 }
 
+.ourStores-titleStore{
+	color: #1d84c3;
+	font-weight: 600;
+}
+
+.ourStores-titleStore:hover, .ourStores-titleStore:active, .ourStores-titleStore:visited, .ourStores-titleStore:focus{
+	color: #1d84c3;
+	text-decoration: none;
+	font-weight: 700;
+}
+
+
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;

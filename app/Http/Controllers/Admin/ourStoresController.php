@@ -17,217 +17,217 @@ class ourStoresController extends Controller
         $stores = [
             [
                 'number' => 1,
-                'name' => 'ALMACEN PLANETA RICA',
+                'name' => 'ALMACÉN PLANETA RICA',
                 'addres' => 'CL 20 No. 7-46', 
                 'city' => 'PLANETA RICA - CORDOBA',
                 'telephone' => '(4)7767598 -(4)7767291'
             ],
             [
                 'number' => 2,
-                'name' => 'ALMACEN COROZALCR', 
-                'addres' => '26 No. 32-55 BRR San Juan Centro',
+                'name' => 'ALMACÉN COROZAL', 
+                'addres' => 'CR 26 No. 32-55 BRR San Juan Centro',
                 'city' => 'COROZAL - SUCRE',
                 'telephone'=>'(5) 2841374'
             ],
             [
                 'number' => 3,
-                'name' => 'ALMACEN MONTELIBANO',
+                'name' => 'ALMACÉN MONTELIBANO',
                 'addres' => 'CR 13 No. 14A–67 LC 1 ESQ',
                 'city' => 'MONTELIBANO - CORDOBA',
                 'telephone' => '(4)7722157-(4)7721674'
             ],
             [
                 'number' => 4,
-                'name' => 'ALMACEN SINCELEJO',
+                'name' => 'ALMACÉN SINCELEJO',
                 'addres' => 'CL 21 No.21-82',
                 'city' => 'SINCELEJO - SUCRE',
                 'telephone' => '(5)2821181'
             ],
             [
                 'number' => 5,
-                'name' => 'ALMACEN GRANADA',
+                'name' => 'ALMACÉN GRANADA',
                 'addres' => 'CR 13 No.22-30',
                 'city' => 'GRANADA - META',
                 'telephone' => '(8)6582415'
             ],
             [
                 'number' => 6,
-                'name' => 'ALMACEN PUERTO BERRIO',
+                'name' => 'ALMACÉN PUERTO BERRIO',
                 'addres' => 'CR 4 ED David-Premier No. 53-27/25 CENTRO',
                 'city' => 'PUERTO BERRIO - ANTIOQUIA',
                 'telephone' => '(4)8327546-(4)8330252'
             ],
             [
                 'number' => 7,
-                'name' => 'ALMACEN VILLAVICENCIO',
+                'name' => 'ALMACÉN VILLAVICENCIO',
                 'addres' => 'CR 29 No. 37-16/18',
                 'city' => 'VILLAVICENCIO - META',
                 'telephone' => '(8)6627721-(8) 6627337-(8)6623952'
             ],
             [
                 'number' => 8,
-                'name' => 'ALMACEN PUERTO BOYACA',
+                'name' => 'ALMACÉN PUERTO BOYACA',
                 'addres' => 'CR 2 con CL 13 ESQ No. 12-79 CENTRO',
                 'city' => 'PUERTO BOYACA - BOYACA',
                 'telephone' => '(8)7381543-(8)7384532'
             ],
             [
                 'number' => 9,
-                'name' => 'ALMACEN PUERTO LOPEZ',
+                'name' => 'ALMACÉN PUERTO LOPEZ',
                 'addres' => 'CL 5 No. 7-17',
                 'city' => 'PUERTO LOPEZ - META',
                 'telephone' => '(8)6452085'
             ],
             [
                 'number' => 10,
-                'name' => 'ALMACEN CHINCHINÁ',
+                'name' => 'ALMACÉN CHINCHINÁ',
                 'addres' => 'CR 8 No. 8-19',
                 'city' => 'CHINCHINÁ - CALDAS',
                 'telephone' => '(6)8503315'
             ],
             [
                 'number' => 11,
-                'name' => 'ALMACEN AGUACHICA',
+                'name' => 'ALMACÉN AGUACHICA',
                 'addres' => 'CL 5 No. 22-33',
                 'city' => 'AGUACHICA - CESAR',
                 'telephone' => '(5)5652549'
             ],
             [
                 'number' => 12,
-                'name' => 'ALMACEN BARRANCABERMEJA',
+                'name' => 'ALMACÉN BARRANCABERMEJA',
                 'addres' => 'CL 49 No. 11ª-47 Edificio Los Balcones (Sector Comercial)',
                 'city' => 'BARRANCABERMEJA - SANTANDER',
                 'telephone' => '(7)6115188'
             ],
             [
                 'number' => 13,
-                'name' => 'ALMACEN TULUÁ',
+                'name' => 'ALMACÉN TULUÁ',
                 'addres' => 'CL 25 No. 22-60',
                 'city' => 'TULUÁ - VALLE DEL CAUCA',
                 'telephone' => '(2) 2245051-(2)2246998'
             ],
             [
                 'number' => 14,
-                'name' => 'ALMACEN PEREIRA',
+                'name' => 'ALMACÉN PEREIRA',
                 'addres' => 'CR 8 No. 20-51',
                 'city' => 'PEREIRA - RISARALDA',
                 'telephone' => '(6)3350470–(6)3344985'
             ],
             [
                 'number' => 15,
-                'name' => 'ALMACEN PEREIRA II',
+                'name' => 'ALMACÉN PEREIRA II',
                 'addres' => 'CR 8 No. 21-18',
                 'city' => 'PEREIRA - RISARALDA',
                 'telephone' => '(6)3355949-(6)3343296'
             ],
             [
                 'number' => 16,
-                'name' => 'ALMACEN LA VIRGINIA',
+                'name' => 'ALMACÉN LA VIRGINIA',
                 'addres' => 'LC Comercial CR. 7 No. 8-28',
                 'city' => 'LA VIRGINIA - RISARALDA',
                 'telephone' => '(6)3677868-(6)3680131'
             ],
             [
                 'number' => 17,
-                'name' => 'ALMACEN SANTA ROSA',
+                'name' => 'ALMACÉN SANTA ROSA',
                 'addres' => 'CR 14 No. 15 – 63',
                 'city' => 'SANTA ROSA - RISARALDA',
                 'telephone' => '(6)3642875'
             ],
             [
                 'number' => 18,
-                'name' => 'ALMACEN ARMENIA',
+                'name' => 'ALMACÉN ARMENIA',
                 'addres' => 'CR 17 No. 19-48',
                 'city' => 'ARMENIA - QUINDIO',
                 'telephone' => '(6)7444522'
             ],
             [
                 'number' => 19,
-                'name' => 'ALMACEN GIRARDOT',
+                'name' => 'ALMACÉN GIRARDOT',
                 'addres' => 'CL 16 No. 10 – 41 BRR CEN',
                 'city' => 'GIRARDOT - CUNDINAMARCA',
                 'telephone' => '(1)8889933'
             ],
             [
                 'number' => 20,
-                'name' => 'ALMACEN MANIZALES',
+                'name' => 'ALMACÉN MANIZALES',
                 'addres' => 'CR. 22 No. 23-51',
                 'city' => 'MANIZALES - CALDAS',
                 'telephone' => '(6)8847374-(6)8847176-(6)8847407'
             ],
             [
                 'number' => 21,
-                'name' => 'ALMACEN LA DORADA',
+                'name' => 'ALMACÉN LA DORADA',
                 'addres' => 'CR. 2 No. 14 – 35/37',
                 'city' => 'LA DORADA - CALDAS',
                 'telephone' => '(6) 8391341'
             ],
             [
                 'number' => 22,
-                'name' => 'ALMACEN MAGANGUÉ',
+                'name' => 'ALMACÉN MAGANGUÉ',
                 'addres' => 'Sector Centro CL 11 No.3-11Calle del Colegio Piso 1',
                 'city' => 'MAGANGUÉ - BOLIVAR',
                 'telephone' => '(5)6875343'
             ],
             [
                 'number' => 23,
-                'name' => 'ALMACEN VILLANUEVA',
+                'name' => 'ALMACÉN VILLANUEVA',
                 'addres' => 'CL 11 No. 10-03',
                 'city' => 'VILLANUEVA - CASANARE',
                 'telephone' => '(8)6243060'
             ],
             [
                 'number' => 24,
-                'name' => 'ALMACEN IBAGUÉ',
+                'name' => 'ALMACÉN IBAGUÉ',
                 'addres' => 'CR. 2 No. 15-42',
                 'city' => 'IBAGUÉ - TOLIMA',
                 'telephone' => '(8)2618937-(8)2636013'
             ],
             [
                 'number' => 25,
-                'name' => 'ALMACEN SINCELEJO',
+                'name' => 'ALMACÉN SINCELEJO',
                 'addres' => 'CL 22 No.18 - 04 LCl 103 CEN',
                 'city' => 'SINCELEJO - SUCRE',
                 'telephone' => '(5)2809103-(5)2820989'
             ],
             [
                 'number' => 26,
-                'name' => 'ALMACEN MONTERÍA',
+                'name' => 'ALMACÉN MONTERÍA',
                 'addres' => 'CL 30 No. 2-28',
                 'city' => 'MONTERÍA - CÓRDOBA',
                 'telephone' => '(4) 7822769(4)7822536(4)7824131'
             ],
             [
                 'number' => 27,
-                'name' => 'ALMACEN ACACIAS',
+                'name' => 'ALMACÉN ACACIAS',
                 'addres' => 'CR 18 No. 13-35 BRR CEN',
                 'city' => 'ACACIAS - META',
                 'telephone' => '(8)6567803'
             ],
             [
                 'number' => 28,
-                'name' => 'ALMACEN PITALITO',
+                'name' => 'ALMACÉN PITALITO',
                 'addres' => 'CL 7 No. 5- 41 Primer piso',
                 'city' => 'PITALITO - HUILA',
                 'telephone' => '(8) 8351380'
             ],
             [
                 'number' => 29,
-                'name' => 'ALMACEN CERETÉ',
+                'name' => 'ALMACÉN CERETÉ',
                 'addres' => 'CR15 No. 9A-30 LC 6 AV. Santader',
                 'city' => 'CERETÉ - CORDOBA',
                 'telephone' => '(4)7745401'
             ],
             [
                 'number' => 30,
-                'name' => 'ALMACEN GARZON',
+                'name' => 'ALMACÉN GARZON',
                 'addres' => 'CR 11 No. 8-36 LC Comercial',
                 'city' => 'GARZON - HUILA',
                 'telephone' => '(8) 8331314'
             ],
             [
                 'number' => 31,
-                'name' => 'ALMACEN ARMENIA',
+                'name' => 'ALMACÉN ARMENIA',
                 'addres' => 'CR 18 No. 20-00',
                 'city' => 'ARMENIA - QUINDIO',
                 'telephone' => '(6)7442320'
@@ -241,35 +241,35 @@ class ourStoresController extends Controller
             ],
             [
                 'number' => 33,
-                'name' => 'ALMACEN LORICA',
+                'name' => 'ALMACÉN LORICA',
                 'addres' => 'CL 4 A No.23-19',
                 'city' => 'LORICA - CORDOBA',
                 'telephone' => '(4) 7735718'
             ],
             [
                 'number' => 34,
-                'name' => 'ALMACEN YOPAL',
+                'name' => 'ALMACÉN YOPAL',
                 'addres' => 'CR 21 No. 8-31',
                 'city' => 'SAN BORJA - LIMA',
                 'telephone' => '(8)6354497-(8)6354978'
             ],
             [
                 'number' => 35,
-                'name' => 'ALMACEN AGUAZUL',
+                'name' => 'ALMACÉN AGUAZUL',
                 'addres' => 'CL 10 No.15-49',
                 'city' => 'AGUAZUL - CASANARE',
                 'telephone' => '(8) 6383431-(8)6387096'
             ],
             [
                 'number' => 36,
-                'name' => 'ALMACEN ESPINAL',
+                'name' => 'ALMACÉN ESPINAL',
                 'addres' => 'CR 4 No. 8-25',
                 'city' => 'ESPINAL - TOLIMA',
                 'telephone' => '(8)2484459-(8)2484550'
             ],
             [
                 'number' => 37,
-                'name' => 'ALMACEN MARIQUITA',
+                'name' => 'ALMACÉN MARIQUITA',
                 'addres' => 'CR 4 No. 7-28/30',
                 'city' => 'MARIQUITA - TOLIMA',
                 'telephone' => '(8)2522919-(8)2524912'

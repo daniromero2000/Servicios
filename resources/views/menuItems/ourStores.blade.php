@@ -13,13 +13,13 @@
 							<div class="card">
 								<div class="card-header" id="heading{{ $store['number'] }}">
 									<h5 class="mb-0">
-									<button class="btn btn-link" data-toggle="collapse" data-target="#store{{ $store['number'] }}" aria-expanded="false" aria-controls="store{{ $store['number'] }}">
+									<button class="btn btn-link ourStores-titleStore" data-toggle="collapse" data-target="#store{{ $store['number'] }}" aria-expanded="false" aria-controls="store{{ $store['number'] }}">
 										{{ $store['name'] }}
 									</button>
 									</h5>
 								</div>
 
-								<div id="store{{ $store['number'] }}" class="collapse " aria-labelledby="heading{{ $store['number'] }}" data-parent="#acorddion">
+								<div id="store{{ $store['number'] }}" class="collapse @if($store['number'] == 1) show @endif" aria-labelledby="heading{{ $store['number'] }}" data-parent="#acorddion">
 									<div class="card-body">
 										{{ $store['name'] }} <br>
 										{{ $store['addres'] }} <br>
