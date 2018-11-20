@@ -122,7 +122,7 @@
 		<div id="preHeader">
 			<div class="container-itemsPreHeader">
 				<a class="preHeader-item  borderLeftItems" href="/quienes-somos">Quiénes somos</a>
-				<a class="preHeader-item  borderLeftItems" href="#">Oficinas</a>
+				<a class="preHeader-item  borderLeftItems" href="/Nuestras-tiendas">Oficinas</a>
 				<a class="preHeader-item  borderLeftItems" href="#">01 8000 517793 o 307 3029 en Bogotá</a>
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
 				@auth

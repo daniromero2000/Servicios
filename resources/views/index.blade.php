@@ -171,7 +171,7 @@
 					<img src="/images/convenios-puntosServicioIcon.png" alt="Puntos de Servicio" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Puntos de servicio</h3>
 					<p class="convenios-textInfo">Tenemos 48 Puntos de servicio a tu disposición, donde encontrarás todo lo que tenemos para ti.</p>
-					<a href="" class="convenios-button">Ver más</a>
+					<a href="/Nuestras-tiendas" class="convenios-button">Ver más</a>
 				</div>
 			</div>
 		</div>
