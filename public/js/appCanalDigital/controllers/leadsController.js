@@ -6,7 +6,8 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		'fecha_ini': '',
 		'fecha_fin': '',
 		'typeService': '',
-		'state': ''
+		'state': '',
+		'channel':''
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
@@ -117,7 +118,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state,
+		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.q.initFrom += response.data.length;
@@ -179,6 +180,13 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		    
 		});
 	};
+
+
+	$scope.viewCommentChange = function(){
+		$scope.viewAddComent = !$scope.viewAddComent;
+	};
+
+	
 
 	$scope.addComment = function(){
 		$scope.comment.idLead = $scope.idLead;
