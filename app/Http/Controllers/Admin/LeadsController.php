@@ -163,7 +163,8 @@ class LeadsController extends Controller
         $lead->city=$request->city;
         $lead->typeProduct=$request->typeProduct;
         $lead->typeService=$request->typeService;
-        $lead->channel=$request->channel;  
+        $lead->channel=$request->channel; 
+        $lead->termsAndConditions = 2; 
 
         $lead->save();
 
@@ -182,7 +183,7 @@ class LeadsController extends Controller
         
         $lead=Lead::findOrfail($id);
         $lead->delete();
-        
+
         return response()->json([true]);
     }
 
