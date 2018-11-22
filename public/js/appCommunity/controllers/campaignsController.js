@@ -92,7 +92,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 				$("#addCampaign").modal("hide");
 			}
 		}, function errorCallback(response) {
-		   // console.log($scope.campaign);
+		   console.log(response);
 		});
 	};
 
