@@ -94,18 +94,11 @@ Route::resource('dashboard','Admin\DashboardController');
 Route::resource('users','Admin\UserController');
 Route::resource('campaign','Admin\CampaignController');
 Route::resource('Nuestras-tiendas','Admin\ourStoresController');
+Route::resource('communityleads','Admin\CommunityController');
 
 
 
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
-
-Route::get("/canalDigital",function(){
-	return view('leads.index');
-});
-
-Route::get("/community",function(){
-	return view('campaign.index');
-});
 
 
 
@@ -151,6 +144,34 @@ Route::post('community/addCampaign','Admin\CampaignController@store')->middlewar
 Route::post('community/deleteCampaign/{idCampaign}','Admin\CampaignController@destroy');
 Route::post('community/updateCampaign','Admin\CampaignController@update')->middleware('cors');
 
+/*Community Leads routes*/
+Route::post('communityLeads/addCommunityLeads','Admin\LeadsController@addCommunityLeads');
+Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
+Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
+Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
+//Route::get('communityLeads/viewCommunityLeads','Admin\CommunityController@index');
+
+
+Route::get("/canalDigital",function(){
+	return view('leads.index');
+});
+
+Route::get("/communityLeads",function(){
+	return view('communityLeads.index');
+});
+
+Route::get('/community',function(){
+		return view('campaign.index');
+	});
+
+Route::get("/libranzaLeads",function(){
+	return view('libranzaLeads.index');
+});
+
+Route::get("/fabricaLeads",function(){
+	return view('fabricaLeads.index');
+});
+
 
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
@@ -173,15 +194,14 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     });
 });
 
-Route::get("/libranzaLeads",function(){
-	return view('libranzaLeads.index');
+
+Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
+
+	Route::get('/leads',function(){
+		return view('communityLeads.leads');
+	});
+
 });
-
-Route::get("/fabricaLeads",function(){
-	return view('fabricaLeads.index');
-});
-
-
 
 
 Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
