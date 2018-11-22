@@ -49,7 +49,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		$scope.q.initFrom = 0;
 		$scope.campaigns = [];
 		$scope.getCampaigns();
-		//console.log($scope.campaigns);
+		
 	};
 
 	$scope.resetFiltros = function (){
@@ -92,7 +92,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 				$("#addCampaign").modal("hide");
 			}
 		}, function errorCallback(response) {
-		   console.log(response);
+		   
 		});
 	};
 
@@ -172,13 +172,13 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		 	url: 'community/updateCampaign',
 		 	data: $scope.campaign
 		}).then(function successCallback(response){
-			console.log(response);
+			
 			if(response.data != false){
 				$scope.searchCampaign();
 				$('#updateModal').modal('hide');
 			}
 		},function errorCallback(response){
-			console.log('update');
+			
 		});
 	}
 	
