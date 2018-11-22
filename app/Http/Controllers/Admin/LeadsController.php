@@ -27,10 +27,10 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
-        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
+        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
             FROM leads 
             LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`
-            WHERE 1";
+            WHERE 1 ";
 
         if($request->get('q')){
             $query .= sprintf(" AND (leads.`name` LIKE '%s' OR leads.`lastName` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
@@ -63,6 +63,10 @@ class LeadsController extends Controller
         if($request->get('libranzaLead')){
             $query .= sprintf(" AND leads.`state` != 0 ");
         }
+
+         if($request->get('communityLead')){
+            $query .= sprintf(" AND leads.`channel` = 2");
+        }
         
         $query .= " ORDER BY leads.`id` DESC";
 
@@ -73,6 +77,8 @@ class LeadsController extends Controller
         return $resp;
     }
 
+
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -90,8 +96,8 @@ class LeadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {    
+        
     }
 
     /**
@@ -144,6 +150,58 @@ class LeadsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     public function addCommunityLeads(Request $request){
+
+        $lead= new Lead;
+
+        $lead->name=$request->name;
+        $lead->lastName=$request->lastName;
+        $lead->email=$request->email;
+        $lead->telephone=$request->telephone;
+        $lead->city=$request->city;
+        $lead->typeProduct=$request->typeProduct;
+        $lead->typeService=$request->typeService;
+        $lead->channel=$request->channel;  
+
+        $lead->save();
+
+        return response()->json($lead);
+        
+    }
+
+    public function viewCommunityLeads($id){
+
+        $lead=Lead::findOrfail($id);
+
+        return response()->json($lead);
+    }
+
+    public function deleteCommunityLeads($id){
+        
+        $lead=Lead::findOrfail($id);
+        $lead->delete();
+        
+        return response()->json([true]);
+    }
+
+
+    public function updateCommunityLeads(Request $request){
+
+        $lead=lead::findOrfail($request->get('id'));
+        $lead->name = $request->get('name');
+        $lead->lastName = $request->get('lastName');
+        $lead->email = $request->get('email');
+        $lead->telephone = $request->get('telephone');
+        $lead->city = $request->get('city');
+        $lead->typeProduct = $request->get('typeProduct');
+        $lead->typeService = $request->get('typeService');
+        $lead->channel = $request->get('channel');
+
+        $lead->save();
+
+        return response()->json([true]);
     }
 
 
