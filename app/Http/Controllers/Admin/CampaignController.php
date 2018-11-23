@@ -17,9 +17,9 @@ class CampaignController extends Controller
     public function index(Request $request)
     {
 
-          $query = "SELECT `id`, `name`, `description`, `socialNetwork`, `beginDate`, `endingDate`, `budget`, `usedBudget` 
+          $query = "SELECT `id`, `name`, `description`, `socialNetwork`, `beginDate`, `endingDate`, `budget`, `usedBudget`,`remove` 
             FROM campaigns 
-            WHERE 1";
+            WHERE 1 AND `remove`= 0";
 
         if($request->get('q')){
             $query .= sprintf(" AND (`name` LIKE '%s') ", '%'.$request->get('q').'%');
@@ -133,6 +133,15 @@ class CampaignController extends Controller
 
         return response()->json([true]);
 
+    }
+
+    public function deleteCampaign(Request $request){
+        $campaign=Campaigns::findOrfail($request->get('id'));
+        $campaign->remove = 1;
+
+        $campaign->save();
+
+        return response()->json($campaign);
     }
 
     /**
