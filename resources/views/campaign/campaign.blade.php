@@ -98,8 +98,9 @@
                 <td>@{{ campaign.budget }}</td>
                 <td>@{{ campaign.usedBudget }}</td>
                 <td>
-                    <i class="fas fa-times cursor" title="eliminar campaña" ng-click="showDialog(campaign.id)"></i>
+                    <i class="fa fa-eye" title="Ver detalles" ng-click="viewDetails(campaign.id)"></i>                           
                     <i class="fas fa-edit cursor" title="Actualizar campaña" ng-click="showUpdateDialog(campaign.id)"></i>
+                    <i class="fas fa-times cursor" ng-if="campaign.remove == 0" title="eliminar campaña" ng-click="showDialog(campaign.id)"></i>
                 </td>
             </tr>
         </tbody>
@@ -120,9 +121,65 @@
     </div>
 </div>
 
+<!-- view modal-->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="myModalLabel">@{{campaign.name}}</h4>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+           </div>
+           <div class="modal-body">
+                <div class="container">
+                    <div class="container">
+                        <div class="row form-group">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Nombre:</label>
+                                <span class="textViewLead">@{{ campaign.name }}</span>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Red Social:</label>
+                                <span class="textViewLead">@{{ campaign.socialNetwork }}</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Fecha de Inicio:</label>
+                                <span class="textViewLead">@{{ campaign.beginDate }}</span>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Fecha de Fin:</label>
+                                <span class="textViewLead">@{{ campaign.endingDate }}</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Presupuesto:</label>
+                                <span class="textViewLead">@{{ campaign.budget }}</span>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Presupuesto Usado:</label>
+                                <span class="textViewLead">@{{ campaign.usedBudget }}</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Descripción :</label>
+                                <span class="textViewLead">@{{ campaign.description }}</span>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!--Delete modal-->
+
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -151,6 +208,8 @@
     </div>
 </div>
 
+<!-- add campaign modal-->
+
 <div class="modal fade" id="addCampaign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -164,42 +223,44 @@
                         <div class="col-12 form-group">
                             <form ng-submit="addCampaign()" id="addForm">
                                 {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="name">Nombre de campaña</label>
-                                    <input type="text" ng-model="campaign.name" id="name" cols="10" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                
-
-                                    <label for="socialNetwork">Red Social</label>
-                                     <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="name">Nombre de campaña</label>
+                                        <input type="text" ng-model="campaign.name" id="name" cols="10" class="form-control" required>
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                        <label for="socialNetwork">Red Social</label>
+                                        <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
                                          <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}">
                                              @{{socialNetwork.value}}
                                          </option>
-                                     </select>
+                                        </select>
+                                    </div>              
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="beginDate">Fecha de inicio</label>
+                                        <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control" ng-model="campaign.beginDate" readonly></div>    
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                            <label for="endingDate">Fecha de fin</label>
+                                            <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control" ng-model="campaign.endingDate" readonly></div>    
+                                    </div>                                    
+                                </div>                                
+
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="budget">Presupuesto</label>
+                                        <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">                     
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                        <label for="budget">Presupuesto Gastado</label>
+                                        <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">   
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="description">Descripción</label>
                                     <textarea ng-model="campaign.description" id="description" cols="10" class="form-control" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="beginDate">Fecha de inicio de campaña</label>
-                                     <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control"
-                                       ng-model="campaign.beginDate"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="endingDate">Fecha de inicio de campaña</label>
-                                     <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control"
-                                       ng-model="campaign.endingDate"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="budget">Presupuesto</label>
-                                    <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="budget">Presupuesto Gastado</label>
-                                    <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">
-                            
                                 </div>
                                 <div class="form-group text-left">
                                     <button class="btn btn-primary">Agregar</button>
@@ -216,7 +277,7 @@
 
 
 <!--Update modal-->
-<div class="modal fade" id="updateCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -229,41 +290,51 @@
                         <div class="col-12 form-group">
                             <form ng-submit="confirmUpdate()">
                                 {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelName}}</label>
-                                    <input type="text" ng-model="campaign.name" id="name" cols="10" value="@{{ campaign.name }}" class="form-control" required>
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="name">@{{confirmDialogUpdate.labelName}}</label>
+                                        <input type="text" ng-model="campaign.name" id="name" cols="10" value="@{{ campaign.name }}" class="form-control" required>
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                        <label for="name">@{{confirmDialogUpdate.labelSocialNetwork}}</label>
+                                        <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
+                                             <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}" label="@{{socialNetwork.label}}">
+                                                 @{{socialNetwork.value}}
+                                             </option>
+                                         </select>
+                                        
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelSocialNetwork}}</label>
-                                    <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
-                                         <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}" label="@{{socialNetwork.label}}">
-                                             @{{socialNetwork.value}}
-                                         </option>
-                                     </select>
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="name">@{{confirmDialogUpdate.labelBeginDate}}</label>
+                                         <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control"
+                                           ng-model="campaign.beginDate"></div>
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                        <label for="name">@{{confirmDialogUpdate.labelEndidgDate}}</label>
+                                         <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control"
+                                           ng-model="campaign.endingDate"></div>
+                                        
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelDescription}}</label>
+                                <div class="form-group row">
+                                    <div class="col-6 no-padding-left">
+                                        <label for="name">@{{confirmDialogUpdate.labelBudget}}</label>
+                                        <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">
+                                    </div>
+                                    <div class="col-6 no-padding-right">
+                                        <label for="name">@{{confirmDialogUpdate.labelUsedBudget}}</label>
+                                        <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group  row">
+                                    <label for="description">@{{confirmDialogUpdate.labelDescription}}</label>
                                     <textarea ng-model="campaign.description" id="description" cols="10" class="form-control" required></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelBeginDate}}</label>
-                                     <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control"
-                                       ng-model="campaign.beginDate"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelEndidgDate}}</label>
-                                     <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control"
-                                       ng-model="campaign.endingDate"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelBudget}}</label>
-                                    <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">@{{confirmDialogUpdate.labelUsedBudget}}</label>
-                                    <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">
-                            
-                                </div>
+                                
                                 <div class="form-group text-left">
                                     <button class="btn btn-primary">Actualizar</button>
                                 </div>
