@@ -27,9 +27,10 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
-        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
+        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName
             FROM leads 
-            LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`
+            LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`      
+            LEFT JOIN `campaigns` ON campaigns.`id` = leads.`campaign`
             WHERE 1 ";
 
         if($request->get('q')){
