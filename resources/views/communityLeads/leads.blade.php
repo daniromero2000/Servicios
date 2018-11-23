@@ -79,7 +79,6 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr>
-                
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
@@ -87,6 +86,7 @@
                 <th scope="col">Servicio</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Fecha de registro</th>
+                <th scope="col">Campaña</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -99,6 +99,7 @@
                 <td>@{{ lead.typeService }}</td>
                 <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
+                <td>@{{ lead.campaignName }}</td>
                 <td>
                     <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(lead.id)"></i>
                     <i class="fas fa-times cursor" title="eliminar Lead" ng-click="showDialogDelete(lead.id)"></i>
@@ -112,6 +113,17 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-6 text-right">
+        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
+    </div>
+    <div class="col-6 text-left">
+        <a href="/community"><i class="fas fa-share-square"></i>  Campañas</a>
+    </div>
+</div>
+
+
 
 <div class="modal fade" id="changeStateLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -219,6 +231,9 @@
         </div>
     </div>
 </div>
+
+
+<!--AddCommunityLead modal-->
 
 <div class="modal fade" id="addCommunityLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
