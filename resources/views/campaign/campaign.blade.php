@@ -111,6 +111,15 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-6 text-right">
+        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Atrás</a>
+    </div>
+    <div class="col-6 text-left">
+        <a href="/communityLeads"><i class="fas fa-file-medical-alt"></i> Gestíón de leads</a>
+    </div>
+</div>
+
 
 
 <!--Delete modal-->
@@ -207,7 +216,7 @@
 
 
 <!--Update modal-->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="updateCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
