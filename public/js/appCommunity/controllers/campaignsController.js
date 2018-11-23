@@ -86,7 +86,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 
 		   },
 		  data:$scope.campaign
-		}).then(function successCallback(response) {
+		}).then(function successCallback(response) {	
 			if(response.data != false){
 				$scope.searchCampaign();
 				$("#addCampaign").modal("hide");
@@ -96,18 +96,21 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.deleteCampaign= function(idCampaign){
-	
+	$scope.deleteCampaign= function(){
+		$scope.campaign = {
+			id : $scope.idCampaign
+		}
 		$http({
 			method:'POST',
-			url:'community/deleteCampaign/'+idCampaign
+			url:'community/deleteCampaign',
+			data: $scope.campaign
 		}).then(function successCallback(response){
 			if(response.data){
 				$scope.searchCampaign();
 				$('#deleteModal').modal( "hide");
 			}
 		}, function errorCallback(response){
-			
+			console.log(response);
 		});
 	}
 
@@ -127,6 +130,16 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		
 		$scope.deleteCampaign($scope.idCampaign);
 
+	}
+
+	$scope.cancelDelete=function(){
+		$('#deleteModal').modal('hide');
+	}
+
+	$scope.viewDetails=function(idCampaign){
+		$scope.idCampaign=idCampaign;
+		$scope.viewCampaign($scope.idCampaign);
+		$('#viewModal').modal( "show");
 	}
 
 	$scope.viewCampaign = function(idCampaign){
