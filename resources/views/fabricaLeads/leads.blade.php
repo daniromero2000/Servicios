@@ -257,7 +257,7 @@
                     </div>
                     <div class="row resetRow " ng-if="state != 4">
                         <div class="col-12 text-right form-group">
-                            <button type="button" ng-click="viewAddComent = !viewAddComent" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                            <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                     <div class="containerCommentsLeads">

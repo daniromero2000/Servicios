@@ -185,7 +185,7 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
-				$scope.viewComments("","",$scope.idLead, false);
+				$scope.viewComments("","",$scope.state,$scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}
@@ -202,6 +202,11 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		$scope.comment.state = state;
 		$("#changeStateLead").modal("show");
 	};
+
+	$scope.viewCommentChange = function(){
+		$scope.viewAddComent = !$scope.viewAddComent;
+	};
+
 
 	$scope.changeStateLeadComment = function(){
 		$http({
