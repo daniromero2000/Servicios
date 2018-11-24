@@ -361,7 +361,7 @@
 						<div class="form-group">
 							<input type="checkbox" ng-model="libranza.termsAndConditions" id="termsAndConditions" ng-true-value="1" ng-false-value="0" required>
 							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-								<a style="color: black" href="/Terminos-y-condiciones" target="_blank">Aceptar términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" style="color: black" target="_blank">política de tratamiento de datos</a>
+								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
 							</label>
 						</div>
 						<p class="textCityForm">

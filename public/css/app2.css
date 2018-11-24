@@ -29,6 +29,15 @@
 	text-align: -webkit-center;
 }
 
+.linkTermAndCondition{
+	color: blue;
+	text-decoration: underline;
+}
+
+.linkTermAndCondition:hover, .linkTermAndCondition:active, .linkTermAndCondition:visited, .linkTermAndCondition:focus{
+	color: blue;
+	text-decoration: underline !important;
+}
 
 /* Menu */
 .imgSombraMenu{
@@ -230,6 +239,10 @@
 	background: #3fcf64;
 	color: white;
 	bottom: 20px;
+}
+
+.creditoLibranza-buttonWhatsAppmodal:hover, .creditoLibranza-buttonWhatsAppmodal:active, .creditoLibranza-buttonWhatsAppmodal:visited, .creditoLibranza-buttonWhatsAppmodal:focus{
+	color: white;
 }
 
 .creditoLibranza-buttonWhatsAppmodal > i{
@@ -523,6 +536,7 @@
 #aboutUs, #ethicsCode, #peronalInformation, #termsAndConditions, #ourStores{
 	padding: 20px 0;
 }
+
 .menuItem-title{
 	color: #348dc7;
 	font-size: 25px;

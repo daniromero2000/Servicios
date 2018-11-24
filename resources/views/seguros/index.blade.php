@@ -52,7 +52,7 @@
 						<div class="form-group">
 							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
 							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-								<a style="color: black" href="/Terminos-y-condiciones" target="_blank">Aceptar términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" style="color: black" target="_blank">política de tratamiento de datos</a>
+								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
 							</label>
 						</div>
 						<p class="textCityForm">
