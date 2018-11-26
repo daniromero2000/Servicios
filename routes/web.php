@@ -95,12 +95,15 @@ Route::resource('users','Admin\UserController');
 Route::resource('campaign','Admin\CampaignController');
 Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('communityleads','Admin\CommunityController');
-
+Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
+Route::resource('fqas','Admin\fqasController');
 
 
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
+// Pasos solictud credito
 
+Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
 
 /* Menu Items */
 Route::get('/quienes-somos', function(){
