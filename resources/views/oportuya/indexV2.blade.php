@@ -390,9 +390,23 @@
 							<label for="email" class="control-label">Correo electronico</label>
 							<input type="email" name="email" class="form-control" id="email" required="true"/>
 						</div>
-						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
+						<div class="row">
+							<div class="col-12 col-sm-6">
+								<div class="form-group">
+									<label for="telephone class="control-label">Teléfono</label>
+									<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<label for="occupation">Ocupación</label>
+								<select class="form-control" name="occupation">
+									<option value="Empleado">Empleado</option>
+									<option value="Pensionado">Pensionado</option>
+									<option value="Fuerzas armadas">Fuerzas armadas</option>
+									<option value="Docente">Docente</option>
+									<option value="Independiente">Independiente</option>
+								</select>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-12 col-sm-6 form-group">

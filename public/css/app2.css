@@ -614,6 +614,32 @@
 }
 
 
+/* Step 2 */
+#step2{
+	margin-bottom: 40px;
+}
+.step2-containTile{
+	margin: 40px 0;
+}
+.step2-titleAnalista{
+	color: #4a4a4a;
+	font-size: 28px;
+	font-weight: 200;
+	margin:0;
+}
+
+.step2-textAnalista{
+	color: #4a4a4a;
+	font-size: 20px;
+	font-weight: 200;
+}
+
+.step2-containerForm{
+	max-width: 1000px;
+	margin: auto;
+}
+
+
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;
