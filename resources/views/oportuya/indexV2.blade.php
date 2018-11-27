@@ -375,6 +375,7 @@
 					</h3>
 					<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
 						{{ csrf_field() }}
+						<input type="hidden" name="step" value="1">
 						<input type="hidden" name="channel" value="1">
 						<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
 
