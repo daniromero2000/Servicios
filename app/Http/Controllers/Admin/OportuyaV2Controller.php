@@ -117,21 +117,21 @@ class OportuyaV2Controller extends Controller
 
 				$oportudataLead->setConnection('oportudata');
 
-				$oportudata->TIPO_DOC = $request->get('typeDocument');
-				$oportudata->CEDULA = $identificationNumber;
-				$oportudata->NOMBRES = $request->get('name');
-				$oportudata->APELLIDOS = $request->get('lastName');
-				$oportudata->EMAIL = $request->get('email');
-				$oportudata->CELULAR = $request->get('telephone');
-				$oportudata->PROFESION = $request->get('occupation');
+				$oportudataLead->TIPO_DOC = $request->get('typeDocument');
+				$oportudataLead->CEDULA = $identificationNumber;
+				$oportudataLead->NOMBRES = $request->get('name');
+				$oportudataLead->APELLIDOS = $request->get('lastName');
+				$oportudataLead->EMAIL = $request->get('email');
+				$oportudataLead->CELULAR = $request->get('telephone');
+				$oportudataLead->PROFESION = $request->get('occupation');
 
-				$response = $oportudata->save();
+				$response = $oportudataLead->save();
 
 				if($response){
 					$flag=2;
 				}
 
-				$oportudata->setConnection('mysql');
+				$oportudataLead->setConnection('mysql');
 			}
 
 			if($flag==2){
