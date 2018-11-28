@@ -119,7 +119,7 @@ class OportuyaV2Controller extends Controller
 
 				$idLead=Lead::select('id')->where('identificationNumber','=',$identificationNumber)->get();
 
-				$leadInfo->idLead=$idLead;
+				$leadInfo->idLead=intval($idLead->id);
 
 				$leadInfo->save();
 
