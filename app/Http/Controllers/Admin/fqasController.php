@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\fqa;
+use App\Fqa;
 
 class fqasController extends Controller
 {
@@ -55,7 +55,7 @@ class fqasController extends Controller
      */
     public function store(Request $request)
     {
-        $fqas = new fqa;
+        $fqas = new Fqa;
         $fqas->question = $request->get('question');
         $fqas->answer = $request->get('answer');
         $fqas->user_id = Auth::id();
@@ -95,7 +95,7 @@ class fqasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fqa = fqa::find($id);
+        $fqa = Fqa::find($id);
         $fqa->question = $request->question;
         $fqa->answer = $request->answer;
         $fqa->save();
@@ -110,7 +110,7 @@ class fqasController extends Controller
      */
     public function destroy($id)
     {
-        $fqa=fqa::findOrfail($id);
+        $fqa=Fqa::findOrfail($id);
         $fqa->delete();
         return back();
     }
