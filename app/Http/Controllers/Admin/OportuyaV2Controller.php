@@ -94,11 +94,13 @@ class OportuyaV2Controller extends Controller
 			
 			$flag=0;
 			$lead= new Lead;
-			$leadInfo= new LeadInfo;	
+			$leadInfo= new LeadInfo;
+
 
 			$identificationNumber = $request->get('identificationNumber');
 			$lead->typeDocument=$request->get('typeDocument');
-			$lead->identificationNumber=$identificationNumber;
+			$lead->identificationNumber=$identificationNumber;	
+
 			$lead->name=$request->get('name');
 			$lead->lastName=$request->get('lastName');
 			$lead->email=$request->get('email');
@@ -112,6 +114,16 @@ class OportuyaV2Controller extends Controller
 			if($response){
 
 				$flag=1;
+				
+				$leadInfo = new leadInfo;
+
+				$idLead=Lead::select('id')->where('identificationNumber','=',$identificationNumber);
+
+				$leadInfo->idLead=$idLead;
+
+				$leadInfo->save();
+
+				
 
 				$oportudataLead= new OportuyaV2;
 
@@ -149,6 +161,15 @@ class OportuyaV2Controller extends Controller
 			}		
 
 			//$idLead=Lead::select('idLead')->where('identificationNumber','=',$identificationNumber);
+		}
+
+
+		if($request->get('step')==2){
+
+			$identificationNumber = $request->get('identificationNumber');
+			$idLead=Lead::select('id')->where('identificationNumber','=',$identificationNumber);
+			$lead=Lead::findOrFail($idLead);
+
 		}
 		
 	}
