@@ -231,7 +231,7 @@ class OportuyaV2Controller extends Controller
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 
-				return redirect()->route('step3Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
+				return redirect()->route('step3Oportuya');
 			} 
 			
 
