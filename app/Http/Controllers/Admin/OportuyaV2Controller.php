@@ -195,7 +195,7 @@ class OportuyaV2Controller extends Controller
 				$flag=1;
 
 				$oportudataLead = new OportuyaV2;
-				$oportudata->setConnection('oportudata');
+				$oportudataLead->setConnection('oportudata');
 				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);
 				
 
