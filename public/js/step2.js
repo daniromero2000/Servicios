@@ -132,7 +132,7 @@ angular.module('appStep2', ['moment-picker'])
 				$scope.encryptText();
 			}
 		}, function errorCallback(response) {
-		    
+		    console.log(response);
 		});
 	};
 
