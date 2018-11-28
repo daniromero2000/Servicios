@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
 use App\Lead;
+use App\LeadInfo;
+use App\OportuyaV2;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -87,27 +89,65 @@ class OportuyaV2Controller extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$lead= new Lead;
 
-		$identificationNumber = $request->get('identificationNumber');
+		if(($request->get('step'))==1){
+			
+			$flag=0;
+			$lead= new Lead;
+			$leadInfo= new LeadInfo;	
 
-		$lead->name=$request->get('name');
-		$lead->lastName=$request->get('lastName');
-		$lead->email=$request->get('email');
-		$lead->telephone=$request->get('telephone');
-		$lead->city=$request->get('city');
-		$lead->typeService=$request->get('typeService');
-		$lead->typeProduct=$request->get('typeProduct');
-		$lead->channel=intval($request->get('channel'));
-		$lead->termsAndConditions=$request->get('termsAndConditions');
-		$lead->typeDocument=$request->get('typeDocument');
-		$lead->identificationNumber=$identificationNumber;
+			$identificationNumber = $request->get('identificationNumber');
+			$lead->typeDocument=$request->get('typeDocument');
+			$lead->identificationNumber=$identificationNumber;
+			$lead->name=$request->get('name');
+			$lead->lastName=$request->get('lastName');
+			$lead->email=$request->get('email');
+			$lead->telephone=$request->get('telephone');
+			$lead->occupation = $request->get('occupation');
+			$lead->termsAndConditions=$request->get('termsAndConditions');
 
-		$lead->save();
+			$response= $lead->save();
 
-		$encryptIdentificactionNumber = $this->encrypt($identificationNumber);
+			if($response){
 
-		return redirect()->route('step2Oportuya', ['numIdentification' => $encryptIdentificactionNumber]);
+				$flag=1;
+
+				$oportudataLead= new OportuyaV2;
+
+				$oportudataLead->setConnection('oportudata');
+
+				$oportudata->TIPO_DOC = $request->get('typeDocument');
+				$oportudata->CEDULA = $identificationNumber;
+				$oportudata->NOMBRES = $request->get('name');
+				$oportudata->APELLIDOS = $request->get('lastName');
+				$oportudata->EMAIL = $request->get('email');
+				$oportudata->CELULAR = $request->get('telephone');
+				$oportudata->PROFESION = $request->get('occupation');
+
+				$response = $oportudata->save();
+
+				if($response){
+					$flag=2;
+				}
+
+				$oportudata->setConnection('mysql');
+			}
+
+			if($flag==2){
+				return response()->json(['oportudata'=>$response]);
+			}elseif ($flag==1) {
+
+				return response()->json(['servicios'=>$response]);
+
+			}else{
+
+				return response()->json([true]);
+
+			}		
+
+			//$idLead=Lead::select('idLead')->where('identificationNumber','=',$identificationNumber);
+		}
+		
 	}
 
 	public function step2($string){
@@ -116,13 +156,20 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
 	}
 
+	public function step3($string){
+		$identificactionNumber = $this->decrypt($string);
+
+		return view('oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
+	}
+
 	private function encrypt($string) {
 		$string = utf8_encode($string);
 		$control1 = "*]wy";
 		$control2 = "3/~";
 		$string = $control1.$string.$control2;
 		$string = base64_encode($string);
-		return($string);
+
+		return $string;
 	} 
 
 	private function decrypt($string){
