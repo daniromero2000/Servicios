@@ -135,7 +135,9 @@ class OportuyaV2Controller extends Controller
 			}
 
 			if($flag==2){
-				return response()->json(['oportudata'=>$response]);
+				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
+
+				return redirect()->route('step2Oportuya', ['numIdentification' => $encryptIdentificactionNumber])
 			}elseif ($flag==1) {
 
 				return response()->json(['servicios'=>$response]);
