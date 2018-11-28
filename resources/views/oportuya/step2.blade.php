@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.steps')
 
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 
