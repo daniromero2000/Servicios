@@ -194,12 +194,12 @@ class OportuyaV2Controller extends Controller
 
 				$flag=1;
 
-				/*$oportudataLead = new OportuyaV2;
+				$oportudataLead = new OportuyaV2;
 				$oportudata->setConnection('oportudata');
-				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);*/
+				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);
 				
 
-				$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->fisrt();
+				//$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->fisrt();
 
 				$oportudataLead->DIRECCION = $request->get('addres');
 				$oportudataLead->FEC_NAC = $request->get('birthday');
@@ -220,12 +220,12 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead->spouseTelephone = $request->get('spouseTelephone');
 				$oportudataLead->stratum = $request->get('stratum');
 
-				$dataLead = (array)$oportudataLead;
-				//$oportudataLead->save();
+				//$dataLead = (array)$oportudataLead;
+				$oportudataLead->save();
 
 				//$oportudataLead->setConnection('mysql');
 
-				DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
+				//DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
 
 
 
