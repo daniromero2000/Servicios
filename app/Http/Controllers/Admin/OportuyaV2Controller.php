@@ -102,6 +102,7 @@ class OportuyaV2Controller extends Controller
 			$lead->name=$request->get('name');
 			$lead->lastName=$request->get('lastName');
 			$lead->email=$request->get('email');
+			$lead->channel= 1;
 			$lead->telephone=$request->get('telephone');
 			$lead->occupation = $request->get('occupation');
 			$lead->termsAndConditions=$request->get('termsAndConditions');
