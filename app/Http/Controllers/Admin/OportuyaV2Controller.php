@@ -160,7 +160,7 @@ class OportuyaV2Controller extends Controller
 
 			$identificationNumber = $request->get('identificationNumber');
 
-			$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
+			//$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
 
 			$idLead=Lead::select('id')->where('identificationNumber','=',$identificationNumber);
 
@@ -195,8 +195,8 @@ class OportuyaV2Controller extends Controller
 				$flag=1;
 
 				$oportudataLead = new OportuyaV2;
-				$oportudata->setConnection('oportudata');
-				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);
+				$oportudataLead->setConnection('oportudata');
+				$oportudataLead = OportuyaV2::findOrFail($identificactionNumber);
 				
 
 				//$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->fisrt();
@@ -220,18 +220,18 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead->spouseTelephone = $request->get('spouseTelephone');
 				$oportudataLead->stratum = $request->get('stratum');
 
-				$dataLead = (array)$oportudataLead;
-				//$oportudataLead->save();
+				//$dataLead = (array)$oportudataLead;
+				$oportudataLead->save();
 
 				//$oportudataLead->setConnection('mysql');
 
-				DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
+				//DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
 
 
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 
-				return redirect()->route('step3Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
+				return redirect()->route('step3Oportuya');
 			} 
 			
 
