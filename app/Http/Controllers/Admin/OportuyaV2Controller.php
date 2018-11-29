@@ -218,7 +218,7 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
 			$leadInfo->stratum = $request->get('stratum');
 
-			$leadInfo->save();
+			$response= $leadInfo->save();
 
 			//$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
 
