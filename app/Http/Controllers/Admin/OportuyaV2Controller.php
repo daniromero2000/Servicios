@@ -168,9 +168,35 @@ class OportuyaV2Controller extends Controller
 			//return $idLead;
 			//$idLead=$idLead[0]->id;
 			
-			$leadInfo = new LeadInfo;
+			//$leadInfo = new LeadInfo;
 
-			$leadInfo->idLead= $idLead;
+			$dataInfo=[
+
+				'idLead' => $idLead,
+				'addres' => $request->get('addres'),
+				'birthdate' => $request->get('birthdate'),
+				'cityExpedition' => $request->get('cityExpedition'),
+				'civilStatus' => $request->get('civilStatus'),
+				'dateDocumentExpedition' => $request->get('dateDocumentExpedition'),
+				'gender' => $request->get('gender'),
+				'housingOwner' => $request->get('housingOwner'),
+				'housingTelephone' => $request->get('housingTelephone'),
+				'housingType' => $request->get('housingType'),
+				'housingTime' => $request->get('housingTime'),
+				'leaseValue' => $request->get('leaseValue');,
+				'spouseEps' => $request->get('spouseEps'),
+				'spouseIdentificationNumber' => $request->get('spouseIdentificationNumber'),
+				'spouseJob' => $request->get('spouseJob'),
+				'spouseJobName' => $request->get('spouseJobName'),
+				'spouseName' => $request->get('spouseName'),
+				'spouseProfession' => $request->get('spouseProfession'),
+				'spouseSalary' => $request->get('spouseSalary'),
+				'spouseTelephone' => $request->get('spouseTelephone'),
+				'stratum' => $request->get('stratum')
+
+			];
+
+			/*$leadInfo->idLead= $idLead;
 			$leadInfo->addres = $request->get('addres');
 			$leadInfo->birthdate = $request->get('birthdate');
 			$leadInfo->cityExpedition = $request->get('cityExpedition');
@@ -190,9 +216,10 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseProfession = $request->get('spouseProfession');
 			$leadInfo->spouseSalary = $request->get('spouseSalary');
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
-			$leadInfo->stratum = $request->get('stratum');
+			$leadInfo->stratum = $request->get('stratum');*/
 
-			$response = $leadInfo->save();
+
+			$response = DB::table('leads_info')->where('identificactionNumber','=',$identificactionNumber)->insert($dataInfo);
 
 			return $response;
 
