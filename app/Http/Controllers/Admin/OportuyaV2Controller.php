@@ -165,7 +165,7 @@ class OportuyaV2Controller extends Controller
 			//$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
 
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]); 
-			return $idLead;
+			//return $idLead;
 			//$idLead=$idLead[0]->id;
 			
 			$leadInfo = new LeadInfo;
@@ -193,6 +193,8 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->stratum = $request->get('stratum');
 
 			$response = $leadInfo->save();
+
+			return $response;
 
 			if($response){
 
