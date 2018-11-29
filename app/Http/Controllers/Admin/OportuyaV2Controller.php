@@ -282,7 +282,7 @@ class OportuyaV2Controller extends Controller
 
 				//$oportudataLead->setConnection('mysql');
 
-				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->update($dataLead);
+				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
 				return response()->json([true]);
 
