@@ -235,7 +235,72 @@ class OportuyaV2Controller extends Controller
 
 		if($request->get('step')==3){
 
-			$leadInfo=findOrFail();
+			$flag=0;
+
+			$identificationNumber = $request->get('identificationNumber');
+
+			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
+			$idLead= $idLead[0]->id;
+
+			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead]);
+			$idLeadInfo= $idLeadInfo[0]->id;
+
+
+			$leadInfo=LeadInfo::findOrFail($idLeadInfo);
+
+
+			$leadInfo->nit = $request->get('nit');
+			$leadInfo->indicative = $request->get('indicative');
+			$leadInfo->companyName = $request->get('companyName');
+			$leadInfo->companyAddres = $request->get('companyAddres');
+			$leadInfo->companyTelephone = $request->get('companyTelephone');
+			$leadInfo->companyTelephone2 = $request->get('companyTelephone2');
+			$leadInfo->eps = $request->get('eps');
+			$leadInfo->companyPosition = $request->get('companyPosition');
+			$leadInfo->admissionDate = $request->get('admissionDate');
+			$leadInfo->antiquity = $request->get('antiquity');
+			$leadInfo->salary = $request->get('salary');
+			$leadInfo->typeContract = $request->get('typeContract');
+			$leadInfo->otherRevenue = $request->get('otherRevenue');
+			$leadInfo->camaraComercio = $request->get('camaraComercio');
+			$leadInfo->whatSell = $request->get('whatSell');
+			$leadInfo->dateCrationCompany = $request->get('dateCrationCompany');
+			$leadInfo->bankSavingAccount = $request->get('bankSavingAccount');
+
+			$response = $leadInfo->save();
+
+			if($response){
+				
+				$flag = 1;
+
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+
+				$dataLead=[
+
+					'NIT_EMP' => $request->get('nit'),
+					'RAZON_SOC' => $request->get('companyName'),
+					'DIR_EMP' => $request->get('companyAddres'),
+					'TEL_EMP' => $request->get('companyTelephone'),
+					'TEL2_EMP'	=> $request->get('companyTelephone2'),
+					'ACT_ECO' => $request->get('eps'),
+					'CARGO' => $request->get('companyPosition'),
+					'FEC_ING' =>  $request->get('admissionDate'),
+					'ANTIG' => $request->get('antiquity'),
+					'SUELDO' => $request->get('salary'),
+					'TIPO_CONT' => $request->get('typeContract'),
+					'OTROS_ING' => $request->get('otherRevenue')
+
+				];
+
+				$identificationNumber = (string)$identificationNumber;
+
+				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
+
+				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
+
+				return response()->json([true]);
+			}
+
 
 		}
 		
