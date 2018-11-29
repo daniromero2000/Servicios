@@ -196,7 +196,7 @@ class OportuyaV2Controller extends Controller
 
 			];*/
 
-			$leadInfo->idLead= $idLead;
+			$leadInfo->idLead= $idLead[0]->id;
 			$leadInfo->addres = $request->get('addres');
 			$leadInfo->birthdate = $request->get('birthdate');
 			$leadInfo->cityExpedition = $request->get('cityExpedition');
