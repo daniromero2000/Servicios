@@ -131,6 +131,7 @@ angular.module('appStep2', ['moment-picker'])
 			if (response.data != false) {
 				$scope.encryptText();
 			}
+			console.log(response);
 		}, function errorCallback(response) {
 		    console.log(response);
 		});
