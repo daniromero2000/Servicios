@@ -199,7 +199,7 @@ class OportuyaV2Controller extends Controller
 				//$oportudataLead = OportuyaV2::findOrFail($identificactionNumber);
 				
 
-				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->get();
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
 				$oportudataLead=[
 
