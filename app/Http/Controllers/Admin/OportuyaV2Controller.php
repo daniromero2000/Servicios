@@ -183,7 +183,7 @@ class OportuyaV2Controller extends Controller
 				'housingTelephone' => $request->get('housingTelephone'),
 				'housingType' => $request->get('housingType'),
 				'housingTime' => $request->get('housingTime'),
-				'leaseValue' => $request->get('leaseValue');,
+				'leaseValue' => $request->get('leaseValue'),
 				'spouseEps' => $request->get('spouseEps'),
 				'spouseIdentificationNumber' => $request->get('spouseIdentificationNumber'),
 				'spouseJob' => $request->get('spouseJob'),
