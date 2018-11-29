@@ -164,7 +164,7 @@ class OportuyaV2Controller extends Controller
 
 			//$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
 
-			$idLead=DB::select('id')->where('identificationNumber','=',$identificationNumber)->get(); 
+			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber])->get(); 
 			return $idLead;
 			//$idLead=$idLead[0]->id;
 			
