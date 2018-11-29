@@ -218,11 +218,11 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
 			$leadInfo->stratum = $request->get('stratum');
 
-			$response = $leadInfo->save();
+			$leadInfo->save();
 
 			//$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
 
-			return $response()->json([true]);
+			return response()->json([true]);
 
 			if($response){
 
