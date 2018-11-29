@@ -168,9 +168,9 @@ class OportuyaV2Controller extends Controller
 			//return $idLead;
 			//$idLead=$idLead[0]->id;
 			
-			//$leadInfo = new LeadInfo;
+			$leadInfo = new LeadInfo;
 
-			$dataInfo=[
+			/*$dataInfo=[
 
 				'idLead' => $idLead,
 				'addres' => $request->get('addres'),
@@ -194,9 +194,9 @@ class OportuyaV2Controller extends Controller
 				'spouseTelephone' => $request->get('spouseTelephone'),
 				'stratum' => $request->get('stratum')
 
-			];
+			];*/
 
-			/*$leadInfo->idLead= $idLead;
+			$leadInfo->idLead= $idLead;
 			$leadInfo->addres = $request->get('addres');
 			$leadInfo->birthdate = $request->get('birthdate');
 			$leadInfo->cityExpedition = $request->get('cityExpedition');
@@ -216,10 +216,11 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseProfession = $request->get('spouseProfession');
 			$leadInfo->spouseSalary = $request->get('spouseSalary');
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
-			$leadInfo->stratum = $request->get('stratum');*/
+			$leadInfo->stratum = $request->get('stratum');
 
+			$response = $leadInfo->save();
 
-			$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
+			//$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
 
 			return $response;
 
