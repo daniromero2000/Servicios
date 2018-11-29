@@ -160,11 +160,11 @@ class OportuyaV2Controller extends Controller
 			$flag= 0;
 
 			$identificationNumber = $request->get('identificationNumber');
-			return $identificationNumber;
+			//return $identificationNumber;
 
 			//$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
 
-			$idLead=Lead::select('id')->where('identificationNumber','=',$identificationNumber);
+			$idLead=DB::select(sprintf('SELECT `id` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber)); 
 
 			$idLead=$idLead[0]->id;
 			
@@ -172,13 +172,15 @@ class OportuyaV2Controller extends Controller
 
 			$leadInfo->idLead= $idLead;
 			$leadInfo->addres = $request->get('addres');
-			$leadInfo->birthday = $request->get('birthday');
+			$leadInfo->birthdate = $request->get('birthdate');
 			$leadInfo->cityExpedition = $request->get('cityExpedition');
 			$leadInfo->civilStatus = $request->get('civilStatus');
 			$leadInfo->dateDocumentExpedition = $request->get('dateDocumentExpedition');
 			$leadInfo->gender= $request->get('gender');
 			$leadInfo->housingOwner = $request->get('housingOwner');
-			$leadInfo->housinTelephone = $request->get('housingTime');
+			$leadInfo->housingTelephone = $request->get('housingTelephone');
+			$leadInfo->housingType = $request->get('housingType');
+			$leadInfo->housingTime = $request->get('housingTime');
 			$leadInfo->leaseValue = $request->get('leaseValue'); 
 			$leadInfo->spouseEps = $request->get('spouseEps');
 			$leadInfo->spouseIdentificationNumber = $request->get('spouseIdentificationNumber');
@@ -208,21 +210,21 @@ class OportuyaV2Controller extends Controller
 					'DIRECCION' => $request->get('addres'),
 					'FEC_NAC' => $request->get('birthday'),
 					'CIUD_EXP' => $request->get('cityExpedition'),
-					'civilStatus' => $request->get('civilStatus'),
-					'dateDocumentExpedition' => $request->get('dateDocumentExpedition'),
-					'gender'=> $request->get('gender'),
-					'housingOwner' => $request->get('housingOwner'),
-					'housinTelephone' => $request->get('housingTime'),
-					'leaseValue' => $request->get('leaseValue'),
-					'spouseEps' => $request->get('spouseEps'),
-					'spouseIdentificationNumber' => $request->get('spouseIdentificationNumber'),
-					'spouseJob' => $request->get('spouseJob'),
-					'spouseJobName' => $request->get('spouseJobName'),
-					'spouseName' => $request->get('spouseName'),
-					'spouseProfession' => $request->get('spouseProfession'),
-					'spouseSalary' => $request->get('spouseSalary'),
-					'spouseTelephone' => $request->get('spouseTelephone'),
-					'stratum' => $request->get('stratum')
+					'ESTADOCIVIL' => $request->get('civilStatus'),
+					'FEC_EXP' => $request->get('dateDocumentExpedition'),
+					'PROPIETARIO' => $request->get('housingOwner'),
+					'TIEMPO_VIV' => $request->get('housingTime'),
+					'TELFIJO' => $request->get('housingTelephone'),
+					'VRARRIENDO' => $request->get('leaseValue'),
+					'EPS_CONYU' => $request->get('spouseEps'),
+					'CEDULA_C' => $request->get('spouseIdentificationNumber'),
+					'TRABAJO_CONYU' => $request->get('spouseJob'),
+					'CARGO_CONYU' => $request->get('spouseJobName'),
+					'NOMBRE_CONYU' => $request->get('spouseName'),
+					'PROFESION_CONYU' => $request->get('spouseProfession'),
+					'SALARIO_CONYU' => $request->get('spouseSalary'),
+					'CELULAR_CONYU' => $request->get('spouseTelephone'),
+					'ESTRATO' => $request->get('stratum')
 
 				];
 
