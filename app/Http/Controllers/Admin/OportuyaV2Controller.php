@@ -151,7 +151,7 @@ class OportuyaV2Controller extends Controller
 
 			}		
 
-			//$idLead=Lead::select('idLead')->where('identificationNumber','=',$identificationNumber);
+			
 		}
 
 
@@ -162,39 +162,10 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');
 			
 
-			//$oportudataLead=OportuyaV2::findOrFail($identificationNumber);
-
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]); 
-			//return $idLead;
-			//$idLead=$idLead[0]->id;
 			
 			$leadInfo = new LeadInfo;
 
-			/*$dataInfo=[
-
-				'idLead' => $idLead,
-				'addres' => $request->get('addres'),
-				'birthdate' => $request->get('birthdate'),
-				'cityExpedition' => $request->get('cityExpedition'),
-				'civilStatus' => $request->get('civilStatus'),
-				'dateDocumentExpedition' => $request->get('dateDocumentExpedition'),
-				'gender' => $request->get('gender'),
-				'housingOwner' => $request->get('housingOwner'),
-				'housingTelephone' => $request->get('housingTelephone'),
-				'housingType' => $request->get('housingType'),
-				'housingTime' => $request->get('housingTime'),
-				'leaseValue' => $request->get('leaseValue'),
-				'spouseEps' => $request->get('spouseEps'),
-				'spouseIdentificationNumber' => $request->get('spouseIdentificationNumber'),
-				'spouseJob' => $request->get('spouseJob'),
-				'spouseJobName' => $request->get('spouseJobName'),
-				'spouseName' => $request->get('spouseName'),
-				'spouseProfession' => $request->get('spouseProfession'),
-				'spouseSalary' => $request->get('spouseSalary'),
-				'spouseTelephone' => $request->get('spouseTelephone'),
-				'stratum' => $request->get('stratum')
-
-			];*/
 
 			$leadInfo->idLead= $idLead[0]->id;
 			$leadInfo->addres = $request->get('addres');
@@ -220,16 +191,9 @@ class OportuyaV2Controller extends Controller
 
 			$response= $leadInfo->save();
 
-			//$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
-
 			if($response){
 
-				$flag=1;
-
-				/*$oportudataLead = new OportuyaV2;
-				$oportudataLead->setConnection('oportudata');
-				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);*/
-				
+				$flag=1;				
 
 				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
@@ -256,36 +220,9 @@ class OportuyaV2Controller extends Controller
 
 				];
 
-				/*$oportudataLead->DIRECCION = $request->get('addres');
-				$oportudataLead->FEC_NAC = $request->get('birthday');
-				$oportudataLead->CIUD_EXP = $request->get('cityExpedition');
-				$oportudataLead->ESTADOCIVIL = $request->get('civilStatus');
-				$oportudataLead->FEC_EXP = $request->get('dateDocumentExpedition');
-				//$oportudataLead->gender= $request->get('gender');
-				$oportudataLead->PROPIETARIO = $request->get('housingOwner');
-				$oportudataLead->TELFIJO = $request->get('housingTime');
-				$oportudataLead->VRARRIENDO = $request->get('leaseValue'); 
-				$oportudataLead->EPS_CONYU = $request->get('spouseEps');
-				$oportudataLead->CEDULA_C = $request->get('spouseIdentificationNumber');
-				$oportudataLead->TRABAJO_CONYU = $request->get('spouseJob');
-				$oportudataLead->CARGO_CONYU = $request->get('spouseJobName');
-				$oportudataLead->NOMBRE_CONYU = $request->get('spouseName');
-				$oportudataLead->PROFESION_CONYU = $request->get('spouseProfession');
-				$oportudataLead->SALARIO_CONYU = $request->get('spouseSalary');
-				$oportudataLead->CELULAR_CONYU = $request->get('spouseTelephone');
-				$oportudataLead->ESTRATO = $request->get('stratum');*/
-
-				//$dataLead = (array)$oportudataLead;
-				//$response = $oportudataLead->save();
-
-				
-
-				//$oportudataLead->setConnection('mysql');
 				$identificationNumber = (string)$identificationNumber;
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
-
-				return response()->json([true]);
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 
@@ -294,8 +231,34 @@ class OportuyaV2Controller extends Controller
 			
 
 		}
+
+
+		if($request->get('step')==3){
+
+			$leadInfo=findOrFail();
+
+		}
 		
 	}
+
+
+	public function getDataStep2($identificationNumber){
+            $data = [];
+
+            $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+
+            $resp = DB::select($query);
+
+            $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
+
+            $num = rand(0,3);
+
+            $data['dataLead'] = $resp[0];
+            $data['digitalAnalyst'] = $digitalAnalysts[$num];
+
+            return $data;
+
+	}            
 
 	public function step2($string){
 		$identificactionNumber = $this->decrypt($string);
