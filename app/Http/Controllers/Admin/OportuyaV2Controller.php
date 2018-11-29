@@ -8,6 +8,7 @@ use App\LeadInfo;
 use App\OportuyaV2;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class OportuyaV2Controller extends Controller
 {
@@ -199,9 +200,9 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);
 				
 
-				//$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->fisrt();
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->get();
 
-				/*	$dataLead=[
+				$dataLead=[
 
 					'DIRECCION' => $request->get('addres'),
 					'FEC_NAC' => $request->get('birthday'),
@@ -222,9 +223,9 @@ class OportuyaV2Controller extends Controller
 					'spouseTelephone' => $request->get('spouseTelephone'),
 					'stratum' => $request->get('stratum')
 
-				];*/
+				];
 
-				$oportudataLead->DIRECCION = $request->get('addres');
+				/*$oportudataLead->DIRECCION = $request->get('addres');
 				$oportudataLead->FEC_NAC = $request->get('birthday');
 				$oportudataLead->CIUD_EXP = $request->get('cityExpedition');
 				$oportudataLead->civilStatus = $request->get('civilStatus');
@@ -241,14 +242,14 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead->spouseProfession = $request->get('spouseProfession');
 				$oportudataLead->spouseSalary = $request->get('spouseSalary');
 				$oportudataLead->spouseTelephone = $request->get('spouseTelephone');
-				$oportudataLead->stratum = $request->get('stratum');
+				$oportudataLead->stratum = $request->get('stratum');*/
 
 				//$dataLead = (array)$oportudataLead;
-				$oportudataLead->save();
+				//$oportudataLead->save();
 
 				//$oportudataLead->setConnection('mysql');
 
-				//DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
+				DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->update($dataLead);
 
 
 
