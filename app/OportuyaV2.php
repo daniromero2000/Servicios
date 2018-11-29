@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OportuyaV2 extends Model
 {
     protected $table = 'CLIENTE_FAB';
-    protected $primaryKey = 'CEDULA'
+    protected $primaryKey = 'CEDULA';
 
     public $timestamps = false;
 
