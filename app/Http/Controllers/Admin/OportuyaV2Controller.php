@@ -281,6 +281,7 @@ class OportuyaV2Controller extends Controller
 				
 
 				//$oportudataLead->setConnection('mysql');
+				$identificationNumber = (string)$identificationNumber;
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
