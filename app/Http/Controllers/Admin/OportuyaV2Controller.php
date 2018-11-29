@@ -226,14 +226,14 @@ class OportuyaV2Controller extends Controller
 
 				$flag=1;
 
-				$oportudataLead = new OportuyaV2;
+				/*$oportudataLead = new OportuyaV2;
 				$oportudataLead->setConnection('oportudata');
-				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);
+				$oportudataLead = OportuyaV2::findOrFail($identificationNumber);*/
 				
 
-				//$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->get();
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->get();
 
-				/*$dataLead=[
+				$dataLead=[
 
 					'DIRECCION' => $request->get('addres'),
 					'FEC_NAC' => $request->get('birthday'),
@@ -254,9 +254,9 @@ class OportuyaV2Controller extends Controller
 					'CELULAR_CONYU' => $request->get('spouseTelephone'),
 					'ESTRATO' => $request->get('stratum')
 
-				];*/
+				];
 
-				$oportudataLead->DIRECCION = $request->get('addres');
+				/*$oportudataLead->DIRECCION = $request->get('addres');
 				$oportudataLead->FEC_NAC = $request->get('birthday');
 				$oportudataLead->CIUD_EXP = $request->get('cityExpedition');
 				$oportudataLead->ESTADOCIVIL = $request->get('civilStatus');
@@ -273,18 +273,18 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead->PROFESION_CONYU = $request->get('spouseProfession');
 				$oportudataLead->SALARIO_CONYU = $request->get('spouseSalary');
 				$oportudataLead->CELULAR_CONYU = $request->get('spouseTelephone');
-				$oportudataLead->ESTRATO = $request->get('stratum');
+				$oportudataLead->ESTRATO = $request->get('stratum');*/
 
 				//$dataLead = (array)$oportudataLead;
-				$response = $oportudataLead->save();
+				//$response = $oportudataLead->save();
 
-				return response()->json([true]);
+				
 
 				//$oportudataLead->setConnection('mysql');
 
-				//DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->update($dataLead);
+				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->update($dataLead);
 
-
+				return response()->json([true]);
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 
@@ -308,7 +308,7 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
 	}
 
-	private function encrypt($string) {
+	public function encrypt($string) {
 		$string = utf8_encode($string);
 		$control1 = "*]wy";
 		$control2 = "3/~";
@@ -318,7 +318,7 @@ class OportuyaV2Controller extends Controller
 		return $string;
 	} 
 
-	private function decrypt($string){
+	public function decrypt($string){
 		$string = $string; 
 		$string = base64_decode($string); 
 		$controls = ['*]wy', '3/~']; 
