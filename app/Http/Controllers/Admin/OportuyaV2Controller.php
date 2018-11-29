@@ -194,44 +194,51 @@ class OportuyaV2Controller extends Controller
 
 				$flag=1;
 
-				$oportudataLead = new OportuyaV2;
-				$oportudataLead->setConnection('oportudata');
-				$oportudataLead = OportuyaV2::findOrFail($identificactionNumber);
+				//$oportudataLead = new OportuyaV2;
+				//$oportudataLead->setConnection('oportudata');
+				//$oportudataLead = OportuyaV2::findOrFail($identificactionNumber);
 				
 
-				//$oportudataLead = DB::connection('oportudata')->table('CLIENTES_FAB')->where('CEDULA','=',$identificactionNumber)->fisrt();
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificactionNumber)->get();
 
-				$oportudataLead->DIRECCION = $request->get('addres');
-				$oportudataLead->FEC_NAC = $request->get('birthday');
-				$oportudataLead->CIUD_EXP = $request->get('cityExpedition');
-				$oportudataLead->civilStatus = $request->get('civilStatus');
-				$oportudataLead->dateDocumentExpedition = $request->get('dateDocumentExpedition');
-				$oportudataLead->gender= $request->get('gender');
-				$oportudataLead->housingOwner = $request->get('housingOwner');
-				$oportudataLead->housinTelephone = $request->get('housingTime');
-				$oportudataLead->leaseValue = $request->get('leaseValue'); 
-				$oportudataLead->spouseEps = $request->get('spouseEps');
-				$oportudataLead->spouseIdentificationNumber = $request->get('spouseIdentificationNumber');
-				$oportudataLead->spouseJob = $request->get('spouseJob');
-				$oportudataLead->spouseJobName = $request->get('spouseJobName');
-				$oportudataLead->spouseName = $request->get('spouseName');
-				$oportudataLead->spouseProfession = $request->get('spouseProfession');
-				$oportudataLead->spouseSalary = $request->get('spouseSalary');
-				$oportudataLead->spouseTelephone = $request->get('spouseTelephone');
-				$oportudataLead->stratum = $request->get('stratum');
+				$oportudataLead=[
+
+					'DIRECCION' => $request->get('addres'),
+					'FEC_NAC' => $request->get('birthday'),
+					'CIUD_EXP' => $request->get('cityExpedition'),
+					'civilStatus' => $request->get('civilStatus'),
+					'dateDocumentExpedition' => $request->get('dateDocumentExpedition'),
+					'gender'= $request->get('gender');
+					'housingOwner' => $request->get('housingOwner'),
+					'housinTelephone' => $request->get('housingTime'),
+					'leaseValue' => $request->get('leaseValue'),
+					'spouseEps' => $request->get('spouseEps'),
+					'spouseIdentificationNumber' => $request->get('spouseIdentificationNumber'),
+					'spouseJob' => $request->get('spouseJob'),
+					'spouseJobName' => $request->get('spouseJobName'),
+					'spouseName' => $request->get('spouseName'),
+					'spouseProfession' => $request->get('spouseProfession'),
+					'spouseSalary' => $request->get('spouseSalary'),
+					'spouseTelephone' => $request->get('spouseTelephone'),
+					'stratum' => $request->get('stratum')
+
+				];
+
+				
 
 				//$dataLead = (array)$oportudataLead;
-				$oportudataLead->save();
+				//$oportudataLead->save();
 
 				//$oportudataLead->setConnection('mysql');
 
-				//DB::connection('oportudata')->table('CLIENTE_FAB')->insert($dataLead);
+				DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA',$identificationNumber)->update($dataLead);
+				
 
 
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 
-				return redirect()->route('step3Oportuya');
+				return redirect()->route('step3Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
 			} 
 			
 
