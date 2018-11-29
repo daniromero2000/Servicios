@@ -188,6 +188,9 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseSalary = $request->get('spouseSalary');
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
 			$leadInfo->stratum = $request->get('stratum');
+			$leadInfo->city= $request->get('city');
+			$leadInfo->typeProduct = $request->get('typeProduct');
+			$leadInfo->typeService = $request->get('typeService');
 
 			$response= $leadInfo->save();
 
