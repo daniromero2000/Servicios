@@ -208,7 +208,7 @@ class OportuyaV2Controller extends Controller
 					'CIUD_EXP' => $request->get('cityExpedition'),
 					'civilStatus' => $request->get('civilStatus'),
 					'dateDocumentExpedition' => $request->get('dateDocumentExpedition'),
-					'gender'= $request->get('gender');
+					'gender'= $request->get('gender'),
 					'housingOwner' => $request->get('housingOwner'),
 					'housinTelephone' => $request->get('housingTime'),
 					'leaseValue' => $request->get('leaseValue'),
@@ -232,7 +232,7 @@ class OportuyaV2Controller extends Controller
 				//$oportudataLead->setConnection('mysql');
 
 				DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA',$identificationNumber)->update($dataLead);
-				
+
 
 
 
