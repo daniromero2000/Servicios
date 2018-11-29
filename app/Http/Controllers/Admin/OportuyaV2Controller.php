@@ -219,7 +219,7 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->stratum = $request->get('stratum');*/
 
 
-			$response = DB::table('leads_info')->where('identificactionNumber','=',$identificactionNumber)->insert($dataInfo);
+			$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
 
 			return $response;
 
