@@ -201,7 +201,7 @@ class OportuyaV2Controller extends Controller
 
 				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
-				$oportudataLead=[
+				$dataLead=[
 
 					'DIRECCION' => $request->get('addres'),
 					'FEC_NAC' => $request->get('birthday'),
