@@ -224,9 +224,7 @@ class OportuyaV2Controller extends Controller
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-
-				return redirect()->route('step3Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
+				return response()->json([true]);
 			} 
 			
 
@@ -264,8 +262,8 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->otherRevenue = $request->get('otherRevenue');
 			$leadInfo->camaraComercio = $request->get('camaraComercio');
 			$leadInfo->whatSell = $request->get('whatSell');
-			$leadInfo->dateCrationCompany = $request->get('dateCrationCompany');
-			$leadInfo->bankSavingAccount = $request->get('bankSavingAccount');
+			$leadInfo->dateCreationCompany = $request->get('dateCrationCompany');
+			$leadInfo->bankSavingsAccount = $request->get('bankSavingsAccount');
 
 			$response = $leadInfo->save();
 
@@ -296,8 +294,6 @@ class OportuyaV2Controller extends Controller
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-
 				return response()->json([true]);
 			}
 
@@ -308,22 +304,40 @@ class OportuyaV2Controller extends Controller
 
 
 	public function getDataStep2($identificationNumber){
-            $data = [];
+	      $data = [];
 
-            $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ";
+	      $resp = DB::select($query);
+	      $resp2 = DB::select($query2);
 
-            $resp = DB::select($query);
+	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
-            $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
+	      $num = rand(0,3);
 
-            $num = rand(0,3);
+	      $data['dataLead'] = $resp[0];
+	      $data['digitalAnalyst'] = $digitalAnalysts[$num];
+	      $data['cities'] = $resp2;
 
-            $data['dataLead'] = $resp[0];
-            $data['digitalAnalyst'] = $digitalAnalysts[$num];
+	      return $data;
 
-            return $data;
+	}
 
-	}            
+
+
+	public function getDataStep3($identificationNumber){
+	      $data = [];
+
+	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
+	      $resp = DB::select($query);
+	      $resp2 = DB::connection('oportudata')->select($query2);
+
+	      $data['dataLead'] = $resp[0];
+	      $data['banks'] = $resp2;
+
+	      return $data;
+	}           
 
 	public function step2($string){
 		$identificactionNumber = $this->decrypt($string);

@@ -159,6 +159,12 @@ Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsControlle
 //Route::get('communityLeads/viewCommunityLeads','Admin\CommunityController@index');
 
 
+/* Apis */
+Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
+Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
+
+
+
 Route::get("/canalDigital",function(){
 	return view('leads.index');
 });

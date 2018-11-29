@@ -24,7 +24,7 @@
 		</div>
 		<div class="step3-containerForm">
 			<div>
-				<form ng-submit="" id="formEmpleado">
+				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'Empleado'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-8 form-group">
@@ -98,10 +98,15 @@
 							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" class="form-control" />
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-12 text-center form-group">
+							<button class="btn btn-primary">Siguiente</button>
+						</div>
+					</div>
 				</form>
 			</div>
 			<div>
-				<form ng-submit="" id="formIdependiente">
+				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'Independiente'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
@@ -151,10 +156,16 @@
 							<input type="number" id="salary" ng-model="leadInfo.salary" class="form-control" />
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-12 text-center form-group">
+							<button class="btn btn-primary">Siguiente</button>
+						</div>
+					</div>
 				</form>
 			</div>
 			<div>
-				<form ng-submit="" id="formPensionado">
+				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'Pensionado' || dataLead.occupation == 'Fuerzas armadas' || dataLead.occupation == 'Do
+				cente'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
@@ -191,7 +202,12 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="admissionDate">Banco</label>
-							<select ng-model="leadInfo.bankSavingsAccount" class="form-control"></select>
+							<select ng-model="leadInfo.bankSavingsAccount" class="form-control" ng-options="bank.value as bank.label for bank in banks"></select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 text-center form-group">
+							<button class="btn btn-primary">Siguiente</button>
 						</div>
 					</div>
 				</form>
