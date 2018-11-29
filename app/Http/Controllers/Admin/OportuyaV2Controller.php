@@ -222,7 +222,7 @@ class OportuyaV2Controller extends Controller
 
 			//$response = DB::table('leads_info')->where('identificationNumber','=',$identificationNumber)->insert($dataInfo);
 
-			return $response;
+			return $response()->json([true]);
 
 			if($response){
 
