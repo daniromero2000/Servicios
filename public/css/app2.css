@@ -634,7 +634,7 @@
 	font-weight: 200;
 }
 
-.step2-containerForm{
+.step2-containerForm, .step3-containerForm{
 	max-width: 1000px;
 	margin: auto;
 }
