@@ -18,7 +18,7 @@
 				<hr>
 			</div>
 			<div class="col-12 step2-containTile">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy Fernanda tu analista digital</h2>
+				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">listo para obtener tu crédito oportuya</p>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 						<select class="form-control" id="housingType" ng-model="leadInfo.housingType" ng-change="changeHousingType()" ng-options="type.value as type.label for type in housingTypes"></select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingTime">Tiempo Vivienda</label>
+						<label for="housingTime">Antigüedad en la Vivienda</label>
 						<input type="number" ng-model="leadInfo.housingTime" class="form-control" id="housingTime" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">

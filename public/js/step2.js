@@ -2,7 +2,7 @@ angular.module('appStep2', ['moment-picker'])
 .controller("step2Ctrl", function($scope, $http) {
 	$scope.leadInfo = {
 		step: 2,
-		identificationNumber: 1,
+		identificationNumber: '',
 		dateDocumentExpedition: '',
 		cityExpedition: '',
 		housingType: '',
@@ -30,53 +30,7 @@ angular.module('appStep2', ['moment-picker'])
 		{ label : 'Femenino',value: 'femenino' }
 	];
 
-	$scope.cities = [
-		{ label : 'ARMENIA',value: 'ARMENIA' },
-		{ label : 'MANIZALES',value: 'MANIZALES' },
-		{ label : 'SINCELEJO',value: 'SINCELEJO' },
-		{ label : 'YOPAL',value: 'YOPAL' },
-		{ label : 'CERETÉ',value: 'CERETÉ' },
-		{ label : 'TULUÁ',value: 'TULUÁ' },
-		{ label : 'ACACÍAS',value: 'ACACÍAS' },
-		{ label : 'ESPINAL',value: 'ESPINAL' },
-		{ label : 'MARIQUITA',value: 'MARIQUITA' },
-		{ label : 'CARTAGENA',value: 'CARTAGENA' },
-		{ label : 'LA DORADA',value: 'LA DORADA' },
-		{ label : 'IBAGUÉ',value: 'IBAGUÉ' },
-		{ label : 'BOGOTÁ',value: 'BOGOTÁ' },
-		{ label : 'MONTERÍA',value: 'MONTERÍA' },
-		{ label : 'MAGANGUÉ',value: 'MAGANGUÉ' },
-		{ label : 'PEREIRA',value: 'PEREIRA' },
-		{ label : 'CALI',value: 'CALI' },
-		{ label : 'MONTELIBANO',value: 'MONTELIBANO' },
-		{ label : 'SAHAGÚN',value: 'SAHAGÚN' },
-		{ label : 'PLANETA RICA',value: 'PLANETA RICA' },
-		{ label : 'COROZAL',value: 'COROZAL' },
-		{ label : 'CIÉNAGA',value: 'CIÉNAGA' },
-		{ label : 'MONTELÍ',value: 'MONTELÍ' },
-		{ label : 'PLATO',value: 'PLATO' },
-		{ label : 'SABANALARGA',value: 'SABANALARGA' },
-		{ label : 'GRANADA',value: 'GRANADA' },
-		{ label : 'PUERTO BERRÍ',value: 'PUERTO BERRÍ' },
-		{ label : 'VILLAVICENCIO',value: 'VILLAVICENCIO' },
-		{ label : 'TAURAMENA',value: 'TAURAMENA' },
-		{ label : 'PUERTO GAITÁN',value: 'PUERTO GAITÁN' },
-		{ label : 'PUERTO BOYACÁ',value: 'PUERTO BOYACÁ' },
-		{ label : 'PUERTO LÓPEZ',value: 'PUERTO LÓPEZ' },
-		{ label : 'SEVILLA',value: 'SEVILLA' },
-		{ label : 'CHINCHINÁ',value: 'CHINCHINÁ' },
-		{ label : 'AGUACHICA',value: 'AGUACHICA' },
-		{ label : 'BARRANCABERMEJA',value: 'BARRANCABERMEJA' },
-		{ label : 'LA VIRGINIA',value: 'LA VIRGINIA' },
-		{ label : 'SANTA ROSA DE CABAL',value: 'SANTA ROSA DE CABAL' },
-		{ label : 'GIRARDOT',value: 'GIRARDOT' },
-		{ label : 'VILLANUEVA',value: 'VILLANUEVA' },
-		{ label : 'PITALITO',value: 'PITALITO' },
-		{ label : 'GARZÓN',value: 'GARZÓN' },
-		{ label : 'NEIVA',value: 'NEIVA' },
-		{ label : 'LORICA',value: 'LORICA' },
-		{ label : 'AGUAZUL', value: 'AGUAZUL' }
-	];
+	$scope.cities = {};
 
 	$scope.housingTypes = [
 		{
@@ -112,6 +66,23 @@ angular.module('appStep2', ['moment-picker'])
 		},
 	];
 
+	$scope.lead = {};
+	$scope.analyst = {};
+
+	$scope.getDataStep2 = function(){
+		$http({
+		  method: 'GET',
+		  url: '/api/oportuya/getDataStep2/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			$scope.lead = response.data.dataLead;
+			$scope.analyst = response.data.digitalAnalyst;
+			$scope.cities = response.data.cities;
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
+
+
 	$scope.changeHousingType = function(){
 		if($scope.leadInfo.housingType == 'familiar' || $scope.leadInfo.housingType == 'propia'){
 			$scope.leadInfo.leaseValue = "";
@@ -131,7 +102,6 @@ angular.module('appStep2', ['moment-picker'])
 			if (response.data != false) {
 				$scope.encryptText();
 			}
-			console.log(response);
 		}, function errorCallback(response) {
 		    console.log(response);
 		});
@@ -149,4 +119,6 @@ angular.module('appStep2', ['moment-picker'])
 		    
 		});
 	};
+
+	setTimeout(function(){ $scope.getDataStep2();}, 1);
 });

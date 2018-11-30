@@ -109,6 +109,9 @@ class OportuyaV2Controller extends Controller
 			$lead->telephone=$request->get('telephone');
 			$lead->occupation = $request->get('occupation');
 			$lead->termsAndConditions=$request->get('termsAndConditions');
+			$leadInfo->city= $request->get('city');
+			$leadInfo->typeProduct = $request->get('typeProduct');
+			$leadInfo->typeService = $request->get('typeService');
 
 			$response= $lead->save();
 
@@ -189,6 +192,7 @@ class OportuyaV2Controller extends Controller
 			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
 			$leadInfo->stratum = $request->get('stratum');
 
+
 			$response= $leadInfo->save();
 
 			if($response){
@@ -224,9 +228,7 @@ class OportuyaV2Controller extends Controller
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-
-				return redirect()->route('step3Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
+				return response()->json([true]);
 			} 
 			
 
@@ -235,7 +237,70 @@ class OportuyaV2Controller extends Controller
 
 		if($request->get('step')==3){
 
-			$leadInfo=findOrFail();
+			$flag=0;
+
+			$identificationNumber = $request->get('identificationNumber');
+
+			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
+			$idLead= $idLead[0]->id;
+
+			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead]);
+			$idLeadInfo= $idLeadInfo[0]->id;
+
+
+			$leadInfo=LeadInfo::findOrFail($idLeadInfo);
+
+
+			$leadInfo->nit = $request->get('nit');
+			$leadInfo->indicative = $request->get('indicative');
+			$leadInfo->companyName = $request->get('companyName');
+			$leadInfo->companyAddres = $request->get('companyAddres');
+			$leadInfo->companyTelephone = $request->get('companyTelephone');
+			$leadInfo->companyTelephone2 = $request->get('companyTelephone2');
+			$leadInfo->eps = $request->get('eps');
+			$leadInfo->companyPosition = $request->get('companyPosition');
+			$leadInfo->admissionDate = $request->get('admissionDate');
+			$leadInfo->antiquity = $request->get('antiquity');
+			$leadInfo->salary = $request->get('salary');
+			$leadInfo->typeContract = $request->get('typeContract');
+			$leadInfo->otherRevenue = $request->get('otherRevenue');
+			$leadInfo->camaraComercio = $request->get('camaraComercio');
+			$leadInfo->whatSell = $request->get('whatSell');
+			$leadInfo->dateCreationCompany = $request->get('dateCrationCompany');
+			$leadInfo->bankSavingsAccount = $request->get('bankSavingsAccount');
+
+			$response = $leadInfo->save();
+
+			if($response){
+				
+				$flag = 1;
+
+				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+
+				$dataLead=[
+
+					'NIT_EMP' => $request->get('nit'),
+					'RAZON_SOC' => $request->get('companyName'),
+					'DIR_EMP' => $request->get('companyAddres'),
+					'TEL_EMP' => $request->get('companyTelephone'),
+					'TEL2_EMP'	=> $request->get('companyTelephone2'),
+					'ACT_ECO' => $request->get('eps'),
+					'CARGO' => $request->get('companyPosition'),
+					'FEC_ING' =>  $request->get('admissionDate'),
+					'ANTIG' => $request->get('antiquity'),
+					'SUELDO' => $request->get('salary'),
+					'TIPO_CONT' => $request->get('typeContract'),
+					'OTROS_ING' => $request->get('otherRevenue')
+
+				];
+
+				$identificationNumber = (string)$identificationNumber;
+
+				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
+
+				return response()->json([true]);
+			}
+
 
 		}
 		
@@ -243,22 +308,40 @@ class OportuyaV2Controller extends Controller
 
 
 	public function getDataStep2($identificationNumber){
-            $data = [];
+	      $data = [];
 
-            $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ";
+	      $resp = DB::select($query);
+	      $resp2 = DB::select($query2);
 
-            $resp = DB::select($query);
+	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
-            $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
+	      $num = rand(0,3);
 
-            $num = rand(0,3);
+	      $data['dataLead'] = $resp[0];
+	      $data['digitalAnalyst'] = $digitalAnalysts[$num];
+	      $data['cities'] = $resp2;
 
-            $data['dataLead'] = $resp[0];
-            $data['digitalAnalyst'] = $digitalAnalysts[$num];
+	      return $data;
 
-            return $data;
+	}
 
-	}            
+
+
+	public function getDataStep3($identificationNumber){
+	      $data = [];
+
+	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
+	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
+	      $resp = DB::select($query);
+	      $resp2 = DB::connection('oportudata')->select($query2);
+
+	      $data['dataLead'] = $resp[0];
+	      $data['banks'] = $resp2;
+
+	      return $data;
+	}           
 
 	public function step2($string){
 		$identificactionNumber = $this->decrypt($string);
