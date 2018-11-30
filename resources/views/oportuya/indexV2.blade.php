@@ -241,7 +241,7 @@
 					</span>
 				</p>
 				<div class="col-md-3 col-sm-3 oportuyaHeaderImage">
-					<img src="{{asset('/images/tarjetaOportuyaLogo.png')}}" class="img-fluid">
+					<img src="{{asset('/images/logoOportuya-inverso.png')}}" class="img-fluid">
 				</div>
 				<div class="col-sm-9 col-md-9 oportuyaTextResponsive">
 					<p class="textOportuyaHeader">
