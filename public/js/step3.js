@@ -14,12 +14,19 @@ angular.module('appStep3', ['moment-picker'])
 		admissionDate: '',
 		antiquity: '',
 		salary: '',
-		typeContract: '',
+		typeContract: null,
 		otherRevenue: '',
-		camaraComercio: '',
+		camaraComercio: null,
 		whatSell:'',
 		dateCreationCompany: '',
-		bankSavingsAccount:''
+		bankSavingsAccount:null
+	};
+
+	$scope.comment = {
+		step: 'comment',
+		availability: '',
+		comment: '',
+		identificationNumber: ''
 	};
 
 	$scope.typesContracts = [
@@ -47,6 +54,7 @@ angular.module('appStep3', ['moment-picker'])
 	$scope.idForm = "";
 	$scope.banks = {};
 	$scope.dataLead = {};
+	$scope.analyst = {};
 
 	$scope.getDataStep3 = function(){
 		$http({
@@ -55,6 +63,7 @@ angular.module('appStep3', ['moment-picker'])
 		}).then(function successCallback(response) {
 			$scope.banks = response.data.banks;
 			$scope.dataLead = response.data.dataLead;
+			$scope.analyst = response.data.digitalAnalyst;
 			if($scope.dataLead.occupation == 'Empleado'){
 				$scope.idForm = "formEmpleado";
 			}else if($scope.dataLead.occupation == 'Independiente'){
@@ -78,7 +87,23 @@ angular.module('appStep3', ['moment-picker'])
 		   },
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				console.log(response);
+				$('#congratulations').modal('show');
+			}
+		}, function errorCallback(response) {
+		    console.log(response);
+		});
+	};
+
+
+	$scope.sendComment = function(){
+		$scope.comment.identificationNumber = $scope.leadInfo.identificationNumber;
+		$http({
+		  method: 'POST',
+		  url: '/oportuyaV2',
+		  data: $scope.comment,
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				window.location="/OP_gracias_FRM";
 			}
 		}, function errorCallback(response) {
 		    console.log(response);

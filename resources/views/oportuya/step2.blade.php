@@ -13,13 +13,15 @@
 
 @section('content')
 	<div id="step2" ng-app="appStep2" ng-controller="step2Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}">
-		<div class="row">
-			<div class="col-12">
-				<hr>
+		<div class="row resetRow">
+			<div class="col-12 conatiner-logoImg">
+				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
+				<img ng-src="/@{{ analyst.img }}" ng-alt="@{{ analyst.name }}" class="img-fluid steps-imgAnalista" />
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso1</strong> > (Información Personal)</span>
 			</div>
-			<div class="col-12 step2-containTile">
+			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
-				<p class="text-center step2-textAnalista">listo para obtener tu crédito oportuya</p>
+				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
 			</div>
 		</div>
 		<div class="step2-containerForm">
@@ -27,121 +29,109 @@
 				{{ csrf_field() }}
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-					    <label for="dateDocumentExpedition">Fecha Expedición Documento</label>
 					    <div class="input-group"
 					         moment-picker="leadInfo.dateDocumentExpedition"
 					         format="YYYY-MM-DD">
-					        <input class="form-control"
-					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" placeholder="YYYY-MM-DD">
+					        <input class="form-control inputsSteps inputText"
+					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" placeholder="Fecha Expedición Documento (Año/Mes/Día">
 					        <span class="input-group-addon">
 					            <i class="octicon octicon-calendar"></i>
 					        </span>
 					    </div>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-					    <label for="cityExpedition">Ciudad Expedición Documento</label>
-					    <select class="form-control" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.value as city.label for city in cities"></select>
+					    <select class="form-control inputsSteps inputSelect" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.value as city.label for city in cities" required>
+					    	 <option value="" disabled="" hidden>Ciudad Expedición Documento</option>
+					    </select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingType">Tipo de Vivienda</label>
-						<select class="form-control" id="housingType" ng-model="leadInfo.housingType" ng-change="changeHousingType()" ng-options="type.value as type.label for type in housingTypes"></select>
+						<select class="form-control inputsSteps inputSelect" id="housingType" ng-model="leadInfo.housingType" ng-change="changeHousingType()" ng-options="type.value as type.label for type in housingTypes" required="">
+							<option value="" disabled="" hidden>Tipo de Vivienda</option>
+						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingTime">Antigüedad en la Vivienda</label>
-						<input type="number" ng-model="leadInfo.housingTime" class="form-control" id="housingTime" validation-pattern="number" />
+						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingOwner">Propietario de la Vivienda</label>
-						<input type="text" class="form-control" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" />
+						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="addres">Dirección Residencia</label>
-						<input type="text" class="form-control" validation-pattern="text" ng-model="leadInfo.addres" id="addres" />
+						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" placeholder="Dirección Residencia" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'arriendo'">
-						<label for="leaseValue">Valor de Arriendo</label>
-						<input type="number" class="form-control" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" />
+						<input type="number" class="form-control inputsSteps inputText" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" placeholder="Valor de Arriendo" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="housingTelephone">Teléfono Residencia</label>
-						<input type="text" class="form-control" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" />
+						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" placeholder="Teléfono Residencia" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="stratum">Estrato</label>
-						<input type="number" class="form-control" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" />
+						<input type="number" class="form-control inputsSteps inputText" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" placeholder="Estrato" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-4">
-						<label for="birthdate">Fecha de Nacimiento</label>
 						<div class="input-group"
 						     moment-picker="leadInfo.birthdate"
 						     format="YYYY-MM-DD">
-						    <input class="form-control"
-						           ng-model="leadInfo.birthdate" id="birthdate" readonly="" placeholder="YYYY-MM-DD">
+						    <input class="form-control inputsSteps inputText"
+						           ng-model="leadInfo.birthdate" id="birthdate" readonly="" placeholder="Fecha de Nacimiento (Año/Mes/Día)">
 						    <span class="input-group-addon">
 						        <i class="octicon octicon-calendar"></i>
 						    </span>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="gender">Género</label>
-						<select class="form-control" id="gender" ng-model="leadInfo.gender" ng-options="gender.value as gender.label for gender in genders"></select>
+						<select class="form-control inputsSteps inputSelect" id="gender" ng-model="leadInfo.gender" ng-options="gender.value as gender.label for gender in genders" required="">
+							<option value="" disabled="" hidden>Género</option>
+						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="civilStatus">Estado Civil</label>
-						<select class="form-control" id="civilStatus" ng-model="leadInfo.civilStatus" ng-options="civilType.value as civilType.label for civilType in civilTypes"></select>
+						<select class="form-control inputsSteps inputSelect" id="civilStatus" ng-model="leadInfo.civilStatus" ng-options="civilType.value as civilType.label for civilType in civilTypes" required="">
+							<option value="" disabled="" hidden>Estado Civil</option>
+						</select>
 					</div>
 				</div>
 				<div ng-show="leadInfo.civilStatus == 'casado' || leadInfo.civilStatus == 'union libre'">
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseName">Nombre Cónyuge</label>
-							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control" />
+							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control inputsSteps inputText" placeholder="Nombre Cónyuge" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseIdentificationNumber">Número Identificación Cónyuge</label>
-							<input type="text" id="spouseIdentificationNumber" validation-pattern="number" ng-model="leadInfo.spouseIdentificationNumber" class="form-control">
+							<input type="text" id="spouseIdentificationNumber" validation-pattern="number" ng-model="leadInfo.spouseIdentificationNumber" class="form-control inputsSteps inputText" placeholder="Número Identificación Cónyuge">
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseTelephone">Número de Teléfono del Cónyuge</label>
-							<input type="text" id="spouseTelephone" validation-pattern="telephone" ng-model="leadInfo.spouseTelephone" class="form-control">
+							<input type="text" id="spouseTelephone" validation-pattern="telephone" ng-model="leadInfo.spouseTelephone" class="form-control inputsSteps inputText" placeholder="Número de Teléfono del Cónyuge">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseJobName">Trabajo del Cónyuge</label>
-							<input type="text" id="spouseJobName" validation-pattern="textAndNumber" ng-model="leadInfo.spouseJobName" class="form-control" />
+							<input type="text" id="spouseJobName" validation-pattern="textAndNumber" ng-model="leadInfo.spouseJobName" class="form-control inputsSteps inputText" placeholder="Trabajo del Cónyuge" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseProfession">Profesión del Cónyuge</label>
-							<input type="text" id="spouseProfession" validation-pattern="text" ng-model="leadInfo.spouseProfession" class="form-control" />
+							<input type="text" id="spouseProfession" validation-pattern="text" ng-model="leadInfo.spouseProfession" class="form-control inputsSteps inputText" placeholder="Profesión del Cónyuge" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="spouseJob">Cargo Actual del Cónyuge</label>
-							<input type="text" id="spouseJob" validation-pattern="text" ng-model="leadInfo.spouseJob" class="form-control" />
+							<input type="text" id="spouseJob" validation-pattern="text" ng-model="leadInfo.spouseJob" class="form-control inputsSteps inputText" placeholder="Cargo Actual del Cónyuge" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="spouseSalary">Salrio del Cónyuge</label>
-							<input type="number" id="spouseSalary" validation-pattern="number" ng-model="leadInfo.spouseSalary" class="form-control" />
+							<input type="number" id="spouseSalary" validation-pattern="number" ng-model="leadInfo.spouseSalary" class="form-control inputsSteps inputText" placeholder="Salario del Cónyuge" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="spouseEps">EPS del Cónyuge</label>
-							<input type="text" id="spouseEps" validation-pattern="textOnly" ng-model="leadInfo.spouseEps" class="form-control" />
+							<input type="text" id="spouseEps" validation-pattern="textOnly" ng-model="leadInfo.spouseEps" class="form-control inputsSteps inputText" placeholder="EPS del Cónyuge" />
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12 text-center">
-						<button type="submit" class="btn btn-primary">Continuar</button>
+						<button type="submit" class="btn btn-primary btnStep">Continuar</button>
 					</div>
 				</div>
 			</form>

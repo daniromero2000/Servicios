@@ -1,11 +1,12 @@
 angular.module('appStep2', ['moment-picker'])
 .controller("step2Ctrl", function($scope, $http) {
+	$scope.myModel = "";
 	$scope.leadInfo = {
 		step: 2,
 		identificationNumber: '',
 		dateDocumentExpedition: '',
-		cityExpedition: '',
-		housingType: '',
+		cityExpedition: null,
+		housingType: null,
 		housingTime: '',
 		housingOwner: '',
 		addres: '',
@@ -13,8 +14,8 @@ angular.module('appStep2', ['moment-picker'])
 		housingTelephone: '',
 		stratum: '',
 		birthdate: '',
-		gender: '',
-		civilStatus: '',
+		gender: null,
+		civilStatus: null,
 		spouseName: '',
 		spouseIdentificationNumber: '',
 		spouseTelephone: '',

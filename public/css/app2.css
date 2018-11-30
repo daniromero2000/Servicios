@@ -613,13 +613,58 @@
 	font-weight: 700;
 }
 
+/* Steps */
+#headerSteps{
+	background: #1d84c3;
+	padding: 20px;
+}
+
+.titleHeaderSteps{
+	color: white;
+	font-size: 23px;
+}
 
 /* Step 2 */
-#step2{
-	margin-bottom: 40px;
+#step2, #step3{
+	background: #fafafa;
+	min-height: 900px;
 }
-.step2-containTile{
-	margin: 40px 0;
+
+.btnStep{
+	border-radius: 30px;
+	padding: 10px 55px;
+}
+
+.modalSteps > .modal-dialog{
+	max-width: 557px;
+	min-height: 650px;
+}
+
+.modalStepsBody{
+	background: url(../images/fondoModalSteps.png) no-repeat center bottom;
+}
+
+.modalStepsContent{
+	min-height: 650px;
+}
+
+.textModal{
+	color: #4a4a4a;
+    font-size: 20px;
+    margin-top: 16px;
+}
+
+.containerFormModal{
+	padding-top: 40px;
+}
+
+.containerLogoModalStep{
+	background: #1b8acc;
+	padding: 20px;
+}
+
+.step2-containTitle{
+	margin: 95px 0 30px;
 }
 .step2-titleAnalista{
 	color: #4a4a4a;
@@ -630,7 +675,7 @@
 
 .step2-textAnalista{
 	color: #4a4a4a;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 200;
 }
 
@@ -639,6 +684,45 @@
 	margin: auto;
 }
 
+.conatiner-logoImg{
+	border-bottom: 1px solid #b2b2b2;
+    padding: 30px 100px;
+    position: relative;
+}
+
+.steps-imgAnalista{
+	position: absolute;
+    left: 47%;
+    bottom: -50px;
+}
+
+.inputsSteps{
+	border-radius: 8px !important;;
+	height: 52px;
+}
+
+.inputsSteps::-webkit-input-placeholder, .inputSelect {
+	color: #afafaf;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.inputText{
+	color: black;
+	font-size: 18px;
+}
+
+.steps-textStep{
+	position: absolute;
+	bottom: -30px;
+	left: 50px;
+	font-size: 13px;
+	color: #a2a2a2;
+}
+
+.steps-textStep > strong{
+	color: #4a4a4a;
+}
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{

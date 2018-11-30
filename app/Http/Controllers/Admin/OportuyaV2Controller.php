@@ -91,7 +91,7 @@ class OportuyaV2Controller extends Controller
 	public function store(Request $request)
 	{
 
-		if(($request->get('step'))==1){	
+		if(($request->get('step'))==1){
 			
 			$flag=0;
 			$lead= new Lead;
@@ -109,9 +109,9 @@ class OportuyaV2Controller extends Controller
 			$lead->telephone=$request->get('telephone');
 			$lead->occupation = $request->get('occupation');
 			$lead->termsAndConditions=$request->get('termsAndConditions');
-			$leadInfo->city= $request->get('city');
-			$leadInfo->typeProduct = $request->get('typeProduct');
-			$leadInfo->typeService = $request->get('typeService');
+			$lead->city= $request->get('city');
+			$lead->typeProduct = $request->get('typeProduct');
+			$lead->typeService = $request->get('typeService');
 
 			$response= $lead->save();
 
@@ -303,6 +303,25 @@ class OportuyaV2Controller extends Controller
 
 
 		}
+
+		if ($request->get('step') == 'comment') {
+			$identificationNumber = $request->get('identificationNumber');
+
+			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
+			$idLead= $idLead[0]->id;
+
+			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead]);
+			$idLeadInfo= $idLeadInfo[0]->id;
+
+
+			$leadInfo=LeadInfo::findOrFail($idLeadInfo);
+			$leadInfo->availability = $request->get('availability');
+			$leadInfo->comment = $request->get('comment');
+
+			$response = $leadInfo->save();
+
+			return response()->json([true]);
+		}
 		
 	}
 
@@ -336,8 +355,11 @@ class OportuyaV2Controller extends Controller
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
 	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
+	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
+	      $num = rand(0,3);
 	      $data['dataLead'] = $resp[0];
+	      $data['digitalAnalyst'] = $digitalAnalysts[$num];
 	      $data['banks'] = $resp2;
 
 	      return $data;
