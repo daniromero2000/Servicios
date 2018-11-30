@@ -97,7 +97,7 @@ Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('communityleads','Admin\CommunityController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
-Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic');
+Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
 Route::get('api/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
 Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
