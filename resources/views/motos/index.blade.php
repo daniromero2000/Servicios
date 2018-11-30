@@ -26,19 +26,19 @@
 						<input type="hidden" name="channel" value="1">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
-							<input type="text" name="name" id="name" class="form-control" required="true"  />
+							<input type="text" name="name" id="name" class="form-control" validation-pattern="name" required="true"  />
 						</div>
 						<div class="form-group">
 							<label for="lastName" class="control-label">Apellidos</label>
-							<input type="text" name="lastName" id="lastName" class="form-control" required="true"/>
+							<input type="text" name="lastName" id="lastName" class="form-control" validation-pattern="name" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="email" class="control-label">Correo electrónico</label>
-							<input type="email" name="email" id="mail" class="form-control" required="true"/>
+							<input type="email" name="email" id="mail" class="form-control" validation-pattern="email" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" id="telephone" class="form-control"required="true"/>
+							<input type="text" name="telephone" id="telephone" class="form-control" validation-pattern="telephone" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="ciudad class="control-label">Ciudad</label>

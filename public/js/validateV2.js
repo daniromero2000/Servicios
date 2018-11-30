@@ -3,23 +3,29 @@ $( document ).ready(function() {
 	for (var i = 0; i < inputs.length; i++) {
 		var name = "";
 		var typeInput = "";
+		
 		if(inputs[i].getAttribute('type') != 'hidden'){
-			name = getNameInput(inputs[i]);
-			typeInput = inputs[i].getAttribute('type');
-			switch(typeInput) {
+			name = getTypeValidationInput(inputs[i]);
+			switch(name) {
 			    case 'number':
-			    	if(name == 'age' || name == 'edad' || name == "anos" || name == "anios"){
-			    		validateAge(inputs[i]);
-			    	}
+			    	validateNumber(inputs[i]);
 			        break;
 
-			    case 'text':
-			        if(name == 'name' || name == "nombre" || name == "names" || name == "nombres" || name == "lastName" || name == "last_name" || name == "apellidos"){
-			        	validateNameAndLastName(inputs[i]);
-			        }else if(name == "telefono" || name == "tel" || name == "telephone" || name == "celphone" || name == "celular" || name == "cel"){
-			        	validateTelephoneAndCelphone(inputs[i]);
-			        }
+			    case 'name':
+			        validateName(inputs[i]);
 			        break;
+
+		        case 'telephone':
+		        	validateTelephoneAndCelphone(inputs[i]);
+		        	break;
+
+	        	case 'text':
+	        		validateText(inputs[i]);
+	        		break;
+
+	        	case 'textOnly':
+	        		validateTextOnly(inputs[i]);
+	        		break;
 
 			    case 'email':
 			    	validateEmail(inputs[i]);
@@ -28,21 +34,9 @@ $( document ).ready(function() {
 		}
 	}
 
-	function getNameInput(input){
+	function getTypeValidationInput(input){
 		var name = "";
-		if(input.getAttribute('ng-model')){
-			var ngModel = input.getAttribute('ng-model');
-			ngModel = ngModel.split('.');
-			var countNgModel = ngModel.length;
-			if(countNgModel > 1){
-				name = ngModel[countNgModel - 1];
-			}else{
-				name = input.getAttribute('ng-model');
-			}
-		}else if(input.getAttribute('name')){
-			name = input.getAttribute('name');
-		}
-
+		name = input.getAttribute('validation-pattern');
 		return name;
 	}
 
@@ -53,13 +47,23 @@ $( document ).ready(function() {
 
 	/*Type Text*/
 
-	function validateNameAndLastName(input){
+	function validateName(input){
 		var patt ="(([a-zA-Z]+([\\.]?)[a-zA-Z]*)\\s{0,1}){1,3}";
+		setAttributePatternInput(input, patt);
+	}
+
+	function validateText(input){
+		var patt ="((\\w*([\\.]?)(#?)(-?))\\s{0,1})+";
 		setAttributePatternInput(input, patt);
 	}
 
 	function validateTelephoneAndCelphone(input){
 		var patt = "(\\+57)?\\s?3((\\d{6})|(\\d{9}))";
+		setAttributePatternInput(input, patt);
+	}
+
+	function validateTextOnly(input){
+		var patt = "([a-zA-Z]+\\s?)+";
 		setAttributePatternInput(input, patt);
 	}
 

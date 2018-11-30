@@ -50,31 +50,31 @@
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
 						<label for="housingTime">Antigüedad en la Vivienda</label>
-						<input type="number" ng-model="leadInfo.housingTime" class="form-control" id="housingTime" />
+						<input type="number" ng-model="leadInfo.housingTime" class="form-control" id="housingTime" validation-pattern="number" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
 						<label for="housingOwner">Propietario de la Vivienda</label>
-						<input type="text" class="form-control" id="housingOwner" ng-model="leadInfo.housingOwner" />
+						<input type="text" class="form-control" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="addres">Dirección Residencia</label>
-						<input type="text" class="form-control" ng-model="leadInfo.addres" id="addres" />
+						<input type="text" class="form-control" validation-pattern="text" ng-model="leadInfo.addres" id="addres" />
 					</div>
-					<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.housingType == 'arriendo'">
+					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'arriendo'">
 						<label for="leaseValue">Valor de Arriendo</label>
-						<input type="number" class="form-control" ng-model="leadInfo.leaseValue" id="leaseValue" />
+						<input type="number" class="form-control" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="housingTelephone">Teléfono Residencia</label>
-						<input type="text" class="form-control" ng-model="leadInfo.housingTelephone" id="housingTelephone" />
+						<input type="text" class="form-control" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="stratum">Estrato</label>
-						<input type="number" class="form-control" ng-model="leadInfo.stratum" id="stratum" />
+						<input type="number" class="form-control" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" />
 					</div>
 				</div>
 				<div class="row">
@@ -99,43 +99,43 @@
 						<select class="form-control" id="civilStatus" ng-model="leadInfo.civilStatus" ng-options="civilType.value as civilType.label for civilType in civilTypes"></select>
 					</div>
 				</div>
-				<div ng-if="leadInfo.civilStatus == 'casado' || leadInfo.civilStatus == 'union libre'">
+				<div ng-show="leadInfo.civilStatus == 'casado' || leadInfo.civilStatus == 'union libre'">
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseName">Nombre Cónyuge</label>
-							<input type="text" id="spouseName" ng-model="leadInfo.spouseName" class="form-control" />
+							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseIdentificationNumber">Número Identificación Cónyuge</label>
-							<input type="text" id="spouseIdentificationNumber" ng-model="leadInfo.spouseIdentificationNumber" class="form-control">
+							<input type="text" id="spouseIdentificationNumber" validation-pattern="number" ng-model="leadInfo.spouseIdentificationNumber" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseTelephone">Número de Teléfono del Cónyuge</label>
-							<input type="text" id="spouseTelephone" ng-model="leadInfo.spouseTelephone" class="form-control">
+							<input type="text" id="spouseTelephone" validation-pattern="telephone" ng-model="leadInfo.spouseTelephone" class="form-control">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseJobName">Trabajo del Cónyuge</label>
-							<input type="text" id="spouseJobName" ng-model="leadInfo.spouseJobName" class="form-control" />
+							<input type="text" id="spouseJobName" validation-pattern="textAndNumber" ng-model="leadInfo.spouseJobName" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseProfession">Profesión del Cónyuge</label>
-							<input type="text" id="spouseProfession" ng-model="leadInfo.spouseProfession" class="form-control" />
+							<input type="text" id="spouseProfession" validation-pattern="text" ng-model="leadInfo.spouseProfession" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseJob">Cargo Actual del Cónyuge</label>
-							<input type="text" id="spouseJob" ng-model="leadInfo.spouseJob" class="form-control" />
+							<input type="text" id="spouseJob" validation-pattern="text" ng-model="leadInfo.spouseJob" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 col-md-6">
+						<div class="col-sm-12 col-md-6 form-group">
 							<label for="spouseSalary">Salrio del Cónyuge</label>
-							<input type="number" id="spouseSalary" ng-model="leadInfo.spouseSalary" class="form-control" />
+							<input type="number" id="spouseSalary" validation-pattern="number" ng-model="leadInfo.spouseSalary" class="form-control" />
 						</div>
-						<div class="col-sm-12 col-md-6">
+						<div class="col-sm-12 col-md-6 form-group">
 							<label for="spouseEps">EPS del Cónyuge</label>
-							<input type="text" id="spouseEps" ng-model="leadInfo.spouseEps" class="form-control" />
+							<input type="text" id="spouseEps" validation-pattern="textOnly" ng-model="leadInfo.spouseEps" class="form-control" />
 						</div>
 					</div>
 				</div>

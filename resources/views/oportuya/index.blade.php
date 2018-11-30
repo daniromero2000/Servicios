@@ -378,19 +378,19 @@
 
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>
-							<input type="text" name="name" class="form-control" id="name" required="true"/>
+							<input type="text" name="name" class="form-control" id="name" validation-pattern="name" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="lastName" class="control-label">Apellidos</label>
-							<input type="text" name="lastName" class="form-control" id="lastName" required="true"/>
+							<input type="text" name="lastName" class="form-control" validation-pattern="name" id="lastName" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="email" class="control-label">Correo electronico</label>
-							<input type="email" name="email" class="form-control" id="email" required="true"/>
+							<input type="email" name="email" class="form-control" id="email" validation-pattern="email" required="true"/>
 						</div>
 						<div class="form-group">
 							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
+							<input type="text" name="telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true"/>
 						</div>
 
 						<div class="row">
@@ -537,19 +537,19 @@ $arraySliderOffer=[
 										<input type="hidden" name="typeProduct" value="{{$arrayOfferItem['nameProduct']}}">
 										<div class="form-group">
 											<label for="name" class="control-label">Nombres</label>
-											<input type="text" name="name" class="form-control" id="name" required="true"/>
+											<input type="text" name="name" class="form-control" id="name" validation-pattern="name" required="true"/>
 										</div>
 										<div class="form-group">
 											<label for="lastName" class="control-label">Apellidos</label>
-											<input type="text" name="lastName" class="form-control" id="lastName" required="true"/>
+											<input type="text" name="lastName" class="form-control" id="lastName" validation-pattern="name" required="true"/>
 										</div>
 										<div class="form-group">
 											<label for="email" class="control-label">Correo electronico</label>
-											<input type="email" name="email" class="form-control" id="email" required="true"/>
+											<input type="email" name="email" class="form-control" id="email" validation-pattern="email" required="true"/>
 										</div>
 										<div class="form-group">
 											<label for="telephone class="control-label">Teléfono</label>
-											<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
+											<input type="text" name="telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true"/>
 										</div>
 										<div class="form-group">
 											<label for="city class="control-label">Ciudad</label>

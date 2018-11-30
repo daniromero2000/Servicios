@@ -195,7 +195,7 @@
 								<div class="col-sm-12 col-md-2">
 									<div class="formularioSimulador-containInput">
 										<label for="age" class="formularioSimulador-labelFormulario">Edad :</label>
-										<input type="number" class="form-control" id="age" ng-model="libranza.age" ng-blur="calculateData()" validate="age" ng-change="validateInt()" required="true" />
+										<input type="number" class="form-control" min="1" max="127" validation-pattern="number" id="age" ng-model="libranza.age" ng-blur="calculateData()" validate="age" ng-change="validateInt()" required="true" />
 									</div>
 								</div>
 								<div class="col-sm-12 col-md-10">
@@ -209,26 +209,26 @@
 								<div class="col-sm-12 col-md-6">
 									<div class="formularioSimulador-containInput">
 										<label for="salary" class="formularioSimulador-labelFormulario">Salario Básico :</label>
-										<input type="number" id="salary" class="form-control" ng-model="libranza.salary" ng-blur="calculateData()" ng-change="validateInt()" required="true" />
+										<input type="number" id="salary" class="form-control" validation-pattern="number" ng-model="libranza.salary" ng-blur="calculateData()" ng-change="validateInt()" required="true" />
 									</div>
 								</div>
 								<div class="col-sm-12 col-md-6">
 									<div class="formularioSimulador-containInput">
 										<label for="lawDesc" class="formularioSimulador-labelFormulario">Descuentos de ley :</label>
-										<input type="text" id="lawDesc" class="form-control" ng-model="libranza.lawDesc" ng-disabled="true" />
+										<input type="text" id="lawDesc" class="form-control" validation-pattern="number" ng-model="libranza.lawDesc" ng-disabled="true" />
 									</div>
 								</div>
 							</div>
 							<div class="formularioSimulador-containInput">
 								<label for="otherDesc" class="formularioSimulador-labelFormulario">Otros Descuentos :</label>
-								<input type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-blur="calculateData()" ng-change="validateInt()" />
+								<input type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="calculateData()" ng-change="validateInt()" />
 							</div>
 							<div class="formularioSimulador-containInput">
 								<input type="hidden" id="segMargen" class="form-control" ng-model="libranza.segMargen">
 							</div>
 							<div class="formularioSimulador-containInput" ng-if="libranza.creditLine == 'Libre inversion + Compra de cartera'">
 								<label for="quotaBuy" class="formularioSimulador-labelFormulario">Valor Cuota Compra :</label>
-								<input type="text" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="calculateData()" ng-change="validateInt()" />
+								<input type="number" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="calculateData()" ng-change="validateInt()" />
 							</div>
 							<div class="formularioSimulador-containInput text-center">
 								<button type="submit" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Simular</button>
@@ -327,22 +327,22 @@
 						</h3>
 						<form role="form" ng-submit="addLead()" id="saveLead">
 						<div class="form-group">
-							<label class="control-label modalLabelForm">Nombres</label>
-							<input type="text" ng-model="libranza.name" class="form-control" id="nameForm" required="true" />
+							<label class="control-label modalLabelForm" for="name">Nombres</label>
+							<input type="text" ng-model="libranza.name" class="form-control" id="name" validation-pattern="name" required="true" />
 						</div>
 						<input type="hidden" ng.model="libranza.typeService" value="libranza">
 						<input type="hidden" ng.model="libranza.channel" value="1">
 						<div class="form-group">
-							<label class="control-label modalLabelForm">Apellidos</label>
-							<input type="text" ng-model="libranza.lastName" class="form-control" id="nameForm" />
+							<label class="control-label modalLabelForm" id="lastName">Apellidos</label>
+							<input type="text" ng-model="libranza.lastName" class="form-control" id="lastName" validation-pattern="name" />
 						</div>
 						<div class="form-group">
-							<label class="control-label modalLabelForm">Correo electrónico</label>
-							<input type="email" ng-model="libranza.email" class="form-control" id="nameForm" required="true" />
+							<label class="control-label modalLabelForm" for="email">Correo electrónico</label>
+							<input type="email" ng-model="libranza.email" class="form-control" id="email" validation-pattern="email" required="true" />
 						</div>
 						<div class="form-group">
-							<label class="control-label modalLabelForm">Teléfono</label>
-							<input type="text" ng-model="libranza.telephone" class="form-control" id="nameForm" required="true" />
+							<label class="control-label modalLabelForm" for="telephone">Teléfono</label>
+							<input type="text" ng-model="libranza.telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true" />
 						</div>
 						<div class="row">
 							<div class="col-sm-6">

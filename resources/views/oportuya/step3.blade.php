@@ -29,41 +29,41 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-8 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
-							<input type="text" class="form-control" id="nit" ng-model="leadInfo.nit" />
+							<input type="text" class="form-control" id="nit" validation-pattern="number" ng-model="leadInfo.nit" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="indicative">Indicativo</label>
-							<input type="number" class="form-control" id="indicative" ng-model="leadInfo.indicative" />
+							<input type="number" class="form-control" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la empresa</label>
-							<input type="text" class="form-control" id="companyName" ng-model="leadInfo.companyName">
+							<input type="text" class="form-control" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyAddres">Dirección de la empresa</label>
-							<input type="text" class="form-control" id="companyAddres" ng-model="leadInfo.companyAddres">
+							<input type="text" class="form-control" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone">Teléfono de la empresa</label>
-							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" class="form-control">
+							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone2">Teléfono 2 de la empresa</label>
-							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" class="form-control">
+							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" validation-pattern="telephone" class="form-control">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" class="form-control">
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="companyPosition">Cargo</label>
-							<input type="text" name="" id="companyPosition" ng-model="leadInfo.companyPosition" class="form-control">
+							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="admissionDate">Fecha de ingreso</label>
@@ -81,21 +81,21 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquity">Atigüedad</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" class="form-control" />
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" class="form-control" />
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="typeContract">Tipo de contrato</label>
-							<select class="form-control" id="typeContract" ng-model="leadInfo.typeContract" ng-options="type.value as type.label for type in typesContracts"></select>
+							<select class="form-control" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts"></select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="otherRevenue">Otros ingresos</label>
-							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" class="form-control" />
+							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" validation-pattern="number" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
@@ -115,23 +115,23 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
-							<input type="text" id="nit" ng-model="leadInfo.nit" class="form-control">
+							<input type="text" id="nit" ng-model="leadInfo.nit" validation-pattern="number" class="form-control">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la empresa</label>
-							<input type="text" class="form-control" id="companyName" ng-model="leadInfo.companyName">
+							<input type="text" class="form-control" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="whatSell">Que Vendes o Comercializas?</label>
-							<input type="text" class="form-control" id="whatSell" ng-model="leadInfo.whatSell">
+							<input type="text" class="form-control" id="whatSell" validation-pattern="text" ng-model="leadInfo.whatSell">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" class="form-control">
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="dateCreationCompany">Fecha de constitución</label>
@@ -149,11 +149,11 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquity">Atigüedad</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" class="form-control" />
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" class="form-control" />
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
@@ -170,7 +170,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la empresa</label>
-							<input type="text" class="form-control" id="companyName" ng-model="leadInfo.companyName">
+							<input type="text" class="form-control" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="dateCreationCompany">Fecha de pensión</label>
@@ -188,17 +188,17 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquity">Atigüedad</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" class="form-control" />
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" class="form-control" />
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" class="form-control">
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="admissionDate">Banco</label>
