@@ -87,7 +87,7 @@
 
             <div id="collapse{{$pregunta->id}}" class="collapse @if($show) @php echo 'show'; $show=false @endphp @endif" aria-labelledby="heading{{$pregunta->id}}" data-parent="#accordion">
               <div class="card-body">
-                {{$pregunta->answer}}
+                {!!$pregunta->answer!!}
               </div>
             </div>
           </div>
