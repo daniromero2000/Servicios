@@ -391,7 +391,7 @@ class OportuyaV2Controller extends Controller
 	      $data = [];
 
 	      $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
-	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ";
+	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
 
 	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 

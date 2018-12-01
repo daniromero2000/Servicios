@@ -423,11 +423,11 @@
 							<div class="col-12 col-sm-6">
 								<label for="occupation">Ocupación</label>
 								<select class="form-control" name="occupation">
-									<option value="Empleado">Empleado</option>
-									<option value="Pensionado">Pensionado</option>
-									<option value="Fuerzas armadas">Fuerzas armadas</option>
-									<option value="Docente">Docente</option>
-									<option value="Independiente">Independiente</option>
+									<option value="EMPLEADO">Empleado</option>
+									<option value="PENSIONADO">Pensionado</option>
+									<option value="FUERZAS ARMADAS">Fuerzas armadas</option>
+									<option value="DOCENTE">Docente</option>
+									<option value="INDEPENDIENTE">Independiente</option>
 								</select>
 							</div>
 						</div>
@@ -435,8 +435,8 @@
 							<div class="col-12 col-sm-6 form-group">
 								<label for="typeDocument">Tipo de documento</label>
 								<select class="form-control" name="typeDocument" id="typeDocument">
-									<option value="cc">Cédula de ciudadanía</option>
-									<option value="ce">Cédula de extranjería</option>
+									<option value="1">Cédula de ciudadanía</option>
+									<option value="2">Cédula de extranjería</option>
 								</select>
 							</div>
 							<div class="col-12 col-sm-6 form-group">

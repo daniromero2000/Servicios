@@ -55,7 +55,7 @@
 						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda" required="" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" required="" />
+						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" />
 					</div>
 				</div>
 				<div class="row">
@@ -68,7 +68,7 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" placeholder="Teléfono Residencia" required />
+						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" placeholder="Teléfono Residencia" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<input type="number" class="form-control inputsSteps inputText" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" placeholder="Estrato" />
@@ -103,7 +103,7 @@
 							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control inputsSteps inputText" placeholder="Nombre Cónyuge" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<input type="text" id="spouseIdentificationNumber" validation-pattern="number" ng-model="leadInfo.spouseIdentificationNumber" class="form-control inputsSteps inputText" placeholder="Número Identificación Cónyuge">
+							<input type="number" id="spouseIdentificationNumber" validation-pattern="number" ng-model="leadInfo.spouseIdentificationNumber" class="form-control inputsSteps inputText" placeholder="Número Identificación Cónyuge">
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<input type="text" id="spouseTelephone" validation-pattern="telephone" ng-model="leadInfo.spouseTelephone" class="form-control inputsSteps inputText" placeholder="Número de Teléfono del Cónyuge">
