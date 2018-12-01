@@ -31,22 +31,22 @@ angular.module('appStep3', ['moment-picker'])
 
 	$scope.typesContracts = [
 		{
-			value: 'fijo',
+			value: 'FIJO',
 			label: 'Fijo'
 		},
 		{
-			value: 'indefinido',
+			value: 'INDEFINIDO',
 			label: 'indefinido'
 		}
 	];
 
 	$scope.typesCamaraComercio = [
 		{
-			value: 'Si',
+			value: 'SI',
 			label: 'Si'
 		},
 		{
-			value: 'No',
+			value: 'NO',
 			label: 'No'
 		}
 	];
@@ -64,7 +64,6 @@ angular.module('appStep3', ['moment-picker'])
 			$scope.banks = response.data.banks;
 			$scope.dataLead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
-			console.log(response);
 			if($scope.dataLead.occupation == 'Empleado'){
 				$scope.idForm = "formEmpleado";
 			}else if($scope.dataLead.occupation == 'Independiente'){

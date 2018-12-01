@@ -36,34 +36,34 @@ angular.module('appStep2', ['moment-picker'])
 	$scope.housingTypes = [
 		{
 			label: 'Propia',
-			value: 'propia'
+			value: 'PROPIA'
 		},
 		{
 			label: 'Arriendo',
-			value: 'arriendo'
+			value: 'ARRIENDO'
 		},
 		{
 			label: 'Familiar',
-			value: 'familiar'
+			value: 'FAMILIAR'
 		}
 	];
 
 	$scope.civilTypes = [
 		{
 			label: 'Soltero',
-			value: 'soltero'
+			value: 'SOLTERO'
 		},
 		{
 			label: 'Casado',
-			value: 'casado'
+			value: 'CASADO'
 		},
 		{
 			label: 'Unión Libre',
-			value: 'union libre'
+			value: 'UNION LIBRE'
 		},
 		{
 			label: 'Viudo',
-			value: 'viudo'
+			value: 'VIUDO'
 		},
 	];
 
@@ -80,7 +80,7 @@ angular.module('appStep2', ['moment-picker'])
 			$scope.cities = response.data.cities;
 			$scope.leadInfo = response.data.oportudataLead;
 			$scope.leadInfo.step = 2;
-			$scope.leadInfo.cityExpedition = ($scope.leadInfo.cityExpedition != null && $scope.leadInfo.cityExpedition != NaN && $scope.leadInfo.cityExpedition != '') ? $scope.leadInfo.cityExpedition : null;
+			$scope.leadInfo.cityExpedition = ($scope.leadInfo.cityExpedition != null && $scope.leadInfo.cityExpedition != NaN && $scope.leadInfo.cityExpedition != '') ? parseInt($scope.leadInfo.cityExpedition) : null;
 			$scope.leadInfo.housingType = ($scope.leadInfo.housingType != null && $scope.leadInfo.housingType != NaN && $scope.leadInfo.housingType != '') ? $scope.leadInfo.housingType : null;
 			$scope.leadInfo.gender = ($scope.leadInfo.gender != null && $scope.leadInfo.gender != NaN && $scope.leadInfo.gender != '') ? $scope.leadInfo.gender : null;
 			$scope.leadInfo.civilStatus = ($scope.leadInfo.civilStatus != null && $scope.leadInfo.civilStatus != NaN && $scope.leadInfo.civilStatus != '') ? $scope.leadInfo.civilStatus : null;
@@ -97,7 +97,6 @@ angular.module('appStep2', ['moment-picker'])
 	};
 
 	$scope.saveStep2 = function(){
-		console.log($scope.leadInfo);
 		var csrftoken = document.getElementById('step2Form').children[0].value;
 		$http({
 		  method: 'POST',
