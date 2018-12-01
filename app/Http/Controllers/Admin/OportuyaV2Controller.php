@@ -165,8 +165,9 @@ class OportuyaV2Controller extends Controller
 					'PROFESION' => $request->get('occupation'),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
-					'STATE' => 'A'
-
+					'STATE' => 'A',
+					'SUC' => 129,
+					'CREACION' => "2018-12-01"
 				];
 
 
