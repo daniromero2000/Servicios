@@ -164,7 +164,8 @@ class OportuyaV2Controller extends Controller
 					'CELULAR' =>$request->get('telephone'),
 					'PROFESION' => $request->get('occupation'),
 					'TIPOCLIENTE' => 'OPORTUYA',
-					'SUBTIPO' => 'WEB'
+					'SUBTIPO' => 'WEB',
+					'STATE' => 'A'
 
 				];
 
