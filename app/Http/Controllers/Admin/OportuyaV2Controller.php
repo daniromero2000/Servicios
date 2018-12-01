@@ -163,6 +163,7 @@ class OportuyaV2Controller extends Controller
 					'EMAIL' => $request->get('email'),
 					'CELULAR' =>$request->get('telephone'),
 					'PROFESION' => $request->get('occupation'),
+					'ACTIVIDAD' => $request->get('occupation'),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -226,8 +227,12 @@ class OportuyaV2Controller extends Controller
 			
 
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]); 
-			
-			$leadInfo = new LeadInfo;
+			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead[0]->id]);
+			if($idLeadInfo){
+				$leadInfo=LeadInfo::findOrFail($idLeadInfo[0]->id);
+			}else{
+				$leadInfo = new LeadInfo;
+			}
 
 
 			$leadInfo->idLead= $idLead[0]->id;
@@ -264,7 +269,7 @@ class OportuyaV2Controller extends Controller
 				$dataLead=[
 
 					'DIRECCION' => $request->get('addres'),
-					'FEC_NAC' => $request->get('birthday'),
+					'FEC_NAC' => $request->get('birthdate'),
 					'CIUD_EXP' => $request->get('cityExpedition'),
 					'ESTADOCIVIL' => $request->get('civilStatus'),
 					'FEC_EXP' => $request->get('dateDocumentExpedition'),

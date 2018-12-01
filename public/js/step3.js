@@ -77,14 +77,10 @@ angular.module('appStep3', ['moment-picker'])
 	};
 
 	$scope.saveStep3 = function(){
-		var csrftoken = document.getElementById($scope.idForm).children[0].value;
 		$http({
 		  method: 'POST',
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
-		  headers: {
-		     'X-CSRF-TOKEN': csrftoken
-		   },
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				$('#congratulations').modal('show');

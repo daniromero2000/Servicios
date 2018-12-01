@@ -62,7 +62,7 @@
 					<div class="col-sm-12 col-md-6 form-group">
 						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" placeholder="Dirección Residencia" required="" />
 					</div>
-					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'arriendo'">
+					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'ARRIENDO'">
 						<input type="number" class="form-control inputsSteps inputText" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" placeholder="Valor de Arriendo" />
 					</div>
 				</div>
@@ -97,7 +97,8 @@
 						</select>
 					</div>
 				</div>
-				<div ng-show="leadInfo.civilStatus == 'casado' || leadInfo.civilStatus == 'union libre'">
+				<div ng-show="false">
+				{{-- <div ng-show="leadInfo.civilStatus == 'CASADO' || leadInfo.civilStatus == 'UNION LIBRE'"> --}}
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
 							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control inputsSteps inputText" placeholder="Nombre Cónyuge" />

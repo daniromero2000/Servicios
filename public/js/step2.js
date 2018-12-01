@@ -106,7 +106,6 @@ angular.module('appStep2', ['moment-picker'])
 		     'X-CSRF-TOKEN': csrftoken
 		   },
 		}).then(function successCallback(response) {
-			console.log(response);
 			if (response.data != false) {
 				$scope.encryptText();
 			}
