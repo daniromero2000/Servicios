@@ -27,8 +27,8 @@ angular.module('appStep2', ['moment-picker'])
 	};
 
 	$scope.genders = [
-		{ label : 'Masculino',value: 'masculino' },
-		{ label : 'Femenino',value: 'femenino' }
+		{ label : 'Masculino',value: 'M' },
+		{ label : 'Femenino',value: 'F' }
 	];
 
 	$scope.cities = {};
@@ -78,6 +78,12 @@ angular.module('appStep2', ['moment-picker'])
 			$scope.lead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
 			$scope.cities = response.data.cities;
+			$scope.leadInfo = response.data.oportudataLead;
+			$scope.leadInfo.step = 2;
+			$scope.leadInfo.cityExpedition = ($scope.leadInfo.cityExpedition != null && $scope.leadInfo.cityExpedition != NaN && $scope.leadInfo.cityExpedition != '') ? $scope.leadInfo.cityExpedition : null;
+			$scope.leadInfo.housingType = ($scope.leadInfo.housingType != null && $scope.leadInfo.housingType != NaN && $scope.leadInfo.housingType != '') ? $scope.leadInfo.housingType : null;
+			$scope.leadInfo.gender = ($scope.leadInfo.gender != null && $scope.leadInfo.gender != NaN && $scope.leadInfo.gender != '') ? $scope.leadInfo.gender : null;
+			$scope.leadInfo.civilStatus = ($scope.leadInfo.civilStatus != null && $scope.leadInfo.civilStatus != NaN && $scope.leadInfo.civilStatus != '') ? $scope.leadInfo.civilStatus : null;
 		}, function errorCallback(response) {
 			console.log(response);
 		});
@@ -91,6 +97,7 @@ angular.module('appStep2', ['moment-picker'])
 	};
 
 	$scope.saveStep2 = function(){
+		console.log($scope.leadInfo);
 		var csrftoken = document.getElementById('step2Form').children[0].value;
 		$http({
 		  method: 'POST',
@@ -100,6 +107,7 @@ angular.module('appStep2', ['moment-picker'])
 		     'X-CSRF-TOKEN': csrftoken
 		   },
 		}).then(function successCallback(response) {
+			console.log(response);
 			if (response.data != false) {
 				$scope.encryptText();
 			}

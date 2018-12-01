@@ -453,12 +453,13 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaContentHeader{
-	background-color: #E3EEF2;
+	background-color: #D5EAEF;
 	border-radius: 10px 10px 0 0;
 }
 
 .oportuyaHeaderImage{
 	padding: 0;
+	text-align: center;
 }
 
 .textOportuyaHeader {
@@ -466,6 +467,7 @@ a:hover, a:active, a:focus, a:visited{
 	left: 50%;
 	transform: translate(-50%);
 	text-align: center;
+	margin-top: 25px;
 }
 
 .textOportuyaHeader>span{
@@ -473,18 +475,21 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .buttonOportuyaSection{
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%,-6em);
+	position: relative;
+	margin-top: 0 !important;
+	margin-bottom: 30px;
+	
 }
 
 .buttonOportuyaSection a{
-    background-color: #EA2163;
+    background-color: #013485;
     color: #FFF;
     font-size: 1.2em;
     padding: 0.5em 3.5em;
     border-radius: 25px;
-    font-weight: 500;
+    font-weight: 800;
+    margin-left: 50%;
+    transform: translate(-50%);
 }
 
 .contentFeatures{
@@ -492,8 +497,19 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaContentFeatures{
-	background-color: #F4F5F4;
+	background-color: #EDF7FB;
 	border-radius: 0 0 10px 10px;
+	background-image: url(../images/fondoBarras.png);
+}
+
+.oportuyaContentFeatures div.col-md-8{
+	
+}
+
+
+
+.oportuyaContentFeatures div.col-md-8 div.row{
+	margin-top: 40px;
 }
 
 .oportuyaContentImage img{
@@ -503,6 +519,8 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .efectiveText{
+
+	color: #2C3D5B;
 	font-size: 1.6em;
 	text-align: center;
 }
@@ -616,6 +634,155 @@ a:hover, a:active, a:focus, a:visited{
 
 .hrcards{
 	height:2px; visibility:hidden; margin-bottom:-1px;
+}
+
+.stepContainer{
+	position: relative;
+}
+
+.stepContainer:after{
+	position: absolute;
+	content: ' ';
+	width: 2px;
+	right: 0;
+	top: 0;
+	height: 100%;
+	background-color: #C3CAD0;
+}
+
+.steps img {
+		margin-bottom: 20px;
+}
+
+.steps p{
+	color: #1C7FA8;
+	font-weight: 800;
+	font-size: 1.2em;	
+	margin-bottom: 0;
+	width: 75%;
+    margin: auto;
+}
+
+.steps p span{
+	color: #012D60;	
+	font-weight: 800;
+}
+/*Service Point section*/
+
+
+.servicesPointContainer{
+	position: relative;
+	background-color: #EB1F64;
+	background-image: url('../images/imagenFondoPuntosServicios-05.png');
+	background-repeat: no-repeat;
+	background-position: right;
+	margin-bottom: 25px;
+	padding-top: 50px;
+	padding-bottom: 25px;
+
+}
+
+.servicesPointContainer:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    border-top: 25px solid white;
+    border-left: 25px solid #EB1F64;
+    width: 0;
+}
+
+.servicesPointCard{
+	position: relative;
+	margin-top:25px;
+	background-image: url(../images/imagenFondoDescuentos.png);
+	background-repeat:no-repeat;
+	background-color: #0F8AC6;
+	padding-top: 55px;
+	padding-bottom: 50px;
+}
+
+.servicesPointCard:before {
+    content: '';
+    position: absolute;
+    bottom:  0; left:  0;
+    border-bottom:  25px solid white !important;
+    border-right: 25px solid #0F8AC6 !important;
+    width: 0;
+}
+
+#servicesPoint > div.row {
+	width: 100%;
+	margin: 0 0 50px 0;
+}
+
+.servicesPointCard img,.servicesPointContainer img{
+	margin-bottom: 20px;
+}
+
+.servicesPointCard p,.servicesPointContainer p{
+	color: #FFF;
+	line-height: 0;
+	font-weight: 500;
+	font-size: 1.2em;
+}
+
+.serviceContainer{
+	margin-left: 50%;
+    transform: translate(-50%);
+}
+
+/*button fixed*/
+
+.fixedButton{
+	display: none;
+	position: fixed;
+	background-color: #0F8AC6;
+	top: 30%;
+    right: 0;
+    width: 200px;
+    text-align: center;
+    z-index: 9;
+}
+
+
+.fixedButton:before {
+    content: '';
+    position: absolute;
+    bottom:  0; left:  0;
+    border-bottom:  25px solid transparent !important;
+    border-right: 25px solid #0F8AC6 !important;
+    width: 0;
+}
+
+.fixedButton>div.row div img{
+	width: 2em;
+	margin-left: 10px;
+	margin-top:10px;
+}
+
+.fixedButton>div.row div.col-8{
+    padding: 0;
+    padding-left: 23px;
+	
+}
+
+.fixedButton>div.row div.col-12 a{
+
+	background-color: #FFF;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-weight: 700;
+    color: #020202;
+}
+
+
+
+.fixedButton>div.row span{
+	color: #FFF;
+	font-size: 12px;
+	z-index: 9;
+	font-weight: 500;
 }
 
 /*offers section*/
@@ -2093,6 +2260,45 @@ p.wantToSecondTex{
     font-weight: 700;
 }
 
+.buttonNavheader::before{
+	position: relative;
+	display: block;
+	width: 0;
+	height: 0;
+	 border-right: 100px solid transparent;
+     border-top: 100px solid transparent;
+     border-left: 100px solid transparent;
+     border-bottom: 100px solid #f0ad4e;
+}
+
+.dropdown-menu-dashboard{
+	background-color: #F5F4FE;
+    box-shadow:0 2px 3px grey;
+	display: none;
+    color: #FFF;
+    z-index: 2;
+    position: absolute;
+    top: 70px;
+    right: 3%;
+    list-style: none;
+    padding: 0 30px;
+}
+
+.dropdown-menu-dashboard li{
+	padding: 11px 0; 
+}
+
+.dropdown-menu-dashboard li a {
+	color: #1D84C3;
+}
+
+.no-padding-left{
+	padding-left: 0 !important;
+}
+
+.no-padding-right{
+	padding-right: 0 !important;
+}
 
 /* Media Queries */
 
@@ -2174,7 +2380,8 @@ p.wantToSecondTex{
 
 	.oportuyaHeaderImage img{
 
-		height: 100%;
+		
+    	transform: translateY(15%);
 
 	}
 
@@ -2206,6 +2413,10 @@ p.wantToSecondTex{
 
 		width: 50%;
 
+	}
+
+	.servicesPointCard p, .servicesPointContainer p{
+		font-size: 1.1em;
 	}
 
 }
@@ -2348,7 +2559,9 @@ p.wantToSecondTex{
 	}
 
 
-
+	.servicesPointCard p, .servicesPointContainer p{
+		font-size: 1em;
+	}
 
 
 }
@@ -2504,6 +2717,14 @@ p.wantToSecondTex{
 
 .busTourButton p a{
 	width: 65%;
+}
+
+.servicesPointCard p, .servicesPointContainer p{
+		font-size: 0.9em;
+	}
+
+.serviceContainer {
+    margin-left: 40%;
 }
 
 }
@@ -2832,6 +3053,22 @@ p.wantToSecondTex{
 		display: none;
 	}
 
+	.buttonOportuyaSection a{
+		margin-left: 0;
+		transform: unset;
+	}
+
+	.steps p{
+		width: 100%;
+	}
+
+	.stepContainer:after{
+		display: none;
+	}
+
+	.stepResponsive{
+		margin-top: 15px !important;
+	}
 
 
 }
@@ -3014,6 +3251,11 @@ p.wantToSecondTex{
 		line-height: 1;
 		font-size: 14px;
 	}
+
+	.serviceContainer{
+		margin-left: 25%;
+		transform: translate(-20%)
+	}
 }
 
 @media(max-width: 768px){
@@ -3158,7 +3400,7 @@ p.wantToSecondTex{
 	}
 
 	.oportuyaHeaderImage img{
-		height: auto;
+		height: 70%;
 	}
 
 	.salePoint{
@@ -3201,6 +3443,28 @@ p.wantToSecondTex{
 	.busTourButton p a{
 		width: 60%;
 	}
+
+	.textOportuyaHeader{
+		margin-top: 10px;
+	}
+
+	.textOportuyaHeader{
+		position: relative;
+		right: unset;
+	}
+
+	.oportuyaTextResponsive{
+		margin-bottom: 10px;
+	}
+
+	.servicesPointContainer{
+		margin-bottom: 0;
+	}
+
+	.servicesPointCard{
+		margin-top: 0;
+	}
+
 
 }
 

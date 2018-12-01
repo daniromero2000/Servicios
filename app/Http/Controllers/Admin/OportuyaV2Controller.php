@@ -91,31 +91,53 @@ class OportuyaV2Controller extends Controller
 	public function store(Request $request)
 	{
 
-		if(($request->get('step'))==1){
-			
+		if(($request->get('step'))==1){	
+					
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
-
-
 			$identificationNumber = $request->get('identificationNumber');
-			$lead->typeDocument=$request->get('typeDocument');
-			$lead->identificationNumber=$identificationNumber;	
+			$response = false;
 
-			$lead->name=$request->get('name');
-			$lead->lastName=$request->get('lastName');
-			$lead->email=$request->get('email');
-			$lead->channel= 1;
-			$lead->telephone=$request->get('telephone');
-			$lead->occupation = $request->get('occupation');
-			$lead->termsAndConditions=$request->get('termsAndConditions');
-			$lead->city= $request->get('city');
-			$lead->typeProduct = $request->get('typeProduct');
-			$lead->typeService = $request->get('typeService');
+			$dataLead=[
+				'typeDocument'=> $request->get('typeDocument'),
+				'identificationNumber'=> $identificationNumber,
+				'name'=> $request->get('name'),
+				'lastName'=> $request->get('lastName'),
+				'email'=> $request->get('email'),
+				'channel'=>  1,
+				'telephone'=> $request->get('telephone'),
+				'occupation' =>  $request->get('occupation'),
+				'termsAndConditions'=> $request->get('termsAndConditions'),
+				'city' =>  $request->get('city'),
+				'typeProduct' =>  $request->get('typeProduct'),
+				'typeService' =>  $request->get('typeService')
+			];
 
-			$response= $lead->save();
+			$createLead = $lead->updateOrCreate(['identificationNumber'=>$identificationNumber],$dataLead)->save();
 
-			if($response){
+			if($createLead != true){
+
+				$identificationNumber = $request->get('identificationNumber');
+				$lead->typeDocument=$request->get('typeDocument');
+				$lead->identificationNumber=$identificationNumber;	
+
+				$lead->name=$request->get('name');
+				$lead->lastName=$request->get('lastName');
+				$lead->email=$request->get('email');
+				$lead->channel= 1;
+				$lead->telephone=$request->get('telephone');
+				$lead->occupation = $request->get('occupation');
+				$lead->termsAndConditions=$request->get('termsAndConditions');
+				$lead->city= $request->get('city');
+				$lead->typeProduct = $request->get('typeProduct');
+				$lead->typeService = $request->get('typeService');
+
+				$response = $lead->save();
+			}
+
+
+			if(($response == true) || ($createLead == true)){
 
 				$flag=1;
 				
@@ -123,22 +145,47 @@ class OportuyaV2Controller extends Controller
 
 				$oportudataLead->setConnection('oportudata');
 
-				$oportudataLead->TIPO_DOC = $request->get('typeDocument');
-				$oportudataLead->CEDULA = $identificationNumber;
-				$oportudataLead->NOMBRES = $request->get('name');
-				$oportudataLead->APELLIDOS = $request->get('lastName');
-				$oportudataLead->EMAIL = $request->get('email');
-				$oportudataLead->CELULAR = $request->get('telephone');
-				$oportudataLead->PROFESION = $request->get('occupation');
+				$dataoportudata=[
 
-				$response = $oportudataLead->save();
+					'TIPO_DOC' => $request->get('typeDocument'),
+					'CEDULA' => $identificationNumber,
+					'NOMBRES' => $request->get('name'),
+					'APELLIDOS' => $request->get('lastName'),
+					'EMAIL' => $request->get('email'),
+					'CELULAR' =>$request->get('telephone'),
+					'PROFESION' => $request->get('occupation')
 
-				if($response){
+				];
+
+
+				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
+
+				if($createOportudaLead != true){
+
+
+					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
+					$oportudataLead->CEDULA = $identificationNumber;
+					$oportudataLead->NOMBRES = $request->get('name');
+					$oportudataLead->APELLIDOS = $request->get('lastName');
+					$oportudataLead->EMAIL = $request->get('email');
+					$oportudataLead->CELULAR = $request->get('telephone');
+					$oportudataLead->PROFESION = $request->get('occupation');
+
+					$response = $oportudataLead->save();
+
+				}
+
+
+				if(($response == true) || ($createOportudaLead== true)){
 					$flag=2;
 				}
 
 				$oportudataLead->setConnection('mysql');
+
+
 			}
+
+			
 
 			if($flag==2){
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
@@ -209,6 +256,8 @@ class OportuyaV2Controller extends Controller
 					'ESTADOCIVIL' => $request->get('civilStatus'),
 					'FEC_EXP' => $request->get('dateDocumentExpedition'),
 					'PROPIETARIO' => $request->get('housingOwner'),
+					'SEXO' => $request->get('gender'),
+					'TIPOV' => $request->get('housingType'),
 					'TIEMPO_VIV' => $request->get('housingTime'),
 					'TELFIJO' => $request->get('housingTelephone'),
 					'VRARRIENDO' => $request->get('leaseValue'),
@@ -331,6 +380,10 @@ class OportuyaV2Controller extends Controller
 
 	      $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ";
+
+	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+
+	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $resp = DB::select($query);
 	      $resp2 = DB::select($query2);
 
@@ -341,6 +394,7 @@ class OportuyaV2Controller extends Controller
 	      $data['dataLead'] = $resp[0];
 	      $data['digitalAnalyst'] = $digitalAnalysts[$num];
 	      $data['cities'] = $resp2;
+	      $data['oportudataLead'] = $respOportudataLead[0];
 
 	      return $data;
 
@@ -353,8 +407,10 @@ class OportuyaV2Controller extends Controller
 
 	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
+	      $queryOportudataLead = sprintf("SELECT NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue ");
 	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
+	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
 	      $num = rand(0,3);

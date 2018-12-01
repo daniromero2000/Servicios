@@ -229,16 +229,10 @@
 			<div class=" row oportuyaContentHeader">
 				<p class="textOportuyaHeader oportuyaText">
 					<b class="efectiveText">
-						Avance en efectivo hasta por : <span>$ 500.000</span>
+						Te damos aprobación en línea
 					</b>
-					<br>
-					<b class="salePoint">
-						En cualquier punto de venta Oportunidades del país 
-					</b>
-					<br>
-					<span>
-						*Aplica para tarjetas azul y negra
-					</span>
+					
+					
 				</p>
 				<div class="col-md-3 col-sm-3 oportuyaHeaderImage">
 					<img src="{{asset('/images/logoOportuya-inverso.png')}}" class="img-fluid">
@@ -246,104 +240,100 @@
 				<div class="col-sm-9 col-md-9 oportuyaTextResponsive">
 					<p class="textOportuyaHeader">
 						<b class="efectiveText">
-							Avance en efectivo hasta por : <span>$ 500.000</span>
+							Te damos aprobación en línea
 						</b>
-						<br>
-						<b class="salePoint">
-							En cualquier punto de venta Oportunidades del país 	
-						</b>					
-						<br>
-						<span>
-							*Aplica para tarjetas azul y negra	
-						</span>					
+										
 					</p>
 				</div>
 			</div>
 			<div class="row oportuyaContentFeatures">
 				<div class=" col-md-8">
 					<div class="row">
-						<div class="col-xs-12 col-12 contentFeatures">
-							<div>
-								<div class="row">
-									<div class="col-lg-6 bestPricesImg">
-										<img src="{{asset('/images/mejoresPreciosOportuya.jpeg')}}" class="img-fluid">
-									</div>
-									<div class="col-sm-12 col-lg-6">
-										<p class="featuresfirstText text-center">El crédito para lo que más te guste</p>		
-									</div>
-								</div>
+						<div class="col-xs-12 col-12 contentFeatures">						
 								
-								<p>Además tiene:</p>
 								<div class="row contentListFeatures">
-									<div class="col-md-6">
-										<ul class="list-group">
-											<li >
-												Promociones permanentes.
-											</li>
-											<li >
-												Crédito sin codeudor.
-											</li>
-											<li >Descuentos especiales en 
-												<br>
-												compra de electrodomésticos.
-											</li>
-										</ul>
+									<div class="col-md-4 text-center stepContainer steps">
+										<img src="{{asset('/images/iconPaso1.png')}}">
+										<p>
+											<span>Paso 1</span>	
+										</p>										
+										<p>Déjanos tus datos</p>
 									</div>
-									<div class="col-md-6">
-										<ul class="list-group">
-											<li >
-												Cupo rotativo en productos y avances.
-											</li>
-											<li >
-												Historial crediticio.
-											</li>
-											<li >
-												Crédito en establecimientos
-												<br>
-												con convenio oportuya.
-											</li>
-										</ul>
+									<div class="col-md-4 text-center stepContainer steps">
+										<img src="{{asset('/images/iconPaso2.png')}}">
+										<p>
+											<span>Paso 2</span>	
+										</p>										
+										<p>Llena tu solicitud de crédito</p>
+									</div>
+									<div class="col-md-4 text-center steps">
+										<img src="{{asset('/images/iconPaso3.png')}}">
+										<p>
+											<span>Paso 3</span>
+										</p>
+										<p>Empieza a disfrutar de los mejores descuentos</p>
 									</div>
 								</div>
 								<div class=" row contentListFeaturesResponsive">
-									<ul>
-										<li >
-											Descuentos especiales en 
-											<br>
-											compra de electrodomésticos.
-										</li>
-										<li >
-											Crédito en establecimientos
-											<br>
-											con convenio oportuya.
-										</li>
-										<li >
-											Crédito sin codeudor.
-										</li>
-										<li >
-											Cupo rotativo en productos y avances.
-										</li>
-										<li >
-											Promociones permanentes.
-										</li>
-										<li >
-											Historial crediticio.
-										</li>
-									</ul>
+									<div class="col-12 col-md-12 col-lg-4 text-center stepContainer steps">
+										<div class="row stepResponsive">
+											<div class="col-2 col-md-2">
+												<img src="{{asset('/images/iconPaso1.png')}}">
+											</div>
+											<div class="col-2 col-md-3 text-left">
+												
+												<span>Paso 1</span>	
+												
+											</div>
+											<div class="col-8 col-md-7 text-left">
+												<p>Déjanos tus datos</p>
+											</div>
+										</div>									
+									</div>
+									<div class="col-12 col-md-12 col-lg-4 text-center stepContainer steps">
+										<div class="row stepResponsive">
+											<div class="col-2 col-md-2">
+												<img src="{{asset('/images/iconPaso2.png')}}">
+											</div>
+											<div class="col-2 col-md-3 text-left">
+												
+												<span>Paso 2</span>	
+												
+											</div>
+											<div class="col-8 col-md-7 text-left">
+												<p>Llena tu solicitud de crédito</p>
+											</div>
+										</div>		
+									</div>
+									<div class="col-12 col-md-12 col-lg-4 text-center steps">
+										<div class="row stepResponsive">
+											<div class="col-2 col-md-2">
+												<img src="{{asset('/images/iconPaso3.png')}}">
+											</div>
+											<div class="col-2 col-md-3 text-left">
+												
+												<span>Paso 3</span>	
+												
+											</div>
+											<div class="col-8 col-md-7 text-left">
+												<p>Empieza a disfrutar de los mejores descuentos</p>
+											</div>
+										</div>		
+									</div>
 								</div>
 								<div class="row">
 								</div>
-							</div>
+							
 						</div>
 						
 					</div>
-					<div class="row soatImageContainer">
-						<div class="col-md-9">
-							
-						</div>
-						<div class="col-md-3">
-						</div>
+
+					<div class="row buttonOportuyaSection buttonOportuya text-center">
+						<a href="" data-toggle="modal" data-target="#oportuyaModal">
+							¡Solicita aquí!
+						</a>
 					</div>
+					
 					<div class="row buttonOportuyaSection responsiveButtonOportuya">
 						<a href="" data-toggle="modal" data-target="#oportuyaModal">
 							¡Solicita la tuya ahora!
@@ -352,15 +342,47 @@
 				</div>
 				<div class=" col-md-4 contentFeatures oportuyaContentImage">
 
-					<img src="{{ asset('/images/oportuyaModeloV2.png')}}" class="img-fluid">	
+					<img src="{{ asset('/images/modeloNew.png')}}" class="img-fluid">	
 
 				</div>
 			</div>
-			<div class="row buttonOportuyaSection buttonOportuya">
-				<a href="" data-toggle="modal" data-target="#oportuyaModal">
-					¡Solicita la tuya ahora!
-				</a>
+			
+		</div>
+	</div>
+
+	<div id="servicesPoint">
+		<div class="row">
+			<div class="col-12 col-md-6 servicesPointContainer">
+				<div class="serviceContainer">
+					<img src="{{asset('/images/iconPuntosServicio.png')}}">
+					<p>48 Puntos de servicios para que puedas</p>
+					<p>utilizar tus tarjetas Oportuya</p>
+				</div>
 			</div>
+			<div class="col-12 col-md-6 servicesPointCard">
+				<div class="serviceContainerCard">
+					<img src="{{asset('/images/tarjeta-de-credito_28.png')}}">	
+					<p>Los mejores descuentos con </p>
+					<p>nuestras tarjetas de crédito</p>				
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="fixedButton">
+		<div class="row">
+			<div class="col-2">
+				<img src="{{asset('images/iconFlotante.png')}}">	
+			</div>
+			<div class="col-8">
+				<span>
+				¡Te gustaría saber</span><span> por qué pedimos </span><span>tus datos!
+			</span>	
+			</div>
+			<div class="col-12">
+				<a href="">Click aquí</a>	
+			</div>		
 		</div>
 	</div>
 <!-- oportuya Modal -->

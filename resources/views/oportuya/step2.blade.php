@@ -33,7 +33,7 @@
 					         moment-picker="leadInfo.dateDocumentExpedition"
 					         format="YYYY-MM-DD">
 					        <input class="form-control inputsSteps inputText"
-					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" placeholder="Fecha Expedición Documento (Año/Mes/Día">
+					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" required="" placeholder="Fecha Expedición Documento (Año/Mes/Día">
 					        <span class="input-group-addon">
 					            <i class="octicon octicon-calendar"></i>
 					        </span>
@@ -52,15 +52,15 @@
 						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda" />
+						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda" required="" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" />
+						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" required="" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" placeholder="Dirección Residencia" />
+						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" placeholder="Dirección Residencia" required="" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'arriendo'">
 						<input type="number" class="form-control inputsSteps inputText" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" placeholder="Valor de Arriendo" />
@@ -68,7 +68,7 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-6 form-group">
-						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" placeholder="Teléfono Residencia" />
+						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" placeholder="Teléfono Residencia" required />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<input type="number" class="form-control inputsSteps inputText" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" placeholder="Estrato" />
