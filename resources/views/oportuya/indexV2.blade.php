@@ -477,7 +477,7 @@
 						</p>
 						<div class="form-group text-center">
 							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
-								Guardar
+								Siguiente
 							</button>
 							<button type="button" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
 								Cerrar
