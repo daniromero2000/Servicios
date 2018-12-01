@@ -393,7 +393,7 @@
 			<div class="modal-body modalFormulario-body" style="min-height: 780px;">
 				<div class="modal-containerFormulario">
 					<h3 class="modal-titleForm titleForm-oportuya">
-						Tarjeta de Crédito Oportuya
+						Solicitud de Crédito - Paso 1 de 3
 					</h3>
 					<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
 						{{ csrf_field() }}
