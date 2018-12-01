@@ -84,7 +84,7 @@ if ($options['verify'] ?? false) {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages','Admin\PageController');
-Route::resource('oportuya','Admin\OportuyaController');
+Route::resource('oportuya','Admin\OportuyaV2Controller');
 Route::resource('libranza','Admin\LibranzaController');
 Route::resource('motos','Admin\MotosController');
 Route::resource('leads','Admin\LeadsController');

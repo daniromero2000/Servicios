@@ -114,7 +114,16 @@ class OportuyaV2Controller extends Controller
 				'typeService' =>  $request->get('typeService')
 			];
 
+
 			$createLead = $lead->updateOrCreate(['identificationNumber'=>$identificationNumber],$dataLead)->save();
+
+			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
+			$idLead= $idLead[0]->id;
+
+			$lead=Lead::findOrFail($idLead);
+
+			$lead->occupation = $request->get('occupation');
+			$lead->save();
 
 			if($createLead != true){
 
@@ -153,7 +162,9 @@ class OportuyaV2Controller extends Controller
 					'APELLIDOS' => $request->get('lastName'),
 					'EMAIL' => $request->get('email'),
 					'CELULAR' =>$request->get('telephone'),
-					'PROFESION' => $request->get('occupation')
+					'PROFESION' => $request->get('occupation'),
+					'TIPOCLIENTE' => 'OPORTUYA',
+					'SUBTIPO' => 'WEB'
 
 				];
 
@@ -407,10 +418,10 @@ class OportuyaV2Controller extends Controller
 
 	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
-	      $queryOportudataLead = sprintf("SELECT NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue ");
+	      $queryOportudataLead = sprintf("SELECT NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
-	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
+	      // $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
 	      $num = rand(0,3);

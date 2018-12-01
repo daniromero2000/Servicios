@@ -64,6 +64,7 @@ angular.module('appStep3', ['moment-picker'])
 			$scope.banks = response.data.banks;
 			$scope.dataLead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
+			console.log(response);
 			if($scope.dataLead.occupation == 'Empleado'){
 				$scope.idForm = "formEmpleado";
 			}else if($scope.dataLead.occupation == 'Independiente'){

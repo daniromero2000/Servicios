@@ -159,7 +159,7 @@
 					<div class="header-containerItemsResponsive header-item1" id="navbarNavAltMarkup">
 						<div class="navbar-nav header-menu">
 							<a class="nav-item nav-link header-item header-item1" href="/oportuya">
-								<span class="header-textoItem">Oportuya</span>
+								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
@@ -180,7 +180,7 @@
 						<div class="collapse navbar-collapse header-containerItems" id="navbarNavAltMarkup">
 							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp">
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp" href="/oportuya"> 
-									<span class="header-textoItem">Oportuya</span>
+									<span class="header-textoItem">Crédito Oportuya</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
