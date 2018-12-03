@@ -52,7 +52,7 @@
 						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda en Meses" required="" />
+						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" placeholder="Antigüedad en la Vivienda (Meses)" required="" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
 						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" placeholder="Propietario de la Vivienda" />

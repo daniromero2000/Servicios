@@ -84,6 +84,8 @@ angular.module('appStep2', ['moment-picker'])
 			$scope.leadInfo.housingType = ($scope.leadInfo.housingType != null && $scope.leadInfo.housingType != NaN && $scope.leadInfo.housingType != '') ? $scope.leadInfo.housingType : null;
 			$scope.leadInfo.gender = ($scope.leadInfo.gender != null && $scope.leadInfo.gender != NaN && $scope.leadInfo.gender != '') ? $scope.leadInfo.gender : null;
 			$scope.leadInfo.civilStatus = ($scope.leadInfo.civilStatus != null && $scope.leadInfo.civilStatus != NaN && $scope.leadInfo.civilStatus != '') ? $scope.leadInfo.civilStatus : null;
+			$scope.leadInfo.stratum = ($scope.leadInfo.stratum != null && $scope.leadInfo.stratum != NaN && $scope.leadInfo.stratum != '') ? $scope.leadInfo.stratum : '';
+			$scope.leadInfo.housingTime = ($scope.leadInfo.housingTime != null && $scope.leadInfo.housingTime != NaN && $scope.leadInfo.housingTime != '') ? $scope.leadInfo.housingTime : '';
 		}, function errorCallback(response) {
 			console.log(response);
 		});
@@ -91,8 +93,18 @@ angular.module('appStep2', ['moment-picker'])
 
 
 	$scope.changeHousingType = function(){
-		if($scope.leadInfo.housingType == 'familiar' || $scope.leadInfo.housingType == 'propia'){
+		if($scope.leadInfo.housingType == 'FAMILIAR' || $scope.leadInfo.housingType == 'PROPIA'){
 			$scope.leadInfo.leaseValue = "";
+		}
+
+		if($scope.leadInfo.housingType == 'FAMILIAR' || $scope.leadInfo.housingType == 'ARRIENDO'){
+			var myEl = angular.element( document.querySelector( '#housingOwner' ) );
+			myEl.attr('required',"true");
+		}
+
+		if($scope.leadInfo.housingType == 'PROPIA'){
+			var myEl = angular.element( document.querySelector( '#housingOwner' ) );
+			myEl.removeAttr('required');
 		}
 	};
 

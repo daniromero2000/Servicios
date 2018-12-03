@@ -445,17 +445,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group">
-									<label class="control-label">Tipo de tarjeta que te interesa</label>
-									<select class="form-control"  id="typeProduct" name="typeProduct" required="true">
-										<option value="tarjeta Gray">GRAY</option>
-										<option value="tarjeta Blue">BLUE</option>
-										<option value="tarjeta Black">BLACK</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6">
+							<div class="col-12">
 								<div class="form-group">
 									<label for="city" class="control-label">Ciudad</label>
 									<select name="city" id="city" class="form-control" >

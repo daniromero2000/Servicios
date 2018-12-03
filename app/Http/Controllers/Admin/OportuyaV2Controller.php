@@ -110,7 +110,7 @@ class OportuyaV2Controller extends Controller
 				'occupation' =>  $request->get('occupation'),
 				'termsAndConditions'=> $request->get('termsAndConditions'),
 				'city' =>  $request->get('city'),
-				'typeProduct' =>  $request->get('typeProduct'),
+				'typeProduct' =>  '',
 				'typeService' =>  $request->get('typeService')
 			];
 
@@ -167,8 +167,8 @@ class OportuyaV2Controller extends Controller
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
-					'SUC' => 129,
-					'CREACION' => "2018-12-01"
+					'SUC' => 9999,
+					'CREACION' => date("Y-m-d")
 				];
 
 

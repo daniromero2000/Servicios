@@ -48,7 +48,7 @@ $( document ).ready(function() {
 	/*Type Text*/
 
 	function validateName(input){
-		var patt ="(([a-zA-Z]+([\\.]?)[a-zA-Z]*)\\s{0,1}){1,3}";
+		var patt ="(([a-zA-ZñÑáéíóúÁÉÍÓÚ]+([\\.]?)[a-zA-ZñÑáéíóúÁÉÍÓÚ]*)\\s{0,1}){1,3}";
 		setAttributePatternInput(input, patt);
 	}
 
@@ -63,7 +63,7 @@ $( document ).ready(function() {
 	}
 
 	function validateTextOnly(input){
-		var patt = "([a-zA-Z]+\\s?)+";
+		var patt = "([a-zA-ZñÑáéíóúÁÉÍÓÚ]+\\s?)+";
 		setAttributePatternInput(input, patt);
 	}
 
