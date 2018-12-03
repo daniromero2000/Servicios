@@ -1,4 +1,16 @@
+function showLoader(){
+	$('body').append('<div class="ex-loader"><div id="loader"></div></div>');
+}
+function hideLoader(){				
+	$('#ex-global-content').removeClass('ex-loader-blur'); 
+	$(".ex-loader").fadeOut(1000,function(){
+		$(".ex-loader").remove();
+		
+	}); 
+};
 $( document ).ready(function() {
+
+
 	var heightWindow= $(window).height();
 		var heightPreheader = $('#preHeader').height();
 		var heightHeaderImage = $('.headerImage').height();
