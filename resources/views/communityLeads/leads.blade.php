@@ -119,7 +119,7 @@
         <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
     </div>
     <div class="col-6 text-left">
-        <a href="/community"><i class="fas fa-share-square"></i>  Campañas</a>
+        <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
     </div>
 </div>
 
