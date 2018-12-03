@@ -114,10 +114,10 @@
 
 <div class="row">
     <div class="col-6 text-right">
-        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Atrás</a>
+        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
     </div>
     <div class="col-6 text-left">
-        <a href="/communityLeads"><i class="fas fa-file-medical-alt"></i> Gestíón de leads</a>
+        <a href="/communityLeads"><i class="fas fa-file-medical-alt"></i> Gestión de leads</a>
     </div>
 </div>
 
