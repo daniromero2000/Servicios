@@ -89,7 +89,6 @@ a:hover, a:active, a:focus, a:visited{
 	top: 50%;
 	transform: translate(-50%,-50%);
 	width: 100%;
-	z-index: 3;
 }
 
 .header-containerItemsResponsive{
@@ -1752,6 +1751,24 @@ a[data-toggle="collapse"] {
 	font-weight: 600;
 }
 
+.cardsProfiles .card {
+	padding: 10px;
+}
+
+.cardsProfiles .col-6 .card {
+	padding: 10px;
+	width: 50%;
+	margin:auto;
+}
+
+.cardsProfiles .card .card-body a i{
+	font-size: 70px;
+}
+
+.cardsProfile .card .card-header h5{
+	text-align: center;
+}
+
 
 /*thank you pages*/
 
@@ -2482,6 +2499,14 @@ p.wantToSecondTex{
 
 @media(max-width: 1300px){
 
+	.cardsProfiles .col-6 .card{
+		width: 70%;
+	}
+
+	.cardsProfiles .card .card-body a i{
+		font-size: 4em;
+	}
+
 	.dialogThakPage p{
 
 		font-size: 1em;
@@ -2733,6 +2758,10 @@ p.wantToSecondTex{
 
 
 @media(max-width: 991px){
+
+	.cardsProfiles .col-6 .card{
+		width: 90%;
+	}
 
 	.busTourButton p a{
 		width: unset;
@@ -3261,7 +3290,9 @@ p.wantToSecondTex{
 
 @media(max-width: 768px){
 
-
+	.cardsProfiles .col-6 .card{
+		width: 100%;
+	}
 
 	.conoceViajesTitle{
 		
