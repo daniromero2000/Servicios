@@ -75,8 +75,6 @@
 		<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<link href="{{ asset('editor/contentbuilder/contentbuilder.css')}}" rel="stylesheet" type="text/css" /> 
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
-		<script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 		<link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/oportunidadesServicios.ico') }}' />
 		<script> 
 
@@ -89,31 +87,17 @@
 				}); 
 			};
 
-			window.onload = function(){			
-
-				hideLoader();
-			
-				
+			window.onload = function(){
+				hideLoader();	
 			};
-
+			
 			$(document).ready(function($) {
-				
-					hideLoader();
 				setTimeout(function(){
+					hideLoader();
 				},800);
-
-				
-				
 			});
 
 		</script>
-		<style>
-			#ex-global-content{transition: all .5s ease-out; }
-			.ex-loader{position: fixed; width: 100%; height: 100%; background-color: rgba(227,238,243,0.8); z-index: 9999999999;}
-			.ex-loader-blur{filter: blur(10px); -webkit-filter: blur(10px);z-index: 9999999 }
-			#loader{transition: all .5 ease-out;z-index: 99999999;top: 40%;left: 50%;margin-left: -20px;margin-top: -20px;position: absolute ;margin:6em auto;font-size:10px;text-indent:-9999em;border-top:1.1em solid rgba(42,172,224,.5);display:block;border-right:1.1em solid rgba(42,172,224,.2);border-bottom:1.1em solid rgba(42,172,224,.2);border-left:1.1em solid #2aace0;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}
-			#loader,#loader::after{border-radius:50%;width:40px;height:40px}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
-		</style>
 	</head>
 	<body>
 		<div class="ex-loader"><div id="loader"></div></div>
@@ -260,6 +244,8 @@
 		<script src="{{ asset('editor/contentbuilder/jquery-ui.min.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('editor/contentbuilder/contentbuilder.js')}}" type="text/javascript"></script>
 		<script type="text/javascript" src="{{ asset('js/libranza.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
+		<script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 		@yield('scriptsJs')
 		<link href="{{ asset('editor/contentbuilder/contentbuilder.css')}}" rel="stylesheet" type="text/css" />
 		<script type="text/javascript">

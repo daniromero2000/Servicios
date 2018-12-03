@@ -69,7 +69,7 @@ class OportuyaV2Controller extends Controller
 						->where('category','=','1')
 						->where('isSlide','=','1')
 						->get();
-		return view('oportuya.indexV2',['images'=>$images, 'cities' => $cities]);
+		return view('oportuya.indexV2',['images'=>$images, 'cities' => array_sort($cities, 'label', SORT_DESC)]);
 	}
 
 	/**
@@ -158,12 +158,12 @@ class OportuyaV2Controller extends Controller
 
 					'TIPO_DOC' => $request->get('typeDocument'),
 					'CEDULA' => $identificationNumber,
-					'NOMBRES' => $request->get('name'),
-					'APELLIDOS' => $request->get('lastName'),
-					'EMAIL' => $request->get('email'),
+					'NOMBRES' => strtoupper($request->get('name')),
+					'APELLIDOS' => strtoupper($request->get('lastName')),
+					'EMAIL' => strtoupper($request->get('email')),
 					'CELULAR' =>$request->get('telephone'),
-					'PROFESION' => $request->get('occupation'),
-					'ACTIVIDAD' => $request->get('occupation'),
+					'PROFESION' => strtoupper($request->get('occupation')),
+					'ACTIVIDAD' => strtoupper($request->get('occupation')),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -268,23 +268,23 @@ class OportuyaV2Controller extends Controller
 
 				$dataLead=[
 
-					'DIRECCION' => $request->get('addres'),
+					'DIRECCION' => strtoupper($request->get('addres')),
 					'FEC_NAC' => $request->get('birthdate'),
 					'CIUD_EXP' => $request->get('cityExpedition'),
-					'ESTADOCIVIL' => $request->get('civilStatus'),
+					'ESTADOCIVIL' => strtoupper($request->get('civilStatus')),
 					'FEC_EXP' => $request->get('dateDocumentExpedition'),
-					'PROPIETARIO' => $request->get('housingOwner'),
-					'SEXO' => $request->get('gender'),
-					'TIPOV' => $request->get('housingType'),
+					'PROPIETARIO' => strtoupper($request->get('housingOwner')),
+					'SEXO' => strtoupper($request->get('gender')),
+					'TIPOV' => strtoupper($request->get('housingType')),
 					'TIEMPO_VIV' => $request->get('housingTime'),
 					'TELFIJO' => $request->get('housingTelephone'),
 					'VRARRIENDO' => $request->get('leaseValue'),
-					'EPS_CONYU' => $request->get('spouseEps'),
+					'EPS_CONYU' => strtoupper($request->get('spouseEps')),
 					'CEDULA_C' => $request->get('spouseIdentificationNumber'),
-					'TRABAJO_CONYU' => $request->get('spouseJob'),
-					'CARGO_CONYU' => $request->get('spouseJobName'),
-					'NOMBRE_CONYU' => $request->get('spouseName'),
-					'PROFESION_CONYU' => $request->get('spouseProfession'),
+					'TRABAJO_CONYU' => strtoupper($request->get('spouseJob')),
+					'CARGO_CONYU' => strtoupper($request->get('spouseJobName')),
+					'NOMBRE_CONYU' => strtoupper($request->get('spouseName')),
+					'PROFESION_CONYU' => strtoupper($request->get('spouseProfession')),
 					'SALARIO_CONYU' => $request->get('spouseSalary'),
 					'CELULAR_CONYU' => $request->get('spouseTelephone'),
 					'ESTRATO' => $request->get('stratum')
@@ -347,16 +347,16 @@ class OportuyaV2Controller extends Controller
 				$dataLead=[
 
 					'NIT_EMP' => $request->get('nit'),
-					'RAZON_SOC' => $request->get('companyName'),
-					'DIR_EMP' => $request->get('companyAddres'),
+					'RAZON_SOC' => strtoupper($request->get('companyName')),
+					'DIR_EMP' => strtoupper($request->get('companyAddres')),
 					'TEL_EMP' => $request->get('companyTelephone'),
 					'TEL2_EMP'	=> $request->get('companyTelephone2'),
-					'ACT_ECO' => $request->get('eps'),
-					'CARGO' => $request->get('companyPosition'),
+					'ACT_ECO' => strtoupper($request->get('eps')),
+					'CARGO' => strtoupper($request->get('companyPosition')),
 					'FEC_ING' =>  $request->get('admissionDate'),
 					'ANTIG' => $request->get('antiquity'),
 					'SUELDO' => $request->get('salary'),
-					'TIPO_CONT' => $request->get('typeContract'),
+					'TIPO_CONT' => strtoupper($request->get('typeContract')),
 					'OTROS_ING' => $request->get('otherRevenue')
 
 				];
@@ -425,16 +425,17 @@ class OportuyaV2Controller extends Controller
 
 	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
-	      $queryOportudataLead = sprintf("SELECT NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
-	      // $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
+	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $digitalAnalysts = [['name' => 'Fernanda', 'img' => 'images/analista1.png'], ['name' => 'Luisa', 'img' => 'images/analista2.png'], ['name' => 'Mariana', 'img' => 'images/analista3.png'], ['name' => 'Claudia', 'img' => 'images/analista4.png']];
 
 	      $num = rand(0,3);
 	      $data['dataLead'] = $resp[0];
 	      $data['digitalAnalyst'] = $digitalAnalysts[$num];
 	      $data['banks'] = $resp2;
+	      $data['oportudataLead'] = $respOportudataLead[0];
 
 	      return $data;
 	}           
