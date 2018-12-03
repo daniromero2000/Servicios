@@ -71,10 +71,12 @@ angular.module('appStep2', ['moment-picker'])
 	$scope.analyst = {};
 
 	$scope.getDataStep2 = function(){
+		showLoader();
 		$http({
 		  method: 'GET',
 		  url: '/api/oportuya/getDataStep2/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
+			hideLoader();
 			$scope.lead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
 			$scope.cities = response.data.cities;
@@ -87,6 +89,7 @@ angular.module('appStep2', ['moment-picker'])
 			$scope.leadInfo.stratum = ($scope.leadInfo.stratum != null && $scope.leadInfo.stratum != NaN && $scope.leadInfo.stratum != '') ? $scope.leadInfo.stratum : '';
 			$scope.leadInfo.housingTime = ($scope.leadInfo.housingTime != null && $scope.leadInfo.housingTime != NaN && $scope.leadInfo.housingTime != '') ? $scope.leadInfo.housingTime : '';
 		}, function errorCallback(response) {
+			hideLoader();
 			console.log(response);
 		});
 	};

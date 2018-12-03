@@ -138,10 +138,10 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript" src="{{ asset('js/step2.js') }}"></script>
 @endsection
 
 @section('scriptsJs')
+	<script type="text/javascript" src="{{ asset('js/step2.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 @endsection
