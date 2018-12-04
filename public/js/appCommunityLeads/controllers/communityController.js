@@ -9,6 +9,11 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		'state': '',
 		'communityLead':true
 	};
+
+	$scope.campaign = {};
+	$scope.campaigns=[];
+	$scope.idCampaign = '';
+
 	$scope.cargando = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
@@ -138,11 +143,32 @@ app.controller('communityController', function($scope, $http, $rootScope){
 						}
 						$scope.leads.push(value);
 					}
+
 				});
 				$scope.cargando = false;
 				
 			}
 		}, function errorCallback(response) {
+		});
+	};
+
+
+	$scope.getCampaigns = function(){
+		$scope.cargando = true;
+		$http({
+		  method: 'GET',
+		  url: '/campaign?q='+$scope.q.q,
+		}).then(function successCallback(response) {
+			
+			if(response.data != false){
+				angular.forEach(response.data, function(value, key) {
+					$scope.campaigns.push(value);
+				});
+				$scope.cargando = false;
+				
+			}
+		}, function errorCallback(response) {
+		    
 		});
 	};
 
@@ -183,6 +209,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				if(response.data != false){
 					$scope.searchLeads();
 					$('#addCommunityLead').modal('hide');
+					
 				}
 				
 				
@@ -230,6 +257,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.searchLeads();
 				$('#updateCommunityModal').modal('hide');
 			}
+			
 		},function errorCallback(response){
 			
 		});
@@ -352,4 +380,5 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		
 
 	$scope.getLeads();
+	$scope.getCampaigns();
 })
