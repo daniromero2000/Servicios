@@ -628,6 +628,7 @@
 #step2, #step3{
 	background: #fafafa;
 	min-height: 900px;
+	padding-bottom: 20px;
 }
 
 .btnStep{

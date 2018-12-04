@@ -17,7 +17,7 @@
 			<div class="col-12 conatiner-logoImg">
 				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
 				<img ng-src="/@{{ analyst.img }}" ng-alt="@{{ analyst.name }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso2</strong> > (Información Laboral)</span>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso3</strong> > (Información Laboral)</span>
 			</div>
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ dataLead.name + ' ' + dataLead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
@@ -30,41 +30,50 @@
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-8 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="number" ng-model="leadInfo.nit" placeholder="Nit (sin número de verificación)" />
+							<label for="nit">Nit (sin número de verificación)</label>
+							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="number" ng-model="leadInfo.nit" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<input type="number" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" placeholder="Indicativo" />
+							<label for="indicative">Indicativo</label>
+							<input type="number" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" placeholder="Nombre de la empresa">
+							<label for="companyName">Nombre de la Empresa</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" placeholder="Dirección de la empresa">
+							<label for="companyAddres">Dirección de la Empresa</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" >
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" placeholder="Teléfono de la empresa">
+							<label for="companyTelephone">Teléfono de la Empresa</label>
+							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" validation-pattern="telephone" class="form-control inputsSteps inputText" placeholder="Teléfono 2 de la empresa">
+							<label for="companyTelephone2">Teléfono 2 de la Empresa</label>
+							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" validation-pattern="telephone" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" placeholder="EPS">
+							<label for="eps">EPS</label>
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control inputsSteps inputText" placeholder="Cargo">
+							<label for="companyPosition">Cargo</label>
+							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
+							<label for="admissionDate">Fecha de Ingreso</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.admissionDate"
 							     format="YYYY-MM-DD">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.admissionDate" id="admissionDate" readonly="" placeholder="Fecha de ingreso (Año/Mes/Día)">
+							           ng-model="leadInfo.admissionDate" id="admissionDate" readonly="" placeholder="Año/Mes/Día">
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -73,20 +82,23 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Atigüedad" />
+							<label for="antiquity">Antigüedad</label>
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Salario" />
+							<label for="salary">Salario</label>
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
+							<label>Tipo de Contrato</label>
 							<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts">
-								<option value="" disabled="" hidden>Tipo de contrato</option>
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Otros ingresos" />
+							<label for="otherRevenue">Otros ingresos</label>
+							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -101,32 +113,37 @@
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
+							<label for="camaraComercio">Cámara de Comercio</label>
 							<select id="camaraComercio" ng-model="leadInfo.camaraComercio" class="form-control inputsSteps inputSelect" ng-options="type.value as type.label for type in typesCamaraComercio">
-								<option value="" disabled="" hidden>Cámara de comercio</option>
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="nit" ng-model="leadInfo.nit" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Nit (sin número de verificación)">
+							<label for="nit">Nit (sin número de verificación)</label>
+							<input type="text" id="nit" ng-model="leadInfo.nit" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" placeholder="Nombre de la empresa">
+							<label for="companyName">Nombre de la Empresa</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="whatSell" validation-pattern="text" ng-model="leadInfo.whatSell" placeholder="Qué Vendes o Comercializas?">
+							<label for="whatSell">Qué Vendes o Comercializas?</label>
+							<input type="text" class="form-control inputsSteps inputText" id="whatSell" validation-pattern="text" ng-model="leadInfo.whatSell" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" placeholder="EPS">
+							<label for="eps">EPS</label>
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText">
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
+							<label for="dateCreationCompany">Fecha de Constitución</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Fecha de constitución (Año/Mes)">
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes">
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -135,10 +152,12 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Atigüedad" />
+							<label for="antiquity">Atigüedad</label>
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Salario" />
+							<label for="salary">Salario</label>
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -169,19 +188,22 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Atigüedad" />
+							<label for="antiquity">Atigüedad</label>
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="Salario" />
+							<label for="salary">Salario</label>
+							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" placeholder="EPS" />
+							<label for="eps">EPS</label>
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<select ng-model="leadInfo.bankSavingsAccount" class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks">
-								<option value="" disabled="" hidden>Banco</option>
+							<label for="bankSavingsAccount">Banco</label>
+							<select ng-model="leadInfo.bankSavingsAccount" id="bankSavingsAccount" class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks">
 							</select>
 						</div>
 					</div>
@@ -231,10 +253,10 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="{{ asset('js/step3.js') }}"></script>
 @endsection
 
 @section('scriptsJs')
+	<script type="text/javascript" src="{{ asset('js/step3.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 @endsection

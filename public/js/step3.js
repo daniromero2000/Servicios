@@ -36,7 +36,7 @@ angular.module('appStep3', ['moment-picker'])
 		},
 		{
 			value: 'INDEFINIDO',
-			label: 'indefinido'
+			label: 'Indefinido'
 		}
 	];
 
@@ -68,7 +68,6 @@ angular.module('appStep3', ['moment-picker'])
 			$scope.analyst = response.data.digitalAnalyst;
 			$scope.leadInfo = response.data.oportudataLead;
 			$scope.leadInfo.step = 3;
-			$scope.leadInfo.typeContract = ($scope.leadInfo.typeContract != null && $scope.leadInfo.typeContract != NaN && $scope.leadInfo.typeContract != '') ? $scope.leadInfo.typeContract : null;
 			$scope.leadInfo.antiquity = ($scope.leadInfo.antiquity != 0 && $scope.leadInfo.antiquity != '') ? $scope.leadInfo.antiquity : '' ;
 			$scope.leadInfo.salary = ($scope.leadInfo.salary != 0 && $scope.leadInfo.salary != '') ? $scope.leadInfo.salary : '' ;
 			$scope.leadInfo.otherRevenue = ($scope.leadInfo.otherRevenue != 0 && $scope.leadInfo.otherRevenue != '') ? $scope.leadInfo.otherRevenue : '' ;
