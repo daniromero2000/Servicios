@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Lead;
 use App\Liquidator;
 use App\Comments;
+use App\Campaigns;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,7 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
-        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName
+        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
             FROM leads 
             LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`      
             LEFT JOIN `campaigns` ON campaigns.`id` = leads.`campaign`
@@ -155,17 +156,23 @@ class LeadsController extends Controller
 
      public function addCommunityLeads(Request $request){
 
+        $nameCampaign = (string)$request->get('campaign');
+        $idCampaign =Campaigns::selectRaw('`id`,`name`')->where('name','=',$nameCampaign)->get();
+        //return $idCampaign;
+        $idCampaign = $idCampaign[0]->id; 
+
         $lead= new Lead;
 
-        $lead->name=$request->name;
-        $lead->lastName=$request->lastName;
-        $lead->email=$request->email;
-        $lead->telephone=$request->telephone;
-        $lead->city=$request->city;
-        $lead->typeProduct=$request->typeProduct;
-        $lead->typeService=$request->typeService;
-        $lead->channel=$request->channel; 
-        $lead->termsAndConditions = 2; 
+        $lead->name=$request->get('name');
+        $lead->lastName=$request->get('lastName');
+        $lead->email=$request->get('email');
+        $lead->telephone=$request->get('telephone');
+        $lead->city=$request->get('city');
+        $lead->typeProduct=$request->get('typeProduct');
+        $lead->typeService=$request->get('typeService');
+        $lead->channel=$request->get('channel'); 
+        $lead->termsAndConditions = 2;
+        $lead->campaign= $idCampaign;
 
         $lead->save();
 
@@ -191,7 +198,19 @@ class LeadsController extends Controller
 
     public function updateCommunityLeads(Request $request){
 
+        $nameCampaign = (string)$request->get('campaignName');
         $lead=lead::findOrfail($request->get('id'));
+
+        if($nameCampaign){
+            $idCampaign =Campaigns::selectRaw('`id`,`name`')->where('name','=',$nameCampaign)->first();        
+            $idCampaign = $idCampaign->id; 
+            $lead->campaign =$idCampaign;
+        }else{
+            $lead->campaign =$request->get('campaign');
+        }
+        
+
+        
         $lead->name = $request->get('name');
         $lead->lastName = $request->get('lastName');
         $lead->email = $request->get('email');
@@ -200,6 +219,7 @@ class LeadsController extends Controller
         $lead->typeProduct = $request->get('typeProduct');
         $lead->typeService = $request->get('typeService');
         $lead->channel = $request->get('channel');
+        
 
         $lead->save();
 
