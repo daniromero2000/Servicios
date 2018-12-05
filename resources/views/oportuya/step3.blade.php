@@ -45,7 +45,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyAddres">Dirección de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" >
+							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" />
 						</div>
 					</div>
 					<div class="row">
@@ -135,7 +135,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText">
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="dateCreationCompany">Fecha de Constitución</label>
@@ -143,7 +143,7 @@
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes">
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -172,14 +172,16 @@
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" placeholder="Nombre de la empresa">
+							<label>Nombre de la Empresa</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
+							<label for="dateCreationCompany">Fecha de Pensión</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Fecha de pensión (Año/Mes)">
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -235,7 +237,7 @@
 							<div class="col-sm-7 offset-sm-5">
 								<form ng-submit="sendComment()">
 									<div class="form-group">
-										<input type="text" ng-model="comment.availability" placeholder="A que hora te podemos llamar" class="form-control">
+										<input type="text" ng-model="comment.availability" placeholder="A que hora te podemos llamar" class="form-control" required>
 									</div>
 									<div class="form-group">
 										<textarea ng-model="comment.comment" class="form-control" rows="10" placeholder="Algún comentario adicional"></textarea>

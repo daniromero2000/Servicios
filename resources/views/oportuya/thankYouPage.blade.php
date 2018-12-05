@@ -8,7 +8,7 @@
 			</div>
 			<div class="dialogThakPage">	
 				<img src="{{ asset('images/dialogThankPage.png')}}" class="img-fluid">
-				<p>	Gracias por contactarte con nosotros, un asesor de Oportuya se comunicará contigo para darte más información.</p>
+				<p>	Gracias, un asesor de crédito se comunicará contigo para coordinar la entrega del producto.</p>
 			</div>
 		</div>
 	</div>

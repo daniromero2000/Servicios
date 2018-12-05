@@ -155,12 +155,11 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead->setConnection('oportudata');
 
 				$dataoportudata=[
-
 					'TIPO_DOC' => $request->get('typeDocument'),
 					'CEDULA' => $identificationNumber,
 					'NOMBRES' => strtoupper($request->get('name')),
 					'APELLIDOS' => strtoupper($request->get('lastName')),
-					'EMAIL' => strtoupper($request->get('email')),
+					'EMAIL' => $request->get('email'),
 					'CELULAR' =>$request->get('telephone'),
 					'PROFESION' => strtoupper($request->get('occupation')),
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
@@ -262,33 +261,53 @@ class OportuyaV2Controller extends Controller
 
 			if($response){
 
-				$flag=1;				
+				$flag=1;
 
 				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
 				$dataLead=[
-
 					'DIRECCION' => strtoupper($request->get('addres')),
 					'FEC_NAC' => $request->get('birthdate'),
+					'EDAD' => $this->calculateAge($request->get('birthdate')),
 					'CIUD_EXP' => $request->get('cityExpedition'),
 					'ESTADOCIVIL' => strtoupper($request->get('civilStatus')),
 					'FEC_EXP' => $request->get('dateDocumentExpedition'),
-					'PROPIETARIO' => strtoupper($request->get('housingOwner')),
+					'PROPIETARIO' => ($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')) : 'NA' ,
 					'SEXO' => strtoupper($request->get('gender')),
 					'TIPOV' => strtoupper($request->get('housingType')),
 					'TIEMPO_VIV' => $request->get('housingTime'),
 					'TELFIJO' => $request->get('housingTelephone'),
-					'VRARRIENDO' => $request->get('leaseValue'),
-					'EPS_CONYU' => strtoupper($request->get('spouseEps')),
-					'CEDULA_C' => $request->get('spouseIdentificationNumber'),
+					'VRARRIENDO' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
+					'EPS_CONYU' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
+					'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : 0,
 					'TRABAJO_CONYU' => strtoupper($request->get('spouseJob')),
-					'CARGO_CONYU' => strtoupper($request->get('spouseJobName')),
-					'NOMBRE_CONYU' => strtoupper($request->get('spouseName')),
-					'PROFESION_CONYU' => strtoupper($request->get('spouseProfession')),
-					'SALARIO_CONYU' => $request->get('spouseSalary'),
-					'CELULAR_CONYU' => $request->get('spouseTelephone'),
-					'ESTRATO' => $request->get('stratum')
-
+					'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? strtoupper($request->get('spouseJobName')) : 'NA',
+					'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? strtoupper($request->get('spouseName')) : 'NA',
+					'PROFESION_CONYU' => ($request->get('spouseProfession' != '')) ? strtoupper($request->get('spouseProfession')) : 'NA' ,
+					'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : 0,
+					'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : 0,
+					'ESTRATO' => $request->get('stratum'),
+					'PERSONAS' => 0,
+					'ESTUDIOS' => 'NA',
+					'PLACA' => 'NA',
+					'PROFESION' => 'NO APLICA',
+					'TEL_PROP' => 'NA',
+					'CIUD_UBI' => 'NA',
+					'DEPTO' => 'NA',
+					'N_EMPLEA' => 0,
+					'VENTASMES' => 0,
+					'COSTOSMES' => 0,
+					'GASTOS' => 0,
+					'DEUDAMES' => 0,
+					'TEL3' => 0,
+					'TEL4' => 0,
+					'TEL5' => 0,
+					'TEL6' => 0,
+					'TEL7' => 0,
+					'DIRECCION2' => 'NA',
+					'DIRECCION3' => 'NA',
+					'DIRECCION4' => 'NA',
+					'CIUD_NAC' => 'NA'
 				];
 
 				$identificationNumber = (string)$identificationNumber;
@@ -439,6 +458,15 @@ class OportuyaV2Controller extends Controller
 
 	      return $data;
 	}           
+
+	public function calculateAge($fecha){
+		$time = strtotime($fecha);
+		$now = time();
+		$age = ($now-$time)/(60*60*24*365.25);
+		$age = floor($age);
+
+		return $age;
+	}
 
 	public function step2($string){
 		$identificactionNumber = $this->decrypt($string);
