@@ -75,7 +75,7 @@ $( document ).ready(function() {
 
 	/* Type Number */
 	function validateNumber(input){
-		var patt = new RegExp("[0-9*]");
+		var patt = "[0-9]*";
 		setAttributePatternInput(input, patt);
 	};
 	/* Age */

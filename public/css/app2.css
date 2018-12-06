@@ -625,7 +625,7 @@
 }
 
 /* Step 2 */
-#step2, #step3{
+#step1, #step2, #step3{
 	background: #fafafa;
 	min-height: 900px;
 	padding-bottom: 20px;
@@ -680,7 +680,7 @@
 	font-weight: 200;
 }
 
-.step2-containerForm, .step3-containerForm{
+.step2-containerForm, .step3-containerForm, .step1-containerForm{
 	max-width: 1000px;
 	margin: auto;
 }

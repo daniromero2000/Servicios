@@ -100,14 +100,17 @@ Route::resource('faqs','Admin\FaqsController');
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
 Route::get('api/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
-Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
 
 
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
 // Pasos solictud credito
 
+
+Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
 Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
+Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
+
 
 /* Menu Items */
 Route::get('/quienes-somos', function(){

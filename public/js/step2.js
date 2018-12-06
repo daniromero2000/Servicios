@@ -82,7 +82,7 @@ angular.module('appStep2', ['moment-picker'])
 			$scope.cities = response.data.cities;
 			$scope.leadInfo = response.data.oportudataLead;
 			$scope.leadInfo.step = 2;
-			$scope.leadInfo.cityExpedition = ($scope.leadInfo.cityExpedition != null && $scope.leadInfo.cityExpedition != NaN && $scope.leadInfo.cityExpedition != '') ? parseInt($scope.leadInfo.cityExpedition) : null;
+			$scope.leadInfo.cityExpedition = ($scope.leadInfo.cityExpedition != null && $scope.leadInfo.cityExpedition != NaN && $scope.leadInfo.cityExpedition != '') ? $scope.leadInfo.cityExpedition : '';
 			$scope.leadInfo.stratum = ($scope.leadInfo.stratum != null && $scope.leadInfo.stratum != NaN && $scope.leadInfo.stratum != '') ? $scope.leadInfo.stratum : '';
 			$scope.leadInfo.housingTime = ($scope.leadInfo.housingTime != null && $scope.leadInfo.housingTime != NaN && $scope.leadInfo.housingTime != '') ? $scope.leadInfo.housingTime : '';
 		}, function errorCallback(response) {

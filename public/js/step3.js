@@ -37,6 +37,10 @@ angular.module('appStep3', ['moment-picker'])
 		{
 			value: 'INDEFINIDO',
 			label: 'Indefinido'
+		},
+		{
+			value: 'SERVICIOS',
+			label: 'Servicios'
 		}
 	];
 
@@ -98,7 +102,6 @@ angular.module('appStep3', ['moment-picker'])
 		    console.log(response);
 		});
 	};
-
 
 	$scope.sendComment = function(){
 		$scope.comment.identificationNumber = $scope.leadInfo.identificationNumber;

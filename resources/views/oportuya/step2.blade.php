@@ -17,7 +17,7 @@
 			<div class="col-12 conatiner-logoImg">
 				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
 				<img ng-src="/@{{ analyst.img }}" ng-alt="@{{ analyst.name }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso2</strong> > (Información Personal)</span>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 2</strong> > (Información Personal)</span>
 			</div>
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>

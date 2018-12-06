@@ -41,17 +41,17 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
+							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyAddres">Dirección de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" />
+							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" required="" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone">Teléfono de la Empresa</label>
-							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" />
+							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone2">Teléfono 2 de la Empresa</label>
@@ -61,11 +61,11 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="companyPosition">Cargo</label>
-							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
+							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="admissionDate">Fecha de Ingreso</label>
@@ -93,7 +93,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label>Tipo de Contrato</label>
-							<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts">
+							<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts" required="">
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">

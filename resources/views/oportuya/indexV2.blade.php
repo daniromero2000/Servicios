@@ -61,7 +61,7 @@
 					<br>
 					<div class="oportuyaSliderButton">
 						<p>
-							<a href="" data-toggle="modal" data-target="#oportuyaModal">
+							<a href="/step1" alt="Realizar Solicitud de Crédito">
 								@php
 								  echo $slider['textButton'];
 								@endphp
@@ -249,8 +249,7 @@
 			<div class="row oportuyaContentFeatures">
 				<div class=" col-md-8">
 					<div class="row">
-						<div class="col-xs-12 col-12 contentFeatures">						
-								
+						<div class="col-xs-12 col-12 contentFeatures">
 								<div class="row contentListFeatures">
 									<div class="col-md-4 text-center stepContainer steps">
 										<img src="{{asset('/images/iconPaso1.png')}}">
@@ -329,13 +328,13 @@
 					</div>
 
 					<div class="row buttonOportuyaSection buttonOportuya text-center">
-						<a href="" data-toggle="modal" data-target="#oportuyaModal">
+						<a href="/step1" alt="Realizar Solicitud de Crédito" >
 							¡Solicita aquí!
 						</a>
 					</div>
 					
 					<div class="row buttonOportuyaSection responsiveButtonOportuya">
-						<a href="" data-toggle="modal" data-target="#oportuyaModal">
+						<a href="/step1" alt="Realizar Solicitud de Crédito" >
 							¡Solicita la tuya ahora!
 						</a>
 					</div>
@@ -386,99 +385,4 @@
 		</div>
 	</div>
 <!-- oportuya Modal -->
-
-<div class="modal modalFormulario fade hide" id="oportuyaModal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body modalFormulario-body" style="min-height: 780px;">
-				<div class="modal-containerFormulario">
-					<h3 class="modal-titleForm titleForm-oportuya">
-						Solicitud de Crédito - Paso 1 de 3
-					</h3>
-					<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
-						{{ csrf_field() }}
-						<input type="hidden" name="step" value="1">
-						<input type="hidden" name="channel" value="1">
-						<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
-
-						<div class="form-group">
-							<label for="name" class="control-label">Nombres</label>
-							<input type="text" name="name" class="form-control" id="name" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="lastName" class="control-label">Apellidos</label>
-							<input type="text" name="lastName" class="form-control" id="lastName" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="email" class="control-label">Correo electronico</label>
-							<input type="email" name="email" class="form-control" id="email" required="true"/>
-						</div>
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group">
-									<label for="telephone class="control-label">Teléfono</label>
-									<input type="text" name="telephone" class="form-control" id="telephone" required="true"/>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6">
-								<label for="occupation">Ocupación</label>
-								<select class="form-control" name="occupation">
-									<option value="EMPLEADO">Empleado</option>
-									<option value="SOLDADO-MILITAR-POLICÍA">Soldado - Militar - Policía</option>
-									<option value="PRESTACIÓN DE SERVICIOS">Prestación de Servicios</option>
-									<option value="INDEPENDIENTE CERTIFICADO">Independiente Certificado</option>
-									<option value="NO CERTIFICADO">No Certificado</option>
-									<option value="RENTISTA">Rentista</option>
-									<option value="PENSIONADO">Pensionado</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12 col-sm-6 form-group">
-								<label for="typeDocument">Tipo de documento</label>
-								<select class="form-control" name="typeDocument" id="typeDocument">
-									<option value="1">Cédula de ciudadanía</option>
-									<option value="2">Cédula de extranjería</option>
-								</select>
-							</div>
-							<div class="col-12 col-sm-6 form-group">
-								<label for="identificationNumber">Número de identificación</label>
-								<input class="form-control" type="text" name="identificationNumber" id="identificationNumber" required="" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<label for="city" class="control-label">Ciudad</label>
-									<select name="city" id="city" class="form-control" >
-										@foreach($cities as $city)
-											<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
-										@endforeach
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
-							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
-							</label>
-						</div>
-						<p class="textCityForm">
-							*Válido solo para ciudades que se desplieguen en la casilla.
-						</p>
-						<div class="form-group text-center">
-							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
-								Siguiente
-							</button>
-							<button type="button" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
-								Cerrar
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 @stop
