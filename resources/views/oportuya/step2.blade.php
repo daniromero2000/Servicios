@@ -67,7 +67,7 @@
 					</div>
 					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'ARRIENDO'">
 						<label for="leaseValue">Valor de Arriendo</label>
-						<input type="text" class="form-control inputsSteps inputText" ng-currency fraction="0" validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" />
+						<input type="text" class="form-control inputsSteps inputText"  validation-pattern="number" ng-model="leadInfo.leaseValue" id="leaseValue" />
 					</div>
 				</div>
 				<div class="row">
