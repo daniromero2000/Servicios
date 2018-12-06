@@ -82,7 +82,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquity">Antigüedad</label>
+							<label for="antiquity">Antigüedad (Meses)</label>
 							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
@@ -152,7 +152,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquityInd">Atigüedad</label>
+							<label for="antiquityInd">Atigüedad (Meses)</label>
 							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
@@ -190,7 +190,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquity">Atigüedad</label>
+							<label for="antiquity">Atigüedad (Meses)</label>
 							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
