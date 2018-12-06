@@ -82,6 +82,20 @@ if ($options['verify'] ?? false) {
     Route::emailVerification();
 }
 
+//Assessor Auth
+
+Route::get('assessor/dashboard','Admin\assessorsController@index');
+Route::get('assessor/login','Assessor\LoginController@showLoginForm')->name('assessors.login');
+Route::post('assessor/dashboard','Assessor\LoginController@login')->name('assessors.access');
+Route::post('assessor-password/email','Assessor\ForgotPasswordController@sendResetLinkEmail')->name('assessors.password.email');
+Route::get('assessor-password/reset','Assessor\ForgotPasswordController@showLinkRequestForm')->name('assessors.password.request');
+Route::post('assessor-password/reset','Assessor\ResetPasswordController@reset');
+Route::get('assessor-password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
+Route::get('assessor/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages','Admin\PageController');
 Route::resource('oportuya','Admin\OportuyaV2Controller');
