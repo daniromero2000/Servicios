@@ -87,7 +87,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<input type="number" id="salary" ng-model="leadInfo.salary" ng-currency fraction="0" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -98,7 +98,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="otherRevenue">Otros ingresos</label>
-							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" ng-currency fraction="0" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -157,7 +157,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salaryInd">Salario</label>
-							<input type="number" id="salaryInd" ng-model="leadInfo.salaryInd" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<input type="number" id="salaryInd" ng-currency fraction="0" ng-model="leadInfo.salaryInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -194,8 +194,8 @@
 							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="salaryInd">Salario</label>
+							<input type="number" id="salaryInd" ng-currency fraction="0" ng-model="leadInfo.salaryInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -261,4 +261,5 @@
 	<script type="text/javascript" src="{{ asset('js/step3.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+	<script src="https://rawgit.com/aguirrel/ng-currency/latest/dist/ng-currency.js"></script>
 @endsection
