@@ -424,10 +424,12 @@
 								<label for="occupation">Ocupación</label>
 								<select class="form-control" name="occupation">
 									<option value="EMPLEADO">Empleado</option>
+									<option value="SOLDADO-MILITAR-POLICÍA">Soldado - Militar - Policía</option>
+									<option value="PRESTACIÓN DE SERVICIOS">Prestación de Servicios</option>
+									<option value="INDEPENDIENTE CERTIFICADO">Independiente Certificado</option>
+									<option value="NO CERTIFICADO">No Certificado</option>
+									<option value="RENTISTA">Rentista</option>
 									<option value="PENSIONADO">Pensionado</option>
-									<option value="FUERZAS ARMADAS">Fuerzas armadas</option>
-									<option value="DOCENTE">Docente</option>
-									<option value="INDEPENDIENTE">Independiente</option>
 								</select>
 							</div>
 						</div>

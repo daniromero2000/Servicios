@@ -26,7 +26,7 @@
 		</div>
 		<div class="step3-containerForm">
 			<div>
-				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'EMPLEADO'">
+				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'EMPLEADO' || dataLead.occupation == 'SOLDADO-MILITAR-POLICÍA'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-8 form-group">
@@ -35,7 +35,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="indicative">Indicativo</label>
-							<input type="number" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
+							<input type="number" min="1" max="8" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
 						</div>
 					</div>
 					<div class="row">
@@ -109,7 +109,7 @@
 				</form>
 			</div>
 			<div>
-				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'INDEPENDIENTE'">
+				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'RENTISTA'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
@@ -118,14 +118,14 @@
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="nit">Nit (sin número de verificación)</label>
-							<input type="text" id="nit" ng-model="leadInfo.nit" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="nitInd">Nit (sin número de verificación)</label>
+							<input type="text" id="nitInd" ng-model="leadInfo.nitInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyName">Nombre de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
+							<label for="companyNameInd">Nombre de la Empresa</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyNameInd" validation-pattern="text" ng-model="leadInfo.companyNameInd" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="whatSell">Qué Vendes o Comercializas?</label>
@@ -152,12 +152,12 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquity">Atigüedad</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="antiquityInd">Atigüedad</label>
+							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="salary">Salario</label>
-							<input type="number" id="salary" ng-model="leadInfo.salary" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="salaryInd">Salario</label>
+							<input type="number" id="salaryInd" ng-model="leadInfo.salaryInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row">
@@ -168,7 +168,7 @@
 				</form>
 			</div>
 			<div>
-				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'PENSIONADO' || dataLead.occupation == 'FUERZAS ARMADAS' || dataLead.occupation == 'DOCENTE'">
+				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'PENSIONADO'">
 					{{ csrf_field() }}
 					<div class="row">
 						<div class="col-sm-12 col-md-6 form-group">

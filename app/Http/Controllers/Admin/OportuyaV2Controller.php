@@ -161,8 +161,9 @@ class OportuyaV2Controller extends Controller
 					'APELLIDOS' => strtoupper($request->get('lastName')),
 					'EMAIL' => $request->get('email'),
 					'CELULAR' =>$request->get('telephone'),
-					'PROFESION' => strtoupper($request->get('occupation')),
+					'PROFESION' => 'NO APLICA',
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
+					'CIUD_UBI' => $request->get('city'),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -287,10 +288,9 @@ class OportuyaV2Controller extends Controller
 					'ESTRATO' => $request->get('stratum'),
 					'PERSONAS' => 0,
 					'ESTUDIOS' => 'NA',
+					'POSEEVEH' => 'N',
 					'PLACA' => 'NA',
-					'PROFESION' => 'NO APLICA',
 					'TEL_PROP' => 'NA',
-					'CIUD_UBI' => 'NA',
 					'DEPTO' => 'NA',
 					'N_EMPLEA' => 0,
 					'VENTASMES' => 0,
@@ -362,20 +362,26 @@ class OportuyaV2Controller extends Controller
 				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
 				$dataLead=[
-
-					'NIT_EMP' => $request->get('nit'),
-					'RAZON_SOC' => strtoupper($request->get('companyName')),
-					'DIR_EMP' => strtoupper($request->get('companyAddres')),
-					'TEL_EMP' => $request->get('companyTelephone'),
-					'TEL2_EMP'	=> $request->get('companyTelephone2'),
-					'ACT_ECO' => strtoupper($request->get('eps')),
-					'CARGO' => strtoupper($request->get('companyPosition')),
-					'FEC_ING' =>  $request->get('admissionDate'),
-					'ANTIG' => $request->get('antiquity'),
-					'SUELDO' => $request->get('salary'),
-					'TIPO_CONT' => strtoupper($request->get('typeContract')),
-					'OTROS_ING' => $request->get('otherRevenue')
-
+					'NIT_EMP' => ($request->get('nit') != '') ? $request->get('nit') : 0,
+					'RAZON_SOC' => ($request->get('companyName') != '') ? strtoupper($request->get('companyName')) : 'NA',
+					'DIR_EMP' => ($request->get('companyAddres') != '') ? strtoupper($request->get('companyAddres')) : 'NA',
+					'TEL_EMP' => ($request->get('companyTelephone') != '') ? $request->get('companyTelephone') : 0,
+					'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? $request->get('companyTelephone2') : 0,
+					'ACT_ECO' => ($request->get('eps') != '') ? strtoupper($request->get('eps')) : '-',
+					'CARGO' => ($request->get('companyPosition') != '') ? strtoupper($request->get('companyPosition')) : 'NA',
+					'FEC_ING' => ($request->get('admissionDate') != '') ? $request->get('admissionDate') : '0000/1/1',
+					'ANTIG' => ($request->get('antiquity') != '') ? $request->get('antiquity') : 1,
+					'SUELDO' => ($request->get('salary') != '') ? $request->get('salary') : 0,
+					'TIPO_CONT' => ($request->get('typeContract') != '') ? strtoupper($request->get('typeContract')) : 'NA',
+					'OTROS_ING' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
+					'CAMARAC' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
+					'NIT_IND' => ($request->get('nitInd') != '') ? $request->get('nitInd') : 0,
+					'RAZON_IND' => ($request->get('companyNameInd') != '') ? $request->get('companyNameInd') : 'NA',
+					'ACT_IND' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
+					'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '0000/1/1',
+					'EDAD_INDP' => ($request->get('antiquityInd') != '') ? $request->get('antiquityInd') : 1,
+					'SUELDOIND' => ($request->get('salaryInd') != '') ? $request->get('salaryInd') : 0,
+					'BANCOP' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA'
 				];
 
 				$identificationNumber = (string)$identificationNumber;
@@ -442,7 +448,10 @@ class OportuyaV2Controller extends Controller
 
 	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
-	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue, `CAMARAC` as camaraComercio, `NIT_IND` as nitInd, `RAZON_IND` as companyNameInd, `FEC_CONST` as dateCreationCompany, `EDAD_INDP` as antiquityInd, `SUELDOIND` as salaryInd, `BANCOP` as bankSavingsAccount, `ACT_IND` as whatSell
+	      	FROM CLIENTE_FAB 
+	      	WHERE CEDULA = %s ", $identificationNumber);
+	      
 	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
@@ -457,7 +466,7 @@ class OportuyaV2Controller extends Controller
 	      return $data;
 	}           
 
-	public function calculateAge($fecha){
+	private function calculateAge($fecha){
 		$time = strtotime($fecha);
 		$now = time();
 		$age = ($now-$time)/(60*60*24*365.25);
