@@ -92,7 +92,7 @@ class OportuyaV2Controller extends Controller
 	{
 
 		if(($request->get('step'))==1){	
-					
+			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
@@ -164,6 +164,7 @@ class OportuyaV2Controller extends Controller
 					'PROFESION' => 'NO APLICA',
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
 					'CIUD_UBI' => $request->get('city'),
+					'DEPTO' => $departament->departament,
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -291,7 +292,6 @@ class OportuyaV2Controller extends Controller
 					'POSEEVEH' => 'N',
 					'PLACA' => 'NA',
 					'TEL_PROP' => 'NA',
-					'DEPTO' => 'NA',
 					'N_EMPLEA' => 0,
 					'VENTASMES' => 0,
 					'COSTOSMES' => 0,
@@ -464,7 +464,14 @@ class OportuyaV2Controller extends Controller
 	      $data['oportudataLead'] = $respOportudataLead[0];
 
 	      return $data;
-	}           
+	}
+
+	private function getCodeAndDepartmentCity($nameCity){
+		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
+		$resp = DB::select($query);
+
+		return $resp[0];
+	}
 
 	private function calculateAge($fecha){
 		$time = strtotime($fecha);
