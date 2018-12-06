@@ -104,7 +104,7 @@
 						</select>
 					</div>
 				</div>
-				<div ng-show="false">
+				<div ng-if="false">
 				{{-- <div ng-show="leadInfo.civilStatus == 'CASADO' || leadInfo.civilStatus == 'UNION LIBRE'"> --}}
 					<div class="row">
 						<div class="col-sm-12 col-md-4 form-group">
