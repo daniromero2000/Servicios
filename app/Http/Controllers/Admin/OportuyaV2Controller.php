@@ -262,9 +262,7 @@ class OportuyaV2Controller extends Controller
 			if($response){
 
 				$flag=1;
-
 				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-
 				$dataLead=[
 					'DIRECCION' => strtoupper($request->get('addres')),
 					'FEC_NAC' => $request->get('birthdate'),
@@ -279,13 +277,13 @@ class OportuyaV2Controller extends Controller
 					'TELFIJO' => $request->get('housingTelephone'),
 					'VRARRIENDO' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
 					'EPS_CONYU' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
-					'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : 0,
+					'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : '0',
 					'TRABAJO_CONYU' => strtoupper($request->get('spouseJob')),
 					'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? strtoupper($request->get('spouseJobName')) : 'NA',
 					'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? strtoupper($request->get('spouseName')) : 'NA',
-					'PROFESION_CONYU' => ($request->get('spouseProfession' != '')) ? strtoupper($request->get('spouseProfession')) : 'NA' ,
-					'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : 0,
-					'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : 0,
+					'PROFESION_CONYU' => ($request->get('spouseProfession') != '') ? strtoupper($request->get('spouseProfession')) : 'NA' ,
+					'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : '0',
+					'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : '0',
 					'ESTRATO' => $request->get('stratum'),
 					'PERSONAS' => 0,
 					'ESTUDIOS' => 'NA',
