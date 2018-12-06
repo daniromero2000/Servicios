@@ -37,7 +37,7 @@
                             <label for="num_doc" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                             <div class="col-md-6">
-                                <input id="num_doc" type="num_doc" class="form-control{{ $errors->has('num_doc') ? ' is-invalid' : '' }}" name="num_doc" required>
+                                <input id="num_doc" type="password" class="form-control{{ $errors->has('num_doc') ? ' is-invalid' : '' }}" name="num_doc" required>
 
                                 @if ($errors->has('num_doc'))
                                     <span class="invalid-feedback" role="alert">
