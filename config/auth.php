@@ -45,6 +45,12 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'assessor'=> [
+            'driver'=>'session',
+            'provider'=>'assessors',
+        ],
+
     ],
 
     /*
@@ -68,6 +74,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'assessors'=>[
+            'driver'=>'eloquent',
+            'model'=> App\Assessor::class,
         ],
 
         // 'users' => [
@@ -94,6 +105,15 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+    ],
+
+
+    'passwords' => [
+        'assessors' => [
+            'provider' => 'assessor',
             'table' => 'password_resets',
             'expire' => 60,
         ],
