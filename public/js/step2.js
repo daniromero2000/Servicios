@@ -1,4 +1,4 @@
-angular.module('appStep2', ['moment-picker'])
+angular.module('appStep2', ['moment-picker', 'ng-currency'])
 .controller("step2Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.leadInfo = {
