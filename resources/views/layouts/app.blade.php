@@ -212,7 +212,7 @@
 						<div class="footer-contianerTelefonos">
 							<img src="{{ asset('images/footer-telefonoIcon.png')}}" alt="Línea Nacional" class="img-fluid footer-imgNosotros" />
 							<p class="footer-textTelefonos">
-								<span class="footer-textTelefonosNal">Línea nacional: 57 (1)484 2122</span> <br />
+								<span class="footer-textTelefonosNal">Línea nacional: 57 (1)484 2122 - 01 8000 11 77 87</span> <br />
 								<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
 							</p>
 						</div>
