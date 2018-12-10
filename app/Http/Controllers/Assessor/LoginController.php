@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 
 
+
 class LoginController extends Controller
 {
 
@@ -72,7 +73,7 @@ class LoginController extends Controller
 
     {
 
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:assessor')->except('logout');
 
     }
 
@@ -93,25 +94,17 @@ class LoginController extends Controller
     {
         $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->codigo)->where('NUM_DOC','=',$request->num_doc)->first();
 
-        //return $request;
-        //$assessor=Assessor::where('name',$request->name)->where('password',$request->password)->first(); 
 
         if ($assessor) {
-            Auth::loginUsingId($assessor->CODIGO);
-            //Auth::login($assessor);
-            
 
+            Auth::guard('assessor')->loginUsingId($assessor->CODIGO);   
             return view('assessors.dashboard');
-        }
-
-
-        //return response()->json([auth()->guard('assessor')->attempt(['email' => $request->email, 'password' => $request->password])]);
-
-            
+        }            
 
         return back()->withErrors(['email' => 'Email or password are wrong.']);
 
     }
+    
 
     public function logout(Request $request) {
         Auth::logout();
