@@ -84,14 +84,20 @@ if ($options['verify'] ?? false) {
 
 //Assessor Auth
 
-Route::get('assessor/dashboard','Admin\assessorsController@index');
-Route::get('assessor/login','Assessor\LoginController@showLoginForm')->name('assessors.login');
-Route::post('assessor/dashboard','Assessor\LoginController@login')->name('assessors.access');
-Route::post('assessor-password/email','Assessor\ForgotPasswordController@sendResetLinkEmail')->name('assessors.password.email');
-Route::get('assessor-password/reset','Assessor\ForgotPasswordController@showLinkRequestForm')->name('assessors.password.request');
-Route::post('assessor-password/reset','Assessor\ResetPasswordController@reset');
-Route::get('assessor-password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
-Route::get('assessor/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::group(['prefix'=>'/assessor/'],function(){
+
+	Route::get('/dashboard','Admin\assessorsController@index');
+	Route::get('/login','Assessor\LoginController@showLoginForm')->name('assessors.login');
+	Route::post('/dashboard','Assessor\LoginController@login')->name('assessors.access');
+	Route::post('/password/email','Assessor\ForgotPasswordController@sendResetLinkEmail')->name('assessors.password.email');
+	Route::get('/password/reset','Assessor\ForgotPasswordController@showLinkRequestForm')->name('assessors.password.request');
+	Route::post('/password/reset','Assessor\ResetPasswordController@reset');
+	Route::get('/password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
+	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+	Route::get('/step1', 'Admin\assessorsController@step1')->name('step1Assessor')->middleware(['auth:assessor']);
+    
+});
+
 
 
 
