@@ -19,10 +19,7 @@
 			
 		</div>
 		<div class="step1-containerForm">
-			@php
-			dd(Auth::guard('assessor')->check());
-
-			@endphp
+			
 			<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
 				{{ csrf_field() }}
 				<input type="hidden" name="step" value="1">
