@@ -52,11 +52,11 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		  data: $scope.faq
 		}).then(function successCallback(response) {
 			if(response.data != false){
-				$("#addFaqModal").modal("hide");
 				$scope.search();
-				$scope.faq = {};
+				//$scope.faq = {};
 				console.log($scope.faq);
-				console.log(response);
+				console.log(response);	
+				$("#addFaqModal").modal("hide");
 			}
 		}, function errorCallback(response) {
 		    console.log(response);
