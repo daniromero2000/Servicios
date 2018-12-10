@@ -56,6 +56,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				$scope.search();
 				$scope.faq = {};
 				console.log($scope.faq);
+				console.log(response);
 			}
 		}, function errorCallback(response) {
 		    console.log(response);
