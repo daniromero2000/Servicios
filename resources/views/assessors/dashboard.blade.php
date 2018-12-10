@@ -1,4 +1,17 @@
 @extends('layouts.app')
 @section('content')
-	<h1>you are login</h1>    
+	<div class="container">
+		
+		<div class="row">
+			<p>
+				<a href="{{route('step1Assessor')}}">Crédito Oportuya </a>
+			</p>
+
+			@php
+
+			//dd(Auth::user());
+
+			@endphp
+		</div>
+	</div>
 @endsection
