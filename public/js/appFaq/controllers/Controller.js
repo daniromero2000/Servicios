@@ -18,14 +18,12 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/faqs?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual
 		}).then(function successCallback(response) {
-			console.log($scope.q);
 			if(response != false){
 				$scope.q.initFrom += response.data.length;
 				angular.forEach(response.data, function(value) {
 					$scope.faqs.push(value);
 				});
 				$scope.cargando = false;
-				//console.log($scope.faqs);
 			}
 
 				
@@ -50,7 +48,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.createFaq = function(){
 		$http({
 		  method: 'POST',
-		  url: 'faqs/',
+		  url: 'addFaqs/',
 		  data: $scope.faq
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -62,7 +60,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 			}
 		}, function errorCallback(response) {
 			console.log("error");
-		    console.log(response);
+		    console.log(data);
 		});
 	};
 
