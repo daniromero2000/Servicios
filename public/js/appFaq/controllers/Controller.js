@@ -28,8 +28,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 				
 		}, function errorCallback(response) {
-		  	console.log(false);
-		  	console.log(response);
+
 		});
 	};
 
@@ -82,8 +81,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");
-				$scope.search(response);
-				console.log(response);
+				$scope.search();
 			}
 		},function errorCallback(response){
 
