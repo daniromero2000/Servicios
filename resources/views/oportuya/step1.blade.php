@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-12">
 				<div class="step3-containerForm">
-					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress" />
 					<div class="progreso">
 						<div class="barra_vacia" style="width: 0;"></div>
 						<div class="puntos punto_uno listo">
@@ -46,7 +46,7 @@
 						<span></span>
 						<label>Confirmación</label>
 					</div>
-					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress" />
 				</div>
 			</div>
 		</div>
