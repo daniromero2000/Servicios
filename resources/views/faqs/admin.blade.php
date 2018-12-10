@@ -13,7 +13,6 @@
         </div>
     </div>
 </div>
-<label>@{{faqCrud.id}}</label>
 <div class="table table-responsive">
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">

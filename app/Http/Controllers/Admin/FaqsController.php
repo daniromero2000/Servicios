@@ -24,6 +24,7 @@ class faqsController extends Controller
     {
         $faqs = DB::table('faqs')
                 ->select('question','answer','id')
+                ->where('question','LIKE','%' . $request->q . '%')
                 ->orderBy('id', 'desc')
                 ->get();
         return response()->json($faqs);    
