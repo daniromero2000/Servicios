@@ -58,7 +58,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				console.log($scope.faq);
 			}
 		}, function errorCallback(response) {
-		    console.log(data);
+		    console.log(response);
 		});
 	};
 
