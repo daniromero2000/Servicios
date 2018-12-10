@@ -53,13 +53,10 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.search();
-				//$scope.faq = {};
-				console.log($scope.faq);
-				console.log(response);	
 				$("#addFaqModal").modal("hide");
 			}
 		}, function errorCallback(response) {
-		    console.log(response);
+			
 		});
 	};
 
@@ -89,7 +86,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				console.log(response);
 			}
 		},function errorCallback(response){
-				console.log(response);
+
 		});
 	}
 
@@ -103,10 +100,9 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				$("#Update").modal("hide");
 				$scope.search();
 				$scope.faq = {};
-				console.log(response);
 			}
 		}, function errorCallback(response) {
-		    console.log(response);
+
 		});
 	};
 

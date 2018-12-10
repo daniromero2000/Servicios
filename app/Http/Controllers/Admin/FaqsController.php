@@ -24,6 +24,7 @@ class faqsController extends Controller
     {
         $faqs = DB::table('faqs')
                 ->select('question','answer','id')
+                ->orderBy('id', 'desc')
                 ->get();
         return response()->json($faqs);    
     }
@@ -66,7 +67,6 @@ class faqsController extends Controller
         return response()->json([true]);
     }
 
-   
 
     /**
      * Display the specified resource.
