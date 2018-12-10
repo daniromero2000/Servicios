@@ -48,7 +48,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.createFaq = function(){
 		$http({
 		  method: 'POST',
-		  url: 'faqs/',
+		  url: 'faqs',
 		  data: $scope.faq
 		}).then(function successCallback(response) {
 			if(response.data != false){
