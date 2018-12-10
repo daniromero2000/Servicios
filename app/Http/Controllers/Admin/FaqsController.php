@@ -66,15 +66,7 @@ class faqsController extends Controller
         return response()->json([true]);
     }
 
-    public function addFaq(Request $request){
-        $faqs = new Faq;
-        $faqs->question = $request->get('question');
-        $faqs->answer = $request->get('answer');
-        $faqs->user_id = Auth::id();
-        
-        $faqs->save();
-        return response()->json([true]);   
-    }
+   
 
     /**
      * Display the specified resource.
