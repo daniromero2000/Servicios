@@ -51,6 +51,7 @@
               </div>
               <div class="modal-body">
                 <form ng-submit="createFaq()">
+                  {{ csrf_field() }}
                   <div class="form-group">
                     <label>Pregunta</label>
                     <textarea rows="2" class="form-control" name="question"  ng-model="faq.question" required ></textarea>
