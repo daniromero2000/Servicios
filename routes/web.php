@@ -111,6 +111,7 @@ Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('communityleads','Admin\CommunityController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
+
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
 Route::get('api/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
@@ -238,5 +239,16 @@ Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
 
     Route::get('/campaigns', function(){
         return view('campaign.campaign');
+    });
+});
+
+Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+
+	Route::get("/",function(){
+		return view('faqs.indexAngular');
+	});
+
+    Route::get('/admin', function(){
+        return view('faqs.admin');
     });
 });

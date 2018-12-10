@@ -66,7 +66,7 @@
 
               </div>
           <div class="card-body">
-            <p class="card-text">{{$pregunta->answer}} </p>
+            <p class="card-text">{!!$pregunta->answer!!} </p>
           </div>
         </div>
 
