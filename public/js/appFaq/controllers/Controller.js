@@ -48,7 +48,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.createFaq = function(){
 		$http({
 		  method: 'POST',
-		  url: 'addFaqs/',
+		  url: 'faqs/',
 		  data: $scope.faq
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -56,10 +56,8 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				$scope.search();
 				$scope.faq = {};
 				console.log($scope.faq);
-				console.log(response);
 			}
 		}, function errorCallback(response) {
-			console.log("error");
 		    console.log(data);
 		});
 	};
