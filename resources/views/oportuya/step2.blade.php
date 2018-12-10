@@ -12,22 +12,59 @@
 @endsection()
 
 @section('content')
-	<div id="step2" ng-app="appStep2" ng-controller="step2Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}">
-		<div class="row resetRow">
-			<div class="col-12 conatiner-logoImg">
-				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
-				<img ng-src="/@{{ analyst.img }}" ng-alt="@{{ analyst.name }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 2</strong> > (Información Personal)</span>
+	<div id="step2" ng-app="appStep2" ng-controller="step2Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
+		<div class="row resetRow container-header-forms">
+			<div class="form-container-logoHeader">
+				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
+			<div class="col-12 conatiner-logoImg">
+				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
+			</div>
+		</div>
+		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
 			</div>
+			<div class="col-12">
+				<div class="step3-containerForm">
+					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<div class="progreso">
+						<div class="barra_vacia" style="width: 33.333333%;"></div>
+						<div class="puntos punto_uno listo">
+						</div>
+						<span></span>
+						<label>Cuentanos sobre ti</label>
+						<div class="puntos punto_dos listo">
+						</div>
+						<span></span>
+						<label>Información Personal</label>
+						<div class="puntos punto_tres">
+						</div>
+						<span></span>
+						<label>Información Laboral</label>
+						<div class="puntos punto_cuatro">
+						</div>
+						<span></span>
+						<label>Confirmación</label>
+					</div>
+					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+				</div>
+			</div>
 		</div>
 		<div class="step2-containerForm">
+			<div class="row resetRow">
+				<div class="forms-descStep">
+					<strong>Cuéntanos sobre ti</strong><br>
+					<span class="forms-descText">Ingresa tus datos personales</span>
+					<img src="{{ asset('images/datosPersonales2.png') }}" class="img-fluid forms-descImg" />
+					<span class="forms-descStepNum">2</span>
+				</div>
+			</div>
 			<form id="step2Form" ng-submit="saveStep2()">
 				{{ csrf_field() }}
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="dateDocumentExpedition">Fecha Expedición Documento</label>
 					    <div class="input-group"
@@ -45,7 +82,7 @@
 					    <select class="form-control inputsSteps inputSelect" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.label as city.label for city in cities" required></select>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-4 form-group">
 						<label for="housingType">Tipo de Vivienda</label>
 						<select class="form-control inputsSteps inputSelect" id="housingType" ng-model="leadInfo.housingType" ng-change="changeHousingType()" ng-options="type.value as type.label for type in housingTypes" required="">
@@ -60,7 +97,7 @@
 						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="addres">Dirección Residencia</label>
 						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" required="" />
@@ -70,7 +107,7 @@
 						<input type="text" class="form-control inputsSteps inputText" ng-currency fraction="0" min="0" ng-model="leadInfo.leaseValue" id="leaseValue" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="housingTelephone">Teléfono Residencia</label>
 						<input type="text" class="form-control inputsSteps inputText" validation-pattern="telephone" ng-model="leadInfo.housingTelephone" id="housingTelephone" />
@@ -80,7 +117,7 @@
 						<input type="number" class="form-control inputsSteps inputText" ng-model="leadInfo.stratum" validation-pattern="number" id="stratum" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-4">
 						<label for="birthdate">Fecha de Nacimiento</label>
 						<div class="input-group"
@@ -106,7 +143,7 @@
 				</div>
 				<div ng-if="false">
 				{{-- <div ng-show="leadInfo.civilStatus == 'CASADO' || leadInfo.civilStatus == 'UNION LIBRE'"> --}}
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseName">Nombre Cónyuge</label>
 							<input type="text" id="spouseName" validation-pattern="name" ng-model="leadInfo.spouseName" class="form-control inputsSteps inputText" />
@@ -120,7 +157,7 @@
 							<input type="text" id="spouseTelephone" validation-pattern="telephone" ng-model="leadInfo.spouseTelephone" class="form-control inputsSteps inputText">
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="spouseJobName">Trabajo del Cónyuge</label>
 							<input type="text" id="spouseJobName" validation-pattern="textAndNumber" ng-model="leadInfo.spouseJobName" class="form-control inputsSteps inputText" />
@@ -134,7 +171,7 @@
 							<input type="text" id="spouseJob" validation-pattern="text" ng-model="leadInfo.spouseJob" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="spouseSalary">Salario del Cónyuge</label>
 							<input type="number" id="spouseSalary" validation-pattern="number" ng-model="leadInfo.spouseSalary" class="form-control inputsSteps inputText" />
@@ -145,7 +182,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-12 text-center">
 						<button type="submit" class="btn btn-primary btnStep">Continuar</button>
 					</div>

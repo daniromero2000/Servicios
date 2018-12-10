@@ -624,6 +624,209 @@
 	font-size: 23px;
 }
 
+.form-container-logoHeader{
+	background: #167efa;
+	padding: 40px;
+	position: relative;
+}
+
+.form-container-logoHeader:before {
+    background: #167efa;
+    content: "";
+    height: 156px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+    transform: skew(338deg);
+    width: 64px;
+    z-index: 2;
+}
+
+.forms-text-analyst{
+	color: #ea148c;
+}
+
+.forms-descStep{
+	background: #b03187;
+	border-radius: 10px;
+	color: white;
+	line-height: 1;
+	padding: 10px 100px 15px 50px;
+	position: relative;
+	margin: 40px 0;
+}
+
+.forms-descStepNum{
+	background: #cccccc;
+	border: 3px solid white;
+	border-radius: 50%;
+	font-weight: 700;
+	height: 35px;
+	left: -5px;
+	padding: 7px 0 0 0;
+	position: absolute;
+	text-align: -webkit-center;
+	top: -7px;
+	width: 35px;
+}
+
+.forms-descImg{
+	position: absolute;
+	right: 16px;
+	top: 13px;
+	width: 40px;
+}
+
+.forms-descText{
+	font-size: 12px;
+}
+
+.forms-descStep > strong{
+	font-size: 20px;
+	font-weight: 600;
+}
+
+
+/* Barra Progreso */
+
+.progreso {
+    margin: 18px auto 35px;
+    display: block;
+    width: 85%;
+    height: 10px;
+    background-color: #ccc;
+    position: relative;
+}
+
+.progreso > .barra_vacia {
+    position: absolute;
+    height: 6px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #b22c88;
+    z-index: 2;
+    will-change: width;
+    transition: width .3s linear;
+}
+
+.progreso > .punto_uno, .progreso > .punto_uno + span, .progreso > .punto_uno ~ label {
+    left: 0;
+}
+
+.progreso > .puntos {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    padding: 0;
+    z-index: 1;
+}
+
+.progreso > .puntos.listo + span {
+    background-color: #b22c88;
+}
+
+.progreso > .puntos.listo + span {
+	display: flex;
+	font-size: 15px;
+	font-weight: normal;
+	align-items: center;
+	justify-content: center;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	height: 25px;
+	width: 25px;
+	margin: auto;
+	border-radius: 50%;
+	color: #fff;
+	background-color: #0082d3;
+}
+
+
+.progreso > .punto_dos, .progreso > .punto_dos + span, .progreso > .punto_tres, .progreso > .punto_tres + span {
+    left: 33.3333%;
+    height: 20px;
+    width: 20px;
+    background-color: #aaa;
+}
+
+
+.progreso > .puntos ~ label {
+    position: absolute;
+    transform: translateX(-50%);
+    width: auto;
+    display: inline-block;
+    top: 100%;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.progreso > .puntos.listo + span {
+    background-color: #b22c88;
+}
+
+label {
+    font-size: 12px;
+    line-height: 1em;
+    font-weight: bold;
+    color: #999;
+}
+
+.progreso > .punto_dos ~ label {
+    left: 33.3333%;
+}
+
+.progreso > .puntos + span {
+    position: absolute;
+    display: none;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.progreso > .punto_tres, .progreso > .punto_tres + span {
+    left: 66.6666%;
+}
+
+.progreso > .punto_tres, .progreso > .punto_tres + span {
+    left: 66.6666%;
+}
+.progreso > .punto_tres ~ label {
+    left: 66.6666%;
+}
+.progreso > .puntos.listo + span + label, .progreso > .mono-izquierda, .progreso .punto_cuatro.listo ~ .mono-derecha {
+    color: #b22c88;
+}
+.progreso > .punto_cuatro, .progreso > .punto_cuatro + span {
+    left: 100%;
+}
+.progreso > .punto_cuatro + span {
+    display: block;
+    height: 20px;
+    width: 20px;
+    background-color: #aaa;
+}
+
+.progreso > .punto_cuatro, .progreso > .punto_cuatro + span {
+    left: 100%;
+}
+.progreso > .punto_cuatro ~ label {
+    left: 100%;
+}
+
+.progreso > .punto_uno.listo + span:after, .progreso > .punto_dos.listo + span:after, .progreso > .punto_tres.listo + span:after, .progreso > .punto_cuatro.listo + span:after{
+	font-family: "Font Awesome 5 Free";
+	content: "\f058";
+}
+
 /* Step 2 */
 #step1, #step2, #step3{
 	background: #fafafa;
@@ -683,12 +886,18 @@
 .step2-containerForm, .step3-containerForm, .step1-containerForm{
 	max-width: 1000px;
 	margin: auto;
+	position: relative;
 }
 
 .conatiner-logoImg{
 	border-bottom: 1px solid #b2b2b2;
-    padding: 30px 100px;
+    padding: 0;
     position: relative;
+    min-height: 0 !important;
+}
+
+.container-header-forms{
+	background: #fafafa;
 }
 
 .steps-imgAnalista{
@@ -725,12 +934,39 @@
 	color: #4a4a4a;
 }
 
+.imgStartProgress{
+	position: absolute;
+	left: 0;
+	top: -30px;
+}
+
+.imgEndProgress{
+	position: absolute;
+	right: 0;
+	top: -30px;
+}
+
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;
 	}
 	.formularioSimulador-containerFormulario{
 		margin-top: 40px;
+	}
+}
+
+@media(max-width: 768px){
+	.steps-textStep{
+		bottom: -85px;
+	}
+	.form-container-logoHeader{
+		margin-bottom: 80px;
+	}
+	.form-container-logoHeader:before{
+		width: 0;
+	}
+	.imgStartProgress, .imgEndProgress{
+		display: none;
 	}
 }
 
@@ -743,5 +979,22 @@
 		background: rgba(238, 238, 238,.7);
 		margin: auto;
 		position: relative;
+	}
+
+	.progreso > .puntos ~ label{
+		font-size: 12px;
+	}
+
+	.progreso{
+		width: 82%;
+	}
+}
+
+@media(max-width: 450px){
+	.progreso > .puntos ~ label {
+	    font-size: 8px;
+	}
+	.progreso {
+	    width: 85%;
 	}
 }
