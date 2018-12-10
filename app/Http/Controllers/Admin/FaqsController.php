@@ -20,10 +20,12 @@ class faqsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = DB::table('faqs')->latest()->get();
-        return view('faqs.index', ['preguntas' => $faqs]);
+        $faqs = DB::table('faqs')
+                ->select('question','answer','id')
+                ->get();
+        return response()->json($faqs);    
     }
 
     /**
@@ -61,7 +63,17 @@ class faqsController extends Controller
         $faqs->user_id = Auth::id();
         
         $faqs->save();
-        return back();
+        return response()->json([true]);
+    }
+
+    public function addFaq(Request $request){
+        $faqs = new Faq;
+        $faqs->question = $request->get('question');
+        $faqs->answer = $request->get('answer');
+        $faqs->user_id = Auth::id();
+        
+        $faqs->save();
+        return response()->json([true]);   
     }
 
     /**
@@ -99,7 +111,7 @@ class faqsController extends Controller
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->save();
-        return back();
+        return response()->json([true]);
     }
 
     /**
@@ -110,8 +122,9 @@ class faqsController extends Controller
      */
     public function destroy($id)
     {
-        $faq=Fqa::findOrfail($id);
+        $faq=Faq::findOrfail($id);
         $faq->delete();
-        return back();
+        return response()->json([true]);
     }
+
 }
