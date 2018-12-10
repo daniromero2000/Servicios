@@ -884,7 +884,7 @@ label {
 }
 
 .step2-containerForm, .step3-containerForm, .step1-containerForm{
-	max-width: 1000px;
+	max-width: 1200px;
 	margin: auto;
 	position: relative;
 }
@@ -944,6 +944,42 @@ label {
 	position: absolute;
 	right: 0;
 	top: -30px;
+}
+
+/* Footer */
+#footerSteps{
+	display: none;
+	background: #efefef;
+	padding: 50px 0;
+}
+
+.footerSteps-title{
+	color: #ea148c;
+	font-size: 25px;
+	font-weight: 700;
+	margin-bottom: 50px;
+}
+
+.footerSteps-img{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.footerSteps-text{
+	line-height: 20px;
+	padding: 17px 0 0 70px;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.footerSteps-text > span{
+	font-weight: 500;
+	font-size: 13px;
+}
+
+.footerSteps-containerItem{
+	margin-bottom: 15px;
 }
 
 @media(max-width: 991px){
