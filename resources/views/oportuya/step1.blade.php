@@ -9,24 +9,62 @@
 
 @section('content')
 	<div id="step1">
-		<div class="row resetRow">
+		<div class="row resetRow container-header-forms">
+			<div class="form-container-logoHeader">
+				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
+			</div>
 			<div class="col-12 conatiner-logoImg">
-				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
 				<img src="/{{ $digitalAnalyst['img'] }}" alt="{{ $digitalAnalyst['name'] }}" class="img-fluid steps-imgAnalista" />
 				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
 			</div>
+		</div>
+		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy {{ $digitalAnalyst['name'] }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
+				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu tarjeta Oportuya</h3>
+			</div>
+			<div class="col-12">
+				<div class="step3-containerForm">
+					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<div class="progreso">
+						<div class="barra_vacia" style="width: 0;"></div>
+						<div class="puntos punto_uno listo">
+						</div>
+						<span></span>
+						<label>Cuentanos sobre ti</label>
+						<div class="puntos punto_dos">
+						</div>
+						<span></span>
+						<label>Información Personal</label>
+						<div class="puntos punto_tres">
+						</div>
+						<span></span>
+						<label>Información Laboral</label>
+						<div class="puntos punto_cuatro">
+						</div>
+						<span></span>
+						<label>Confirmación</label>
+					</div>
+					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+				</div>
 			</div>
 		</div>
 		<div class="step1-containerForm">
+			<div class="row resetRow">
+				<div class="forms-descStep">
+					<strong>Información básica</strong><br>
+					<span class="forms-descText">Ingresa tus datos personales</span>
+					<img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg" />
+					<span class="forms-descStepNum">1</span>
+				</div>
+			</div>
 			<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
 				{{ csrf_field() }}
 				<input type="hidden" name="step" value="1">
 				<input type="hidden" name="channel" value="1">
 				<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="name" class="control-label">Nombres</label>
 						<input type="text" name="name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true"/>
@@ -36,11 +74,13 @@
 						<input type="text" name="lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true"/>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="email" class="control-label">Correo electronico</label>
-					<input type="email" name="email" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"/>
+				<div class="row resetRow">
+					<div class="col-sm-12 form-group">
+						<label for="email" class="control-label">Correo electronico</label>
+						<input type="email" name="email" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"/>
+					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
 							<label for="telephone class="control-label">Teléfono</label>
@@ -60,7 +100,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento</label>
 						<select class="form-control inputsSteps inputSelect" name="typeDocument" id="typeDocument" required="">
@@ -73,7 +113,7 @@
 						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" name="identificationNumber" id="identificationNumber" required="" />
 					</div>
 				</div>
-				<div class="row">
+				<div class="row resetRow">
 					<div class="col-12">
 						<div class="form-group">
 							<label for="city" class="control-label">Ciudad</label>

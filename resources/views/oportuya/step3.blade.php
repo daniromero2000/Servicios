@@ -12,23 +12,60 @@
 @endsection()
 
 @section('content')
-	<div id="step3" ng-app="appStep3" ng-controller="step3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}">
-		<div class="row resetRow">
-			<div class="col-12 conatiner-logoImg">
-				<img src="{{ asset('images/logoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
-				<img ng-src="/@{{ analyst.img }}" ng-alt="@{{ analyst.name }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso3</strong> > (Información Laboral)</span>
+	<div id="step3" ng-app="appStep3" ng-controller="step3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
+		<div class="row resetRow container-header-forms">
+			<div class="form-container-logoHeader">
+				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
+			<div class="col-12 conatiner-logoImg">
+				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
+			</div>
+		</div>
+		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ dataLead.name + ' ' + dataLead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">Cuéntanos más sobre tu información laboral</p>
 			</div>
+			<div class="col-12">
+				<div class="step3-containerForm">
+					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<div class="progreso">
+						<div class="barra_vacia" style="width: 66.66666%;"></div>
+						<div class="puntos punto_uno listo">
+						</div>
+						<span></span>
+						<label>Cuentanos sobre ti</label>
+						<div class="puntos punto_dos listo">
+						</div>
+						<span></span>
+						<label>Información Personal</label>
+						<div class="puntos punto_tres listo">
+						</div>
+						<span></span>
+						<label>Información Laboral</label>
+						<div class="puntos punto_cuatro">
+						</div>
+						<span></span>
+						<label>Confirmación</label>
+					</div>
+					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+				</div>
+			</div>
 		</div>
 		<div class="step3-containerForm">
+			<div class="row resetRow">
+				<div class="forms-descStep">
+					<strong>Cuéntanos sobre ti</strong><br>
+					<span class="forms-descText">Ingresa tu información laboral</span>
+					<img src="{{ asset('images/datosLaborales.png') }}" class="img-fluid forms-descImg" />
+					<span class="forms-descStepNum">2</span>
+				</div>
+			</div>
 			<div>
 				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'EMPLEADO' || dataLead.occupation == 'SOLDADO-MILITAR-POLICÍA'">
 					{{ csrf_field() }}
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-8 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
 							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="number" ng-model="leadInfo.nit" />
@@ -38,7 +75,7 @@
 							<input type="number" min="1" max="8" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la Empresa</label>
 							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" required="" />
@@ -48,7 +85,7 @@
 							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" required="" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone">Teléfono de la Empresa</label>
 							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" required="" />
@@ -58,7 +95,7 @@
 							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" validation-pattern="telephone" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-4 form-group">
 							<label for="eps">EPS</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
@@ -80,7 +117,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquity">Antigüedad (Meses)</label>
 							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="" />
@@ -90,7 +127,7 @@
 							<input type="text" id="salary" ng-model="leadInfo.salary" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label>Tipo de Contrato</label>
 							<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts" required="">
@@ -101,7 +138,7 @@
 							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-12 text-center form-group">
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
@@ -111,7 +148,7 @@
 			<div>
 				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'RENTISTA'">
 					{{ csrf_field() }}
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="camaraComercio">Cámara de Comercio</label>
 							<select id="camaraComercio" ng-model="leadInfo.camaraComercio" class="form-control inputsSteps inputSelect" ng-options="type.value as type.label for type in typesCamaraComercio">
@@ -122,7 +159,7 @@
 							<input type="text" id="nitInd" ng-model="leadInfo.nitInd" validation-pattern="number" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyNameInd">Nombre de la Empresa</label>
 							<input type="text" class="form-control inputsSteps inputText" id="companyNameInd" validation-pattern="text" ng-model="leadInfo.companyNameInd" />
@@ -132,7 +169,7 @@
 							<input type="text" class="form-control inputsSteps inputText" id="whatSell" validation-pattern="text" ng-model="leadInfo.whatSell" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="eps">EPS</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
@@ -150,7 +187,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquityInd">Atigüedad (Meses)</label>
 							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" />
@@ -160,7 +197,7 @@
 							<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-12 text-center form-group">
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
@@ -170,7 +207,7 @@
 			<div>
 				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'PENSIONADO'">
 					{{ csrf_field() }}
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label>Nombre de la Empresa</label>
 							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
@@ -188,7 +225,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="antiquity">Atigüedad (Meses)</label>
 							<input type="number" id="antiquity" ng-model="leadInfo.antiquity"  validation-pattern="number" class="form-control inputsSteps inputText" />
@@ -198,7 +235,7 @@
 							<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="eps">EPS</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
@@ -209,7 +246,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row resetRow">
 						<div class="col-12 text-center form-group">
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
