@@ -57,8 +57,11 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				$("#addFaqModal").modal("hide");
 				$scope.search();
 				$scope.faq = {};
+				console.log($scope.faq);
+				console.log(response);
 			}
 		}, function errorCallback(response) {
+			console.log("error");
 		    console.log(response);
 		});
 	};
