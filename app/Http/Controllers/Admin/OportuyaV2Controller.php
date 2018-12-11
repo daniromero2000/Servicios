@@ -123,7 +123,7 @@ class OportuyaV2Controller extends Controller
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
 					'SUC' => ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999,
-					'CREACION' => date("Y-m-d")
+					'CREACION' => date("Y-m-d H:i:s")
 				];
 
 
