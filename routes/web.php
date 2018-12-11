@@ -259,3 +259,15 @@ Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function
         return view('faqs.admin');
     });
 });
+
+Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+
+	Route::get("/",function(){
+		return view('faqs.indexAngular');
+	})->name('preguntasFrecuentes');
+
+    Route::get('/admin', function(){
+        return view('faqs.admin');
+    });
+});
+

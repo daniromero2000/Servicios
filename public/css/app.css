@@ -3721,6 +3721,39 @@ p.wantToSecondTex{
 	.busTourButton p a{
 		width: 100%;
 	}
+}
 
+.cardFQA{
+    margin: 10px;
+}
 
+.card-headerFQA{
+    background: white;
+}
+
+.btn-FAQ{
+  background-color: white !important;
+  white-space: normal;
+  width: 100%;
+}
+.btn-FAQ:focus{
+  box-shadow: unset;
+}
+.titelFAQ{
+  margin-top: 30px; 
+}
+.downFAQ{
+    padding: 5px;
+    font-size: 20px;
+    position: absolute;
+    right: 0px;
+}
+.rowFAQ{
+	position: relative;
+}
+
+.h5FAQ{
+
+	width:90%;
+    text-align:left;
 }

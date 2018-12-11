@@ -2,62 +2,10 @@
  
 @section('content')
 
-<style>
-    .card{
-        margin: 10px;
-    }
-
-    .create {
-        margin: auto;
-    }
-
-    .create button {
-       
-        margin: 10px 15px ;
-    }
-    .card-header{
-        background: white;
-    }
-    .ulFAQ{
-        padding: 0px;
-        list-style: none;
-        float: right;
-        
-    }
-    .ulFAQ li{
-        display: inline-block;
-    }
-    .col-faq{
-        padding: 0px !important;
-    }
-    .col-sm-2 a {
-        padding: 3px 6px;
-    }
-    .textareaReadOnly{
-        background-color: white !important; 
-    }
-    .btn-FAQ{
-      background-color: white !important;
-      white-space: normal;
-    }
-    .btn-FAQ:focus{
-      box-shadow: unset;
-    }
-    .titelFAQ{
-      margin-top: 30px; 
-    }
-    .downFAQ{
-        padding: 5px;
-        font-size: 20px;
-    }
-    
-</style>
-
+    <link rel="stylesheet" >
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
       <div class="container">
-        
 
-      
-    
         @if (Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ Session::get('success') }}</p>
@@ -68,21 +16,18 @@
 
         @php
             $show=true;
-            $s='show';
         @endphp
     <div id="accordion">
-        @foreach($preguntas as $pregunta)
+        @foreach($preguntas as $key => $pregunta)
         
-          <div class="card">
-            <div class="card-header" id="heading{{$pregunta->id}}">
-              <h5 class="mb-0">
-                <button class="btn btn-default ourStores-titleStore btn-FAQ" data-toggle="collapse" data-target="#collapse{{$pregunta->id}}" aria-expanded="false" aria-controls="collapse{{$pregunta->id}}">
+          <div class="card cardFQA">
+            <div class="card-header card-headerFQA" id="heading{{$pregunta->id}}">
+                <button class="btn btn-default ourStores-titleStore btn-FAQ cardItem{{$key}}" data-toggle="collapse" data-target="#collapse{{$pregunta->id}}" aria-expanded="false" aria-controls="collapse{{$pregunta->id}}">
                     <div class="row rowFAQ">
-                      <h5 >{{$pregunta->question}}</h5>
-                      <i class="fas fa-angle-down downFAQ"></i> 
+                      <h5 class="h5FAQ">{{$pregunta->question}}</h5>
+                      <i class="fas fa-angle-down downFAQ" name="collapse{{$pregunta->id}}"></i> 
                     </div>
                 </button>
-              </h5>
             </div>
 
             <div id="collapse{{$pregunta->id}}" class="collapse @if($show) @php echo 'show'; $show=false @endphp @endif" aria-labelledby="heading{{$pregunta->id}}" data-parent="#accordion">
@@ -94,7 +39,70 @@
         
         @endforeach
         </div>
-        
-        
-        </div>      
+        </div> 
+        <script>
+            //document.getElementByClassName('show').style.color = "red";
+            $( document ).ready(function() {
+                
+                var itemsArray=[];
+
+                $('.cardFQA .card-headerFQA .btn-FAQ').each(function(index){
+                    itemsArray.push(this);
+                     
+                });
+
+                var clicksArray=[];
+
+                var i=0;
+
+                for(i;i<itemsArray.length;i++){
+                    clicksArray.push('click'+i);
+
+                }
+
+                var obj = {};
+                var j=0;
+                for(j;j<itemsArray.length;j++){
+                    if(j==0){
+                        obj[clicksArray[j]]=1;
+                        $(itemsArray[j]).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+                    }
+                    else{
+                        obj[clicksArray[j]]=0;    
+                    } 
+                }
+
+                function toggle (index) {
+    
+                    var down = true;
+                    if (obj[clicksArray[index]]!=0) {
+                        down=false;
+                    }
+
+                    for(j=0;j<itemsArray.length;j++){
+                         obj[clicksArray[j]]=0;
+                        $(itemsArray[j]).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+                    }
+
+                    if (down){
+                        obj[clicksArray[index]]=1;
+                        $(itemsArray[index]).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+                    }
+                }
+
+                 $('.cardFQA .card-headerFQA .btn-FAQ').each(function(index){
+                    
+                    $(this).click(function(){
+                    
+                    toggle(index);
+
+                    });
+                 });
+                });
+
+                
+
+       
+        </script>
+
 @stop
