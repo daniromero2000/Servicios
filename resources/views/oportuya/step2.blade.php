@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 2</strong> > (Información Personal)</span>
 			</div>
 		</div>
 		<div class="row resetRow">
