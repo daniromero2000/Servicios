@@ -24,9 +24,6 @@
 	</head>
 	</head>
 	<body>
-		<div id="headerSteps" class="text-center">
-			<h2 class="titleHeaderSteps">Solicitud de crédito</h2>
-		</div>
 		<div id="container">
 			@yield('content')
 		</div>
