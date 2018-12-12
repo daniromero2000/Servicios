@@ -77,6 +77,7 @@
                                     <option value="community">Community</option>
                                     <option value="libranza">Libranza</option>
                                     <option value="fabrica">Fábrica de crédito</option>
+                                    <option value="cruzado">Jefe de producto cruzado</option>
                                 </select>
                                
 

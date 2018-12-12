@@ -13,7 +13,7 @@ class faqsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('indexPublic');
+        $this->middleware('auth')->except('indexPublic');// se exeptua ya que no 
     }
     /**
      * Display a listing of the resource.
