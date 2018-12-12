@@ -92,7 +92,7 @@
 						<label for="housingTime">Antigüedad en la Vivienda (Meses)</label>
 						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" required="" />
 					</div>
-					<div class="col-sm-12 col-md-4 form-group">
+					<div class="col-sm-12 col-md-4 form-group" ng-hide="leadInfo.housingType == 'PROPIA'">
 						<label for="housingOwner">Propietario de la Vivienda</label>
 						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" />
 					</div>
