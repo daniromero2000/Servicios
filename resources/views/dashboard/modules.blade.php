@@ -17,7 +17,11 @@
             @elseif($currentUser->idProfile == 5)
 
                 @include('profiles.fabricaUser')
-                
+
+            @elseif($currentUser->idProfile == 6)
+
+                @include('profiles.cruzado')
+
             @else
 
                 @include('profiles.communityUser')

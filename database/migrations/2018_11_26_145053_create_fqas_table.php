@@ -6,6 +6,17 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateFqasTable extends Migration
 {
+
+    /**
+    **Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción:
+    **Fecha: 12/12/2018
+     * 
+     **/
+
     /**
      * Run the migrations.
      *

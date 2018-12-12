@@ -1,17 +1,23 @@
+	/**
+     /Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: controlador para la administracion de preguntas frecuentes.
+    **Fecha: 12/12/2018
+     **/
 app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.q = {
 		'q': '',
 		'page': 30,
 		'actual':1
-	};
-	$scope.cargando = true;
-	$scope.filtros = false;
-	$scope.faq = {};
-	$scope.idFaq = '';
-	$scope.faqCrud = {};
-	$scope.faqs = [];
+	};//object for index and filter 
+	$scope.cargando = true;//variable for loading effect
+	$scope.faq = {};//scope for storage a new faq
+	$scope.faqCrud = {};//scope for storage a faq for view, update or delete forms
+	$scope.faqs = [];//array of faqs retuned by server 
 
-	
+	// query of faqs index and with filter 
 	$scope.getFaqs = function(){
 		$scope.cargando = true;
 		$http({
@@ -31,7 +37,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 		});
 	};
-
+	//reset the getFaqs variables 
 	$scope.search = function(){
 		$scope.q.initFrom = 0;
 		$scope.faqs = [];

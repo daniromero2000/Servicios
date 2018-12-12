@@ -1,5 +1,13 @@
+    <!--
+    **Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: view for FAQS CRUD
+    **Fecha: 12/12/2018
+     -->
 @extends('layouts.app')
- 
+@section('title', 'Preguntas Frecuentes')
 @section('content')
 
     <link rel="stylesheet" >

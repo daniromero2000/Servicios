@@ -1,3 +1,12 @@
+    <!--
+    **Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: view for FAQS CRUD
+    **Fecha: 12/12/2018
+     -->
+
 <div class="row resetRow">
 
     <div class="col-sm-12 col-md-4">

@@ -1,5 +1,15 @@
 <?php
 
+    /**
+    **Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: model for FAQS
+    **Fecha: 12/12/2018
+     **/
+
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;

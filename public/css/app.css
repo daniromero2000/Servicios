@@ -3723,6 +3723,13 @@ p.wantToSecondTex{
 	}
 }
 
+	/**
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
+
 .cardFQA{
     margin: 10px;
 }
@@ -3756,4 +3763,19 @@ p.wantToSecondTex{
 
 	width:90%;
     text-align:left;
+}
+  /**
+    **Caso de Uso: Administrador usuarios
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
+.cardUser{
+	margin: 10px;
+}
+.hederUser {
+	text-align: center;
+}
+.iconUser {
+	font-size: 70px;
 }

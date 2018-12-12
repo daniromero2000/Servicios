@@ -16,12 +16,25 @@ class faqsController extends Controller
         $this->middleware('auth')->except('indexPublic');// se exeptua ya que no 
     }
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the resource and filter by question.
+     /Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: controlador REST para la administracion de preguntas frecuentes.
+    ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
+    **Fecha: 12/12/2018
      * @return \Illuminate\Http\Response
      */
+    
+    /**
+     * Display a listing of the resource.
+     *
+     */
+
     public function index(Request $request)
     {
+        //consulta
         $faqs = DB::table('faqs')
                 ->select('question','answer','id')
                 ->where('question','LIKE','%' . $request->q . '%')
@@ -29,6 +42,7 @@ class faqsController extends Controller
                 ->skip($request->page*($request->actual-1))
                 ->take($request->page)
                 ->get();
+        //respuesta en json
         return response()->json($faqs);
     }
 
@@ -39,7 +53,9 @@ class faqsController extends Controller
 
     public function indexPublic()
     {
+        //consulta
         $faqs = DB::table('faqs')->select('id','question','answer')->latest()->get();
+        //respuesta en json
         return view('faqs.indexPublic', ['preguntas' => $faqs]);
     }
 
@@ -61,12 +77,14 @@ class faqsController extends Controller
      */
     public function store(Request $request)
     {
+        //consulta
         $faqs = new Faq;
         $faqs->question = $request->get('question');
         $faqs->answer = $request->get('answer');
         $faqs->user_id = Auth::id();
         
         $faqs->save();
+        //respueta en json
         return response()->json([true]);
     }
 
@@ -102,10 +120,12 @@ class faqsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //consulta
         $faq = Faq::find($id);
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->save();
+        //respuesta en json
         return response()->json([true]);
     }
 
@@ -117,8 +137,10 @@ class faqsController extends Controller
      */
     public function destroy($id)
     {
+        //consulta
         $faq=Faq::findOrfail($id);
         $faq->delete();
+        //respuesta en json
         return response()->json([true]);
     }
 

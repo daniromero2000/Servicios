@@ -1,3 +1,11 @@
+    <!--
+    **Proyecto: SERVISIOS FINANCIEROS
+    **Caso de Uso: MODULO FAQS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: view for FAQS CRUD
+    **Fecha: 12/12/2018
+     -->
 @extends('layouts.app')
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
