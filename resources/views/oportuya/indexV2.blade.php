@@ -375,9 +375,15 @@
 				<img src="{{asset('images/iconFlotante.png')}}">	
 			</div>
 			<div class="col-8">
-				<span>
-				¡Te gustaría saber</span><span> por qué pedimos </span><span>tus datos!
-			</span>	
+				<p>
+					<span>¡Te gustaría saber</span>
+				</p>
+				<p>
+					<span> por qué pedimos </span>
+				</p>
+				<p>
+					<span>tus datos!</span>	
+				</p>
 			</div>
 			<div class="col-12">
 				<a href="">Click aquí</a>	
