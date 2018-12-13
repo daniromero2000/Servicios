@@ -9,7 +9,7 @@ class ChangeNameFqasToFaqs extends Migration
 
     /**
      * Display a listing of the resource and filter by question.
-     /Proyecto: SERVISIOS FINANCIEROS
+     /Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: MODULO FAQS
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
