@@ -142,7 +142,7 @@
 
 					<div class="header-containerItemsResponsive header-item1" id="navbarNavAltMarkup">
 						<div class="navbar-nav header-menu">
-							<a class="nav-item nav-link header-item header-item1" href="/oportuya">
+							<a class="nav-item nav-link header-item header-item1" href="{{url('oportuya')}}">
 								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
