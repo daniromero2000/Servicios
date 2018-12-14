@@ -269,6 +269,7 @@ a:hover, a:active, a:focus, a:visited{
 .oportuyaSliderContent p{
 	text-align: center;
 	line-height: 100%;
+	color: #FFF !important;
 }
 
 .textTitleSliderPink{
@@ -291,9 +292,9 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaSliderButton p a{
-	font-weight: 600;
-	background-color: #F1C53B;
-    color: #000;
+	font-weight: 800;
+	background-color: #FFF;
+    color: #382989;
     padding: 12px 50px;
     border-radius: 50px;
     font-size: 1.2em;
