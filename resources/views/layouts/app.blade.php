@@ -109,7 +109,7 @@
 				<a class="preHeader-item  borderLeftItems" href="/Nuestras-tiendas">Oficinas</a>
 				<a class="preHeader-item  borderLeftItems" href="#">01 8000 11 77 87 o (1) 484 2122 en Bogotá</a>
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
-				@auth
+				@if(Auth::guard('web')->check())
 					<div class="logoutButton">
 						 <a class="dropdown-item" href="{{ route('logout') }}" 
 							onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -119,7 +119,26 @@
 							@csrf
 						</form>                                
 					</div>
-				@endauth
+					
+					@elseif(Auth::guard('assessor')->check())
+
+						<div class="logoutButton">
+							 <a class="dropdown-item" href="{{ route('assessor.logout') }}" 
+								onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+										{{ __('Logout') }}
+							</a>
+							<form id="logout-form" action="{{ route('assessor.logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>                                
+						</div>
+
+					@else
+
+						<div class="logoutButton">
+							<a href="assessor/login">Asesores</a>
+							<p>{{Auth::user()}}</p>
+						</div>
+				@endif
 			</div>
 		</div>
 
