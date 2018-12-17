@@ -3783,3 +3783,19 @@ p.wantToSecondTex{
 .iconUser {
 	font-size: 70px;
 }
+
+
+	/**
+    **Caso de Uso: Catalogo
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 13/12/2018
+     **/
+.rowBrands{
+	margin: 0px;
+	width: 100%;
+}
+
+.rowBrands div {
+	padding:5px;
+} 
