@@ -287,7 +287,7 @@ class OportuyaV2Controller extends Controller
 			$sucursal=9999;
 			$estado='CANAL_DIGITAL';
 			$ftp=0;
-			$state='A';
+			$state='X';
 			$granTotal=0;
 
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
