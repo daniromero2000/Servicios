@@ -741,7 +741,7 @@ a:hover, a:active, a:focus, a:visited{
 /*button fixed*/
 
 .fixedButton{
-	display: block;
+	display: none;
 	background-image: url('../images/fondoFlotante.png');	
 	position: fixed;
 	background-size: 100% 100%;
