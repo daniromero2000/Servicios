@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
+use App\Application;
 use App\Lead;
 use App\LeadInfo;
 use App\OportuyaV2;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class OportuyaV2Controller extends Controller
 {
@@ -45,17 +47,24 @@ class OportuyaV2Controller extends Controller
 	public function store(Request $request)
 	{
 
-		if(($request->get('step'))==1){	
+
+		
+		//get step 1 request from sended by form
+
+		if(($request->get('step'))==1){
+
+			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
 			$identificationNumber = $request->get('identificationNumber');
 			$response = false;
-
+			$assessorCode=($request->get('assessor') !== NULL)?$request->get('assessor'):NULL;
 			$dataLead=[
 				'typeDocument'=> $request->get('typeDocument'),
 				'identificationNumber'=> $identificationNumber,
+				'assessor' => $assessorCode,
 				'name'=> $request->get('name'),
 				'lastName'=> $request->get('lastName'),
 				'email'=> $request->get('email'),
@@ -68,23 +77,24 @@ class OportuyaV2Controller extends Controller
 				'typeService' =>  $request->get('typeService')
 			];
 
-
+			
+			//verify if a customer exist before save a lead , then save data into leads table.
 			$createLead = $lead->updateOrCreate(['identificationNumber'=>$identificationNumber],$dataLead)->save();
 
+			//get id throught identification number from leads table 
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
 			$idLead= $idLead[0]->id;
 
 			$lead=Lead::findOrFail($idLead);
-
 			$lead->occupation = $request->get('occupation');
 			$lead->save();
 
+			//if updateOrCreate method fails save data without verify its existent, then save data into leads table
 			if($createLead != true){
 
 				$identificationNumber = $request->get('identificationNumber');
 				$lead->typeDocument=$request->get('typeDocument');
 				$lead->identificationNumber=$identificationNumber;	
-
 				$lead->name=$request->get('name');
 				$lead->lastName=$request->get('lastName');
 				$lead->email=$request->get('email');
@@ -95,19 +105,20 @@ class OportuyaV2Controller extends Controller
 				$lead->city= $request->get('city');
 				$lead->typeProduct = $request->get('typeProduct');
 				$lead->typeService = $request->get('typeService');
-
 				$response = $lead->save();
+
 			}
 
 
+			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
+
 			if(($response == true) || ($createLead == true)){
 
+				// $flag =1 means  data into leads table was saved correctly
 				$flag=1;
 				
 				$oportudataLead= new OportuyaV2;
-
 				$oportudataLead->setConnection('oportudata');
-
 				$dataoportudata=[
 					'TIPO_DOC' => $request->get('typeDocument'),
 					'CEDULA' => $identificationNumber,
@@ -126,11 +137,11 @@ class OportuyaV2Controller extends Controller
 					'CREACION' => date("Y-m-d H:i:s")
 				];
 
-
+				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
 
+				//if updateOrCreate method fails save data without verify its existent, then save data into CLIENTES_FAB table
 				if($createOportudaLead != true){
-
 
 					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
 					$oportudataLead->CEDULA = $identificationNumber;
@@ -144,51 +155,41 @@ class OportuyaV2Controller extends Controller
 
 				}
 
-
 				if(($response == true) || ($createOportudaLead== true)){
+					// $flag =2 means  data into leads and CLIENTES_FAB table was saved correctly
 					$flag=2;
 				}
-
-				$oportudataLead->setConnection('mysql');
-
 
 			}
 
 			
 
 			if($flag==2){
+				
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-
+				if($assessorCode != NULL){
+					return redirect()->route('step2Assessor', ['numIdentification' => $identificationNumberEncrypt]);
+				}
 				return redirect()->route('step2Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
 			}elseif ($flag==1) {
-
 				return response()->json(['servicios'=>$response]);
-
 			}else{
-
 				return response()->json([true]);
-
 			}		
-
-			
 		}
 
 
+		//get step 2 from request form
+
 		if($request->get('step')==2){
 
+
 			$flag= 0;
-
 			$identificationNumber = $request->get('identificationNumber');
-			
-
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]); 
 			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead[0]->id]);
-			if($idLeadInfo){
-				$leadInfo=LeadInfo::findOrFail($idLeadInfo[0]->id);
-			}else{
-				$leadInfo = new LeadInfo;
-			}
 
+			$leadInfo=$idLeadInfo?LeadInfo::findOrFail($idLeadInfo[0]->id):$leadInfo = new LeadInfo;
 
 			$leadInfo->idLead= $idLead[0]->id;
 			$leadInfo->addres = $request->get('addres');
@@ -278,6 +279,16 @@ class OportuyaV2Controller extends Controller
 			$flag=0;
 
 			$identificationNumber = $request->get('identificationNumber');
+			$selectAssessor=DB::table('leads')->selectRaw('assessor, created_at as dateLead')
+					->whereRaw('identificationNumber = ?',$identificationNumber)->get();
+
+			$codeAssessor=$selectAssessor[0]->assessor;
+			$dateLead=$selectAssessor[0]->dateLead;
+			$sucursal=9999;
+			$estado='CANAL_DIGITAL';
+			$ftp=0;
+			$state='A';
+			$granTotal=0;
 
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
 			$idLead= $idLead[0]->id;
@@ -338,9 +349,41 @@ class OportuyaV2Controller extends Controller
 					'BANCOP' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA'
 				];
 
+				
+
 				$identificationNumber = (string)$identificationNumber;
 
 				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
+
+				$solic_fab= new Application;
+
+				$solic_fab->setConnection('oportudata');
+
+				$soliData=[
+					'CLIENTE'=>$identificationNumber,
+					'CODASESOR'=>$codeAssessor,
+					'FECHASOL'=>date("Y-m-d H:i:s",strtotime($dateLead)),
+					'SUCURSAL'=>$sucursal,
+					'ESTADO'=>$estado,
+					'FTP'=>$ftp,
+					'STATE'=>$state
+				];
+
+				$solic_fab->CLIENTE=$identificationNumber;
+				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->FECHASOL=date("Y-m-d H:i:s",strtotime($dateLead));
+				$solic_fab->SUCURSAL=$sucursal;
+				$solic_fab->ESTADO=$estado;
+				$solic_fab->FTP=$ftp;
+				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->STATE=$state;
+				$solic_fab->GRAN_TOTAL=$granTotal;
+
+
+				$solic_fab->save();
+
+				//$createOportudaLead = $solic_fab->updateOrCreate(['CLIENTE'=>$identificationNumber],$soliData)->save();
+
 
 				return response()->json([true]);
 			}
@@ -393,7 +436,13 @@ class OportuyaV2Controller extends Controller
 
 	}
 
+	/*public function getDataConsultation($identificationNumber){
 
+		$dataLead=DB::table('leads')->selectRaw('identificationNumber as ced, assessor, created_at as dateLead')
+					->whereRaw('identificationNumber = ?',$identificationNumber)->get();
+
+		return $dataLead;
+	}*/
 
 	public function getDataStep3($identificationNumber){
 	      $data = [];

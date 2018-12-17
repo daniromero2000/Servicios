@@ -83,4 +83,36 @@ class assessorsController extends Controller
         //return $cities;
         return view('assessors.oportuya.step1', ['digitalAnalyst' => $digitalAnalyst[0], 'cities' => array_sort($cities, 'label', SORT_DESC)]);
     }
+
+    public function step2($string){
+        $identificactionNumber = $this->decrypt($string);
+
+        return view('assessors.oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
+    }
+
+    public function step3($string){
+        $identificactionNumber = $this->decrypt($string);
+
+        return view('assessors.oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
+    }
+
+    public function encrypt($string) {
+        $string = utf8_encode($string);
+        $control1 = "*]wy";
+        $control2 = "3/~";
+        $string = $control1.$string.$control2;
+        $string = base64_encode($string);
+
+        return $string;
+    } 
+
+    public function decrypt($string){
+        $string = $string; 
+        $string = base64_decode($string); 
+        $controls = ['*]wy', '3/~']; 
+        $replaces = ['', ''];
+        $string = str_replace($controls, $replaces, $string); 
+
+        return $string;
+    }
 }
