@@ -19,7 +19,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 	// query of faqs index and with filter 
 	$scope.getFaqs = function(){
-		$scope.cargando = true;
+		showLoader();
 		$http({
 		  method: 'GET',
 		  url: '/faqs?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual
@@ -29,18 +29,18 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				angular.forEach(response.data, function(value) {
 					$scope.faqs.push(value);
 				});
-				$scope.cargando = false;
-			}
-
-				
+				hideLoader();
+			}	
 		}, function errorCallback(response) {
-
+			hideLoader();
 		});
 	};
 	//reset the getFaqs variables 
 	$scope.search = function(){
 		$scope.q.initFrom = 0;
 		$scope.faqs = [];
+		$scope.q.actual = 1;
+		$scope.q.page = 30;
 		$scope.getFaqs();
 	};
 
@@ -109,7 +109,6 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 		});
 	};
-
 
 	$scope.getFaqs();
 

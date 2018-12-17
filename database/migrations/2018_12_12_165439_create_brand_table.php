@@ -26,9 +26,12 @@ class CreateBrandTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->string('name',70);
+            $table->string('name',70)->unique();
+            $table->integer('id_user')->unsigned();
             $table->softDeletes(); //Colum for soft delete
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id')->on('users');
         });
     }
 

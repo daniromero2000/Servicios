@@ -117,7 +117,7 @@ Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('communityleads','Admin\CommunityController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
-Route::post('addFaqs','Admin\FaqsController@addFaq');
+Route::resource('brands','Admin\BrandsController');
 
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
@@ -260,14 +260,16 @@ Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function
     });
 });
 
-Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+
+
+Route::group(['prefix'=>'/Products/'],function(){
 
 	Route::get("/",function(){
-		return view('faqs.indexAngular');
-	})->name('preguntasFrecuentes');
+		return view('products.index');
+	})->name('products');
 
     Route::get('/admin', function(){
-        return view('faqs.admin');
+        return view('products.admin');
     });
 });
 
