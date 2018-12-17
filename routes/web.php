@@ -86,7 +86,7 @@ if ($options['verify'] ?? false) {
 
 Route::group(['prefix'=>'/assessor/'],function(){
 
-	Route::get('/dashboard','Admin\assessorsController@index');
+	Route::get('/dashboard','Admin\assessorsController@index')->name('assessors.dashboard');
 	Route::get('/login','Assessor\LoginController@showLoginForm')->name('assessors.login');
 	Route::post('/dashboard','Assessor\LoginController@login')->name('assessors.access');
 	Route::post('/password/email','Assessor\ForgotPasswordController@sendResetLinkEmail')->name('assessors.password.email');
@@ -95,6 +95,13 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 	Route::get('/step1', 'Admin\assessorsController@step1')->name('step1Assessor')->middleware(['auth:assessor']);
+	Route::get('/step2/{numIdentification}', 'Admin\assessorsController@step2')->name('step2Assessor');
+	Route::get('/step3/{numIdentification}', 'Admin\assessorsController@step3')->name('step3Assessor');
+	Route::get('/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
+	Route::get('/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
+	Route::get('/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
+	Route::get('/getData/{identificationNumber}','Admin\OportuyaV2Controller@getDataConsultation');
+	Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
     
 });
 
