@@ -229,7 +229,7 @@
 			<div class=" row oportuyaContentHeader">
 				<p class="textOportuyaHeader oportuyaText">
 					<b class="efectiveText">
-						Te damos aprobación en línea
+						Solicita tu crédito en línea
 					</b>
 					
 					
@@ -240,7 +240,7 @@
 				<div class="col-sm-9 col-md-9 oportuyaTextResponsive">
 					<p class="textOportuyaHeader">
 						<b class="efectiveText">
-							Te damos aprobación en línea
+							Solicita tu crédito en línea
 						</b>
 										
 					</p>
