@@ -19,15 +19,12 @@
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 3</strong></span>
 			</div>
 		</div>
 		<div class="row resetRow">
-			<div class="col-12 step2-containTitle">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ dataLead.name + ' ' + dataLead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
-				<p class="text-center step2-textAnalista">Cuéntanos más sobre tu información laboral</p>
-			</div>
-			<div class="col-12">
+		
+			<div class="col-12 assessorProgress">
 				<div class="step3-containerForm">
 					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
 					<div class="progreso">

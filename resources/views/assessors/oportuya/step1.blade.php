@@ -15,16 +15,11 @@
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img src="/{{ $digitalAnalyst['img'] }}" alt="{{ $digitalAnalyst['name'] }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Cuéntanos Sobre Ti)</span>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong></span>
 			</div>
 		</div>
 		<div class="row resetRow">
-			<div class="col-12 step2-containTitle">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy {{ $digitalAnalyst['name'] }} tu analista digital</h2>
-				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
-				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu tarjeta Oportuya</h3>
-			</div>
-			<div class="col-12">
+			<div class="col-12 assessorProgress">
 				<div class="step3-containerForm">
 					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress" />
 					<div class="progreso">
@@ -32,7 +27,7 @@
 						<div class="puntos punto_uno listo">
 						</div>
 						<span></span>
-						<label>Cuentanos sobre ti</label>
+						<label>Datos personales</label>
 						<div class="puntos punto_dos">
 						</div>
 						<span></span>
@@ -54,7 +49,7 @@
 			<div class="row resetRow">
 				<div class="forms-descStep">
 					<strong>Información básica</strong><br>
-					<span class="forms-descText">Ingresa tus datos personales</span>
+					<span class="forms-descText"><DATA></DATA>atos personales</span>
 					<img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg" />
 					<span class="forms-descStepNum">1</span>
 				</div>

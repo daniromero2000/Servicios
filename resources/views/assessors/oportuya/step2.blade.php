@@ -19,15 +19,12 @@
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Información Personal)</span>
-			</div>
+				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 2</strong> > (Información Personal)</span>
+			</div>	
 		</div>
 		<div class="row resetRow">
-			<div class="col-12 step2-containTitle">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
-				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
-			</div>
-			<div class="col-12">
+			
+			<div class="col-12 assessorProgress">
 				<div class="step3-containerForm">
 					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
 					<div class="progreso">
@@ -57,7 +54,7 @@
 			<div class="row resetRow">
 				<div class="forms-descStep">
 					<strong>Cuéntanos sobre ti</strong><br>
-					<span class="forms-descText">Ingresa tus datos personales</span>
+					<span class="forms-descText">Información personal</span>
 					<img src="{{ asset('images/datosPersonales2.png') }}" class="img-fluid forms-descImg" />
 					<span class="forms-descStepNum">2</span>
 				</div>
