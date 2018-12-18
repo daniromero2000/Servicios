@@ -93,7 +93,7 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/password/reset','Assessor\ForgotPasswordController@showLinkRequestForm')->name('assessors.password.request');
 	Route::post('/password/reset','Assessor\ResetPasswordController@reset');
 	Route::get('/password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
-	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+	Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('assessor.logout');
 	Route::get('/step1', 'Admin\assessorsController@step1')->name('step1Assessor')->middleware(['auth:assessor']);
 	Route::get('/step2/{numIdentification}', 'Admin\assessorsController@step2')->name('step2Assessor');
 	Route::get('/step3/{numIdentification}', 'Admin\assessorsController@step3')->name('step3Assessor');
