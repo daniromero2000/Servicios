@@ -111,7 +111,7 @@ angular.module('appAssessorStep3', ['moment-picker', 'ng-currency'])
 		  data: $scope.comment,
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				window.location="/OP_gracias_FRM";
+				window.location="/assessor/dashboard";
 			}
 		}, function errorCallback(response) {
 		    console.log(response);
