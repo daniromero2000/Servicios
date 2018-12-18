@@ -146,6 +146,40 @@ a:hover, a:active, a:focus, a:visited{
     height: 25px;
 }
 
+.assesorLogin a
+{
+	position: absolute;
+    right: 20px;
+    top: 11px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #1d84c3;
+}
+
+.assessorModule a{
+    background-color: #007bff;
+    color: #FFF;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.assessorModule p {
+	margin-top: 10%;
+}
+
+.assessorHeader{
+	margin-top: 30px;
+}
+
+.assessorProgress{
+	margin-top: 60px;
+}
+
+.assessorHeader h3{
+	width: 100%;
+}
+
 .activeMenu:after{
 	background: url(../images/menu-idintifier.png) no-repeat center center;
 	bottom: -35px;
