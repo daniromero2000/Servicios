@@ -2519,25 +2519,17 @@ p.wantToSecondTex{
 
 
 	.descriptionContentCard{
-
 		height: 3em;
-
 	}
 
 
 
 	.efectiveText{
-
 		font-size: 1.2em;
-
 	}
 
-	.viajesHeaderContent{
-
-	}
 
 	.viajesWhatsappButton a{
-
 		padding: 13px 19px;
 		font-size: 10px;
 	}
@@ -2557,10 +2549,8 @@ p.wantToSecondTex{
 		font-size: 4em;
 	}
 
-	.dialogThakPage p{
-
-		font-size: 1em;
-		font-size: 12px;
+	.dialogThakPage p{		
+		font-size: 1.3em;
 	}
 
 	.bestPricesImg img{
@@ -2573,9 +2563,7 @@ p.wantToSecondTex{
 	}
 
 	.conoce-TarjetaOportuya, .conoce-creditoMotos, .conoce-creditoLibranza, .conoce-seguros, .conoce-viajes{
-
 		width: 50%;
-
 	}
 
 
