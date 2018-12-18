@@ -135,7 +135,7 @@
 					@else
 
 						<div class="assesorLogin">
-							<a href="assessor/login">Acceso asesores</a>
+							<a href="assessor/login">Ingreso asesores</a>
 							<p>{{Auth::user()}}</p>
 						</div>
 				@endif
