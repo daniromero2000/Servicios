@@ -119,7 +119,7 @@
 							@csrf
 						</form>                                
 					</div>
-					
+
 					@elseif(Auth::guard('assessor')->check())
 
 						<div class="logoutButton">
@@ -134,8 +134,8 @@
 
 					@else
 
-						<div class="logoutButton">
-							<a href="assessor/login">Asesores</a>
+						<div class="assesorLogin">
+							<a href="assessor/login">Acceso asesores</a>
 							<p>{{Auth::user()}}</p>
 						</div>
 				@endif
