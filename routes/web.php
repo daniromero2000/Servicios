@@ -256,20 +256,34 @@ Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
     });
 });
 
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: FAQ's
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 13/12/2018
+     **/
+
 Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
 
 	Route::get("/",function(){
 		return view('faqs.indexAngular');
-	});
+	})->name("preguntasFrecuentes");
 
     Route::get('/admin', function(){
         return view('faqs.admin');
     });
 });
 
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 17/12/2018
+     **/
 
-
-Route::group(['prefix'=>'/Products/'],function(){
+Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
 
 	Route::get("/",function(){
 		return view('products.index');
@@ -279,4 +293,25 @@ Route::group(['prefix'=>'/Products/'],function(){
         return view('products.admin');
     });
 });
+
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 17/12/2018
+     **/
+
+
+Route::group(['prefix'=>'/Brands/','middleware' => 'auth'],function(){
+
+	Route::get("/",function(){
+		return view('brands.index');
+	})->name('brands');
+
+    Route::get('/admin', function(){
+        return view('brands.admin');
+    });
+});
+
 

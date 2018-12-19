@@ -21,16 +21,25 @@ use App\Brand;
 
 class BrandsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+          //consulta
         $brands = DB::table('brands')
                 ->select('name','id')
+                ->where('name','LIKE','%' . $request->q . '%')
                 ->orderBy('id', 'desc')
+                ->skip($request->page*($request->actual-1))
+                ->take($request->page)
                 ->get();
         //respuesta en json
         return response()->json($brands);
@@ -54,31 +63,24 @@ class BrandsController extends Controller
      suma(4,7);
      */
     public function store(Request $request){ 
-
-        try{
-
-            $exception = DB::transaction(function() use (Request $request->name){
-
-                $brands = new Brand;
-                $brands->name = $request->name;
-                $brands->id_user = Auth::id();
-                
-                $brands->save();
-
-            });
-
-            return response()->json([true]);
-                       
-        }catch(\Exception $e){
-
-            return response()->json($e->getMessage());
-        }
-
-    
-        //consulta
+        try {
+             //consulta
+            $brands = new Brand;
+            $brands->name = $request->name;
+            $brands->id_user = Auth::id();
+            
+            $brands->save();
         
-        //respueta en json
-        //return response()->json([true]);
+            return response()->json(true);
+
+        }
+        catch(\Exception $e) {
+            if ($e->getCode()=="23000"){
+                return response()->json($e->getCode());
+            }else{
+                return response()->json("indeterminate error");
+            }
+        }
     }
 
     /**
@@ -100,7 +102,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -112,7 +114,21 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+             //consulta
+            $brands =  Brand::find($id);
+            $brands->name = $request->name;        
+            $brands->save();
+        
+            return response()->json(true);
+        }
+        catch(\Exception $e) {
+            if ($e->getCode()=="23000"){
+                return response()->json($e->getCode());
+            }else{
+                return response()->json("indeterminate error");
+            }
+        }
     }
 
     /**
@@ -123,6 +139,10 @@ class BrandsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //consulta
+        $brands = Brand::findOrFail($id);
+        $brands->delete();
+        //respuesta en json
+        return response()->json([true]);
     }
 }
