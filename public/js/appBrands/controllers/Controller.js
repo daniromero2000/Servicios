@@ -11,7 +11,8 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.q = {
 		'q': '',
 		'page': 30,
-		'actual':1
+		'actual': 1,
+		'delete': false
 	};//object for index and filter 
 	$scope.brand = {}; //object for index brand
 	$scope.brands = []; //list of brands returned by server
@@ -27,7 +28,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		showLoader();
 		$http({
 		  method: 'GET',
-		  url: '/brands?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual
+		  url: '/brands?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
 		}).then(function successCallback(response) {
 			if(response != false){
 				$scope.q.initFrom += response.data.length;
@@ -102,7 +103,6 @@ app.controller('Controller', function($scope, $http, $rootScope){
 				}
 			}
 		}, function errorCallback(response) {
-			console.log(response);
 		});
 	};
 

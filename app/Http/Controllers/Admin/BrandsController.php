@@ -34,13 +34,25 @@ class BrandsController extends Controller
     public function index(Request $request)
     {
           //consulta
-        $brands = DB::table('brands')
-                ->select('name','id')
-                ->where('name','LIKE','%' . $request->q . '%')
-                ->orderBy('id', 'desc')
-                ->skip($request->page*($request->actual-1))
-                ->take($request->page)
-                ->get();
+        if($request->delete=="true"){
+            $brands = DB::table('brands')
+                    ->select('name','id')
+                    ->where('name','LIKE','%' . $request->q . '%')
+                    ->where('deleted_at', '<>' , null)
+                    ->orderBy('id', 'desc')
+                    ->skip($request->page*($request->actual-1))
+                    ->take($request->page)
+                    ->get();
+        }else{
+            $brands = DB::table('brands')
+                    ->select('name','id')
+                    ->where('name','LIKE','%' . $request->q . '%')
+                    ->whereNull("deleted_at")
+                    ->orderBy('id', 'desc')
+                    ->skip($request->page*($request->actual-1))
+                    ->take($request->page)
+                    ->get();
+        }
         //respuesta en json
         return response()->json($brands);
     }
