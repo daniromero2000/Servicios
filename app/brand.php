@@ -1,7 +1,7 @@
 <?php
 
     /**
-    **Proyecto: SERVISIOS FINANCIEROS
+    **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com

@@ -22,6 +22,10 @@
 
                 @include('profiles.cruzado')
 
+             @elseif($currentUser->idProfile == 7)
+
+                @include('profiles.marketing')
+
             @else
 
                 @include('profiles.communityUser')

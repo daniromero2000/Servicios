@@ -1,9 +1,9 @@
     <!--
-    **Proyecto: SERVISIOS FINANCIEROS
+    **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: MODULO FAQS
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: view for FAQS CRUD
+    **Descripción: view for digital profile
     **Fecha: 12/12/2018
      -->
 
