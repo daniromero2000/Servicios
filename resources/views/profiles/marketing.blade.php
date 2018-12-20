@@ -1,6 +1,6 @@
     <!--
     **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO MARKETING 
+    **Caso de Uso: MODULO CATALOGO 
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Descripción: view for marketing profile
@@ -14,7 +14,7 @@
 		    <h5 class="card-title hederUser">Gestión de Marcas</h5>
 		</div>
 	    <div class="card-body">
-			<a href="{{route('brands')}}"><span><i class="fab fa-bandcamp"></i></span></a>
+			<a href="{{route('brands')}}"><span><i class="fab fa-bandcamp iconUser"></i></span></a>
 	    </div>
 	  </div>
 
