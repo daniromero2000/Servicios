@@ -4,7 +4,7 @@
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Descripción: controlador para la administracion productos marcas y lineas.
-    **Fecha: 13/12/2018
+    **Fecha: 19/12/2018
      **/
 app.controller('Controller', function($scope, $http, $rootScope){
 
@@ -14,26 +14,25 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		'actual': 1,
 		'delete': false
 	};//object for index and filter 
-	$scope.brand = {}; //object for index brand
-	$scope.brands = []; //list of brands returned by server
-	$scope.alert = "";	//text in create brand alert
+	$scope.resource = {}; //object for index line
+	$scope.resources = []; //list of brands returned by server
+	$scope.alert = "";	//text in create alert text 
 
-	$scope.addBrand = function(){
-		$("#addBrandModal").modal("show");
-		$("#alertBrand").hide();
+	$scope.addResource= function(){
+		$("#addResourceModal").modal("show");
+		$("#alertResource").hide();
 	};
 
 	// query of faqs index and with filter 
-	$scope.getBrands = function(){
+	$scope.getResource = function(){
 		showLoader();
 		$http({
 		  method: 'GET',
-		  url: '/brands?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
+		  url: '/lines?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
 		}).then(function successCallback(response) {
 			if(response != false){
-				$scope.q.initFrom += response.data.length;
 				angular.forEach(response.data, function(value) {
-					$scope.brands.push(value);
+					$scope.resources.push(value);
 				});
 				hideLoader();
 			}	
@@ -43,62 +42,61 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	};
 
 	$scope.search = function(){
-		$scope.brand = {};
+		$scope.resource = {};
 		$scope.alert = "";
-		$scope.brands = [];
+		$scope.resources = [];
 		$scope.q.actual = 1;
 		$scope.q.page = 30;
-		$scope.getBrands();
+		$scope.getResource();
 	};
 
-	$scope.createBrand = function(){
+	$scope.createResource = function(){
 		$http({
 		  method: 'POST',
-		  url: 'brands',
-		  data: $scope.brand
+		  url: 'lines',
+		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				if(response.data=="23000"){
-					document.getElementById('p').innerHTML = "La marca  <b>" + $scope.brand.name + "</b>  ya esta registrada en la base de datos";
-					$("#alertBrand").show();
+					document.getElementById('p').innerHTML = "La Linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
+					$("#alertResource").show();
 				}else if (response.data==true) {
-					$scope.brand.name = "";
-					$("#addBrandModal").modal("hide");
+					$scope.resource.name = "";
+					$("#addResourceModal").modal("hide");
 					$scope.search();
-				}
-				
+				}	
 			}
 		}, function errorCallback(response) {
 		});
 	};
 
 
-	$scope.showDialog = function(brand){
+	$scope.showDialog = function(resource){
 		$("#Show").modal("show");
-		$scope.brand = brand;
+		$scope.resource = resource;
 	};
 	
 
-	$scope.showUpdateDialog = function(brand){
+	$scope.showUpdateDialog = function(resource){
 		$("#alertUpdate").hide();
 		$("#Update").modal("show");
-		$scope.brand = brand;
+		$scope.resource = resource;
 	};
 
-	$scope.UpdateBrand = function(){
+	$scope.UpdateResource = function(){
 		$http({
 		  method: 'PUT',
-		  url: 'brands/'+$scope.brand.id,
-		  data: $scope.brand
+		  url: 'lines/'+$scope.resource.id,
+		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				if(response.data=="23000"){
-					document.getElementById('update').innerHTML = "La marca  <b>" + $scope.brand.name + "</b>  ya esta registrada en la base de datos";
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
 					$("#alertUpdate").show();
 				}else if (response.data==true) {
-					$scope.brand.name = "";
+					$scope.resource.name = "";
 					$("#Update").modal("hide");
-					$scope.brand = {};
+					$scope.resource = {};
 					$scope.search();
 				}
 			}
@@ -106,15 +104,15 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.showDialogDelete = function(brand){
+	$scope.showDialogDelete = function(resource){
 		$("#Delete").modal("show");
-		$scope.brand = brand;
+		$scope.resource = resource;
 	};
 
-	$scope.deleteBrand=function(idBrand){
+	$scope.deleteResource = function(idResource){
 		$http({
 		  method: 'DELETE',
-		  url: 'brands/' + idBrand
+		  url: 'lines/' + idResource
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");
@@ -125,6 +123,6 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		});
 	}
 
-	$scope.getBrands();
+	$scope.getResource();
 
 });

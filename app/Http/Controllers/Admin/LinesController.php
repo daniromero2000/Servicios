@@ -5,9 +5,9 @@
     **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador REST para la administracion de marcas.
+    **Descripción: controlador REST para la administracion de  lineas.
     ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
-    **Fecha: 13/12/2018
+    **Fecha: 19/12/2018
      **/
 
 namespace App\Http\Controllers\Admin;
@@ -16,12 +16,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Brand;
+use App\Line;
 
 
-class BrandsController extends Controller
+class LinesController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -33,9 +32,10 @@ class BrandsController extends Controller
      */
     public function index(Request $request)
     {
+        
           //consulta
         if($request->delete=="true"){
-            $brands = DB::table('brands')
+            $lines = DB::table('lines')
                     ->select('name','id')
                     ->where('name','LIKE','%' . $request->q . '%')
                     ->where('deleted_at', '<>' , null)
@@ -44,7 +44,7 @@ class BrandsController extends Controller
                     ->take($request->page)
                     ->get();
         }else{
-            $brands = DB::table('brands')
+            $lines = DB::table('lines')
                     ->select('name','id')
                     ->where('name','LIKE','%' . $request->q . '%')
                     ->whereNull("deleted_at")
@@ -54,7 +54,7 @@ class BrandsController extends Controller
                     ->get();
         }
         //respuesta en json
-        return response()->json($brands);
+        return response()->json($lines);
     }
 
     /**
@@ -72,17 +72,14 @@ class BrandsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     suma(4,7);
      */
-    public function store(Request $request){ 
+    public function store(Request $request)
+    {
         try {
              //consulta
-            $brands = new Brand;
-            $brands->name = $request->name;
-            $brands->id_user = Auth::id();
-            
-            $brands->save();
-        
+            $lines = new Line;
+            $lines->name = $request->name;
+            $lines->save();
             return response()->json(true);
 
         }
@@ -90,7 +87,7 @@ class BrandsController extends Controller
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
             }else{
-                return response()->json("indeterminate error");
+                return response()->json($e->getMessage());
             }
         }
     }
@@ -114,7 +111,7 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -128,17 +125,17 @@ class BrandsController extends Controller
     {
         try {
              //consulta
-            $brands =  Brand::find($id);
-            $brands->name = $request->name;        
-            $brands->save();
-        
+            $lines = Line::find($id);
+            $lines->name = $request->name;
+            $lines->save();
             return response()->json(true);
+
         }
         catch(\Exception $e) {
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
             }else{
-                return response()->json("indeterminate error");
+                return response()->json($e->getMessage());
             }
         }
     }
@@ -152,8 +149,8 @@ class BrandsController extends Controller
     public function destroy($id)
     {
         //consulta
-        $brands = Brand::findOrFail($id);
-        $brands->delete();
+        $lines = Line::findOrFail($id);
+        $lines->delete();
         //respuesta en json
         return response()->json([true]);
     }

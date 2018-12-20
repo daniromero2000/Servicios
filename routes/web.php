@@ -125,6 +125,7 @@ Route::resource('communityleads','Admin\CommunityController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
 Route::resource('brands','Admin\BrandsController');
+Route::resource('lines','Admin\LinesController');
 
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
@@ -313,5 +314,26 @@ Route::group(['prefix'=>'/Brands/','middleware' => 'auth'],function(){
         return view('brands.admin');
     });
 });
+
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 19/12/2018
+     **/
+
+
+Route::group(['prefix'=>'/Lines/','middleware' => 'auth'],function(){
+
+	Route::get("/",function(){
+		return view('lines.index');
+	})->name('lines');
+
+    Route::get('/admin', function(){
+        return view('lines.admin');
+    });
+});
+
 
 
