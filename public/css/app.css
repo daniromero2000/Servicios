@@ -3828,3 +3828,9 @@ p.wantToSecondTex{
 .rowBrands div {
 	padding:5px;
 }
+
+.headerAdmin {
+	text-align: center;
+	margin: 50px;
+	color:#1D84C3;
+}
