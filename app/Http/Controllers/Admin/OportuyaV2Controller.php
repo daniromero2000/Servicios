@@ -50,8 +50,8 @@ class OportuyaV2Controller extends Controller
 
 		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
-			$dateConsultaComercial = $this->getDateConsultaComercial($identificationNumber);
-			return $dateConsultaComercial;
+			/*$dateConsultaComercial = $this->getDateConsultaComercial($identificationNumber);
+			return $dateConsultaComercial;*/
 			/*$obj = new \stdClass();
 			$obj->typeDocument = trim($request->get('typeDocument'));
 			$obj->identificationNumber = trim($identificationNumber);
