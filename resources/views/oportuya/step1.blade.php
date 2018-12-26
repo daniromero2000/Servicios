@@ -105,7 +105,15 @@
 						<label for="typeDocument">Tipo de documento</label>
 						<select class="form-control inputsSteps inputSelect" name="typeDocument" id="typeDocument" required="">
 							<option value="1">Cédula de ciudadanía</option>
-							<option value="2">Cédula de extranjería</option>
+							<option value="2">NIT</option>
+							<option value="3">cédula de extranjería</option>
+							<option value="4">Tarjeta de Identidad</option>
+							<option value="5">Pasaporte</option>
+							<option value="6">Tarjeta seguro social extranjero</option>
+							<option value="7">Sociedad extranjera sin NIT en Colombia</option>
+							<option value="8">Fidecoismo</option>
+							<option value="9">Registro Civil</option>
+							<option value="10">Carnet Diplomtico</option>
 						</select>
 					</div>
 					<div class="col-12 col-sm-6 form-group">
