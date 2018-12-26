@@ -56,8 +56,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				// "No se realiza la consulta";
 			}
-			$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
-			return $consultaComercial;
+			//$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
