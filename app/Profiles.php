@@ -21,7 +21,7 @@ class Profiles extends Model
 
 	protected $dates = ['deleted_at'];
 
-    protected $table = 'Profiles';
+    protected $table = 'profiles';
 
     protected $fillable = ['id','name'];
 }
