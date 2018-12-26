@@ -50,15 +50,14 @@ class OportuyaV2Controller extends Controller
 
 		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
-			/*$dateConsultaComercial = $this->getDateConsultaComercial($identificationNumber);
-			return $dateConsultaComercial;*/
-			/*$obj = new \stdClass();
-			$obj->typeDocument = trim($request->get('typeDocument'));
-			$obj->identificationNumber = trim($identificationNumber);
-			$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
-			$result = $ws->ConsultarInformacionComercial($obj);  // correcta
-			dd($result);
-			return 1;*/
+			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
+			if($dateConsultaComercial == 'true'){
+				// "Se realiza la consulta";
+			}else{
+				// "No se realiza la consulta";
+			}
+			$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
+			return $consultaComercial;
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
@@ -417,16 +416,28 @@ class OportuyaV2Controller extends Controller
 		
 	}
 
-	private function getDateConsultaComercial($identificationNumber){
+	private function validateDateConsultaComercial($identificationNumber){
 		$dateNow = date('Y-m-d');
-		$dateTowMonths = strtotime ( '-2 month' , strtotime ( $dateNow ) ) ;
-		$dateTowMonths = date ( 'Y-m-d' , $dateTowMonths );
+		$dateTwoMonths = strtotime ( '-2 month' , strtotime ( $dateNow ) ) ;
+		$dateTwoMonths = date ( 'Y-m-d' , $dateTwoMonths );
 		$dateLastConsultaComercial =  DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
 
+		if(strtotime($dateLastConsulta) < strtotime($dateTwoMonths)){
+			return 'true';
+		}else{
+			return 'false';
+		}
+	}
 
-
-		return $dateLastConsultaComercial[0]->fecha;
+	private function execConsultaComercial($identificationNumber, $typeDocument){
+		$obj = new \stdClass();
+		$obj->typeDocument = trim($typeDocument);
+		$obj->identificationNumber = trim($identificationNumber);
+		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
+		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
+		
+		return 1;
 	}
 
 	public function getDataStep2($identificationNumber){
