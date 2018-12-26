@@ -10,7 +10,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div ng-app="ProfileCityApp" class="containerleads container">
+    <div ng-app="ProfileApp" class="containerleads container">
         <br>
 
         <div class="container">
@@ -19,7 +19,7 @@
         </div>
 
     </div>
-    <script src="{{ asset('js/appProfilesCities/app.js') }}"></script>
-    <script src="{{ asset('js/appProfilesCities/services/myService.js') }}"></script>
-    <script src="{{ asset('js/appProfilesCities/controllers/Controller.js') }}"></script>
+    <script src="{{ asset('js/appProfiles/app.js') }}"></script>
+    <script src="{{ asset('js/appProfiles/services/myService.js') }}"></script>
+    <script src="{{ asset('js/appProfiles/controllers/Controller.js') }}"></script>
 @stop

@@ -6,7 +6,7 @@
     **Descripción: view for PROFILES CRUD
     **Fecha: 21/12/2018
      -->
-<h2 class="headerAdmin">Administrador de perfiles de ciudades</h2>
+<h2 class="headerAdmin">Administrador de perfiles</h2>
 <div class="row resetRow">
 
     <div class="col-sm-12 col-md-3">
@@ -30,7 +30,7 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr>
-                <th scope="col" width="90%">Pregunta</th>
+                <th scope="col" width="90%">Perfil</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -65,7 +65,7 @@
                 <div class="alert alert-danger" role="alert" id="alertResource"><span id="p"></span></div>
                 <form ng-submit="createResource()">
                   <div class="form-group">
-                    <label>Linea</label>
+                    <label>Perfil</label>
                     <div>
                         <div class="row rowBrands">
                             <div class = "col-sm-10"><input class="form-control" ng-model="resource.name" required ></div>

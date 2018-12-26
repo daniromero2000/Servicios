@@ -126,7 +126,7 @@ Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
 Route::resource('brands','Admin\BrandsController');
 Route::resource('lines','Admin\LinesController');
-Route::resource('profilesCities','Admin\ProfilesCitiesController');
+Route::resource('profiles','Admin\ProfilesController');
 
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
@@ -344,14 +344,14 @@ Route::group(['prefix'=>'/Lines/','middleware' => 'auth'],function(){
     **Fecha: 21/12/2018
      **/
 
-Route::group(['prefix'=>'/ProfilesCities/','middleware' => 'auth'],function(){
+Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
 
 	Route::get("/",function(){
-		return view('profilesCities.index');
+		return view('profilesAdmin.index');
 	})->name('lines');
 
     Route::get('/admin', function(){
-        return view('profilesCities.admin');
+        return view('profilesAdmin.admin');
     });
 });
 

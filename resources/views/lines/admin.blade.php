@@ -30,7 +30,7 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr>
-                <th scope="col" width="90%">Pregunta</th>
+                <th scope="col" width="90%">Linea</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
