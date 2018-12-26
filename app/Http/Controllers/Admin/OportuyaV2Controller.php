@@ -50,13 +50,13 @@ class OportuyaV2Controller extends Controller
 
 		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
-			$obj = new \stdClass();
+			/*$obj = new \stdClass();
 			$obj->typeDocument = trim($request->get('typeDocument'));
 			$obj->identificationNumber = trim($identificationNumber);
 			$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
 			$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 			dd($result);
-			return 1;
+			return 1;*/
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
