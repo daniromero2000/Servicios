@@ -50,12 +50,12 @@ class OportuyaV2Controller extends Controller
 
 		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
-			/*$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
+			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				// "Se realiza la consulta";
 			}else{
 				// "No se realiza la consulta";
-			}*/
+			}
 			//$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
@@ -420,12 +420,16 @@ class OportuyaV2Controller extends Controller
 		$dateTwoMonths = strtotime ( '-2 month' , strtotime ( $dateNow ) ) ;
 		$dateTwoMonths = date ( 'Y-m-d' , $dateTwoMonths );
 		$dateLastConsultaComercial =  DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
-
-		if(strtotime($dateLastConsulta) < strtotime($dateTwoMonths)){
+		if(empty($dateLastConsultaComercial)){
 			return 'true';
 		}else{
-			return 'false';
+			$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
+
+			if(strtotime($dateLastConsulta) < strtotime($dateTwoMonths)){
+				return 'true';
+			}else{
+				return 'false';
+			}	
 		}
 	}
 
