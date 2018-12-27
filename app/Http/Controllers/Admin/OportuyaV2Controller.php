@@ -52,12 +52,11 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
-				// "Se realiza la consulta";
+				//$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			}else{
 				// "No se realiza la consulta";
 			}
-			$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
-			return $consultaComercial;
+			
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
