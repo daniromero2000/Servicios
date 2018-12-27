@@ -1,105 +1,25 @@
 @extends('layouts.app')
- 
+@section('linkStyleSheets')
+    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+@endsection
 @section('content')
-
-    <div class="containerUsers container">   
-        <div class="row">
-            <a href="{{ route('users.create') }}" class="buttonCreateUsers">Crear Usuario</a>
-        </div>
-
+    <div ng-app="usersApp" class="containerleads container">
         <br>
         @if (Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ Session::get('success') }}</p>
             </div>
         @endif
-        <div class="table table-responsive">
-
-            <table class="table table-bordered table-hover table-striped userTable">
-                <thead>
-                    <tr>
-                        
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Última modificación</th>                        
-                        <th> Tipo Usuario</th>
-                        <th >Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $key => $user)
-                    <tr>
-                        
-                        <td>{{ $user->name }}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->updated_at}}</td>
-                        @if($user->idProfile == 1)
-                            <td>Administrador</td>
-                        @elseif($user->idProfile == 2)
-                            <td>Líder Canal Dígital</td>
-                        @elseif($user->idProfile == 3)
-                            <td>Libranza</td>
-                        @elseif($user->idProfile == 5)
-                            <td>Fábrica de crédito</td>
-                        @else
-                            <td>Community Manager</td>
-                        @endif
-                        
-
-                        <td class="userTableOptions" >
-
-                            <div class="row rowAdjust">
-                                <div class="col-4">
-                                       <a href="{{route('users.show',$user->id)}}" class="btn " ><i class="fa fa-eye"></i></a><br>            
-                                </div>
-                                <div class="col-4">
-                                       <a href="{{route('users.edit',$user->id)}}" class="btn " ><i class="fas fa-pencil-alt"></i></i></a><br>            
-                                </div>
-                                <div class="col-4">
-                                       <a href="#" class="btn"  data-toggle="modal" data-target="#userModal@php echo $user->id @endphp"><i class="fas fa-trash-alt"></i></a><br>           
-                                </div>                             
-                                
-                            </div>      
-                            
-     
-                            
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="userModal@php echo $user->id @endphp" tabindex="-1" role="dialog" aria-hidden="true">
-
-                                <div class="modal-dialog">
-                                    
-                                    <div class="modal-content">
-                                        
-                                        <div class="modal-header">
-                                            
-                                        </div>
-
-                                        <div class="modal-body">
-                                            
-                                            <div class="row">
-                                                <p>¿Está seguro que desea eliminar el usuario?</p>
-                                            </div>
-
-                                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" >
-                                                @method('DELETE')
-                                                @csrf 
-                                                <button type="submit" class="btn btn-danger" value="Delete"> Elminar</button>                           
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                                            </form>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                
-                            </div>
-                    @endforeach
-                </tbody>
-            </table>
-           
-        {!! $users->links() !!}
-        
+        <div class="container">
+            <ng-view></ng-view>
         </div>
+
     </div>
+    <script src="{{ asset('js/appUsers/app.js') }}"></script>
+    <script src="{{ asset('js/appUsers/services/myService.js') }}"></script>
+    <script src="{{ asset('js/appUsers/controllers/userController.js') }}"></script>
 @stop
+@section('scriptsJs')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+        <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+@endsection

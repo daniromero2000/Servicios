@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -24,11 +25,38 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users=User::selectRaw("*")->paginate(15);
-        return view('users.index',['users'=>$users]);   
+        $query="SELECT users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at` FROM users WHERE 1";
+
+
+        if($request->get('q')){
+            $query .= sprintf(" AND (users.`name` LIKE '%s' OR users.`email` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
+        }
+
+        if($request->get('profileUser')){
+            $query .= sprintf(" AND users.`idProfile` = '%s' ", $request->get('profileUser'));
+        }       
+
+        if($request->get('fecha_ini')){
+            $query .= sprintf(" AND users.`created_at` > '%s' ", $request->get('fecha_ini').' 00:00:00');
+        }
+
+        if($request->get('fecha_fin')){
+            $query .= sprintf(" AND users.`created_at` < '%s' ", $request->get('fecha_fin').' 23:59:59');
+        }
+
+        $query .= " ORDER BY users.`id` DESC ";
+
+        $query .= sprintf(" LIMIT %s, 30", $request->get('limitFrom'));
+
+        $resp = DB::select($query);
+
+        return $resp;
+ 
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,13 +76,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-         request()->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'idProfile'=>'required',
-            'password'=>'required|confirmed'
-        ]);
-
+    
         $user= new User;
 
         $user->name=$request->get('name');
@@ -81,7 +103,8 @@ class UserController extends Controller
         
         $user->save();
 
-        return redirect()->route('users.index')->with('success','user add successfully');
+        return response()->json([true]);
+
     }
 
     /**
@@ -131,7 +154,7 @@ class UserController extends Controller
         }     
         $user->save();
 
-        return  view('users.show',compact('user'));
+        return  response()->json([true]);
     }
 
     /**
@@ -145,6 +168,6 @@ class UserController extends Controller
         $user=User::findOrfail($id);
             $user->delete();
 
-            return redirect()->route('users.index');
+            return response()->json([true]);
     }
 }
