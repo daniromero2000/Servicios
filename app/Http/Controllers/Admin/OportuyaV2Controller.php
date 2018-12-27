@@ -53,9 +53,8 @@ class OportuyaV2Controller extends Controller
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				//$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
-			}else{
-				// "No se realiza la consulta";
 			}
+			//$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
@@ -419,7 +418,7 @@ class OportuyaV2Controller extends Controller
 		$dateNow = date('Y-m-d');
 		$dateTwoMonths = strtotime ( '-2 month' , strtotime ( $dateNow ) ) ;
 		$dateTwoMonths = date ( 'Y-m-d' , $dateTwoMonths );
-		$dateLastConsultaComercial =  DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$dateLastConsultaComercial = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(empty($dateLastConsultaComercial)){
 			return 'true';
 		}else{
@@ -430,6 +429,20 @@ class OportuyaV2Controller extends Controller
 			}else{
 				return 'false';
 			}	
+		}
+	}
+
+	private function validatePolicyCredit($identificationNumber){
+		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$respScoreClient = $queryScoreClient[0]->score;
+
+		$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
+		$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;
+
+		if($respScoreClient > $respScoreCreditPolicy){
+			return true;
+		}else{
+			return false;
 		}
 	}
 
