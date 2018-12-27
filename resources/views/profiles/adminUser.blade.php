@@ -17,7 +17,7 @@
 		    <h5 class="card-title hederUser" ;">Gestión de Usuarios</h5>
 		</div>
 	    <div class="card-body">
-			<a href="{{route('users.index')}}"><span><i class="fas fa-users iconUser" ></i></span></a>
+			<a href="/adminUsers"><span><i class="fas fa-users iconUser" ></i></span></a>
 	    </div>
 	  </div>
 	  <div class="card">
