@@ -197,6 +197,9 @@ Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsControlle
 Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
 
+/*Users routes*/
+
+
 
 
 Route::get("/canalDigital",function(){
@@ -210,6 +213,10 @@ Route::get("/communityLeads",function(){
 Route::get('/community',function(){
 		return view('campaign.index');
 	});
+
+Route::get('/adminUsers',function(){
+    return view('users.index');
+});
 
 Route::get("/libranzaLeads",function(){
 	return view('libranzaLeads.index');
@@ -258,6 +265,13 @@ Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
     });
 });
 
+Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
+
+    Route::get('/users', function(){
+        return view('users.users');
+    });
+});
+
 /**
     **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: FAQ's
@@ -303,6 +317,7 @@ Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
     **Email: desarrolladorjunior@lagobo.com
     **Fecha: 17/12/2018
      **/
+
 
 
 Route::group(['prefix'=>'/Brands/','middleware' => 'auth'],function(){
