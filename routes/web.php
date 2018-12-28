@@ -45,8 +45,12 @@ Route::get('/LIB_gracias_FRM', function(){
 })->name('thankYouPageLibranza');
 
 Route::get('/OP_gracias_FRM',function(){
-	return view('oportuya.thankYouPage');
+    return view('oportuya.thankYouPage');
 })->name('thankYouPageOportuya');
+
+Route::get('/OPN_gracias_FRM',function(){
+    return view('oportuya.thankYouPageDenied');
+})->name('thankYouPageOportuyaDenied');
 
 Route::get('/SG_gracias_FRM',function(){
 	return view('seguros.thankYouPage');
