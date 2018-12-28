@@ -90,7 +90,7 @@ class UserController extends Controller
             ->where('profiles.name','=',$request->get('idProfile'))
             ->orderBy('profiles.id')->first();
 
-        $user->idProfile=$idProfile->idProfile;
+        $user->idProfile=$idProfile->id;
 
         
         $user->save();
