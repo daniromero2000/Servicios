@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\Profiles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -83,27 +84,18 @@ class UserController extends Controller
         $user->email=$request->get('email');
         $user->password=$request->get('password');
         $user->password=Hash::make($user->password);
-        
-        if ($request->get('idProfile') == "admin") {
-                $user->idProfile=1;
-        }elseif($request->get('idProfile') == "digital"){
-                $user->idProfile=2;
-        }elseif($request->get('idProfile') == "libranza"){
-                $user->idProfile=3;
-        }elseif($request->get('idProfile') == "fabrica"){
-                $user->idProfile=5;
-        }elseif($request->get('idProfile') == "cruzado"){
-                $user->idProfile=6;
-        }elseif($request->get('idProfile') == "marketing"){
-                $user->idProfile=7;
-        }
-        else{
-                $user->idProfile=4; 
-        }    
+
+        $idProfileUser=User::selectRaw('profiles.id AS profileID, profiles.name AS profileName,users.idProfile AS userProfile')
+            ->leftjoin('profiles','profiles.id','=','users.idProfile')
+            ->where('profiles.name','=',$request->get('idProfile'))
+            ->orderBy('profiles.id')->get();
+
+        $user->idProfile=$idProfileUser[0]->userProfile;
+
         
         $user->save();
 
-        return response()->json([true]);
+        return response()->json([true,$idProfileUser]);
 
     }
 
