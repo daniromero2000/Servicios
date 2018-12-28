@@ -29,12 +29,19 @@
 </div>
 
 <div class="row resetRow">
-    <div class="col-sm-12 col-md-4">
+    <div class="col-sm-12 col-md-3">
          <button class="btn btn-primary">
             <a ng-click="addUserForm()" >Agregar Usuario<i class="far fa-plus-square"></i></a>
         </button>
     </div>
-    <div class="col-sm-12 offset-md-3 col-md-4 text-right">
+
+    <div class="col-sm-12 col-md-3">
+         <button class="btn btn-primary">
+            <a ng-click="" >Asignar perfil a asesor<i class="far fa-plus-square"></i></a>
+        </button>
+    </div>
+
+    <div class="col-sm-12 offset-md-1 col-md-4 text-right">
         <div class="input-group mb-3">
             <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
             <div class="input-group-append">
@@ -62,7 +69,7 @@
             <tr ng-repeat="user in users">
                 <td>@{{ user.name }}</td>
                 <td>@{{ user.email }}</td>
-                <td>@{{ user.idProfile }}</td>
+                <td>@{{ user.profileName }}</td>
                 <td>                          
                     <i class="fas fa-edit cursor" title="Actualizar usuario" ng-click="updateUserForm(user.id)"></i>
                     <i class="fas fa-times cursor"  title="eliminar campaña" ng-click="deleteUserDialog(user.id)"></i>
@@ -150,14 +157,9 @@
                             <div class="col-md-6">
 
                                 <select id="idProfile" type="text" class="form-controll{{ $errors->has('password') ? ' is-invalid' : '' }}" ng-model="user.idProfile" name="idProfile" required>
-                                    <option value="admin">Administrador</option>
-                                    <option value="digital">Canal digital</option>
-                                    <option value="community">Community</option>
-                                    <option value="libranza">Libranza</option>
-                                    <option value="fabrica">Fábrica de crédito</option>
-                                    <option value="cruzado">Jefe de producto cruzado</option>
-                                    <option value="marketing">Marketing</option>
-
+                                    <option ng-repeat="p in profiles" value="@{{p.profileID}}">
+                                        @{{p.profileName}}
+                                    </option>
                                 </select>
                                
 

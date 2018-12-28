@@ -10,6 +10,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.user = {};
+	$scope.profiles=[];
 	$scope.idUser = '';
 	$scope.comment = {
 		comment: '',
@@ -113,29 +114,40 @@ app.controller('userController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/users?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&profileUser='+$scope.q.profileUser+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin,
 		}).then(function successCallback(response) {
-			if(response.data != false){
+			if(response.data[0] != false){
 				
 				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {
-					
+				angular.forEach(response.data[0], function(value, key) {					
 					$scope.users.push(value);
 				});
+				
 				$scope.cargando = false;
 
 			}
+
+			if(response.data[1] != false){
+				angular.forEach(response.data[1], function(value, key) {
+					
+					$scope.profiles.push(value);
+				});
+					
+			}
+			
 		}, function errorCallback(response) {
-		    console.log(response);
+		    
 		});
 	};
 
 	$scope.searchUsers = function(){
 		$scope.q.initFrom = 0;
+		$scope.profiles = [];
 		$scope.users = [];
 		$scope.getUsers();
 	};
 
 	$scope.resetFiltros = function (){
 		$scope.users = [];
+		$scope.profiles = [];
 		$scope.q = {
 			'q': '',
 			'initFrom': 0,
@@ -159,8 +171,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 				$("#addUser").modal("hide");
 			}
 		}, function errorCallback(response) {
-		    console.log($scope.user);
-		    console.log(response);
+		   
 		});
 	};
 
@@ -181,7 +192,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 				$('#updateUser').modal('hide');
 			}
 		},function errorCallback(response){
-			console.log(response);
+			
 		}
 		);
 	}
@@ -194,7 +205,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.deleteUserDialog= function(idUser){
 		$scope.idUser=idUser;
 		$("#deleteModal").modal("show");
-		console.log(idUser);
+		
 	}
 	
 
@@ -210,84 +221,9 @@ app.controller('userController', function($scope, $http, $rootScope){
 				$("#deleteModal").modal("hide");
 			}
 		},function errorCallback(response){
-				console.log(response);
-				console.log($scope.idUser);
+				
 		});
 	}
-
-
-	/*$scope.vewLead = function(lead){
-		$scope.lead = lead;
-		$("#viewLead").modal("show");
-	};
-
-	$scope.viewComments = function(name, lastName, state, idLead, init=true){
-		$scope.comments = [];
-		$scope.idLead = idLead;
-		$http({
-		  method: 'GET',
-		  url: 'api/leads/getComentsLeads/'+idLead
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				angular.forEach(response.data, function(value, key) {
-					$scope.comments.push(value);
-				});
-			}
-			if(init){
-				$("#viewComments").modal("show");
-				$scope.nameLead = name;
-				$scope.lastNameLead = lastName;
-				$scope.state = state;
-			}
-		}, function errorCallback(response) {
-		    
-		});
-	};
-
-	$scope.addComment = function(){
-		$scope.comment.idLead = $scope.idLead;
-		$http({
-		  method: 'GET',
-		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.viewComments("","",$scope.state,$scope.idLead, false);
-				$scope.comment.comment = "";
-				$scope.viewAddComent = false;
-			}
-		}, function errorCallback(response) {
-		    
-		});
-	};
-
-	$scope.changeStateLead = function(name, lastName, idLead, state, title){
-		$scope.title = title;
-		$scope.nameLead = name;
-		$scope.lastNameLead = lastName;
-		$scope.comment.idLead = idLead;
-		$scope.comment.state = state;
-		$("#changeStateLead").modal("show");
-	};
-
-	$scope.viewCommentChange = function(){
-		$scope.viewAddComent = !$scope.viewAddComent;
-	};
-
-
-	$scope.changeStateLeadComment = function(){
-		$http({
-		  method: 'GET',
-		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.comment.comment = "";
-				$scope.searchLeads();
-				$("#changeStateLead").modal("hide");			
-			}
-		}, function errorCallback(response) {
-		    
-		});
-	};*/
 
 	$scope.getUsers();
 })

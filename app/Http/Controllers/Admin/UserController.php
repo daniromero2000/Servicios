@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query="SELECT users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at` FROM users WHERE 1";
+        $query="SELECT `profiles`.`id` AS profileID, `profiles`.`name` AS profileName, users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at` FROM users LEFT JOIN profiles ON `profiles`.`id`=`users`.`idProfile` WHERE 1";
 
 
         if($request->get('q')){
@@ -53,7 +53,9 @@ class UserController extends Controller
 
         $resp = DB::select($query);
 
-        return $resp;
+         $profiles=Profiles::selectRaw('id AS profileID, name AS profileName')->get();
+
+        return response()->json([$resp,$profiles]);
  
     }
 
@@ -87,10 +89,10 @@ class UserController extends Controller
 
         $idProfileUser=User::selectRaw('profiles.id AS profileID, profiles.name AS profileName,users.idProfile AS userProfile')
             ->leftjoin('profiles','profiles.id','=','users.idProfile')
-            ->where('profiles.name','=',$request->get('idProfile'))
-            ->orderBy('profiles.id')->get();
+            ->where('profiles.id','=',(int)$request->get('idProfile'))
+            ->orderBy('profiles.id')->first();
 
-        $user->idProfile=$idProfileUser[0]->userProfile;
+        $user->idProfile=$idProfileUser->userProfile;
 
         
         $user->save();
