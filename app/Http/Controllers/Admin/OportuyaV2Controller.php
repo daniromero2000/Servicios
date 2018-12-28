@@ -52,10 +52,10 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
-				//$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
+				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			}
-			//$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
-			
+
+			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			//catch data from request and values assigning to leads table columns
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
@@ -165,7 +165,9 @@ class OportuyaV2Controller extends Controller
 			}
 
 			
-
+			if($validatePolicyCredit == false){
+				return redirect()->route('thankYouPageOportuyaDenied');
+			}
 			if($flag==2){
 				
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
@@ -434,15 +436,19 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit($identificationNumber){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		$respScoreClient = $queryScoreClient[0]->score;
-
-		$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
-		$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;
-
-		if($respScoreClient > $respScoreCreditPolicy){
-			return true;
-		}else{
+		if(empty($queryScoreClient)){
 			return false;
+		}else{
+			$respScoreClient = $queryScoreClient[0]->score;
+
+			$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
+			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;
+			
+			if($respScoreClient > $respScoreCreditPolicy){
+				return true;
+			}else{
+				return false;
+			}
 		}
 	}
 
@@ -452,8 +458,6 @@ class OportuyaV2Controller extends Controller
 		$obj->identificationNumber = trim($identificationNumber);
 		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
-		
-		return 1;
 	}
 
 	public function getDataStep2($identificationNumber){
