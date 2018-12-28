@@ -95,7 +95,7 @@ class UserController extends Controller
         
         $user->save();
 
-        return response()->json([true]);
+        return response()->json([true,$idProfile]);
 
     }
 
