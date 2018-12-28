@@ -22,6 +22,61 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 		bankSavingsAccount:null
 	};
 
+	$scope.timesContact = [
+		{
+			label: '6 A.M',
+			value: '6 A.M'
+		},
+		{
+			label: '7 A.M',
+			value: '7 A.M'
+		},
+		{
+			label: '8 A.M',
+			value: '8 A.M'
+		},
+		{
+			label: '9 A.M',
+			value: '9 A.M'
+		},
+		{
+			label: '10 A.M',
+			value: '10 A.M'
+		},
+		{
+			label: '11 A.M',
+			value: '11 A.M'
+		},
+		{
+			label: '12 M',
+			value: '12 M'
+		},
+		{
+			label: '1 P.M',
+			value: '1 P.M'
+		},
+		{
+			label: '2 P.M',
+			value: '2 P.M'
+		},
+		{
+			label: '3 P.M',
+			value: '3 P.M'
+		},
+		{
+			label: '4 P.M',
+			value: '4 P.M'
+		},
+		{
+			label: '5 P.M',
+			value: '5 P.M'
+		},
+		{
+			label: '6 P.M',
+			value: '6 P.M'
+		}
+	];
+
 	$scope.comment = {
 		step: 'comment',
 		availability: '',

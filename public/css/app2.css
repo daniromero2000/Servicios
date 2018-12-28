@@ -647,7 +647,7 @@
 }
 
 .forms-descStep{
-	background: #b03187;
+	background: #167efa;
 	border-radius: 10px;
 	color: white;
 	line-height: 1;
@@ -704,7 +704,7 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #b22c88;
+    background-color: #167efa;
     z-index: 2;
     will-change: width;
     transition: width .3s linear;
@@ -725,10 +725,6 @@
     border: none;
     padding: 0;
     z-index: 1;
-}
-
-.progreso > .puntos.listo + span {
-    background-color: #b22c88;
 }
 
 .progreso > .puntos.listo + span {
@@ -767,7 +763,7 @@
 }
 
 .progreso > .puntos.listo + span {
-    background-color: #b22c88;
+    background-color: #167efa;
 }
 
 label {
@@ -803,7 +799,7 @@ label {
     left: 66.6666%;
 }
 .progreso > .puntos.listo + span + label, .progreso > .mono-izquierda, .progreso .punto_cuatro.listo ~ .mono-derecha {
-    color: #b22c88;
+    color: #167efa;
 }
 .progreso > .punto_cuatro, .progreso > .punto_cuatro + span {
     left: 100%;
@@ -859,7 +855,7 @@ label {
 }
 
 .containerFormModal{
-	padding-top: 40px;
+	padding-top: 20px;
 }
 
 .containerLogoModalStep{

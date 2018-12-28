@@ -59,7 +59,7 @@
 					<strong>Cuéntanos sobre ti</strong><br>
 					<span class="forms-descText">Ingresa tu información laboral</span>
 					<img src="{{ asset('images/datosLaborales.png') }}" class="img-fluid forms-descImg" />
-					<span class="forms-descStepNum">2</span>
+					<span class="forms-descStepNum">3</span>
 				</div>
 			</div>
 			<div>
@@ -274,7 +274,9 @@
 							<div class="col-sm-7 offset-sm-5">
 								<form ng-submit="sendComment()">
 									<div class="form-group">
-										<input type="text" ng-model="comment.availability" placeholder="A que hora te podemos llamar" class="form-control" required>
+										<label for="">A que hora te podemos llamar</label>
+										<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact" class="form-control">
+										</select>
 									</div>
 									<div class="form-group">
 										<textarea ng-model="comment.comment" class="form-control" rows="10" placeholder="Algún comentario adicional"></textarea>
