@@ -88,9 +88,9 @@ class UserController extends Controller
         $idProfileUser=User::selectRaw('profiles.id AS profileID, profiles.name AS profileName,users.idProfile AS userProfile')
             ->leftjoin('profiles','profiles.id','=','users.idProfile')
             ->where('profiles.name','=',$request->get('idProfile'))
-            ->orderBy('profiles.id')->first();
+            ->orderBy('profiles.id')->get();
 
-        $user->idProfile=$idProfileUser->userProfile;
+        $user->idProfile=$idProfileUser[0]->userProfile;
 
         
         $user->save();
