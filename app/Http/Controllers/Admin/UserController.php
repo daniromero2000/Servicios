@@ -85,17 +85,17 @@ class UserController extends Controller
         $user->password=$request->get('password');
         $user->password=Hash::make($user->password);
 
-        $idProfile=User::selectRaw('profiles.id, profiles.name,users.idProfile')
+        $idProfileUser=User::selectRaw('profiles.id AS profileID, profiles.name AS profileName,users.idProfile AS userProfile')
             ->leftjoin('profiles','profiles.id','=','users.idProfile')
             ->where('profiles.name','=',$request->get('idProfile'))
             ->orderBy('profiles.id')->first();
 
-        $user->idProfile=$idProfile->id;
+        $user->idProfile=$idProfileUser->userProfile;
 
         
         $user->save();
 
-        return response()->json([true,$idProfile]);
+        return response()->json([true,$idProfileUser]);
 
     }
 
