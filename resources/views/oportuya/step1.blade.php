@@ -8,6 +8,7 @@
 @endsection()
 
 @section('content')
+	 {!! NoCaptcha::renderJs() !!}
 	<div id="step1">
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
@@ -133,6 +134,7 @@
 						</div>
 					</div>
 				</div>
+				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
 				<div class="form-group">
 					<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
@@ -143,7 +145,7 @@
 					*Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
 				<div class="form-group text-center">
-					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
+					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
 					</button>
 					<a href="/oportuya" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
@@ -153,4 +155,13 @@
 			</form>
 		</div>
 	</div>
+@endsection
+
+@section('scriptsJs')
+	<script>
+		document.getElementById("button1").disabled = true;
+		function enableBtn(){
+			document.getElementById("button1").disabled = false;
+		}
+	</script>
 @endsection
