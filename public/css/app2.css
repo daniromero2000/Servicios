@@ -1,4 +1,8 @@
-
+.text-procces{
+	color: #2b97d6;
+    font-weight: 800;
+    font-size: 20px;
+}
 .slidePrevLibranza{
 	position: absolute;
     right: 0;
@@ -908,7 +912,6 @@ label {
 }
 
 .inputsSteps::-webkit-input-placeholder, .inputSelect {
-	color: #afafaf;
 	font-size: 15px;
 	font-weight: 500;
 }
