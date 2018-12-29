@@ -91,12 +91,13 @@
 					<div class="col-12 col-sm-6">
 						<label for="occupation">Ocupación</label>
 						<select class="form-control inputsSteps inputSelect" name="occupation" required="">
+							<option value="">Seleccione...</option>
 							<option value="EMPLEADO">Empleado</option>
 							<option value="SOLDADO-MILITAR-POLICÍA">Soldado - Militar - Policía</option>
 							<option value="PRESTACIÓN DE SERVICIOS">Prestación de Servicios</option>
 							<option value="INDEPENDIENTE CERTIFICADO">Independiente Certificado</option>
 							<option value="NO CERTIFICADO">No Certificado</option>
-							<option value="RENTISTA">Rentista</option>
+							<option value="RENTISTA">Administrador de bienes propios</option>
 							<option value="PENSIONADO">Pensionado</option>
 						</select>
 					</div>
@@ -105,16 +106,17 @@
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento</label>
 						<select class="form-control inputsSteps inputSelect" name="typeDocument" id="typeDocument" required="">
+							<option value="">Seleccione...</option>
 							<option value="1">Cédula de ciudadanía</option>
 							<option value="2">NIT</option>
-							<option value="3">cédula de extranjería</option>
+							<option value="3">Cédula de extranjería</option>
 							<option value="4">Tarjeta de Identidad</option>
 							<option value="5">Pasaporte</option>
 							<option value="6">Tarjeta seguro social extranjero</option>
 							<option value="7">Sociedad extranjera sin NIT en Colombia</option>
 							<option value="8">Fidecoismo</option>
 							<option value="9">Registro Civil</option>
-							<option value="10">Carnet Diplomtico</option>
+							<option value="10">Carnet Diplomático</option>
 						</select>
 					</div>
 					<div class="col-12 col-sm-6 form-group">
@@ -127,6 +129,7 @@
 						<div class="form-group">
 							<label for="city" class="control-label">Ciudad</label>
 							<select name="city" id="city" class="form-control inputsSteps inputSelect" required="">
+								<option value="">Seleccione...</option>
 								@foreach($cities as $city)
 									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
 								@endforeach
@@ -154,6 +157,20 @@
 				</div>
 			</form>
 		</div>
+		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalPrincipal" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="text-center" style="padding: 50px;">
+							<img src="{{ asset('images/gif-load.gif') }}" alt="">
+							<p class="text-procces">
+								Procesando Solicitud...
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
@@ -163,5 +180,9 @@
 		function enableBtn(){
 			document.getElementById("button1").disabled = false;
 		}
+
+		$( "#saveLeadOportuya").submit(function( event ) {
+			$('#proccess').modal('show');
+		});
 	</script>
 @endsection
