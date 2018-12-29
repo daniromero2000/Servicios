@@ -122,10 +122,7 @@ Route::resource('leads','Admin\LeadsController');
 Route::resource('seguros','Admin\SegurosController');
 Route::resource('viajes','Admin\ViajesController');
 Route::resource('dashboard','Admin\DashboardController');
-Route::resource('users','Admin\UserController');
-Route::resource('campaign','Admin\CampaignController');
 Route::resource('Nuestras-tiendas','Admin\ourStoresController');
-Route::resource('communityleads','Admin\CommunityController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
 Route::resource('brands','Admin\BrandsController');
@@ -184,20 +181,6 @@ Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addC
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
-/*Community routes*/
-Route::get('community/viewCampaign/{lead}','Admin\CampaignController@show');
-Route::post('community/addCampaign','Admin\CampaignController@store')->middleware('cors');
-Route::post('community/deleteCampaign','Admin\CampaignController@deleteCampaign')->middleware('cors');
-Route::post('community/updateCampaign','Admin\CampaignController@update')->middleware('cors');
-
-/*Community Leads routes*/
-Route::post('communityLeads/addCommunityLeads','Admin\LeadsController@addCommunityLeads');
-Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
-Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
-Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
-//Route::get('communityLeads/viewCommunityLeads','Admin\CommunityController@index');
-
-
 /* Apis */
 Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
@@ -211,18 +194,6 @@ Route::get("/canalDigital",function(){
 	return view('leads.index');
 });
 
-Route::get("/communityLeads",function(){
-	return view('communityLeads.index');
-});
-
-Route::get('/community',function(){
-		return view('campaign.index');
-	});
-
-Route::get('/adminUsers',function(){
-    return view('users.index');
-});
-
 Route::get("/libranzaLeads",function(){
 	return view('libranzaLeads.index');
 });
@@ -230,7 +201,6 @@ Route::get("/libranzaLeads",function(){
 Route::get("/fabricaLeads",function(){
 	return view('fabricaLeads.index');
 });
-
 
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
@@ -253,29 +223,99 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     });
 });
 
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Administrador de leads - Canal dígital
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 6/12/2018
+**/
+    
+    /*Community Leads Resource*/
 
-Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
+    Route::resource('communityleads','Admin\CommunityController');
 
-	Route::get('/leads',function(){
-		return view('communityLeads.leads');
-	});
+    /*Community Leads routes*/
+    Route::post('communityLeads/addCommunityLeads','Admin\LeadsController@addCommunityLeads');
+    Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
+    Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
+    Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
 
-});
-
-
-Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
-
-    Route::get('/campaigns', function(){
-        return view('campaign.campaign');
+    Route::get("/communityLeads",function(){
+        return view('communityLeads.index');
     });
-});
 
-Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
+    Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
 
-    Route::get('/users', function(){
-        return view('users.users');
+    	Route::get('/leads',function(){
+    		return view('communityLeads.leads');
+    	});
+
     });
-});
+
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Administrador de campañas
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 13/12/2018
+**/
+
+    /*Campaign resource*/
+
+    Route::resource('campaign','Admin\CampaignController');
+
+    /*Community routes*/
+
+    Route::get('community/viewCampaign/{lead}','Admin\CampaignController@show');
+    Route::post('community/addCampaign','Admin\CampaignController@store')->middleware('cors');
+    Route::post('community/deleteCampaign','Admin\CampaignController@deleteCampaign')->middleware('cors');
+    Route::post('community/updateCampaign','Admin\CampaignController@update')->middleware('cors');
+
+    Route::get('/community',function(){
+        return view('campaign.index');
+    });
+
+    Route::group(['prefix'=>'/community/','middleware' => 'auth'],function(){
+
+        Route::get('/campaigns', function(){
+            return view('campaign.campaign');
+        });
+    });
+
+
+
+
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Administrador de Usuarios
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 20/12/2018
+**/
+
+    Route::resource('users','Admin\UserController');
+
+    Route::get('/adminUsers',function(){
+        return view('users.index');
+    });
+
+    Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
+
+        Route::get('/users', function(){
+            return view('users.users');
+        });
+
+        /*Assessors profile*/
+
+
+    });
+
+    Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
+
+    
+
+
 
 /**
     **Proyecto: SERVICIOS FINANCIEROS
