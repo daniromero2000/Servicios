@@ -40,7 +40,7 @@
                 <td>
                     <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(brand)"></i>
                     <i class="fas fa-edit cursor" title="Actualizar" ng-click="showUpdateDialog(brand)"></i>
-                    <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(brand)"></i>
+                    <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(brand)" ng-if='activ'></i>
                        
                 </td>
             </tr>
@@ -48,7 +48,7 @@
     </table>
     <div class="row">
         <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="q.actual = q.actual + 1; getBrands()">Cargar Más</button>
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="moreRegister()">Cargar Más</button>
         </div>
     </div>
 </div>

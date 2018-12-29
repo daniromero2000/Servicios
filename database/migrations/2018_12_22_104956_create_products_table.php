@@ -27,13 +27,17 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name',70)->unique();
             $table->string('reference',70);
+            $table->text('specifications');
+            $table->integer('price')->unsigned();
             $table->integer('idBrand')->unsigned();
             $table->integer('idLine')->unsigned();
+            $table->integer('idCity')->unsigned();
             $table->softDeletes(); //Colum for soft delete
             $table->timestamps();
 
             $table->foreign('idBrand')->references('id')->on('brands');
             $table->foreign('idLine')->references('id')->on('lines');
+            $table->foreign('idCity')->references('id')->on('ciudades');
         });
     }
 
