@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use App\Profiles;
+use App\Assessor;
+use App\ProfilesAssessor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -98,6 +100,37 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([true,$idProfileUser]);
+
+    }
+
+    public function addAssessorProfile(Request $request){
+        
+        $assessor = new ProfilesAssessor;
+
+        $oportudataAssessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->get('code'))->first();
+
+        if($oportudataAssessor != NULL){
+
+            $AssessorProfile = ProfilesAssessor::select('code')->where('code','=',$request->get('code'))->first();
+
+            if(!$AssessorProfile != NULL){
+
+                $assessor->code = $request->get('code');
+                $assessor->profile = $request->get('profile');
+                $assessor->save();
+
+                return response()->json([true]);
+            }
+
+
+         return response()->json([false]);            
+
+        }
+
+        return response()->json([false]);
+
+
+        
 
     }
 

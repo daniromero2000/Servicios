@@ -37,7 +37,7 @@
 
     <div class="col-sm-12 col-md-3">
          <button class="btn btn-primary">
-            <a ng-click="" >Asignar perfil a asesor<i class="far fa-plus-square"></i></a>
+            <a ng-click="addAssessorForm()" >Asignar perfil a asesor<i class="far fa-plus-square"></i></a>
         </button>
     </div>
 
@@ -80,6 +80,68 @@
     <div class="row">
         <div class="col-12 text-center">
             <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getUsers()">Cargar Más</button>
+        </div>
+    </div>
+</div>
+
+<!-- Assessor modal -->
+
+<div class="modal fade" id="assessorAddProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Asignar perfil a usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row resetRow">
+                        <div class="col-12 form-group">
+                            <form ng-submit="addAssessorProfile()" id="addProfileAssessor">
+                                @csrf
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right">
+                                        Codigo de Asesor
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="code" ng-model="assessor.code">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>
+
+                                    <div class="col-md-6">
+
+                                        <select id="profile" type="text" class="form-controll{{ $errors->has('password') ? ' is-invalid' : '' }}" ng-model="assessor.profile" name="profile" required>
+                                            <option ng-repeat="p in profiles" value="@{{p.profileID}}">
+                                                @{{p.profileName}}
+                                            </option>
+                                        </select>
+                                       
+
+                                        @if ($errors->has('idProfile'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('idProfile') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                  <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Asignar perfil
+                                </button>
+                            </div>
+                        </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

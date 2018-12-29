@@ -12,6 +12,8 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.user = {};
 	$scope.profiles=[];
 	$scope.idUser = '';
+	$scope.assessors=[];
+	$scope.assessor={};
 	$scope.comment = {
 		comment: '',
 		idLead: 0,
@@ -180,6 +182,28 @@ app.controller('userController', function($scope, $http, $rootScope){
 		$("#addUser").modal("show");
 	
 	};
+
+	$scope.addAssessorForm = function(){
+		
+		$("#assessorAddProfile").modal("show");
+	
+	};
+
+	$scope.addAssessorProfile = function(){
+		$http({
+				method:'POST',
+				url:'profileAssessor',
+				data: $scope.assessor
+		}).then(function successCallback(response){
+			if (response.data != false) {
+				$("#assessorAddProfile").modal("hide");	
+				}
+			console.log(response);
+		},function errorCallback(response){
+			console.log(response);
+			console.log($scope.assessor);
+		});
+	}
 
 	$scope.updateUser = function(){
 		$http({
