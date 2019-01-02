@@ -87,34 +87,6 @@
     </div>
 </div>
 
-<div class="table table-responsive">
-    <table class="table table-hover table-stripped leadTable">
-        <thead class="headTableLeads">
-            <tr>
-                <th>Nombre de Usuario</th>
-                <th>Email</th>
-                <th>Tipo de Usuario</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="user in users">
-                <td>@{{ user.name }}</td>
-                <td>@{{ user.email }}</td>
-                <td>@{{ user.profileName }}</td>
-                <td>                          
-                    <i class="fas fa-edit cursor" title="Actualizar usuario" ng-click="updateUserForm(user.id)"></i>
-                    <i class="fas fa-times cursor"  title="eliminar campaña" ng-click="deleteUserDialog(user.id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getUsers()">Cargar Más</button>
-        </div>
-    </div>
-</div>
 
 <!-- Assessor modal -->
 
