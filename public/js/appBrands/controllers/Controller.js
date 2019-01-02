@@ -17,6 +17,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.brand = {}; //object for index brand
 	$scope.brands = []; //list of brands returned by server
 	$scope.alert = "";	//text in create brand alert
+	$scope.activ  = true; // display delete action for each resourse if this is activ 
 
 	$scope.addBrand = function(){
 		$("#addBrandModal").modal("show");
@@ -26,6 +27,12 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	// query of faqs index and with filter 
 	$scope.getBrands = function(){
 		showLoader();
+		//dsplay or not the delete action
+		if($scope.q.delete){
+			$scope.activ = false;
+		}else{
+			$scope.activ = true;
+		}
 		$http({
 		  method: 'GET',
 		  url: '/brands?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
@@ -49,6 +56,11 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		$scope.q.actual = 1;
 		$scope.q.page = 30;
 		$scope.getBrands();
+	};
+
+		$scope.moreRegister = function(){
+		$scope.q.actual = $scope.q.actual + 1;
+		getResource()
 	};
 
 	$scope.createBrand = function(){
@@ -75,14 +87,14 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 	$scope.showDialog = function(brand){
 		$("#Show").modal("show");
-		$scope.brand = brand;
+		$scope.brand = angular.extend({}, brand);
 	};
 	
 
 	$scope.showUpdateDialog = function(brand){
 		$("#alertUpdate").hide();
 		$("#Update").modal("show");
-		$scope.brand = brand;
+		$scope.brand = angular.extend({}, brand);
 	};
 
 	$scope.UpdateBrand = function(){

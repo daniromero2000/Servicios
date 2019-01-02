@@ -17,6 +17,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.resource = {}; //object for index line
 	$scope.resources = []; //list of brands returned by server
 	$scope.alert = "";	//text in create alert text 
+	$scope.activ  = true; // display delete action for each resourse if this is activ 
 
 	$scope.addResource= function(){
 		$("#addResourceModal").modal("show");
@@ -26,6 +27,13 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	// query of faqs index and with filter 
 	$scope.getResource = function(){
 		showLoader();
+		//dsplay or not the delete action
+		if($scope.q.delete){
+			$scope.activ = false;
+		}else{
+			$scope.activ = true;
+		}
+
 		$http({
 		  method: 'GET',
 		  url: '/lines?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
@@ -48,6 +56,12 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		$scope.q.actual = 1;
 		$scope.q.page = 30;
 		$scope.getResource();
+	};
+
+	
+	$scope.moreRegister = function(){
+		$scope.q.actual = $scope.q.actual + 1;
+		getResource()
 	};
 
 	$scope.createResource = function(){
@@ -80,7 +94,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.showUpdateDialog = function(resource){
 		$("#alertUpdate").hide();
 		$("#Update").modal("show");
-		$scope.resource = resource;
+		$scope.resource = angular.extend({}, resource);
 	};
 
 	$scope.UpdateResource = function(){

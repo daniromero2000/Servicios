@@ -128,6 +128,7 @@ Route::resource('faqs','Admin\FaqsController');
 Route::resource('brands','Admin\BrandsController');
 Route::resource('lines','Admin\LinesController');
 Route::resource('profiles','Admin\ProfilesController');
+Route::resource('products','Admin\ProductsController');
 
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 
