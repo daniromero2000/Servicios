@@ -24,7 +24,7 @@
 		</div>
 		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ lead.name + ' ' + lead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
+				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ leadInfo.name + ' ' + leadInfo.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
 			</div>
 			<div class="col-12">

@@ -24,7 +24,7 @@
 		</div>
 		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
-				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ dataLead.name + ' ' + dataLead.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
+				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ leadInfo.name + ' ' + leadInfo.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">Cuéntanos más sobre tu información laboral</p>
 			</div>
 			<div class="col-12">
@@ -62,17 +62,12 @@
 					<span class="forms-descStepNum">3</span>
 				</div>
 			</div>
-			<div>
-				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'EMPLEADO' || dataLead.occupation == 'SOLDADO-MILITAR-POLICÍA'">
-					{{ csrf_field() }}
+			<form ng-submit="saveStep3()" id="formEmpleado" >
+				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA'">
 					<div class="row resetRow">
-						<div class="col-sm-12 col-md-8 form-group">
+						<div class="col-12 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
 							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="number" ng-model="leadInfo.nit" />
-						</div>
-						<div class="col-sm-12 col-md-4 form-group">
-							<label for="indicative">Indicativo</label>
-							<input type="number" min="1" max="8" class="form-control inputsSteps inputText" id="indicative" validation-pattern="number" ng-model="leadInfo.indicative" />
 						</div>
 					</div>
 					<div class="row resetRow">
@@ -143,11 +138,8 @@
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div>
-				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'RENTISTA'">
-					{{ csrf_field() }}
+				</div>
+				<div ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="camaraComercio">Cámara de Comercio</label>
@@ -202,11 +194,8 @@
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div>
-				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'PENSIONADO'">
-					{{ csrf_field() }}
+				</div>
+				<div ng-if="leadInfo.occupation == 'PENSIONADO'">
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label>Nombre de la Empresa</label>
@@ -251,8 +240,8 @@
 							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
 					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">

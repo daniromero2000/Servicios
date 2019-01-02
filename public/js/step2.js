@@ -77,7 +77,6 @@ angular.module('appStep2', ['moment-picker', 'ng-currency'])
 		  url: '/api/oportuya/getDataStep2/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
-			$scope.lead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
 			$scope.cities = response.data.cities;
 			$scope.leadInfo = response.data.oportudataLead;
