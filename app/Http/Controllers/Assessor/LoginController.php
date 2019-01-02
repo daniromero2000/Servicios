@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Assessor;
+use App\ProfilesAssessor;
 use Illuminate\Support\Facades\DB;
 
 
@@ -94,17 +95,25 @@ class LoginController extends Controller
     {
         $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->codigo)->where('NUM_DOC','=',$request->num_doc)->first();
 
+        $codeAssessor=ProfilesAssessor::selectRaw('code,profile')->where('code','=',$request->codigo)->first();
 
-        if ($assessor) {
+        $request->session()->put('idProfile',$codeAssessor->profile);
+
+        $codeAssessor->code =trim($codeAssessor->code);
+        $assessor->CODIGO =trim($assessor->CODIGO);
+        $assessor->NUM_DOC=trim($assessor->NUM_DOC);
+
+        if (($assessor) && ($assessor->CODIGO == $codeAssessor->code)) {
 
             Auth::guard('assessor')->loginUsingId($assessor->CODIGO);   
             return view('assessors.dashboard');
         }            
-
+        
         return back()->withErrors(['email' => 'Email or password are wrong.']);
 
     }
-    
+
+
 
     public function logout(Request $request) {
         Auth::logout();
