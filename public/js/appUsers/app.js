@@ -1,4 +1,4 @@
-var app =  angular.module('usersApp',['ngRoute', 'moment-picker']);
+var app =  angular.module('usersApp',['ngRoute', 'moment-picker','angucomplete-alt']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

@@ -53,7 +53,39 @@
         <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i class="fas fa-filter"></i></button>
     </div>
 </div>
+<div class="row">
+    <span ng-if="errorFlag" class="w-100 alert alert-danger text-center" role="alert" ng-model="error">@{{ error }}</span>
+     <span ng-if="successFlag" class="w-100 alert alert-success text-center" role="alert" ng-model="error">@{{ error }}</span>
+</div>
 
+<div class="table table-responsive">
+    <table class="table table-hover table-stripped leadTable">
+        <thead class="headTableLeads">
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Email</th>
+                <th>Tipo de Usuario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>@{{ user.name }}</td>
+                <td>@{{ user.email }}</td>
+                <td>@{{ user.profileName }}</td>
+                <td>                          
+                    <i class="fas fa-edit cursor" title="Actualizar usuario" ng-click="updateUserForm(user.id)"></i>
+                    <i class="fas fa-times cursor"  title="eliminar campaña" ng-click="deleteUserDialog(user.id)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getUsers()">Cargar Más</button>
+        </div>
+    </div>
+</div>
 
 <div class="table table-responsive">
     <table class="table table-hover table-stripped leadTable">
@@ -103,13 +135,26 @@
                             <form ng-submit="addAssessorProfile()" id="addProfileAssessor">
                                 @csrf
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label text-md-right">
+                                      <label class="col-md-4 col-form-label text-md-right">
                                         Codigo de Asesor
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="code" ng-model="assessor.code">
+                                        <angucomplete-alt id="ex1"
+                                      placeholder="Search codes"
+                                      pause="100"
+                                      selected-object="selectedCode"
+                                      local-data="assessors"
+                                      search-fields="CODIGO"
+                                      title-field="NOMBRE"
+                                      description-field='CODIGO'
+                                      minlength="1"
+                                      input-class="form-control form-control-small"
+                                      input-name="code"/>
+                                        
                                     </div>
-                                </div>
+                                </div>                        
+
+                
                                 
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>

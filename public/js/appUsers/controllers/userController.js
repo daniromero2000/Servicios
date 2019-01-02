@@ -10,6 +10,9 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.user = {};
+	$scope.errorFlag=0;
+	$scope.successFlag=0;
+	$scope.error='';
 	$scope.profiles=[];
 	$scope.idUser = '';
 	$scope.assessors=[];
@@ -110,6 +113,12 @@ app.controller('userController', function($scope, $http, $rootScope){
 		}
 	];
 
+	$scope.selectedCode = function(assessorObject){
+		//console.log(assessor);
+		
+		$scope.assessor.code=assessorObject.originalObject.CODIGO;
+	}
+
 	$scope.getUsers = function(){
 		$scope.cargando = true;
 		$http({
@@ -128,9 +137,15 @@ app.controller('userController', function($scope, $http, $rootScope){
 			}
 
 			if(response.data[1] != false){
-				angular.forEach(response.data[1], function(value, key) {
-					
+				angular.forEach(response.data[1], function(value, key) {					
 					$scope.profiles.push(value);
+				});
+					
+			}
+
+			if(response.data[2] != false){
+				angular.forEach(response.data[2], function(value, key) {					
+					$scope.assessors.push(value);
 				});
 					
 			}
@@ -160,6 +175,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 		$scope.filtros = false;
 		$scope.getUsers();
 	};
+
 
 
 	$scope.addUser = function(){
@@ -195,10 +211,29 @@ app.controller('userController', function($scope, $http, $rootScope){
 				url:'profileAssessor',
 				data: $scope.assessor
 		}).then(function successCallback(response){
-			if (response.data != false) {
-				$("#assessorAddProfile").modal("hide");	
+			if(response.data != false) {
+				
+				if(response.data == '-1'){
+					$scope.errorFlag=1;
+					$scope.error='El asesor no existe en oportudata';
+
+				}else if((response.data == 'false') ){
+					
+					$scope.errorFlag=1;
+					$scope.error='El asesor ya se le ha asignado un perfil';
+
+				}else{
+					
+					$scope.errorFlag=0;
+					$scope.successFlag=1;
+					$scope.error='Perfil asignado correctamente';
+
 				}
-			console.log(response);
+
+				$("#assessorAddProfile").modal("hide");		
+			}
+
+			console.log($scope.response);
 		},function errorCallback(response){
 			console.log(response);
 			console.log($scope.assessor);

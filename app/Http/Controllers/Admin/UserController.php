@@ -55,9 +55,12 @@ class UserController extends Controller
 
         $resp = DB::select($query);
 
-         $profiles=Profiles::selectRaw('id AS profileID, name AS profileName')->get();
+        $profiles=Profiles::selectRaw('id AS profileID, name AS profileName')->get();
 
-        return response()->json([$resp,$profiles]);
+        $assessors = DB::connection('oportudata')->table('ASESORES')->get();
+        
+
+        return response()->json([$resp,$profiles,$assessors]);
  
     }
 
@@ -123,15 +126,18 @@ class UserController extends Controller
             }
 
 
-         return response()->json([false]);            
+            return response()->json([false]);            
 
         }
 
-        return response()->json([false]);
+        return response()->json([-1]);       
+    }
 
+    public function getAllAssessor(){
 
-        
+        $assessors = DB::connection('oportudata')->table('ASESORES')->get();
 
+        return response()->json([$assessors]);
     }
 
     /**
