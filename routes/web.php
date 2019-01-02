@@ -187,8 +187,6 @@ Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2
 /*Users routes*/
 
 
-
-
 Route::get("/canalDigital",function(){
 	return view('leads.index');
 });
@@ -311,6 +309,7 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     });
 
     Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
+    Route::get('/getAssessors','Admin\UserController@getAllAssessor');
 
     
 
