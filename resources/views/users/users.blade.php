@@ -31,13 +31,13 @@
 <div class="row resetRow">
     <div class="col-sm-12 col-md-3">
          <button class="btn btn-primary">
-            <a ng-click="addUserForm()" >Agregar Usuario<i class="far fa-plus-square"></i></a>
+            <a ng-click="addUserForm()" >Agregar Usuario <i class="far fa-plus-square"></i></a>
         </button>
     </div>
 
     <div class="col-sm-12 col-md-3">
          <button class="btn btn-primary">
-            <a ng-click="addAssessorForm()" >Asignar perfil a asesor<i class="far fa-plus-square"></i></a>
+            <a ng-click="addAssessorForm()" >Asignar perfil a asesor  <i class="fas fa-user-check"></i></a>
         </button>
     </div>
 
@@ -112,34 +112,27 @@
                                     </label>
                                     <div class="col-md-6">
                                         <angucomplete-alt id="ex1"
-                                      placeholder="Search codes"
+                                      placeholder="Buscar códdigo"
                                       pause="100"
                                       selected-object="selectedCode"
                                       local-data="assessors"
                                       search-fields="CODIGO"
-                                      title-field="NOMBRE"
-                                      description-field='CODIGO'
+                                      title-field="CODIGO"
+                                      description-field='NOMBRE'
                                       minlength="1"
                                       input-class="form-control form-control-small"
                                       input-name="code"/>
                                         
                                     </div>
-                                </div>                        
-
-                
-                                
+                                </div>                                
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>
-
                                     <div class="col-md-6">
-
-                                        <select id="profile" type="text" class="form-controll{{ $errors->has('password') ? ' is-invalid' : '' }}" ng-model="assessor.profile" name="profile" required>
+                                        <select id="profile" type="text" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" ng-model="assessor.profile" name="profile" required>
                                             <option ng-repeat="p in profiles" value="@{{p.profileID}}">
                                                 @{{p.profileName}}
                                             </option>
-                                        </select>
-                                       
-
+                                        </select>          
                                         @if ($errors->has('idProfile'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('idProfile') }}</strong>
