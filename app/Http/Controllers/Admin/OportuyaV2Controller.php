@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Imagenes;
 use App\Application;
 use App\Lead;
+use App\DatosCliente;
 use App\CreditPolicy;
 use App\LeadInfo;
 use App\OportuyaV2;
@@ -66,7 +67,7 @@ class OportuyaV2Controller extends Controller
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
 			$response = false;
-			$assessorCode=($request->get('assessor') !== NULL)?$request->get('assessor'):NULL;
+			$assessorCode=($request->get('assessor') !== NULL)?$request->get('assessor'):998877;
 			$dataLead=[
 				'typeDocument'=> $request->get('typeDocument'),
 				'identificationNumber'=> $identificationNumber,
@@ -173,15 +174,16 @@ class OportuyaV2Controller extends Controller
 				return redirect()->route('thankYouPageOportuyaDenied');
 			}
 			if($flag==2){
-				
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-				if($assessorCode != NULL){
+				if($assessorCode != 998877){
 					return redirect()->route('step2Assessor', ['numIdentification' => $identificationNumberEncrypt]);
 				}
 				return redirect()->route('step2Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
 			}elseif ($flag==1) {
+
 				return response()->json(['servicios'=>$response]);
 			}else{
+
 				return response()->json([true]);
 			}		
 		}
@@ -247,7 +249,8 @@ class OportuyaV2Controller extends Controller
 
 
 		if($request->get('step')==3){
-
+			$datosCliente= new DatosCliente;
+			$datosCliente->setConnection('oportudata');
 			$flag=0;
 
 			$identificationNumber = $request->get('identificationNumber');
@@ -322,7 +325,63 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->save();
 
-			//$createOportudaLead = $solic_fab->updateOrCreate(['CLIENTE'=>$identificationNumber],$soliData)->save();
+			$numSolic = $this->getNumSolic($identificationNumber);
+
+			$datosCliente->CEDULA = $identificationNumber;
+			$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
+			$datosCliente->NOM_REFPER = $request->get('NOM_REFPER');
+			$datosCliente->DIR_REFPER = 'NA';
+			$datosCliente->BAR_REFPER = 'NA';
+			$datosCliente->TEL_REFPER = $request->get('TEL_REFPER');
+			$datosCliente->CIU_REFPER = 'NA';
+			$datosCliente->NOM_REFPE2 = 'NA';
+			$datosCliente->DIR_REFPE2 = 'NA';
+			$datosCliente->BAR_REFPE2 = 'NA';
+			$datosCliente->TEL_REFPE2 = 0;
+			$datosCliente->CIU_REFPE2 = " ";
+			$datosCliente->NOM_REFFAM = $request->get('NOM_REFFAM');
+			$datosCliente->DIR_REFFAM = 'NA';
+			$datosCliente->BAR_REFFAM = 'NA';
+			$datosCliente->TEL_REFFAM = $request->get('TEL_REFFAM');
+			$datosCliente->PARENTESCO = " ";
+			$datosCliente->NOM_REFFA2 = 'NA';
+			$datosCliente->DIR_REFFA2 = 'NA';
+			$datosCliente->BAR_REFFA2 = 'NA';
+			$datosCliente->TEL_REFFA2 = 0;
+			$datosCliente->PARENTESC2 = " ";
+			$datosCliente->NOM_REFCOM = 'NA';
+			$datosCliente->TEL_REFCOM = 'NA';
+			$datosCliente->NOM_REFCO2 = 'NA';
+			$datosCliente->TEL_REFCO2 = 'NA';
+			$datosCliente->NOM_CONYUG = 'NA';
+			$datosCliente->CED_CONYUG = 'NA';
+			$datosCliente->DIR_CONYUG = 'NA';
+			$datosCliente->PROF_CONYU = " ";
+			$datosCliente->EMP_CONYUG = 'NA';
+			$datosCliente->CARGO_CONY = 'NA';
+			$datosCliente->EPS_CONYUG = 'NA';
+			$datosCliente->TEL_CONYUG = 'NA';
+			$datosCliente->ING_CONYUG = 0;
+			$datosCliente->CON_CLI1 = " ";
+			$datosCliente->CON_CLI2 = " ";
+			$datosCliente->CON_CLI3 = " ";
+			$datosCliente->CON_CLI4 = " ";
+			$datosCliente->EDIT_RFCLI = " ";
+			$datosCliente->EDIT_RFCL2 = " ";
+			$datosCliente->EDIT_RFCL3 = " ";
+			$datosCliente->INFORMA1 = 'NA';
+			$datosCliente->CARGO_INF1 = 'NA';
+			$datosCliente->FEC_COM1 = 'NA';
+			$datosCliente->FEC_COM2 = 'NA';
+			$datosCliente->ART_COM1 = 'NA';
+			$datosCliente->ART_COM2 = 'NA';
+			$datosCliente->CUOT_COM1 = 'NA';
+			$datosCliente->CUOT_COM2 = "Al Dia";
+			$datosCliente->HABITO1 = "Al Dia";
+			$datosCliente->HABITO2 = "Al Dia";
+			$datosCliente->STATE = "A";
+
+			$createData = $datosCliente->save();
 
 
 			return response()->json([true]);
@@ -331,22 +390,25 @@ class OportuyaV2Controller extends Controller
 		if ($request->get('step') == 'comment') {
 			$identificationNumber = $request->get('identificationNumber');
 
-			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
-			$idLead= $idLead[0]->id;
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$oportudataLead = [
+				'NOTA1' =>  $request->get('availability'),
+				'NOTA2' => $request->get('comment')
+			];
 
-			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead]);
-			$idLeadInfo= $idLeadInfo[0]->id;
-
-
-			$leadInfo=LeadInfo::findOrFail($idLeadInfo);
-			$leadInfo->availability = $request->get('availability');
-			$leadInfo->comment = $request->get('comment');
-
-			$response = $leadInfo->save();
+			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($oportudataLead);
 
 			return response()->json([true]);
 		}
 		
+	}
+
+	private function getNumSolic($identificationNumber){
+		$query = sprintf("SELECT `SOLICITUD` FROM `SOLIC_FAB` WHERE `CLIENTE` = %s ORDER BY SOLICITUD DESC LIMIT 1 ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($query);
+
+		return $resp[0];
 	}
 
 	private function validateDateConsultaComercial($identificationNumber){
@@ -384,7 +446,6 @@ class OportuyaV2Controller extends Controller
 			}
 		}
 	}
-
 
 	private function execConsultaComercial($identificationNumber, $typeDocument){
 		$obj = new \stdClass();

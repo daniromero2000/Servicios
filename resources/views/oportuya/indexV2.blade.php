@@ -329,7 +329,7 @@
 
 					<div class="row buttonOportuyaSection buttonOportuya text-center">
 						<a href="/step1" alt="Realizar Solicitud de Crédito" >
-							¡Solicita aquí!
+							¡Solicítala aquí!
 						</a>
 					</div>
 					
