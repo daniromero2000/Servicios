@@ -385,11 +385,6 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	public function getCreditPolicy(Request $request){
-		$creditPolicy =  CreditPolicy::all();
-
-		return response()->json([$creditPolicy]);
-	}
 
 	private function execConsultaComercial($identificationNumber, $typeDocument){
 		$obj = new \stdClass();
