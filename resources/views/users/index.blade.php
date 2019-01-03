@@ -10,10 +10,20 @@
                 <p>{{ Session::get('success') }}</p>
             </div>
         @endif
-        <div class="container">
-            <ng-view></ng-view>
-        </div>
+ 
+        @if((Auth::user()->idProfile) == 1)
+            
+            <div class="container">
+                <ng-view></ng-view>
+            </div> 
 
+        @else
+
+            <script type="text/javascript">
+                window.location = "/dashboard";
+            </script>  
+
+        @endif
     </div>
     <script src="{{ asset('js/appUsers/app.js') }}"></script>
     <script src="{{ asset('js/appUsers/services/myService.js') }}"></script>
