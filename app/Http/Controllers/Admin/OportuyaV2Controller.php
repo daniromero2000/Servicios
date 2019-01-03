@@ -190,95 +190,59 @@ class OportuyaV2Controller extends Controller
 		//get step 2 from request form
 
 		if($request->get('step')==2){
-
-
 			$flag= 0;
 			$identificationNumber = $request->get('identificationNumber');
-			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]); 
-			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead[0]->id]);
 
-			$leadInfo=$idLeadInfo?LeadInfo::findOrFail($idLeadInfo[0]->id):$leadInfo = new LeadInfo;
+			$flag=1;
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$dataLead=[
+				'DIRECCION' => strtoupper($request->get('addres')),
+				'FEC_NAC' => $request->get('birthdate'),
+				'EDAD' => $this->calculateAge($request->get('birthdate')),
+				'CIUD_EXP' => $request->get('cityExpedition'),
+				'ESTADOCIVIL' => strtoupper($request->get('civilStatus')),
+				'FEC_EXP' => $request->get('dateDocumentExpedition'),
+				'PROPIETARIO' => ($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')) : 'NA' ,
+				'SEXO' => strtoupper($request->get('gender')),
+				'TIPOV' => strtoupper($request->get('housingType')),
+				'TIEMPO_VIV' => $request->get('housingTime'),
+				'TELFIJO' => $request->get('housingTelephone'),
+				'VRARRIENDO' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
+				'EPS_CONYU' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
+				'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : '0',
+				'TRABAJO_CONYU' => ($request->get('spouseJob')) ? strtoupper($request->get('spouseJob')) : 'NA' ,
+				'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? strtoupper($request->get('spouseJobName')) : 'NA',
+				'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? strtoupper($request->get('spouseName')) : 'NA',
+				'PROFESION_CONYU' => ($request->get('spouseProfession') != '') ? strtoupper($request->get('spouseProfession')) : 'NA' ,
+				'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : '0',
+				'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : '0',
+				'ESTRATO' => $request->get('stratum'),
+				'PERSONAS' => 0,
+				'ESTUDIOS' => 'NA',
+				'POSEEVEH' => 'N',
+				'PLACA' => 'NA',
+				'TEL_PROP' => 'NA',
+				'N_EMPLEA' => 0,
+				'VENTASMES' => 0,
+				'COSTOSMES' => 0,
+				'GASTOS' => 0,
+				'DEUDAMES' => 0,
+				'TEL3' => 0,
+				'TEL4' => 0,
+				'TEL5' => 0,
+				'TEL6' => 0,
+				'TEL7' => 0,
+				'DIRECCION2' => 'NA',
+				'DIRECCION3' => 'NA',
+				'DIRECCION4' => 'NA',
+				'CIUD_NAC' => 'NA'
+			];
 
-			$leadInfo->idLead= $idLead[0]->id;
-			$leadInfo->addres = $request->get('addres');
-			$leadInfo->birthdate = $request->get('birthdate');
-			$leadInfo->cityExpedition = $request->get('cityExpedition');
-			$leadInfo->civilStatus = $request->get('civilStatus');
-			$leadInfo->dateDocumentExpedition = $request->get('dateDocumentExpedition');
-			$leadInfo->gender= $request->get('gender');
-			$leadInfo->housingOwner = $request->get('housingOwner');
-			$leadInfo->housingTelephone = $request->get('housingTelephone');
-			$leadInfo->housingType = $request->get('housingType');
-			$leadInfo->housingTime = $request->get('housingTime');
-			$leadInfo->leaseValue = $request->get('leaseValue'); 
-			$leadInfo->spouseEps = $request->get('spouseEps');
-			$leadInfo->spouseIdentificationNumber = $request->get('spouseIdentificationNumber');
-			$leadInfo->spouseJob = $request->get('spouseJob');
-			$leadInfo->spouseJobName = $request->get('spouseJobName');
-			$leadInfo->spouseName = $request->get('spouseName');
-			$leadInfo->spouseProfession = $request->get('spouseProfession');
-			$leadInfo->spouseSalary = $request->get('spouseSalary');
-			$leadInfo->spouseTelephone = $request->get('spouseTelephone');
-			$leadInfo->stratum = $request->get('stratum');
+			$identificationNumber = (string)$identificationNumber;
 
+			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-			$response= $leadInfo->save();
-
-			if($response){
-
-				$flag=1;
-				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-				$dataLead=[
-					'DIRECCION' => strtoupper($request->get('addres')),
-					'FEC_NAC' => $request->get('birthdate'),
-					'EDAD' => $this->calculateAge($request->get('birthdate')),
-					'CIUD_EXP' => $request->get('cityExpedition'),
-					'ESTADOCIVIL' => strtoupper($request->get('civilStatus')),
-					'FEC_EXP' => $request->get('dateDocumentExpedition'),
-					'PROPIETARIO' => ($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')) : 'NA' ,
-					'SEXO' => strtoupper($request->get('gender')),
-					'TIPOV' => strtoupper($request->get('housingType')),
-					'TIEMPO_VIV' => $request->get('housingTime'),
-					'TELFIJO' => $request->get('housingTelephone'),
-					'VRARRIENDO' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
-					'EPS_CONYU' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
-					'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : '0',
-					'TRABAJO_CONYU' => ($request->get('spouseJob')) ? strtoupper($request->get('spouseJob')) : 'NA' ,
-					'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? strtoupper($request->get('spouseJobName')) : 'NA',
-					'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? strtoupper($request->get('spouseName')) : 'NA',
-					'PROFESION_CONYU' => ($request->get('spouseProfession') != '') ? strtoupper($request->get('spouseProfession')) : 'NA' ,
-					'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : '0',
-					'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : '0',
-					'ESTRATO' => $request->get('stratum'),
-					'PERSONAS' => 0,
-					'ESTUDIOS' => 'NA',
-					'POSEEVEH' => 'N',
-					'PLACA' => 'NA',
-					'TEL_PROP' => 'NA',
-					'N_EMPLEA' => 0,
-					'VENTASMES' => 0,
-					'COSTOSMES' => 0,
-					'GASTOS' => 0,
-					'DEUDAMES' => 0,
-					'TEL3' => 0,
-					'TEL4' => 0,
-					'TEL5' => 0,
-					'TEL6' => 0,
-					'TEL7' => 0,
-					'DIRECCION2' => 'NA',
-					'DIRECCION3' => 'NA',
-					'DIRECCION4' => 'NA',
-					'CIUD_NAC' => 'NA'
-				];
-
-				$identificationNumber = (string)$identificationNumber;
-
-				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
-
-				return response()->json([true]);
-			} 
-			
-
+			return response()->json([true]);
 		}
 
 
@@ -297,106 +261,71 @@ class OportuyaV2Controller extends Controller
 			$ftp=0;
 			$state='X';
 			$granTotal=0;
+	
+			$flag = 1;
 
-			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
-			$idLead= $idLead[0]->id;
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
-			$idLeadInfo = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`= :idLead',['idLead'=>$idLead]);
-			$idLeadInfo= $idLeadInfo[0]->id;
+			$dataLead=[
+				'NIT_EMP' => ($request->get('nit') != '') ? $request->get('nit') : 0,
+				'RAZON_SOC' => ($request->get('companyName') != '') ? strtoupper($request->get('companyName')) : 'NA',
+				'DIR_EMP' => ($request->get('companyAddres') != '') ? strtoupper($request->get('companyAddres')) : 'NA',
+				'TEL_EMP' => ($request->get('companyTelephone') != '') ? $request->get('companyTelephone') : 0,
+				'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? $request->get('companyTelephone2') : 0,
+				'ACT_ECO' => ($request->get('eps') != '') ? strtoupper($request->get('eps')) : '-',
+				'CARGO' => ($request->get('companyPosition') != '') ? strtoupper($request->get('companyPosition')) : 'NA',
+				'FEC_ING' => ($request->get('admissionDate') != '') ? $request->get('admissionDate') : '0000/1/1',
+				'ANTIG' => ($request->get('antiquity') != '') ? $request->get('antiquity') : 1,
+				'SUELDO' => ($request->get('salary') != '') ? $request->get('salary') : 0,
+				'TIPO_CONT' => ($request->get('typeContract') != '') ? strtoupper($request->get('typeContract')) : 'NA',
+				'OTROS_ING' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
+				'CAMARAC' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
+				'NIT_IND' => ($request->get('nitInd') != '') ? $request->get('nitInd') : 0,
+				'RAZON_IND' => ($request->get('companyNameInd') != '') ? $request->get('companyNameInd') : 'NA',
+				'ACT_IND' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
+				'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '0000/1/1',
+				'EDAD_INDP' => ($request->get('antiquityInd') != '') ? $request->get('antiquityInd') : 1,
+				'SUELDOIND' => ($request->get('salaryInd') != '') ? $request->get('salaryInd') : 0,
+				'BANCOP' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA'
+			];
 
+			
 
-			$leadInfo=LeadInfo::findOrFail($idLeadInfo);
+			$identificationNumber = (string)$identificationNumber;
 
+			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-			$leadInfo->nit = $request->get('nit');
-			$leadInfo->indicative = $request->get('indicative');
-			$leadInfo->companyName = $request->get('companyName');
-			$leadInfo->companyAddres = $request->get('companyAddres');
-			$leadInfo->companyTelephone = $request->get('companyTelephone');
-			$leadInfo->companyTelephone2 = $request->get('companyTelephone2');
-			$leadInfo->eps = $request->get('eps');
-			$leadInfo->companyPosition = $request->get('companyPosition');
-			$leadInfo->admissionDate = $request->get('admissionDate');
-			$leadInfo->antiquity = $request->get('antiquity');
-			$leadInfo->salary = $request->get('salary');
-			$leadInfo->typeContract = $request->get('typeContract');
-			$leadInfo->otherRevenue = $request->get('otherRevenue');
-			$leadInfo->camaraComercio = $request->get('camaraComercio');
-			$leadInfo->whatSell = $request->get('whatSell');
-			$leadInfo->dateCreationCompany = $request->get('dateCrationCompany');
-			$leadInfo->bankSavingsAccount = $request->get('bankSavingsAccount');
+			$solic_fab= new Application;
 
-			$response = $leadInfo->save();
+			$solic_fab->setConnection('oportudata');
 
-			if($response){
-				
-				$flag = 1;
+			$soliData=[
+				'CLIENTE'=>$identificationNumber,
+				'CODASESOR'=>$codeAssessor,
+				'FECHASOL'=>date("Y-m-d H:i:s",strtotime($dateLead)),
+				'SUCURSAL'=>$sucursal,
+				'ESTADO'=>$estado,
+				'FTP'=>$ftp,
+				'STATE'=>$state
+			];
 
-				$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-
-				$dataLead=[
-					'NIT_EMP' => ($request->get('nit') != '') ? $request->get('nit') : 0,
-					'RAZON_SOC' => ($request->get('companyName') != '') ? strtoupper($request->get('companyName')) : 'NA',
-					'DIR_EMP' => ($request->get('companyAddres') != '') ? strtoupper($request->get('companyAddres')) : 'NA',
-					'TEL_EMP' => ($request->get('companyTelephone') != '') ? $request->get('companyTelephone') : 0,
-					'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? $request->get('companyTelephone2') : 0,
-					'ACT_ECO' => ($request->get('eps') != '') ? strtoupper($request->get('eps')) : '-',
-					'CARGO' => ($request->get('companyPosition') != '') ? strtoupper($request->get('companyPosition')) : 'NA',
-					'FEC_ING' => ($request->get('admissionDate') != '') ? $request->get('admissionDate') : '0000/1/1',
-					'ANTIG' => ($request->get('antiquity') != '') ? $request->get('antiquity') : 1,
-					'SUELDO' => ($request->get('salary') != '') ? $request->get('salary') : 0,
-					'TIPO_CONT' => ($request->get('typeContract') != '') ? strtoupper($request->get('typeContract')) : 'NA',
-					'OTROS_ING' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
-					'CAMARAC' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
-					'NIT_IND' => ($request->get('nitInd') != '') ? $request->get('nitInd') : 0,
-					'RAZON_IND' => ($request->get('companyNameInd') != '') ? $request->get('companyNameInd') : 'NA',
-					'ACT_IND' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
-					'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '0000/1/1',
-					'EDAD_INDP' => ($request->get('antiquityInd') != '') ? $request->get('antiquityInd') : 1,
-					'SUELDOIND' => ($request->get('salaryInd') != '') ? $request->get('salaryInd') : 0,
-					'BANCOP' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA'
-				];
-
-				
-
-				$identificationNumber = (string)$identificationNumber;
-
-				$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
-
-				$solic_fab= new Application;
-
-				$solic_fab->setConnection('oportudata');
-
-				$soliData=[
-					'CLIENTE'=>$identificationNumber,
-					'CODASESOR'=>$codeAssessor,
-					'FECHASOL'=>date("Y-m-d H:i:s",strtotime($dateLead)),
-					'SUCURSAL'=>$sucursal,
-					'ESTADO'=>$estado,
-					'FTP'=>$ftp,
-					'STATE'=>$state
-				];
-
-				$solic_fab->CLIENTE=$identificationNumber;
-				$solic_fab->CODASESOR=$codeAssessor;
-				$solic_fab->FECHASOL=date("Y-m-d H:i:s",strtotime($dateLead));
-				$solic_fab->SUCURSAL=$sucursal;
-				$solic_fab->ESTADO=$estado;
-				$solic_fab->FTP=$ftp;
-				$solic_fab->CODASESOR=$codeAssessor;
-				$solic_fab->STATE=$state;
-				$solic_fab->GRAN_TOTAL=$granTotal;
+			$solic_fab->CLIENTE=$identificationNumber;
+			$solic_fab->CODASESOR=$codeAssessor;
+			$solic_fab->FECHASOL=date("Y-m-d H:i:s",strtotime($dateLead));
+			$solic_fab->SUCURSAL=$sucursal;
+			$solic_fab->ESTADO=$estado;
+			$solic_fab->FTP=$ftp;
+			$solic_fab->CODASESOR=$codeAssessor;
+			$solic_fab->STATE=$state;
+			$solic_fab->GRAN_TOTAL=$granTotal;
 
 
-				$solic_fab->save();
+			$solic_fab->save();
 
-				//$createOportudaLead = $solic_fab->updateOrCreate(['CLIENTE'=>$identificationNumber],$soliData)->save();
-
-
-				return response()->json([true]);
-			}
+			//$createOportudaLead = $solic_fab->updateOrCreate(['CLIENTE'=>$identificationNumber],$soliData)->save();
 
 
+			return response()->json([true]);
 		}
 
 		if ($request->get('step') == 'comment') {
@@ -473,18 +402,15 @@ class OportuyaV2Controller extends Controller
 	public function getDataStep2($identificationNumber){
 	      $data = [];
 
-	      $query = sprintf('SELECT `name`, `lastName` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
 
-	      $queryOportudataLead = sprintf("SELECT SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
-	      $resp = DB::select($query);
 	      $resp2 = DB::select($query2);
 
 	      $digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
 
-	      $data['dataLead'] = $resp[0];
 	      $data['digitalAnalyst'] = $digitalAnalysts[0];
 	      $data['cities'] = $resp2;
 	      $data['oportudataLead'] = $respOportudataLead[0];
@@ -504,17 +430,14 @@ class OportuyaV2Controller extends Controller
 	public function getDataStep3($identificationNumber){
 	      $data = [];
 
-	      $query = sprintf('SELECT `name`, `lastName`, `occupation` FROM `leads` WHERE `identificationNumber` = %s ', $identificationNumber);
 	      $query2 = "SELECT `CODIGO` as value, `BANCO` as label FROM BANCO ";
-	      $queryOportudataLead = sprintf("SELECT CEDULA as identificationNumber, NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue, `CAMARAC` as camaraComercio, `NIT_IND` as nitInd, `RAZON_IND` as companyNameInd, `FEC_CONST` as dateCreationCompany, `EDAD_INDP` as antiquityInd, `SUELDOIND` as salaryInd, `BANCOP` as bankSavingsAccount, `ACT_IND` as whatSell
+	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, ACTIVIDAD as occupation, CEDULA as identificationNumber, NIT_EMP as nit, RAZON_SOC as companyName, DIR_EMP as companyAddres, TEL_EMP as companyTelephone, TEL2_EMP as companyTelephone2, ACT_ECO as eps, CARGO as companyPosition, FEC_ING as admissionDate, ANTIG as antiquity, SUELDO as salary, TIPO_CONT as typeContract, OTROS_ING as otherRevenue, `CAMARAC` as camaraComercio, `NIT_IND` as nitInd, `RAZON_IND` as companyNameInd, `FEC_CONST` as dateCreationCompany, `EDAD_INDP` as antiquityInd, `SUELDOIND` as salaryInd, `BANCOP` as bankSavingsAccount, `ACT_IND` as whatSell
 	      	FROM CLIENTE_FAB 
 	      	WHERE CEDULA = %s ", $identificationNumber);
 	      
-	      $resp = DB::select($query);
 	      $resp2 = DB::connection('oportudata')->select($query2);
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
-	      $data['dataLead'] = $resp[0];
 	      $data['digitalAnalyst'] = $digitalAnalysts[0];
 	      $data['banks'] = $resp2;
 	      $data['oportudataLead'] = $respOportudataLead[0];
