@@ -3860,3 +3860,14 @@ p.wantToSecondTex{
 .btnFilter {
 	margin-left: 3px;
 }
+.gallery-box * {
+	margin: 3px;
+}
+
+.gallery-box a {
+	color: white !important;
+}
+
+.imgContainer {
+	height: 100px;
+}

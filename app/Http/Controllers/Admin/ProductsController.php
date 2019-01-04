@@ -115,15 +115,10 @@ class ProductsController extends Controller
     {
         
            //consulta
-        $product = new Product;
-        $product->name = $request->name;
-        $product->reference = $request->reference;
-        $product->specifications = $request->specifications;
-        $product->price = $request->price;
-        $product->idBrand = $request->idBrand;
-        $product->idLine = $request->idLine;
-        $product->idCity = $request->idCity;
-
+        
+        $file = $request->file('imgs');
+        //$file->move(public_path()."\images\products","prueba.jpeg");
+        return response()->json($request);
         $product->save();
         //resoupuesta
         return response()->json(true);

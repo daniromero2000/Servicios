@@ -25,13 +25,14 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.cities = []; //list of cities returned by server
 	$scope.filtros = false; // display a filter card
 	$scope.activ  = true; // display delete action for each resourse if this is activ 
+	$scope.imgs = {};
 
-
+ 
 	$scope.addResource= function(){
 		$scope.resource = {};
 		$("#addResourceModal").modal("show");
 	};
-
+    
 	// query of Resource index and with filter 
 	$scope.getResource = function(){
 		showLoader();
@@ -41,7 +42,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}else{
 			$scope.activ = true;
 		}
-
+         
 		$http({
 		  method: 'GET',
 		  url: '/products?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete+'&city='+$scope.q.city+'&brand='+$scope.q.brand+'&line='+$scope.q.line
@@ -83,19 +84,25 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 	$scope.createResource = function(){
 		showLoader();
-		$http({
-		  method: 'POST',
-		  url: 'products',
-		  data: $scope.resource
-		}).then(function successCallback(response) {
+		$scope.imgs.flow.upload();
+		fData = new FormData();
+		$scope.resource.imgs = $scope.imgs.flow.files;
+		fData.append("imgs",$scope.resource.imgs);
+		$http.post('products',fData,{
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).then(function successCallback(response) {			
 			if(response.data != false){
 				$scope.search();
 				$("#addResourceModal").modal("hide");
 				hideLoader();
+				console.log(response);
 			}
 		}, function errorCallback(response) {
 			hideLoader();
+			console.log(response);
 		});
+       
 	};
 
 

@@ -105,7 +105,7 @@
 
 
       <!-- Modal Create -->
-        <div class="modal fade" id="addResourceModal" tabindex="-1" role="dialog">
+        <div class="modal fade" id="addResourceModa" tabindex="-1" role="dialog">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -115,20 +115,20 @@
                 <form ng-submit="createResource()">
                   <div class="form-group">
                     <label>Nombre del producto</label>
-                    <input class="form-control" ng-model="resource.name" required >
+                    <input class="form-control" ng-model="resource.name" >
                   </div>
                   <div class="form-group">
                     <label>Referencia</label>
-                    <input class="form-control" ng-model="resource.reference" required >
+                    <input class="form-control" ng-model="resource.reference" >
                   </div>
                   <div class="form-group">
                     <label>Especificaciones</label>
-                    <textarea rows="2" class="form-control" ng-model="resource.specifications" required ></textarea>
+                    <textarea rows="2" class="form-control" ng-model="resource.specifications" ></textarea>
                     
                   </div>
                   <div class="form-group">
                     <label>Precio a crédito</label>
-                    <input type="number" class="form-control" ng-model="resource.price" required >
+                    <input type="number" class="form-control" ng-model="resource.price" >
                   </div>
                   <div class="form-group">
                     <label>Marca</label>
@@ -148,6 +148,139 @@
                       <option ng-repeat="city in cities" value="@{{city.id}}">@{{city.name}}</option>
                     </select>
                   </div>
+
+                 <h4>Imagenes</h4>
+
+                  <div flow-init
+                       flow-files-submitted="$flow.upload()"
+                       flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
+                    <div class="drop" flow-drop ng-class="dropClass">
+                      <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
+                      <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
+                      <b>O</b>
+                      Arrastra y suleta tus archivos aquí
+                    </div>
+
+      
+                    <div class="row">
+
+                      <div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
+                        <span class="title">@{{file.name.substr(0,20)}}</span>
+                        <div class="imgContainer" ng-show="$flow.files.length">
+                          <img flow-img="file"  class="col-sm-12"/>
+                        </div>
+                        <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
+                          <div class="progress-bar progress-bar-striped" role="progressbar"
+                               aria-valuenow="@{{file.progress() * 100}}"
+                               aria-valuemin="0"
+                               aria-valuemax="100"
+                               ng-style="{width: (file.progress() * 100) + '%'}">
+                            <span class="sr-only">@{{file.progress()}}% Complete</span>
+                          </div>
+                        </div>
+                        <div class="btn-group">
+                          <a class="btn btn-sm btn-danger" ng-click="file.cancel()">Eliminar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+                  </form>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
+              </div>
+
+             </form>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+               <!-- Modal Create2 -->
+        <div class="modal fade" id="addResourceModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Nuevo producto</h5>
+              </div>
+              <div class="modal-body">
+                <form ng-submit="createResource()">
+                  <div class="form-group">
+                    <label>Nombre del producto</label>
+                    <input class="form-control" ng-model="resource.name" >
+                  </div>
+                  <div class="form-group">
+                    <label>Referencia</label>
+                    <input class="form-control" ng-model="resource.reference" >
+                  </div>
+                  <div class="form-group">
+                    <label>Especificaciones</label>
+                    <textarea rows="2" class="form-control" ng-model="resource.specifications" ></textarea>
+                    
+                  </div>
+                  <div class="form-group">
+                    <label>Precio a crédito</label>
+                    <input type="number" class="form-control" ng-model="resource.price" >
+                  </div>
+                  <div class="form-group">
+                    <label>Marca</label>
+                      <select class="form-control" ng-model="resource.brandId" ng-options="brand.id as brand.name for brand in brands">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Linea</label>
+                    <select class="form-control" ng-model="resource.lineId" ng-options="line.id as line.name for line in lines">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Ciudad</label>
+                    <select class="form-control" ng-model="resource.cityId" ng-options="city.id as city.name for city in cities">
+                    </select>
+                  </div>
+
+
+                 <h4>Imagenes</h4>
+                 <p>(solo se permite imágenes en formato jpg y jpeg)</p>
+
+                  <div flow-init
+                       flow-files-submitted="$flow.upload()"
+                       flow-file-added="!!{jpg:1,jepg:1}[$file.getExtension()]"
+                       flow-name="imgs.flow">
+                    <div class="drop" flow-drop ng-class="dropClass">
+                      <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
+                      <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
+                      <b>O</b>
+                      Arrastra y suleta tus archivos aquí
+                    </div>
+
+      
+                    <div class="row">
+
+                      <div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
+                        <span class="title">@{{file.name.substr(0,20)}}</span>
+                        <div class="imgContainer" ng-show="$flow.files.length">
+                          <img flow-img="file"  class="col-sm-12"/>
+                        </div>
+                        <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
+                          <div class="progress-bar progress-bar-striped" role="progressbar"
+                               aria-valuenow="@{{file.progress() * 100}}"
+                               aria-valuemin="0"
+                               aria-valuemax="100"
+                               ng-style="{width: (file.progress() * 100) + '%'}">
+                            <span class="sr-only">@{{file.progress()}}% Complete</span>
+                          </div>
+                        </div>
+                        <div class="btn-group">
+                          <a class="btn btn-sm btn-danger" ng-click="file.cancel()">Eliminar</a>
+                        </div>
+                      </div>
+                
+                    </div>
+                  </div>
+                        
+
               <div class="modal-footer">
                   <button type="submit" class="btn btn-primary">Guardar</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
@@ -158,6 +291,8 @@
           </div>
         </div>
       </div>
+
+
         
                <!-- Modal DELETE-->
       <div class="modal fade" id="Delete" tabindex="-1" role="dialog">
@@ -282,26 +417,26 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Nuevo producto</h5>
+                <h5 class="modal-title">Actualizar producto</h5>
               </div>
               <div class="modal-body">
                 <form ng-submit="UpdateResource()">
                   <div class="form-group">
                     <label>Nombre del producto</label>
-                    <input class="form-control" ng-model="resource.name" required >
+                    <input class="form-control" ng-model="resource.name" >
                   </div>
                   <div class="form-group">
                     <label>Referencia</label>
-                    <input class="form-control" ng-model="resource.reference" required >
+                    <input class="form-control" ng-model="resource.reference" >
                   </div>
                   <div class="form-group">
                     <label>Especificaciones</label>
-                    <textarea rows="2" class="form-control" ng-model="resource.specifications" required ></textarea>
+                    <textarea rows="2" class="form-control" ng-model="resource.specifications" ></textarea>
                     
                   </div>
                   <div class="form-group">
                     <label>Precio a crédito</label>
-                    <input type="number" class="form-control" ng-model="resource.price" required >
+                    <input type="number" class="form-control" ng-model="resource.price" >
                   </div>
                   <div class="form-group">
                     <label>Marca</label>

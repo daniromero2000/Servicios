@@ -6,7 +6,7 @@
     **Descripción: relacion con la ruta a usuarse en esta app
     **Fecha: 12/12/2018
      **/
-var app =  angular.module('ProductApp',['ngRoute']);
+var app =  angular.module('ProductApp',['ngRoute','flow']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
