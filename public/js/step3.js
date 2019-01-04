@@ -19,7 +19,11 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 		camaraComercio: null,
 		whatSell:'',
 		dateCreationCompany: '',
-		bankSavingsAccount:null
+		bankSavingsAccount:null,
+		NOM_REFPER: '',
+		TEL_REFPER: '',
+		NOM_REFFAM: '',
+		TEL_REFFAM: ''
 	};
 
 	$scope.timesContact = [

@@ -66,7 +66,7 @@
 				{{ csrf_field() }}
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="dateDocumentExpedition">Fecha Expedición Documento</label>
+						<label for="dateDocumentExpedition">Fecha Expedición Documento*</label>
 					    <div class="input-group"
 					         moment-picker="leadInfo.dateDocumentExpedition"
 					         format="YYYY-MM-DD">
@@ -78,18 +78,18 @@
 					    </div>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="cityExpedition">Ciudad Expedición Documento </label>
+						<label for="cityExpedition">Ciudad Expedición Documento* </label>
 					    <select class="form-control inputsSteps inputSelect" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.label as city.label for city in cities" required></select>
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingType">Tipo de Vivienda</label>
+						<label for="housingType">Tipo de Vivienda*</label>
 						<select class="form-control inputsSteps inputSelect" id="housingType" ng-model="leadInfo.housingType" ng-change="changeHousingType()" ng-options="type.value as type.label for type in housingTypes" required="">
 						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="housingTime">Antigüedad en la Vivienda (Meses)</label>
+						<label for="housingTime">Antigüedad en la Vivienda (Meses)*</label>
 						<input type="number" ng-model="leadInfo.housingTime" class="form-control inputsSteps inputText" id="housingTime" validation-pattern="number" required="" />
 					</div>
 					<div class="col-sm-12 col-md-4 form-group" ng-hide="leadInfo.housingType == 'PROPIA'">
@@ -99,7 +99,7 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="addres">Dirección Residencia</label>
+						<label for="addres">Dirección Residencia*</label>
 						<input type="text" class="form-control inputsSteps inputText" validation-pattern="text" ng-model="leadInfo.addres" id="addres" required="" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group" ng-show="leadInfo.housingType == 'ARRIENDO'">
@@ -131,12 +131,12 @@
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="gender">Género</label>
+						<label for="gender">Género*</label>
 						<select class="form-control inputsSteps inputSelect" id="gender" ng-model="leadInfo.gender" ng-options="gender.value as gender.label for gender in genders" required="">
 						</select>
 					</div>
 					<div class="col-sm-12 col-md-4 form-group">
-						<label for="civilStatus">Estado Civil</label>
+						<label for="civilStatus">Estado Civil*</label>
 						<select class="form-control inputsSteps inputSelect" id="civilStatus" ng-model="leadInfo.civilStatus" ng-options="civilType.value as civilType.label for civilType in civilTypes" required="">
 						</select>
 					</div>

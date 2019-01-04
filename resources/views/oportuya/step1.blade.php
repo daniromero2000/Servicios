@@ -67,29 +67,29 @@
 				<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="name" class="control-label">Nombres</label>
+						<label for="name" class="control-label">Nombres*</label>
 						<input type="text" name="name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true"/>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="lastName" class="control-label">Apellidos</label>
+						<label for="lastName" class="control-label">Apellidos*</label>
 						<input type="text" name="lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true"/>
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 form-group">
-						<label for="email" class="control-label">Correo electronico</label>
+						<label for="email" class="control-label">Correo electronico*</label>
 						<input type="email" name="email" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"/>
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono</label>
+							<label for="telephone class="control-label">Teléfono*</label>
 							<input type="text" name="telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true"/>
 						</div>
 					</div>
 					<div class="col-12 col-sm-6">
-						<label for="occupation">Ocupación</label>
+						<label for="occupation">Ocupación*</label>
 						<select class="form-control inputsSteps inputSelect" name="occupation" required="">
 							<option value="">Seleccione...</option>
 							<option value="EMPLEADO">Empleado</option>
@@ -104,7 +104,7 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
-						<label for="typeDocument">Tipo de documento</label>
+						<label for="typeDocument">Tipo de documento*</label>
 						<select class="form-control inputsSteps inputSelect" name="typeDocument" id="typeDocument" required="">
 							<option value="">Seleccione...</option>
 							<option value="1">Cédula de ciudadanía</option>
@@ -120,14 +120,14 @@
 						</select>
 					</div>
 					<div class="col-12 col-sm-6 form-group">
-						<label for="identificationNumber">Número de identificación</label>
+						<label for="identificationNumber">Número de identificación*</label>
 						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" name="identificationNumber" id="identificationNumber" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-12">
 						<div class="form-group">
-							<label for="city" class="control-label">Ciudad</label>
+							<label for="city" class="control-label">Ciudad**</label>
 							<select name="city" id="city" class="form-control inputsSteps inputSelect" required="">
 								<option value="">Seleccione...</option>
 								@foreach($cities as $city)

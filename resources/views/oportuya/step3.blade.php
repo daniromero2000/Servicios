@@ -72,17 +72,17 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyName">Nombre de la Empresa</label>
+							<label for="companyName">Nombre de la Empresa*</label>
 							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyAddres">Dirección de la Empresa</label>
+							<label for="companyAddres">Dirección de la Empresa*</label>
 							<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text" ng-model="leadInfo.companyAddres" required="" />
 						</div>
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyTelephone">Teléfono de la Empresa</label>
+							<label for="companyTelephone">Teléfono de la Empresa*</label>
 							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
@@ -92,11 +92,11 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="eps">EPS</label>
+							<label for="eps">EPS*</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
-							<label for="companyPosition">Cargo</label>
+							<label for="companyPosition">Cargo*</label>
 							<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-4 form-group">
@@ -124,18 +124,13 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label>Tipo de Contrato</label>
+							<label>Tipo de Contrato*</label>
 							<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract" validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts" required="">
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="otherRevenue">Otros ingresos</label>
 							<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
-						</div>
-					</div>
-					<div class="row resetRow">
-						<div class="col-12 text-center form-group">
-							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
 					</div>
 				</div>
@@ -153,8 +148,8 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyNameInd">Nombre de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyNameInd" validation-pattern="text" ng-model="leadInfo.companyNameInd" />
+							<label for="companyNameInd">Nombre de la Empresa*</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyNameInd" validation-pattern="text" ng-model="leadInfo.companyNameInd" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="whatSell">Qué Vendes o Comercializas?</label>
@@ -163,16 +158,16 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
+							<label for="eps">EPS*</label>
+							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="dateCreationCompany">Fecha de Constitución</label>
+							<label for="dateCreationCompany">Fecha de Constitución*</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" required="" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -181,33 +176,28 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquityInd">Atigüedad (Meses)</label>
-							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="antiquityInd">Atigüedad (Meses)*</label>
+							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salaryInd">Salario</label>
 							<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
-						</div>
-					</div>
-					<div class="row resetRow">
-						<div class="col-12 text-center form-group">
-							<button class="btn btn-primary btnStep">Siguiente</button>
 						</div>
 					</div>
 				</div>
 				<div ng-if="leadInfo.occupation == 'PENSIONADO'">
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label>Nombre de la Empresa</label>
-							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" />
+							<label>Nombre de la Empresa*</label>
+							<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text" ng-model="leadInfo.companyName" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="dateCreationCompany">Fecha de Pensión</label>
+							<label for="dateCreationCompany">Fecha de Pensión*</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
-							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" required="" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>
@@ -216,8 +206,8 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquity">Atigüedad (Meses)</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity"  validation-pattern="number" class="form-control inputsSteps inputText" />
+							<label for="antiquity">Atigüedad (Meses)*</label>
+							<input type="number" id="antiquity" ng-model="leadInfo.antiquity"  validation-pattern="number" class="form-control inputsSteps inputText" required="" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salaryInd">Salario</label>
@@ -226,19 +216,53 @@
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="eps">EPS</label>
-							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
+							<label for="eps">EPS*</label>
+							<input type="text" id="eps" required="" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
-							<label for="bankSavingsAccount">Banco</label>
-							<select ng-model="leadInfo.bankSavingsAccount" id="bankSavingsAccount" class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks">
+							<label for="bankSavingsAccount">Banco*</label>
+							<select ng-model="leadInfo.bankSavingsAccount" id="bankSavingsAccount" class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks" required="">
 							</select>
 						</div>
 					</div>
-					<div class="row resetRow">
-						<div class="col-12 text-center form-group">
-							<button class="btn btn-primary btnStep">Siguiente</button>
-						</div>
+				</div>
+				<div class="row resetRow">
+					<div class="forms-descStep" style="margin: 10px 0;">
+						<strong>Solo te pedimos</strong><br>
+						<span class="forms-descText">2 referencias</span>
+						<img src="{{ asset('images/datosLaborales.png') }}" class="img-fluid forms-descImg" />
+						<span class="forms-descStepNum">3</span>
+					</div>
+				</div>
+				<div class="row resetRow">
+					<div class="col-12">
+						<label class="textRefs">Referencia personal</label>
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="NOM_REFPER">Nombre*</label>
+						<input type="text" ng-model="leadInfo.NOM_REFPER" id="NOM_REFPER" validation-pattern="name" class="form-control inputsSteps inputText" required="true" />
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="TEL_REFPER">Celular*</label>
+						<input type="text" ng-model="leadInfo.TEL_REFPER" id="TEL_REFPER" validation-pattern="telephone" class="form-control inputsSteps inputText" required="true" />
+					</div>
+				</div>
+				<div class="row resetRow">
+					<div class="col-12">
+						<label class="textRefs">Referencia familar</label>
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="NOM_REFFAM">Nombre*</label>
+						<input type="text" ng-model="leadInfo.NOM_REFFAM" id="NOM_REFFAM" validation-pattern="name" class="form-control inputsSteps inputText" required="true" />
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="TEL_REFFAM">Celular*</label>
+						<input type="text" ng-model="leadInfo.TEL_REFFAM" id="TEL_REFFAM" validation-pattern="telephone" class="form-control inputsSteps inputText" required="true" />
+					</div>
+				</div>
+				<div class="row resetRow">
+					<div class="col-12 text-center form-group">
+						<button class="btn btn-primary btnStep">Siguiente</button>
 					</div>
 				</div>
 			</form>
@@ -263,8 +287,8 @@
 							<div class="col-sm-7 offset-sm-5">
 								<form ng-submit="sendComment()">
 									<div class="form-group">
-										<label for="">A que hora te podemos llamar</label>
-										<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact" class="form-control">
+										<label for="">A que hora te podemos llamar*</label>
+										<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact" class="form-control" required="">
 										</select>
 									</div>
 									<div class="form-group">
