@@ -200,6 +200,7 @@ Route::get("/fabricaLeads",function(){
 	return view('fabricaLeads.index');
 });
 
+
 Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
 
     Route::get('/leads', function(){
@@ -220,6 +221,9 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
         return view('fabricaLeads.leads');
     });
 });
+//Route::get('/getCreditPolicy','Admin\CreditPolicyController@index');
+
+
 
 /**
     **Proyecto: SERVICIOS FINANCIEROS
@@ -291,6 +295,20 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 **/
+Route::resource('creditPolicy','Admin\CreditPolicyController');
+
+
+Route::get("/adminCreditPolicy",function(){
+        return view('creditPolicy.index');
+    });
+
+ Route::group(['prefix'=>'/adminCreditPolicy/'],function(){
+
+        Route::get('/creditPolicy',function(){
+            return view('creditPolicy.creditPolicy');
+        });
+
+    });
 
     Route::resource('users','Admin\UserController');
 
