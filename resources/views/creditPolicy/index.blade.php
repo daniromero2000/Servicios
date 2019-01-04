@@ -11,10 +11,19 @@
             </div>
         @endif
         
+        @if(isset(Auth::user()->idProfile) && (((Auth::user()->idProfile) == 1) || ((Auth::user()->idProfile) == 5)))
             
             <div class="container">
-                <ng-view></ng-view> 
+                <ng-view></ng-view>
             </div> 
+
+        @else
+
+            <script type="text/javascript">
+                window.location = "/dashboard";
+            </script>  
+
+        @endif
 
     </div>
     <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
