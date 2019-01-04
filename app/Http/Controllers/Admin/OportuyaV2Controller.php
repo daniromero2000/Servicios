@@ -1,5 +1,29 @@
 <?php
 
+/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Modulo: MODULO Oportuya
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Descripción: Controlador de solicitud de credito oportuya, 
+    **				donde mediante los datos ingresados
+    **				en un formulario divido en tres pasos se puede pre-aprobar
+    **				o negar una solicitud de tarjeta oportuya.
+    **Fecha: 15/11/2018
+     **/
+
+
+/**
+    **Project: SERVICIOS FINANCIEROS
+    **Module: Oportuya Module
+    **Author: Sebastian Ormaza
+    **Email: desarrollo@lagobo.com
+    **Author: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Description:Oportuya credit request controller, where people by a form can know if a oportuya credit is pre-approve 
+    **Date: 15/11/2018
+     **/
+
 namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
@@ -42,13 +66,28 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Store a newly created resource in storage.
+	 *	
+	 * it get data from step by step form  (one by step),
+	 * so first through id the register is verified, 
+	 * if this exist, the information is  updated,
+	 * otherwise it store a new register
+	 *
+	 * In the process, the data is stored in OPORTUDATA database
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 * @author Robert García
+	 * @email  desarrollo1@lagobo.com
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
+
 	public function store(Request $request)
 	{	
-		//get step 1 request from sended by form
+		
+		//get step one request from data sended by form
 
 		if(($request->get('step'))==1){
 			$this->validate($request, [
@@ -60,8 +99,9 @@ class OportuyaV2Controller extends Controller
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			}
 
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			//catch data from request and values assigning to leads table columns
+
+			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
 			$lead= new Lead;
@@ -189,14 +229,20 @@ class OportuyaV2Controller extends Controller
 		}
 
 
-		//get step 2 from request form
+		//get step two data from request form
 
 		if($request->get('step')==2){
 			$flag= 0;
 			$identificationNumber = $request->get('identificationNumber');
 
 			$flag=1;
+
+			// CEDULA query from OPORTUDATA data base
+
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+
+			//Assign data from request to CLIENTE_FAB colums
+
 			$dataLead=[
 				'DIRECCION' => strtoupper($request->get('addres')),
 				'FEC_NAC' => $request->get('birthdate'),
@@ -240,7 +286,11 @@ class OportuyaV2Controller extends Controller
 				'CIUD_NAC' => 'NA'
 			];
 
+			//cast $identificationNumber
+
 			$identificationNumber = (string)$identificationNumber;
+
+			// Update/save data in OPORTUDATA data base
 
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
@@ -248,8 +298,14 @@ class OportuyaV2Controller extends Controller
 		}
 
 
+		//get step three data from request form
+
 		if($request->get('step')==3){
+
 			$datosCliente= new DatosCliente;
+
+			//establishing connection to OPORTUDATA data base
+
 			$datosCliente->setConnection('oportudata');
 			$flag=0;
 
@@ -268,6 +324,8 @@ class OportuyaV2Controller extends Controller
 			$flag = 1;
 
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+
+			// Assign data to CLIENTE_FAB columns
 
 			$dataLead=[
 				'NIT_EMP' => ($request->get('nit') != '') ? $request->get('nit') : 0,
@@ -295,6 +353,8 @@ class OportuyaV2Controller extends Controller
 			
 
 			$identificationNumber = (string)$identificationNumber;
+
+			// Update/save information in CLIENTE_FAB table
 
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
@@ -403,6 +463,15 @@ class OportuyaV2Controller extends Controller
 		
 	}
 
+
+	/**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Administrador de Usuarios
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 20/12/2018
+**/
+
 	private function getNumSolic($identificationNumber){
 		$query = sprintf("SELECT `SOLICITUD` FROM `SOLIC_FAB` WHERE `CLIENTE` = %s ORDER BY SOLICITUD DESC LIMIT 1 ", $identificationNumber);
 
@@ -430,6 +499,8 @@ class OportuyaV2Controller extends Controller
 			}	
 		}
 	}
+
+
 
 	private function validatePolicyCredit($identificationNumber){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
@@ -477,13 +548,19 @@ class OportuyaV2Controller extends Controller
 
 	}
 
-	/*public function getDataConsultation($identificationNumber){
 
-		$dataLead=DB::table('leads')->selectRaw('identificationNumber as ced, assessor, created_at as dateLead')
-					->whereRaw('identificationNumber = ?',$identificationNumber)->get();
+	/**
+	 * Get data from step two form  
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string $identificationNumber
+	 * @return array 
+	 */
 
-		return $dataLead;
-	}*/
 
 	public function getDataStep3($identificationNumber){
 	      $data = [];
@@ -503,12 +580,38 @@ class OportuyaV2Controller extends Controller
 	      return $data;
 	}
 
+
+	/**
+	 * Get departament code through city name
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string $nameCity
+	 * @return string  
+	 */
+
 	private function getCodeAndDepartmentCity($nameCity){
 		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
 		$resp = DB::select($query);
 
 		return $resp[0];
 	}
+
+	/**
+	 * calculate the age through birth day
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string $fecha
+	 * @return string age  
+	 */
+
 
 	private function calculateAge($fecha){
 		$time = strtotime($fecha);
@@ -518,6 +621,18 @@ class OportuyaV2Controller extends Controller
 
 		return $age;
 	}
+
+	/**
+	 * Send a city array,digital analist image and name to step1 view 
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  none
+	 * @return view
+	 */
 
 	public function step1(){
 		$cities = [
@@ -571,17 +686,55 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.step1', ['digitalAnalyst' => $digitalAnalyst[0], 'cities' => array_sort($cities, 'label', SORT_DESC)]);
 	}
 
+	/**
+	 * Return step2 view with identificationNumber decrypt
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string
+	 * @return view
+	 */
+
+
 	public function step2($string){
 		$identificactionNumber = $this->decrypt($string);
 
 		return view('oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
 	}
 
+
+	/**
+	 * Return step3 view with identificationNumber decrypt
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string
+	 * @return view
+	 */
+
 	public function step3($string){
 		$identificactionNumber = $this->decrypt($string);
 
 		return view('oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
 	}
+
+	/**
+	 * Encrypt the identificationNumber 
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string
+	 * @return string 
+	 */
 
 	public function encrypt($string) {
 		$string = utf8_encode($string);
@@ -592,6 +745,18 @@ class OportuyaV2Controller extends Controller
 
 		return $string;
 	} 
+
+	/**
+	 * Decrypt the identificationNumber 
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string
+	 * @return string
+	 */
 
 	public function decrypt($string){
 		$string = $string; 
