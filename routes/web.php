@@ -189,14 +189,23 @@ Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2
 
 
 Route::get("/canalDigital",function(){
+     if(Auth::guest()){
+            return view('auth.login');
+        }
 	return view('leads.index');
 });
 
 Route::get("/libranzaLeads",function(){
+     if(Auth::guest()){
+            return view('auth.login');
+        }
 	return view('libranzaLeads.index');
 });
 
 Route::get("/fabricaLeads",function(){
+     if(Auth::guest()){
+            return view('auth.login');
+        }
 	return view('fabricaLeads.index');
 });
 
@@ -244,6 +253,11 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
 
     Route::get("/communityLeads",function(){
+
+        if(Auth::guest()){
+            return view('auth.login');
+        }
+
         return view('communityLeads.index');
     });
 
@@ -275,6 +289,9 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     Route::post('community/updateCampaign','Admin\CampaignController@update')->middleware('cors');
 
     Route::get('/community',function(){
+        if(Auth::guest()){
+            return view('auth.login');
+        }
         return view('campaign.index');
     });
 
@@ -299,6 +316,9 @@ Route::resource('creditPolicy','Admin\CreditPolicyController');
 
 
 Route::get("/adminCreditPolicy",function(){
+        if(Auth::guest()){
+            return view('auth.login');
+        }
         return view('creditPolicy.index');
     });
 
@@ -313,6 +333,9 @@ Route::get("/adminCreditPolicy",function(){
     Route::resource('users','Admin\UserController');
 
     Route::get('/adminUsers',function(){
+        if(Auth::guest()){
+            return view('auth.login');
+        }
         return view('users.index');
     });
 

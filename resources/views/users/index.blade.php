@@ -11,7 +11,7 @@
             </div>
         @endif
  
-        @if((Auth::user()->idProfile) == 1)
+        @if(isset(Auth::user()->idProfile) && (Auth::user()->idProfile) == 1)
             
             <div class="container">
                 <ng-view></ng-view>
