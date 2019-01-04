@@ -413,7 +413,9 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateConsultaComercial($identificationNumber){
 		$dateNow = date('Y-m-d');
-		$dateTwoMonths = strtotime ( '-2 month' , strtotime ( $dateNow ) ) ;
+		$queryTimeCreditPolicy = DB::connection('mysql')->select("SELECT timeLimit FROM credit_policy LIMIT 1");
+		$timeScore = $queryTimeCreditPolicy[0]->timeLimit;
+		$dateTwoMonths = strtotime ($timeScore, strtotime ( $dateNow ) ) ;
 		$dateTwoMonths = date ( 'Y-m-d' , $dateTwoMonths );
 		$dateLastConsultaComercial = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(empty($dateLastConsultaComercial)){
