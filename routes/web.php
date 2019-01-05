@@ -408,8 +408,8 @@ Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
 Route::group(['prefix'=>'/Brands/','middleware' => 'auth'],function(){
 
 	Route::get("/",function(){
-		return view('brands.index');
-	})->name('brands');
+        return view('brands.index');
+    })->name('brands');
 
     Route::get('/admin', function(){
         return view('brands.admin');
@@ -455,6 +455,23 @@ Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
     });
 });
 
+// Administrator
+Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/Catalog'], function(){
+        Route::get("/Products",function(){
+            return view('catalog.products.index');
+        })->name('products');
 
+        Route::get("/Lines",function(){
+            return view('catalog.lines.index');
+        })->name('lines');
 
+        Route::get("/Brands",function(){
+            return view('catalog.brands.index');
+        })->name('brands');
 
+        Route::get("/",function(){
+            return view('catalog.index');
+        })->name('products');
+    });
+});
