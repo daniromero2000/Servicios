@@ -17,8 +17,64 @@
 
 @section('content')
 
-<!-- Header viajes -->
+<div id="construccion">
+		<div class="container">
+			<h2 class="creditoLibranza-title text-center">Esta sección está actualmente en construcción</h2>
+			<p class="text-center">Si te interesa conocer más sobre nuestros créditos para viajes, déjanos tus datos y un asesor se pondrá en contacto</p>
+			<div class="modalFormulario-body" style="margin: auto;">
+				<div class="modal-containerFormulario">
+					<h3 class="modal-titleForm titleForm-viajes">Viajes</h3>
+					<form role=form method="POST" id="saveLeadmotos" action="{{ route('motos.store') }}">
+						{{ csrf_field() }}
+						<input type="hidden" name="typeProduct" value="viajes">
+						<input type="hidden" name="typeService" value="viajes">
+						<input type="hidden" name="channel" value="1">
+						<div class="form-group">
+							<label for="name" class="control-label">Nombres</label>
+							<input type="text" name="name" id="name" class="form-control" validation-pattern="name" required="true"  />
+						</div>
+						<div class="form-group">
+							<label for="lastName" class="control-label">Apellidos</label>
+							<input type="text" name="lastName" id="lastName" class="form-control" validation-pattern="name" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label">Correo electrónico</label>
+							<input type="email" name="email" id="mail" class="form-control" validation-pattern="email" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="telephone class="control-label">Teléfono</label>
+							<input type="text" name="telephone" id="telephone" class="form-control" validation-pattern="telephone" required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="ciudad class="control-label">Ciudad</label>
+							<select name="city" id="city" class="form-control" >
+								@foreach($cities as $city)
+									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
+							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
+								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
+							</label>
+						</div>
+						<p class="textCityForm">
+							*Válido solo para ciudades que se desplieguen en la casilla.
+						</p>
+						<div class="form-group text-right">
+							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
+								Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
+<!-- Header viajes -->
+<!--
 <div id="viajesHeader">
 	<div class="row viajesHeaderContent">
 		<div class="col-sm-3 col-xl-3 col-lg-2 helperRow">
@@ -133,12 +189,12 @@
 </div>
 
 
-
+-->
 
 
 <!-- Slider Viajes -->
 
-
+<!---
 <div id="viajesSlider">
 	@foreach($imagesViajes as $slider)
 		<div class="containImg">
@@ -258,9 +314,10 @@
 		</div>
 	</div>
 </div>
+-->
 
 <!-- conoce Colombia -->
-
+<!--
 <div id="conoceViajes">
 	<div class="containImg">
 		<img src="/images/viajesConoce.jpg" class="img-fluid">
@@ -275,8 +332,10 @@
 		</div>
 	</div>
 </div>	
-
+-->
 <!-- Bustour -->
+
+<!--
 
 <div id="bustour" class="w-100">
 	<div class="row">
@@ -328,10 +387,10 @@
 
 	</div>
 </div>
-
+-->
 
 <!--Plans-->
-
+<!--
 <div id="plans">
 	<div class="row">
 		<div class="plansTitle">
@@ -347,7 +406,7 @@
 			<div class="col-sm-12 col-md-12 col-lg-3">
 			<section>
 				<div class="imgPLan">
-					<img src="images/<?php echo $plan['img']; ?>" class="img-fluid">
+					<img src="images/<?php //echo $plan['img']; ?>" class="img-fluid">
 				</div>
 				<div class="plansdate">
 					
@@ -383,8 +442,10 @@
 		@endforeach
 	</div>
 </div>
-
+-->
 <!--Travel Offers-->
+
+<!--
 
 <div id="travelOffers">
 	<div class="row">
@@ -464,10 +525,10 @@
 	</div>
 </div>
 
-
+-->
 
 <!-- Want to Travel -->
-
+<!--
 <div id="wantToTravel">
 	<div class="containImg">
 		<img src="{{asset('images/viajes-quieroViajar.jpg')}}" class="img-fluid">
@@ -489,6 +550,6 @@
 		</div>
 	</div>
 </div>	
-
+-->
 	
 @endsection
