@@ -66,7 +66,7 @@ app.controller('brandsController', function($scope, $http, $rootScope){
 	$scope.createBrand = function(){
 		$http({
 		  method: 'POST',
-		  url: 'brands',
+		  url: '/brands',
 		  data: $scope.brand
 		}).then(function successCallback(response) {
 			if(response.data != false){

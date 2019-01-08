@@ -67,7 +67,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 	$scope.createResource = function(){
 		$http({
 		  method: 'POST',
-		  url: 'lines',
+		  url: '/lines',
 		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){

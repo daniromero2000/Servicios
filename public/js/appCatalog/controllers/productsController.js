@@ -6,8 +6,8 @@
     **Descripción: controlador para la administracion productos
     **Fecha: 19/12/2018
      **/
-app.controller('productsController', function($scope, $http, $rootScope){
-
+app.controller('productsController', function($scope, $http, $rootScope, $ngBootbox, $location){
+	$ngBootbox.setLocale('es');
 	$scope.q = {
 		'q': '',
 		'page': 30,
@@ -46,7 +46,7 @@ app.controller('productsController', function($scope, $http, $rootScope){
 		$http({
 		  method: 'GET',
 		  url: '/products?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete+'&city='+$scope.q.city+'&brand='+$scope.q.brand+'&line='+$scope.q.line
-		}).then(function successCallback(response) {			
+		}).then(function successCallback(response) {
 			if(response != false){
 				$scope.resources = response.data[0];
 				$scope.lines = response.data[1];
@@ -84,52 +84,29 @@ app.controller('productsController', function($scope, $http, $rootScope){
 
 	$scope.createResource = function(){
 		showLoader();
-		$scope.imgs.flow.upload();
-		fData = new FormData();
-		$scope.resource.imgs = $scope.imgs.flow.files;
-		fData.append("imgs",$scope.resource.imgs);
-		$http.post('products',fData,{
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function successCallback(response) {			
-			if(response.data != false){
-				$scope.search();
-				$("#addResourceModal").modal("hide");
-				hideLoader();
-				console.log(response);
-			}
+		$http({
+		  method: 'POST',
+		  url: '/products',
+		  data: $scope.resource
+		}).then(function successCallback(response) {			
+			hideLoader();
+			$("#addResourceModal").modal("hide");
+			if(response != false){
+				$location.url("Products/" + response.data);
+			}	
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
 		});
-       
 	};
 
+	$scope.edtResource = function(idResource){
+		$location.url("Products/" + idResource);
+	};
 
 	$scope.showDialog = function(resource){
 		$("#Show").modal("show");
 		$scope.resource = resource;
-	};
-	
-	$scope.showUpdateDialog = function(resource){
-		$("#Update").modal("show");
-		$scope.resource = angular.extend({}, resource);
-	};
-
-	$scope.UpdateResource = function(){
-		$http({
-		  method: 'PUT',
-		  url: 'products/'+$scope.resource.id,
-		  data: $scope.resource
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.resource.name = "";
-				$("#Update").modal("hide");
-				$scope.resource = {};
-				$scope.search();
-			}
-		}, function errorCallback(response) {
-		});
 	};
 
 	$scope.showDialogDelete = function(resource){
@@ -140,7 +117,7 @@ app.controller('productsController', function($scope, $http, $rootScope){
 	$scope.deleteResource = function(idResource){
 		$http({
 		  method: 'DELETE',
-		  url: 'products/' + idResource
+		  url: '/products/' + idResource
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");

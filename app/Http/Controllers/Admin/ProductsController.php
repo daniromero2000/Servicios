@@ -113,13 +113,23 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        
-           //consulta
+        //consulta
+        $product = new Product();
+
+        $product->name = $request->get('name');
+        $product->idBrand = $request->get('idBrand');
+        $product->idLine = $request->get('idLine');
+        $product->idCity = $request->get('idCity');
+
+        if($product->save()){
+            return $product->id;
+        }else{
+            return false;
+        }
         
         $file = $request->file('imgs');
         //$file->move(public_path()."\images\products","prueba.jpeg");
         return response()->json($request);
-        $product->save();
         //resoupuesta
         return response()->json(true);
 
@@ -145,7 +155,28 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        //query list of lines
+        $lines = DB::table('lines')
+                ->select('name','id')
+                ->whereNull("deleted_at")
+                ->get();
+
+         //query list of brands
+        $brands = DB::table('brands')
+                ->select('name','id')
+                ->whereNull("deleted_at")
+                ->get();
+        //query list of cities
+             
+
+        $cities = DB::table('ciudades')
+                ->select('name','id','departament')
+                ->orderBy('departament')
+                ->get();
+
+        $product = Product::Find($id);
+
+        return response()->json(['product' => $product, 'lines' => $lines, 'brands' => $brands, 'cities' => $cities]);
     }
 
     /**
@@ -157,15 +188,15 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-                   //consulta
+        //consulta
         $product = Product::Find($id);
         $product->name = $request->name;
         $product->reference = $request->reference;
         $product->specifications = $request->specifications;
         $product->price = $request->price;
-        $product->idBrand = $request->brandId;
-        $product->idLine = $request->lineId;
-        $product->idCity = $request->cityId;
+        $product->idBrand = $request->idBrand;
+        $product->idLine = $request->idLine;
+        $product->idCity = $request->idCity;
 
         $product->save();
         //resoupuesta
