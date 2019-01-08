@@ -64,25 +64,16 @@ angular.module('appAssessorStep3', ['moment-picker', 'ng-currency'])
 		showLoader();
 		$http({
 		  method: 'GET',
-		  url: '/assessor/getDataStep3/'+$scope.leadInfo.identificationNumber,
+		  url: '/api/oportuya/getDataStep3/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
 			$scope.banks = response.data.banks;
-			$scope.dataLead = response.data.dataLead;
 			$scope.analyst = response.data.digitalAnalyst;
 			$scope.leadInfo = response.data.oportudataLead;
 			$scope.leadInfo.step = 3;
 			$scope.leadInfo.antiquity = ($scope.leadInfo.antiquity != 0 && $scope.leadInfo.antiquity != '') ? $scope.leadInfo.antiquity : '' ;
 			$scope.leadInfo.salary = ($scope.leadInfo.salary != 0 && $scope.leadInfo.salary != '') ? $scope.leadInfo.salary : '' ;
 			$scope.leadInfo.otherRevenue = ($scope.leadInfo.otherRevenue != 0 && $scope.leadInfo.otherRevenue != '') ? $scope.leadInfo.otherRevenue : '' ;
-			if($scope.dataLead.occupation == 'Empleado'){
-				$scope.idForm = "formEmpleado";
-			}else if($scope.dataLead.occupation == 'Independiente'){
-				$scope.idForm = "formIdependiente";
-			}else{
-				$scope.idForm = "formPensionado";
-			}
-
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);

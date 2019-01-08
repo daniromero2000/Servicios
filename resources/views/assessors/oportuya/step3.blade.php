@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<div>
-				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="dataLead.occupation == 'EMPLEADO' || dataLead.occupation == 'SOLDADO-MILITAR-POLICÍA'">
+				<form ng-submit="saveStep3()" id="formEmpleado" ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA'">
 					{{ csrf_field() }}
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-8 form-group">
@@ -143,7 +143,7 @@
 				</form>
 			</div>
 			<div>
-				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'INDEPENDIENTE CERTIFICADO' || dataLead.occupation == 'RENTISTA'">
+				<form ng-submit="saveStep3()" id="formIdependiente" ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
 					{{ csrf_field() }}
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
@@ -202,7 +202,7 @@
 				</form>
 			</div>
 			<div>
-				<form ng-submit="saveStep3()" id="formPensionado" ng-if="dataLead.occupation == 'PENSIONADO'">
+				<form ng-submit="saveStep3()" id="formPensionado" ng-if="leadInfo.occupation == 'PENSIONADO'">
 					{{ csrf_field() }}
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">

@@ -89,10 +89,7 @@ class OportuyaV2Controller extends Controller
 		
 		//get step one request from data sended by form
 
-		if(($request->get('step'))==1){	
-			$this->validate($request, [
-            	'g-recaptcha-response' => 'required|captcha',
-        	]);
+		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
