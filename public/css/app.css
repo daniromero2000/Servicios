@@ -3347,10 +3347,17 @@ p.wantToSecondTex{
 		margin-left: 25%;
 		transform: translate(-20%)
 	}
+
+	.preHeader-item{
+		padding: 5px 10px 0 10px !important;
+	}
 }
 
 @media(max-width: 768px){
 
+	.preHeader-item:nth-child(3){
+		display: none;
+	}
 	.cardsProfiles .col-6 .card{
 		width: 100%;
 	}
@@ -3577,6 +3584,9 @@ p.wantToSecondTex{
 
 @media(max-width: 576px){
 
+	.preHeader-item:nth-child(2){
+		display: none;
+	}
 	.imagesBustour div.row div.col-sm-4{
 		text-align: center;
 		margin: 20px 0;
