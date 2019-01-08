@@ -90,7 +90,7 @@ class BrandsController extends Controller
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
             }else{
-                return response()->json("indeterminate error");
+                return response()->json($e->getMessage());
             }
         }
     }

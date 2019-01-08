@@ -6,7 +6,7 @@
     **Descripción: view for LINES CRUD
     **Fecha: 12/12/2018
      -->
-
+<h2 class="headerAdmin">Administrador de líneas</h2>
 <div class="row resetRow">
 
     <div class="col-sm-12 col-md-3">

@@ -462,6 +462,10 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('catalog.products.index');
         })->name('products');
 
+        Route::get("/edtProduct",function(){
+            return view('catalog.products.edt');
+        })->name('productsEdt');
+
         Route::get("/Lines",function(){
             return view('catalog.lines.index');
         })->name('lines');
