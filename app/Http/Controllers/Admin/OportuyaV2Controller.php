@@ -89,7 +89,7 @@ class OportuyaV2Controller extends Controller
 		
 		//get step one request from data sended by form
 
-		if(($request->get('step'))==1){
+		if(($request->get('step'))==1){	
 			$this->validate($request, [
             	'g-recaptcha-response' => 'required|captcha',
         	]);
@@ -524,7 +524,7 @@ class OportuyaV2Controller extends Controller
 		$obj = new \stdClass();
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
-		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
+		$ws = new \SoapClient("http://10.238.14.181:2020/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
 
