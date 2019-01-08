@@ -1473,7 +1473,7 @@ a:hover, a:active, a:focus, a:visited{
 	font-weight: 600;
 }
 
-/*Administrador de páginas*/
+/*Administrador de pï¿½ginas*/
 
 .containerPages{
 	padding: 30px;
@@ -1550,7 +1550,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 
-/*Administrador de páginas*/
+/*Administrador de pï¿½ginas*/
 
 
 
@@ -3510,6 +3510,18 @@ p.wantToSecondTex{
 		left: unset;
 		padding-top: 3em;
 		margin-bottom: 3em;
+	}
+
+	.oportuyaSliderDescription{
+		margin-bottom: 40px;
+	}
+
+	.oportuyaSliderContent br{
+		display:none;
+	}
+
+	.oportuyaSliderContent p{
+		color:#000 !important;
 	}
 
 	.slideNext{
