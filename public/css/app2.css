@@ -1009,7 +1009,7 @@ label {
 
 @media(max-width: 768px){
 	.steps-textStep{
-		bottom: -85px;
+		bottom: -50px;
 	}
 	.form-container-logoHeader{
 		margin-bottom: 80px;
