@@ -129,6 +129,9 @@ angular.module('appStep1', [])
 			hideLoader();
 			$scope.leadInfo = response.data;
 			$scope.leadInfo.emailConfirm = response.data.email;
+			$scope.leadInfo.step= 1 ;
+			$scope.leadInfo.channel = 1;
+			$scope.leadInfo.typeService = 'Terjeta de crédito Oportuya';
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -149,6 +152,7 @@ angular.module('appStep1', [])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if (response.data != false) {
 				$scope.encryptText();
 			}

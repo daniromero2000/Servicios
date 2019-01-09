@@ -88,7 +88,6 @@ class OportuyaV2Controller extends Controller
 	{	
 		
 		//get step one request from data sended by form
-
 		if(($request->get('step'))==1){
 			$identificationNumber = $request->get('identificationNumber');
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
@@ -155,7 +154,6 @@ class OportuyaV2Controller extends Controller
 
 
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
-
 			if(($response == true) || ($createLead == true)){
 
 				// $flag =1 means  data into leads table was saved correctly
