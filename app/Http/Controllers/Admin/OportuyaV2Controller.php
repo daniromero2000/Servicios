@@ -222,7 +222,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 
 				return response()->json([true]);
-			}		
+			}
 		}
 
 
@@ -469,6 +469,14 @@ class OportuyaV2Controller extends Controller
     **Fecha: 20/12/2018
 **/
 
+	public function getContactData($identificationNumber){
+		$query = sprintf("SELECT `name`, `lastName`, `email`, `telephone`, `city`, `typeDocument`, `identificationNumber`, `occupation` FROM `leads` WHERE `identificationNumber` = %s LIMIT 1 ", $identificationNumber);
+
+		$resp = DB::select($query);
+
+		return response()->json($resp[0]);
+	}
+
 	private function getNumSolic($identificationNumber){
 		$query = sprintf("SELECT `SOLICITUD` FROM `SOLIC_FAB` WHERE `CLIENTE` = %s ORDER BY SOLICITUD DESC LIMIT 1 ", $identificationNumber);
 
@@ -523,6 +531,60 @@ class OportuyaV2Controller extends Controller
 		$obj->identificationNumber = trim($identificationNumber);
 		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
+	}
+
+	public function getDataStep1(){
+		$data = [];
+
+		$data['cities'] = [
+			[ 'label' => 'Seleccione....', 'value' => '' ],
+			[ 'label' => 'ARMENIA', 'value' => 'ARMENIA' ],
+			[ 'label' => 'MANIZALES', 'value' => 'MANIZALES' ],
+			[ 'label' => 'SINCELEJO', 'value' => 'SINCELEJO' ],
+			[ 'label' => 'YOPAL', 'value' => 'YOPAL' ],
+			[ 'label' => 'CERETÉ', 'value' => 'CERETÉ' ],
+			[ 'label' => 'TULUÁ', 'value' => 'TULUÁ' ],
+			[ 'label' => 'ACACÍAS', 'value' => 'ACACÍAS' ],
+			[ 'label' => 'ESPINAL', 'value' => 'ESPINAL' ],
+			[ 'label' => 'MARIQUITA', 'value' => 'MARIQUITA' ],
+			[ 'label' => 'CARTAGENA', 'value' => 'CARTAGENA' ],
+			[ 'label' => 'LA DORADA', 'value' => 'LA DORADA' ],
+			[ 'label' => 'IBAGUÉ', 'value' => 'IBAGUÉ' ],
+			[ 'label' => 'MONTERÍA', 'value' => 'MONTERÍA' ],
+			[ 'label' => 'MAGANGUÉ', 'value' => 'MAGANGUÉ' ],
+			[ 'label' => 'PEREIRA', 'value' => 'PEREIRA' ],
+			[ 'label' => 'CALI', 'value' => 'CALI' ],
+			[ 'label' => 'MONTELIBANO', 'value' => 'MONTELIBANO' ],
+			[ 'label' => 'SAHAGÚN', 'value' => 'SAHAGÚN' ],
+			[ 'label' => 'PLANETA RICA', 'value' => 'PLANETA RICA' ],
+			[ 'label' => 'COROZAL', 'value' => 'COROZAL' ],
+			[ 'label' => 'CIÉNAGA', 'value' => 'CIÉNAGA' ],
+			[ 'label' => 'MONTELÍ', 'value' => 'MONTELÍ' ],
+			[ 'label' => 'PLATO', 'value' => 'PLATO' ],
+			[ 'label' => 'SABANALARGA', 'value' => 'SABANALARGA' ],
+			[ 'label' => 'GRANADA', 'value' => 'GRANADA' ],
+			[ 'label' => 'PUERTO BERRÍ', 'value' => 'PUERTO BERRÍ' ],
+			[ 'label' => 'VILLAVICENCIO', 'value' => 'VILLAVICENCIO' ],
+			[ 'label' => 'TAURAMENA', 'value' => 'TAURAMENA' ],
+			[ 'label' => 'PUERTO GAITÁN', 'value' => 'PUERTO GAITÁN' ],
+			[ 'label' => 'PUERTO BOYACÁ', 'value' => 'PUERTO BOYACÁ' ],
+			[ 'label' => 'PUERTO LÓPEZ', 'value' => 'PUERTO LÓPEZ' ],
+			[ 'label' => 'SEVILLA', 'value' => 'SEVILLA' ],
+			[ 'label' => 'CHINCHINÁ', 'value' => 'CHINCHINÁ' ],
+			[ 'label' => 'AGUACHICA', 'value' => 'AGUACHICA' ],
+			[ 'label' => 'BARRANCABERMEJA', 'value' => 'BARRANCABERMEJA' ],
+			[ 'label' => 'LA VIRGINIA', 'value' => 'LA VIRGINIA' ],
+			[ 'label' => 'SANTA ROSA DE CABAL', 'value' => 'SANTA ROSA DE CABAL' ],
+			[ 'label' => 'GIRARDOT', 'value' => 'GIRARDOT' ],
+			[ 'label' => 'VILLANUEVA', 'value' => 'VILLANUEVA' ],
+			[ 'label' => 'PITALITO', 'value' => 'PITALITO' ],
+			[ 'label' => 'GARZÓN', 'value' => 'GARZÓN' ],
+			[ 'label' => 'NEIVA', 'value' => 'NEIVA' ],
+			[ 'label' => 'LORICA', 'value' => 'LORICA' ],
+			[ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
+		];;
+
+		return $data;
 	}
 
 	public function getDataStep2($identificationNumber){

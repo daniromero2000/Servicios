@@ -182,6 +182,8 @@ Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComen
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
 /* Apis */
+Route::get('api/oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep1');
+Route::get('api/oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
 Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
 
