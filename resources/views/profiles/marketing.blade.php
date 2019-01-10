@@ -9,21 +9,12 @@
 
 	<div class="card-group">
 
-	   <div class="card">
-	  	<div class="card-header">
-		    <h5 class="card-title hederUser">Gestión de Marcas</h5>
-		</div>
-	    <div class="card-body">
-			<a href="{{route('brands')}}"><span><i class="fab fa-bandcamp iconUser"></i></span></a>
-	    </div>
-	  </div>
-
 	  <div class="card">
 	  	<div class="card-header">
-		    <h5 class="card-title hederUser">Gestión de Lineas</h5>
+		    <h5 class="card-title hederUser">Catalogo</h5>
 		</div>
 	    <div class="card-body">
-			<a href="{{route('products')}}"><span><i class="fas fa-images"></i></span></a>
+			<a href="{{route('products')}}"><span><i class="fas fa-images iconUser"></i></span></a>
 	    </div>
 	  </div>
 

@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="form-group col-12 col-sm-12 col-md-6">
 					<label>Precio a crédito</label>
-					<input type="number" class="form-control" ng-model="resource.price" >
+					<input type="number" class="form-control" ng-model="resource.price" pattern="^[0-9]+">
 				</div>
 				<div class="form-group col-12 col-sm-12 col-md-6">
 					<label>Marca</label>
