@@ -50,6 +50,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		  method: 'GET',
 		  url: '/Administrator/Catalog/deleteImage/'+id,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data != false){
 				$scope.getResource();
 				hideLoader();

@@ -221,7 +221,12 @@ class ProductsController extends Controller
      public function deleteImage($id)
     {
         $images = ProductImage::findOrfail($id);
-        unlink(storage_path("app\public\\".$images->name));
+        if(PHP_OS == "Linux"){
+            unlink(storage_path("app/public/".$images->name));
+        }else{
+            unlink(storage_path("app\public\\".$images->name));
+        }
+        
         $images->delete();
         return response()->json(true);
     }

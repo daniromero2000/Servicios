@@ -60,7 +60,6 @@
 	            <div class="imgContainer">
 	 				<img class="imgCatalog" src="/storage/@{{image.name}}">
 	            </div>
-	            @{{image.id}}
 	            <div class="btn-group">
 	            	<a class="btn btn-sm btn-danger" ng-click="deleteImage(image.id)">Eliminar</a>
 	            </div>
@@ -88,7 +87,7 @@
                   <div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
                     <span class="title">@{{file.name.substr(0,20)}}</span>
                     <div class="imgContainer" ng-show="$flow.files.length">
-                      <img flow-img="file"  class="col-sm-12"/>
+                      <img flow-img="file"  class="imgCatalog"/>
                     </div>
                     <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
                       <div class="progress-bar progress-bar-striped" role="progressbar"
