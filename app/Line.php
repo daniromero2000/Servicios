@@ -20,7 +20,7 @@ class Line extends Model
 
 	protected $dates = ['deleted_at'];
 
-    protected $table = 'Lines';
+    protected $table = 'lines';
 
     protected $fillable = ['id','name'];
 
