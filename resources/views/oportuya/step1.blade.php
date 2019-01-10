@@ -106,15 +106,7 @@
 					</div>
 					<div class="col-12 col-sm-6">
 						<label for="occupation">Ocupación*</label>
-						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required="" ng-disabled="disabledInputs">
-							<option value="">Seleccione...</option>
-							<option value="EMPLEADO">Empleado</option>
-							<option value="SOLDADO-MILITAR-POLICÍA">Soldado - Militar - Policía</option>
-							<option value="PRESTACIÓN DE SERVICIOS">Prestación de Servicios</option>
-							<option value="INDEPENDIENTE CERTIFICADO">Independiente Certificado</option>
-							<option value="NO CERTIFICADO">No Certificado</option>
-							<option value="RENTISTA">Administrador de bienes propios</option>
-							<option value="PENSIONADO">Pensionado</option>
+						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required="" ng-disabled="disabledInputs" ng-options="occu.value as occu.label for occu in occupations">
 						</select>
 					</div>
 				</div>
