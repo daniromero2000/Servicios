@@ -70,6 +70,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 		  url: '/lines',
 		  data: $scope.resource
 		}).then(function successCallback(response) {
+			console.log(response):
 			if(response.data != false){
 				if(response.data=="23000"){
 					document.getElementById('p').innerHTML = "La Linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
@@ -81,6 +82,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 				}	
 			}
 		}, function errorCallback(response) {
+			console.log(response):
 		});
 	};
 
