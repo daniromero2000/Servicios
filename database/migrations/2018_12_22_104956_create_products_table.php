@@ -26,12 +26,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',70)->unique();
-            $table->string('reference',70);
-            $table->text('specifications');
-            $table->integer('price')->unsigned();
+            $table->string('reference',70)->nullable();
+            $table->text('specifications')->nullable();
+            $table->integer('price')->unsigned()->nullable();
             $table->integer('idBrand')->unsigned();
             $table->integer('idLine')->unsigned();
-            $table->integer('idCity')->unsigned();
+            $table->integer('idCity')->unsigned()->nullable();
             $table->softDeletes(); //Colum for soft delete
             $table->timestamps();
 

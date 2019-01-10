@@ -1,6 +1,9 @@
 app.controller('productsEdtController', function($scope, $http, $rootScope, $routeParams, $location){
 	$scope.tabs = 1;
 	$scope.resource = {};
+	$scope.images = [];
+	$scope.imgs = {};
+
 	$scope.getResource = function(){
 		showLoader()
 		$http({
@@ -13,7 +16,9 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				$scope.lines = response.data.lines;
 				$scope.brands = response.data.brands;
 				$scope.cities = response.data.cities;
-			}	
+				$scope.images = response.data.images;
+			}
+			console.log($scope.images)	
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -35,6 +40,52 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				alert("Producto actualizado");
 			}
 		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
+
+		$scope.deleteImage = function(id){
+		showLoader();
+		$http({
+		  method: 'GET',
+		  url: '/Administrator/Catalog/deleteImage/'+id,
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				$scope.getResource();
+				hideLoader();
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+			hideLoader();
+		});
+	};
+
+	$scope.AddImages = function(){
+
+		var formData = new FormData();
+		$scope.imgs.flow.upload();
+		i=0;
+		angular.forEach($scope.imgs.flow.files, function(value) {
+		  formData.append('imgs' + i++,value.file);
+		});
+		formData.append('nImages', i);
+		formData.append('idProduct', $scope.resource.id);
+		showLoader();
+		$http.post('/Administrator/Catalog/images',formData,{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).then(function successCallback(response) {			
+			if(response.data != false){
+				while($scope.imgs.flow.files.length>0){
+					$scope.imgs.flow.cancel();
+				}
+				console.log($scope.imgs.flow.files);
+				$scope.getResource();
+				hideLoader();
+				console.log(response);
+			}
+		}, function errorCallback(response) {
+			hideLoader();
 			console.log(response);
 		});
 	};

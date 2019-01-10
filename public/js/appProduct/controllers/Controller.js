@@ -1,11 +1,11 @@
 	/**
-     /Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador para la administracion productos
-    **Fecha: 19/12/2018
-     **/
+	 /Proyecto: SERVICIOS FINANCIEROS
+	**Caso de Uso: MODULO CATALOGO
+	**Autor: Luis David Giraldo Grajales 
+	**Email: desarrolladorjunior@lagobo.com
+	**Descripción: controlador para la administracion productos
+	**Fecha: 19/12/2018
+	 **/
 app.controller('Controller', function($scope, $http, $rootScope){
 
 	$scope.q = {
@@ -25,14 +25,14 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.cities = []; //list of cities returned by server
 	$scope.filtros = false; // display a filter card
 	$scope.activ  = true; // display delete action for each resourse if this is activ 
-	$scope.imgs = {};
-
+	$scope.imgs = [];
+	$scope.exe=[1,12,15];
  
 	$scope.addResource= function(){
 		$scope.resource = {};
 		$("#addResourceModal").modal("show");
 	};
-    
+	
 	// query of Resource index and with filter 
 	$scope.getResource = function(){
 		showLoader();
@@ -42,7 +42,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}else{
 			$scope.activ = true;
 		}
-         
+		 
 		$http({
 		  method: 'GET',
 		  url: '/products?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete+'&city='+$scope.q.city+'&brand='+$scope.q.brand+'&line='+$scope.q.line
@@ -83,26 +83,37 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	};
 
 	$scope.createResource = function(){
-		showLoader();
+
+		var formData = new FormData();
 		$scope.imgs.flow.upload();
-		fData = new FormData();
-		$scope.resource.imgs = $scope.imgs.flow.files;
-		fData.append("imgs",$scope.resource.imgs);
-		$http.post('products',fData,{
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function successCallback(response) {			
+		i=0;
+		angular.forEach($scope.imgs.flow.files, function(value) {
+		  formData.append('imgs' + i++,value.file);
+		});
+		formData.append('reference', $scope.resource.reference);
+		formData.append('specifications', $scope.resource.specifications);
+		formData.append('name', $scope.resource.name);
+		formData.append('price', $scope.resource.price);
+		formData.append('brandId', $scope.resource.brandId);
+		formData.append('lineId', $scope.resource.lineId);
+		formData.append('cityId', $scope.resource.cityId);
+		formData.append('nImages', i);
+		showLoader();
+		$http.post('products',formData,{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).then(function successCallback(response) {			
 			if(response.data != false){
 				$scope.search();
 				$("#addResourceModal").modal("hide");
 				hideLoader();
+				formData.getAll("imgs");
 				console.log(response);
 			}
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
 		});
-       
 	};
 
 

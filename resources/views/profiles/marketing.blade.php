@@ -23,7 +23,7 @@
 		    <h5 class="card-title hederUser">Gestión de Lineas</h5>
 		</div>
 	    <div class="card-body">
-			<a href="{{route('lines')}}"><span><i class="fas fa-bezier-curve iconUser"></i></span></a>
+			<a href="{{route('products')}}"><span><i class="fas fa-images"></i></span></a>
 	    </div>
 	  </div>
 

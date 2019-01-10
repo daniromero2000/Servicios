@@ -17,6 +17,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
+use App\ProductImage;
+use Files;
 
 
 
@@ -127,12 +129,6 @@ class ProductsController extends Controller
             return false;
         }
         
-        $file = $request->file('imgs');
-        //$file->move(public_path()."\images\products","prueba.jpeg");
-        return response()->json($request);
-        //resoupuesta
-        return response()->json(true);
-
     }
     
 
@@ -174,9 +170,15 @@ class ProductsController extends Controller
                 ->orderBy('departament')
                 ->get();
 
+         //images list query
+        $images = DB::table('product_images')
+                ->select('id','name')
+                ->where('idProduct',$id)
+                ->get();
+
         $product = Product::Find($id);
 
-        return response()->json(['product' => $product, 'lines' => $lines, 'brands' => $brands, 'cities' => $cities]);
+        return response()->json(['product' => $product, 'lines' => $lines, 'brands' => $brands, 'cities' => $cities, 'images' => $images]);
     }
 
     /**
@@ -212,6 +214,31 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrfail($id)->delete();
+
+        return response()->json(true);
+    }
+
+     public function deleteImage($id)
+    {
+        $images = ProductImage::findOrfail($id);
+        unlink(storage_path("app\public\\".$images->name));
+        $images->delete();
+        return response()->json(true);
+    }
+
+    public function images(Request $request)
+    {
+      
+        for ($i=0; $i < (int)$request->nImages ; $i++) { 
+
+            //query
+            $images = new ProductImage();
+
+            $images->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
+            $images->idProduct = $request->idProduct;
+            $images->save();
+
+        }
         return response()->json(true);
     }
 

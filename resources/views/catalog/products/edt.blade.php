@@ -55,37 +55,57 @@
 		</form>
 	</div>
 	<div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab" ng-class="{ 'show active': tabs == 2 }">
-		<h4>Imagenes</h4>
-		<div flow-init
-		flow-files-submitted="$flow.upload()"
-		flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
-			<div class="drop" flow-drop ng-class="dropClass">
-				<span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
-				<span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
-				<b>O</b>
-				Arrastra y suleta tus archivos aquí
-			</div>
+		<div class="row">
+		  <div ng-repeat="image in images" class="gallery-box col-sm-3">
+	            <div class="imgContainer">
+	 				<img class="imgCatalog" src="/storage/@{{image.name}}">
+	            </div>
+	            @{{image.id}}
+	            <div class="btn-group">
+	            	<a class="btn btn-sm btn-danger" ng-click="deleteImage(image.id)">Eliminar</a>
+	            </div>
+           </div>
+          </div>
+	    <h4>Imagenes</h4>
+        <p>(solo se permite imágenes en formato jpg y jpeg)</p>
+        	<form ng-submit="AddImages()">
 
-			<div class="row">
-				<div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
-					<span class="title">@{{file.name.substr(0,20)}}</span>
-					<div class="imgContainer" ng-show="$flow.files.length">
-						<img flow-img="file"  class="col-sm-12"/>
-					</div>
-						<div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
-							<div class="progress-bar progress-bar-striped" role="progressbar"
-							aria-valuenow="@{{file.progress() * 100}}"
-							aria-valuemin="0"
-							aria-valuemax="100"
-							ng-style="{width: (file.progress() * 100) + '%'}">
-								<span class="sr-only">@{{file.progress()}}% Complete</span>
-							</div>
-						</div>
-					<div class="btn-group">
-					<a class="btn btn-sm btn-danger" ng-click="file.cancel()">Eliminar</a>
-					</div>
-				</div>
-			</div>
-		</div>
+              <div flow-init
+                   flow-files-submitted="$flow.upload()"
+                   flow-file-added="!!{jpg:1,jepg:1}[$file.getExtension()]"
+                   flow-name="imgs.flow">
+                <div class="drop" flow-drop ng-class="dropClass">
+                  <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
+                  <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
+                  <b>O</b>
+                  <span>  Arrastra y suleta tus archivos aquí </span>
+                  <button type="submit" class="btn btn-outline-primary">Subir imagenes</button>
+                </div> 
+
+  
+                <div class="row">
+
+                  <div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
+                    <span class="title">@{{file.name.substr(0,20)}}</span>
+                    <div class="imgContainer" ng-show="$flow.files.length">
+                      <img flow-img="file"  class="col-sm-12"/>
+                    </div>
+                    <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
+                      <div class="progress-bar progress-bar-striped" role="progressbar"
+                           aria-valuenow="@{{file.progress() * 100}}"
+                           aria-valuemin="0"
+                           aria-valuemax="100"
+                           ng-style="{width: (file.progress() * 100) + '%'}">
+                        <span class="sr-only">@{{file.progress()}}% Complete</span>
+                      </div>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn btn-sm btn-danger" ng-click="file.cancel()">Eliminar</a>
+                    </div>
+                  </div>
+            
+                </div>
+              </div>
+            </form>
 	</div>
 </div>
