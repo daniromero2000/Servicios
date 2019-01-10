@@ -8,7 +8,7 @@
 @endsection()
 
 @section('content')
-	<div id="step1">
+	<div id="step1" ng-app="appAssessorStep1" ng-controller="assessorStep1Ctrl" ng-init="leadInfo.assessor = {{Auth::user()->CODIGO}}">
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
 				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
@@ -54,83 +54,71 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form method="POST" id="saveLeadOportuya" action="{{ route('oportuyaV2.store') }}">
-				{{ csrf_field() }}
-				<input type="hidden" name="step" value="1">
-				<input type="hidden" name="channel" value="1">
-				<input type="hidden" name="typeService" value="terjeta de crédito Oportuya">
-				<input type="hidden" name="assessor" value="{{Auth::user()->CODIGO}}">
+			</form>
+			</form>
+			<form role=form id="saveLeadOportuya" ng-submit="saveStep1()">
 				<div class="row resetRow">
-					<div class="col-sm-12 col-md-6 form-group">
-						<label for="name" class="control-label">Nombres</label>
-						<input type="text" name="name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true"/>
+					<div class="col-12 col-sm-6 form-group">
+						<label for="typeDocument">Tipo de documento*</label>
+						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.typeDocument" id="typeDocument" required="" ng-options="type.value as type.label for type in typesDocuments">
+						</select>
 					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label for="lastName" class="control-label">Apellidos</label>
-						<input type="text" name="lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true"/>
+					<div class="col-12 col-sm-6 form-group">
+						<label for="identificationNumber">Número de identificación*</label>
+						<input class="form-control inputsSteps inputText" type="text" ng-blur="getContactData()" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
-					<div class="col-sm-12 form-group">
-						<label for="email" class="control-label">Correo electronico</label>
-						<input type="email" name="email" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"/>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="name" class="control-label">Nombres*</label>
+						<input type="text" ng-model="leadInfo.name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true" ng-disabled="disabledInputs"/>
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="lastName" class="control-label">Apellidos*</label>
+						<input type="text" ng-model="leadInfo.lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true" ng-disabled="disabledInputs"/>
+					</div>
+				</div>
+				<div class="row resetRow">
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="email" class="control-label">Correo electronico*</label>
+						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
+					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="email" class="control-label">Confirmar Correo electronico*</label>
+						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
+					</div>
+					<div ng-show="emailValidate" class="col-12">
+						<p class="alert alert-danger">
+							Los correos no coinciden.
+						</p>
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true"/>
+							<label for="telephone class="control-label">Teléfono*</label>
+							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="disabledInputs"/>
 						</div>
 					</div>
 					<div class="col-12 col-sm-6">
-						<label for="occupation">Ocupación</label>
-						<select class="form-control inputsSteps inputSelect" name="occupation" required="">
-							<option value="EMPLEADO">Empleado</option>
-							<option value="SOLDADO-MILITAR-POLICÍA">Soldado - Militar - Policía</option>
-							<option value="PRESTACIÓN DE SERVICIOS">Prestación de Servicios</option>
-							<option value="INDEPENDIENTE CERTIFICADO">Independiente Certificado</option>
-							<option value="NO CERTIFICADO">No Certificado</option>
-							<option value="RENTISTA">Rentista</option>
-							<option value="PENSIONADO">Pensionado</option>
+						<label for="occupation">Ocupación*</label>
+						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required="" ng-disabled="disabledInputs" ng-options="occu.value as occu.label for occu in occupations">
 						</select>
-					</div>
-				</div>
-				<div class="row resetRow">
-					<div class="col-12 col-sm-6 form-group">
-						<label for="typeDocument">Tipo de documento</label>
-						<select class="form-control inputsSteps inputSelect" name="typeDocument" id="typeDocument" required="">
-							<option value="1">Cédula de ciudadanía</option>
-							<option value="2">NIT</option>
-							<option value="3">cédula de extranjería</option>
-							<option value="4">Tarjeta de Identidad</option>
-							<option value="5">Pasaporte</option>
-							<option value="6">Tarjeta seguro social extranjero</option>
-							<option value="7">Sociedad extranjera sin NIT en Colombia</option>
-							<option value="8">Fidecoismo</option>
-							<option value="9">Registro Civil</option>
-							<option value="10">Carnet Diplomtico</option>
-						</select>
-					</div>
-					<div class="col-12 col-sm-6 form-group">
-						<label for="identificationNumber">Número de identificación</label>
-						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" name="identificationNumber" id="identificationNumber" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-12">
 						<div class="form-group">
-							<label for="city" class="control-label">Ciudad</label>
-							<select name="city" id="city" class="form-control inputsSteps inputSelect" required="">
-								@foreach($cities as $city)
-									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
-								@endforeach
+							<label for="city" class="control-label">Ciudad**</label>
+							<select ng-model="leadInfo.city" id="city" class="form-control inputsSteps inputSelect" required="" ng-options="city.value as city.label for city in cities" ng-disabled="disabledInputs">
+								
 							</select>
 						</div>
 					</div>
 				</div>
+				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
 				<div class="form-group">
-					<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
+					<input type="checkbox" ng-model="leadInfo.termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
 						Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
 					</label>
@@ -139,7 +127,7 @@
 					*Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
 				<div class="form-group text-center">
-					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
+					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
 					</button>
 					<a href="/oportuya" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
@@ -149,4 +137,14 @@
 			</form>
 		</div>
 	</div>
+@endsection
+
+@section('scriptsJs')
+	<script type="text/javascript" src="{{ asset('js/assessorStep1.js') }}"></script>
+	<script>
+
+		$( "#saveLeadOportuya").submit(function( event ) {
+			$('#proccess').modal('show');
+		});
+	</script>
 @endsection
