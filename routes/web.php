@@ -479,6 +479,11 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get("/",function(){
             return view('catalog.index');
         })->name('products');
+
+        //store products images
+        Route::post('images', 'Admin\ProductsController@images');
+        //delete products images
+        Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
     });
 });
 

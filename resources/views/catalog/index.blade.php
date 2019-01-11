@@ -41,4 +41,9 @@
     <script src="{{ asset('js/appCatalog/controllers/productsController.js') }}"></script>
     <script src="{{ asset('js/appCatalog/controllers/linesController.js') }}"></script>
     <script src="{{ asset('js/appCatalog/controllers/brandsController.js') }}"></script>
+    <script src="{{ asset('js/libsJs/flow.js') }}"></script>
+    <script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
+    <script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
+    <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
+
 @stop

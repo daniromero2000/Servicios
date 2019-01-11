@@ -3882,6 +3882,9 @@ p.wantToSecondTex{
 .btnFilter {
 	margin-left: 3px;
 }
+.gallery-box {
+	margin-top:50px;
+}
 .gallery-box * {
 	margin: 3px;
 }
@@ -3891,5 +3894,12 @@ p.wantToSecondTex{
 }
 
 .imgContainer {
-	height: 100px;
+	width: 100%;
+	height: 200px;
 }
+
+.imgCatalog {
+	width: 100%;
+	height: 100%;
+}
+

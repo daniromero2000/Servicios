@@ -1,4 +1,4 @@
-var app =  angular.module('catalogApp',['ngRoute', 'ngBootbox',]);
+var app =  angular.module('catalogApp',['ngRoute', 'ngBootbox','flow']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

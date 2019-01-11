@@ -88,7 +88,6 @@
 				<td>@{{ resource.brand }}</td>
 				<td>@{{ resource.city }}</td>
 			<td> 
-				<i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(resource)"></i>
 				<i class="fas fa-edit cursor" title="Actualizar" ng-click="edtResource(resource.id)"></i>
 				<i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(resource)" ng-if='activ'></i> 
 			</td>
@@ -136,7 +135,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary">Guardar</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 					</div>
 				</form>
 			</div>
@@ -147,65 +146,18 @@
 
 		
 			   <!-- Modal DELETE-->
-	  <div class="modal fade" id="Delete" tabindex="-1" role="dialog">
-			  <div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<h5 class="modal-title">Producto</h5>
-				  </div>
-				  <div class="modal-body">
-					  <div class="form-group">
-						<label>Nombre del producto</label>
-						<input class="form-control" ng-model="resource.name" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Referencia</label>
-						<input class="form-control" ng-model="resource.reference" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Especificaciones</label>
-						<textarea rows="2" class="form-control" ng-model="resource.specifications" readOnly ></textarea>
-						
-					  </div>
-					  <div class="form-group">
-						<label>Precio a crédito</label>
-						<input type="number" class="form-control" ng-model="resource.price" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Marca</label>
-						<input type="text" class="form-control" ng-model="resource.brand" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Categoria</label>
-						 <input type="text" class="form-control" ng-model="resource.line" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Ciudad</label>
-						 <input type="text" class="form-control" ng-model="resource.city" readOnly >
-				  <div class="modal-footer">
-					  <form ng-submit = "deleteResource(resource.id)">
-						  <button class="btn btn-danger">Eliminar</button>
-					  </form>
-					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
-				  </div>
-				</form>
-				</div>
-			  </div>
-			</div>
-		  </div>
-		</div>
 
 		<div class="modal fade" id="Delete" tabindex="-1" role="dialog">
 		  <div class="modal-dialog" role="document">
 			<div class="modal-content">
 			  <div class="modal-header">
-				<h5 class="modal-title">¿Desea eliminar este perfil?</h5>
+				<h5 class="modal-title">¿Desea eliminar este producto?</h5>
 			</div>
 			  <div class="modal-body">
 		
 				  <div class="form-group">
 					<label>Nombre</label>
-					<textarea class="form-control textareaReadOnly" name="question" ng-model="resource.name" readonly></textarea>
+					<input class="form-control textareaReadOnly" name="question" ng-model="resource.name" readonly>
 				  </div>  
 			  </div>
 			  <div class="modal-footer">
@@ -219,48 +171,5 @@
 		  </div>
 		</div>
 
-	 <!-- Modal show -->
-	 <div class="modal fade" id="Show" tabindex="-1" role="dialog">
-			  <div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<h5 class="modal-title">Producto</h5>
-				  </div>
-				  <div class="modal-body">
-					  <div class="form-group">
-						<label>Nombre del producto</label>
-						<input class="form-control" ng-model="resource.name" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Referencia</label>
-						<input class="form-control" ng-model="resource.reference" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Especificaciones</label>
-						<textarea rows="2" class="form-control" ng-model="resource.specifications" readOnly ></textarea>
-					  </div>
-					  <div class="form-group">
-						<label>Precio a crédito</label>
-						<input type="number" class="form-control" ng-model="resource.price" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Marca</label>
-						<input type="text" class="form-control" ng-model="resource.brand" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Categoria</label>
-						 <input type="text" class="form-control" ng-model="resource.line" readOnly >
-					  </div>
-					  <div class="form-group">
-						<label>Ciudad</label>
-						 <input type="text" class="form-control" ng-model="resource.city" readOnly >
-				  <div class="modal-footer">
-					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </div>
-	</div>
 </div>
 

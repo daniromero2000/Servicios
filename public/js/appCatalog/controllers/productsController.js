@@ -25,7 +25,7 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 	$scope.cities = []; //list of cities returned by server
 	$scope.filtros = false; // display a filter card
 	$scope.activ  = true; // display delete action for each resourse if this is activ 
-	$scope.imgs = {};
+	$scope.imgs = [];
 
  
 	$scope.addResource= function(){
@@ -36,7 +36,7 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 	// query of Resource index and with filter 
 	$scope.getResource = function(){
 		showLoader();
-		//dsplay or not the delete action
+		//display or not the delete action
 		if($scope.q.delete){
 			$scope.activ = false;
 		}else{
