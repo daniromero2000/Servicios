@@ -481,3 +481,6 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         })->name('products');
     });
 });
+
+require "web2.php";
+require "web3.php";
