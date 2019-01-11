@@ -488,4 +488,11 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     });
 });
 
-require "web2.php";
+Route::resource('libranzaV2','Admin\LibranzaV2Controller');
+Route::group(['prefix'=>'/libranza'],function(){
+    Route::get('/step1', 'Admin\LibranzaV2Controller@step1')->name('step1Libranza');
+})  ;
+
+
+include "web2.php";
+include "web3.php";
