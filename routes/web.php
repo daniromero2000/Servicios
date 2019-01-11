@@ -111,6 +111,7 @@ Route::group(['prefix'=>'/assessor/'],function(){
 
 
 
+
 // All resource routes
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -488,4 +489,3 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 });
 
 require "web2.php";
-require "web3.php";
