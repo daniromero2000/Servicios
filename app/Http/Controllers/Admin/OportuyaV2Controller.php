@@ -510,8 +510,8 @@ class OportuyaV2Controller extends Controller
 		}else{
 			$respScoreClient = $queryScoreClient[0]->score;
 
-			$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
-			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;
+			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
+			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
 			
 			if($respScoreClient >= 686){
 				return true;
