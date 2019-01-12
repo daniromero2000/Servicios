@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\CreditPolicy;
+use Illuminate\Support\Facades\DB;
 
 class CreditPolicyController extends Controller
 {
@@ -18,10 +19,14 @@ class CreditPolicyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $creditPolicy =CreditPolicy::selectRaw('id,score,timeLimit')->first();
-        return response()->json([$creditPolicy]);
+        $creditPolicy = DB::table('credit_policy')
+                    ->where(function ($query) use ($request){
+                            $query->where('name','LIKE','%' . $request->q . '%');
+                    });
+        
+        return $creditPolicy->get();
     }
 
     /**
@@ -42,7 +47,15 @@ class CreditPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $creditPolicy = new CreditPolicy();
+
+        $creditPolicy->name = $request->get('nombre');
+
+        if($creditPolicy->save()){
+            return $creditPolicy->id;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -64,7 +77,9 @@ class CreditPolicyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $creditPolicy= CreditPolicy::Find($id);
+
+        return response()->json($creditPolicy);
     }
 
     /**
@@ -78,9 +93,16 @@ class CreditPolicyController extends Controller
     {
         $creditPolicy=CreditPolicy::findOrFail($id);
 
-        $creditPolicy->score=$request->score;
-        $creditPolicy->timeLimit = $request->timeLimit;
-
+        $creditPolicy->name = $request->get('name');
+        $creditPolicy->score = $request->get('score');
+        $creditPolicy->scoreEnd = $request->get('scoreEnd');
+        $creditPolicy->salary = $request->get('salary');
+        $creditPolicy->salaryEnd = $request->get('salaryEnd');
+        $creditPolicy->age = $request->get('age');
+        $creditPolicy->ageEnd = $request->get('ageEnd');
+        $creditPolicy->activity = $request->get('activity');
+        $creditPolicy->quotaApproved = $request->get('quotaApproved');
+        
         $creditPolicy->save();
 
         return response()->json([true]);

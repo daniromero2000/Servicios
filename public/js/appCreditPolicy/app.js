@@ -1,6 +1,9 @@
-var app =  angular.module('creditPolicyApp',['ngRoute', 'moment-picker']);
+var app =  angular.module('creditPolicyApp',['ngRoute', 'moment-picker', 'ngBootbox']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/', { templateUrl: 'adminCreditPolicy/creditPolicy',controller: 'creditPolicyController' })
+        when('/creditPolicy', { templateUrl: '/Administrator/AdminCreditPolicy/creditPolicy',controller: 'creditPolicyController' })
+        .when('/creditPolicy/:id_creditPolicy', { templateUrl: '/Administrator/AdminCreditPolicy/edtCreditPolicy',controller: 'edtCreditPolicyController' })
+
+        .otherwise({ redirectTo: '/creditPolicy' })
 }]);

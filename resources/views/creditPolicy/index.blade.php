@@ -15,7 +15,7 @@
             
             <div class="container">
                 <ng-view></ng-view>
-            </div> 
+            </div>
 
         @else
 
@@ -26,9 +26,12 @@
         @endif
 
     </div>
+    <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
     <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
     <script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
     <script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
+    <script src="{{ asset('js/appCreditPolicy/controllers/edtCreditPolicyController.js') }}"></script>
+
 @stop
 @section('scriptsJs')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>

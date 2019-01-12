@@ -325,14 +325,6 @@ Route::get("/adminCreditPolicy",function(){
         return view('creditPolicy.index');
     });
 
- Route::group(['prefix'=>'/adminCreditPolicy/'],function(){
-
-        Route::get('/creditPolicy',function(){
-            return view('creditPolicy.creditPolicy');
-        });
-
-    });
-
     Route::resource('users','Admin\UserController');
 
     Route::get('/adminUsers',function(){
@@ -355,11 +347,6 @@ Route::get("/adminCreditPolicy",function(){
 
     Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
     Route::get('/getAssessors','Admin\UserController@getAllAssessor');
-
-    
-
-
-
 /**
     **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: FAQ's
@@ -460,7 +447,13 @@ Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
 
 // Administrator
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
+    // Módulo Catálogo
     Route::group(['prefix' => '/Catalog'], function(){
+
+        Route::get("/",function(){
+            return view('catalog.index');
+        })->name('products');
+
         Route::get("/Products",function(){
             return view('catalog.products.index');
         })->name('products');
@@ -477,14 +470,24 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('catalog.brands.index');
         })->name('brands');
 
-        Route::get("/",function(){
-            return view('catalog.index');
-        })->name('products');
-
         //store products images
         Route::post('images', 'Admin\ProductsController@images');
         //delete products images
         Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
+    });
+
+    Route::group(['prefix' => '/AdminCreditPolicy'], function(){
+        Route::get('/',function(){
+            return view('creditPolicy.index');
+        });
+
+        Route::get('/creditPolicy',function(){
+            return view('creditPolicy.creditPolicy');
+        });
+
+        Route::get('/edtCreditPolicy',function(){
+            return view('creditPolicy.edt');
+        });
     });
 });
 

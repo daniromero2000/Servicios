@@ -1,21 +1,12 @@
-app.controller('creditPolicyController', function($scope, $http, $rootScope){
+app.controller('creditPolicyController', function($scope, $http, $rootScope, $location, $ngBootbox){
+	$ngBootbox.setLocale('es');
 	$scope.q = {
 		'q': '',
 		'initFrom': 0,
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
-	$scope.errorFlag=0;
-	$scope.successFlag=0;
-	$scope.error='';
-	$scope.creditPolicyId ='';
-	$scope.creditPolicies=[];
-	$scope.creditPolicy={};
-	$scope.comment = {
-		comment: '',
-		idLead: 0,
-		state: 0
-	};
+	$scope.creditPolicy=[];
 	$scope.credit={};
 	$scope.months=[];
 	$scope.monthsOptions=[
@@ -48,31 +39,25 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope){
 
 
 	$scope.getCreditPolicy = function(){
+		showLoader();
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/creditPolicy',
+		  url: '/creditPolicy?q=' + $scope.q.q
 		}).then(function successCallback(response) {
-			console.log(response);
+			hideLoader()
 			if(response.status == 401){
 				window.location = "/login";
 			}
 			if(response.data!= false){
-				
 				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {	
-					
-					value.timeLimitText=value.timeLimit.split('-')[1].split(' ')[0];			
-					$scope.creditPolicies.push(value);
-					
+				angular.forEach(response.data, function(value, key) {
+					$scope.creditPolicy.push(value);
 				});
-				
 				$scope.cargando = false;
-
 			}
-			
 		}, function errorCallback(response) {
-		    
+			hideLoader();
 		});
 
 		
@@ -80,7 +65,7 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope){
 
 	$scope.searchCreditPolicies = function(){
 		$scope.q.initFrom = 0;
-		$scope.creditPolicies = [];
+		$scope.creditPolicy = [];
 		$scope.getCreditPolicy();
 	};
 
@@ -94,25 +79,31 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope){
 		$scope.getCreditPolicy();
 	};
 
-	$scope.showUpdate = function(id){
-		$scope.creditPolicyId=id;
-		$scope.creditPolicy=$scope.creditPolicies[0];
-		$('#modalUpdate').modal('show');
-	}
+	$scope.addCreditPolicy = function(){
+		$ngBootbox
+			.prompt('Ingrese el nombre del artÃ­culo')
+			.then(function(nombre) {
+				if(nombre != '') {
+					$http({
+						method:'POST',
+						url:'/creditPolicy/',
+						data:{nombre: nombre},
+					}).then(function successCallback(response){
+						if(response.data != false){
+							$scope.edtCreditPolicy(response.data);
+						}
+					},function errorCallback(response){
+						console.log(response);
+					});
+				} else {
+					
+				}
+			})
+		;
+	};
 
-	$scope.updateCreditPolicy=function(){
-		$http({
-			method:'PUT',
-			url:'/creditPolicy/'+$scope.creditPolicyId,
-			data:$scope.creditPolicy,
-		}).then(function successCallback(response){
-			if(response.data != false){
-				$scope.searchCreditPolicies();
-				$('#modalUpdate').modal('hide');
-			}
-		},function errorCallback(response){
-				console.log(response);
-		});
+	$scope.edtCreditPolicy = function(id){
+		$location.url('creditPolicy/' + id);
 	}
 
 	$scope.getCreditPolicy();
