@@ -3894,7 +3894,8 @@ p.wantToSecondTex{
 }
 
 .imgContainer {
-	width: 100%;
+	position: relative;
+	width: 200px;
 	height: 200px;
 }
 
@@ -3902,4 +3903,16 @@ p.wantToSecondTex{
 	width: 100%;
 	height: 100%;
 }
-
+.closeProductsImages{
+	color white;
+	position: absolute;
+	top:0;
+	right: 0;
+	text-shadow:2px 2px 2px #000000;
+}
+.labelDelete{
+	font-size: unset;
+}
+.textImage{
+	margin-top: 7px;
+}

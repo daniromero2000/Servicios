@@ -38,7 +38,6 @@
             <tr ng-repeat="brand in brands">
                 <td>@{{ brand.name }}</td>
                 <td>
-                    <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(brand)"></i>
                     <i class="fas fa-edit cursor" title="Actualizar" ng-click="showUpdateDialog(brand)"></i>
                     <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(brand)" ng-if='activ'></i>
                        
@@ -110,27 +109,6 @@
           </div>
         </div>
 
-                       <!-- Modal show -->
-
-        <div class="modal fade" id="Show" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Marca</h5>
-            </div>
-              <div class="modal-body">
-        
-                  <div class="form-group">
-                    <label>Nombre</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" name="question" ng-model="brand.name" readonly></textarea>
-                  </div>        
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
 
          <!-- Modal Update -->
         <div class="modal fade" id="Update" tabindex="-1" role="dialog">

@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="form-group col-12 col-sm-12 col-md-6">
 					<label>Precio a crédito</label>
-					<input type="number" class="form-control" ng-model="resource.price" pattern="^[0-9]+">
+					<input type="number" class="form-control" ng-model="resource.price" min="0" ngPattern="[0-9]+">
 				</div>
 				<div class="form-group col-12 col-sm-12 col-md-6">
 					<label>Marca</label>
@@ -56,29 +56,31 @@
 	</div>
 	<div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab" ng-class="{ 'show active': tabs == 2 }">
 		<div class="row">
-		  <div ng-repeat="image in images" class="gallery-box col-sm-3">
+		  <div ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
 	            <div class="imgContainer">
 	 				<img class="imgCatalog" src="/storage/@{{image.name}}">
-	            </div>
-	            <div class="btn-group">
-	            	<a class="btn btn-sm btn-danger" ng-click="deleteImage(image.id)">Eliminar</a>
+	 				<a class="closeProductsImages" ng-click="deleteImageModal(image.id)"><i class="fas fa-times"></i></a>
 	            </div>
            </div>
           </div>
 	    <h4>Imagenes</h4>
-        <p>(solo se permite imágenes en formato jpg y jpeg)</p>
+        <p>(solo se permite imágenes en formato jpg y jpeg preferiblemente de 200x200px y máximo 1MB)</p>
         	<form ng-submit="AddImages()">
 
               <div flow-init
                    flow-files-submitted="$flow.upload()"
-                   flow-file-added="!!{jpg:1,jepg:1}[$file.getExtension()]"
+                   flow-file-added="!!{jpg:1,jepg:1,$file.size < 2000000}[$file.getExtension()]"
                    flow-name="imgs.flow">
-                <div class="drop" flow-drop ng-class="dropClass">
-                  <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
-                  <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
-                  <b>O</b>
-                  <span>  Arrastra y suleta tus archivos aquí </span>
-                  <button type="submit" class="btn btn-outline-primary">Subir imagenes</button>
+                <div class="row" flow-drop ng-class="dropClass">
+                	<div class="col-lg-4">
+	                    <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
+	                    <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
+                		
+                	</div>
+                    <div class="col-md-12 col-lg-6 textImage">
+	                    <span> <b>O</b>  Arrastra y suleta tus archivos aquí </span>
+	                    <button type="submit" class="btn btn-outline-primary">Subir imagenes</button>
+                    </div>
                 </div> 
 
   
@@ -106,5 +108,30 @@
                 </div>
               </div>
             </form>
+	</div>
+
+	<!-- Modal DELETE-->
+
+	<div class="modal fade" id="Delete" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title">Eliminar</h5>
+		</div>
+		  <div class="modal-body">
+	
+			  <div class="form-group">
+				<label class="labelDelete">¿Desea eliminar esta imagen?</label>
+			  </div>  
+		  </div>
+		  <div class="modal-footer">
+			<form ng-submit = "deleteImage(id)">
+				
+				<button class="btn btn-danger">Eliminar</button>
+			</form>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		  </div>
+		</div>
+	  </div>
 	</div>
 </div>

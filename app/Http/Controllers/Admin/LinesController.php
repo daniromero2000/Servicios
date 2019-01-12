@@ -33,7 +33,7 @@ class LinesController extends Controller
     public function index(Request $request)
     {
         
-          //consulta
+          //query 
         if($request->delete=="true"){
             $lines = DB::table('lines')
                     ->select('name','id')
@@ -124,13 +124,14 @@ class LinesController extends Controller
     public function update(Request $request, $id)
     {
         try {
-             //consulta
+             //quey 
             $lines = Line::find($id);
             $lines->name = $request->name;
             $lines->save();
             return response()->json(true);
 
         }
+        // if resource already exist return error
         catch(\Exception $e) {
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
@@ -148,10 +149,10 @@ class LinesController extends Controller
      */
     public function destroy($id)
     {
-        //consulta
+        //query
         $lines = Line::findOrFail($id);
         $lines->delete();
-        //respuesta en json
+        // json respons
         return response()->json([true]);
     }
 }

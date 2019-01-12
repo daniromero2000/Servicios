@@ -70,7 +70,6 @@ app.controller('linesController', function($scope, $http, $rootScope){
 		  url: '/lines',
 		  data: $scope.resource
 		}).then(function successCallback(response) {
-			console.log(response):
 			if(response.data != false){
 				if(response.data=="23000"){
 					document.getElementById('p').innerHTML = "La Linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
@@ -82,7 +81,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 				}	
 			}
 		}, function errorCallback(response) {
-			console.log(response):
+			
 		});
 	};
 
@@ -102,7 +101,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 	$scope.UpdateResource = function(){
 		$http({
 		  method: 'PUT',
-		  url: 'lines/'+$scope.resource.id,
+		  url: '/lines/'+$scope.resource.id,
 		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -128,7 +127,7 @@ app.controller('linesController', function($scope, $http, $rootScope){
 	$scope.deleteResource = function(idResource){
 		$http({
 		  method: 'DELETE',
-		  url: 'lines/' + idResource
+		  url: '/lines/' + idResource
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");

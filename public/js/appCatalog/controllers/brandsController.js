@@ -71,9 +71,11 @@ app.controller('brandsController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				if(response.data=="23000"){
+					//if element already exist display a alert arror
 					document.getElementById('p').innerHTML = "La marca  <b>" + $scope.brand.name + "</b>  ya esta registrada en la base de datos";
 					$("#alertBrand").show();
 				}else if (response.data==true) {
+					//if update is sucesfull reset the resource object value
 					$scope.brand.name = "";
 					$("#addBrandModal").modal("hide");
 					$scope.search();
@@ -100,14 +102,16 @@ app.controller('brandsController', function($scope, $http, $rootScope){
 	$scope.UpdateBrand = function(){
 		$http({
 		  method: 'PUT',
-		  url: 'brands/'+$scope.brand.id,
+		  url: '/brands/'+$scope.brand.id,
 		  data: $scope.brand
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				if(response.data=="23000"){
+					//if element already exist display a alert arror
 					document.getElementById('update').innerHTML = "La marca  <b>" + $scope.brand.name + "</b>  ya esta registrada en la base de datos";
 					$("#alertUpdate").show();
 				}else if (response.data==true) {
+					//if update is sucesfull reset the resource object value
 					$scope.brand.name = "";
 					$("#Update").modal("hide");
 					$scope.brand = {};
@@ -126,7 +130,7 @@ app.controller('brandsController', function($scope, $http, $rootScope){
 	$scope.deleteBrand=function(idBrand){
 		$http({
 		  method: 'DELETE',
-		  url: 'brands/' + idBrand
+		  url: '/brands/' + idBrand
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");

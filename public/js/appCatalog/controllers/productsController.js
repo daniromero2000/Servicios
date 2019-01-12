@@ -48,10 +48,12 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 		  url: '/products?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete+'&city='+$scope.q.city+'&brand='+$scope.q.brand+'&line='+$scope.q.line
 		}).then(function successCallback(response) {
 			if(response != false){
-				$scope.resources = response.data[0];
-				$scope.lines = response.data[1];
-				$scope.brands = response.data[2];
-				$scope.cities = response.data[3];
+				angular.forEach(response.data.products, function(value) {
+					$scope.resources.push(value);
+				});
+				$scope.lines = response.data.lines;
+				$scope.brands = response.data.brands;
+				$scope.cities = response.data.cities;
 				hideLoader();
 			}	
 		}, function errorCallback(response) {
@@ -96,7 +98,6 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 			}	
 		}, function errorCallback(response) {
 			hideLoader();
-			console.log(response);
 		});
 	};
 

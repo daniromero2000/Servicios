@@ -27,7 +27,7 @@
 							<select class="form-control" ng-model="q.brand" ng-options="brand.id as brand.name for brand in brands"></select>
 						</div>
 						<div class="col-12 col-sm-4">
-							<label>Categoria</label>
+							<label>Linea</label>
 							<select class="form-control" ng-model="q.line" ng-options="line.id as line.name for line in lines"></select>
 						</div>
 					</div>
@@ -101,7 +101,7 @@
 	</div>
 </div>
 
-<!-- Modal Create2 -->
+<!-- Modal Create -->
 <div class="modal fade" id="addResourceModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">

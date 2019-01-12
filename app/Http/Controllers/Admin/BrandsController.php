@@ -33,7 +33,7 @@ class BrandsController extends Controller
      */
     public function index(Request $request)
     {
-          //consulta
+          //query
         if($request->delete=="true"){
             $brands = DB::table('brands')
                     ->select('name','id')
@@ -53,7 +53,7 @@ class BrandsController extends Controller
                     ->take($request->page)
                     ->get();
         }
-        //respuesta en json
+        //json  response
         return response()->json($brands);
     }
 
@@ -76,16 +76,17 @@ class BrandsController extends Controller
      */
     public function store(Request $request){ 
         try {
-             //consulta
+             //query
             $brands = new Brand;
             $brands->name = $request->name;
             $brands->id_user = Auth::id();
             
             $brands->save();
-        
+            //json response 
             return response()->json(true);
 
         }
+        //if resource already existe return error
         catch(\Exception $e) {
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
@@ -127,13 +128,14 @@ class BrandsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-             //consulta
+             //query
             $brands =  Brand::find($id);
             $brands->name = $request->name;        
             $brands->save();
         
             return response()->json(true);
         }
+        //if resource already existe return error
         catch(\Exception $e) {
             if ($e->getCode()=="23000"){
                 return response()->json($e->getCode());
@@ -151,10 +153,10 @@ class BrandsController extends Controller
      */
     public function destroy($id)
     {
-        //consulta
+        //query
         $brands = Brand::findOrFail($id);
         $brands->delete();
-        //respuesta en json
+        //json response
         return response()->json([true]);
     }
 }

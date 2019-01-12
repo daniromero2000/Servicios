@@ -1,5 +1,15 @@
 <?php
 
+ /**
+    **Proyect: SERVICIOS FINANCIEROS
+    **Case of use: MODULO CATALOGO DE PRODUCTOS
+    **Author: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Description: migration for products images
+    **Date: 11/01/2019
+     * 
+     **/
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;

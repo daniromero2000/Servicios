@@ -93,8 +93,8 @@ class ProductsController extends Controller
         $products->orderBy('products.id', 'desc')
                  ->skip($request->page*($request->actual-1))
                  ->take($request->page);
-        //respuesta en json
-        return response()->json([$products->get(),$lines,$brands,$cities]);
+        //json response
+        return response()->json(['products' => $products->get(),'lines' => $lines,'brands' => $brands, 'cities' =>$cities]);
     }
 
     /**
@@ -115,14 +115,15 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //consulta
+        //query
         $product = new Product();
-
+        //asignation
         $product->name = $request->get('name');
         $product->idBrand = $request->get('idBrand');
         $product->idLine = $request->get('idLine');
         $product->idCity = $request->get('idCity');
 
+        //response
         if($product->save()){
             return $product->id;
         }else{
@@ -190,8 +191,9 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //consulta
+        //query
         $product = Product::Find($id);
+        //asignation
         $product->name = $request->name;
         $product->reference = $request->reference;
         $product->specifications = $request->specifications;
@@ -201,7 +203,7 @@ class ProductsController extends Controller
         $product->idCity = $request->idCity;
 
         $product->save();
-        //resoupuesta
+        //response
         return response()->json(true);
     }
 
@@ -213,15 +215,26 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
+        //query
         $product = Product::findOrfail($id)->delete();
-
+        //response
         return response()->json(true);
     }
 
+    /**
+     * Remove the specified images from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
      public function deleteImage($id)
     {
+        //query
         $images = ProductImage::findOrfail($id);
+        //detect os
         if(PHP_OS == "Linux"){
+            //delete whit path
             unlink(storage_path("app/public/".$images->name));
         }else{
             unlink(storage_path("app\public\\".$images->name));
@@ -238,7 +251,7 @@ class ProductsController extends Controller
 
             //query
             $images = new ProductImage();
-
+            // to save in public/storage  execute php artisan storage:link
             $images->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
             $images->idProduct = $request->idProduct;
             $images->save();

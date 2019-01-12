@@ -1,8 +1,8 @@
 app.controller('productsEdtController', function($scope, $http, $rootScope, $routeParams, $location){
-	$scope.tabs = 1;
-	$scope.resource = {};
-	$scope.images = [];
-	$scope.imgs = {};
+	$scope.tabs = 1;//init in first tab
+	$scope.resource = {};//resource to edidt 
+	$scope.images = [];//list of images
+	$scope.imgs = {};// image of flow
 
 	$scope.getResource = function(){
 		showLoader()
@@ -18,13 +18,12 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				$scope.cities = response.data.cities;
 				$scope.images = response.data.images;
 			}
-			console.log($scope.images)	
+				
 		}, function errorCallback(response) {
 			hideLoader();
-			console.log(response);
 		});		
 	}
-
+	//back to products admin
 	$scope.volver = function(){
 		$location.url('/Products');
 	};
@@ -40,54 +39,59 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				alert("Producto actualizado");
 			}
 		}, function errorCallback(response) {
-			console.log(response);
+			
 		});
 	};
 
 		$scope.deleteImage = function(id){
+		$('#Delete').modal('hide');
 		showLoader();
 		$http({
 		  method: 'GET',
 		  url: '/Administrator/Catalog/deleteImage/'+id,
 		}).then(function successCallback(response) {
-			console.log(response);
+			
 			if(response.data != false){
 				$scope.getResource();
 				hideLoader();
 			}
 		}, function errorCallback(response) {
-			console.log(response);
+			
 			hideLoader();
 		});
 	};
+	$scope.deleteImageModal = function(id){
+		$('#Delete').modal('show');
+		$scope.id = id;
+	}
 
 	$scope.AddImages = function(){
 
 		var formData = new FormData();
 		$scope.imgs.flow.upload();
+		//add images to FormData
 		i=0;
 		angular.forEach($scope.imgs.flow.files, function(value) {
 		  formData.append('imgs' + i++,value.file);
 		});
-		formData.append('nImages', i);
-		formData.append('idProduct', $scope.resource.id);
+		formData.append('nImages', i);//num images to upload
+		formData.append('idProduct', $scope.resource.id);//id product to attach images 
 		showLoader();
 		$http.post('/Administrator/Catalog/images',formData,{
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
 		}).then(function successCallback(response) {			
 			if(response.data != false){
+				//clear a flow  objet of images uploads
 				while($scope.imgs.flow.files.length>0){
 					$scope.imgs.flow.cancel();
 				}
-				console.log($scope.imgs.flow.files);
+				//to  updete the uploaded images
 				$scope.getResource();
 				hideLoader();
-				console.log(response);
 			}
 		}, function errorCallback(response) {
 			hideLoader();
-			console.log(response);
 		});
 	};
 
