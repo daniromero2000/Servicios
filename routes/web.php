@@ -251,6 +251,8 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
 
     /*Community Leads routes*/
     Route::post('communityLeads/addCommunityLeads','Admin\LeadsController@addCommunityLeads');
+    Route::get('api/getQuotaApproved/{score}/{salary}/{age}/{activity}','Admin\OportuyaV2Controller@getQuotaApproved');
+    Route::post('api/simulateCreditPolicy/', 'Admin\CreditPolicyController@simulateCreditPolicy');
     Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
     Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
     Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');

@@ -152,8 +152,10 @@ angular.module('appStep1', [])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
-			console.log(response);
-			if (response.data != false) {
+			if(response.data == "-1"){
+				window.location = "/OPN_gracias_FRM"
+			}
+			if (response.data == "1") {
 				$scope.encryptText();
 			}
 		}, function errorCallback(response) {
