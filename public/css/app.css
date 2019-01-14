@@ -633,7 +633,7 @@ a:hover, a:active, a:focus, a:visited{
 
 .cardImage .side {
   backface-visibility: hidden;
-  -webkit- 	backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   height: 100%;
  -webkit-overflow: hidden;
   overflow: hidden;
@@ -1195,7 +1195,65 @@ a:hover, a:active, a:focus, a:visited{
 	background: #3fcf64;
 }
 
+.libranzaSteplogo{
+	width: 72% !important;
+}
 
+.form-container-logoLibranza{
+	background:#FFF !important;
+	position: relative;
+}
+
+.form-container-logoLibranza:before{
+	background: #FFF !important;
+    content: "";
+    height: 156px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+    transform: skew(338deg);
+    width: 64px;
+    z-index: 2;
+}
+
+.container-libranza-forms{
+	background: #FFCF00 !important;
+}
+
+.progreso > .barra_vacia_libranza{
+	background-color: #FFCF00 !important;
+}
+
+.progreso > .puntos.listo.punto_listo_libranza + span{
+	background-color: #FFCF00 !important;
+}
+
+.progreso > .puntos.listo.punto_listo_libranza + span + label{
+	color:#000;
+}
+.btnStepLibranzaStep1:disabled{
+	background-color: #FFCF00 !important;
+    border-color: #000 !important;
+}
+
+.btnStepLibranzaStep1{
+	background-color: #FFCF00 !important;
+    border-color: #000 !important;
+}
+
+
+.btnStepLibranza{
+	background-color: #FFCF00 !important;
+    border-color: #000 !important;
+}
+
+.forms-descStepLibranza{
+	background:#FFCF00 !important;
+}
+
+.text-analyst-libranza{
+	color: #000 !important;
+}
 
 /* Video */
 
@@ -2387,7 +2445,7 @@ p.wantToSecondTex{
 
 /* Media Queries */
 
-@media(min-width: :1701px){
+@media(min-width: 1701px){
 		.dialogThakPage p{
 		font-size: 2em;
 	}
@@ -2795,7 +2853,7 @@ p.wantToSecondTex{
 
 .viajesWhatsappButton{
 	padding-left: 0;
-	padding-right: : 0;
+	padding-right:  0;
 }
 
 .viajesListItems li{
@@ -3904,7 +3962,7 @@ p.wantToSecondTex{
 	height: 100%;
 }
 .closeProductsImages{
-	color white;
+	color: white;
 	position: absolute;
 	top:0;
 	right: 0;
