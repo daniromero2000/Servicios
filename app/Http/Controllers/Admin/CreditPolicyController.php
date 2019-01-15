@@ -21,8 +21,15 @@ class CreditPolicyController extends Controller
      */
     public function index(Request $request)
     {
-        $creditPolicy = DB::table('credit_policy');
-        return "Holaaa";
+        $creditPolicy = DB::table('credit_policy')
+                    ->where(function ($query) use ($request){
+                            $query->where('name','LIKE','%' . $request->q . '%');
+                    });
+        
+        $creditPolicy->orderBy('id', 'desc')
+                ->skip($request->page*($request->actual-1))
+                ->take($request->page);
+        
         return $creditPolicy->get();
     }
 
