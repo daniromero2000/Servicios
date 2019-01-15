@@ -319,14 +319,6 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
 **/
 Route::resource('creditPolicy','Admin\CreditPolicyController');
 
-
-Route::get("/adminCreditPolicy",function(){
-        if(Auth::guest()){
-            return view('auth.login');
-        }
-        return view('creditPolicy.index');
-    });
-
     Route::resource('users','Admin\UserController');
 
     Route::get('/adminUsers',function(){
@@ -482,6 +474,9 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/AdminCreditPolicy'], function(){
         Route::get('/',function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
             return view('creditPolicy.index');
         });
 
