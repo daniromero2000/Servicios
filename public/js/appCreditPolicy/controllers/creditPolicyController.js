@@ -72,12 +72,12 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 
 	$scope.addCreditPolicy = function(){
 		$ngBootbox
-			.prompt('Ingrese el nombre del artÃ­culo')
+			.prompt('Ingrese el nombre de la política')
 			.then(function(nombre) {
 				if(nombre != '') {
 					$http({
 						method:'POST',
-						url:'/creditPolicy/',
+						url:'/api/AdminCreditPolicy/addCredit',
 						data:{nombre: nombre},
 					}).then(function successCallback(response){
 						if(response.data != false){

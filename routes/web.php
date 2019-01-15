@@ -187,7 +187,7 @@ Route::get('api/oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep
 Route::get('api/oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
 Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
-
+Route::post('api/AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 /*Users routes*/
 
 
