@@ -3980,6 +3980,7 @@ p.wantToSecondTex{
 	top:0;
 	right: 0;
 	text-shadow:2px 2px 2px #000000;
+	cursor: default;
 }
 .labelDelete{
 	font-size: unset;
