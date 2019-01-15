@@ -217,8 +217,9 @@
 @endsection
 
 @section('scriptsJs')
-	<script type="text/javascript" src="{{ asset('js/Libranzastep2.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 	<script src="https://rawgit.com/aguirrel/ng-currency/latest/dist/ng-currency.js"></script>
+	<script type="text/javascript" src="{{ asset('js/Libranzastep2.js') }}"></script>
+	
 @endsection
