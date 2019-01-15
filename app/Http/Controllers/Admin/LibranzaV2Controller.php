@@ -151,10 +151,19 @@ class LibranzaV2Controller extends Controller
             $identificationNumber= $request->get('identificationNumber');
 			$idLead=DB::select('SELECT `id` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
 			$idLead = $idLead[0]->id;
-			$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
-			$idLead_info= $idLead_info[0]->id;
+
+			$flag_lead= LeadInfo::where('idLead',$idLead);
+
+			if(empty($flag_lead)){
+				$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
+				$idLead_info= $idLead_info[0]->id;
 			
-			$lead=LeadInfo::findOrFail($idLead_info);
+				$lead=LeadInfo::findOrFail($idLead_info);
+			}else{
+				$lead=new LeadInfo;
+			}
+
+			
 
             $dataLead=[
                 'idLead'=>$idLead,
@@ -165,8 +174,10 @@ class LibranzaV2Controller extends Controller
                 'housingOwner'=>($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')):'NA',
                 'gender' => strtoupper($request->get('gender')),
 				'housingType' => strtoupper($request->get('housingType')),
+				'dateDocumentExpedition'=> ($request->get('dateDocumentExpedition') != '' )? $request->get('dateDocumentExpedition'):'0000/1/1',
 				'housingTime' => ($request->get('housingTime') != '')?$request->get('housingTime'):'NA',
-				'housingTelephone' => $request->get('housingTelephone'),
+				'housingTelephone' => ($request->get('housingTelephone') != '')?$request->get('housingTelephone'):'',
+				'spouseTelephone' => ($request->get('spouseTelephone') != '')?$request->get('spouseTelephone'):'',
 				'leaseValue' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
 				'spouseEps' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
 				'spouseIdentificationNumber' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : '0',
@@ -178,7 +189,32 @@ class LibranzaV2Controller extends Controller
 				'spouseSalary' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : '0',
 				'stratum' => ($request->get('stratum') != '')? $request->get('stratum'): 0,
 				'nationality' => ($request->get('nationality') != '')? $request->get('nationality') : 52,
-				'civilStatus'=>($request->get('civilStatus') != '')?$request->get('civilStatus'):'NA'
+				'civilStatus'=>($request->get('civilStatus') != '')?$request->get('civilStatus'):'NA',
+				/*'levelStudy'=>($request->get('levelStudy') != '')?$request->get('levelStudy'):'',
+				'vehicle'=>($request->get('vehicle') != '')?$request->get('vehicle'):'',
+				'vehiclePlate'=>($request->get('vehiclePlate') != '')?$request->get('vehiclePlate'):'',
+				'nit'=>($request->get('nit') != '')?$request->get('nit'):'',
+				'indicative'=>($request->get('indicative') != '')?$request->get('indicative'):'',
+				'companyName'=>($request->get('companyName') != '')?$request->get('companyName'):'',
+				'nit'=> ($request->get('nit') != '')?$request->get('nit') :0,
+				'companyName' => ($request->get('companyName') != '')? strtoupper($request->get('companyName')):'NA',
+				'companyAddres' => ($request->get('companyAddres') != '')?strtoupper($request->get('companyAddres')):0,
+				'companyTelephone' => ($request->get('companyTelephone') != '')?strtoupper($request->get('companyTelephone')):0,
+				'companyTelephone2' => ($request->get('companyTelephone2') != '')?strtoupper($request->get('companyTelephone')):0,
+				'eps' => ($request->get('eps') != '')? strtoupper($request->get('eps')):'-',
+				'companyPosition' => ($request->get('companyPosition') != '')?strtoupper($request->get('companyPosition')):'NA',
+				'admissionDate' =>($request->get('admissionDate') != '')?$request->get('admissionDate'):'0000/1/1',
+				'antiquity' =>($request->get('antiquity') != '')?$request->get('antiquity'):1,
+				'salary' => ($request->get('salary') != '')?$request->get('salary'): 0,
+				'typeContract' => ($request->get('typeContract') != '')?strtoupper($request->get('typeContract')): 'NA',
+				'otherRevenue' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
+				'camaraComercio' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
+				'whatShell' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
+				'dateCreationCompany' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '0000/1/1',
+				'bankSavingsAccount' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA',
+				'whatSell' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
+				'pagaduria'=>($request->get('pagaduria') != '' )? $request->get('pagaduria'):1,
+				'membershipNumber'=>($request->get('membershipNumber') != '' )? $request->get('membershipNumber'):''*/
             ];
 
             //verify if a customer exist before save a lead , then save data into leads table.
@@ -581,10 +617,26 @@ class LibranzaV2Controller extends Controller
 		$idLead=DB::select('SELECT `id`,`occupation` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
 		$occupation=$idLead[0]->occupation;
 		$idLead = $idLead[0]->id;
-		$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
-		$idLead_info= $idLead_info[0]->id;
+		//$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
+		$idLead_info=false;
+		$lead_info=false;
 
-		$lead_info=DB::select('SELECT `dateDocumentExpedition`,`cityExpedition`,`nationality`,`housingType`,`housingTime`,`housingOwner`, `addres`,`housingTelephone`,`stratum`,`birthdate`, `gender`,`civilStatus` FROM `leads_info` WHERE `id`=:idLead ',['idLead'=>$idLead_info]);
+		try {
+			$idLeadInfo= LeadInfo::where('idLead',$idLead);	
+
+			if($idLeadInfo){
+				$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
+				$idLead_info= $idLead_info[0]->id;
+				$lead_info=DB::select('SELECT `dateDocumentExpedition`,`cityExpedition`,`nationality`,`housingType`,`housingTime`,`housingOwner`, `addres`,`housingTelephone`,`stratum`,`birthdate`, `gender`,`civilStatus` FROM `leads_info` WHERE `id`=:idLead ',['idLead'=>$idLead_info]);
+			}else{
+				$idLead_info=false;
+				$lead_info=false;
+			}
+
+		} catch (\Throwable $th) {
+
+		}
+		
 		$queryCountries = "SELECT `id`,`name`,`iso` FROM  `paises`";
 		$countries = DB::select($queryCountries);
 

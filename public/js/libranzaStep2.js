@@ -82,15 +82,18 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 		  url: '/creditoLibranza/getDataStep2/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
-			$scope.ced=$scope.leadInfo.identificationNumber;
-			$scope.countries = response.data.countries;
-			$scope.analyst = response.data.digitalAnalyst;
-			$scope.cities = response.data.cities;
-			$scope.leadInfo = response.data.dataLead[0];
-			$scope.leadInfo.identificationNumber = $scope.ced;
-			$scope.leadInfo.step = 2;
-			$scope.leadInfo.occupation=response.data.occupation;
-			console.log(response);
+				$scope.countries = response.data.countries;
+				$scope.analyst = response.data.digitalAnalyst;
+				$scope.leadInfo.step = 2;
+				$scope.cities = response.data.cities;
+				$scope.leadInfo.occupation=response.data.occupation;
+			if(response.data.dataLead != false){
+				$scope.ced=$scope.leadInfo.identificationNumber;
+				$scope.leadInfo = response.data.dataLead[0];
+				$scope.cities = response.data.cities;
+				$scope.leadInfo.identificationNumber = $scope.ced;		
+			}
+			
 		}, function errorCallback(response) {
 			console.log(response);
 			hideLoader();
@@ -126,9 +129,10 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				$scope.encryptText();
+				console.log(response);
 			}
 		}, function errorCallback(response) {
-		    
+		    console.log(response);
 		});
 	};
 
