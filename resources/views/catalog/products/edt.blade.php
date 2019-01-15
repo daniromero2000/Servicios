@@ -56,22 +56,15 @@
 	</div>
 	<div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab" ng-class="{ 'show active': tabs == 2 }">
 		<div class="row">
-
-			  <div class="floatleft">
-			    <ul ui-sortable="sortableOptions" ng-model="images" class="row ulImages">
-			      <li ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
-			       <div class="imgContainer">
-	 				<img class="imgCatalog" src="/storage/@{{image.name}}">
-	 				<a class="closeProductsImages" ng-click="deleteImageModal(image.id)"><i class="fas fa-times"></i></a>
-	            </div>
-			      </li>
-			    </ul>
-			  </div>
-
-		  <div ng-repeat="image in images" >
-	            
-           </div>
-          </div>
+		    <ul ui-sortable="sortableOptions" ng-model="images" class="row ulImages">
+		      <li ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
+		       <div class="imgContainer">
+					 <img class="imgCatalog" src="/storage/@{{image.name}}">
+					 <a class="closeProductsImages" ng-click="deleteImageModal(image.id)"><i class="fas fa-times"></i></a>
+	           </div>
+		      </li>
+			</ul>
+        </div>
 	    <h4>Imagenes</h4>
         <p>(solo se permite imágenes en formato jpg y jpeg preferiblemente de 200x200px y máximo 1MB)</p>
         	<form ng-submit="AddImages()">
