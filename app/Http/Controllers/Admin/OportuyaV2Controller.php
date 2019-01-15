@@ -211,7 +211,7 @@ class OportuyaV2Controller extends Controller
 			if($flag==2){
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 				if($assessorCode != 998877){
-					return redirect()->route('step2Assessor', ['numIdentification' => $identificationNumberEncrypt]);
+					return 1;
 				}
 				return 1;
 			}elseif ($flag==1) {

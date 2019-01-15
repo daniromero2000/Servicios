@@ -147,20 +147,26 @@ angular.module('appStep1', [])
 	};
 
 	$scope.saveStep1 = function(){
-		$http({
-		  method: 'POST',
-		  url: '/oportuyaV2',
-		  data: $scope.leadInfo,
-		}).then(function successCallback(response) {
-			if(response.data == "-1"){
-				window.location = "/OPN_gracias_FRM"
-			}
-			if (response.data == "1") {
-				$scope.encryptText();
-			}
-		}, function errorCallback(response) {
-		    console.log(response);
-		});
+		if($scope.emailValidate == false){
+			$('#proccess').modal('show');
+			$http({
+				method: 'POST',
+				url: '/oportuyaV2',
+				data: $scope.leadInfo,
+			  }).then(function successCallback(response) {
+				  if(response.data == "-1"){
+					  window.location = "/OPN_gracias_FRM"
+				  }
+				  if (response.data == "1") {
+					  $scope.encryptText();
+				  }
+			  }, function errorCallback(response) {
+				  console.log(response);
+			  });
+		}else{
+			alert('Los correos no coinciden');
+		}
+		
 	};
 
 	$scope.encryptText = function(){
