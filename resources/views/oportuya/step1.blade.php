@@ -164,9 +164,5 @@
 		function enableBtn(){
 			document.getElementById("button1").disabled = false;
 		}
-
-		$( "#saveLeadOportuya").submit(function( event ) {
-			$('#proccess').modal('show');
-		});
 	</script>
 @endsection
