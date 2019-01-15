@@ -3942,6 +3942,7 @@ p.wantToSecondTex{
 }
 .gallery-box {
 	margin-top:50px;
+	text-align: center;
 }
 .gallery-box * {
 	margin: 3px;
@@ -3955,14 +3956,26 @@ p.wantToSecondTex{
 	position: relative;
 	width: 200px;
 	height: 200px;
+	cursor: move;
+	margin:auto;
+}
+.flowContainer {
+	position: relative;
+	width: 200px;
+	height: 200px;
+	margin: auto;
+}
+.ulImages {
+	list-style: none  !important;
 }
 
 .imgCatalog {
 	width: 100%;
 	height: 100%;
+	margin: auto;
 }
 .closeProductsImages{
-	color: white;
+	color white;
 	position: absolute;
 	top:0;
 	right: 0;
@@ -3973,4 +3986,8 @@ p.wantToSecondTex{
 }
 .textImage{
 	margin-top: 7px;
+}
+.progress{
+	width: 220px;
+	margin:auto;
 }

@@ -474,6 +474,8 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 
         //store products images
         Route::post('images', 'Admin\ProductsController@images');
+        //update the images position
+        Route::post('imagesUpdate', 'Admin\ProductsController@imagesUpdate');
         //delete products images
         Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
     });
