@@ -45,5 +45,10 @@
     <script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
     <script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
     <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
+    <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
+    
+    <script src="https://rawgithub.com/angular-ui/ui-sortable/master/src/sortable.js"></script>
+    
+
 
 @stop

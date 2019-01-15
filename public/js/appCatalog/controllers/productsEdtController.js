@@ -1,8 +1,21 @@
 app.controller('productsEdtController', function($scope, $http, $rootScope, $routeParams, $location){
 	$scope.tabs = 1;//init in first tab
-	$scope.resource = {};//resource to edidt 
+	$scope.resource = {};//resource to edit 
 	$scope.images = [];//list of images
 	$scope.imgs = {};// image of flow
+
+	//update the images position agording to drag androp position list
+	$scope.sortableOptions = {
+		stop: function(){
+			$http({
+			  method: 'POST',
+			  url: '/Administrator/Catalog/imagesUpdate',
+			  data: $scope.images
+			}).then(function successCallback(response) {			
+			}, function errorCallback(response) {
+			});
+		}
+	};
 
 	$scope.getResource = function(){
 		showLoader()
@@ -17,6 +30,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				$scope.brands = response.data.brands;
 				$scope.cities = response.data.cities;
 				$scope.images = response.data.images;
+				$scope.list = $scope.images;
 			}
 				
 		}, function errorCallback(response) {
@@ -43,7 +57,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		});
 	};
 
-		$scope.deleteImage = function(id){
+	$scope.deleteImage = function(id){
 		$('#Delete').modal('hide');
 		showLoader();
 		$http({
