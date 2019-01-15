@@ -22,7 +22,7 @@ class CreditPolicyController extends Controller
     public function index(Request $request)
     {
         $creditPolicy = DB::table('credit_policy');
-        
+        return "Holaaa";
         return $creditPolicy->get();
     }
 
