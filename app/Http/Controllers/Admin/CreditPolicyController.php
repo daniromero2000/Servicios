@@ -12,7 +12,7 @@ class CreditPolicyController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -25,6 +25,10 @@ class CreditPolicyController extends Controller
                     ->where(function ($query) use ($request){
                             $query->where('name','LIKE','%' . $request->q . '%');
                     });
+        
+        $creditPolicy->orderBy('id', 'desc')
+                ->skip($request->page*($request->actual-1))
+                ->take($request->page);
         
         return $creditPolicy->get();
     }
@@ -117,5 +121,9 @@ class CreditPolicyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function simulateCreditPolicy(Request $request){
+        return response()->json($request);
     }
 }

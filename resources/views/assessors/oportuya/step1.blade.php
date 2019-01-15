@@ -116,7 +116,6 @@
 						</div>
 					</div>
 				</div>
-				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
 				<div class="form-group">
 					<input type="checkbox" ng-model="leadInfo.termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
@@ -136,15 +135,23 @@
 				</div>
 			</form>
 		</div>
+		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalPrincipal" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="text-center" style="padding: 50px;">
+							<img src="{{ asset('images/gif-load.gif') }}" alt="">
+							<p class="text-procces">
+								Procesando Solicitud...
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
 @section('scriptsJs')
 	<script type="text/javascript" src="{{ asset('js/assessorStep1.js') }}"></script>
-	<script>
-
-		$( "#saveLeadOportuya").submit(function( event ) {
-			$('#proccess').modal('show');
-		});
-	</script>
 @endsection

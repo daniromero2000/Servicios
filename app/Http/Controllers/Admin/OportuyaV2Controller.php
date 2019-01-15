@@ -206,14 +206,14 @@ class OportuyaV2Controller extends Controller
 
 			
 			if($validatePolicyCredit == false){
-				return redirect()->route('thankYouPageOportuyaDenied');
+				return -1;
 			}
 			if($flag==2){
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 				if($assessorCode != 998877){
-					return redirect()->route('step2Assessor', ['numIdentification' => $identificationNumberEncrypt]);
+					return 1;
 				}
-				return redirect()->route('step2Oportuya', ['numIdentification' => $identificationNumberEncrypt]);
+				return 1;
 			}elseif ($flag==1) {
 
 				return response()->json(['servicios'=>$response]);
@@ -438,8 +438,9 @@ class OportuyaV2Controller extends Controller
 
 			$createData = $datosCliente->save();
 
+			//$quotaApproved = $this->getQuotaApproved($identificationNumber);
 
-			return response()->json([true]);
+			return response()->json(true);
 		}
 
 		if ($request->get('step') == 'comment') {
@@ -501,7 +502,24 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	public function getQuotaApproved($identificationNumber){
+		$score = DB::connection('oportudata')->select("SELECT `score` FROM `cifin_score` WHERE `scocedula` = :identificationNumber ORDER BY `scoconsul` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$score = $score[0]->score;
 
+		$infoLead = DB::connection('oportudata')->select("SELECT `SUELDO`, `EDAD`, `ACTIVIDAD` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber ", ['identificationNumber' => $identificationNumber]);
+		
+		$infoLead = $infoLead[0];
+
+		$sql = sprintf("SELECT `id`,`quotaApproved` FROM `credit_policy` 
+		WHERE %s BETWEEN `score` AND `scoreEnd` AND 
+		%s BETWEEN `salary` AND `salaryEnd`  AND 
+		%s BETWEEN `age` AND `ageEnd`  AND 
+		`activity` = '%s' ", $score, $infoLead->SUELDO, $infoLead->EDAD, $infoLead->ACTIVIDAD);
+
+		$resp = DB::select($sql);
+
+		return response()->json($resp[0]);
+	}
 
 	private function validatePolicyCredit($identificationNumber){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);

@@ -56,11 +56,20 @@
 	</div>
 	<div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab" ng-class="{ 'show active': tabs == 2 }">
 		<div class="row">
-		  <div ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
-	            <div class="imgContainer">
+
+			  <div class="floatleft">
+			    <ul ui-sortable="sortableOptions" ng-model="images" class="row ulImages">
+			      <li ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
+			       <div class="imgContainer">
 	 				<img class="imgCatalog" src="/storage/@{{image.name}}">
 	 				<a class="closeProductsImages" ng-click="deleteImageModal(image.id)"><i class="fas fa-times"></i></a>
 	            </div>
+			      </li>
+			    </ul>
+			  </div>
+
+		  <div ng-repeat="image in images" >
+	            
            </div>
           </div>
 	    <h4>Imagenes</h4>
@@ -69,7 +78,7 @@
 
               <div flow-init
                    flow-files-submitted="$flow.upload()"
-                   flow-file-added="!!{jpg:1,jepg:1,$file.size < 2000000}[$file.getExtension()]"
+                   flow-file-added="!!{jpg:1,jepg:1}[$file.getExtension()]"
                    flow-name="imgs.flow">
                 <div class="row" flow-drop ng-class="dropClass">
                 	<div class="col-lg-4">
@@ -83,13 +92,13 @@
                     </div>
                 </div> 
 
-  
                 <div class="row">
 
-                  <div ng-repeat="file in $flow.files" class="gallery-box col-sm-3">
+                  <div ng-repeat="file in $flow.files" class="gallery-box col-lg-3 col-md-4">
                     <span class="title">@{{file.name.substr(0,20)}}</span>
-                    <div class="imgContainer" ng-show="$flow.files.length">
-                      <img flow-img="file"  class="imgCatalog"/>
+                    <div class="flowContainer" ng-show="$flow.files.length">
+                        <img flow-img="file"  class="imgCatalog"/>
+                        <a class="closeProductsImages" ng-click="file.cancel()"><i class="fas fa-times"></i></a>
                     </div>
                     <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
                       <div class="progress-bar progress-bar-striped" role="progressbar"
@@ -99,9 +108,6 @@
                            ng-style="{width: (file.progress() * 100) + '%'}">
                         <span class="sr-only">@{{file.progress()}}% Complete</span>
                       </div>
-                    </div>
-                    <div class="btn-group">
-                      <a class="btn btn-sm btn-danger" ng-click="file.cancel()">Eliminar</a>
                     </div>
                   </div>
             

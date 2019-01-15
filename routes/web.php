@@ -187,7 +187,7 @@ Route::get('api/oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep
 Route::get('api/oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
 Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
-
+Route::post('api/AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 /*Users routes*/
 
 
@@ -251,6 +251,8 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
 
     /*Community Leads routes*/
     Route::post('communityLeads/addCommunityLeads','Admin\LeadsController@addCommunityLeads');
+    Route::get('api/getQuotaApproved/{score}/{salary}/{age}/{activity}','Admin\OportuyaV2Controller@getQuotaApproved');
+    Route::post('api/simulateCreditPolicy/', 'Admin\CreditPolicyController@simulateCreditPolicy');
     Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
     Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
     Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
@@ -316,14 +318,6 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     **Fecha: 20/12/2018
 **/
 Route::resource('creditPolicy','Admin\CreditPolicyController');
-
-
-Route::get("/adminCreditPolicy",function(){
-        if(Auth::guest()){
-            return view('auth.login');
-        }
-        return view('creditPolicy.index');
-    });
 
     Route::resource('users','Admin\UserController');
 
@@ -472,12 +466,17 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 
         //store products images
         Route::post('images', 'Admin\ProductsController@images');
+        //update the images position
+        Route::post('imagesUpdate', 'Admin\ProductsController@imagesUpdate');
         //delete products images
         Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
     });
 
     Route::group(['prefix' => '/AdminCreditPolicy'], function(){
         Route::get('/',function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
             return view('creditPolicy.index');
         });
 

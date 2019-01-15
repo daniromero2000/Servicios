@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12 col-md-3">
-        <button class="btn btn-primary" ng-click="addCreditPolicy()">Agregar Producto</button>
+        <button class="btn btn-primary" ng-click="addCreditPolicy()">Agregar Política</button>
     </div>
     <div class="col-sm-12 offset-md-6 col-md-3 text-right">
 		<div class="input-group mb-3">
@@ -30,7 +30,7 @@
     </table>
     <div class="row">
         <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="">Cargar Más</button>
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getCreditPolicy()">Cargar Más</button>
         </div>
     </div>
 </div>

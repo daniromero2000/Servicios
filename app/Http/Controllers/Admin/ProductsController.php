@@ -175,6 +175,7 @@ class ProductsController extends Controller
         $images = DB::table('product_images')
                 ->select('id','name')
                 ->where('idProduct',$id)
+                ->orderBy('order')
                 ->get();
 
         $product = Product::Find($id);
@@ -258,6 +259,22 @@ class ProductsController extends Controller
 
         }
         return response()->json(true);
+    }
+    public function imagesUpdate(Request $request)
+    {
+        $i=0;//images order 
+        $images = $request->all();
+        
+        foreach ($images as $value) {
+            //query
+            $updateImage = ProductImage::find($value['id']);
+            //update
+            $updateImage->order = $i++;
+            $updateImage->save();
+        }
+        //response
+        return response()->json(true);
+        
     }
 
 }
