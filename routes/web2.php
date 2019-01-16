@@ -15,3 +15,5 @@ Route::group(['prefix'=>'/creditoLibranza/'],function(){
     Route::get('/encryptText/{string}','Admin\LibranzaV2Controller@encrypt');
 
 })  ;
+
+Route::resource('avance','Admin\AdvanceController');
