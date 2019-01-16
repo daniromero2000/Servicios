@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterLeadsInfoAddAvailability extends Migration
+class AddCityProfileToProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterLeadsInfoAddAvailability extends Migration
      */
     public function up()
     {
-        Schema::table('leads_info',function(Blueprint $table){
-            $table->string('availability')->nullable();
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->boolean('city');
         });
     }
 
@@ -25,6 +25,8 @@ class AlterLeadsInfoAddAvailability extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->dropColumn('city');
+        });
     }
 }
