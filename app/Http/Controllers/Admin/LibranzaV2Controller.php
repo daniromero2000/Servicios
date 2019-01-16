@@ -190,8 +190,8 @@ class LibranzaV2Controller extends Controller
 				'stratum' => ($request->get('stratum') != '')? $request->get('stratum'): 0,
 				'nationality' => ($request->get('nationality') != '')? $request->get('nationality') : 52,
 				'civilStatus'=>($request->get('civilStatus') != '')?$request->get('civilStatus'):'NA',
-				/*'levelStudy'=>($request->get('levelStudy') != '')?$request->get('levelStudy'):'',
-				'vehicle'=>($request->get('vehicle') != '')?$request->get('vehicle'):'',
+				'levelStudy'=>($request->get('levelStudy') != '')?$request->get('levelStudy'):'',
+				'vehicle'=>($request->get('vehicle') != '')?$request->get('vehicle'):0,
 				'vehiclePlate'=>($request->get('vehiclePlate') != '')?$request->get('vehiclePlate'):'',
 				'nit'=>($request->get('nit') != '')?$request->get('nit'):'',
 				'indicative'=>($request->get('indicative') != '')?$request->get('indicative'):'',
@@ -214,7 +214,7 @@ class LibranzaV2Controller extends Controller
 				'bankSavingsAccount' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA',
 				'whatSell' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
 				'pagaduria'=>($request->get('pagaduria') != '' )? $request->get('pagaduria'):1,
-				'membershipNumber'=>($request->get('membershipNumber') != '' )? $request->get('membershipNumber'):''*/
+				'membershipNumber'=>($request->get('membershipNumber') != '' )? $request->get('membershipNumber'):''
             ];
 
             //verify if a customer exist before save a lead , then save data into leads table.

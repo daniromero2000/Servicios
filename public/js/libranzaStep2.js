@@ -84,7 +84,6 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 			hideLoader();
 				$scope.countries = response.data.countries;
 				$scope.analyst = response.data.digitalAnalyst;
-				$scope.leadInfo.step = 2;
 				$scope.cities = response.data.cities;
 				$scope.leadInfo.occupation=response.data.occupation;
 			if(response.data.dataLead != false){
@@ -93,9 +92,12 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 				$scope.cities = response.data.cities;
 				$scope.leadInfo.identificationNumber = $scope.ced;		
 			}
+			$scope.leadInfo.step = 2;
+
+			console.log($scope.leadInfo);
 			
 		}, function errorCallback(response) {
-			console.log(response);
+			
 			hideLoader();
 		});
 	};
