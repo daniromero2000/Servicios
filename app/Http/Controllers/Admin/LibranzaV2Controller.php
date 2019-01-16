@@ -210,7 +210,7 @@ class LibranzaV2Controller extends Controller
 				'otherRevenue' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
 				'camaraComercio' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
 				'whatShell' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
-				'dateCreationCompany' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '2019/1/1',
+				'dateCreationCompany' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '2000/1/1',
 				'bankSavingsAccount' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA',
 				'whatSell' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
 				'pagaduria'=>($request->get('pagaduria') != '' )? $request->get('pagaduria'):1,
