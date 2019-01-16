@@ -209,6 +209,7 @@ class OportuyaV2Controller extends Controller
 				return -1;
 			}
 			if($flag==2){
+
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
 				if($assessorCode != 998877){
 					return 1;
@@ -469,9 +470,9 @@ class OportuyaV2Controller extends Controller
 **/
 
 	public function getContactData($identificationNumber){
-		$query = sprintf("SELECT `name`, `lastName`, `email`, `telephone`, `city`, `typeDocument`, `identificationNumber`, `occupation` FROM `leads` WHERE `identificationNumber` = %s LIMIT 1 ", $identificationNumber);
+		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", $identificationNumber);
 
-		$resp = DB::select($query);
+		$resp = DB::connection('oportudata')->select($query);
 
 		return response()->json($resp[0]);
 	}
@@ -482,6 +483,20 @@ class OportuyaV2Controller extends Controller
 		$resp = DB::connection('oportudata')->select($query);
 
 		return $resp[0];
+	}
+
+	function getSolicLead($identificationNumber){
+		if(empty($identificationNumber)) return -1;
+
+		$resp = DB::connection('oportudata')->select("SELECT `ESTADO`, `FECHASOL`, `SOLICITUD` FROM `SOLIC_FAB` WHERE `CLIENTE` = :identificationNumber ORDER BY `SOLICITUD` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+
+		if(empty($resp)){
+			return 1; // No tiene solicitud
+		}else{
+			if ($resp[0]->ESTADO == 'APROBADO' || $resp[0]->ESTADO == 'NEGADO') {
+				# code...
+			}
+		}
 	}
 
 	private function validateDateConsultaComercial($identificationNumber){
