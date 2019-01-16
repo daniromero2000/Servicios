@@ -543,12 +543,6 @@ a:hover, a:active, a:focus, a:visited{
 	background-image: url(../images/fondoBarras.png);
 }
 
-.oportuyaContentFeatures div.col-md-8{
-	
-}
-
-
-
 .oportuyaContentFeatures div.col-md-8 div.row{
 	margin-top: 40px;
 }
@@ -1741,11 +1735,6 @@ a[data-toggle="collapse"] {
 	background-color: unset !important; 
 	
 	border-style: none;
-}
-
-.navContainer a img {
-	
-
 }
 
 .dashboardIconsContent{
@@ -3976,7 +3965,7 @@ p.wantToSecondTex{
 	margin: auto;
 }
 .closeProductsImages{
-	color white;
+	color: white;
 	position: absolute;
 	top:0;
 	right: 0;
