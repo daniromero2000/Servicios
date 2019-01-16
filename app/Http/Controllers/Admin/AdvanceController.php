@@ -63,7 +63,7 @@ class AdvanceController extends Controller
             [ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
         ];
         $images=Imagenes::all();
-        return view('alogodvance.index',['images'=>$images, 'cities' => $cities]);
+        return view('advance.index',['images'=>$images, 'cities' => $cities]);
     }
 
     /**
