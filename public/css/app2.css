@@ -463,7 +463,7 @@
 	display: none;
 }
 
-.titleForm-avances, .titleForm-libranza:before{
+.titleForm-avances, .titleForm-avances:before{
 	background: #FDBF3D;
 }
 
