@@ -189,8 +189,8 @@
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/libranza"> 
-									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito libranza</span>
+								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/avance"> 
+									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Avances</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item4 @php echo $activeSeguros @endphp " href="/seguros">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Seguros</span>

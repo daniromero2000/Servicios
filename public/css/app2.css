@@ -459,6 +459,14 @@
 	background: #FDBF3D;
 }
 
+.header-item5{
+	display: none;
+}
+
+.titleForm-avances, .titleForm-libranza:before{
+	background: #FDBF3D;
+}
+
 .titleForm-oportuya, .titleForm-oportuya:before{
 	background: #1d84c3;
 }
