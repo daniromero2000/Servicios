@@ -64,6 +64,10 @@ Route::get('/VJ_gracias_FRM',function(){
 	return view('viajes.thankYouPage');
 })->name('thankYouPageViajes');
 
+Route::get('/AD_gracias_FRM',function(){
+	return view('advance.thankYouPage');
+})->name('thankYouPageAvance');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
