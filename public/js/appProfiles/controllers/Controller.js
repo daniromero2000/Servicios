@@ -47,7 +47,6 @@ app.controller('Controller', function($scope, $http, $rootScope){
 			}	
 		}, function errorCallback(response) {
 			hideLoader();
-			console.log(response);
 		});
 	};
 

@@ -86,6 +86,7 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 	};
 
 	$scope.createResource = function(){
+		console.log($scope.resource);
 		showLoader();
 		$http({
 		  method: 'POST',
