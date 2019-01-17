@@ -67,6 +67,10 @@
                   <div class="form-group">
                     <label>Perfil</label>
                     <div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" ng-model="resource.city">
+                          <label class="form-check-label" >¿Es un perfil de ciudad?</label>
+                        </div>
                         <div class="row rowBrands">
                             <div class = "col-sm-10"><input class="form-control" ng-model="resource.name" required ></div>
                             <div class = "col-sm-2"><button type="submit" class="btn btn-primary">Guardar</button></div>
@@ -93,7 +97,6 @@
                 <h5 class="modal-title">¿Desea eliminar este perfil?</h5>
             </div>
               <div class="modal-body">
-        
                   <div class="form-group">
                     <label>Nombre</label>
                     <textarea class="form-control textareaReadOnly" name="question" ng-model="resource.name" readonly></textarea>
@@ -119,10 +122,13 @@
                 <h5 class="modal-title">Perfil</h5>
             </div>
               <div class="modal-body">
-        
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" ng-true-value="1" ng-false-value="0" ng-model="resource.city" disabled>
+                    <label class="form-check-label" >¿Es un perfil de ciudad?</label>
+                  </div>
                   <div class="form-group">
                     <label>Nombre</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="resource.name" readonly></textarea>
+                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="resource.name" readonly ></textarea>
                   </div>        
               </div>
               <div class="modal-footer">
@@ -142,6 +148,10 @@
               <div class="modal-body">
                 <form ng-submit="UpdateResource()">
                   <div class="alert alert-danger" role="alert" id="alertUpdate"><span id="update"></span></div>
+                   <div class="form-check">
+                    <input type="checkbox" class="form-check-input" ng-true-value="1" ng-false-value="0" ng-model="resource.city">
+                    <label class="form-check-label" >¿Es un perfil de ciudad?</label>
+                  </div>
                   <div class="form-group">
                     <label>Nombre</label>
                     <textarea rows="2" class="form-control" name="question"  ng-model="resource.name" required ></textarea>

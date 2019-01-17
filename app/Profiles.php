@@ -23,5 +23,5 @@ class Profiles extends Model
 
     protected $table = 'profiles';
 
-    protected $fillable = ['id','name'];
+    protected $fillable = ['id','name','city'];
 }

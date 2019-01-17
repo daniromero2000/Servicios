@@ -51,9 +51,9 @@ class ProductsController extends Controller
         //query list of cities
              
 
-        $cities = DB::table('ciudades')
-                ->select('name','id','departament')
-                ->orderBy('departament')
+        $cities = DB::table('profiles')
+                ->select('name','id')
+                ->where('city',true)
                 ->get();
         
 
@@ -62,9 +62,9 @@ class ProductsController extends Controller
                 
         $products = DB::table('products')
                     ->join('brands', 'idBrand', '=', 'brands.id')
-                    ->join('ciudades', 'idCity', '=', 'ciudades.id')
+                    ->join('profiles', 'id_city', '=', 'profiles.id')
                     ->join('lines', 'idLine', '=', 'lines.id')
-                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','ciudades.name AS city','ciudades.id AS cityId')
+                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city')
                     ->where(function ($query) use ($request){
                             $query->where('products.name','LIKE','%' . $request->q . '%')
                                   ->Orwhere('products.reference','LIKE','%' . $request->q . '%');
@@ -79,7 +79,7 @@ class ProductsController extends Controller
         }
         //city filter
         if(!is_null($request->city)){
-             $products->where('idCity', $request->city);
+             $products->where('id_city', $request->city);
         }
         //line filter
         if(!is_null($request->line)){
@@ -121,7 +121,7 @@ class ProductsController extends Controller
         $product->name = $request->get('name');
         $product->idBrand = $request->get('idBrand');
         $product->idLine = $request->get('idLine');
-        $product->idCity = $request->get('idCity');
+        $product->id_city = $request->get('idCity');
 
         //response
         if($product->save()){
@@ -165,10 +165,9 @@ class ProductsController extends Controller
                 ->get();
         //query list of cities
              
-
-        $cities = DB::table('ciudades')
-                ->select('name','id','departament')
-                ->orderBy('departament')
+       $cities = DB::table('profiles')
+                ->select('name','id')
+                ->where('city',true)
                 ->get();
 
          //images list query
@@ -201,7 +200,7 @@ class ProductsController extends Controller
         $product->price = $request->price;
         $product->idBrand = $request->idBrand;
         $product->idLine = $request->idLine;
-        $product->idCity = $request->idCity;
+        //$product->idCity = $request->idCity;
 
         $product->save();
         //response

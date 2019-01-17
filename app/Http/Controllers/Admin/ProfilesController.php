@@ -37,7 +37,7 @@ class ProfilesController extends Controller
           //consulta
         if($request->delete=="true"){
             $profiles = DB::table('profiles')
-                    ->select('name','id')
+                    ->select('name','id','city')
                     ->where('name','LIKE','%' . $request->q . '%')
                     ->where('deleted_at', '<>' , null)
                     ->orderBy('id', 'desc')
@@ -46,7 +46,7 @@ class ProfilesController extends Controller
                     ->get();
         }else{
             $profiles = DB::table('profiles')
-                    ->select('name','id')
+                    ->select('name','id','city')
                     ->where('name','LIKE','%' . $request->q . '%')
                     ->whereNull("deleted_at")
                     ->orderBy('id', 'desc')
@@ -81,6 +81,7 @@ class ProfilesController extends Controller
              //consulta
             $profiles = new Profiles;
             $profiles->name = $request->name;
+            $profiles->city = $request->city;
             $profiles->save();
             //resoupuesta
             return response()->json(true);
@@ -130,6 +131,7 @@ class ProfilesController extends Controller
              //consulta
             $profiles = Profiles::find($id);
             $profiles->name = $request->name;
+            $profiles->city = $request->city;
             $profiles->save();
             return response()->json(true);
 
