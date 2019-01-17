@@ -146,10 +146,12 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
-			
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
 				$('#congratulations').modal('show');
+			}
+			if(response.data.data == false){
+				window.location = "/OPN_gracias_FRM";
 			}
 		}, function errorCallback(response) {
 		    console.log(response);
