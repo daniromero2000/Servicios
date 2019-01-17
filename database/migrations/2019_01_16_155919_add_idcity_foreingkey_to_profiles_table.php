@@ -16,8 +16,8 @@ class AddIdcityForeingkeyToProfilesTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign('products_idCity_foreign');
             $table->dropColumn('idCity');
-            $table->integer('city_id')->unsigned();
-            $table->foreign('city_id')->references('id')->on('profiles');
+            $table->integer('id_city')->unsigned();
+            $table->foreign('id_city')->references('id')->on('profiles');
         });
     }
 
