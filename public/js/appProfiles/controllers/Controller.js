@@ -20,6 +20,8 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.activ  = true; // display delete action for each resourse if this is activ 
 
 	$scope.addResource= function(){
+		$scope.resource = {};
+		$scope.resource.city = 0;
 		$("#addResourceModal").modal("show");
 		$("#alertResource").hide();
 	};

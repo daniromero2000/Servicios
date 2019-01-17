@@ -113,7 +113,7 @@
 					<div class="row">
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Nombre del producto</label>
-							<input class="form-control" ng-model="resource.name" required="">
+							<input class="form-control" ng-model="resource.name" required>
 						</div>
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Marca</label>
@@ -124,12 +124,12 @@
 					<div class="row">
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Línea</label>
-							<select class="form-control" ng-model="resource.idLine" ng-options="line.id as line.name for line in lines" required="">
+							<select class="form-control" ng-model="resource.idLine" ng-options="line.id as line.name for line in lines" required>
 							</select>
 						</div>
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Ciudad</label>
-							<select class="form-control" ng-model="resource.idCity" ng-options="city.id as city.name for city in cities" required="">
+							<select class="form-control" ng-model="resource.idCity" ng-options="city.id as city.name for city in cities" required>
 							</select>
 						</div>
 					</div>

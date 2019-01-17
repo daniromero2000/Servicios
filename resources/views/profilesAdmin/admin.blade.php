@@ -68,7 +68,7 @@
                     <label>Perfil</label>
                     <div>
                         <div class="form-check">
-                          <input type="checkbox" class="form-check-input" ng-model="resource.city">
+                          <input type="checkbox" class="form-check-input" ng-true-value="1" ng-false-value="0" ng-model="resource.city">
                           <label class="form-check-label" >¿Es un perfil de ciudad?</label>
                         </div>
                         <div class="row rowBrands">
