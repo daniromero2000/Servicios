@@ -129,7 +129,7 @@
 						</div>
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Ciudad</label>
-							<select class="form-control" ng-model="resource.idCity" ng-options="city.id as city.name for city in cities" required>
+							<select class="form-control" ng-model="resource.id_city" ng-options="city.id as city.name for city in cities" required>
 							</select>
 						</div>
 					</div>
