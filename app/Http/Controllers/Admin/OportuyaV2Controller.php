@@ -33,6 +33,7 @@ use App\DatosCliente;
 use App\CreditPolicy;
 use App\LeadInfo;
 use App\OportuyaV2;
+use App\Tarjeta;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -204,7 +205,12 @@ class OportuyaV2Controller extends Controller
 
 			}
 
+			$existCard = $this->getExistCard($identificationNumber);
 			
+			if($existCard == true){
+				return -2;
+			}
+
 			if($validatePolicyCredit == false){
 				return -1;
 			}
@@ -299,10 +305,12 @@ class OportuyaV2Controller extends Controller
 		if($request->get('step')==3){
 
 			$datosCliente= new DatosCliente;
+			$tarjeta = new Tarjeta;
 
 			//establishing connection to OPORTUDATA data base
 
 			$datosCliente->setConnection('oportudata');
+			$tarjeta->setConnection('oportudata');
 			$flag=0;
 
 			$identificationNumber = $request->get('identificationNumber');
@@ -312,7 +320,7 @@ class OportuyaV2Controller extends Controller
 			$codeAssessor=$selectAssessor[0]->assessor;
 			$dateLead=$selectAssessor[0]->dateLead;
 			$sucursal=9999;
-			$estado='CANAL_DIGITAL';
+			$estado='ANALISIS';
 			$ftp=0;
 			$state='X';
 			$granTotal=0;
@@ -439,9 +447,67 @@ class OportuyaV2Controller extends Controller
 
 			$createData = $datosCliente->save();
 
-			//$quotaApproved = $this->getQuotaApproved($identificationNumber);
+			$quotaApproved = $this->execCreditPolicy($identificationNumber);
+			$con3 = "";
+			if($quotaApproved > 0){
+				$con3 = "PREAPROBADO";
+				$tarjeta->NUMERO = '871279999';
+				$tarjeta->SOLICITUD = $numSolic->SOLICITUD;
+				$tarjeta->CLIENTE = $identificationNumber;
+				$tarjeta->APROBACION ='0' ;
+				$tarjeta->DESPACHO = "1994-09-30";
+				$tarjeta->LOTE = 0;
+				$tarjeta->FEC_APROB = "1994-09-30";
+				$tarjeta->CUOTA_MAN = 14400;
+				$tarjeta->CARGO = 9300;
+				$tarjeta->CUP_INICIA = 0;
+				$tarjeta->CUP_COMPRA = $quotaApproved;
+				$tarjeta->COMPRA_ACT = $quotaApproved;
+				$tarjeta->COMPRA_EFE = 0;
+				$tarjeta->CUPO_EFEC = 0;
+				$tarjeta->CUP_ACTUAL = 0;
+				$tarjeta->CUPOMAX = 0;
+				$tarjeta->SUC = 9999;
+				$tarjeta->ESTADO = 'W';
+				$tarjeta->FEC_ACTIV = "1994-09-30";
+				$tarjeta->CONS = 0;
+				$tarjeta->OPORTUNID = '0' ;
+				$tarjeta->EXTRACUPO = 0;
+				$tarjeta->EXTRA_ACT = 0 ;
+				$tarjeta->RECEPC1 = '';
+				$tarjeta->RECEPC2 = '';
+				$tarjeta->RECEPC3 = '';
+				$tarjeta->FEC_REC = '1994-09-30';
+				$tarjeta->OBSTAR1 = '';
+				$tarjeta->OBSTAR2 = '';
+				$tarjeta->OBSTAR3 = '';
+				$tarjeta->TIPO_TAR = 'BLACK';
+				$tarjeta->RESPUEST = "1994-09-30";
+				$tarjeta->RECEPCOFI = '';
+				$tarjeta->OBSTAROFI = '';
+				$tarjeta->FEC_RECOFI = "1994-09-30";
+				$tarjeta->RECEPCSUC = '';
+				$tarjeta->OBSTARSUC = '';
+				$tarjeta->FEC_RECSUC = "1994-09-30";
+				$tarjeta->RECEPCCLI = '';
+				$tarjeta->OBSTARCLI = '';
+				$tarjeta->FEC_RECCLI = "1994-09-30";
+				$tarjeta->STATE = 'A';
+				$tarjeta->save();
+			}else{
+				$con3 = "RECHAZADO";
+			}
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$dataLead=[
+				'CON3' => $con3
+			];
 
-			return response()->json(true);
+			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
+			if($con3 == 'RECHAZADO'){
+				return response()->json(['data' => false]);
+			}elseif($con3 == 'PREAPROBADO'){
+				return response()->json(['data' => true, 'quota' => $quotaApproved]);
+			}
 		}
 
 		if ($request->get('step') == 'comment') {
@@ -485,17 +551,15 @@ class OportuyaV2Controller extends Controller
 		return $resp[0];
 	}
 
-	function getSolicLead($identificationNumber){
-		if(empty($identificationNumber)) return -1;
+	function getExistCard($identificationNumber){
+		$queryExistCard = sprintf("SELECT COUNT(`NUMERO`) as numTarjeta FROM `TARJETA` WHERE `CLIENTE` = %s ", $identificationNumber);
 
-		$resp = DB::connection('oportudata')->select("SELECT `ESTADO`, `FECHASOL`, `SOLICITUD` FROM `SOLIC_FAB` WHERE `CLIENTE` = :identificationNumber ORDER BY `SOLICITUD` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+		$resp = DB::connection('oportudata')->select($queryExistCard);
 
-		if(empty($resp)){
-			return 1; // No tiene solicitud
+		if($resp[0]->numTarjeta > 0){
+			return true; // Tiene tarjeta
 		}else{
-			if ($resp[0]->ESTADO == 'APROBADO' || $resp[0]->ESTADO == 'NEGADO') {
-				# code...
-			}
+			return false; // No tiene tarjeta
 		}
 	}
 
@@ -517,23 +581,197 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	public function getQuotaApproved($identificationNumber){
-		$score = DB::connection('oportudata')->select("SELECT `score` FROM `cifin_score` WHERE `scocedula` = :identificationNumber ORDER BY `scoconsul` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		$score = $score[0]->score;
+	public function execCreditPolicy($identificationNumber){
+		// Negacion, condicional 3
+		$queryFinMora = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
+		FROM `cifin_finmora` 
+		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
+		AND `fincedula` = %s AND `fincalid` != 'CODE' ", $identificationNumber, $identificationNumber);
 
-		$infoLead = DB::connection('oportudata')->select("SELECT `SUELDO`, `EDAD`, `ACTIVIDAD` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber ", ['identificationNumber' => $identificationNumber]);
+		$respFinMora = DB::connection('oportudata')->select($queryFinMora);
+
+		if(!empty($respFinMora)){
+			if($respFinMora[0]->totalMoraFin > 0){
+				return -1; // Credito Negado
+			}
+		}
+
+		$queryRealMora = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
+		FROM `cifin_realmora` 
+		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
+		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') ", $identificationNumber, $identificationNumber);
+
+		$respRealMora = DB::connection('oportudata')->select($queryRealMora);
+
+		if(!empty($respRealMora)){
+			if($respRealMora[0]->totalMoraReal > 0){
+				return -2; // Credito Negado
+			}
+		}
+
+		// Con Historia Comercial, condicion 2
+
+		$queryFindia = sprintf("SELECT SUM(`fdsaldob`) as totalSaldoFin
+		FROM `cifin_findia` 
+		WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
+		AND fdcedula = %s ", $identificationNumber, $identificationNumber);
+
+		$respFindia = DB::connection('oportudata')->select($queryFindia);
+
+		$totalSaldoFin = (empty($respFindia)) ? 0 : $respFindia[0]->totalSaldoFin ;
+
+		$queryRealdia = sprintf("SELECT SUM(`rdsaldob`) as totalSaldoReal
+		FROM `cifin_realdia` 
+		WHERE `rdconsul` = (SELECT MAX(`rdconsul`) FROM `cifin_realdia` WHERE `rdcedula` = %s  ) 
+		AND rdcedula = %s ", $identificationNumber, $identificationNumber);
+
+		$respRealdia = DB::connection('oportudata')->select($queryRealdia);
+
+		$totalSaldoReal = (empty($respRealdia)) ? 0 : $respRealdia[0]->totalSaldoReal ;
+
+		$totalSaldo = ($totalSaldoFin + $totalSaldoReal) * 1000;
+
+		if ($totalSaldo >= 1000000) {
+			return $this->getQuotaApproved(2, $identificationNumber);
+		}
+
+		// Sin Historia Comercial, condicion 1
+		$queryNoHistorial = sprintf("SELECT COUNT(vigconsul) as totalCuentas
+		FROM `cifin_ctavigen` 
+		WHERE `vigcedula` = %s AND `vigconsul` = (SELECT MAX(`vigconsul`) FROM `cifin_ctavigen` WHERE `vigcedula` = %s  ) AND `vigestado` = 'NORMA' ", $identificationNumber, $identificationNumber);
+
+		$respNoHistorial = DB::connection('oportudata')->select($queryNoHistorial);
+
+		if ($respNoHistorial[0]->totalCuentas >= 1) {
+			return $this->getQuotaApproved(1, $identificationNumber); // Sin Historia comercial pero tiene cuentas bancarias, condicion 1
+		}
+
+		//Condicion 1.1: Creditos < 1000000
+
+		if ($totalSaldo <= 1000000) {
+			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
+		}
+
+		// Condicion 1.2: Solo Codeudor
+
+		$queryCodeFinDia = sprintf("SELECT COUNT(`fdconsul`) as totalCodeFinDia 
+		FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
+		AND fdcedula = %s AND `fdcalid` = 'CODE' ", $identificationNumber, $identificationNumber);
+
+		$respCodeFinDia = DB::connection('oportudata')->select($queryCodeFinDia);
+		$totalCodeFinDia = $respCodeFinDia[0]->totalCodeFinDia;
+
+		$queryCodeRealDia = sprintf("SELECT COUNT(`rdconsul`) as totalCodeRealDia 
+		FROM `cifin_realdia` WHERE `rdconsul` = (SELECT MAX(`rdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
+		AND rdcedula = %s AND `rdcalid` = 'CODE' ", $identificationNumber, $identificationNumber);
+
+		$respCodeRealDia = DB::connection('oportudata')->select($queryCodeRealDia);
+		$totalCodeFinDia = $respCodeFinDia[0]->totalCodeFinDia;
+
+		if($totalCodeFinDia >= 1 || $totalCodeFinDia >= 1){
+			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
+		}
+
+
+		// Condicion 1.3: Sin creditos ultimos 2 años
+		$dateNow = date('Y-m-d');
+		$dateTwoYears = strtotime ("-2 year", strtotime ( $dateNow ) ) ;
+		$dateTwoYears = date ( 'Y-m-d' , $dateTwoYears );
+
+		$queryFinExtCorte = sprintf("SELECT `extcorte`
+		FROM `cifin_finext` 
+		WHERE `extcedula` = %s AND `extconsul` = (SELECT MAX(`extconsul`) FROM `cifin_finext` WHERE `extcedula` = %s  )  ", $identificationNumber, $identificationNumber);
+
+		$respFinExtCorte = DB::connection('oportudata')->select($queryFinExtCorte);
+		if(!empty($respFinExtCorte)){
+			foreach($respFinExtCorte as $date){
+				$time = explode("/", $date->extcorte);
+				$newTime = strtotime($time[1]."/".$time[0]."/".$time[2]);
+				if($newTime >= strtotime($dateTwoYears)){
+					return $this->getQuotaApproved(1, $identificationNumber);
+				}
+			}
+		}
+
+		$queryRealExtCorte = sprintf("SELECT `rexcorte`
+		FROM `cifin_realext` 
+		WHERE `rexcedula` = %s AND `rexconsul` = (SELECT MAX(`rexconsul`) FROM `cifin_realext` WHERE `rexcedula` = %s  )  ", $identificationNumber, $identificationNumber);
 		
-		$infoLead = $infoLead[0];
+		$respRealExtCorte = DB::connection('oportudata')->select($queryRealExtCorte);
 
-		$sql = sprintf("SELECT `id`,`quotaApproved` FROM `credit_policy` 
-		WHERE %s BETWEEN `score` AND `scoreEnd` AND 
-		%s BETWEEN `salary` AND `salaryEnd`  AND 
-		%s BETWEEN `age` AND `ageEnd`  AND 
-		`activity` = '%s' ", $score, $infoLead->SUELDO, $infoLead->EDAD, $infoLead->ACTIVIDAD);
+		if(!empty($respRealExtCorte)){
+			foreach($respRealExtCorte as $date){
+				$time = explode("/", $date->rexcorte);
+				$newTime = strtotime($time[1]."/".$time[0]."/".$time[2]);
+				if($newTime >= strtotime($dateTwoYears)){
+					return $this->getQuotaApproved(1, $identificationNumber);
+				}
+			}
+		}
+	}
 
-		$resp = DB::select($sql);
+	private function getQuotaApproved($typeValidation, $identificationNumber){
+		// typeValidation = 1 Sin Historia Comercial, 2 Con historia Comercial
+		$quotaApproved = 0;
+		$queryOccupationLead = sprintf("SELECT `ACTIVIDAD` FROM `CLIENTE_FAB` WHERE `CEDULA` = %s ", $identificationNumber);
+		$respOccupationLead = DB::connection('oportudata')->select($queryOccupationLead);
+		$occupation = $respOccupationLead[0]->ACTIVIDAD;
 
-		return response()->json($resp[0]);
+		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+		$score = $respScoreLead[0]->score;
+		
+		if($typeValidation == 1){
+			// Sin historia comercial
+			if($occupation == 'EMPLEADO' || $occupation == 'PENSIONADO'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 2100000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 2300000;
+				}
+			}elseif($occupation == 'INDEPENDIENTE CERTIFICADO'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 1700000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 1900000;
+				}
+			}elseif($occupation == 'NO CERTIFICADO' || $occupation == 'RENTISTA' || $occupation == 'PRESTACIÓN DE SERVICIOS'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 1500000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 1500000;
+				}
+			}
+		}else{
+			// Con historia comercial
+			if($occupation == 'EMPLEADO' || $occupation == 'PENSIONADO'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 2300000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 2500000;
+				}
+			}elseif($occupation == 'INDEPENDIENTE CERTIFICADO'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 1900000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 2100000;
+				}
+			}elseif($occupation == 'NO CERTIFICADO' || $occupation == 'RENTISTA' || $occupation == 'PRESTACIÓN DE SERVICIOS'){
+				if($score >= 686 && $score <= 725){
+					$quotaApproved = 1700000;
+				}
+				if($score >= 726 && $score <= 1000){
+					$quotaApproved = 1700000;
+				}
+			}
+		}
+
+		return $quotaApproved;
 	}
 
 	private function validatePolicyCredit($identificationNumber){
@@ -558,10 +796,10 @@ class OportuyaV2Controller extends Controller
 		$obj = new \stdClass();
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
-		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
+		$ws = new \SoapClient("http://10.238.14.181:2020/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
-
+	
 	public function getDataStep1(){
 		$data = [];
 

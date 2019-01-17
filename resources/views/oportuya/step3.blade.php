@@ -279,7 +279,12 @@
 						<div class="row resetRow">
 							<div class="col-12">
 								<p class="textModal text-center">
-									<strong>Felicitaciones</strong> tu solicitud ha sido pre aprobada <br> un analista se pondrá en contacto contigo <br> para continuar el proceso
+									<strong>Felicitaciones!!</strong>
+									<br>
+									Tu cupo aprobado es de:
+								</p>
+								<p class="text-quotamodal text-center">
+									$@{{ quota | number:0 }}
 								</p>
 							</div>
 						</div>

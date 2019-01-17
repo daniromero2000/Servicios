@@ -1,5 +1,6 @@
 angular.module('appStep3', ['moment-picker', 'ng-currency'])
 .controller("step3Ctrl", function($scope, $http) {
+	$scope.quota = 0;
 	$scope.leadInfo = {
 		step: 3,
 		identificationNumber: '',
@@ -145,7 +146,9 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
-			if (response.data != false) {
+			
+			if (response.data.data == true) {
+				$scope.quota = response.data.quota;
 				$('#congratulations').modal('show');
 			}
 		}, function errorCallback(response) {

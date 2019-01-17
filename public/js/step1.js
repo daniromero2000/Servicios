@@ -157,6 +157,10 @@ angular.module('appStep1', [])
 				  if(response.data == "-1"){
 					  window.location = "/OPN_gracias_FRM"
 				  }
+				  if(response.data == "-2"){
+					$('#proccess').modal('hide');
+					$('#cardExist').modal('show');
+				  }
 				  if (response.data == "1") {
 					  $scope.encryptText();
 				  }

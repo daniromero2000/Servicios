@@ -149,6 +149,46 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content modalStepsContent">
+					<div class="modal-body modalStepsBody" style="padding: 0">
+						<div class="row resetRow">
+							<div class="col-12 text-center containerLogoModalStep">
+								<img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
+							</div>
+						</div>
+						<div class="row resetRow">
+							<div class="col-12">
+								<p class="textModal text-center">
+									<strong>Gracias</strong> por contar con nosotros
+								</p>
+								<br>
+								<br>
+								<div class="row">
+									<div class="offset-5 col-7">
+									<p>
+										Actualmente ya cuentas <br>
+										con una tarejta <strong> Oportuya.</strong> 
+										<br>
+										Te invitamos a que la utilices en <br>
+										cualquiera de nuestros puntos de venta! <br>
+										<br>Para más información comunicate  <br>
+										a la línea <strong>01 8000 000 00 00</strong>
+									</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row resetRow containerFormModal">
+							<div class="col-sm-7 offset-sm-5">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
