@@ -796,7 +796,7 @@ class OportuyaV2Controller extends Controller
 		$obj = new \stdClass();
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
-		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
+		$ws = new \SoapClient("http://10.238.14.181:2020/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
 	
@@ -849,7 +849,7 @@ class OportuyaV2Controller extends Controller
 			[ 'label' => 'NEIVA', 'value' => 'NEIVA' ],
 			[ 'label' => 'LORICA', 'value' => 'LORICA' ],
 			[ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
-		];;
+		];
 
 		return $data;
 	}
