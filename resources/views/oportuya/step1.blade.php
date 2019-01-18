@@ -84,11 +84,11 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="email" class="control-label">Correo electronico*</label>
+						<label for="email" class="control-label">Correo electrónico*</label>
 						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="email" class="control-label">Confirmar Correo electronico*</label>
+						<label for="email" class="control-label">Confirmar Correo electrónico*</label>
 						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
 					</div>
 					<div ng-show="emailValidate" class="col-12">

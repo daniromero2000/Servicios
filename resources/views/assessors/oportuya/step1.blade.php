@@ -49,7 +49,7 @@
 			<div class="row resetRow">
 				<div class="forms-descStep">
 					<strong>Información básica</strong><br>
-					<span class="forms-descText"><DATA></DATA>atos personales</span>
+					<span class="forms-descText"><DATA></DATA>datos personales</span>
 					<img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg" />
 					<span class="forms-descStepNum">1</span>
 				</div>
@@ -80,11 +80,11 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="email" class="control-label">Correo electronico*</label>
+						<label for="email" class="control-label">Correo electrónico*</label>
 						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="email" class="control-label">Confirmar Correo electronico*</label>
+						<label for="email" class="control-label">Confirmar Correo electrónico*</label>
 						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
 					</div>
 					<div ng-show="emailValidate" class="col-12">
