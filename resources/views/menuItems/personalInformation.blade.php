@@ -10,7 +10,7 @@
 		<div class="container">
 			<h2 class="menuItem-subtitle">OBJETIVO:</h2>
 			<p class="menuItem-text">
-				Establecer y divulgar las Políticas de Tratamiento de la Información y Protección de Datos Personales, implementados por LAGOBO DISTRIBCIONES S.A. L.G.B. S.A., con el fin de garantizar el adecuado cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, los cuales tienen por objeto desarrollar el derecho constitucional que tienen todas las personas a conocer, actualizar y rectificar las informaciones que se hayan recogido sobre ellas en bases de datos o archivos, y los demás derechos, libertades y garantías constitucionales a que se refiere el artículo 15 de la Constitución Política “Habeas Data”; así como el derecho a la información consagrado en el artículo 20 de la misma.
+				Establecer y divulgar las Políticas de Tratamiento de la Información y Protección de Datos Personales, implementados por LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, con el fin de garantizar el adecuado cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, los cuales tienen por objeto desarrollar el derecho constitucional que tienen todas las personas a conocer, actualizar y rectificar las informaciones que se hayan recogido sobre ellas en bases de datos o archivos, y los demás derechos, libertades y garantías constitucionales a que se refiere el artículo 15 de la Constitución Política “Habeas Data”; así como el derecho a la información consagrado en el artículo 20 de la misma.
 			</p>
 			<p class="menuItem-text">
 				La sociedad LAGOBO DISTRIBUCIONES S.A. L.G.B. S.A., adopta el manual interno de políticas y procedimientos para garantizar el cumplimiento de éste precepto y estas regulaciones normativas.
