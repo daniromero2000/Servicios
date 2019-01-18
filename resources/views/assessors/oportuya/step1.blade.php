@@ -149,9 +149,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="cardExist" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
-				<div class="modal-content modalStepsContent">
+				<div class="modal-content modalCardContent">
 					<div class="modal-body modalStepsBody" style="padding: 0">
 						<div class="row resetRow">
 							<div class="col-12 text-center containerLogoModalStep">
@@ -174,8 +174,11 @@
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
 										<br>Para más información comunicate  <br>
-										a la línea <strong>01 8000 000 00 00</strong>
+										a la línea <strong>01 8000 11 77 87</strong>
 									</p>
+									<div class="text-center">
+										<a class="btn btn-danger buttonBackCardExist" href="/assessor/step1">Regresar</a>
+									</div>
 									</div>
 								</div>
 							</div>

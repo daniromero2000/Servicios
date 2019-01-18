@@ -157,12 +157,16 @@ angular.module('appAssessorStep1', [])
 				url: '/oportuyaV2',
 				data: $scope.leadInfo,
 			  }).then(function successCallback(response) {
-				  if(response.data == "-1"){
-					  window.location = "/OPN_gracias_FRM"
-				  }
-				  if (response.data == "1") {
-					  $scope.encryptText();
-				  }
+				if(response.data == "-1"){
+					window.location = "/OPN_gracias_FRM"
+				}
+				if(response.data == "-2"){
+				  $('#proccess').modal('hide');
+				  setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+				}
+				if (response.data == "1") {
+					$scope.encryptText();
+				}
 			  }, function errorCallback(response) {
 				  console.log(response);
 			  });

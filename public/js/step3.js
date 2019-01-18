@@ -150,6 +150,7 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 				$scope.quota = response.data.quota;
 				$('#congratulations').modal('show');
 			}
+			
 			if(response.data.data == false){
 				window.location = "/OPN_gracias_FRM";
 			}
