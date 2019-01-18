@@ -159,7 +159,7 @@ angular.module('appStep1', [])
 				  }
 				  if(response.data == "-2"){
 					$('#proccess').modal('hide');
-					$('#cardExist').modal('show');
+					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
 				  }
 				  if (response.data == "1") {
 					  $scope.encryptText();
