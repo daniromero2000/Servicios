@@ -8,33 +8,33 @@
 			<h1 class="ethicsCode-title text-center">PRESENTACIÓN CÓDIGO DE ÉTICA Y <br> BUEN GOBIERNO PARA PROVEEDORES</h1>
 			<h2 class="menuItem-subtitle">PRESENTACIÓN</h2>
 			<p class="menuItem-text">
-				El presente Código de Ética y Buen Gobierno está orientado a impartir directrices para el desarrollo de buenas prácticas de mercado, comerciales y administrativas en todos los niveles de la organización, de igual forma; brinda reglas concretas de cumplimiento a todas las partes interesadas de LAGOBO DISTRIBUCIONES S.A., estos estándares no son negociables y son un requisito de estricto cumplimiento, su violación se considera como falta grave y puede conllevar a la terminación de las relaciones comerciales, laborales y/o cualquier otro vínculo con la compañía.
+				El presente Código de Ética y Buen Gobierno está orientado a impartir directrices para el desarrollo de buenas prácticas de mercado, comerciales y administrativas en todos los niveles de la organización, de igual forma; brinda reglas concretas de cumplimiento a todas las partes interesadas de LAGOBO DISTRIBUCIONES S.A.S, estos estándares no son negociables y son un requisito de estricto cumplimiento, su violación se considera como falta grave y puede conllevar a la terminación de las relaciones comerciales, laborales y/o cualquier otro vínculo con la compañía.
 			</p>
 			<p class="menuItem-text">
-				Este documento es la declaración documentada de los valores y principios éticos marcados en la cultura de LAGOBO DISTRIBUCIONES S.A., los cuales representan una guía de conducta y comportamiento mediante la cual se reafirma la voluntad por mantener los mejores estándares de honestidad e integridad, brindando la certeza de que las buenas prácticas administrativas y comerciales, llevan a la empresa a ser reconocida por su operación sustentada en actos alineados al respeto por la ley, la sociedad, el medio ambiente y las buenas prácticas económicas y financieras, y demás principios que velan por el desarrollo de una sana competencia de mercado, garantizando así legalidad en las operaciones dentro y fuera de la compañía.
+				Este documento es la declaración documentada de los valores y principios éticos marcados en la cultura de LAGOBO DISTRIBUCIONES S.A.S, los cuales representan una guía de conducta y comportamiento mediante la cual se reafirma la voluntad por mantener los mejores estándares de honestidad e integridad, brindando la certeza de que las buenas prácticas administrativas y comerciales, llevan a la empresa a ser reconocida por su operación sustentada en actos alineados al respeto por la ley, la sociedad, el medio ambiente y las buenas prácticas económicas y financieras, y demás principios que velan por el desarrollo de una sana competencia de mercado, garantizando así legalidad en las operaciones dentro y fuera de la compañía.
 			</p>
 			<p class="menuItem-text">
 				A través del Código de Ética y Buen Gobierno adoptado por la compañía, se busca generar una cultura de autorregulación y conciencia social. De esta forma se pretende lograr buenas prácticas universales de convivencia, generándose el respeto entre compañeros, logrando mayor grado de responsabilidad al momento de tomar decisiones, contando con disponibilidad para escuchar recomendaciones, sugerencias u opiniones para trabajar de una forma más eficiente en equipo, también se genera la defensa del medio ambiente y la sociedad. De esta forma la adopción del Código de Ética permite que cada miembro de la organización se responsabilice de las obligaciones conferidas, por consiguiente se evita divulgar información confidencial, privada o delicada de la compañía y/o terceros, se evitan y sancionan actos de corrupción a través de sobornos o favores a terceros, lavado de activos, financiación del terrorismo y cualquier otra acción que atente contra la integridad y buen nombre de la compañía y su grupo de interés.
 			</p>
 			<h2 class="menuItem-subtitle">DE LA ACEPTACIÓN</h2>
 			<p class="menuItem-text">
-				La aceptación del presente CÓDIGO DE ÉTICA Y BUEN GOBIERNO CORPORATIVO es un requisito contractual que LAGOBO DISTRIBUCIONES S.A., exige a todas sus partes interesadas previo a la celebración de relaciones comerciales, laborales y/o cualquier otra índole.
+				La aceptación del presente CÓDIGO DE ÉTICA Y BUEN GOBIERNO CORPORATIVO es un requisito contractual que LAGOBO DISTRIBUCIONES S.A.S, exige a todas sus partes interesadas previo a la celebración de relaciones comerciales, laborales y/o cualquier otra índole.
 			</p>
 			<p class="menuItem-text">
 				En ningún momento la filosofía del presente documento busca reemplazar las buenas prácticas adoptadas por clientes, proveedores, colaboradores y demás partes interesadas; por el contrario, las políticas aquí definidas se adicionan a las disposiciones de cualquier acuerdo y/o contrato legal, escrito y/o verbal existente; y a su vez se hace de obligatorio cumplimiento.
 			</p>
 			<p class="menuItem-text">
-				LAGOBO DISTRIBUCIONES S.A., se reserva el derecho de verificar y/o evaluar el cumplimiento de este código de ética, mediante mecanismos y/o herramientas internas o externas a la compañía. El incumplimiento de las políticas y directrices dadas en el presente código de ética por parte de cualquier parte interesada, puede conllevar a la terminación de cualquier vínculo laboral y/o comercial.
+				LAGOBO DISTRIBUCIONES S.A.S, se reserva el derecho de verificar y/o evaluar el cumplimiento de este código de ética, mediante mecanismos y/o herramientas internas o externas a la compañía. El incumplimiento de las políticas y directrices dadas en el presente código de ética por parte de cualquier parte interesada, puede conllevar a la terminación de cualquier vínculo laboral y/o comercial.
 			</p>
 			<h2 class="menuItem-subtitle">CAPÍTULO 1: INTRODUCCIÓN</h2>
 			<h3 class="menuItem-subTitle2">OBJETIVO</h3>
 			<p class="menuItem-text">
-				Establecer pautas de comportamiento ético, a través de las cuales se genera una cultura de la legalidad que opera bajo buenas prácticas empresariales, respetando y actuando en función de los derechos humanos, las leyes, normas, reglamentos y demás directrices legales del país, así como también en función de la misión y visión de la compañía, con lo cual se evitan comportamientos mal intencionados de corrupción, fraudes o cualquier actuación ilícita que afecte el buen nombre y honra de LAGOBO DISTRIBUCIONES S.A., de sus colaboradores y/o demás partes interesadas.
+				Establecer pautas de comportamiento ético, a través de las cuales se genera una cultura de la legalidad que opera bajo buenas prácticas empresariales, respetando y actuando en función de los derechos humanos, las leyes, normas, reglamentos y demás directrices legales del país, así como también en función de la misión y visión de la compañía, con lo cual se evitan comportamientos mal intencionados de corrupción, fraudes o cualquier actuación ilícita que afecte el buen nombre y honra de LAGOBO DISTRIBUCIONES S.A.S, de sus colaboradores y/o demás partes interesadas.
 			</p>
 
 			<h3 class="menuItem-subTitle2">ALCANCE</h3>
 			<p class="menuItem-text">
-				El presente CÓDIGO DE ÉTICA Y BUEN GOBIERNO “CEBG” aplica para los Accionistas, Directivos, personal administrativo y comercial de la compañía, indistintamente de su nivel jerárquico, cargo, rol o funciones desempeñadas. Así como para proveedores, clientes y todo individuo que en el desarrollo de sus actividades 	diarias, repercuta directa o indirectamente en los resultados e imagen corporativa de LAGOBO DISTRIBUCIONES S.A L.G.B S.A.
+				El presente CÓDIGO DE ÉTICA Y BUEN GOBIERNO “CEBG” aplica para los Accionistas, Directivos, personal administrativo y comercial de la compañía, indistintamente de su nivel jerárquico, cargo, rol o funciones desempeñadas. Así como para proveedores, clientes y todo individuo que en el desarrollo de sus actividades 	diarias, repercuta directa o indirectamente en los resultados e imagen corporativa de LAGOBO DISTRIBUCIONES S.A L.G.B S.A.S
 			</p>
 
 			<h3 class="menuItem-subTitle2">DEFINICIONES</h3>
@@ -86,7 +86,7 @@
 				<br><br>
 				- Responsabilidad: realizar a cabalidad y con la debida diligencia las labores propias de cada cargo, según el grado de decisión y actuación otorgado por la compañía, en consecuencia responder plenamente por los actos y resultados obtenidos propios de su función o como resultado indirecto en otras operaciones.
 				<br><br>
-				- Integridad: actuar con honestidad y transparencia, cuidando el mejor uso de los recursos y el cumplimiento de los objetivos corporativos de LAGOBO DISTRIBUCIONES S.A.
+				- Integridad: actuar con honestidad y transparencia, cuidando el mejor uso de los recursos y el cumplimiento de los objetivos corporativos de LAGOBO DISTRIBUCIONES S.A.S
 				<br><br>
 				- Confidencialidad: cada colaborador de LAGOBO DISTRIBUCIONES S.A debe guardar reserva de la información conocida de la compañía, en especial de aquella cuya divulgación esté sometida a protección legal y cause perjuicios a terceros, en especial la información relativa a cualquier parte interesada.
 				<br><br>
@@ -94,7 +94,7 @@
 			</p>
 			<h2 class="menuItem-subtitle">CAPITULO 3: CONDICIONES GENERALES</h2>
 			<p class="menuItem-text">
-				Toda persona natural o jurídica que en su juicio genere vínculos de carácter comercial, laboral y/o financiero con LAGOBO DISTRIBUCIONES S.A., debe acogerse a las políticas, procedimientos y demás normas establecidas en el código de ética y buen gobierno corporativo, resumido como la actuación bajo buenas prácticas, las cuales sobresaltan el debido cumplimiento normativo y las directrices y reglamentos internos.
+				Toda persona natural o jurídica que en su juicio genere vínculos de carácter comercial, laboral y/o financiero con LAGOBO DISTRIBUCIONES S.A.S, debe acogerse a las políticas, procedimientos y demás normas establecidas en el código de ética y buen gobierno corporativo, resumido como la actuación bajo buenas prácticas, las cuales sobresaltan el debido cumplimiento normativo y las directrices y reglamentos internos.
 			</p>
 			<p class="menuItem-text">
 				El presente Código de Ética y Buen Gobierno desaprueba en todo momento y lugar: a) Comportamientos que busquen degradar el buen nombre y dignidad de la compañía, sus colaboradores, y demás partes interesadas, b) Actos tendientes a generar situaciones de fraude, corrupción o soborno, lavado de activos o financiación del terrorismo, y aprovechamiento inapropiado de información confidencial para fines personales o de terceros.
@@ -120,7 +120,7 @@
 			</p>
 			<h2 class="menuItem-subtitle">POLÍTICAS PARA LA DIRECCIÓN DE LA COMPAÑÍA</h2>
 			<p class="menuItem-text">
-				LAGOBO DISTRIBUCIONES S.A., a través de su modelo de gobierno corporativo, ha optado por implementar políticas éticas por departamento con las cuales busca impactar a todas las partes interesadas según su relación con la compañía, brindando de esta forma un referente de buen comportamiento de cara a la diversidad de actividades que se puedan presentar. A continuación se definen las siguientes políticas éticas:
+				LAGOBO DISTRIBUCIONES S.A.S, a través de su modelo de gobierno corporativo, ha optado por implementar políticas éticas por departamento con las cuales busca impactar a todas las partes interesadas según su relación con la compañía, brindando de esta forma un referente de buen comportamiento de cara a la diversidad de actividades que se puedan presentar. A continuación se definen las siguientes políticas éticas:
 			</p>
 			<h3 class="menuItem-subTitle2">Política Ética Compras y Proveedores</h3>
 			<p class="menuItem-text">
@@ -241,7 +241,7 @@
 			<p class="menuItem-text">
 				Para evitar conflictos de intereses se deben evitar las siguientes prácticas:
 				<br><br>
-				- Recibir remuneración, regalos, o cualquier otro tipo de compensación en dinero o especie por parte de clientes, proveedores u otro tercero, en razón del trabajo o servicio prestado a LAGOBO DISTRIBUCIONES S.A., que pueda prestarse para dilemas éticos y morales, comprometiendo las funciones del cargo.
+				- Recibir remuneración, regalos, o cualquier otro tipo de compensación en dinero o especie por parte de clientes, proveedores u otro tercero, en razón del trabajo o servicio prestado a LAGOBO DISTRIBUCIONES S.A.S, que pueda prestarse para dilemas éticos y morales, comprometiendo las funciones del cargo.
 				<br><br>
 				- Obtener provecho del uso de información confidencial o usarla para salvaguardar intereses individuales propios o de terceros.
 				<br><br>
@@ -307,13 +307,13 @@
 				Toda persona natural o jurídica que preste o en el futuro desee ofrecer bienes y servicios a LAGOBO en calidad de proveedor, debe acogerse a las políticas, procedimientos y demás normas establecidas en el código de ética. El cual establece las directrices para actuar bajo buenas prácticas, así como de los demás reglamentos y directrices que internamente se establezcan, además de los definidos por la ley y aplicable a todos los proveedores de manera directa e indirecta y sus filiales.
 			</p>
 			<p class="menuItem-text">
-				Cualquier situación o acto tendiente a generar situaciones de fraude, corrupción o soborno será sancionado por LAGOBO DISTRIBUCIONES S.A., a nivel interno según su reglamento laboral y demás mecanismos adoptados como herramientas y medidas de control, seguimiento y prevención, así como las contempladas por la ley que prevengan este tipo de actos malintencionados y a nivel externo este tipo de conductas puede generar la terminación de las relaciones comerciales con el proveedor que se vea involucrado en esta clase de actos
+				Cualquier situación o acto tendiente a generar situaciones de fraude, corrupción o soborno será sancionado por LAGOBO DISTRIBUCIONES S.A.S, a nivel interno según su reglamento laboral y demás mecanismos adoptados como herramientas y medidas de control, seguimiento y prevención, así como las contempladas por la ley que prevengan este tipo de actos malintencionados y a nivel externo este tipo de conductas puede generar la terminación de las relaciones comerciales con el proveedor que se vea involucrado en esta clase de actos
 			</p>
 			<p class="menuItem-text">
 				<i>“PILARES DEL CÓDIGO DE ÉTICA Y BUEN GOBIERNO CORPORATIVO PARA PROVEEDORES”</i>
 			</p>
 			<p class="menuItem-text">
-				LAGOBO DISTRIBUCIONES S.A., establece en el código de ética dos pilares para sus proveedores, a los cuales espera se dé pleno cumplimiento.
+				LAGOBO DISTRIBUCIONES S.A.S, establece en el código de ética dos pilares para sus proveedores, a los cuales espera se dé pleno cumplimiento.
 			</p>
 			<p class="menuItem-text">
 				- El Ámbito Ambiental.
@@ -322,7 +322,7 @@
 				<br><br>
 				- El Ámbito Ético.
 				<br><br>
-				- Para LAGOBO DISTRIBUCIONES S.A., la ética significa actuar bajo las buenas prácticas de la moralidad, por este motivo espera que de igual forma sus proveedores y filiales fomenten una cultura empresarial basada en prácticas éticas.
+				- Para LAGOBO DISTRIBUCIONES S.A.S, la ética significa actuar bajo las buenas prácticas de la moralidad, por este motivo espera que de igual forma sus proveedores y filiales fomenten una cultura empresarial basada en prácticas éticas.
 			</p>
 			<p class="menuItem-text">
 				Se espera de los proveedores y sus filiales un comportamiento ético, por lo cual deberán garantizar como mínimo los siguientes compromisos:
@@ -338,18 +338,18 @@
 			</p>
 			<h2 class="menuItem-subtitle">UNA PRÁCTICA NO ÉTICA Y NO PERMITIDA</h2>
 			<p class="menuItem-text">
-				LAGOBO DISTRIBUCIONES S.A., en su actuar ético, y según estrategias implementadas para evitar conductas que puedan comprometer su buen nombre y honra, el de sus colaboradores, clientes y/o proveedores, o generar conflictos de interés; además de buscar garantizar una libre y sana competencia de todas las marcas que hacen presencia en sus almacenes a nivel nacional y de todos los proveedores de bienes y servicios; informa que, según el código de ética y buen gobierno corporativo, se debe dar cumplimiento a:
+				LAGOBO DISTRIBUCIONES S.A.S, en su actuar ético, y según estrategias implementadas para evitar conductas que puedan comprometer su buen nombre y honra, el de sus colaboradores, clientes y/o proveedores, o generar conflictos de interés; además de buscar garantizar una libre y sana competencia de todas las marcas que hacen presencia en sus almacenes a nivel nacional y de todos los proveedores de bienes y servicios; informa que, según el código de ética y buen gobierno corporativo, se debe dar cumplimiento a:
 			</p>
 			<p class="menuItem-text">
 				- Todo pago u ofrecimiento de incentivos tales como: bonificaciones, concursos, campañas de fidelización, comisiones, bonos, viajes, entradas a espectáculos públicos e invitaciones a comer o cualquier otro concepto que implique entrega de dinero, obsequios y/o servicios personales a colaboradores de LAGOBO, en contraprestación o como recompensa por el cargo desempeñado dentro en la compañía, ya sea por: compra, venta y/o almacenamiento de cualquiera de los productos y servicios ofrecidos y comercializados por las diferentes marcas dentro de los ALMACENES OPORTUNIDADES/ELECTROFERTAS/OPORTUNIDADES MOTOS y demás canales comerciales, deberán ser canalizados a través de la empresa, por medio del Director de compras y/o Director nacional de ventas, quienes deberán informarlo y contar con la autorización por escrito de la alta dirección de la compañía.
 				<br><br>
 				- Está totalmente prohibido ofrecer beneficios por la contratación de servicios, compra, almacenamiento y/o venta de productos a colaboradores de LAGOBO, o como motivo del cargo desempeñado por el colaborador, este tipo de actividades deben ser planteadas y revisadas directamente a través de la empresa por medio el Director de compras y el Director nacional de ventas, quienes deben contar con la previa aprobación por escrito de la alta dirección.
 				<br><br>
-				- Toda actividad donde el proveedor y sus filiales ofrezcan beneficios a colaboradores de LAGOBO DISTRIBUCIONES S.A., durante el proceso de cotización, venta de bienes y/o servicios con la intención de adquirir ventaja competitiva y no se cuente con la autorización de la alta dirección de la compañía, será tomado como una conducta desleal y un incumplimiento a las buenas prácticas corporativas de LAGOBO DISTRIBUCIONES S.A., plasmadas en el código de ética corporativo, motivo por el cual la organización iniciará la respectiva investigación y tomará las medidas necesarias, lo que puede conllevar a la terminación de cualquier relación y/o vinculo comercial entre las partes, tanto con el proveedor y sus filiales como con el funcionario.
+				- Toda actividad donde el proveedor y sus filiales ofrezcan beneficios a colaboradores de LAGOBO DISTRIBUCIONES S.A.S, durante el proceso de cotización, venta de bienes y/o servicios con la intención de adquirir ventaja competitiva y no se cuente con la autorización de la alta dirección de la compañía, será tomado como una conducta desleal y un incumplimiento a las buenas prácticas corporativas de LAGOBO DISTRIBUCIONES S.A.S, plasmadas en el código de ética corporativo, motivo por el cual la organización iniciará la respectiva investigación y tomará las medidas necesarias, lo que puede conllevar a la terminación de cualquier relación y/o vinculo comercial entre las partes, tanto con el proveedor y sus filiales como con el funcionario.
 			</p>
 			<h2 class="menuItem-subtitle">CAPITULO 8: DENUNCIA DE INCUMPLIMIENTOS</h2>
 			<p class="menuItem-text">
-				LAGOBO DISTRIBUCIONES S.A., ha dispuesto de canales para que de forma directa o anónima se presenten denuncias o se informe sobre faltas al código de ética, hechos de corrupción, fraude, lavado de activos y/o financiación del terrorismo.
+				LAGOBO DISTRIBUCIONES S.A.S, ha dispuesto de canales para que de forma directa o anónima se presenten denuncias o se informe sobre faltas al código de ética, hechos de corrupción, fraude, lavado de activos y/o financiación del terrorismo.
 			</p>
 			<p class="menuItem-text">
 				Para ello se podrá dirigir correo electrónico a oficialdecumplimiento@lagobo.com.co, o comunicarse desde cualquier teléfono fijo a nivel nacional a la línea gratuita 018000117787 opción 5 (Línea ética) o marcando al teléfono fijo en Pereira 3358557 ext. 125. A través de estos canales toda solicitud será atendida por una persona profesional responsable específicamente del cumplimiento ético de la compañía, de acuerdo al presente código de ética, las normas legales, y demás practicas consideradas socialmente como apropiadas.
@@ -370,11 +370,11 @@
 			</p>
 			<h2 class="menuItem-subtitle">CONCLUSIONES</h2>
 			<p class="menuItem-text">
-				- Se resuelve adoptar el código de ética y buen gobierno de LAGOBO DISTRIBUCIONES S.A. por parte de todos sus colaboradores.
+				- Se resuelve adoptar el código de ética y buen gobierno de LAGOBO DISTRIBUCIONES S.A.S por parte de todos sus colaboradores.
 				<br><br>
 				- El Código de Ética y Buen Gobierno que se adopta debe ser divulgado y socializado a cada colaborador y parte interesada a la compañía. Será publicado en las páginas WEB de la compañía e Intranet para conocimiento de todas las partes relacionadas.
 				<br><br>
-				- El cumplimiento de código de ética será objetivo de constante seguimiento por parte de LAGOBO DISTRIBUCIONES S.A.
+				- El cumplimiento de código de ética será objetivo de constante seguimiento por parte de LAGOBO DISTRIBUCIONES S.A.S
 				<br><br>
 				- Las políticas definidas a proveedores y colaboradores podrán ser evaluadas por LAGOBO en cualquier momento.
 			</p>
