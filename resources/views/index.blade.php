@@ -46,7 +46,7 @@
 	<div id="conoce">
 		<h2 class="conoce-title">Conoce todos los servicios <br> que tenemos para ti</h2>
 		<div class="row resetRow">
-			<div class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-1 conoce-containTarjeta text-center">
+			<div class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-2 conoce-containTarjeta text-center">
 				<div class="conoce-TarjetaOportuya">
 					<h3 class="conoce-titleTarjeta">Tarjeta de <strong>crédito Oportuya</strong></h3>
 					<img src="/images/servicios_CreditoOportuyaIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
@@ -80,7 +80,7 @@
 
 			<div class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-0 conoce-containTarjeta text-center">
 				<div class="conoce-creditoLibranza">
-					<h3 class="conoce-titleTarjetaMotos">Crédito <strong>libranza</strong></h3>
+					<h3 class="conoce-titleTarjetaSeguros"><strong>Avances</strong></h3>
 					<img src="/images/servicios_libranzaIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
 					<p class="conoce-tarjetasTexto">
 						¡Porque es momento
@@ -89,7 +89,7 @@
 				</div>
 
 				<div class="conoce-containButton">
-					<a href="/libranza" class="conoce-button button-creditoLibranza">Conoce más</a>
+					<a href="/avance" class="conoce-button button-creditoLibranza">Conoce más</a>
 				</div>
 				<img src="/images/conoce-libranzaImagen.png" alt="Conoce nuestros créditos de libranza" class="img-fluid" />
 			</div>
@@ -110,20 +110,6 @@
 					<a href="/seguros" class="conoce-button button-seguros">Conoce más</a>
 				</div>
 				<img src="/images/conoce-segurosImagen.png" alt="Conoce nuestro servicio de seguros" class="img-fluid" />
-			</div>
-
-			<div class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-0 col-xl-2 offset-xl-0 conoce-containTarjeta tarjetaLAst text-center">
-				<div class="conoce-viajes">
-					<h3 class="conoce-titleTarjetaSeguros"><strong>Viajes</strong></h3>
-					<img src="/images/servicios_viajesIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
-					<p class="conoce-tarjetasTexto">
-						No te pierdas el viaje de tus sueños, te damos crédito para viajar.
-					</p>
-				</div>
-				<div class="conoce-containButton">
-					<a href="/viajes" class="conoce-button button-viajes">Conoce más</a>
-				</div>
-				<img src="/images/conoce-viajesImagen.png" alt="Conoce nuestro servicio de viajes" class="img-fluid" />
 			</div>
 		</div>
 	</div>

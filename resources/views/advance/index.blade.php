@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Crédito para Motos')
+@section('title', 'Avances')
 
 @section('metaTags')
 	{{-- <meta name="description" content="">
