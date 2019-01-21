@@ -35,7 +35,7 @@
 						<div class="puntos punto_uno listo">
 						</div>
 						<span></span>
-						<label>Cuentanos sobre ti</label>
+						<label>Cuéntanos sobre ti</label>
 						<div class="puntos punto_dos listo">
 						</div>
 						<span></span>

@@ -90,7 +90,7 @@ class OportuyaV2Controller extends Controller
 		
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
-			$identificationNumber = $request->get('identificationNumber');
+			$identificationNumber = trim($request->get('identificationNumber'));
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
@@ -109,16 +109,16 @@ class OportuyaV2Controller extends Controller
 				'typeDocument'=> $request->get('typeDocument'),
 				'identificationNumber'=> $identificationNumber,
 				'assessor' => $assessorCode,
-				'name'=> $request->get('name'),
-				'lastName'=> $request->get('lastName'),
-				'email'=> $request->get('email'),
+				'name'=> trim($request->get('name')),
+				'lastName'=> trim($request->get('lastName')),
+				'email'=> trim($request->get('email')),
 				'channel'=>  1,
-				'telephone'=> $request->get('telephone'),
-				'occupation' =>  $request->get('occupation'),
-				'termsAndConditions'=> $request->get('termsAndConditions'),
-				'city' =>  $request->get('city'),
+				'telephone'=> trim($request->get('telephone')),
+				'occupation' =>  trim($request->get('occupation')),
+				'termsAndConditions'=> trim($request->get('termsAndConditions')),
+				'city' =>  trim($request->get('city')),
 				'typeProduct' =>  '',
-				'typeService' =>  $request->get('typeService')
+				'typeService' =>  trim($request->get('typeService'))
 			];
 
 			
@@ -139,14 +139,14 @@ class OportuyaV2Controller extends Controller
 				$identificationNumber = $request->get('identificationNumber');
 				$lead->typeDocument=$request->get('typeDocument');
 				$lead->identificationNumber=$identificationNumber;	
-				$lead->name=$request->get('name');
-				$lead->lastName=$request->get('lastName');
-				$lead->email=$request->get('email');
+				$lead->name=trim($request->get('name'));
+				$lead->lastName=trim($request->get('lastName'));
+				$lead->email=trim($request->get('email'));
 				$lead->channel= 1;
-				$lead->telephone=$request->get('telephone');
-				$lead->occupation = $request->get('occupation');
+				$lead->telephone=trim($request->get('telephone'));
+				$lead->occupation = trim($request->get('occupation'));
 				$lead->termsAndConditions=$request->get('termsAndConditions');
-				$lead->city= $request->get('city');
+				$lead->city= $request->trim(get('city'));
 				$lead->typeProduct = $request->get('typeProduct');
 				$lead->typeService = $request->get('typeService');
 				$response = $lead->save();
@@ -165,10 +165,10 @@ class OportuyaV2Controller extends Controller
 				$dataoportudata=[
 					'TIPO_DOC' => $request->get('typeDocument'),
 					'CEDULA' => $identificationNumber,
-					'NOMBRES' => strtoupper($request->get('name')),
-					'APELLIDOS' => strtoupper($request->get('lastName')),
-					'EMAIL' => $request->get('email'),
-					'CELULAR' =>$request->get('telephone'),
+					'NOMBRES' => trim(strtoupper($request->get('name'))),
+					'APELLIDOS' => trim(strtoupper($request->get('lastName'))),
+					'EMAIL' => trim($request->get('email')),
+					'CELULAR' =>trim($request->get('telephone')),
 					'PROFESION' => 'NO APLICA',
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
 					'CIUD_UBI' => $request->get('city'),
@@ -188,11 +188,11 @@ class OportuyaV2Controller extends Controller
 
 					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
 					$oportudataLead->CEDULA = $identificationNumber;
-					$oportudataLead->NOMBRES = $request->get('name');
-					$oportudataLead->APELLIDOS = $request->get('lastName');
-					$oportudataLead->EMAIL = $request->get('email');
-					$oportudataLead->CELULAR = $request->get('telephone');
-					$oportudataLead->PROFESION = $request->get('occupation');
+					$oportudataLead->NOMBRES = trim($request->get('name'));
+					$oportudataLead->APELLIDOS = trim($request->get('lastName'));
+					$oportudataLead->EMAIL = trim($request->get('email'));
+					$oportudataLead->CELULAR = trim($request->get('telephone'));
+					$oportudataLead->PROFESION = trim($request->get('occupation'));
 
 					$response = $oportudataLead->save();
 
@@ -235,7 +235,7 @@ class OportuyaV2Controller extends Controller
 
 		if($request->get('step')==2){
 			$flag= 0;
-			$identificationNumber = $request->get('identificationNumber');
+			$identificationNumber = trim($request->get('identificationNumber'));
 
 			$flag=1;
 
@@ -246,7 +246,7 @@ class OportuyaV2Controller extends Controller
 			//Assign data from request to CLIENTE_FAB colums
 
 			$dataLead=[
-				'DIRECCION' => strtoupper($request->get('addres')),
+				'DIRECCION' => trim(strtoupper($request->get('addres'))),
 				'FEC_NAC' => $request->get('birthdate'),
 				'EDAD' => $this->calculateAge($request->get('birthdate')),
 				'CIUD_EXP' => $request->get('cityExpedition'),
@@ -255,17 +255,17 @@ class OportuyaV2Controller extends Controller
 				'PROPIETARIO' => ($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')) : 'NA' ,
 				'SEXO' => strtoupper($request->get('gender')),
 				'TIPOV' => strtoupper($request->get('housingType')),
-				'TIEMPO_VIV' => $request->get('housingTime'),
-				'TELFIJO' => $request->get('housingTelephone'),
-				'VRARRIENDO' => ($request->get('leaseValue') != '') ? $request->get('leaseValue') : 0,
-				'EPS_CONYU' => ($request->get('spouseEps') != '') ? strtoupper($request->get('spouseEps')) : 'NA',
-				'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? $request->get('spouseIdentificationNumber') : '0',
-				'TRABAJO_CONYU' => ($request->get('spouseJob')) ? strtoupper($request->get('spouseJob')) : 'NA' ,
-				'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? strtoupper($request->get('spouseJobName')) : 'NA',
-				'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? strtoupper($request->get('spouseName')) : 'NA',
-				'PROFESION_CONYU' => ($request->get('spouseProfession') != '') ? strtoupper($request->get('spouseProfession')) : 'NA' ,
-				'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? $request->get('spouseSalary') : '0',
-				'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? $request->get('spouseTelephone') : '0',
+				'TIEMPO_VIV' => trim($request->get('housingTime')),
+				'TELFIJO' => trim($request->get('housingTelephone')),
+				'VRARRIENDO' => ($request->get('leaseValue') != '') ? trim($request->get('leaseValue')) : 0,
+				'EPS_CONYU' => ($request->get('spouseEps') != '') ? trim(strtoupper($request->get('spouseEps'))) : 'NA',
+				'CEDULA_C' => ($request->get('spouseIdentificationNumber') != '') ? trim($request->get('spouseIdentificationNumber')) : '0',
+				'TRABAJO_CONYU' => ($request->get('spouseJob')) ? trim(strtoupper($request->get('spouseJob'))) : 'NA' ,
+				'CARGO_CONYU' => ($request->get('spouseJobName') != '') ? trim(strtoupper($request->get('spouseJobName'))) : 'NA',
+				'NOMBRE_CONYU' => ($request->get('spouseName') != '') ? trim(strtoupper($request->get('spouseName'))) : 'NA',
+				'PROFESION_CONYU' => ($request->get('spouseProfession') != '') ? trim(strtoupper($request->get('spouseProfession'))) : 'NA' ,
+				'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? trim($request->get('spouseSalary')) : '0',
+				'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? trim($request->get('spouseTelephone')) : '0',
 				'ESTRATO' => $request->get('stratum'),
 				'PERSONAS' => 0,
 				'ESTUDIOS' => 'NA',
@@ -322,7 +322,7 @@ class OportuyaV2Controller extends Controller
 			$sucursal=9999;
 			$estado='ANALISIS';
 			$ftp=0;
-			$state='X';
+			$state='A';
 			$granTotal=0;
 	
 			$flag = 1;
@@ -332,26 +332,26 @@ class OportuyaV2Controller extends Controller
 			// Assign data to CLIENTE_FAB columns
 
 			$dataLead=[
-				'NIT_EMP' => ($request->get('nit') != '') ? $request->get('nit') : 0,
-				'RAZON_SOC' => ($request->get('companyName') != '') ? strtoupper($request->get('companyName')) : 'NA',
-				'DIR_EMP' => ($request->get('companyAddres') != '') ? strtoupper($request->get('companyAddres')) : 'NA',
-				'TEL_EMP' => ($request->get('companyTelephone') != '') ? $request->get('companyTelephone') : 0,
-				'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? $request->get('companyTelephone2') : 0,
-				'ACT_ECO' => ($request->get('eps') != '') ? strtoupper($request->get('eps')) : '-',
-				'CARGO' => ($request->get('companyPosition') != '') ? strtoupper($request->get('companyPosition')) : 'NA',
-				'FEC_ING' => ($request->get('admissionDate') != '') ? $request->get('admissionDate') : '0000/1/1',
-				'ANTIG' => ($request->get('antiquity') != '') ? $request->get('antiquity') : 1,
-				'SUELDO' => ($request->get('salary') != '') ? $request->get('salary') : 0,
-				'TIPO_CONT' => ($request->get('typeContract') != '') ? strtoupper($request->get('typeContract')) : 'NA',
-				'OTROS_ING' => ($request->get('otherRevenue') != '') ? $request->get('otherRevenue') : 0,
+				'NIT_EMP' => ($request->get('nit') != '') ? trim($request->get('nit')) : 0,
+				'RAZON_SOC' => ($request->get('companyName') != '') ? trim(strtoupper($request->get('companyName'))) : 'NA',
+				'DIR_EMP' => ($request->get('companyAddres') != '') ? trim(strtoupper($request->get('companyAddres'))) : 'NA',
+				'TEL_EMP' => ($request->get('companyTelephone') != '') ? trim($request->get('companyTelephone')) : 0,
+				'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? trim($request->get('companyTelephone2')) : 0,
+				'ACT_ECO' => ($request->get('eps') != '') ? trim(strtoupper($request->get('eps'))) : '-',
+				'CARGO' => ($request->get('companyPosition') != '') ? trim(strtoupper($request->get('companyPosition'))) : 'NA',
+				'FEC_ING' => ($request->get('admissionDate') != '') ? trim($request->get('admissionDate')) : '0000/1/1',
+				'ANTIG' => ($request->get('antiquity') != '') ? trim($request->get('antiquity')) : 1,
+				'SUELDO' => ($request->get('salary') != '') ? trim($request->get('salary')) : 0,
+				'TIPO_CONT' => ($request->get('typeContract') != '') ? trim(strtoupper($request->get('typeContract'))) : 'NA',
+				'OTROS_ING' => ($request->get('otherRevenue') != '') ? trim($request->get('otherRevenue')) : 0,
 				'CAMARAC' => ($request->get('camaraComercio') != '') ? $request->get('camaraComercio') : 'NO',
-				'NIT_IND' => ($request->get('nitInd') != '') ? $request->get('nitInd') : 0,
-				'RAZON_IND' => ($request->get('companyNameInd') != '') ? $request->get('companyNameInd') : 'NA',
-				'ACT_IND' => ($request->get('whatSell') != '') ? $request->get('whatSell') : 'NA',
-				'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? $request->get('dateCreationCompany') : '0000/1/1',
-				'EDAD_INDP' => ($request->get('antiquityInd') != '') ? $request->get('antiquityInd') : 1,
-				'SUELDOIND' => ($request->get('salaryInd') != '') ? $request->get('salaryInd') : 0,
-				'BANCOP' => ($request->get('bankSavingsAccount') != '') ? $request->get('bankSavingsAccount') : 'NA'
+				'NIT_IND' => ($request->get('nitInd') != '') ? trim($request->get('nitInd')) : 0,
+				'RAZON_IND' => ($request->get('companyNameInd') != '') ? trim($request->get('companyNameInd')) : 'NA',
+				'ACT_IND' => ($request->get('whatSell') != '') ? trim($request->get('whatSell')) : 'NA',
+				'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? trim($request->get('dateCreationCompany')) : '0000/1/1',
+				'EDAD_INDP' => ($request->get('antiquityInd') != '') ? trim($request->get('antiquityInd')) : 1,
+				'SUELDOIND' => ($request->get('salaryInd') != '') ? trim($request->get('salaryInd')) : 0,
+				'BANCOP' => ($request->get('bankSavingsAccount') != '') ? trim($request->get('bankSavingsAccount')) : 'NA'
 			];
 
 			
@@ -393,20 +393,20 @@ class OportuyaV2Controller extends Controller
 
 			$datosCliente->CEDULA = $identificationNumber;
 			$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
-			$datosCliente->NOM_REFPER = $request->get('NOM_REFPER');
+			$datosCliente->NOM_REFPER = trim($request->get('NOM_REFPER'));
 			$datosCliente->DIR_REFPER = 'NA';
 			$datosCliente->BAR_REFPER = 'NA';
-			$datosCliente->TEL_REFPER = $request->get('TEL_REFPER');
+			$datosCliente->TEL_REFPER = trim($request->get('TEL_REFPER'));
 			$datosCliente->CIU_REFPER = 'NA';
 			$datosCliente->NOM_REFPE2 = 'NA';
 			$datosCliente->DIR_REFPE2 = 'NA';
 			$datosCliente->BAR_REFPE2 = 'NA';
 			$datosCliente->TEL_REFPE2 = 0;
 			$datosCliente->CIU_REFPE2 = " ";
-			$datosCliente->NOM_REFFAM = $request->get('NOM_REFFAM');
+			$datosCliente->NOM_REFFAM = trim($request->get('NOM_REFFAM'));
 			$datosCliente->DIR_REFFAM = 'NA';
 			$datosCliente->BAR_REFFAM = 'NA';
-			$datosCliente->TEL_REFFAM = $request->get('TEL_REFFAM');
+			$datosCliente->TEL_REFFAM = trim($request->get('TEL_REFFAM'));
 			$datosCliente->PARENTESCO = " ";
 			$datosCliente->NOM_REFFA2 = 'NA';
 			$datosCliente->DIR_REFFA2 = 'NA';
@@ -516,7 +516,7 @@ class OportuyaV2Controller extends Controller
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$oportudataLead = [
 				'NOTA1' =>  $request->get('availability'),
-				'NOTA2' => $request->get('comment')
+				'NOTA2' => trim($request->get('comment'))
 			];
 
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($oportudataLead);
@@ -652,7 +652,7 @@ class OportuyaV2Controller extends Controller
 			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
 		}
 
-		// Condicion 1.2: Solo Codeudor
+		// Condicion 1.2: Solo Codeudorouhhu
 
 		$queryCodeFinDia = sprintf("SELECT COUNT(`fdconsul`) as totalCodeFinDia 
 		FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
@@ -796,6 +796,7 @@ class OportuyaV2Controller extends Controller
 		$obj = new \stdClass();
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
+		// 2923 Produccion, 2020 Pruebas
 		$ws = new \SoapClient("http://10.238.14.181:2020/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
@@ -859,7 +860,7 @@ class OportuyaV2Controller extends Controller
 
 	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
 
-	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, CELULAR as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $resp2 = DB::select($query2);
