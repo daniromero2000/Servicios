@@ -2888,7 +2888,7 @@ p.wantToSecondTex{
 	}
 	.wantToButton {
     margin-top: 2em;
-}
+    }
 
 	.dialogThakPage p{
 
@@ -3209,14 +3209,6 @@ p.wantToSecondTex{
 	}
 
 
-}
-
-
-
-
-
-@media(max-width: 991px){
-
 	.plansContent section{
 		width: 60%;
    		margin: 20px auto;
@@ -3398,9 +3390,64 @@ p.wantToSecondTex{
 	.preHeader-item{
 		padding: 5px 10px 0 10px !important;
 	}
+
+			/**
+    **Caso de Uso: MODULO catalogo 991
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
+
+    .publicHeader {
+    	text-align: center;
+		background-color:#F5F4FE;
+		font-weight:bold;
+		position: relative;
+	}
+	.publicHeader * {
+		margin: unset !important;
+	}
+
+	.headerLogo{
+		margin: 10px 0px !important;
+	}
+	.headerText{
+		margin-top: 25px !important;
+		position: relative;
+	}
+	.headerText * {
+		padding: 0px;
+	}
+
+	.phoneCatalog:after{
+		position: absolute;
+		content: '';
+		width: 1px;
+		background-color: #000;
+		height: 30px;
+		top:0;
+		right: 0;
+	}
+
+	.headerText a{
+	    position: absolute;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    left: 1vw;
+	}
+		.headerText span{
+	    position: absolute;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    left: 0;
+	}	
 }
 
 @media(max-width: 768px){
+
+	.phoneCatalog:after{
+		display: none;
+	}
 
 	.preHeader-item:nth-child(3){
 		display: none;
@@ -3624,6 +3671,33 @@ p.wantToSecondTex{
 		margin-top: 0;
 	}
 
+			/**
+    **Caso de Uso: MODULO catalogo 768
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
+
+    .publicHeader {
+    	text-align: center;
+		background-color:#F5F4FE;
+		font-weight:bold;
+		font-size: 2.1vw !important;
+	}
+	.publicHeader * {
+		margin: unset !important;
+	}
+
+	.headerLogo{
+		margin: 10px 0px !important;
+	}
+	.headerText{
+		margin-top: 10px !important;
+	}
+	.phoneCatalog:after{
+		display: none;
+	}
+
 
 }
 
@@ -3796,8 +3870,34 @@ p.wantToSecondTex{
 		width: 80%;
 	}
 
+		/**
+    **Caso de Uso: MODULO catalogo 576
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
 
+    .publicHeader {
+		background-color:#F5F4FE;
+		font-weight:bold;
+		font-size: 2vh !important;
+	}
 
+	.headerText{
+		background: white;
+		top: 0px;
+
+	}
+
+	.headerText a, .headerText span {
+		left:50%;
+		transform: translateX(-50%) translateY(-50%);
+		width: 100%;
+	}
+	
+	.headerLogo{
+		margin: 10px !important;
+	}
 }
 
 
@@ -3845,6 +3945,8 @@ p.wantToSecondTex{
 	.busTourButton p a{
 		width: 100%;
 	}
+
+
 }
 
 
@@ -3982,3 +4084,40 @@ p.wantToSecondTex{
 	width: 220px;
 	margin:auto;
 }
+			/**
+    **Caso de Uso: MODULO catalogo 576
+    **Autor: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Fecha: 12/12/2018
+     **/
+
+    .publicHeader {
+		background-color:#F5F4FE;
+		font-weight:bold;
+		font-size: 1.2vw;
+		position: relative;
+	}
+
+
+
+	.headerLogo{
+		padding: 10px 0px 10px 30px !important;
+	}
+	.headerText{
+		margin-top: 25px !important;
+		position: relative;
+	}
+	.headerText * {
+		padding: 0px;
+		text-align: center;
+	}
+
+	.phoneCatalog:after{
+		position: absolute;
+		content: '';
+		width: 1px;
+		background-color: #000;
+		height: 30px;
+		top:0;
+		right: 0;
+	}

@@ -54,7 +54,7 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 				$scope.lines = response.data.lines;
 				$scope.brands = response.data.brands;
 				$scope.cities = response.data.cities;
-				console.log($scope.resources);
+				
 				hideLoader();
 			}	
 		}, function errorCallback(response) {
@@ -86,7 +86,7 @@ app.controller('productsController', function($scope, $http, $rootScope, $ngBoot
 	};
 
 	$scope.createResource = function(){
-		console.log($scope.resource);
+		
 		showLoader();
 		$http({
 		  method: 'POST',
