@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['indexpublic']]);
     }
     /**
      * Display a listing of the resource.
@@ -276,4 +276,8 @@ class ProductsController extends Controller
         
     }
 
+    public function indexpublic(Request $request)
+    {
+        
+    }
 }
