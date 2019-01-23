@@ -23,17 +23,11 @@
 */
 
 Route::get('/', function () {
-
 	$sliders = collect([
-
 		['img' => 'tarjetaCreditoOportuya.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Obtén beneficios que otros no tienen con <br /> nuestra tarjeta de crédito Oportuya</p>', 'textoBoton' => 'Solicita tu tarjeta ya', 'title' => 'Tarjeta Oportuya','color' => '#1d84c3', 'position_text' => 'bottom', 'enlace' => '/oportuya'],
-
 		['img' => 'creditoMotos.jpg', 'texto' => '<h1 class="sliderPrincipal-titleSlider">Crédito <strong>Motos</strong></h1><p class="sliderPrincipal-textSlider">Te damos crédito para que pongas a rodar tus aventuras.</p>', 'textoBoton' => 'Obtener mi moto Ya', 'title' => 'Crédito Motos','color' => '#ec2d35', 'position_text' => 'left', 'enlace' => '/motos'],
-
 		['img' => 'creditoLibranza.jpg', 'texto' => '<h1 class="sliderPrincipal-titleSlider">Crédito <strong>Libranza</strong></h1><p class="sliderPrincipal-textSlider">¡Porque es momento de disfrutar la vida!</p>', 'textoBoton' => 'Solicitar crédito', 'title' => 'Crédito Libranza','color' => '#fdbf3c', 'position_text' => 'left', 'enlace' => 'libranza'],
-
 		['img' => 'seguros.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Asegura tu patrimonio y el bienestar <br /> de quienes están a tu lado</p>', 'textoBoton' => 'Asegúrate Ya', 'title' => 'Seguros','color' => '#2aace0', 'position_text' => 'bottom', 'enlace' => '/seguros']
-
 	]);
 
     return view('index')
@@ -91,9 +85,7 @@ if ($options['verify'] ?? false) {
 }
 
 //Assessor Auth
-
 Route::group(['prefix'=>'/assessor/'],function(){
-
 	Route::get('/dashboard','Admin\assessorsController@index')->name('assessors.dashboard');
 	Route::get('/login','Assessor\LoginController@showLoginForm')->name('assessors.login');
 	Route::post('/dashboard','Assessor\LoginController@login')->name('assessors.access');
@@ -123,13 +115,7 @@ Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
     });
 });
 
-
-
-
-
-
 // All resource routes
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages','Admin\PageController');
 Route::resource('oportuya','Admin\OportuyaV2Controller');
@@ -138,7 +124,6 @@ Route::resource('motos','Admin\MotosController');
 Route::resource('leads','Admin\LeadsController');
 Route::resource('seguros','Admin\SegurosController');
 Route::resource('viajes','Admin\ViajesController');
-
 Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
@@ -146,21 +131,14 @@ Route::resource('brands','Admin\BrandsController');
 Route::resource('lines','Admin\LinesController');
 Route::resource('profiles','Admin\ProfilesController');
 Route::resource('products','Admin\ProductsController');
-
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
-
 Route::get('api/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
-
-
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 
 // Pasos solictud credito
-
-
 Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
 Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
 Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
-
 
 /* Menu Items */
 Route::get('/quienes-somos', function(){
@@ -187,8 +165,6 @@ Route::get('/Por-que-comprar-con-nosotros', function(){
 	return view('menuItems.buyWithUs');
 })->name('buyWithUs');
 
-
-
 Route::get('/googledd6db54bffdd55e4.html', function(){
 	return view('autoridad.googledd6db54bffdd55e4');
 })->name('termsAndConditions');
@@ -205,7 +181,6 @@ Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2
 Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
 Route::post('api/AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 /*Users routes*/
-
 
 Route::get("/canalDigital",function(){
      if(Auth::guest()){
@@ -363,13 +338,13 @@ Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
 
     Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
     Route::get('/getAssessors','Admin\UserController@getAllAssessor');
-    /**
+/**
     **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: FAQ's
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Fecha: 13/12/2018
-     **/
+**/
 
 Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
 
@@ -388,7 +363,7 @@ Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Fecha: 21/12/2018
-     **/
+**/
 
 Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
 
@@ -485,7 +460,6 @@ Route::resource('libranzaV2','Admin\LibranzaV2Controller');
 Route::group(['prefix'=>'/libranza'],function(){
     Route::get('/step1', 'Admin\LibranzaV2Controller@step1')->name('step1Libranza');
 });
-
 
 include "web2.php";
 include "web3.php";
