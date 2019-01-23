@@ -138,7 +138,7 @@ Route::resource('motos','Admin\MotosController');
 Route::resource('leads','Admin\LeadsController');
 Route::resource('seguros','Admin\SegurosController');
 Route::resource('viajes','Admin\ViajesController');
-Route::resource('dashboard','Admin\DashboardController');
+
 Route::resource('Nuestras-tiendas','Admin\ourStoresController');
 Route::resource('oportuyaV2','Admin\OportuyaV2Controller');
 Route::resource('faqs','Admin\FaqsController');
@@ -249,9 +249,6 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
         return view('fabricaLeads.leads');
     });
 });
-//Route::get('/getCreditPolicy','Admin\CreditPolicyController@index');
-
-
 
 /**
     **Proyecto: SERVICIOS FINANCIEROS
@@ -347,29 +344,26 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
 **/
 Route::resource('creditPolicy','Admin\CreditPolicyController');
 
-    Route::resource('users','Admin\UserController');
+Route::resource('users','Admin\UserController');
 
-    Route::get('/adminUsers',function(){
+Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
+
+    Route::get('/', function(){
         if(Auth::guest()){
             return view('auth.login');
         }
         return view('users.index');
     });
 
-    Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
-
-        Route::get('/users', function(){
-            return view('users.users');
-        });
-
-        /*Assessors profile*/
-
-
+    Route::get('/users', function(){
+        return view('users.users');
     });
+});
+    /*Assessors profile*/
 
     Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
     Route::get('/getAssessors','Admin\UserController@getAllAssessor');
-/**
+    /**
     **Proyecto: SERVICIOS FINANCIEROS
     **Caso de Uso: FAQ's
     **Autor: Luis David Giraldo Grajales 
@@ -385,66 +379,6 @@ Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function
 
     Route::get('/admin', function(){
         return view('faqs.admin');
-    });
-});
-
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Fecha: 17/12/2018
-     **/
-
-Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-		return view('products.index');
-	})->name('products');
-
-    Route::get('/admin', function(){
-        return view('products.admin');
-    });
-});
-
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Fecha: 17/12/2018
-     **/
-
-
-
-Route::group(['prefix'=>'/Brands/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-        return view('brands.index');
-    })->name('brands');
-
-    Route::get('/admin', function(){
-        return view('brands.admin');
-    });
-});
-
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Fecha: 19/12/2018
-     **/
-
-
-Route::group(['prefix'=>'/Lines/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-		return view('lines.index');
-	})->name('lines');
-
-    Route::get('/admin', function(){
-        return view('lines.admin');
     });
 });
 
@@ -471,7 +405,6 @@ Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     // Módulo Catálogo
     Route::group(['prefix' => '/Catalog'], function(){
-
         Route::get("/",function(){
             return view('catalog.index');
         })->name('products');
@@ -500,6 +433,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
     });
 
+    // Administrador de politicas de credito
     Route::group(['prefix' => '/AdminCreditPolicy'], function(){
         Route::get('/',function(){
             if(Auth::guest()){
@@ -516,12 +450,41 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('creditPolicy.edt');
         });
     });
+
+    // Dashboard
+    Route::resource('dashboard','Admin\DashboardController');
+
+    // Administrador de usuarios
+    Route::group(['prefix'=>'/adminUsers/'],function(){
+        Route::get('/', function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
+            return view('users.index');
+        });
+
+        Route::get('/users', function(){
+            return view('users.users');
+        });
+    });
+
+    // Administrador de preguntas frecuentes
+    Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+
+        Route::get("/",function(){
+            return view('faqs.indexAngular');
+        })->name("preguntasFrecuentes");
+    
+        Route::get('/admin', function(){
+            return view('faqs.admin');
+        });
+    });
 });
 
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
 Route::group(['prefix'=>'/libranza'],function(){
     Route::get('/step1', 'Admin\LibranzaV2Controller@step1')->name('step1Libranza');
-})  ;
+});
 
 
 include "web2.php";

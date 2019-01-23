@@ -53,7 +53,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.createFaq = function(){
 		$http({
 		  method: 'POST',
-		  url: 'faqs',
+		  url: '/faqs',
 		  data: $scope.faq
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -83,7 +83,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.deleteFaq=function(idFaq){
 		$http({
 		  method: 'DELETE',
-		  url: 'faqs/' + idFaq
+		  url: '/faqs/' + idFaq
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");
@@ -97,7 +97,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.UpdateFaq = function(){
 		$http({
 		  method: 'PUT',
-		  url: 'faqs/'+$scope.faqCrud.id,
+		  url: '/faqs/'+$scope.faqCrud.id,
 		  data: $scope.faqCrud
 		}).then(function successCallback(response) {
 			if(response.data != false){
