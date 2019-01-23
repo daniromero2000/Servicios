@@ -110,8 +110,20 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
 	Route::get('/getData/{identificationNumber}','Admin\OportuyaV2Controller@getDataConsultation');
 	Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
-    
 });
+
+Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
+
+	Route::get("/",function(){
+		return view('products.index');
+	})->name('products');
+
+    Route::get('/admin', function(){
+        return view('products.admin');
+    });
+});
+
+
 
 
 
@@ -311,7 +323,19 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
         });
     });
 
+    Route::resource('customers','Assessor\ClientesController');
+    
+    Route::get('/solicitudesAsessores',function(){
+        return view('assessors.customers.index');
+    });
 
+    Route::group(['prefix'=>'/solicitudesAsessores/'],function(){
+        //Route::get('/dataCustomer','Assessor\ClientesController@index');
+      
+        Route::get('/clientes',function(){
+            return view('assessors.customers.customers');
+        });
+    });
 
 
 /**
