@@ -123,7 +123,7 @@
     </table>
     <div class="row">
         <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getUsers()">Cargar Más</button>
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getCustomers()">Cargar Más</button>
         </div>
     </div>
 </div>
