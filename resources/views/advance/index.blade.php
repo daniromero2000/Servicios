@@ -15,7 +15,7 @@
 	<div id="construccion">
 		<div class="container">
 			<h2 class="creditoLibranza-title text-center">Esta sección está actualmente en construcción</h2>
-			<p class="text-center">Si te interesa conocer más sobre nuestros créditos para motos, déjanos tus datos y un asesor se pondrá en contacto</p>
+			<p class="text-center">Si te interesa conocer más sobre nuestros avances de créditos, déjanos tus datos y un asesor se pondrá en contacto</p>
 			<div class="modalFormulario-body" style="margin: auto;">
 				<div class="modal-containerFormulario">
 					<h3 class="modal-titleForm titleForm-avances">Avance</h3>
