@@ -43,7 +43,7 @@ class ClientesController extends Controller
             $query = 'SELECT `SOLIC_FAB`.`SOLICITUD`,`CLIENTE_FAB`.`APELLIDOS`,`CLIENTE_FAB`.`NOMBRES`,`SOLIC_FAB`.`CLIENTE`,`SOLIC_FAB`.`CODASESOR`,`SOLIC_FAB`.`FECHASOL`, `SOLIC_FAB`.`CODEUDOR1`,`SOLIC_FAB`.`CODEUDOR2`, `SOLIC_FAB`.`ESTADO`  FROM SOLIC_FAB LEFT JOIN CLIENTE_FAB ON `SOLIC_FAB`.`CLIENTE` = `CLIENTE_FAB`.`CEDULA` WHERE CODASESOR='.$codAssessor.' ';
 
             if($request->get('q')){
-                $query .= sprintf(" AND (CLIENTE_FAB.`NOMBRES` LIKE '%s' OR CLIENTE_FAB.`APELLIDOS` LIKE '%s' OR SOLIC_FAB.`CLIENTE` LIKE '%s' )", '%'.$request->get('q').'%' , '%'.$request->get('q').'%','%'.$request->get('q').'%');
+                $query .= sprintf(" AND (CLIENTE_FAB.`NOMBRES` LIKE '%s' OR CLIENTE_FAB.`APELLIDOS` LIKE '%s' OR SOLIC_FAB.`CLIENTE` LIKE '%s' )",  '%'.$request->get('q').'%' , '%'.$request->get('q').'%','%'.$request->get('q').'%');
             }
 
             if($request->get('solic')){
@@ -72,7 +72,7 @@ class ClientesController extends Controller
             
 
             $initFrom = ($request->get('limitFrom')) ? $request->get('limitFrom') : 0 ;
-            $query .= sprintf(" LIMIT %s,30", $initFrom);
+            $query .= sprintf("ORDER BY `SOLIC_FAB`.`SOLICITUD` DESC LIMIT %s,30", $initFrom);
 
             $customers=  DB::connection('oportudata')->select($query);
 
