@@ -443,6 +443,18 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('users.users');
         });
     });
+
+    // Administrador de preguntas frecuentes
+    Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+
+        Route::get("/",function(){
+            return view('faqs.indexAngular');
+        })->name("preguntasFrecuentes");
+    
+        Route::get('/admin', function(){
+            return view('faqs.admin');
+        });
+    });
 });
 
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
