@@ -16,7 +16,7 @@
 			</div>
 			<div class="col-6 assessorModule text-center">
 				<p>
-					<a href="{{route('step1Assessor')}}">Clientes </a>
+					<a href="{{route('solicitudes.clientes')}}">Clientes </a>
 				</p>	
 			</div>			
 		</div>

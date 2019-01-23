@@ -324,7 +324,7 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     
     Route::get('/solicitudesAsessores',function(){
         return view('assessors.customers.index');
-    });
+    })->name('solicitudes.clientes');
 
     Route::group(['prefix'=>'/solicitudesAsessores/'],function(){
         //Route::get('/dataCustomer','Assessor\ClientesController@index');
