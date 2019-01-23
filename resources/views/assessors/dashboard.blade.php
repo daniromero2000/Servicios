@@ -3,9 +3,9 @@
 	<div class="container">
 		<div class="row text-center assessorHeader">
 			<h3>
-				@if(Auth::check())
+				
 				 	{{Auth::guard('assessor')->user()->NOMBRE}}
-				@endif
+				
 			</h3>
 		</div>
 		<div class="row">
