@@ -33,17 +33,41 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="fechaSol">Fecha </label>
-                            <input id="fechaSol" class="form-control" ng-model="q.fechaSol" >
+                            <div class="input-group"
+                                 moment-picker="q.fechasol"
+                                 format="YYYY-MM-DD">
+                                <input class="form-control"
+                                       ng-model="q.fechasol">
+                                <span class="input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
                          <div class="col-12 col-sm-6">
                             <label for="firstDate">Fecha inicio</label>
-                            <input id="firstDate" class="form-control" ng-model="q.firstDate" >
+                            <div class="input-group"
+                                 moment-picker="q.firstDate"
+                                 format="YYYY-MM-DD">
+                                <input class="form-control"
+                                       ng-model="q.firstDate">
+                                <span class="input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="lastDate">Fecha Fin</label>
-                            <input id="lastDate" class="form-control" ng-model="q.lastDate" >
+                            <div class="input-group"
+                                 moment-picker="q.endingDate"
+                                 format="YYYY-MM-DD">
+                                <input class="form-control"
+                                       ng-model="q.endingDate">
+                                <span class="input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>                       
                     <div class="row">
