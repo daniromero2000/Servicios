@@ -40,7 +40,7 @@ class ClientesController extends Controller
             
             $codAssessor = Auth::guard('assessor')->user()->CODIGO;
             
-            $query = 'SELECT `SOLIC_FAB`.`SOLICITUD`,`CLIENTE_FAB`.`APELLIDOS`,`CLIENTE_FAB`.`NOMBRES`,`SOLIC_FAB`.`CLIENTE`,`SOLIC_FAB`.`CODASESOR`,`SOLIC_FAB`.`FECHASOL`, `SOLIC_FAB`.`CODEUDOR1`,`SOLIC_FAB`.`CODEUDOR2`, `SOLIC_FAB`.`ESTADO`  FROM SOLIC_FAB LEFT JOIN CLIENTE_FAB ON `SOLIC_FAB`.`CLIENTE` = `CLIENTE_FAB`.`CEDULA` WHERE CODASESOR='.$codAssessor.' ';
+            $query = 'SELECT `SOLIC_FAB`.`SOLICITUD`,`SOLIC_FAB`.`SUCURSAL`,`CLIENTE_FAB`.`APELLIDOS`,`CLIENTE_FAB`.`NOMBRES`,`SOLIC_FAB`.`CLIENTE`,`SOLIC_FAB`.`CODASESOR`,`SOLIC_FAB`.`FECHASOL`, `SOLIC_FAB`.`CODEUDOR1`,`SOLIC_FAB`.`CODEUDOR2`, `SOLIC_FAB`.`ESTADO`  FROM SOLIC_FAB LEFT JOIN CLIENTE_FAB ON `SOLIC_FAB`.`CLIENTE` = `CLIENTE_FAB`.`CEDULA` WHERE CODASESOR='.$codAssessor.' ';
 
             if($request->get('q')){
                 $query .= sprintf(" AND (CLIENTE_FAB.`NOMBRES` LIKE '%s' OR CLIENTE_FAB.`APELLIDOS` LIKE '%s' OR SOLIC_FAB.`CLIENTE` LIKE '%s' )",  '%'.$request->get('q').'%' , '%'.$request->get('q').'%','%'.$request->get('q').'%');

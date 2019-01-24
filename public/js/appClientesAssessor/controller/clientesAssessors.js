@@ -20,6 +20,7 @@ app.controller('customersAssessorsController', function($scope, $http, $rootScop
 		'CODEUDOR1':'',
 		'CODEUDOR2':'',
 		'ESTADO':'',
+		'SUCURSAL':'',
 
 	};
 	$scope.customers=[];
@@ -46,41 +47,18 @@ app.controller('customersAssessorsController', function($scope, $http, $rootScop
 					$scope.customers.push(value);
 				});
 				$scope.cargando = false;
-				console.log($scope.customers);
+				console.log(response.data);
 			}
 		}, function errorCallback(response) {
 		    console.log(response);
 		});
 	};
 
-	$scope.showDetails=function(id){
-		$scope.customer.SOLICITUD=id;
-
-	};
-
-
-	$scope.viewDetails=function(idSol){
-		$scope.idSol=idSol;
-		$scope.viewCustomer($scope.idSol);
+	$scope.viewDetails=function(customer){
+		$scope.customer = customer;
 		$('#viewModal').modal( "show");
 	}
 
-	$scope.viewCustomer = function(idSol){
-
-		$http({
-		  method: 'GET',
-		  url: ' customers/'+idSol
-		}).then(function successCallback(response){				
-					if (response.data != false) {
-						$scope.customer=response.data[0];
-						$scope.customer.SOLICITUD=idSol;
-					}
-				},
-				function errorCallback(response){
-					
-				});
-
-	}
 
 
 	$scope.searchCustomer = function(){

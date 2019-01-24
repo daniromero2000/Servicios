@@ -116,7 +116,7 @@
                 <td>@{{ customer.NOMBRES }} @{{ customer.APELLIDOS }}</td>
                 <td>@{{ customer.CLIENTE }}</td>
                 <td>                          
-                    <i class="fas fa-eye cursor" title="Actualizar usuario" ng-click="viewDetails(customer.SOLICITUD)"></i>
+                    <i class="fas fa-eye cursor" title="Actualizar usuario" ng-click="viewDetails(customer)"></i>
                 </td>
             </tr>
         </tbody>
@@ -143,6 +143,7 @@
                             <label class="labelViewLead">NOMBRES:</label>
                             <span class="textViewLead">@{{ customer.NOMBRES }}</span>
                         </div>
+                      
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">APELLIDOS:</label>
                             <span class="textViewLead">@{{ customer.APELLIDOS }}</span>
@@ -157,6 +158,13 @@
                             <label class="labelViewLead">CÉDULA:</label>
                             <span class="textViewLead">@{{ customer.CLIENTE }}</span>
                         </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 col-md-12">
+                            <label class="labelViewLead">SUCURSAL:</label>
+                            <span class="textViewLead">@{{ customer.SUCURSAL }}</span>
+                        </div>
+                        
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
