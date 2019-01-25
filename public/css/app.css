@@ -3440,6 +3440,12 @@ p.wantToSecondTex{
 	    top: 50%;
 	    transform: translateY(-50%);
 	    left: 0;
+	}
+	.productsCatalog{
+		width: 47vw !important;
+	}
+	.descCatalog{
+		width: 23vw !important;
 	}	
 }
 
@@ -3697,6 +3703,12 @@ p.wantToSecondTex{
 	.phoneCatalog:after{
 		display: none;
 	}
+	.productsCatalog{
+		width: 45vw !important;
+	}
+	.descCatalog{
+		width: 21vw !important;
+	}
 
 
 }
@@ -3896,7 +3908,13 @@ p.wantToSecondTex{
 	}
 	
 	.headerLogo{
-		margin: 10px !important;
+		padding: 10px !important;
+	}
+	.productsCatalog{
+		width: 36vw !important;
+	}
+	.descCatalog{
+		width: 16vw !important;
 	}
 }
 
@@ -4101,7 +4119,7 @@ p.wantToSecondTex{
 
 
 	.headerLogo{
-		padding: 10px 0px 10px 30px !important;
+		padding: 10px 0px 10px 30px;
 	}
 	.headerText{
 		margin-top: 25px !important;
@@ -4120,4 +4138,100 @@ p.wantToSecondTex{
 		height: 30px;
 		top:0;
 		right: 0;
+	}
+
+	.catalogSlide{
+		margin:10px 0px;
+		width: 100%;
+		padding: 3%	10%;
+		background-color: #EBEBEB;
+	}
+	.containerLines{
+		padding: unset;
+		padding-left: 10px;
+	}
+	.productsCatalog{
+		width: 48vw;
+	}
+	.descCatalog{
+		width: 24vw;
+	}
+	.productsMenu{
+		list-style: none;
+		background-color:#F5F4FE;
+		padding: unset;
+		margin-left: 10px;
+	}
+	.buttonLines{
+		text-align: left;
+		font-family: Barlow;
+		font-weight: bold;
+		width: 100%;
+		background:none;
+		border: unset;
+		border-bottom: solid #aeadb2 1px;
+	}
+	.buttonLines:focus{
+		outline:unset;
+	}
+	.nameLine{
+		padding-left: 20px
+	}
+	.carretLines{
+    	position: absolute;
+	    font-size: 31px;
+	    margin-left: 5px;
+	    margin-top: -2px;
+	    color: #FFCA05;
+	}
+	.brandsCatalog{
+		list-style: none;
+	    font-family: Barlow;
+	    font-weight: bold;
+	    background: #DCDCE0;
+	    padding:unset;
+	}
+
+	.brandsName{
+		border-bottom: solid #CCCCCC 1px;
+		padding-left: 40px;
+	}
+
+	.targetContainer{
+		padding: 10px;
+	}
+
+	.tagentProduct{
+		padding: 5px;
+	}
+	.targetProductBody{
+		background-color: #F2F0F0;
+		padding-top: 20px;
+		text-align: center
+	}
+	.targetProductFooter{
+		background-color: #454545;
+		border-radius: 0px 0px 0px 10px;
+	}
+	.catalogContainer{
+		width: 100%;
+		margin:0;
+	}
+
+	.targetProductBody h3 {
+		color: red;
+		font-family: 'Barlow';
+		font-weight: bold;
+		font-size: 15px;
+	}
+	.targetProductBody p {
+		color: black;
+		font-family: 'Barlow';
+		font-weight: bold;
+		font-size: 10px;
+		margin: 0;
+	}
+	.imagesTarget{
+		width: 95%;
+		margin: 20px 0px 40px 0px;
 	}

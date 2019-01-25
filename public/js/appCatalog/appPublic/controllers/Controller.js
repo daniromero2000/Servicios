@@ -1,12 +1,42 @@
 	/**
-     /Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO
-    **Autor: Luis David Giraldo Grajales 
+     /Proyect: SERVICIOS FINANCIEROS
+    **Case of use: MODULO CATALOGO
+    **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador para la administracion productos marcas y lineas.
-    **Fecha: 19/12/2018
+    **Description: controler to display a products public view.
+    **Date: 22/01/2011
      **/
 app.controller('Controller', function($scope, $http, $rootScope){
+
+	$scope.linesBrands = [];
+
+	// list the lines and with their associated brands
+	$scope.getLinesBrands = function(){
+		showLoader();
+		$http({
+		  method: 'GET',
+		  url: '/Catalog/linesBrands'
+		}).then(function successCallback(response) {
+			if(response != false){
+				$scope.linesBrands = response.data;
+				console.log($scope.linesBrands); 
+				hideLoader();
+			}	
+		}, function errorCallback(response) {
+			hideLoader();
+		});
+	};
+
+	$scope.getLinesBrands();
+
+
+
+
+
+/*
+
+
+
 
 	$scope.q = {
 		'q': '',
@@ -139,5 +169,5 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	}
 
 	$scope.getResource();
-
+*/
 });

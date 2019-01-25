@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['indexpublic']]);
+        $this->middleware('auth', ['except' => ['linesBrands']]);
     }
     /**
      * Display a listing of the resource.
@@ -276,8 +276,32 @@ class ProductsController extends Controller
         
     }
 
-    public function indexpublic(Request $request)
+    public function linesBrands(Request $request)
     {
+        $lines = DB::table('lines')
+                ->select('name','id')
+                ->whereNull("deleted_at")
+                ->get();
+
+        $linesBrands = DB::table('products')
+                    ->join('brands', 'idBrand', '=', 'brands.id')
+                    ->join('lines', 'idLine', '=', 'lines.id')
+                    ->select('products.idLine AS idLine','lines.name AS lineName','products.idBrand AS idBrand','brands.name AS brandsName')
+                    ->whereNull("products.deleted_at")
+                    ->distinct()
+                    ->get();
         
+
+        $linesBrands = $linesBrands->groupBy('lineName');
+
+        $linesBrands = $linesBrands->map(function ($item, $key){
+            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName, 'brands' => $item->map(function ($item2, $key) {
+                                                                        return [ 'id' => $item2->idBrand, 'name' => $item2->brandsName];
+                                                                    })];
+        });
+
+        //list($keys, $values) = array_divide($linesBrands);
+
+        return response()->json($linesBrands);
     }
 }
