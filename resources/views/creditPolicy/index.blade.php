@@ -20,7 +20,7 @@
         @else
 
             <script type="text/javascript">
-                window.location = "/dashboard";
+                window.location = "/Administrator/dashboard";
             </script>  
 
         @endif
@@ -30,8 +30,6 @@
     <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
     <script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
     <script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/controllers/edtCreditPolicyController.js') }}"></script>
-
 @stop
 @section('scriptsJs')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>

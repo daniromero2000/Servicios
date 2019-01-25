@@ -1,36 +1,25 @@
 <div class="row">
-    <div class="col-sm-12 col-md-3">
-        <button class="btn btn-primary" ng-click="addCreditPolicy()">Agregar Política</button>
+    <div class="col-12 text-center">
+        <h2 class="headerAdmin ng-scope">Configuración consulta comercial</h2>
     </div>
-    <div class="col-sm-12 offset-md-6 col-md-3 text-right">
-		<div class="input-group mb-3">
-			<div class="input-group-append">
-				<input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
-				<span class="input-group-text" id="searchIcon" ng-click="searchCreditPolicies()"><i class="fas fa-search"></i></span>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="table table-responsive">
-    <table class="table table-hover table-stripped leadTable">
-        <thead class="headTableLeads">
-            <tr>
-                <th>Nombre</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="credit in creditPolicy">
-                <td>@{{ credit.name }}</td>
-                <td>
-                    <i class="fas fa-edit cursor" title="Editar Política" ng-click="edtCreditPolicy(credit.id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getCreditPolicy()">Cargar Más</button>
-        </div>
+    <div class="col-sm-12">
+        <form ng-submit="edtCredit()">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <label for="pub_vigencia">Tiempo límite de consulta/Días (Servicios Financieros)</label>
+                    <input type="number" id="pub_vigencia" validation-pattern="number" class="form-control" ng-model="credit.pub_vigencia" />
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="timeLimitAdmin">Tiempo límite de consulta/Días (Oportudata)</label>
+                    <input type="number" id="fab_vigencia" validation-pattern="number" class="form-control" ng-model="credit.fab_vigencia" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:50px">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">Actualizar</button>
+                    <button type="button" class="btn btn-danger buttonFormModal buttonFormModalSubmit" ng-click="volver()">Volver</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

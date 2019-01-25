@@ -10,12 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CreditPolicy extends \Eloquent implements AuthenticatableContract
 {
     use Authenticatable;
-    use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
-    public $table='credit_policy';
-    protected $fillable=['name', 'score', 'scoreEnd', 'salary', 'salaryEnd', 'age', 'ageEnd', 'activity', 'quotaApproved'];
+    public $table='VIG_CONSULTA';
+    protected $fillable=['fab_vigencia', 'pub_vigencia'];
     public $timestamps = false;
-
 }

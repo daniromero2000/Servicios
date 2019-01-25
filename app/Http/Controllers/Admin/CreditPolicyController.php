@@ -12,7 +12,7 @@ class CreditPolicyController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -21,14 +21,7 @@ class CreditPolicyController extends Controller
      */
     public function index(Request $request)
     {
-        $creditPolicy = DB::table('credit_policy')
-                    ->where(function ($query) use ($request){
-                            $query->where('name','LIKE','%' . $request->q . '%');
-                    });
-        
-        $creditPolicy->orderBy('id', 'desc')
-                ->skip($request->page*($request->actual-1))
-                ->take($request->page);
+        $creditPolicy = DB::connection('oportudata')->table('VIG_CONSULTA');
         
         return $creditPolicy->get();
     }
@@ -51,15 +44,7 @@ class CreditPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        $creditPolicy = new CreditPolicy();
-
-        $creditPolicy->name = $request->get('nombre');
-
-        if($creditPolicy->save()){
-            return $creditPolicy->id;
-        }else{
-            return false;
-        }
+        //
     }
 
     /**
@@ -80,10 +65,8 @@ class CreditPolicyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $creditPolicy= CreditPolicy::Find($id);
-
-        return response()->json($creditPolicy);
+    {  
+        //
     }
 
     /**
@@ -95,19 +78,13 @@ class CreditPolicyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $creditPolicy=CreditPolicy::findOrFail($id);
 
-        $creditPolicy->name = $request->get('name');
-        $creditPolicy->score = $request->get('score');
-        $creditPolicy->scoreEnd = $request->get('scoreEnd');
-        $creditPolicy->salary = $request->get('salary');
-        $creditPolicy->salaryEnd = $request->get('salaryEnd');
-        $creditPolicy->age = $request->get('age');
-        $creditPolicy->ageEnd = $request->get('ageEnd');
-        $creditPolicy->activity = $request->get('activity');
-        $creditPolicy->quotaApproved = $request->get('quotaApproved');
-        
-        $creditPolicy->save();
+        $creditPolicy = [
+            'pub_vigencia' => $request->get('pub_vigencia'),
+            'fab_vigencia' => $request->get('fab_vigencia')
+        ];
+
+        $creditPolicy = DB::connection('oportudata')->table('VIG_CONSULTA')->update($creditPolicy);
 
         return response()->json([true]);
     }
