@@ -174,7 +174,7 @@
 									<div class="offset-5 col-7">
 									<p>
 										Actualmente ya cuentas <br>
-										con una tarejta <strong> Oportuya.</strong> 
+										con una tarjeta <strong> Oportuya.</strong> 
 										<br>
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
