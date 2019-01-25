@@ -34,6 +34,7 @@ use App\CreditPolicy;
 use App\LeadInfo;
 use App\OportuyaV2;
 use App\Tarjeta;
+use App\TurnosOportuya;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -306,11 +307,13 @@ class OportuyaV2Controller extends Controller
 
 			$datosCliente= new DatosCliente;
 			$tarjeta = new Tarjeta;
+			$turnosOportuya = new TurnosOportuya;
 
 			//establishing connection to OPORTUDATA data base
 
 			$datosCliente->setConnection('oportudata');
 			$tarjeta->setConnection('oportudata');
+			$turnosOportuya->setConnection('oportudata');
 			$flag=0;
 
 			$identificationNumber = $request->get('identificationNumber');
@@ -450,6 +453,9 @@ class OportuyaV2Controller extends Controller
 			$quotaApproved = $this->execCreditPolicy($identificationNumber);
 			$con3 = "";
 			if($quotaApproved > 0){
+				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+
 				$con3 = "PREAPROBADO";
 				$tarjeta->NUMERO = '871279999';
 				$tarjeta->SOLICITUD = $numSolic->SOLICITUD;
@@ -494,6 +500,31 @@ class OportuyaV2Controller extends Controller
 				$tarjeta->FEC_RECCLI = "1994-09-30";
 				$tarjeta->STATE = 'A';
 				$tarjeta->save();
+
+				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
+				$turnosOportuya->CEDULA = $identificationNumber;
+				$turnosOportuya->FECHA = date("Y-m-d H:i:s",strtotime($dateLead));
+				$turnosOportuya->SUC = 9999;
+				$turnosOportuya->USUARIO = 'JARVIS';
+				$turnosOportuya->PRIORIDAD = '1';
+				$turnosOportuya->ESTADO = 'ANALISIS';
+				$turnosOportuya->TIPO = 'OPORTUYA';
+				$turnosOportuya->SUB_TIPO = 'WEB';
+				$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
+				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
+				$turnosOportuya->VALOR = $quotaApproved;
+				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
+				$turnosOportuya->SCORE = $respScoreLead[0]->score;
+				$turnosOportuya->TIPO_CLI = '';
+				$turnosOportuya->CED_COD1 = '';
+				$turnosOportuya->SCO_COD1 = '0';
+				$turnosOportuya->TIPO_COD1 = '';
+				$turnosOportuya->CED_COD2 = '';
+				$turnosOportuya->SCO_COD2 = '0';
+				$turnosOportuya->TIPO_COD2 = '';
+				$turnosOportuya->STATE = 'X';
+
+				$turnosOportuya->save();
 			}else{
 				$con3 = "RECHAZADO";
 			}
@@ -533,7 +564,7 @@ class OportuyaV2Controller extends Controller
     **Autor: Robert García
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
-**/
+	**/
 
 	public function getContactData($identificationNumber){
 		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", $identificationNumber);
@@ -577,7 +608,7 @@ class OportuyaV2Controller extends Controller
 				return 'true';
 			}else{
 				return 'false';
-			}	
+			}
 		}
 	}
 
