@@ -128,7 +128,7 @@
 					</label>
 				</div>
 				<p class="textCityForm">
-					*Válido solo para ciudades que se desplieguen en la casilla.
+					**Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
 				<div class="form-group text-center">
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
