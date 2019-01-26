@@ -595,16 +595,18 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function validateDateConsultaComercial($identificationNumber){
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 		$dateNow = date('Y-m-d');
-		$dateTwoMonths = strtotime ("-1 month", strtotime ( $dateNow ) ) ;
-		$dateTwoMonths = date ( 'Y-m-d' , $dateTwoMonths );
+		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
 		$dateLastConsultaComercial = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(empty($dateLastConsultaComercial)){
 			return 'true';
 		}else{
 			$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
 
-			if(strtotime($dateLastConsulta) < strtotime($dateTwoMonths)){
+			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
 				return 'true';
 			}else{
 				return 'false';
