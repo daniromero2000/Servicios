@@ -503,9 +503,9 @@ class OportuyaV2Controller extends Controller
 
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
 				$turnosOportuya->CEDULA = $identificationNumber;
-				$turnosOportuya->FECHA = date("Y-m-d H:i:s",strtotime($dateLead));
+				$turnosOportuya->FECHA = date("Y-m-d H:i:s");
 				$turnosOportuya->SUC = 9999;
-				$turnosOportuya->USUARIO = 'JARVIS';
+				$turnosOportuya->USUARIO = '';
 				$turnosOportuya->PRIORIDAD = '1';
 				$turnosOportuya->ESTADO = 'ANALISIS';
 				$turnosOportuya->TIPO = 'OPORTUYA';
@@ -567,7 +567,7 @@ class OportuyaV2Controller extends Controller
 	**/
 
 	public function getContactData($identificationNumber){
-		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", $identificationNumber);
+		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", trim($identificationNumber));
 
 		$resp = DB::connection('oportudata')->select($query);
 

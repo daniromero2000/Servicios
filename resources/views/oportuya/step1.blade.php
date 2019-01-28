@@ -100,7 +100,7 @@
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono*</label>
+							<label for="telephone" class="control-label">Celular*</label>
 							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="disabledInputs"/>
 						</div>
 					</div>
