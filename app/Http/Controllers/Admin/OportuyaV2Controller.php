@@ -506,7 +506,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->FECHA = date("Y-m-d H:i:s");
 				$turnosOportuya->SUC = 9999;
 				$turnosOportuya->USUARIO = '';
-				$turnosOportuya->PRIORIDAD = '1';
+				$turnosOportuya->PRIORIDAD = '2';
 				$turnosOportuya->ESTADO = 'ANALISIS';
 				$turnosOportuya->TIPO = 'OPORTUYA';
 				$turnosOportuya->SUB_TIPO = 'WEB';
@@ -522,7 +522,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->CED_COD2 = '';
 				$turnosOportuya->SCO_COD2 = '0';
 				$turnosOportuya->TIPO_COD2 = '';
-				$turnosOportuya->STATE = 'X';
+				$turnosOportuya->STATE = 'A';
 
 				$turnosOportuya->save();
 			}else{
