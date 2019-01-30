@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Campaigns;
 use Illuminate\Support\Facades\DB;
+use App\Imagenes;
+use App\CampaignImages;
 
 class CampaignController extends Controller
 {
@@ -17,8 +19,8 @@ class CampaignController extends Controller
     public function index(Request $request)
     {
 
-          $query = "SELECT `id`, `name`, `description`, `socialNetwork`, `beginDate`, `endingDate`, `budget`, `usedBudget`,`remove` 
-            FROM campaigns 
+          $query = "SELECT `campaign_images`.`name` AS imageName,`campaigns`.`id`, `campaigns`.`name`, `campaigns`.`description`, `campaigns`.`socialNetwork`, `campaigns`.`beginDate`, `campaigns`.`endingDate`, `campaigns`.`budget`, `campaigns`.`usedBudget`,`campaigns`.`remove` 
+            FROM campaigns  LEFT JOIN `campaign_images` ON `campaigns`.`id` = `campaign_images`.`campaign`
             WHERE 1 AND `remove`= 0";
 
         if($request->get('q')){
@@ -73,15 +75,33 @@ class CampaignController extends Controller
     {
 
         $campaign = new Campaigns;
-        $campaign->name = $request->get('name');
-        $campaign->socialNetwork = $request->get('socialNetwork');
-        $campaign->description = $request->get('description');
+        $campaign->name = $request->get('name')? $request->get('name'):'';
+        $campaign->socialNetwork = $request->get('socialNetwork')?$request->get('socialNetwork'):'';
+        $campaign->description = $request->get('description')?$request->get('description'):'';
         $campaign->beginDate = $request->get('beginDate');
         $campaign->endingDate = $request->get('endingDate');
-        $campaign->budget = intval($request->get('budget'));
-        $campaign->usedBudget = intval($request->get('usedBudget'));
-
+        $campaign->budget = $request->get('budget')? intval($request->get('budget')):0;
+        $campaign->usedBudget = $request->get('usedBudget')?intval($request->get('usedBudget')):0;
+        
         $campaign->save();
+
+        return response()->json($campaign->id);
+
+    }
+
+    public function storeImage(Request $request){
+
+        for ($i=0; $i < (int)$request->nImages ; $i++) { 
+
+            $imageCampaign = new CampaignImages;
+            
+            $imageCampaign->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
+           // $images->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
+            $imageCampaign->campaign= $request->idCampaign;
+
+            $imageCampaign->save();
+
+        }        
 
         return response()->json([true]);
 
@@ -95,7 +115,20 @@ class CampaignController extends Controller
      */
     public function show($id)
     {
-        $campaign=Campaigns::findOrfail($id);
+
+        /*$idProfileUser=User::selectRaw('profiles.id AS profileID, profiles.name AS profileName,users.idProfile AS userProfile')
+        ->leftjoin('profiles','profiles.id','=','users.idProfile')
+        ->where('profiles.id','=',(int)$request->get('idProfile'))
+        ->orderBy('profiles.id')->first();*/
+
+        $campaign=Campaigns::selectRaw('campaign_images.name AS imageName,campaigns.id, campaigns.name, campaigns.description, campaigns.socialNetwork, campaigns.beginDate, campaigns.endingDate, campaigns.budget, campaigns.usedBudget,campaigns.remove')
+        ->leftjoin('campaign_images','campaigns.id','=','campaign_images.campaign')
+        ->where('campaigns.id','=',$id)
+        ->orderBy('campaigns.id')->first();
+
+      
+
+        // $campaign=Campaigns::findOrfail($id);
 
         return response()->json($campaign);
     }

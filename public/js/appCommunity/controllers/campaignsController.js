@@ -15,6 +15,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 	$scope.campaign = {};
 	$scope.campaigns=[];
 	$scope.idCampaign = '';
+	$scope.idImage = '';
 	$scope.confirmDialog={};
 	$scope.confirmDialogUpdate={};
 	$scope.socialNetworks = [
@@ -23,6 +24,11 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		{ label : 'INSTAGRAM',value: 'INSTAGRAM' },
 		{ label : 'TWITTER',value: 'TWITTER' }
 	];
+	$scope.tabs = 1;//init in first tab
+	$scope.resource = {};//resource to edit 
+	$scope.images = [];//list of images
+	$scope.imgs = {};// image of flow
+
 	
 
 	$scope.getCampaigns = function(){
@@ -90,6 +96,8 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 			if(response.data != false){
 				$scope.searchCampaign();
 				$("#addCampaign").modal("hide");
+				$scope.idCampaign=response.data;
+				$scope.showUpdateDialog(response.data);
 			}
 		}, function errorCallback(response) {
 		   
@@ -149,7 +157,7 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 		  url: 'community/viewCampaign/'+idCampaign
 		}).then(function successCallback(response){				
 					if (response.data != false) {
-						$scope.campaign=response.data;						
+						$scope.campaign=response.data;			
 					}
 				},
 				function errorCallback(response){
@@ -188,12 +196,59 @@ app.controller('campaignsController', function($scope, $http, $rootScope){
 			
 			if(response.data != false){
 				$scope.searchCampaign();
-				$('#updateModal').modal('hide');
+				//$('#updateModal').modal('hide');
 			}
 		},function errorCallback(response){
 			
 		});
 	}
+
+	$scope.saveChanges = function(idCampaign){
+		idCampaign=$scope.idCampaign;
+		$scope.updateCampaign();
+		$scope.AddImages(idCampaign);
+		$('#updateModal').modal('hide');
+	}
+
+	$scope.AddImages = function(idCampaign){
+		idCampaign=$scope.idCampaign;
+		var formData = new FormData();
+		$scope.imgs.flow.upload();
+		//add images to FormData
+		i=0;
+		angular.forEach($scope.imgs.flow.files, function(value) {
+		  formData.append('imgs' + i++,value.file);
+		});
+		
+		formData.append('nImages', i);//num images to upload
+		formData.append('idCampaign',idCampaign);//id product to attach images 
+		console.log(idCampaign);
+		showLoader();
+		$http.post('/community/addImage',formData,{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).then(function successCallback(response) {	
+					
+			if(response.data != false){
+				//clear a flow  objet of images uploads
+				while($scope.imgs.flow.files.length>0){
+					$scope.imgs.flow.cancel();
+				}
+				console.log('si');
+				console.log(response.data);
+				console.log($scope);
+				//to  updete the uploaded images
+			//	$scope.getResource();
+				hideLoader();
+			}
+		}, function errorCallback(response) {
+			console.log('no');
+			console.log(response);
+			hideLoader();
+			//console.log(response.data);
+		});
+	};
+
 	
 	$scope.getCampaigns();
 });

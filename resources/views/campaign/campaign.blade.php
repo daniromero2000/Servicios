@@ -45,8 +45,7 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                     
+                    </div>                     
                     <div class="row">
                         <div class="col-12 text-right">
                             <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
@@ -167,15 +166,21 @@
                                 <label class="labelViewLead">Descripción :</label>
                                 <span class="textViewLead">@{{ campaign.description }}</span>
                             </div>
-                        </div>                    
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="labelViewLead">Imagen :</label>
+                                <img src="/storage/@{{ campaign.imageName}}" alt="">
+                            </div>
+                        </div>  
+
+                                           
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <!--Delete modal-->
 
@@ -224,20 +229,20 @@
                             <form ng-submit="addCampaign()" id="addForm">
                                 {{ csrf_field() }}
                                 <div class="form-group row">
-                                    <div class="col-6 no-padding-left">
+                                    <div class="col-12 no-padding-left">
                                         <label for="name">Nombre de campaña</label>
                                         <input type="text" ng-model="campaign.name" id="name" cols="10" class="form-control" required>
                                     </div>
-                                    <div class="col-6 no-padding-right">
+                                   <!-- <div class="col-6 no-padding-right">
                                         <label for="socialNetwork">Red Social</label>
                                         <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
                                          <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}">
                                              @{{socialNetwork.value}}
                                          </option>
                                         </select>
-                                    </div>              
+                                    </div>  -->            
                                 </div>
-                                <div class="form-group row">
+                               <!-- <div class="form-group row">
                                     <div class="col-6 no-padding-left">
                                         <label for="beginDate">Fecha de inicio</label>
                                         <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control" ng-model="campaign.beginDate" readonly></div>    
@@ -261,7 +266,7 @@
                                 <div class="form-group row">
                                     <label for="description">Descripción</label>
                                     <textarea ng-model="campaign.description" id="description" cols="10" class="form-control" required></textarea>
-                                </div>
+                                </div>-->
                                 <div class="form-group text-left">
                                     <button class="btn btn-primary">Agregar</button>
                                 </div>
@@ -286,65 +291,127 @@
            </div>
            <div class="modal-body">
                 <div class="container">
-                    <div class="row resetRow " >
-                        <div class="col-12 form-group">
-                            <form ng-submit="confirmUpdate()">
-                                {{ csrf_field() }}
-                                <div class="form-group row">
-                                    <div class="col-6 no-padding-left">
-                                        <label for="name">@{{confirmDialogUpdate.labelName}}</label>
-                                        <input type="text" ng-model="campaign.name" id="name" cols="10" value="@{{ campaign.name }}" class="form-control" required>
-                                    </div>
-                                    <div class="col-6 no-padding-right">
-                                        <label for="name">@{{confirmDialogUpdate.labelSocialNetwork}}</label>
-                                        <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
-                                             <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}" label="@{{socialNetwork.label}}">
-                                                 @{{socialNetwork.value}}
-                                             </option>
-                                         </select>
-                                        
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-6 no-padding-left">
-                                        <label for="name">@{{confirmDialogUpdate.labelBeginDate}}</label>
-                                         <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control"
-                                           ng-model="campaign.beginDate"></div>
-                                    </div>
-                                    <div class="col-6 no-padding-right">
-                                        <label for="name">@{{confirmDialogUpdate.labelEndidgDate}}</label>
-                                         <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control"
-                                           ng-model="campaign.endingDate"></div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-6 no-padding-left">
-                                        <label for="name">@{{confirmDialogUpdate.labelBudget}}</label>
-                                        <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">
-                                    </div>
-                                    <div class="col-6 no-padding-right">
-                                        <label for="name">@{{confirmDialogUpdate.labelUsedBudget}}</label>
-                                        <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">
-                                        
-                                    </div>
-                                </div>
-
-                                <div class="form-group  row">
-                                    <label for="description">@{{confirmDialogUpdate.labelDescription}}</label>
-                                    <textarea ng-model="campaign.description" id="description" cols="10" class="form-control" required></textarea>
-                                </div>
-                                
-                                <div class="form-group text-left">
-                                    <button class="btn btn-primary">Actualizar</button>
-                                </div>
-                            </form>
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">General</a>
+                            <a class="nav-item nav-link cursor" id="nav-img-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-img">Imágenes</a>
                         </div>
-                        <hr>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <!--form action="" ng-submit="saveChanges(campaign.id)">
+                        {{ csrf_field() }}-->
+                            <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
+                                <div class="row resetRow " >
+                                    <div class="col-12 form-group">
+                                       <form ng-submit="confirmUpdate()">
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-6 no-padding-left">
+                                                <label for="name">@{{confirmDialogUpdate.labelName}}</label>
+                                                <input type="text" ng-model="campaign.name" id="name" cols="10" value="@{{ campaign.name }}" class="form-control" required>
+                                            </div>
+                                            <div class="col-6 no-padding-right">
+                                                <label for="name">@{{confirmDialogUpdate.labelSocialNetwork}}</label>
+                                                <select id="socialNetwork" class="form-control" ng-model="campaign.socialNetwork">
+                                                    <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}" label="@{{socialNetwork.label}}">
+                                                    @{{socialNetwork.value}}
+                                                    </option>
+                                                </select>                                       
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6 no-padding-left">
+                                                <label for="name">@{{confirmDialogUpdate.labelBeginDate}}</label>
+                                                <div moment-picker="campaign.beginDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="beginDate" cols="10" class="input-group"><input class="form-control"
+                                                ng-model="campaign.beginDate">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 no-padding-right">
+                                                <label for="name">@{{confirmDialogUpdate.labelEndidgDate}}</label>
+                                                <div moment-picker="campaign.endingDate" format="YYYY-MM-DD" max-view="day" locale="en"  id="endingDate" cols="10" class="input-group"><input class="form-control"
+                                                ng-model="campaign.endingDate">
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6 no-padding-left">
+                                                <label for="name">@{{confirmDialogUpdate.labelBudget}}</label>
+                                                <input type="numero" ng-model="campaign.budget" id="budget" cols="10" class="form-control">
+                                            </div>
+                                            <div class="col-6 no-padding-right">
+                                                <label for="name">@{{confirmDialogUpdate.labelUsedBudget}}</label>
+                                                <input type="numero" ng-model="campaign.usedBudget" id="usedBudget" cols="10" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group  row">
+                                            <label for="description">@{{confirmDialogUpdate.labelDescription}}</label>
+                                            <textarea ng-model="campaign.description" id="description" cols="10" class="form-control" required></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group text-left">
+                                            <button class="btn btn-primary">Actualizar</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                <hr>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab" ng-class="{ 'show active': tabs == 2 }">
+                                <div class="row">
+                                    <ul ui-sortable="sortableOptions" ng-model="images" class="row ulImages">
+                                        <li ng-repeat="image in images" class="gallery-box col-lg-3 col-md-4">
+                                            <div class="imgContainer">
+                                                <img class="imgCatalog" src="/storage/@{{image.name}}">
+                                                <a class="closeProductsImages" ng-click="deleteImageModal(image.id)"><i class="fas fa-times"></i></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h4>Imagenes</h4>
+                                <p>(solo se permite imágenes en formato jpg y jpeg preferiblemente de 200x200px y máximo 1MB)</p>
+                                <form ng-submit="AddImages(campaign.id )">
+                                    <input type="hidden" value="@{{campaign.id}}">
+                                    <div flow-init
+                                        flow-files-submitted="$flow.upload()"
+                                        flow-file-added="!!{jpg:1,jepg:1}[$file.getExtension()]"
+                                        flow-name="imgs.flow">
+                                        <div class="row" flow-drop ng-class="dropClass">
+                                            <div class="col-lg-4">
+                                                <span class="btn  btn-outline-primary" flow-btn>Añadir imagen</span>
+                                                <span class="btn  btn-outline-primary" flow-btn flow-directory ng-show="$flow.supportDirectory">Añadir carpeta</span>
+                                            </div>
+                                            <div class="col-md-12 col-lg-6 textImage">
+                                                <span> <b>O</b>  Arrastra y suleta tus archivos aquí </span>
+                                                <button type="submit" class="btn btn-outline-primary">Subir imagenes</button>
+                                            </div>
+                                        </div> 
+
+                                        <div class="row">
+                                            <div ng-repeat="file in $flow.files" class="gallery-box col-lg-3 col-md-4">
+                                            <span class="title">@{{file.name.substr(0,20)}}</span>
+                                                <div class="flowContainer" ng-show="$flow.files.length">
+                                                    <img flow-img="file"  class="imgCatalog"/>
+                                                    <a class="closeProductsImages" ng-click="file.cancel()"><i class="fas fa-times"></i></a>
+                                                </div>
+                                                <div class="progress progress-bar-striped" ng-class="{active: file.isUploading()}">
+                                                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                        aria-valuenow="@{{file.progress() * 100}}"
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                        ng-style="{width: (file.progress() * 100) + '%'}">
+                                                        <span class="sr-only">@{{file.progress()}}% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                       <!-- </form>-->                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
