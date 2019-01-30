@@ -14,9 +14,11 @@ Route::group(['prefix'=>'/Catalog/'],function(){
             return view('catalog.public.layout');
         })->name('catalog');
     //render internal catalog
-    Route::get('/products', function(){
+    Route::get('/index', function(){
         return view('catalog.public.catalog');
     });
     //get lines and brands
     Route::get('/linesBrands','Admin\ProductsController@linesBrands');
+    //get filter products list
+    Route::get('/products','Admin\ProductsController@productsPublic');
 });

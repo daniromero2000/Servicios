@@ -1,13 +1,13 @@
 <?php
 
 /**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
+    **Proyect: SERVICIOS FINANCIEROS
+    **Case of use: MODULO CATALOGO DE PRODUCTOS
+    **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador REST para la administracion de Productos.
+    **Description: controlador REST para la administracion de Productos.
     ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
-    **Fecha: 26/12/2018
+    **Date: 26/12/2018
      **/
 
 namespace App\Http\Controllers\Admin;
@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['linesBrands']]);
+        $this->middleware('auth', ['except' => ['linesBrands','productsPublic']]);
     }
     /**
      * Display a listing of the resource.
@@ -176,7 +176,7 @@ class ProductsController extends Controller
                 ->where('idProduct',$id)
                 ->orderBy('order')
                 ->get();
-
+        // recover product to edit
         $product = Product::Find($id);
 
         return response()->json(['product' => $product, 'lines' => $lines, 'brands' => $brands, 'cities' => $cities, 'images' => $images]);
@@ -191,16 +191,17 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         //query
         $product = Product::Find($id);
-        //asignation
+        //update
         $product->name = $request->name;
         $product->reference = $request->reference;
         $product->specifications = $request->specifications;
         $product->price = $request->price;
         $product->idBrand = $request->idBrand;
         $product->idLine = $request->idLine;
-        //$product->idCity = $request->idCity;
+        $product->id_city = $request->id_city;
 
         $product->save();
         //response
@@ -244,6 +245,13 @@ class ProductsController extends Controller
         return response()->json(true);
     }
 
+    /**
+     * store a grup of images in server and store de name in DB
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response whit a set of images
+     */
+
     public function images(Request $request)
     {
       
@@ -253,17 +261,28 @@ class ProductsController extends Controller
             $images = new ProductImage();
             // to save in public/storage  execute php artisan storage:link
             $images->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
+            //put a new image in the last position
+            $count = ProductImage::where('idProduct', $request->idProduct)->count();
+            $images->order = $count;
+
             $images->idProduct = $request->idProduct;
             $images->save();
 
         }
         return response()->json(true);
     }
+
+      /**
+     * store a grup of images in server and store de name in DB
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response with a set of images
+     */ 
+
     public function imagesUpdate(Request $request)
     {
         $i=0;//images order 
         $images = $request->all();
-        
         foreach ($images as $value) {
             //query
             $updateImage = ProductImage::find($value['id']);
@@ -276,32 +295,65 @@ class ProductsController extends Controller
         
     }
 
+       /**
+     * 
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response  list of lines with their sespective brands [[idLine,nameLine,[[idBrand,nameBrand]......[others brand]]].......[others line]]
+     */ 
+
     public function linesBrands(Request $request)
     {
-        $lines = DB::table('lines')
-                ->select('name','id')
-                ->whereNull("deleted_at")
-                ->get();
-
+        //All the combinations of lines and brands of the products there are products.
         $linesBrands = DB::table('products')
                     ->join('brands', 'idBrand', '=', 'brands.id')
                     ->join('lines', 'idLine', '=', 'lines.id')
                     ->select('products.idLine AS idLine','lines.name AS lineName','products.idBrand AS idBrand','brands.name AS brandsName')
                     ->whereNull("products.deleted_at")
+                    //->whereNull("lines.deleted_at")//uncomment if a client can saw a product with deleted line
                     ->distinct()
                     ->get();
         
 
         $linesBrands = $linesBrands->groupBy('lineName');
-
+        //agrup a brands with our sespectiv line
         $linesBrands = $linesBrands->map(function ($item, $key){
-            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName, 'brands' => $item->map(function ($item2, $key) {
+            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName, 'brands' => $item->map(function ($item2, $key){
                                                                         return [ 'id' => $item2->idBrand, 'name' => $item2->brandsName];
                                                                     })];
         });
 
-        //list($keys, $values) = array_divide($linesBrands);
-
         return response()->json($linesBrands);
+    }
+
+    public function productsPublic(Request $request)
+    {
+        //consulta join products brands lines cities tables       
+        $products = DB::table('products')
+                    ->join('brands', 'idBrand', '=', 'brands.id')
+                    ->join('profiles', 'id_city', '=', 'profiles.id')
+                    ->join('lines', 'idLine', '=', 'lines.id')
+                    ->leftJoin('product_images',function($q) use ($request){
+                        $q->on('product_images.idProduct', 'products.id')
+                            ->where('product_images.order',0);
+                    })
+                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city','product_images.name AS image')
+                    ->whereNull("products.deleted_at");
+
+        //line filter
+        if(!is_null($request->line)){
+             $products->where('idLine', $request->line);
+        }
+        //brand filter
+        if(!is_null($request->brand)){
+             $products->where('idBrand', $request->brand);
+        }
+        // pagination  
+        $products->orderBy('products.id', 'desc')
+                 ->skip($request->page*($request->actual-1))
+                 ->take($request->page);
+         //json response
+        return response()->json($products->get());
+       
     }
 }

@@ -8,7 +8,21 @@
      **/
 app.controller('Controller', function($scope, $http, $rootScope){
 
-	$scope.linesBrands = [];
+	$scope.linesBrands = [];// list the lines and with their associated brands
+	$scope.products = [];// list the products
+	$scope.filter = {
+		'page': 12,
+		'actual': 1,
+		'brand': '',
+		'line': ''
+	};//object for index and filter 
+	$scope.Products = [];//product list to display
+	$scope.title = {
+		'color': "",
+		'name': ""
+	}//color and content to title
+	$scope.color = ['#046627','#82BCF4','#ED8C00','#2C8DC9','#EC1C24','#FECD14'];//list of colors to lines icon
+	$scope.enableTitle = "none";//show a title div when the user filter
 
 	// list the lines and with their associated brands
 	$scope.getLinesBrands = function(){
@@ -19,155 +33,45 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response != false){
 				$scope.linesBrands = response.data;
-				console.log($scope.linesBrands); 
 				hideLoader();
-			}	
+				angular.forEach($scope.linesBrands,function(value,key){
+					value.color = $scope.color.pop();
+				});
+			}
+
 		}, function errorCallback(response) {
 			hideLoader();
 		});
 	};
 
-	$scope.getLinesBrands();
 
-
-
-
-
-/*
-
-
-
-
-	$scope.q = {
-		'q': '',
-		'page': 30,
-		'actual': 1,
-		'delete': false
-	};//object for index and filter 
-	$scope.resource = {}; //object for index line
-	$scope.resources = []; //list of brands returned by server
-	$scope.alert = "";	//text in create alert text 
-	$scope.activ  = true; // display delete action for each resourse if this is activ 
-
-	$scope.addResource= function(){
-		$scope.resource = {};
-		$scope.resource.city = 0;
-		$("#addResourceModal").modal("show");
-		$("#alertResource").hide();
-	};
-
-	// query of faqs index and with filter 
-	$scope.getResource = function(){
-		showLoader();
-		//dsplay or not the delete action
-		if($scope.q.delete){
-			$scope.activ = false;
-		}else{
-			$scope.activ = true;
-		}
+	//  index and filter  products
+	$scope.getProducts = function(){
 		$http({
 		  method: 'GET',
-		  url: '/profiles?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
+		  url: 'Catalog/products?q='+'&page='+$scope.filter.page+'&actual='+$scope.filter.actual+'&brand='+$scope.filter.brand+'&line='+$scope.filter.line
 		}).then(function successCallback(response) {
 			if(response != false){
 				angular.forEach(response.data, function(value) {
-					$scope.resources.push(value);
+					$scope.products.push(value);
 				});
-				hideLoader();
 			}	
 		}, function errorCallback(response) {
-			hideLoader();
 		});
 	};
-
-	$scope.search = function(){
-		$scope.resource = {};
-		$scope.alert = "";
-		$scope.resources = [];
-		$scope.q.actual = 1;
-		$scope.q.page = 30;
-		$scope.getResource();
+	//prepare  the filters object to make the product request
+	$scope.search = function(line,brand){
+		$scope.filter.actual=1;//reset de actual page
+		$scope.filter.line=line.id;
+		brand.id ? $scope.filter.brand=brand.id:$scope.filter.brand="";//if only filter by line set the brand id in empty string
+		$scope.products=[];//reset a products list when the user make a filter
+		$scope.title.name = line.name; // set a title with a line name selected by the client
+		$scope.title.color = line.color;
+		$scope.enableTitle = "block";//enable de title div
+		$scope.getProducts();		
 	};
 
-	$scope.moreRegister = function(){
-		$scope.q.actual = $scope.q.actual + 1;
-		getResource()
-	};
+$scope.getLinesBrands();
+$scope.getProducts();
 
-
-	$scope.createResource = function(){
-		$http({
-		  method: 'POST',
-		  url: 'profiles',
-		  data: $scope.resource
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				if(response.data=="23000"){
-					document.getElementById('p').innerHTML = "El perfil <b>" + $scope.resource.name + "</b>  ya esta registrado en la base de datos";
-					$("#alertResource").show();
-				}else if (response.data==true) {
-					$scope.resource.name = "";
-					$("#addResourceModal").modal("hide");
-					$scope.search();
-				}	
-			}
-		}, function errorCallback(response) {
-		});
-	};
-
-
-	$scope.showDialog = function(resource){
-		$("#Show").modal("show");
-		$scope.resource = resource;
-	};
-	
-
-	$scope.showUpdateDialog = function(resource){
-		$("#alertUpdate").hide();
-		$("#Update").modal("show");
-		$scope.resource = angular.extend({}, resource);
-	};
-
-	$scope.UpdateResource = function(){
-		$http({
-		  method: 'PUT',
-		  url: 'profiles/'+$scope.resource.id,
-		  data: $scope.resource
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				if(response.data=="23000"){
-					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
-					$("#alertUpdate").show();
-				}else if (response.data==true) {
-					$scope.resource.name = "";
-					$("#Update").modal("hide");
-					$scope.resource = {};
-					$scope.search();
-				}
-			}
-		}, function errorCallback(response) {
-		});
-	};
-
-	$scope.showDialogDelete = function(resource){
-		$("#Delete").modal("show");
-		$scope.resource = resource;
-	};
-
-	$scope.deleteResource = function(idResource){
-		$http({
-		  method: 'DELETE',
-		  url: 'profiles/' + idResource
-		}).then(function successCallback(response){	
-			if(response.data != false){
-				$("#Delete").modal("hide");
-				$scope.search();
-			}
-		},function errorCallback(response){
-			
-		});
-	}
-
-	$scope.getResource();
-*/
 });

@@ -17,6 +17,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		}
 	};
 
+
 	$scope.getResource = function(){
 		showLoader()
 		$http({
@@ -31,6 +32,13 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				$scope.cities = response.data.cities;
 				$scope.images = response.data.images;
 				$scope.list = $scope.images;
+				$http({
+				  method: 'POST',
+				  url: '/Administrator/Catalog/imagesUpdate',
+				  data: $scope.images
+				}).then(function successCallback(response) {			
+				}, function errorCallback(response) {
+				});
 			}
 				
 		}, function errorCallback(response) {
@@ -49,6 +57,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		  url: '/products/'+$scope.resource.id,
 		  data: $scope.resource
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data != false){
 				alert("Producto actualizado");
 			}
@@ -57,6 +66,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		});
 	};
 
+
 	$scope.deleteImage = function(id){
 		$('#Delete').modal('hide');
 		showLoader();
@@ -64,13 +74,11 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		  method: 'GET',
 		  url: '/Administrator/Catalog/deleteImage/'+id,
 		}).then(function successCallback(response) {
-			
 			if(response.data != false){
 				$scope.getResource();
 				hideLoader();
 			}
 		}, function errorCallback(response) {
-			
 			hideLoader();
 		});
 	};

@@ -3487,49 +3487,49 @@ p.wantToSecondTex{
 	}
 
 	.dialogThakPage p {
-    
-    transform: translate(-50%,60%);
-    
-    font-size: 0.8em;
-}
+	    
+	    transform: translate(-50%,60%);
+	    
+	    font-size: 0.8em;
+	}
 
-.viajesHeaderButtonResponsive{
-	display: block;
+	.viajesHeaderButtonResponsive{
+		display: block;
 
-}
+	}
 
-.viajesHeaderButton{
-	display: none;
-}
+	.viajesHeaderButton{
+		display: none;
+	}
 
-.viajesWhatsappButton{
-	padding: 0;
-}
+	.viajesWhatsappButton{
+		padding: 0;
+	}
 
-.viajesWhatsappButton a{
-	padding: 0;
-	position: fixed;
-    width: 50px;
-    height: 50px;
-    bottom: 50%;
-    right: 4%;
-    background-color: #3fcf64;
-    color: #FFF;
-    border-radius: 50px;
-    border: solid 1px;
-    text-align: center;
-    font-size: 27px;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 100;;
+	.viajesWhatsappButton a{
+		padding: 0;
+		position: fixed;
+	    width: 50px;
+	    height: 50px;
+	    bottom: 50%;
+	    right: 4%;
+	    background-color: #3fcf64;
+	    color: #FFF;
+	    border-radius: 50px;
+	    border: solid 1px;
+	    text-align: center;
+	    font-size: 27px;
+	    box-shadow: 2px 2px 3px #999;
+	    z-index: 100;;
 
-}
+	}
 
-.viajesHeaderButtonResponsive .fa-whatsapp:before{
-	position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-}
+	.viajesHeaderButtonResponsive .fa-whatsapp:before{
+		position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    transform: translate(-50%,-50%);
+	}
 
 	.sliderPrincipal-button {
 	    padding: 9px 35px;
@@ -3709,13 +3709,33 @@ p.wantToSecondTex{
 	.descCatalog{
 		width: 21vw !important;
 	}
+	.containerLines{
+		display: none;
+	}
+	.container-sm-Lines{
+		display: block !important;
+	}
+	.container-sm-Lines ul{
+		list-style: none;
+		padding: 0;
+	}
 
+	.targetProductFooter{
+    	font-size: 3vw !important;
+	}
+	.productsImageContainer{
+		height: 25vw !important;
+	}
+	.productsTitle{
+		padding-left: 6vw;
+	}
 
 }
 
 
 
 @media(max-width: 576px){
+	
 
 	.preHeader-item:nth-child(2){
 		display: none;
@@ -3916,6 +3936,19 @@ p.wantToSecondTex{
 	.descCatalog{
 		width: 16vw !important;
 	}
+	.targetProductFooter{
+    	font-size: 5vw !important;
+	}
+	.productsImageContainer{
+		height: 50vw  !important;
+	}
+	.productsImageContainer{
+		padding-bottom: 3vw !important;
+	}
+	.productsTitle{
+		padding-left: 10vw !important;
+	}
+	
 }
 
 
@@ -3963,8 +3996,6 @@ p.wantToSecondTex{
 	.busTourButton p a{
 		width: 100%;
 	}
-
-
 }
 
 
@@ -4068,6 +4099,11 @@ p.wantToSecondTex{
 	cursor: move;
 	margin:auto;
 }
+.imgCatalog {
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
 .flowContainer {
 	position: relative;
 	width: 200px;
@@ -4079,11 +4115,7 @@ p.wantToSecondTex{
 	width: 100%;
 }
 
-.imgCatalog {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
+
 .closeProductsImages{
 	color: white;
 	position: absolute;
@@ -4109,129 +4141,184 @@ p.wantToSecondTex{
     **Fecha: 12/12/2018
      **/
 
-    .publicHeader {
-		background-color:#F5F4FE;
-		font-weight:bold;
-		font-size: 1.2vw;
-		position: relative;
-	}
+.publicHeader {
+	background-color:#F5F4FE;
+	font-weight:bold;
+	font-size: 1.2vw;
+	position: relative;
+}
 
 
+.headerLogo{
+	padding: 10px 0px 10px 30px;
+}
+.headerText{
+	margin-top: 25px !important;
+	position: relative;
+}
+.headerText * {
+	padding: 0px;
+	text-align: center;
+}
 
-	.headerLogo{
-		padding: 10px 0px 10px 30px;
-	}
-	.headerText{
-		margin-top: 25px !important;
-		position: relative;
-	}
-	.headerText * {
-		padding: 0px;
-		text-align: center;
-	}
+.phoneCatalog:after{
+	position: absolute;
+	content: '';
+	width: 1px;
+	background-color: #000;
+	height: 30px;
+	top:0;
+	right: 0;
+}
 
-	.phoneCatalog:after{
-		position: absolute;
-		content: '';
-		width: 1px;
-		background-color: #000;
-		height: 30px;
-		top:0;
-		right: 0;
-	}
+.catalogSlide{
+	margin:10px 0px;
+	width: 100%;
+	padding: 3%	10%;
+	background-color: #EBEBEB;
+}
+.containerLines{
+	padding: unset;
+	padding-left: 10px;
+}
+.productsCatalog{
+	width: 48vw;
+}
+.descCatalog{
+	width: 24vw;
+}
+.productsMenu{
+	list-style: none;
+	background-color:#F5F4FE;
+	padding: unset;
+	margin-left: 10px;
+}
+.buttonLines{
+	text-align: left;
+	font-family: Barlow;
+	font-weight: bold;
+	width: 100%;
+	background:none;
+	border: unset;
+	border-bottom: solid #aeadb2 1px;
+}
+.buttonLines:focus{
+	outline:unset;
+}
+.nameLine{
+	padding-left: 20px
+}
+.nameFilter{
+	padding-left: 20px
+}
+.carretLines{
+	position: absolute;
+    font-size: 31px;
+    margin-left: 5px;
+    margin-top: -2px;
+    /*color: #FFCA05;*/
+}
+.brandsCatalog{
+	list-style: none;
+    font-family: Barlow;
+    font-weight: bold;
+    background: #DCDCE0;
+    padding:unset;
+}
 
-	.catalogSlide{
-		margin:10px 0px;
-		width: 100%;
-		padding: 3%	10%;
-		background-color: #EBEBEB;
-	}
-	.containerLines{
-		padding: unset;
-		padding-left: 10px;
-	}
-	.productsCatalog{
-		width: 48vw;
-	}
-	.descCatalog{
-		width: 24vw;
-	}
-	.productsMenu{
-		list-style: none;
-		background-color:#F5F4FE;
-		padding: unset;
-		margin-left: 10px;
-	}
-	.buttonLines{
-		text-align: left;
-		font-family: Barlow;
-		font-weight: bold;
-		width: 100%;
-		background:none;
-		border: unset;
-		border-bottom: solid #aeadb2 1px;
-	}
-	.buttonLines:focus{
-		outline:unset;
-	}
-	.nameLine{
-		padding-left: 20px
-	}
-	.carretLines{
-    	position: absolute;
-	    font-size: 31px;
-	    margin-left: 5px;
-	    margin-top: -2px;
-	    color: #FFCA05;
-	}
-	.brandsCatalog{
-		list-style: none;
-	    font-family: Barlow;
-	    font-weight: bold;
-	    background: #DCDCE0;
-	    padding:unset;
-	}
+.brandsName{
+	border-bottom: solid #CCCCCC 1px;
+	padding-left: 40px;
+}
 
-	.brandsName{
-		border-bottom: solid #CCCCCC 1px;
-		padding-left: 40px;
-	}
+.targetContainer{
+	padding: 10px;
+}
 
-	.targetContainer{
-		padding: 10px;
-	}
+.tagentProduct{
+	padding: 5px;
+}
+.targetProductBody{
+	background-color: #F2F0F0;
+	padding-top: 20px;
+	text-align: center;
+	padding-bottom:10px;
+}
+.targetProductFooter{
+	background-color: #454545;
+	border-radius: 0px 0px 0px 20px;
+	padding: 20px 0px 20px 0px;
+    text-align: center;
+    font-family: 'Barlow';
+    font-weight: bold;
+    color: white;
+    font-size: 1.6vw;
+}
+.targetProductFooter p {
+	margin: 0;
+}
+.catalogContainer{
+	width: 100%;
+	margin:0;
+}
 
-	.tagentProduct{
-		padding: 5px;
-	}
-	.targetProductBody{
-		background-color: #F2F0F0;
-		padding-top: 20px;
-		text-align: center
-	}
-	.targetProductFooter{
-		background-color: #454545;
-		border-radius: 0px 0px 0px 10px;
-	}
-	.catalogContainer{
-		width: 100%;
-		margin:0;
-	}
-
-	.targetProductBody h3 {
-		color: red;
-		font-family: 'Barlow';
-		font-weight: bold;
-		font-size: 15px;
-	}
-	.targetProductBody p {
-		color: black;
-		font-family: 'Barlow';
-		font-weight: bold;
-		font-size: 10px;
-		margin: 0;
-	}
-	.imagesTarget{
-		width: 95%;
-		margin: 20px 0px 40px 0px;
-	}
+.targetProductBody h3 {
+	color: red;
+	font-family: 'Barlow';
+	font-weight: bold;
+	font-size: 15px;
+}
+.targetProductBody p {
+	color: black;
+	font-family: 'Barlow';
+	font-weight: bold;
+	font-size: 10px;
+	margin: 0px;
+	height: 1vw;
+}
+.productsImageContainer{
+	text-align: center;
+	height: 150px;
+	background-color: #F2F0F0;
+	padding-bottom: 1vw;
+}
+.productsImageContainer img{
+	width: 95%;
+	height: 100%;
+}
+.productBtn{
+	background-color: #FFCA05;
+    position: absolute;
+    font-family: 'Barlow';
+    font-weight: bold;
+    margin-left: 50%;
+    transform: translateX(-53%) translateY(-60%);
+    width: 80%;
+    border-radius: 20px;
+}
+.priceLabel{
+	color: #FFCA05;
+}
+.buttonBrands{
+	text-align: left;
+	font-family: Barlow;
+	font-weight: bold;
+	width: 100%;
+	background:none;
+	border: unset;
+	
+}
+.buttonBrands:focus{
+	outline:unset;
+}
+.container-sm-Lines{
+	display: none;
+	list-style: none;
+}
+.productsTitle{
+	padding-left: 3vw;
+}
+.carretTitle{
+	position: absolute;
+    font-size: 45px;
+}
