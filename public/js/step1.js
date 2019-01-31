@@ -119,25 +119,6 @@ angular.module('appStep1', [])
 		});
 	};
 
-	$scope.getContactData = function(){
-		$scope.disabledInputs = false;
-		showLoader();
-		$http({
-		  method: 'GET',
-		  url: '/api/oportuya/getContactData/'+$scope.leadInfo.identificationNumber,
-		}).then(function successCallback(response) {
-			hideLoader();
-			$scope.leadInfo = response.data;
-			$scope.leadInfo.emailConfirm = response.data.email;
-			$scope.leadInfo.step= 1 ;
-			$scope.leadInfo.channel = 1;
-			$scope.leadInfo.typeService = 'Terjeta de crédito Oportuya';
-		}, function errorCallback(response) {
-			hideLoader();
-			console.log(response);
-		});
-	};
-
 	$scope.validateEmail = function(){
 		if($scope.leadInfo.email == $scope.leadInfo.emailConfirm){
 			$scope.emailValidate = false;

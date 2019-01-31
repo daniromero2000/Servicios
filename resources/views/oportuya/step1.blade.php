@@ -69,27 +69,27 @@
 					</div>
 					<div class="col-12 col-sm-6 form-group">
 						<label for="identificationNumber">Número de identificación*</label>
-						<input class="form-control inputsSteps inputText" type="text" ng-blur="getContactData()" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" />
+						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="name" class="control-label">Nombres*</label>
-						<input type="text" ng-model="leadInfo.name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true" ng-disabled="disabledInputs"/>
+						<input type="text" ng-model="leadInfo.name" validation-pattern="name" class="form-control inputsSteps inputText" id="name" required="true"  />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="lastName" class="control-label">Apellidos*</label>
-						<input type="text" ng-model="leadInfo.lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true" ng-disabled="disabledInputs"/>
+						<input type="text" ng-model="leadInfo.lastName" validation-pattern="name" class="form-control inputsSteps inputText" id="lastName" required="true"  />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="email" class="control-label">Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
+						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="email" class="control-label">Confirmar Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true" ng-disabled="disabledInputs"/>
+						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
 					</div>
 					<div ng-show="emailValidate" class="col-12">
 						<p class="alert alert-danger">
@@ -101,12 +101,12 @@
 					<div class="col-12 col-sm-6">
 						<div class="form-group">
 							<label for="telephone" class="control-label">Celular*</label>
-							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="disabledInputs"/>
+							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true"  />
 						</div>
 					</div>
 					<div class="col-12 col-sm-6">
 						<label for="occupation">Ocupación*</label>
-						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required="" ng-disabled="disabledInputs" ng-options="occu.value as occu.label for occu in occupations">
+						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required=""   ng-options="occu.value as occu.label for occu in occupations">
 						</select>
 					</div>
 				</div>
@@ -114,7 +114,7 @@
 					<div class="col-12">
 						<div class="form-group">
 							<label for="city" class="control-label">Ciudad**</label>
-							<select ng-model="leadInfo.city" id="city" class="form-control inputsSteps inputSelect" required="" ng-options="city.value as city.label for city in cities" ng-disabled="disabledInputs">
+							<select ng-model="leadInfo.city" id="city" class="form-control inputsSteps inputSelect" required="" ng-options="city.value as city.label for city in cities"  >
 								
 							</select>
 						</div>
