@@ -262,6 +262,31 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content modalStepsContent">
+					<div class="modal-body modalStepsBody" style="padding: 0">
+						<div class="row resetRow">
+							<div class="col-12 text-center containerLogoModalStep">
+								<img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
+							</div>
+						</div>
+						<div class="row resetRow">
+							<div class="col-12">
+								<p class="textModal text-center">
+									<strong>Felicitaciones</strong> tu solicitud ha sido pre aprobada <br> un analista se pondrá en contacto contigo <br> para continuar el proceso
+								</p>
+							</div>
+						</div>
+						<div class="row resetRow containerFormModal">
+							<div class="col-sm-7 offset-sm-5">
 								<form ng-submit="sendComment()">
 									<div class="form-group">
 										<label for="">A que hora te podemos llamar*</label>
