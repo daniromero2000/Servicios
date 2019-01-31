@@ -114,7 +114,6 @@ app.controller('userController', function($scope, $http, $rootScope){
 	];
 
 	$scope.selectedCode = function(assessorObject){
-		//console.log(assessor);
 		
 		$scope.assessor.code=assessorObject.originalObject.CODIGO;
 	}
