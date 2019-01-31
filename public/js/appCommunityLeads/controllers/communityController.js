@@ -13,7 +13,6 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	$scope.campaign = {};
 	$scope.campaigns=[];
 	$scope.idCampaign = '';
-
 	$scope.cargando = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
@@ -139,14 +138,12 @@ app.controller('communityController', function($scope, $http, $rootScope){
 					if((value.channel != 1) && (value.channel != 0)){
 						if(value.campaignName==null){
 							value.campaignName = 'N/A';
-														
 						}
 						$scope.leads.push(value);
 					}
 
 				});
 				$scope.cargando = false;
-				
 			}
 		}, function errorCallback(response) {
 		});
@@ -194,25 +191,20 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	};
 
 	$scope.addCommunityForm = function(){
-		
 		$("#addCommunityLead").modal("show");
-	
 	};
 
 	$scope.addCommunityLeads =function(){
 		
 		$http({
 			method:'POST',
-			url:'communityLeads/addCommunityLeads',
+			url:'/communityLeads/addCommunityLeads',
 			data:$scope.lead
 		}).then(function successCallback(response){
 				if(response.data != false){
 					$scope.searchLeads();
-					$('#addCommunityLead').modal('hide');
-					
+					$('#addCommunityLead').modal('hide');	
 				}
-				
-				
 			},function errorCallback(response){
 				
 			});
@@ -222,34 +214,28 @@ app.controller('communityController', function($scope, $http, $rootScope){
 
 		$http({
 		  method: 'GET',
-		  url: 'communityLeads/viewCommunityLeads/'+idLead
+		  url: '/communityLeads/viewCommunityLeads/'+idLead
 		}).then(function successCallback(response){				
-					if (response.data != false) {
-						$scope.lead=response.data;						
-					}
-					
-				},
-				function errorCallback(response){
-					
-				});
-
+			if (response.data != false) {
+				$scope.lead=response.data;						
+			}
+			
+		},
+		function errorCallback(response){
+			
+		});
 	};
 
 	$scope.showUpdateDialog=function(idLead){
 		$scope.idLead=idLead;		
 		$scope.viewCommunityLeads($scope.idLead);
 		$('#updateCommunityModal').modal('show');
-
-
-		
-	};	
-
-
+	};
 	
 	$scope.updateCommunityLeads = function(){
 		$http({
 			method: 'POST',
-		 	url: 'communityLeads/updateCommunityLeads',
+		 	url: '/communityLeads/updateCommunityLeads',
 		 	data: $scope.lead
 		}).then(function successCallback(response){
 			
@@ -288,7 +274,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	$scope.deleteCommunityLeads=function(idLead){
 		$http({
 			method:'POST',
-			url:'communityLeads/deleteCommunityLeads/'+idLead
+			url:'/communityLeads/deleteCommunityLeads/'+idLead
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$scope.searchLeads();
@@ -309,7 +295,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.idLead = idLead;
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/getComentsLeads/'+idLead
+		  url: '/api/leads/getComentsLeads/'+idLead
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				angular.forEach(response.data, function(value, key) {
@@ -338,7 +324,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.comment.idLead = $scope.idLead;
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
+		  url: '/api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.viewComments("","",$scope.idLead, false);
@@ -362,7 +348,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	$scope.changeStateLeadComment = function(){
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
+		  url: '/api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.comment.comment = "";
@@ -373,11 +359,6 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		    
 		});
 	};
-
-
-	
-
-		
 
 	$scope.getLeads();
 	$scope.getCampaigns();

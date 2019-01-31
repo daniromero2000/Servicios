@@ -175,11 +175,20 @@ Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComen
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
 /* Apis */
-Route::get('api/oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep1');
-Route::get('api/oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
-Route::get('api/oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
-Route::get('api/oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
-Route::post('api/AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
+Route::group(['prefix'=>'api/','middleware' => 'auth'],function(){
+    // Oportuya paso a paso
+    Route::get('oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep1');
+    Route::get('oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
+    Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
+    Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
+
+    // Administrador de politicas de credito
+    Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
+
+    // Dashboard
+    Route::get('dashBoard/getModules', 'Admin\DashboardController@getModulesDashboard');
+});
+
 /*Users routes*/
 
 Route::get("/canalDigital",function(){
@@ -244,23 +253,6 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     Route::post('communityLeads/updateCommunityLeads','Admin\LeadsController@updateCommunityLeads');
     Route::get('communityLeads/viewCommunityLeads/{idLead}','Admin\LeadsController@viewCommunityLeads');
     Route::post('communityLeads/deleteCommunityLeads/{idLead}','Admin\LeadsController@deleteCommunityLeads');
-
-    Route::get("/communityLeads",function(){
-
-        if(Auth::guest()){
-            return view('auth.login');
-        }
-
-        return view('communityLeads.index');
-    });
-
-    Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
-
-    	Route::get('/leads',function(){
-    		return view('communityLeads.leads');
-    	});
-
-    });
 
 /**
     **Proyecto: SERVICIOS FINANCIEROS
@@ -339,43 +331,6 @@ Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
 
     Route::post('/profileAssessor','Admin\UserController@addAssessorProfile')->middleware('cors');
     Route::get('/getAssessors','Admin\UserController@getAllAssessor');
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: FAQ's
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Fecha: 13/12/2018
-**/
-
-Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-		return view('faqs.indexAngular');
-	})->name("preguntasFrecuentes");
-
-    Route::get('/admin', function(){
-        return view('faqs.admin');
-    });
-});
-
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Fecha: 21/12/2018
-**/
-
-Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-		return view('profilesAdmin.index');
-	})->name('lines');
-
-    Route::get('/admin', function(){
-        return view('profilesAdmin.admin');
-    });
-});
 
 // Administrator
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
@@ -383,7 +338,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     Route::group(['prefix' => '/Catalog'], function(){
         Route::get("/",function(){
             return view('catalog.index');
-        })->name('products');
+        })->name('catalogo');
 
         Route::get("/Products",function(){
             return view('catalog.products.index');
@@ -454,6 +409,34 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get('/admin', function(){
             return view('faqs.admin');
         });
+    });
+
+     // Administrador de perfiles
+     Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
+
+        Route::get("/",function(){
+            return view('profilesAdmin.index');
+        });
+    
+        Route::get('/admin', function(){
+            return view('profilesAdmin.admin');
+        });
+    });
+
+    // Community leads
+    Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
+
+        Route::get("/",function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
+            return view('communityLeads.index');
+        });
+
+    	Route::get('/leads',function(){
+    		return view('communityLeads.leads');
+    	});
+
     });
 });
 

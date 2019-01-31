@@ -68,7 +68,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.createResource = function(){
 		$http({
 		  method: 'POST',
-		  url: 'profiles',
+		  url: '/profiles',
 		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -101,7 +101,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.UpdateResource = function(){
 		$http({
 		  method: 'PUT',
-		  url: 'profiles/'+$scope.resource.id,
+		  url: '/profiles/'+$scope.resource.id,
 		  data: $scope.resource
 		}).then(function successCallback(response) {
 			if(response.data != false){
@@ -127,7 +127,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	$scope.deleteResource = function(idResource){
 		$http({
 		  method: 'DELETE',
-		  url: 'profiles/' + idResource
+		  url: '/profiles/' + idResource
 		}).then(function successCallback(response){	
 			if(response.data != false){
 				$("#Delete").modal("hide");

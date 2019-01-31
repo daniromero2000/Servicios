@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class DashboardController extends Controller
@@ -25,7 +27,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $currentUser=\Auth::user();
+        $currentUser = \Auth::user();
         return view('dashboard',['currentUser'=>$currentUser]);
+    }
+
+    public function getModulesDashboard(){
+        $userInfo = \Auth::user();
+
+        $query = DB::select("SELECT modu.name, modu.icon, modu.route
+        FROM permissions_profile_module as ppm
+        LEFT JOIN modules as modu ON ppm.id_module = modu.id
+        WHERE ppm.id_profile = :idProfile", ['idProfile' => $userInfo->idProfile]);
+
+        return $query;
     }
 }
