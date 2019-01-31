@@ -10,6 +10,28 @@ function hideLoader(){
 };
 $( document ).ready(function() {
 
+	function isScrolledIntoView(elem) {
+		var docViewTop = $(window).scrollTop()+300;
+		console.log('docViewTop '+docViewTop);
+		var docViewBottom = docViewTop + $(window).height();
+		console.log('docViewBottom '+docViewBottom);
+	
+		var elemTop = $(elem).offset().top;
+		console.log('elemTop '+elemTop);
+		var elemBottom = elemTop + $(elem).height();
+		console.log('elemBottom '+elemBottom);
+	
+		return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+	  }
+	  // If element is scrolled into view, fade it in
+	  $(window).scroll(function() {
+		$('.scroll-animations .animated').each(function() {
+			
+		  if (isScrolledIntoView(this) === true) {
+			$(this).addClass('fadeInLeft');
+		  }
+		});
+	  });
 
 	var heightWindow= $(window).height();
 		var heightPreheader = $('#preHeader').height();
