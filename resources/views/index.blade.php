@@ -116,20 +116,20 @@
 
 	<div id="video">
 		<h3 class="video-title">En Oportunidades tenemos todo para ti</h3>
-		<div class="col-12 col-sm-12 col-md-8 offset-md-2 col-lg-4 video-containText text-left">
-			<p>
+		<div class="col-12 col-sm-12 col-md-8 offset-md-2 col-lg-4 video-containText text-left scroll-animations">
+			<p class="animated">
 				<img src="/images/video-ubicacionIcon.png" alt=Ubicación" class="img-fluid video-img">
 				<span class="video-text">46 Almacenes respaldan tu compra.</span>
 			</p>
-			<p>
+			<p class="animated">
 				<img src="/images/video-antiguedadIcon.png" alt="49 años de servicio" class="img-fluid video-img">
 				<span class="video-text">49 años de servicio.</span>
 			</p>
-			<p>
+			<p class="animated">
 				<img src="/images/video-electrodomesticosIcon.png" alt="Líder en electrodomésticos" class="img-fluid video-img">
 				<span class="video-text">Líder en electrodomésticos.</span>
 			</p>
-			<p>
+			<p class="animated">
 				<img src="/images/video-descuentosIcon.png" alt="Los mejores descuentos" class="img-fluid video-img">
 				<span class="video-text">Los mejores descuentos.</span>
 			</p>

@@ -12,14 +12,10 @@ $( document ).ready(function() {
 
 	function isScrolledIntoView(elem) {
 		var docViewTop = $(window).scrollTop()+300;
-		console.log('docViewTop '+docViewTop);
 		var docViewBottom = docViewTop + $(window).height();
-		console.log('docViewBottom '+docViewBottom);
 	
 		var elemTop = $(elem).offset().top;
-		console.log('elemTop '+elemTop);
 		var elemBottom = elemTop + $(elem).height();
-		console.log('elemBottom '+elemBottom);
 	
 		return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 	  }
@@ -31,7 +27,27 @@ $( document ).ready(function() {
 			$(this).addClass('fadeInLeft');
 		  }
 		});
+
+		$('#video .video-containTex .animated').each(function() {
+			
+			if (isScrolledIntoView(this) === true) {
+			  $(this).addClass('fadeInUp');
+			}
+		  });
+
 	  });
+
+	  var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
+	  /*var interval = setInterval(function(){
+		
+			$('#video .video-containText p').addClass('animated bounceInUp').one(animationEnd, function() {
+				$(this).removeClass ('animated bounceInUp');
+			  });
+	
+		
+	}, 2000);*/
+
 
 	var heightWindow= $(window).height();
 		var heightPreheader = $('#preHeader').height();
