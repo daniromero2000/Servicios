@@ -12,7 +12,7 @@
         @endif 
 
         
-            @if(Auth::guard('assessor')->check())
+        @if(Auth::guard('assessor')->check())
             
             <div class="container">
                 <ng-view></ng-view>
