@@ -9,7 +9,7 @@
 
 @section('content')
 	 {!! NoCaptcha::renderJs() !!}
-	<div id="step1" ng-app="appStep1" ng-controller="step1Ctrl">
+	<div id="step1" ng-app="appAdvanceStep1" ng-controller="advanceStep1Ctrl">
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
 				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
@@ -201,7 +201,7 @@
 @endsection
 
 @section('scriptsJs')
-	<script type="text/javascript" src="{{ asset('js/step1.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/advanceStep1.js') }}"></script>
 	<script>
 		document.getElementById("button1").disabled = true;
 		function enableBtn(){

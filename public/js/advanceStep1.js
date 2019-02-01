@@ -1,12 +1,12 @@
-angular.module('appStep1', [])
-.controller("step1Ctrl", function($scope, $http) {
+angular.module('appAdvanceStep1', [])
+.controller("advanceStep1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.disabledInputs = true;
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
-		'typeService' : 'Terjeta de crédito Oportuya',
+		'typeService' : 'Avance',
 		'typeDocument' : '',
 		'identificationNumber' : '',
 		'name' : '',

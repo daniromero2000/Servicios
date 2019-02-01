@@ -1,5 +1,5 @@
-angular.module('appStep3', ['moment-picker', 'ng-currency'])
-.controller("step3Ctrl", function($scope, $http) {
+angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
+.controller("advanceStep3Ctrl", function($scope, $http) {
 	$scope.quota = 0;
 	$scope.leadInfo = {
 		step: 3,

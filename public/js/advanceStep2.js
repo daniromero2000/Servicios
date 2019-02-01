@@ -1,5 +1,5 @@
-angular.module('appStep2', ['moment-picker', 'ng-currency'])
-.controller("step2Ctrl", function($scope, $http) {
+angular.module('appAdvanceStep2', ['moment-picker', 'ng-currency'])
+.controller("advanceStep2Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.leadInfo = {
 		step: 2,
@@ -131,7 +131,7 @@ angular.module('appStep2', ['moment-picker', 'ng-currency'])
 		  url: '/api/encryptText/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				window.location = "/step3/"+response.data;
+				window.location = "/avance/step3/"+response.data;
 			}
 		}, function errorCallback(response) {
 		    

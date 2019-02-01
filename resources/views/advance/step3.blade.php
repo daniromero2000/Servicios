@@ -12,7 +12,7 @@
 @endsection()
 
 @section('content')
-	<div id="step3" ng-app="appStep3" ng-controller="step3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
+	<div id="step3" ng-app="appAdvacneStep3" ng-controller="advanceStep3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
 				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
@@ -315,7 +315,7 @@
 @endsection
 
 @section('scriptsJs')
-	<script type="text/javascript" src="{{ asset('js/step3.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/advanceStep3.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 	<script src="https://rawgit.com/aguirrel/ng-currency/latest/dist/ng-currency.js"></script>
