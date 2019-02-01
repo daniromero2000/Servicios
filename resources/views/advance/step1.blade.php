@@ -16,14 +16,14 @@
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img src="/{{ $digitalAnalyst['img'] }}" alt="{{ $digitalAnalyst['name'] }}" class="img-fluid steps-imgAnalista" />
-				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 1</strong> > (Cuéntanos Sobre Ti)</span>
+				<span class="steps-textStep"><strong>Solicitud de Avance Paso 1</strong> > (Cuéntanos Sobre Ti)</span>
 			</div>
 		</div>
 		<div class="row resetRow">
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy {{ $digitalAnalyst['name'] }} tu analista digital</h2>
-				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
-				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu tarjeta Oportuya</h3>
+				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de avance, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
+				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu Avance</h3>
 			</div>
 			<div class="col-12">
 				<div class="step3-containerForm">
