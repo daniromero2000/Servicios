@@ -87,8 +87,7 @@ class OportuyaV2Controller extends Controller
 	 */
 
 	public function store(Request $request)
-	{	
-		
+	{
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
 			$identificationNumber = trim($request->get('identificationNumber'));
@@ -304,7 +303,7 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
-
+			
 			$datosCliente= new DatosCliente;
 			$tarjeta = new Tarjeta;
 			$turnosOportuya = new TurnosOportuya;
@@ -356,8 +355,6 @@ class OportuyaV2Controller extends Controller
 				'SUELDOIND' => ($request->get('salaryInd') != '') ? trim($request->get('salaryInd')) : 0,
 				'BANCOP' => ($request->get('bankSavingsAccount') != '') ? trim($request->get('bankSavingsAccount')) : 'NA'
 			];
-
-			
 
 			$identificationNumber = (string)$identificationNumber;
 
@@ -450,11 +447,10 @@ class OportuyaV2Controller extends Controller
 
 			$createData = $datosCliente->save();
 
-			$typeServiceSol= DB::select("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s DESC LIMIT 1", $identificationNumber); 
-
+			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 
-				if($this->creditPolicyAdvance($identificactionNumber)){
+				if($this->creditPolicyAdvance($identificationNumber)){
 					$quotaApproved='500000';
 				}else{
 					$quotaApproved=-2;
