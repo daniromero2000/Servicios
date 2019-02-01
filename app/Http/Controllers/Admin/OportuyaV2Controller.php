@@ -450,7 +450,20 @@ class OportuyaV2Controller extends Controller
 
 			$createData = $datosCliente->save();
 
-			$quotaApproved = $this->execCreditPolicy($identificationNumber);
+			$typeServiceSol= DB::select("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s DESC LIMIT 1", $identificactionNumber); 
+
+			if($typeServiceSol[0]->typeService == 'Avance'){
+
+				if($this->creditPolicyAdvance($identificactionNumber)){
+					$quotaApproved='500000';
+				}else{
+					$quotaApproved=-2;
+				}
+
+			}else{
+				$quotaApproved = $this->execCreditPolicy($identificationNumber);
+			}
+			
 			$con3 = "";
 			if($quotaApproved > 0){
 				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
@@ -614,19 +627,29 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	/*private function alterArrayToTrim($charArray){
-		return trim($charArray);
+
+	private function applyTrim($charItem){
+		
+		$charTrim = trim($charItem);
+		return $charTrim; 
+
 	}
 
-	public function creditPolicyAdvance($identificactionNumber){
+	public function creditPolicyAdvance($identificationNumber){
+
+		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		
-		$sfMainAccount=sprintf("SELECT COUNT(`fdcalid`) AS sumFdCalid FROM `cifin_findia` WHERE `fdcedula`=%s AND fdcalid='PRIN'",$identificactionNumber);
-		$paymentFinDia=sprintf("SELECT fdcompor FROM OPORTUDATA1.cifin_findia WHERE fdcedula=%s AND fdcalid='PRIN'",$identificactionNumber);
+		if(($queryScoreClient[0]->score) < 686 ){
+			return response()->json([false]);	
+		}
+
+		$sfMainAccount=sprintf("SELECT COUNT(`fdcalid`) AS sumFdCalid FROM `cifin_findia` WHERE `fdcedula`=%s AND fdcalid='PRIN'",$identificationNumber);
+		$paymentFinDia=sprintf("SELECT fdcompor FROM OPORTUDATA1.cifin_findia WHERE fdcedula=%s AND fdcalid='PRIN'",$identificationNumber);
 		
 		$sfMainAccountQuery= DB::connection('oportudata')->select($sfMainAccount);
 
 		if(($sfMainAccountQuery[0]->sumFdCalid) < 1){
-			return response()->json([1]);
+			return response()->json([false]);
 		}
 
 		$paymentFinDiaQuery= DB::connection('oportudata')->select($paymentFinDia);
@@ -635,21 +658,18 @@ class OportuyaV2Controller extends Controller
 		foreach($paymentFinDiaQuery as $key => $payment){
 
 			$paymentArray = explode('|',$payment->fdcompor);
-			foreach($paymentArray as $pos => $charArray){
-				$paymentTrim=trim($charArray);
-			}
-			//$elementsPayment = array_keys(($paymentTrim),'N');
-			//$paymentsNumber = count($elementsPayment);
+			$paymentArray = array_map(array($this,'applyTrim'),$paymentArray);
+			$elementsPayment = array_keys(($paymentArray),'N');
+			$paymentsNumber = count($elementsPayment);
 
-			//$totalPayment=$totalPayment+$paymentsNumber;
+			$totalPayment=$totalPayment+$paymentsNumber;
 
 		}
 
-		return response()->json([$paymentArray);
 
 		if($totalPayment < 12 ){
 
-			$paymentFinExt = sprintf("SELECT extcompor  FROM OPORTUDATA1.cifin_finext WHERE extcedula=%s AND extcalid='PRIN'",$identificactionNumber);
+			$paymentFinExt = sprintf("SELECT extcompor  FROM OPORTUDATA1.cifin_finext WHERE extcedula=%s AND extcalid='PRIN'",$identificationNumber);
 			$queryPaymentExt=DB::connection('oportudata')->select($paymentFinExt);
 
 			$totalPaymentExt=0;
@@ -657,6 +677,7 @@ class OportuyaV2Controller extends Controller
 			foreach($queryPaymentExt as $key => $paymentExt){
 
 				$paymentExtArray = explode('|',$paymentExt->extcompor);
+				$paymentExtArray = array_map(array($this,'applyTrim',$paymentExtArray));
 				$elementsPaymentExt = array_keys($paymentExtArray,'N ');
 				$paymentsExtNumber = count($elementsPaymentExt);
 	
@@ -667,15 +688,15 @@ class OportuyaV2Controller extends Controller
 			$sumPayments = $totalPayment + $totalPaymentExt;
 
 			if($sumPayments < 12){
-				return response()->json([2]);
+				return response()->json([false]);
 			}
 
-			return response()->json([3]);
+			return response()->json([false]);
 			
 		}
 
-		return  response()->json([4]);
-	}*/
+		return  response()->json([true]);
+	}
 
 	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicional 3
@@ -872,6 +893,7 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit($identificationNumber){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		
 		if(empty($queryScoreClient)){
 			return false;
 		}else{
