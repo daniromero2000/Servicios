@@ -190,7 +190,7 @@
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/avance"> 
+								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/avance/step1"> 
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Avances</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item4 @php echo $activeSeguros @endphp " href="/seguros">
