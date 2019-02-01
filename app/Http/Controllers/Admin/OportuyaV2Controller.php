@@ -614,7 +614,7 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	private function alterArrayToTrim($charArray){
+	/*private function alterArrayToTrim($charArray){
 		return trim($charArray);
 	}
 
@@ -635,16 +635,17 @@ class OportuyaV2Controller extends Controller
 		foreach($paymentFinDiaQuery as $key => $payment){
 
 			$paymentArray = explode('|',$payment->fdcompor);
-			foreach($paymentArray as ){
-
+			foreach($paymentArray as $pos => $charArray){
+				$paymentTrim=trim($charArray);
 			}
-			$elementsPayment = array_keys(($paymentArray),'N ');
-			$paymentsNumber = count($elementsPayment);
+			//$elementsPayment = array_keys(($paymentTrim),'N');
+			//$paymentsNumber = count($elementsPayment);
 
-			$totalPayment=$totalPayment+$paymentsNumber;
+			//$totalPayment=$totalPayment+$paymentsNumber;
 
 		}
 
+		return response()->json([$paymentArray);
 
 		if($totalPayment < 12 ){
 
@@ -674,7 +675,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		return  response()->json([4]);
-	}
+	}*/
 
 	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicional 3
