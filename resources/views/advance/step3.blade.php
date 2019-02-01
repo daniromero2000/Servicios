@@ -281,7 +281,7 @@
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tu cupo pre-aprobado es de:
+									Tu avance aprobado es de:
 								</p>
 								<p class="text-quotamodal text-center">
 									$@{{ quota | number:0 }}

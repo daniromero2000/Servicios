@@ -161,7 +161,7 @@ angular.module('appAdvanceStep1', [])
 		  url: '/api/encryptText/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				window.location = "/step2/"+response.data;
+				window.location = "/avance/step2/"+response.data;
 			}
 		}, function errorCallback(response) {
 		    
