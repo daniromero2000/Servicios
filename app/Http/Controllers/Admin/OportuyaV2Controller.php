@@ -614,6 +614,68 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	private function alterArrayToTrim($charArray){
+		return trim($charArray);
+	}
+
+	public function creditPolicyAdvance($identificactionNumber){
+		
+		$sfMainAccount=sprintf("SELECT COUNT(`fdcalid`) AS sumFdCalid FROM `cifin_findia` WHERE `fdcedula`=%s AND fdcalid='PRIN'",$identificactionNumber);
+		$paymentFinDia=sprintf("SELECT fdcompor FROM OPORTUDATA1.cifin_findia WHERE fdcedula=%s AND fdcalid='PRIN'",$identificactionNumber);
+		
+		$sfMainAccountQuery= DB::connection('oportudata')->select($sfMainAccount);
+
+		if(($sfMainAccountQuery[0]->sumFdCalid) < 1){
+			return response()->json([1]);
+		}
+
+		$paymentFinDiaQuery= DB::connection('oportudata')->select($paymentFinDia);
+		$totalPayment=0;
+
+		foreach($paymentFinDiaQuery as $key => $payment){
+
+			$paymentArray = explode('|',$payment->fdcompor);
+			foreach($paymentArray as ){
+
+			}
+			$elementsPayment = array_keys(($paymentArray),'N ');
+			$paymentsNumber = count($elementsPayment);
+
+			$totalPayment=$totalPayment+$paymentsNumber;
+
+		}
+
+
+		if($totalPayment < 12 ){
+
+			$paymentFinExt = sprintf("SELECT extcompor  FROM OPORTUDATA1.cifin_finext WHERE extcedula=%s AND extcalid='PRIN'",$identificactionNumber);
+			$queryPaymentExt=DB::connection('oportudata')->select($paymentFinExt);
+
+			$totalPaymentExt=0;
+
+			foreach($queryPaymentExt as $key => $paymentExt){
+
+				$paymentExtArray = explode('|',$paymentExt->extcompor);
+				$elementsPaymentExt = array_keys($paymentExtArray,'N ');
+				$paymentsExtNumber = count($elementsPaymentExt);
+	
+				$totalPaymentExt=$totalPaymentExt+$paymentsExtNumber;
+	
+			}
+
+			$sumPayments = $totalPayment + $totalPaymentExt;
+
+			if($sumPayments < 12){
+				return response()->json([2]);
+			}
+
+			return response()->json([3]);
+			
+		}
+
+		return  response()->json([4]);
+	}
+
 	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicional 3
 		$queryFinMora = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
@@ -833,6 +895,72 @@ class OportuyaV2Controller extends Controller
 		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
+
+	public function advanceStep1(){
+		$cities = [
+			[ 'label' => 'ARMENIA', 'value' => 'ARMENIA' ],
+			[ 'label' => 'MANIZALES', 'value' => 'MANIZALES' ],
+			[ 'label' => 'SINCELEJO', 'value' => 'SINCELEJO' ],
+			[ 'label' => 'YOPAL', 'value' => 'YOPAL' ],
+			[ 'label' => 'CERETÉ', 'value' => 'CERETÉ' ],
+			[ 'label' => 'TULUÁ', 'value' => 'TULUÁ' ],
+			[ 'label' => 'ACACÍAS', 'value' => 'ACACÍAS' ],
+			[ 'label' => 'ESPINAL', 'value' => 'ESPINAL' ],
+			[ 'label' => 'MARIQUITA', 'value' => 'MARIQUITA' ],
+			[ 'label' => 'CARTAGENA', 'value' => 'CARTAGENA' ],
+			[ 'label' => 'LA DORADA', 'value' => 'LA DORADA' ],
+			[ 'label' => 'IBAGUÉ', 'value' => 'IBAGUÉ' ],
+			[ 'label' => 'MONTERÍA', 'value' => 'MONTERÍA' ],
+			[ 'label' => 'MAGANGUÉ', 'value' => 'MAGANGUÉ' ],
+			[ 'label' => 'PEREIRA', 'value' => 'PEREIRA' ],
+			[ 'label' => 'CALI', 'value' => 'CALI' ],
+			[ 'label' => 'MONTELIBANO', 'value' => 'MONTELIBANO' ],
+			[ 'label' => 'SAHAGÚN', 'value' => 'SAHAGÚN' ],
+			[ 'label' => 'PLANETA RICA', 'value' => 'PLANETA RICA' ],
+			[ 'label' => 'COROZAL', 'value' => 'COROZAL' ],
+			[ 'label' => 'CIÉNAGA', 'value' => 'CIÉNAGA' ],
+			[ 'label' => 'MONTELÍ', 'value' => 'MONTELÍ' ],
+			[ 'label' => 'PLATO', 'value' => 'PLATO' ],
+			[ 'label' => 'SABANALARGA', 'value' => 'SABANALARGA' ],
+			[ 'label' => 'GRANADA', 'value' => 'GRANADA' ],
+			[ 'label' => 'PUERTO BERRÍ', 'value' => 'PUERTO BERRÍ' ],
+			[ 'label' => 'VILLAVICENCIO', 'value' => 'VILLAVICENCIO' ],
+			[ 'label' => 'TAURAMENA', 'value' => 'TAURAMENA' ],
+			[ 'label' => 'PUERTO GAITÁN', 'value' => 'PUERTO GAITÁN' ],
+			[ 'label' => 'PUERTO BOYACÁ', 'value' => 'PUERTO BOYACÁ' ],
+			[ 'label' => 'PUERTO LÓPEZ', 'value' => 'PUERTO LÓPEZ' ],
+			[ 'label' => 'SEVILLA', 'value' => 'SEVILLA' ],
+			[ 'label' => 'CHINCHINÁ', 'value' => 'CHINCHINÁ' ],
+			[ 'label' => 'AGUACHICA', 'value' => 'AGUACHICA' ],
+			[ 'label' => 'BARRANCABERMEJA', 'value' => 'BARRANCABERMEJA' ],
+			[ 'label' => 'LA VIRGINIA', 'value' => 'LA VIRGINIA' ],
+			[ 'label' => 'SANTA ROSA DE CABAL', 'value' => 'SANTA ROSA DE CABAL' ],
+			[ 'label' => 'GIRARDOT', 'value' => 'GIRARDOT' ],
+			[ 'label' => 'VILLANUEVA', 'value' => 'VILLANUEVA' ],
+			[ 'label' => 'PITALITO', 'value' => 'PITALITO' ],
+			[ 'label' => 'GARZÓN', 'value' => 'GARZÓN' ],
+			[ 'label' => 'NEIVA', 'value' => 'NEIVA' ],
+			[ 'label' => 'LORICA', 'value' => 'LORICA' ],
+			[ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
+		];
+		$digitalAnalyst = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
+
+		return view('advance.step1', ['digitalAnalyst' => $digitalAnalyst[0], 'cities' => array_sort($cities, 'label', SORT_DESC)]);
+	}
+
+	public function advanceStep2($string){
+		$identificactionNumber = $this->decrypt($string);
+
+		return view('advance.step2', ['identificactionNumber' => $identificactionNumber]);
+	}
+
+	public function advanceStep3($string){
+		$identificactionNumber = $this->decrypt($string);
+
+		return view('advance.step3', ['identificactionNumber' => $identificactionNumber]);
+	}
+
+
 	
 	public function getDataStep1(){
 		$data = [];
