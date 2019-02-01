@@ -450,7 +450,7 @@ class OportuyaV2Controller extends Controller
 
 			$createData = $datosCliente->save();
 
-			$typeServiceSol= DB::select("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s DESC LIMIT 1", $identificactionNumber); 
+			$typeServiceSol= DB::select("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s DESC LIMIT 1", $identificationNumber); 
 
 			if($typeServiceSol[0]->typeService == 'Avance'){
 
