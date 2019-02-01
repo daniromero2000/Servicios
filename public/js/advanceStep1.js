@@ -137,7 +137,7 @@ angular.module('appAdvanceStep1', [])
 			  }).then(function successCallback(response) {
 				  console.log(response.data);
 				  if(response.data == "-1"){
-					  window.location = "/OPN_gracias_FRM"
+					  window.location = "/OPN_gracias_denied_advance"
 				  }
 				  if(response.data == "-2"){
 					$('#proccess').modal('hide');
