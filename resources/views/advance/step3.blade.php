@@ -15,7 +15,7 @@
 	<div id="step3" ng-app="appAdvacneStep3" ng-controller="advanceStep3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
-				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
+				<img src="{{ asset('images/logosAvancesNew.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img ng-src="/@{{ analyst.img }}" class="img-fluid steps-imgAnalista" />

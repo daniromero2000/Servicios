@@ -12,7 +12,7 @@
 	<div id="step1" ng-app="appAdvanceStep1" ng-controller="advanceStep1Ctrl">
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
-				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
+				<img src="{{ asset('images/logosAvancesNew.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img src="/{{ $digitalAnalyst['img'] }}" alt="{{ $digitalAnalyst['name'] }}" class="img-fluid steps-imgAnalista" />
