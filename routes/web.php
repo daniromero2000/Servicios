@@ -140,6 +140,11 @@ Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
 Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
 Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
 
+// Pasos solictud cupo
+Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
+Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');
+Route::get('/avance/step3/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep3')->name('step3Avance');
+
 /* Menu Items */
 Route::get('/quienes-somos', function(){
 	return view('menuItems.aboutUs');
@@ -175,7 +180,7 @@ Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComen
 Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
 /* Apis */
-Route::group(['prefix'=>'api/','middleware' => 'auth'],function(){
+Route::group(['prefix'=>'api/'],function(){
     // Oportuya paso a paso
     Route::get('oportuya/getDataStep1/', 'Admin\OportuyaV2Controller@getDataStep1');
     Route::get('oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
