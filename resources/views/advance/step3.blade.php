@@ -14,7 +14,7 @@
 @section('content')
 	<div id="step3" ng-app="appAdvacneStep3" ng-controller="advanceStep3Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
 		<div class="row resetRow container-header-forms">
-			<div class="form-container-logoHeader">
+			<div class="form-container-logoHeader form-container-logoHeader-avances">
 				<img src="{{ asset('images/logosAvancesNew.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
 			<div class="col-12 conatiner-logoImg">
@@ -29,33 +29,33 @@
 			</div>
 			<div class="col-12">
 				<div class="step3-containerForm">
-					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<img src="{{ asset('images/iconoStartProgresoVerde.png') }}" alt="" class="img-fluid imgStartProgress">
 					<div class="progreso">
-						<div class="barra_vacia" style="width: 66.66666%;"></div>
-						<div class="puntos punto_uno listo">
+						<div class="barra_vacia barra_vacia_avances" style="width: 66.66666%;"></div>
+						<div class="puntos puntos-avances punto_uno listo">
 						</div>
 						<span></span>
 						<label>Cuéntanos sobre ti</label>
-						<div class="puntos punto_dos listo">
+						<div class="puntos puntos-avances punto_dos listo">
 						</div>
 						<span></span>
 						<label>Información Personal</label>
-						<div class="puntos punto_tres listo">
+						<div class="puntos puntos-avances punto_tres listo">
 						</div>
 						<span></span>
 						<label>Información Laboral</label>
-						<div class="puntos punto_cuatro">
+						<div class="puntos puntos-avances punto_cuatro">
 						</div>
 						<span></span>
 						<label>Confirmación</label>
 					</div>
-					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+					<img src="{{ asset('images/iconoEndProgresoVerde.png') }}" alt="" class="img-fluid imgEndProgress">
 				</div>
 			</div>
 		</div>
 		<div class="step3-containerForm">
 			<div class="row resetRow">
-				<div class="forms-descStep">
+				<div class="forms-descStep forms-descStep-avances">
 					<strong>Cuéntanos sobre ti</strong><br>
 					<span class="forms-descText">Ingresa tu información laboral</span>
 					<img src="{{ asset('images/datosLaborales.png') }}" class="img-fluid forms-descImg" />
@@ -227,7 +227,7 @@
 					</div>
 				</div>
 				<div class="row resetRow">
-					<div class="forms-descStep" style="margin: 10px 0;">
+					<div class="forms-descStep forms-descStep-avances" style="margin: 10px 0;">
 						<strong>Solo te pedimos</strong><br>
 						<span class="forms-descText">2 referencias</span>
 						<img src="{{ asset('images/datosLaborales.png') }}" class="img-fluid forms-descImg" />
@@ -236,7 +236,7 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-12">
-						<label class="textRefs">Referencia personal</label>
+						<label class="textRefs textRefs-avances">Referencia personal</label>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="NOM_REFPER">Nombre*</label>
@@ -249,7 +249,7 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-12">
-						<label class="textRefs">Referencia familar</label>
+						<label class="textRefs textRefs-avances">Referencia familar</label>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="NOM_REFFAM">Nombre*</label>

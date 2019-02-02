@@ -14,7 +14,7 @@
 @section('content')
 	<div id="step2" ng-app="appAdvanceStep2" ng-controller="advanceStep2Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>
 		<div class="row resetRow container-header-forms">
-			<div class="form-container-logoHeader">
+			<div class="form-container-logoHeader form-container-logoHeader-avances">
 				<img src="{{ asset('images/logosAvancesNew.png') }}" class="img-fluid" alt="Oportuya" />
 			</div>
 			<div class="col-12 conatiner-logoImg">
@@ -29,33 +29,33 @@
 			</div>
 			<div class="col-12">
 				<div class="step3-containerForm">
-					<img src="{{ asset('images/iconoStartProgreso.png') }}" alt="" class="img-fluid imgStartProgress">
+					<img src="{{ asset('images/iconoStartProgresoVerde.png') }}" alt="" class="img-fluid imgStartProgress">
 					<div class="progreso">
-						<div class="barra_vacia" style="width: 33.333333%;"></div>
-						<div class="puntos punto_uno listo">
+						<div class="barra_vacia barra_vacia_avances" style="width: 33.333333%;"></div>
+						<div class="puntos puntos-avances punto_uno listo">
 						</div>
 						<span></span>
 						<label>Cuéntanos sobre ti</label>
-						<div class="puntos punto_dos listo">
+						<div class="puntos puntos-avances punto_dos listo">
 						</div>
 						<span></span>
 						<label>Información Personal</label>
-						<div class="puntos punto_tres">
+						<div class="puntos puntos-avances  punto_tres">
 						</div>
 						<span></span>
 						<label>Información Laboral</label>
-						<div class="puntos punto_cuatro">
+						<div class="puntos puntos-avances punto_cuatro">
 						</div>
 						<span></span>
 						<label>Confirmación</label>
 					</div>
-					<img src="{{ asset('images/iconoEndProgreso.png') }}" alt="" class="img-fluid imgEndProgress">
+					<img src="{{ asset('images/iconoEndProgresoVerde.png') }}" alt="" class="img-fluid imgEndProgress">
 				</div>
 			</div>
 		</div>
 		<div class="step2-containerForm">
 			<div class="row resetRow">
-				<div class="forms-descStep">
+				<div class="forms-descStep forms-descStep-avances">
 					<strong>Cuéntanos sobre ti</strong><br>
 					<span class="forms-descText">Ingresa tus datos personales</span>
 					<img src="{{ asset('images/datosPersonales2.png') }}" class="img-fluid forms-descImg" />
