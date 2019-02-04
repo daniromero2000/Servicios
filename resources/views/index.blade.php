@@ -134,26 +134,26 @@
 				<span class="video-text">Los mejores descuentos.</span>
 			</p>
 		</div>
-		<img src="/images/video-botonPlay.png" alt="Ver Vídeo" class="img-fluid video-botonPlay" />
+		<img src="/images/video-botonPlay.png" alt="Ver Vídeo" class="img-fluid video-botonPlay animated" />
 	</div>
 
 	<div id="convenios">
 		<div class="containerConvenios">
 			<h3 class="convenios-title text-center">Conoce nuestros <strong>Convenios</strong></h3>
-			<div class="row resetRow">
-				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
+			<div class="row resetRow conveniosContent">
+				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo animated">
 					<img src="/images/convenios-credibilidadIcon.png" alt="Credibilidad" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Credibilidad</h3>
 					<p class="convenios-textInfo">49 Años trabajando para llevar las mejores Oportunidades a nuestros clientes.</p>
 					<a href="/quienes-somos" class="convenios-button">Ver más</a>
 				</div>
-				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
+				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo animated">
 					<img src="/images/convenios-confianzaIcon.png" alt="Confianza" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Confianza</h3>
 					<p class="convenios-textInfo">Confiamos en nuestros clientes, por eso te ofrecemos crédito para todo.</p>
 					<a href="/Por-que-comprar-con-nosotros" class="convenios-button">Ver más</a>
 				</div>
-				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo">
+				<div class="col-12 col-md-12 col-lg-4 text-center resetCol convenios-containInfo animated">
 					<img src="/images/convenios-puntosServicioIcon.png" alt="Puntos de Servicio" class="img-fluid" />
 					<h3 class="convenios-titleInfo">Puntos de servicio</h3>
 					<p class="convenios-textInfo">Tenemos 48 Puntos de servicio a tu disposición, donde encontrarás todo lo que tenemos para ti.</p>

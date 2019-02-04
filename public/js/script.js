@@ -10,8 +10,8 @@ function hideLoader(){
 };
 $( document ).ready(function() {
 
-	function isScrolledIntoView(elem) {
-		var docViewTop = $(window).scrollTop()+300;
+	function isScrolledIntoView(elem,distanceY) {
+		var docViewTop = $(window).scrollTop()+distanceY;
 		var docViewBottom = docViewTop + $(window).height();
 	
 		var elemTop = $(elem).offset().top;
@@ -23,21 +23,36 @@ $( document ).ready(function() {
 	  $(window).scroll(function() {
 		$('.scroll-animations .animated').each(function() {
 			
-		  if (isScrolledIntoView(this) === true) {
+		  if (isScrolledIntoView(this,300) === true) {
 			$(this).addClass('fadeInLeft');
 		  }
 		});
 
-		$('#video .video-containTex .animated').each(function() {
+		$('#video .video-containText .animated').each(function() {
 			
-			if (isScrolledIntoView(this) === true) {
+			if (isScrolledIntoView(this,40) === true) {
 			  $(this).addClass('fadeInUp');
 			}
 		  });
 
+		  $('#video .video-botonPlay.animated').each(function() {
+			
+			if (isScrolledIntoView(this,0) === true) {
+			  $(this).addClass('zoomIn');
+			}
+		  });
+
+		  $('#convenios .conveniosContent .animated').each(function(){
+			if (isScrolledIntoView(this,0) === true) {
+				$(this).addClass('heartBeat');
+			  }
+		  });
+
 	  });
 
-	  var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+	
+
+	  //var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
 	  /*var interval = setInterval(function(){
 		
