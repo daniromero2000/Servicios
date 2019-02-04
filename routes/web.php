@@ -104,17 +104,6 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
 });
 
-Route::group(['prefix'=>'/Products/','middleware' => 'auth'],function(){
-
-	Route::get("/",function(){
-		return view('products.index');
-	})->name('products');
-
-    Route::get('/admin', function(){
-        return view('products.admin');
-    });
-});
-
 // All resource routes
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages','Admin\PageController');
