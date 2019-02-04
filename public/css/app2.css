@@ -648,9 +648,6 @@
 	padding: 20px;
 }
 
-.textRefs-avances{
-	color: #3fcf64 !important;
-}
 
 .textRefs{
 	color: #167efa;
@@ -662,22 +659,7 @@
 	color: white;
 	font-size: 23px;
 }
-.form-container-logoHeader-avances{
-	background: #3fcf64 !important;
-	padding: 40px;
-	position: relative;
-}
-.form-container-logoHeader-avances:before{
-	background: #3fcf64 !important;
-    content: "";
-    height: 156px;
-    position: absolute;
-    top: 0;
-    right: -32px;
-    transform: skew(338deg);
-    width: 64px;
-    z-index: 2;
-}
+
 
 .form-container-logoHeader{
 	background: #167efa;
@@ -696,16 +678,9 @@
     width: 64px;
     z-index: 2;
 }
-.forms-text-analyst-avances{
-	color: #3fcf64 !important;
-}
 
 .forms-text-analyst{
 	color: #167efa;
-}
-
-.forms-descStep-avances{
-	background: #3fcf64 !important;
 }
 
 .forms-descStep{
@@ -766,7 +741,6 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #3fcf64 !important;
     z-index: 2;
     will-change: width;
     transition: width .3s linear;
@@ -799,11 +773,6 @@
     border: none;
     padding: 0;
     z-index: 1;
-}
-
-.progreso > .puntos.listo.puntos-avances + span {
-	
-	background-color:#3fcf64 !important;
 }
 
 .progreso > .puntos.listo + span {
@@ -847,9 +816,6 @@
     font-size: 14px;
 }
 
-.progreso > .puntos.listo.puntos-avances + span {
-    background-color: #3fcf64;
-}
 
 .progreso > .puntos.listo + span {
     background-color: #167efa;
@@ -888,9 +854,6 @@ label {
     left: 66.6666%;
 }
 
-.progreso > .puntos.puntos-avances.listo + span + label, .progreso > .mono-izquierda, .progreso .punto_cuatro.listo ~ .mono-derecha {
-	color: #3fcf64 !important;
-}
 
 .progreso > .puntos.listo + span + label, .progreso > .mono-izquierda, .progreso .punto_cuatro.listo ~ .mono-derecha {
     color: #167efa;
