@@ -394,7 +394,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     });
 
     // Administrador de preguntas frecuentes
-    Route::group(['prefix'=>'/preguntasFrecuentes/','middleware' => 'auth'],function(){
+    Route::group(['prefix'=>'/preguntasFrecuentes/'],function(){
 
         Route::get("/",function(){
             return view('faqs.indexAngular');
@@ -406,7 +406,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     });
 
      // Administrador de perfiles
-     Route::group(['prefix'=>'/Profiles/','middleware' => 'auth'],function(){
+     Route::group(['prefix'=>'/Profiles/'],function(){
 
         Route::get("/",function(){
             return view('profilesAdmin.index');
@@ -418,7 +418,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     });
 
     // Community leads
-    Route::group(['prefix'=>'/communityLeads/','middleware'=>'auth'],function(){
+    Route::group(['prefix'=>'/communityLeads/'],function(){
 
         Route::get("/",function(){
             if(Auth::guest()){
@@ -431,6 +431,18 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     		return view('communityLeads.leads');
     	});
 
+    });
+
+    // Administrador de modulos
+    Route::resource('modules', 'Admin\ModulesController');
+    Route::group(['prefix'=>'/Modules/'],function(){
+        Route::get('/', function(){
+            return view('modules.index');
+        });
+
+        Route::get('/Modules', function(){
+            return view('modules.modules');
+        });
     });
 });
 
