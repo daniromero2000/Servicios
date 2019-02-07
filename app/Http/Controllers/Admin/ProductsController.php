@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['linesBrands','productsPublic']]);
+        $this->middleware('auth', ['except' => ['linesBrands','productsPublic','productsDetails']]);
     }
     /**
      * Display a listing of the resource.
@@ -318,9 +318,10 @@ class ProductsController extends Controller
         $linesBrands = $linesBrands->groupBy('lineName');
         //agrup a brands with our sespectiv line
         $linesBrands = $linesBrands->map(function ($item, $key){
-            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName, 'brands' => $item->map(function ($item2, $key){
-                                                                        return [ 'id' => $item2->idBrand, 'name' => $item2->brandsName];
-                                                                    })];
+            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName,
+            'brands' => $item->map(function ($item2, $key){
+                                        return [ 'id' => $item2->idBrand, 'name' => $item2->brandsName];
+                                    })];
         });
 
         return response()->json($linesBrands);
@@ -352,8 +353,34 @@ class ProductsController extends Controller
         $products->orderBy('products.id', 'desc')
                  ->skip($request->page*($request->actual-1))
                  ->take($request->page);
+        
          //json response
         return response()->json($products->get());
        
     }
+
+    public function productsDetails(Request $request)
+    {
+        //consulta join product images       
+        $product = DB::table('products')
+                    ->join('brands', 'idBrand', '=', 'brands.id')
+                    ->join('profiles', 'id_city', '=', 'profiles.id')
+                    ->join('lines', 'idLine', '=', 'lines.id')
+                    ->leftJoin('product_images','product_images.idProduct','=','products.id')
+                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city','product_images.name AS image')
+                    ->where("products.id",$request->id)
+                    ->get();
+
+
+
+        //agrup a product with our respectiv images
+        $product = [ 'id' => $product->first()->id, 'name' => $product->first()->name,'brand' => $product->first()->brand,'brandId' => $product->first()->brandId,'city' => $product->first()->city,'line' => $product->first()->line,'lineId' => $product->first()->lineId,'price' => $product->first()->price,'reference' => $product->first()->reference,'specifications' => $product->first()->specifications,
+             'images' => $product->map(function ($item2, $key){
+                                    return $item2->image;
+                                })];
+        //json response
+        return response()->json($product);
+       
+    }
+
 }

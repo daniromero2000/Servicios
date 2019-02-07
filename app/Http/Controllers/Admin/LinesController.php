@@ -1,13 +1,13 @@
 <?php
 
 /**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO DE PRODUCTOS
-    **Autor: Luis David Giraldo Grajales 
+    **Proyec: SERVICIOS FINANCIEROS
+    **Case of use: MODULO CATALOGO DE PRODUCTOS
+    **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador REST para la administracion de  lineas.
+    **Description: controlador REST para la administracion de  lineas.
     ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
-    **Fecha: 19/12/2018
+    **Date: 19/12/2018
      **/
 
 namespace App\Http\Controllers\Admin;

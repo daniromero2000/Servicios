@@ -4,9 +4,9 @@
     **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Description: controler to display a products public view.
-    **Date: 22/01/2011
+    **Date: 22/01/2019
      **/
-app.controller('Controller', function($scope, $http, $rootScope){
+app.controller('Controller', function($scope, $http, $rootScope, $location){
 
 	$scope.linesBrands = [];// list the lines and with their associated brands
 	$scope.products = [];// list the products
@@ -23,6 +23,8 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	}//color and content to title
 	$scope.color = ['#046627','#82BCF4','#ED8C00','#2C8DC9','#EC1C24','#FECD14'];//list of colors to lines icon
 	$scope.enableTitle = "none";//show a title div when the user filter
+	$scope.details = true; // show a details of a selected product
+	$scope.showProducts = true; 
 
 	// list the lines and with their associated brands
 	$scope.getLinesBrands = function(){
@@ -71,7 +73,12 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		$scope.getProducts();		
 	};
 
-$scope.getLinesBrands();
-$scope.getProducts();
+	$scope.showDetails = function(product){
+		color = $scope.linesBrands[product.line].color.substr(1,);
+		$location.url("details/" + product.id + "/" + product.line + "/" + color);
+	};
 
+	$scope.getLinesBrands();
+	$scope.getProducts();
+	
 });

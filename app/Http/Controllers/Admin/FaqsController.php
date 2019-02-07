@@ -17,13 +17,13 @@ class faqsController extends Controller
     }
     /**
      * Display a listing of the resource and filter by question.
-     /Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO FAQS
-    **Autor: Luis David Giraldo Grajales 
+     /Proyect: SERVICIOS FINANCIEROS
+    **Case of use: MODULO FAQS
+    **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador REST para la administracion de preguntas frecuentes.
+    **Description: controlador REST para la administracion de preguntas frecuentes.
     ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
-    **Fecha: 12/12/2018
+    **Date: 12/12/2018
      * @return \Illuminate\Http\Response
      */
     

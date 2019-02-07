@@ -3729,6 +3729,15 @@ p.wantToSecondTex{
 	.productsTitle{
 		padding-left: 6vw;
 	}
+	.tabBody{
+		font-size: 2vw !important;
+	}
+	.tabTitle{
+	    padding: 5px 0px 5px 25px !important;
+	}
+	.tabTitle p{
+		margin: 0;
+	}
 
 }
 
@@ -3948,6 +3957,21 @@ p.wantToSecondTex{
 	.productsTitle{
 		padding-left: 10vw !important;
 	}
+	.tabBody{
+		padding: 15px 0px 15px 25px !important;
+		font-size: 3vw !important;
+	}
+	.detailsPrice{
+		font-size: 2.4vw !important;
+	}
+
+	.containerSlickMiniature{
+		display: none;
+	}
+
+	.specsContainer{
+		margin-top: 25px !important;
+	}
 	
 }
 
@@ -4135,7 +4159,7 @@ p.wantToSecondTex{
 	margin:auto;
 }
 			/**
-    **Caso de Uso: MODULO catalogo 576
+    **Caso de Uso: MODULO catalogo
     **Autor: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
     **Fecha: 12/12/2018
@@ -4146,8 +4170,8 @@ p.wantToSecondTex{
 	font-weight:bold;
 	font-size: 1.2vw;
 	position: relative;
+	width: 100%;
 }
-
 
 .headerLogo{
 	padding: 10px 0px 10px 30px;
@@ -4216,7 +4240,6 @@ p.wantToSecondTex{
     font-size: 31px;
     margin-left: 5px;
     margin-top: -2px;
-    /*color: #FFCA05;*/
 }
 .brandsCatalog{
 	list-style: none;
@@ -4295,6 +4318,16 @@ p.wantToSecondTex{
     transform: translateX(-53%) translateY(-60%);
     width: 80%;
     border-radius: 20px;
+    color:black;
+}
+.productBtn:hover{
+    color:black;
+}
+.btn-volver{
+	margin: 3vw;
+}
+.btn-volver .fa-angle-left{
+	margin-right: 1vw;
 }
 .priceLabel{
 	color: #FFCA05;
@@ -4317,8 +4350,102 @@ p.wantToSecondTex{
 }
 .productsTitle{
 	padding-left: 3vw;
+	color: #ABACAC;
 }
 .carretTitle{
 	position: absolute;
     font-size: 45px;
 }
+.containerSlickMain{
+	margin: auto;
+}
+.containerSlickMiniature{
+	margin: auto;
+    padding: unset;
+}
+.single-item{
+	width: 90%;
+	margin: auto;
+}
+.multiple-items{
+	width: 95%;
+	margin: auto;
+	padding: 5%;
+	background-color: #F0F2F1;
+}
+.slideContainer{
+	width: 90%;
+	margin: auto;
+}
+
+.lineDetails{
+	margin: unset;
+	margin-left: 3%;
+	color:#ABACAC; 
+}
+
+.detailName h1{
+	color:#FD0000;
+	font-size: 2vw;
+	height: 2vw;
+}
+.detailName h2{
+	font-size: 2vw;
+	height: 2vw;
+}
+
+.detailsPrice{
+	width: 90%;
+	background: #454545;
+	color: white; 
+	position: relative;
+	text-align: center;
+	font-size: 2vw;
+	padding: 0;
+}
+.containerPrice{
+	width: 90%;
+	margin-top:	1vw;
+}
+
+.detailsPrice:before { 
+  content: "";
+  background-color: #454545;
+  z-index: -10;
+  width: 30px;
+  height: 100%;
+  transform: skew(-20deg);
+  left: -15px;
+  position: absolute;
+}
+.colorPrice{
+	color:#FEC905;
+}
+.detailsPrice b{
+	width: 100%;
+	position: absolute;
+    transform: translate(-50%,50%);
+}
+.specsContainer{
+	margin-top: 50px;
+}
+.TabSpecs{
+	width: 90%;
+}
+.tabTitle{
+	background-color: #FFC905;
+    padding: 10px 0px 10px 50px;
+    font-weight: bold;
+}
+.tabTitle p{
+	margin: 0;
+}
+.tabBody{
+	padding: 30px 0px 30px 50px;
+	font-size: 1.4vw;
+	font-family: barlow;
+}
+.tabBody pre {
+	font-family: barlow;
+}
+

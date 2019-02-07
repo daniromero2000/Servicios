@@ -11,4 +11,5 @@ app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', { templateUrl: 'Catalog/index',controller:'Controller' })
+            .when('/details/:id_product/:line/:color', { templateUrl: 'Catalog/details/',controller: 'ControllerDetails' })
 }]);
