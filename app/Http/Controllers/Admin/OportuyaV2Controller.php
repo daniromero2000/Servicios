@@ -35,6 +35,7 @@ use App\LeadInfo;
 use App\OportuyaV2;
 use App\Tarjeta;
 use App\TurnosOportuya;
+use App\CodeUserVerification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -99,7 +100,7 @@ class OportuyaV2Controller extends Controller
 			//catch data from request and values assigning to leads table columns
 
 			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
-			$departament = $this->getCodeAndDepartmentCity($request->get('city'));
+			//$departament = $this->getCodeAndDepartmentCity($request->get('city'));
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
@@ -172,7 +173,7 @@ class OportuyaV2Controller extends Controller
 					'PROFESION' => 'NO APLICA',
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
 					'CIUD_UBI' => $request->get('city'),
-					'DEPTO' => $departament->departament,
+					'DEPTO' => '',
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -203,12 +204,6 @@ class OportuyaV2Controller extends Controller
 					$flag=2;
 				}
 
-			}
-
-			$existCard = $this->getExistCard($identificationNumber);
-			
-			if($existCard == true){
-				return -2;
 			}
 
 			if($validatePolicyCredit == false){
@@ -303,33 +298,29 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
-			
+			$identificationNumber = $request->get('identificationNumber');			
 			$datosCliente= new DatosCliente;
-			$tarjeta = new Tarjeta;
 			$turnosOportuya = new TurnosOportuya;
-
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			//establishing connection to OPORTUDATA data base
 
 			$datosCliente->setConnection('oportudata');
-			$tarjeta->setConnection('oportudata');
 			$turnosOportuya->setConnection('oportudata');
 			$flag=0;
 
-			$identificationNumber = $request->get('identificationNumber');
 			$selectAssessor=DB::table('leads')->selectRaw('assessor, created_at as dateLead')
 					->whereRaw('identificationNumber = ?',$identificationNumber)->get();
 
+			//$queryCity = sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = %s AND `PRINCIPAL` = 1", $oportudataLead[0]->);
 			$codeAssessor=$selectAssessor[0]->assessor;
 			$dateLead=$selectAssessor[0]->dateLead;
-			$sucursal=9999;
+			$sucursal=$oportudataLead[0]->CIUD_UBI;
 			$estado='ANALISIS';
 			$ftp=0;
 			$state='A';
 			$granTotal=0;
 	
 			$flag = 1;
-
-			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 
 			// Assign data to CLIENTE_FAB columns
 
@@ -382,13 +373,65 @@ class OportuyaV2Controller extends Controller
 			$solic_fab->SUCURSAL=$sucursal;
 			$solic_fab->ESTADO=$estado;
 			$solic_fab->FTP=$ftp;
-			$solic_fab->CODASESOR=$codeAssessor;
 			$solic_fab->STATE=$state;
 			$solic_fab->GRAN_TOTAL=$granTotal;
 
+			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
+			if($typeServiceSol[0]->typeService == 'Avance'){
 
-			$solic_fab->save();
+				if($this->creditPolicyAdvance($identificationNumber)){
+					$quotaApproved='500000';
+				}else{
+					$quotaApproved=-2;
+				}
 
+			}else{
+				$quotaApproved = $this->execCreditPolicy($identificationNumber);
+			}
+			
+			$con3 = "";
+			if($quotaApproved > 0){
+				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+				if($typeServiceSol[0]->typeService == 'Avance'){
+					$solic_fab->AVANCE_W=$quotaApproved;
+				}else{
+					$solic_fab->PRODUC_W=$quotaApproved;
+				}				
+				
+				$solic_fab->save();
+				$numSolic = $this->getNumSolic($identificationNumber);
+				$con3 = "PREAPROBADO";
+				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
+				$turnosOportuya->CEDULA = $identificationNumber;
+				$turnosOportuya->FECHA = date("Y-m-d H:i:s");
+				$turnosOportuya->SUC = 9999;
+				$turnosOportuya->USUARIO = '';
+				$turnosOportuya->PRIORIDAD = '2';
+				$turnosOportuya->ESTADO = 'ANALISIS';
+				$turnosOportuya->TIPO = 'OPORTUYA';
+				$turnosOportuya->SUB_TIPO = 'WEB';
+				$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
+				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
+				$turnosOportuya->VALOR = $quotaApproved;
+				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
+				$turnosOportuya->SCORE = $respScoreLead[0]->score;
+				$turnosOportuya->TIPO_CLI = '';
+				$turnosOportuya->CED_COD1 = '';
+				$turnosOportuya->SCO_COD1 = '0';
+				$turnosOportuya->TIPO_COD1 = '';
+				$turnosOportuya->CED_COD2 = '';
+				$turnosOportuya->SCO_COD2 = '0';
+				$turnosOportuya->TIPO_COD2 = '';
+				$turnosOportuya->STATE = 'A';
+				$turnosOportuya->save();
+			}else{
+				$con3 = "RECHAZADO";
+			}
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$dataLead=[
+				'CON3' => $con3
+			];
 			$numSolic = $this->getNumSolic($identificationNumber);
 
 			$datosCliente->CEDULA = $identificationNumber;
@@ -446,102 +489,6 @@ class OportuyaV2Controller extends Controller
 			$datosCliente->STATE = "A";
 
 			$createData = $datosCliente->save();
-
-			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
-			if($typeServiceSol[0]->typeService == 'Avance'){
-
-				if($this->creditPolicyAdvance($identificationNumber)){
-					$quotaApproved='500000';
-				}else{
-					$quotaApproved=-2;
-				}
-
-			}else{
-				$quotaApproved = $this->execCreditPolicy($identificationNumber);
-			}
-			
-			$con3 = "";
-			if($quotaApproved > 0){
-				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
-				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
-
-				$con3 = "PREAPROBADO";
-				$tarjeta->NUMERO = '871279999';
-				$tarjeta->SOLICITUD = $numSolic->SOLICITUD;
-				$tarjeta->CLIENTE = $identificationNumber;
-				$tarjeta->APROBACION ='0' ;
-				$tarjeta->DESPACHO = "1994-09-30";
-				$tarjeta->LOTE = 0;
-				$tarjeta->FEC_APROB = "1994-09-30";
-				$tarjeta->CUOTA_MAN = 14400;
-				$tarjeta->CARGO = 9300;
-				$tarjeta->CUP_INICIA = 0;
-				$tarjeta->CUP_COMPRA = $quotaApproved;
-				$tarjeta->COMPRA_ACT = $quotaApproved;
-				$tarjeta->COMPRA_EFE = 0;
-				$tarjeta->CUPO_EFEC = 0;
-				$tarjeta->CUP_ACTUAL = 0;
-				$tarjeta->CUPOMAX = 0;
-				$tarjeta->SUC = 9999;
-				$tarjeta->ESTADO = 'W';
-				$tarjeta->FEC_ACTIV = "1994-09-30";
-				$tarjeta->CONS = 0;
-				$tarjeta->OPORTUNID = '0' ;
-				$tarjeta->EXTRACUPO = 0;
-				$tarjeta->EXTRA_ACT = 0 ;
-				$tarjeta->RECEPC1 = '';
-				$tarjeta->RECEPC2 = '';
-				$tarjeta->RECEPC3 = '';
-				$tarjeta->FEC_REC = '1994-09-30';
-				$tarjeta->OBSTAR1 = '';
-				$tarjeta->OBSTAR2 = '';
-				$tarjeta->OBSTAR3 = '';
-				$tarjeta->TIPO_TAR = 'BLACK';
-				$tarjeta->RESPUEST = "1994-09-30";
-				$tarjeta->RECEPCOFI = '';
-				$tarjeta->OBSTAROFI = '';
-				$tarjeta->FEC_RECOFI = "1994-09-30";
-				$tarjeta->RECEPCSUC = '';
-				$tarjeta->OBSTARSUC = '';
-				$tarjeta->FEC_RECSUC = "1994-09-30";
-				$tarjeta->RECEPCCLI = '';
-				$tarjeta->OBSTARCLI = '';
-				$tarjeta->FEC_RECCLI = "1994-09-30";
-				$tarjeta->STATE = 'A';
-				$tarjeta->save();
-
-				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
-				$turnosOportuya->CEDULA = $identificationNumber;
-				$turnosOportuya->FECHA = date("Y-m-d H:i:s");
-				$turnosOportuya->SUC = 9999;
-				$turnosOportuya->USUARIO = '';
-				$turnosOportuya->PRIORIDAD = '2';
-				$turnosOportuya->ESTADO = 'ANALISIS';
-				$turnosOportuya->TIPO = 'OPORTUYA';
-				$turnosOportuya->SUB_TIPO = 'WEB';
-				$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
-				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
-				$turnosOportuya->VALOR = $quotaApproved;
-				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
-				$turnosOportuya->SCORE = $respScoreLead[0]->score;
-				$turnosOportuya->TIPO_CLI = '';
-				$turnosOportuya->CED_COD1 = '';
-				$turnosOportuya->SCO_COD1 = '0';
-				$turnosOportuya->TIPO_COD1 = '';
-				$turnosOportuya->CED_COD2 = '';
-				$turnosOportuya->SCO_COD2 = '0';
-				$turnosOportuya->TIPO_COD2 = '';
-				$turnosOportuya->STATE = 'A';
-
-				$turnosOportuya->save();
-			}else{
-				$con3 = "RECHAZADO";
-			}
-			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-			$dataLead=[
-				'CON3' => $con3
-			];
-
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 			if($con3 == 'RECHAZADO'){
 				return response()->json(['data' => false]);
@@ -563,7 +510,6 @@ class OportuyaV2Controller extends Controller
 
 			return response()->json([true]);
 		}
-		
 	}
 
 
@@ -574,6 +520,50 @@ class OportuyaV2Controller extends Controller
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 	**/
+
+	public function getCodeVerification($identificationNumber){
+		$this->setCodesState($identificationNumber);
+		$codeUserVerification = new CodeUserVerification;
+		$options = [
+			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+			['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
+		];
+		$code = '';
+		$codeExist = 1;
+		while ($codeExist >= 1){
+			for ($i=0; $i < 6; $i++) {
+				$randomOption = rand(0,1);
+				if($randomOption == 0){
+					$randomNumChar = rand(0, 9);
+				}else{
+					$randomNumChar = rand(0, 51);
+				}
+				$code = $code.$options[$randomOption][$randomNumChar];
+			}
+
+			$codeExist = DB::select('SELECT COUNT(`id`) as `totalCodes` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+			$codeExist = $codeExist[0]->totalCodes;
+		}
+
+		$codeUserVerification->code = $code;
+		$codeUserVerification->identificationNumber = $identificationNumber;
+
+		$codeUserVerification->save();
+
+		$date = DB::select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+
+		$dateTwo = gettype($date[0]->created_at);
+		$dateNow = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		$dateNew = strtotime ("+ 10 minute", strtotime ( $dateNow ) );
+
+		return $dateNew;
+	}
+
+	private function setCodesState($identificationNumber){
+		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);
+
+		$resp = DB::select($query);
+	}
 
 	public function getContactData($identificationNumber){
 		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", trim($identificationNumber));
@@ -978,61 +968,13 @@ class OportuyaV2Controller extends Controller
 
 		return view('advance.step3', ['identificactionNumber' => $identificactionNumber]);
 	}
-
-
 	
 	public function getDataStep1(){
-		$data = [];
+		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
 
-		$data['cities'] = [
-			[ 'label' => 'Seleccione....', 'value' => '' ],
-			[ 'label' => 'ARMENIA', 'value' => 'ARMENIA' ],
-			[ 'label' => 'MANIZALES', 'value' => 'MANIZALES' ],
-			[ 'label' => 'SINCELEJO', 'value' => 'SINCELEJO' ],
-			[ 'label' => 'YOPAL', 'value' => 'YOPAL' ],
-			[ 'label' => 'CERETÉ', 'value' => 'CERETÉ' ],
-			[ 'label' => 'TULUÁ', 'value' => 'TULUÁ' ],
-			[ 'label' => 'ACACÍAS', 'value' => 'ACACÍAS' ],
-			[ 'label' => 'ESPINAL', 'value' => 'ESPINAL' ],
-			[ 'label' => 'MARIQUITA', 'value' => 'MARIQUITA' ],
-			[ 'label' => 'CARTAGENA', 'value' => 'CARTAGENA' ],
-			[ 'label' => 'LA DORADA', 'value' => 'LA DORADA' ],
-			[ 'label' => 'IBAGUÉ', 'value' => 'IBAGUÉ' ],
-			[ 'label' => 'MONTERÍA', 'value' => 'MONTERÍA' ],
-			[ 'label' => 'MAGANGUÉ', 'value' => 'MAGANGUÉ' ],
-			[ 'label' => 'PEREIRA', 'value' => 'PEREIRA' ],
-			[ 'label' => 'CALI', 'value' => 'CALI' ],
-			[ 'label' => 'MONTELIBANO', 'value' => 'MONTELIBANO' ],
-			[ 'label' => 'SAHAGÚN', 'value' => 'SAHAGÚN' ],
-			[ 'label' => 'PLANETA RICA', 'value' => 'PLANETA RICA' ],
-			[ 'label' => 'COROZAL', 'value' => 'COROZAL' ],
-			[ 'label' => 'CIÉNAGA', 'value' => 'CIÉNAGA' ],
-			[ 'label' => 'MONTELÍ', 'value' => 'MONTELÍ' ],
-			[ 'label' => 'PLATO', 'value' => 'PLATO' ],
-			[ 'label' => 'SABANALARGA', 'value' => 'SABANALARGA' ],
-			[ 'label' => 'GRANADA', 'value' => 'GRANADA' ],
-			[ 'label' => 'PUERTO BERRÍ', 'value' => 'PUERTO BERRÍ' ],
-			[ 'label' => 'VILLAVICENCIO', 'value' => 'VILLAVICENCIO' ],
-			[ 'label' => 'TAURAMENA', 'value' => 'TAURAMENA' ],
-			[ 'label' => 'PUERTO GAITÁN', 'value' => 'PUERTO GAITÁN' ],
-			[ 'label' => 'PUERTO BOYACÁ', 'value' => 'PUERTO BOYACÁ' ],
-			[ 'label' => 'PUERTO LÓPEZ', 'value' => 'PUERTO LÓPEZ' ],
-			[ 'label' => 'SEVILLA', 'value' => 'SEVILLA' ],
-			[ 'label' => 'CHINCHINÁ', 'value' => 'CHINCHINÁ' ],
-			[ 'label' => 'AGUACHICA', 'value' => 'AGUACHICA' ],
-			[ 'label' => 'BARRANCABERMEJA', 'value' => 'BARRANCABERMEJA' ],
-			[ 'label' => 'LA VIRGINIA', 'value' => 'LA VIRGINIA' ],
-			[ 'label' => 'SANTA ROSA DE CABAL', 'value' => 'SANTA ROSA DE CABAL' ],
-			[ 'label' => 'GIRARDOT', 'value' => 'GIRARDOT' ],
-			[ 'label' => 'VILLANUEVA', 'value' => 'VILLANUEVA' ],
-			[ 'label' => 'PITALITO', 'value' => 'PITALITO' ],
-			[ 'label' => 'GARZÓN', 'value' => 'GARZÓN' ],
-			[ 'label' => 'NEIVA', 'value' => 'NEIVA' ],
-			[ 'label' => 'LORICA', 'value' => 'LORICA' ],
-			[ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
-		];
+		$resp = DB::connection('oportudata')->select($query);
 
-		return $data;
+		return $resp;
 	}
 
 	public function getDataStep2($identificationNumber){
