@@ -112,7 +112,7 @@ angular.module('appAdvanceStep1', [])
 		  url: '/api/oportuya/getDataStep1/',
 		}).then(function successCallback(response) {
 			hideLoader();
-			$scope.cities = response.data.cities;
+			$scope.cities = response.data;
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
