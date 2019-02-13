@@ -154,6 +154,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal modalCardExist fade hide" data-keyboard="false" id="timer" tabindex="-1" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content modalCardContent">
+						<div class="modal-body modalStepsBody" style="padding: 0">
+								<div class="col-12">
+									@{{ endTime }}
+									<timer autostart="false" end-time="endTime">@{{minutes}} minutes, @{{seconds}} seconds.</timer>
+								</div>
+						</div>
+					</div>
+				</div>
+		</div>
 		<div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="cardExist" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content modalCardContent">
@@ -201,6 +213,9 @@
 @endsection
 
 @section('scriptsJs')
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/humanize-duration/3.17.0/humanize-duration.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-timer/1.3.5/angular-timer.min.js"></script>
 	<script type="text/javascript" src="{{ asset('js/step1.js') }}"></script>
 	<script>
 		document.getElementById("button1").disabled = true;
