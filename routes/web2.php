@@ -20,5 +20,5 @@ Route::group(['prefix'=>'/creditoLibranza/'],function(){
 Route::resource('avance','Admin\AdvanceController');
 
 Route::get('/OPN_gracias_denied_advance',function(){
-    return view('oportuya.pageDeniedAdvance');
+    return view('advance.pageDeniedAdvance');
 })->name('thankYouPageAdvanceDenied');
