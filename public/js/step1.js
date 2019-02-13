@@ -1,8 +1,9 @@
-angular.module('appStep1', [])
+angular.module('appStep1', ['timer'])
 .controller("step1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.disabledInputs = true;
+	$scope.endTime = 1546318800000;
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
@@ -112,7 +113,7 @@ angular.module('appStep1', [])
 		  url: '/api/oportuya/getDataStep1/',
 		}).then(function successCallback(response) {
 			hideLoader();
-			$scope.cities = response.data.cities;
+			$scope.cities = response.data;
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -125,6 +126,23 @@ angular.module('appStep1', [])
 		}else{
 			$scope.emailValidate = true;
 		}
+	};
+
+	$scope.getCodeVerification = function(){
+		showLoader();
+		$http({
+		method: 'GET',
+		url: 'api/oportuya/getCode/'+$scope.leadInfo.identificationNumber,
+		data: $scope.leadInfo,
+		}).then(function successCallback(response) {
+			$scope.endTime = 1546318800000;
+			$scope.$broadcast('timer-start');
+			hideLoader();
+			$('#timer').modal('show');
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
 	};
 
 	$scope.saveStep1 = function(){
