@@ -60,7 +60,7 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form id="saveLeadOportuya" ng-submit="saveStep1()">
+			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
@@ -154,6 +154,50 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmNumCel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalCode">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 10px">
+						<div class="row">
+							<div class="col-12 form-group">
+								<label for="">Número de Celular</label>
+								<input type="text" ng-model="leadInfo.telephone" class="form-control" />
+							</div>
+							<div class="col-12 text-center">
+								<button class="btn btn-primary form-group" ng-click="getCodeVerification()">Enviar Código</button>
+							</div>
+							<div class="col text-center">
+								<p class="textCodeVerificacion">
+									*Enviaremos un código de verificación a tu número celular
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmCodeVerification" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalCode">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 10px">
+						<form ng-submit="verificationCode()">
+							<div class="row">
+								<div class="col-12 form-group">
+									<label for="">Código de Verificacion</label>
+									<input type="text" ng-model="code.code" class="form-control" />
+								</div>
+								<div class="col-12 text-center">
+									<button class="btn btn-primary form-group">Confirmar Código</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="cardExist" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content modalCardContent">

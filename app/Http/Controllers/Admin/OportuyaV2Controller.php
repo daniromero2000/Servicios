@@ -561,6 +561,7 @@ class OportuyaV2Controller extends Controller
 
 	
 	public function enviarMensaje(){
+		return true;
 		$url = 'https://api.hablame.co/sms/envio/';
 		$data = array(
 			'cliente' => 10013280, //Numero de cliente

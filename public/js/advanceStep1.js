@@ -18,6 +18,9 @@ angular.module('appAdvanceStep1', [])
 		'city' : '',
 		'termsAndConditions' : ''
 	};
+	$scope.code = {
+		'code' : ''
+	};
 
 	$scope.typesDocuments = [
 		{
@@ -125,6 +128,48 @@ angular.module('appAdvanceStep1', [])
 		}else{
 			$scope.emailValidate = true;
 		}
+	};
+	
+	$scope.confirmnumCel = function(){
+		$('#confirmNumCel').modal('show');
+	};
+
+	$scope.getCodeVerification = function(){
+		$('#confirmNumCel').modal('hide');
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/getCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				$('#confirmCodeVerification').modal('show');
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+
+	$scope.verificationCode = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				$('#confirmCodeVerification').modal('hide');
+				$scope.saveStep1();
+			}else if(response.data == -1){
+				// en caso de que el codigo ya expiro
+			}else if(response.data == -2){
+				// En caso de que el codigo sea erroneo
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
 	};
 
 	$scope.saveStep1 = function(){
