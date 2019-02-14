@@ -157,6 +157,57 @@
 .creditoLibranza-buttonWhatsApp > i{
 	font-size: 20px;
 }
+.avance-containerText:before{
+	border-left-color: #FFF !important;
+	border-top-color: #FFF !important;
+	border-bottom: 30px solid transparent !important;
+}
+
+/*Slider Avances*/
+
+.oportuyaSliderContentAdvance{
+	background-color: rgba(0,0,0,0.2) !important;
+	border-radius: 20px !important;
+	padding: 30px 19px !important;
+}
+
+.oportuyaSliderButtonAdvance p a{
+	background-color: #fdbf3c !important;
+	box-shadow: 2px 1px 12px 3px rgba(249,224,232,1) !important;
+	color:#FFF;
+} 
+
+.requirementsListAdvance{
+	margin-top: 15px !important;
+	padding-right: 30px !important;
+}
+
+.descriptionRequirementsAdvance{
+	margin-top: 15px !important;
+	padding:0 30px !important;
+}
+
+.descriptionRequirementsAdvance{
+	min-height: 260px;
+}
+
+.cardTextAdvance{
+	min-height: unset;
+}
+
+.cupoAvance{
+	padding: 0 !important;
+}
+.avanceCredibilidad{
+	padding-top: 0px !important;
+}
+
+.travelOffersButtonAdvance p a{
+	color: #FFF !important;
+}
+
+
+
 
 .creditoLibranza-electrodomesticos:before{
 	border-left-color: #348dc7;
