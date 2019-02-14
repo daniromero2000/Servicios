@@ -1,25 +1,11 @@
 <?php
-
-
-
 /*
-
-|--------------------------------------------------------------------------
-
-| Web Routes
-
-|--------------------------------------------------------------------------
-
-|
-
-| Here is where you can register web routes for your application. These
-
-| routes are loaded by the RouteServiceProvider within a group which
-
-| contains the "web" middleware group. Now create something great!
-
-|
-
+    |--------------------------------------------------------------------------
+    | Web Routes
+    |--------------------------------------------------------------------------
+    | Here is where you can register web routes for your application. These
+    | routes are loaded by the RouteServiceProvider within a group which
+    | contains the "web" middleware group. Now create something great!
 */
 
 Route::get('/', function () {
@@ -123,12 +109,12 @@ Route::resource('products','Admin\ProductsController');
 Route::get('preguntas-frecuentes','Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
-
 // Pasos solictud credito
 Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
 Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
 Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
-
+Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerification');
+Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 // Pasos solictud cupo
 Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
 Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');

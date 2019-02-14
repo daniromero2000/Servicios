@@ -60,7 +60,7 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form id="saveLeadOportuya" ng-submit="saveStep1()">
+			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
@@ -154,18 +154,50 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal modalCardExist fade hide" data-keyboard="false" id="timer" tabindex="-1" role="dialog">
-				<div class="modal-dialog">
-					<div class="modal-content modalCardContent">
-						<div class="modal-body modalStepsBody" style="padding: 0">
-								<div class="col-12">
-									@{{ endTime }}
-									<timer autostart="false" end-time="endTime">@{{minutes}} minutes, @{{seconds}} seconds.</timer>
-								</div>
+
+		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmNumCel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalCode">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 10px">
+						<div class="row">
+							<div class="col-12 form-group">
+								<label for="">Número de Celular</label>
+								<input type="text" ng-model="leadInfo.telephone" class="form-control" />
+							</div>
+							<div class="col-12 text-center">
+								<button class="btn btn-primary form-group" ng-click="getCodeVerification()">Enviar Código</button>
+							</div>
+							<div class="col text-center">
+								<p class="textCodeVerificacion">
+									*Enviaremos un código de verificación a tu número celular
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 		</div>
+
+		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmCodeVerification" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalCode">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 10px">
+						<form ng-submit="verificationCode()">
+							<div class="row">
+								<div class="col-12 form-group">
+									<label for="">Código de Verificacion</label>
+									<input type="text" ng-model="code.code" class="form-control" />
+								</div>
+								<div class="col-12 text-center">
+									<button class="btn btn-primary form-group">Confirmar Código</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="cardExist" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content modalCardContent">
@@ -215,7 +247,6 @@
 @section('scriptsJs')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/humanize-duration/3.17.0/humanize-duration.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-timer/1.3.5/angular-timer.min.js"></script>
 	<script type="text/javascript" src="{{ asset('js/step1.js') }}"></script>
 	<script>
 		document.getElementById("button1").disabled = true;

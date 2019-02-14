@@ -1,9 +1,12 @@
-angular.module('appStep1', ['timer'])
+angular.module('appStep1', [])
 .controller("step1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.disabledInputs = true;
 	$scope.endTime = 1546318800000;
+	$scope.code = {
+		'code' : ''
+	}
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
@@ -127,18 +130,43 @@ angular.module('appStep1', ['timer'])
 			$scope.emailValidate = true;
 		}
 	};
+	
+	$scope.confirmnumCel = function(){
+		$('#confirmNumCel').modal('show');
+	};
 
 	$scope.getCodeVerification = function(){
+		$('#confirmNumCel').modal('hide');
 		showLoader();
 		$http({
-		method: 'GET',
-		url: 'api/oportuya/getCode/'+$scope.leadInfo.identificationNumber,
-		data: $scope.leadInfo,
+			method: 'GET',
+			url: 'api/oportuya/getCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
 		}).then(function successCallback(response) {
-			$scope.endTime = 1546318800000;
-			$scope.$broadcast('timer-start');
 			hideLoader();
-			$('#timer').modal('show');
+			if(response.data == true){
+				$('#confirmCodeVerification').modal('show');
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+
+	$scope.verificationCode = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: 'api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				$('#confirmCodeVerification').modal('show');
+				$scope.saveStep1();
+			}else if(response.data == -1){
+				// en caso de que el codigo ya expiro
+			}else if(response.data == -2){
+				// En caso de que el codigo sea erroneo
+			}
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);

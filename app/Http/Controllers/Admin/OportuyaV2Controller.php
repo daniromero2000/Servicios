@@ -521,7 +521,7 @@ class OportuyaV2Controller extends Controller
     **Fecha: 20/12/2018
 	**/
 
-	public function getCodeVerification($identificationNumber){
+	public function getCodeVerification($identificationNumber, $celNumber){
 		$this->setCodesState($identificationNumber);
 		$codeUserVerification = new CodeUserVerification;
 		$options = [
@@ -551,12 +551,89 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerification->save();
 
 		$date = DB::select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
-
+		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNow = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
 		$dateNew = strtotime ("+ 10 minute", strtotime ( $dateNow ) );
+		$dateNew = date('Y-m-d H:i:s A', $dateNew);
+		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+	}
 
-		return $dateNew;
+	
+	public function enviarMensaje(){
+		$url = 'https://api.hablame.co/sms/envio/';
+		$data = array(
+			'cliente' => 10013280, //Numero de cliente
+			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
+			'numero' => '573136392833', //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
+			'sms' => 'Probando mensaje 1', //Mensaje de texto a enviar
+			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
+			'referencia' => 'Referenca Envio Hablame', //(campo opcional) Numero de referencio ó nombre de campaña
+		);
+		
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode((file_get_contents($url, false, $context)), true);
+	
+		if ($result["resultado"]===0){
+			$mensaje = 'Se ha enviado el SMS exitosamente';
+		}else{
+			$mensaje = 'ha ocurrido un error!!';
+		}
+	
+		return response()->json([$mensaje, $result]);
+	}
+
+	public function sendMessageSms($code, $identificationNumber, $date, $celNumber){
+		$url = 'https://api.hablame.co/sms/envio/';
+		$data = array(
+			'cliente' => 10013280, //Numero de cliente
+			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
+			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
+			'sms' => 'El token de verificación para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos - " . $date, //Mensaje de texto a enviar
+			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
+			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
+		);
+		
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode((file_get_contents($url, false, $context)), true);
+	
+		if ($result["resultado"]===0){
+			$mensaje = 'Se ha enviado el SMS exitosamente';
+		}else{
+			$mensaje = 'ha ocurrido un error!!';
+		}
+	
+		return response()->json(true);
+	}
+
+	public function verificationCode($code, $identificationNumber){
+		$getCode = DB::select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `id` DESC LIMIT 1 ', $identificationNumber));
+		$dateNow =strtotime(date('Y-m-d H:i:s'));
+		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
+		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
+		if($dateNow <= $dateCodeNew){
+			if($code === $getCode[0]->code){
+				return response()->json(true);
+			}else{
+				return response()->json(false);
+			}
+		}else{
+			return response()->json(false);
+		}
 	}
 
 	private function setCodesState($identificationNumber){
@@ -1009,7 +1086,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string $identificationNumber
 	 * @return array 
 	 */
-
 
 	public function getDataStep3($identificationNumber){
 	      $data = [];
