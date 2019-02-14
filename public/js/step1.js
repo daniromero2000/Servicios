@@ -6,7 +6,7 @@ angular.module('appStep1', [])
 	$scope.endTime = 1546318800000;
 	$scope.code = {
 		'code' : ''
-	}
+	};
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
@@ -140,7 +140,7 @@ angular.module('appStep1', [])
 		showLoader();
 		$http({
 			method: 'GET',
-			url: 'api/oportuya/getCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
+			url: '/api/oportuya/getCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
@@ -156,11 +156,11 @@ angular.module('appStep1', [])
 		showLoader();
 		$http({
 			method: 'GET',
-			url: 'api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.leadInfo.identificationNumber,
+			url: '/api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
-				$('#confirmCodeVerification').modal('show');
+				$('#confirmCodeVerification').modal('hide');
 				$scope.saveStep1();
 			}else if(response.data == -1){
 				// en caso de que el codigo ya expiro

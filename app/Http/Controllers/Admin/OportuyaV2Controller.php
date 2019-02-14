@@ -561,6 +561,7 @@ class OportuyaV2Controller extends Controller
 
 	
 	public function enviarMensaje(){
+		return true;
 		$url = 'https://api.hablame.co/sms/envio/';
 		$data = array(
 			'cliente' => 10013280, //Numero de cliente
@@ -627,6 +628,7 @@ class OportuyaV2Controller extends Controller
 		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
 		if($dateNow <= $dateCodeNew){
 			if($code === $getCode[0]->code){
+				$updateCode = DB::select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `code` = "%s" ', $code));
 				return response()->json(true);
 			}else{
 				return response()->json(false);
