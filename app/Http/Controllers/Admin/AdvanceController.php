@@ -62,7 +62,8 @@ class AdvanceController extends Controller
             [ 'label' => 'LORICA', 'value' => 'LORICA' ],
             [ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
         ];
-        $images=Imagenes::all();
+        $images=Imagenes::selectRaw('*')->where('category','=','3')->where('isSlide','=','1')->get();
+                        
         return view('advance.index',['images'=>$images, 'cities' => $cities]);
     }
 
