@@ -566,7 +566,7 @@ class OportuyaV2Controller extends Controller
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '573136392833', //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'Probando mensaje 1', //Mensaje de texto a enviar
+			'sms' => 'Probando mensaje 1.2.3', //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Referenca Envio Hablame', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
