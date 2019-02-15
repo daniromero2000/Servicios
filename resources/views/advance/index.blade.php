@@ -127,7 +127,7 @@
 			<p class="travelAnyText">en efectivo</p>
 		</div>
 		<div class="travelOffersButton travelOffersButtonAdvance  col-sm-4 col-4 col-md-2">
-			<p><a href="/avance/step1">!Solicítala aquí!</a></p>
+			<p><a href="/avance/step1">!Solicítalo aquí!</a></p>
 		</div>
 	</div>
 </div>
