@@ -211,7 +211,7 @@
 
 					<b>Estas interesado en obtenerla?	</b> <br>
 					<br>	
-					Solo debes ingresar los datos y te llamaremos en menos de 2 horas, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
+					Solo debes ingresar los datos y te llamaremos, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
 
 				</p>
 
