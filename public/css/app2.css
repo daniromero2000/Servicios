@@ -1,3 +1,8 @@
+span.renewCode:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .bootbox-close-button{
 	position: absolute;
     right: 9px;

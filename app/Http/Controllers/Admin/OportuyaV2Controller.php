@@ -631,10 +631,10 @@ class OportuyaV2Controller extends Controller
 				$updateCode = DB::select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `code` = "%s" ', $code));
 				return response()->json(true);
 			}else{
-				return response()->json(false);
+				return response()->json(-1);
 			}
 		}else{
-			return response()->json(false);
+			return response()->json(-2);
 		}
 	}
 
