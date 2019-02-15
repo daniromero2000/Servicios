@@ -132,7 +132,15 @@ angular.module('appStep1', [])
 	};
 	
 	$scope.confirmnumCel = function(){
-		$('#confirmNumCel').modal('show');
+		if(typeof $scope.leadInfo.typeDocument == ''){
+			alert('Por favor selecciona el tipo de documento');
+		}else if($scope.leadInfo.occupation == ''){
+			alert('Por favor selecciona una ocupación');
+		}else if($scope.leadInfo.city == ''){
+			alert('Por favor selecciona una ciudad');
+		}else{
+			$('#confirmNumCel').modal('show');
+		}
 	};
 
 	$scope.getCodeVerification = function(){
