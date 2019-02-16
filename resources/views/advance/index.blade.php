@@ -346,7 +346,9 @@
 			<h2 class="credibilidad-title text-center">Experiencia y <strong>Calidad</strong></h2>
 			<div class="row">
 				<div class="col-md-12 col-lg-4 text-center">
-					<img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
+					<a href="/Nuestras-tiendas">
+						<img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
+					</a>
 					<p class="credibilidad-text ">
 						48 puntos de atención  <br>
 						al público

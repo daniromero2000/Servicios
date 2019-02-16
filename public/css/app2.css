@@ -238,7 +238,7 @@ span.renewCode:hover {
 	color: #001980;
 	font-size: 20px;
 	font-weight: 300;
-	margin: 60px 0;
+	margin: 0 0 60px 0;
 	position: relative;
 }
 
@@ -435,6 +435,7 @@ span.renewCode:hover {
 /* Credibilidad */
 
 #credibilidad{
+	margin-top:60px;
 	padding: 50px 0;
 }
 
