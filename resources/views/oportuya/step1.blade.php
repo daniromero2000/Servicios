@@ -185,11 +185,22 @@
 						<form ng-submit="verificationCode()">
 							<div class="row">
 								<div class="col-12 form-group">
-									<label for="">Código de Verificacion</label>
+									<label for="">Código de Verificación</label>
 									<input type="text" ng-model="code.code" class="form-control" />
 								</div>
-								<div class="col-12 text-center">
-									<button class="btn btn-primary form-group">Confirmar Código</button>
+								<div class="col-12 text-center form-group">
+									<button type="submit" class="btn btn-primary">Confirmar Código</button>
+									<button type="button" ng-click="cerrar()" class="btn btn-danger">Cerrar</button>
+								</div>
+								<div class="col-12 text-center" ng-show="showAlertCode">
+									<div class="alert alert-danger" role="alert">
+										Código erróneo, por favor verifícalo
+									</div>
+								</div>
+								<div class="col-12 text-center" ng-show="showWarningCode">
+									<div class="alert alert-warning" role="alert">
+										El código ya expiró, <span class="renewCode" ng-click="getCodeVerification(true)">clic aquí</span> para generar un nuevo código
+									</div>
 								</div>
 							</div>
 						</form>
