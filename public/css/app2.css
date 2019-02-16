@@ -230,7 +230,7 @@
 }
 
 .creditoLibranza-title, .credibilidad-title{
-	color: #348dc7;
+	color: #001980;
 	font-size: 20px;
 	font-weight: 300;
 	margin: 60px 0;
@@ -242,7 +242,7 @@
 }
 
 .creditoLibranza-title:before{
-	background: #348dc7;
+	background: #001980;
 	border-radius: 70px;
 	bottom: -14px;
 	content: "";
@@ -260,7 +260,7 @@
 }
 
 .creditoLibranza-titleText{
-	color: #348dc7;
+	color: #001980;
 	font-size: 18px;
 	font-weight: 600;
 }
@@ -434,12 +434,12 @@
 }
 
 .credibilidad-text{
-	color: #348dc7;
+	color: #001980;
 	font-weight: bold;
 }
 
 .credibilidad-title:before{
-	background: #348dc7;
+	background: #001980;
 	border-radius: 70px;
 	bottom: -14px;
 	content: "";

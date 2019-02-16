@@ -16,7 +16,7 @@
 		@foreach($images as $slider)
 			<div class="containImg">
 				<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
-				<div class="oportuyaSliderContent oportuyaSliderContentAdvance">
+				<div class="oportuyaSliderContent avanceSliderContent">
 					<div class="oportuyaSliderTitle">
 							@php
 								$titleChunk=explode("-",$slider['title'],2);								
@@ -64,10 +64,218 @@
 		@endforeach
 	</div>
 
+	<div id="prestamos">
+		<div class="container text-center">
+			<h3>Préstamos online desde $500.000 desde donde estés a cualquier hora</h3>
+		</div>
+	</div>
+	<!--<div id="requisitos-prestamo">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-texto">
+					<h4>
+						REQUISITOS
+					</h4>
+					<span>PARA APLICAR A UN PRÉSTAMO</span>
+				</div>
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-items">
+					<div class="row">
+					<div class="col-5 col-sm-4 col-md-12 col-lg-5">
+						<img src="{{asset('images/avanceMap.png')}}" alt="" class="rounded-circle img-fluid">
+					</div>
+					<div class="col-7 col-sm-8 col-md-12 col-lg-7">
+						<span>RESIDENTE EN <br>	COLOMBIA</span>				
+					</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-items">
+					<div class="row">
+					<div class="col-5 col-sm-4 col-md-12 col-lg-5">
+						<img src="{{asset('images/avanceEdad.png')}}" alt="" class="rounded-circle img-fluid">
+					</div>
+					<div class="col-7 col-sm-8 col-md-12 col-lg-7">
+						<span>MAYOR DE EDAD<br>	(18 AÑOS A +)</span>				
+					</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-items">
+					<div class="row">
+					<div class="col-5 col-sm-4 col-md-12 col-lg-5">
+						<img src="{{asset('images/avanceMail.png')}}" alt="" class="rounded-circle img-fluid">
+					</div>
+					<div class="col-7 col-sm-8 col-md-12 col-lg-7">
+						<span>E-MAIL <br>PERSONAL</span>				
+					</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-items">
+					<div class="row">
+					<div class="col-5 col-sm-4 col-md-12 col-lg-5">
+						<img src="{{asset('images/avanceCuenta.png')}}" alt="" class="rounded-circle img-fluid">
+					</div>
+					<div class="col-7 col-sm-8 col-md-12 col-lg-7">
+						<span>BUEN HISTORIAL<br> CREDITICIO</span>				
+					</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-4 col-md-2 col-lg-2 requisitos-items">
+					<div class="row">
+					<div class="col-5 col-sm-4 col-md-12 col-lg-5">
+						<img src="{{asset('images/avanceMovil.png')}}" alt="" class="rounded-circle img-fluid">
+					</div>
+					<div class="col-7 col-sm-8 col-md-12 col-lg-7">
+						<span>TELÉFONO MÓVIL<br>PERSONAL</span>				
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="solicitudAvances">
+		<div class="container">
+			<div class="solicitudAvanceTitulo text-center">
+				<h3>SOLICITAR TU CRÉDITO ES MUY SENCILLO, SOLO <br> DEBES SEGUIR ESTOS SENCILLOS PASOS</h3>
+			</div>
+			<div class="avancePasos row">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesCalculo.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									CALCULA Y SOLICITA TU CRÉDITO
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesIngresa.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									INGRESA Y VALIDA TUS DATOS
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesResultado.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									RESULTADO DE TU SOLICITUD
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesContrato.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									CONTRATO Y CÓDIGO DE VERIFICACIÓN
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesDesembolso.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									DESEMBOLSO
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-4 solicitudPasos">
+					<div>
+						<div class="row">
+							<div class="col-12 col-sm-6 col-lg-4 imageSolicitudPasos">
+								<img src="{{asset('images/avancesPaga.png')}}" alt="" class="img-fluid">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-8 tituloSolicitudPasos">
+								<span>
+									PAGA TU CRÉDITO
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<p class="descripcionSolicitudPasos">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra enim eget elit vehicula sollicitudin. Donec sed malesuada purus. Integer ac mi ac velit egestas interdum. Nulla varius feugiat purus eu consequat. Suspendisse consequat aliquet dictum. Cras posuere augue nisl, at luctus odio ultrices a.
+							</p>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div id="solicitudPasosBoton">
+		<div class="container">
+			<div class="botonSolicitudContainer">
+				<a href="/avance/step1">
+					Solicítalo aquí
+				</a>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>-->
 
 	<div id="creditoLibranza" class="cupoAvance">
 		<div class="containerCreditoLibranza">
-			<h2 class="creditoLibranza-title text-center">¿Qué necesitas y  y cómo<br> solicitas tu <strong>Avance</strong>?</h2>
+			<h2 class="creditoLibranza-title text-center">¿Qué necesitasy cómo<br> solicitas tu <strong>Avance</strong>?</h2>
 			<div class="row" id="creditoLibranza-slider">
 				<div class="col-md-12 col-lg-6 container-creditoLibranzaCards">
 					<div class="creditoLibranza-contianerTexto creditoLibranza-electrodomesticos avance-containerText">

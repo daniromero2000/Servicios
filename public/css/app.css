@@ -287,6 +287,135 @@ a:hover, a:active, a:focus, a:visited{
 .sliderPrincipal-button:hover, .sliderPrincipal-button:active, .sliderPrincipal-button:focus, .sliderPrincipal-button:visited{
 	color: white;
 }
+/*Slider Avances*/
+
+.oportuyaSliderContentAdvance{
+	background-color: rgba(0,0,0,0.2) !important;
+	border-radius: 20px !important;
+	padding: 30px 19px !important;
+}
+
+.oportuyaSliderButtonAdvance p a{
+	background-color: #fdbf3c !important;
+	box-shadow: 2px 1px 12px 3px rgba(249,224,232,1) !important;
+	color:#FFF;
+} 
+
+.requirementsListAdvance{
+	margin-top: 15px !important;
+	padding-right: 30px !important;
+}
+
+.descriptionRequirementsAdvance{
+	margin-top: 15px !important;
+	padding:0 30px !important;
+}
+
+.descriptionRequirementsAdvance{
+	min-height: 480px;
+}
+
+
+.avanceSliderContent.oportuyaSliderContent p{
+	color: #001980 !important;
+	font-weight: 700;
+}
+
+#prestamos{
+	padding: 30px 0;
+}
+
+#prestamos div h3{
+	color:#009ADE;
+}
+
+#requisitos-prestamo{
+	background-color:#001980;
+	padding: 15px 0;
+}
+#requisitos-prestamo .requisitos-texto{
+	line-height: 0.8;
+}
+
+#requisitos-prestamo .requisitos-texto h4{
+	color:#009ADE;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.requisitos-texto{
+	padding: 1.3em 0 0 0;
+}
+
+#requisitos-prestamo .requisitos-texto span{
+	color:#FFF;
+	font-weight: 600;
+	font-size: 11px;
+}
+.requisitos-items{
+	font-size: 0.8em;
+	color: #FFF;
+	font-weight: 700;
+}
+
+.requisitos-items .row .col-sm-4.col-lg-5{
+	padding: 0;
+}
+
+.requisitos-items .row .col-sm-8.col-lg-7{
+	padding: 1.5em 0 0 0;
+}
+
+.solicitudAvanceTitulo{
+	padding-top:30px;
+}
+
+.solicitudAvanceTitulo h3{
+	color:#001980;	
+	font-weight: 700;
+}
+.solicitudPasos{
+	padding: 15px;
+}
+
+.solicitudPasos > div{
+	border-radius: 20px;
+    padding: 25px 35px;
+    background-color: #D9D6E2;
+}
+
+.imageSolicitudPasos{
+	padding: 0;
+}
+
+.tituloSolicitudPasos{
+	padding-top: 7%;
+}
+
+.tituloSolicitudPasos span{
+	color: #021780;
+    font-weight: 800;
+}
+
+.descripcionSolicitudPasos{
+	color:#021780;
+}
+
+.botonSolicitudContainer a{
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	background-color: #021780;
+	color: #FFF;
+	padding: 1% 12%;
+	font-weight: 800;
+	font-size: 1.4em;
+	border-radius: 31px;
+}
+
+#solicitudPasosBoton{
+	margin-bottom: 70px;
+}
 
 /*slider Oportuya*/
 .oportuyaSliderContent{
@@ -303,7 +432,7 @@ a:hover, a:active, a:focus, a:visited{
 .oportuyaSliderContent p{
 	text-align: center;
 	line-height: 100%;
-	color: #FFF !important;
+	color: #FFF;
 }
 
 .textTitleSliderPink{
@@ -334,6 +463,14 @@ a:hover, a:active, a:focus, a:visited{
     font-size: 1.2em;
     box-shadow: 2px 1px 12px 3px rgba(249,224,232,1);
 }
+
+.oportuyaSliderButton.oportuyaSliderButtonAdvance p a{
+	background-color: #001980 !important;
+	color: #FFF !important;
+	box-shadow: 2px 1px 12px 3px rgba(0,25,128,0.5) !important;
+
+}
+
 
 .containImg img {
 	margin: auto;
@@ -2321,7 +2458,7 @@ a[data-toggle="collapse"] {
 
 .travelOffersButton p a{
 
-	background-color: #ffef02;
+	background-color: #001980;
     padding: 7px 30px;
     border-radius: 20px;
     color: #000;
@@ -3619,6 +3756,7 @@ p.wantToSecondTex{
 		margin-bottom: 3em;
 	}
 
+
 	.oportuyaSliderDescription{
 		margin-bottom: 40px;
 	}
@@ -3745,6 +3883,18 @@ p.wantToSecondTex{
 
 @media(max-width: 576px){
 	
+	#requisitos-prestamo{
+		text-align: center;
+	}
+	.botonSolicitudContainer a{
+		padding: 1% 8%;
+		font-size:1.2em;
+
+	}
+
+	#solicitudAvances{
+		text-align: center;
+	}
 
 	.preHeader-item:nth-child(2){
 		display: none;
@@ -4449,7 +4599,3 @@ p.wantToSecondTex{
 	font-family: barlow;
 }
 
-.textCodeVerificacion{
-	font-size: 11px;
-	color: black;
-}
