@@ -3,6 +3,9 @@ angular.module('appAdvanceStep1', [])
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.disabledInputs = true;
+	$scope.showAlertCode = false;
+	$scope.showWarningCode = false;
+	$scope.showInfoCode = false;
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
@@ -142,7 +145,7 @@ angular.module('appAdvanceStep1', [])
 		}
 	};
 
-	$scope.getCodeVerification = function(){
+	$scope.getCodeVerification = function(renew = false){
 		$('#confirmNumCel').modal('hide');
 		showLoader();
 		$http({
@@ -151,7 +154,11 @@ angular.module('appAdvanceStep1', [])
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
-				$('#confirmCodeVerification').modal('show');
+				if(renew == true){
+					alert('Código generado exitosamente');
+				}else{
+					$('#confirmCodeVerification').modal('show');
+				}
 			}
 		}, function errorCallback(response) {
 			hideLoader();
@@ -170,9 +177,11 @@ angular.module('appAdvanceStep1', [])
 				$('#confirmCodeVerification').modal('hide');
 				$scope.saveStep1();
 			}else if(response.data == -1){
-				// en caso de que el codigo ya expiro
-			}else if(response.data == -2){
 				// En caso de que el codigo sea erroneo
+				$scope.showAlertCode = true;
+			}else if(response.data == -2){
+				// en caso de que el codigo ya expiro
+				$scope.showWarningCode = true;
 			}
 		}, function errorCallback(response) {
 			hideLoader();

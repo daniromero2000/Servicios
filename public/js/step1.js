@@ -3,7 +3,6 @@ angular.module('appStep1', [])
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.disabledInputs = true;
-	$scope.endTime = 1546318800000;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
