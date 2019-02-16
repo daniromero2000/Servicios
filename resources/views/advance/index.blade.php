@@ -66,7 +66,7 @@
 
 	<div id="prestamos">
 		<div class="container text-center">
-			<h3>Préstamos online desde $500.000 desde donde estés a cualquier hora</h3>
+			<h3>Préstamos online hasta $500.000,en cualquiera de nuestras sucursales</h3>
 		</div>
 	</div>
 	<!--<div id="requisitos-prestamo">
