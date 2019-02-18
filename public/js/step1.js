@@ -134,7 +134,7 @@ angular.module('appStep1', [])
 	};
 	
 	$scope.confirmnumCel = function(){
-		if(typeof $scope.leadInfo.typeDocument == ''){
+		if($scope.leadInfo.typeDocument == ''){
 			alert('Por favor selecciona el tipo de documento');
 		}else if($scope.leadInfo.occupation == ''){
 			alert('Por favor selecciona una ocupación');
