@@ -377,7 +377,7 @@
 				<br><br>
 				- El Código de Ética y Buen Gobierno que se adopta debe ser divulgado y socializado a cada colaborador y parte interesada a la compañía. Será publicado en las páginas WEB de la compañía e Intranet para conocimiento de todas las partes relacionadas.
 				<br><br>
-				- El cumplimiento de código de ética será objetivo de constante seguimiento por parte de LAGOBO DISTRIBUCIONES S.A
+				- El cumplimiento de código de ética será objetivo de constante seguimiento por parte de LAGOBO DISTRIBUCIONES S.A.S
 				<br><br>
 				- Las políticas definidas a proveedores y colaboradores podrán ser evaluadas por LAGOBO en cualquier momento
 			</p>
