@@ -553,9 +553,8 @@ class OportuyaV2Controller extends Controller
 		$date = DB::select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
 		
 		$dateTwo = gettype($date[0]->created_at);
-		$dateNow = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
-		$dateNew = strtotime ("+ 10 minute", strtotime ( $dateNow ) );
-		$dateNew = date('Y-m-d H:i:s A', $dateNew);
+		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
@@ -597,7 +596,7 @@ class OportuyaV2Controller extends Controller
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El token de verificación para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El token de verificacion para Servicios Oportunidades es '.$code." el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2SaiaOu - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
