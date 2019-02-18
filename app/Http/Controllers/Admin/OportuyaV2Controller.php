@@ -96,11 +96,12 @@ class OportuyaV2Controller extends Controller
 			if($dateConsultaComercial == 'true'){
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
 			}
+			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
 
 			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
-			//$departament = $this->getCodeAndDepartmentCity($request->get('city'));
+			$departament = $this->getCodeAndDepartmentCity(trim($cityName[0]->CIUDAD));
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
@@ -117,7 +118,7 @@ class OportuyaV2Controller extends Controller
 				'telephone'=> trim($request->get('telephone')),
 				'occupation' =>  trim($request->get('occupation')),
 				'termsAndConditions'=> trim($request->get('termsAndConditions')),
-				'city' =>  trim($request->get('city')),
+				'city' =>  trim($cityName[0]->CIUDAD),
 				'typeProduct' =>  '',
 				'typeService' =>  trim($request->get('typeService'))
 			];
@@ -147,7 +148,7 @@ class OportuyaV2Controller extends Controller
 				$lead->telephone=trim($request->get('telephone'));
 				$lead->occupation = trim($request->get('occupation'));
 				$lead->termsAndConditions=$request->get('termsAndConditions');
-				$lead->city= $request->trim(get('city'));
+				$lead->city= trim($cityName[0]->CIUDAD);
 				$lead->typeProduct = $request->get('typeProduct');
 				$lead->typeService = $request->get('typeService');
 				$response = $lead->save();
@@ -172,8 +173,8 @@ class OportuyaV2Controller extends Controller
 					'CELULAR' =>trim($request->get('telephone')),
 					'PROFESION' => 'NO APLICA',
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
-					'CIUD_UBI' => $request->get('city'),
-					'DEPTO' => '',
+					'CIUD_UBI' => trim($cityName[0]->CIUDAD),
+					'DEPTO' => trim($departament->departament),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -554,7 +555,7 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
-
+		return response()->json(true);
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
@@ -983,6 +984,33 @@ class OportuyaV2Controller extends Controller
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
 
+	private function getCity($code){
+		$queryCity = sprintf("SELECT `CIUDAD` FROM `SUCURSALES` WHERE `CODIGO` = %s ", $code);
+
+		$resp = DB::connection('oportudata')->select($queryCity);
+
+		return $resp;
+	}
+
+	/**
+	 * Get departament code through city name
+	 *
+	 *
+	 * @author Sebastian Ormaza
+	 * @email  desarrollo@lagobo.com
+	 *
+	 *
+	 * @param  string $nameCity
+	 * @return string  
+	 */
+
+	private function getCodeAndDepartmentCity($nameCity){
+		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
+		$resp = DB::select($query);
+
+		return $resp[0];
+	}
+
 	public function advanceStep1(){
 		$cities = [
 			[ 'label' => 'ARMENIA', 'value' => 'ARMENIA' ],
@@ -1104,26 +1132,6 @@ class OportuyaV2Controller extends Controller
 	      $data['oportudataLead'] = $respOportudataLead[0];
 
 	      return $data;
-	}
-
-
-	/**
-	 * Get departament code through city name
-	 *
-	 *
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string $nameCity
-	 * @return string  
-	 */
-
-	private function getCodeAndDepartmentCity($nameCity){
-		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
-		$resp = DB::select($query);
-
-		return $resp[0];
 	}
 
 	/**
