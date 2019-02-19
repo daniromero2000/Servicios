@@ -275,7 +275,7 @@
 
 	<div id="creditoLibranza" class="cupoAvance">
 		<div class="containerCreditoLibranza">
-			<h2 class="creditoLibranza-title text-center">¿Qué necesitasy cómo<br> solicitas tu <strong>Avance</strong>?</h2>
+			<h2 class="creditoLibranza-title text-center">¿Qué necesitas y cómo<br> solicitas tu <strong>Avance</strong>?</h2>
 			<div class="row" id="creditoLibranza-slider">
 				<div class="col-md-12 col-lg-6 container-creditoLibranzaCards">
 					<div class="creditoLibranza-contianerTexto creditoLibranza-electrodomesticos avance-containerText">
@@ -326,15 +326,15 @@
 
 	<div id="travelOffers">
 	<div class="row">
-		<div class="travelOffersIcon col-sm-4 col-4 offset-md-3 col-md-2 travelOffersImg">
+		<div class="travelOffersIcon col-sm-4 col-4 offset-lg-3 col-md-4 col-lg-2 travelOffersImg">
 			<img src="{{ asset('images/convenios-credibilidadIcon.png') }}" class="img-fluid">
 		</div>
-		<div class="travelOffersText col-sm-4 col-4 col-md-2">
+		<div class="travelOffersText col-sm-4 col-4 col-md-4 col-lg-2">
 			<p class="travelMainText">No te quedes</p>
 			<p class="travelSecondText">sin tu avance </p>
 			<p class="travelAnyText">en efectivo</p>
 		</div>
-		<div class="travelOffersButton travelOffersButtonAdvance  col-sm-4 col-4 col-md-2">
+		<div class="travelOffersButton travelOffersButtonAdvance  col-sm-4 col-4 col-md-4 col-lg-2">
 			<p><a href="/avance/step1">!Solicítalo aquí!</a></p>
 		</div>
 	</div>

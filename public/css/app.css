@@ -2834,6 +2834,11 @@ p.wantToSecondTex{
 		font-size: 1em;
 	}
 
+	
+	.travelOffersButtonAdvance{
+		padding: 0;
+	}
+
 
 }
 
@@ -2998,11 +3003,19 @@ p.wantToSecondTex{
     margin-left: 40%;
 }
 
+.travelOffersButtonAdvance p a{
+	padding: 7px 10px;
+}
+
 }
 
 
 
 @media(max-width: 991px){
+
+	.travelOffersButtonAdvance p a{
+		padding: 7px 30px;
+	}
 
 	.cardsProfiles .col-6 .card{
 		width: 90%;
@@ -3882,6 +3895,11 @@ p.wantToSecondTex{
 
 
 @media(max-width: 576px){
+
+	.travelOffersButtonAdvance p a{
+		padding: 7px 10px;
+		font-size: 12px;
+	}
 	
 	#requisitos-prestamo{
 		text-align: center;
