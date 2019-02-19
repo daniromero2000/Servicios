@@ -146,7 +146,7 @@ angular.module('appStep1', [])
 	};
 
 	$scope.cerrar = function(){
-		$('#confirmCodeVerification').modal('hide');
+		$('#confirmNumCel').modal('hide');
 	};
 
 	$scope.getCodeVerification = function(renew = false){

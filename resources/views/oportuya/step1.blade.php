@@ -164,8 +164,9 @@
 								<label for="">Número de Celular</label>
 								<input type="text" ng-model="leadInfo.telephone" class="form-control" />
 							</div>
-							<div class="col-12 text-center">
-								<button class="btn btn-primary form-group" ng-click="getCodeVerification()">Enviar Código</button>
+							<div class="col-12 text-center form-group">
+								<button class="btn btn-primary" ng-click="getCodeVerification()">Enviar Código</button>
+								<button type="button" ng-click="cerrar()" class="btn btn-danger">Cancelar</button>
 							</div>
 							<div class="col text-center">
 								<p class="textCodeVerificacion">
@@ -190,7 +191,6 @@
 								</div>
 								<div class="col-12 text-center form-group">
 									<button type="submit" class="btn btn-primary">Confirmar Código</button>
-									<button type="button" ng-click="cerrar()" class="btn btn-danger">Cerrar</button>
 								</div>
 								<div class="col-12 text-center" ng-show="showAlertCode">
 									<div class="alert alert-danger" role="alert">
