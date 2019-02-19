@@ -4170,6 +4170,22 @@ p.wantToSecondTex{
 	.busTourButton p a{
 		width: 100%;
 	}
+	
+	.container-itemsPreHeader{
+		margin-bottom: 30px;
+		text-align: center;
+	}
+
+	.assesorLogin{
+		text-align: center;
+	}
+
+	.assesorLogin a{
+		position: relative;
+		border:solid 1px;
+		border-radius:20px;
+		padding:5px 20px;
+	}
 }
 
 
