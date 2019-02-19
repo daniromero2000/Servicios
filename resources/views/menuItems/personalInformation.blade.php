@@ -30,7 +30,7 @@
 				Autorización: consentimiento previo, expreso e  informado del Titular para llevar a cabo el tratamiento de datos personales. <br>
 				Base de datos: conjunto organizado de datos personales que sea objeto de tratamiento.  <br>
 				Causahabiente: persona que ha sucedido o se ha subrogado por cualquier título en el derecho de otra u otras. <br>
-				Consultas: solicitud de la información personal del Titular que repose en cualquier base de datos, sobre la cual tiene la obligación LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, 
+				Consultas: solicitud de la información personal del Titular que repose en cualquier base de datos, sobre la cual tiene la obligación LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, 
 				de suministrar al Titular o sus causahabientes, toda la información contenida en el registro individual o que esté vinculada con la identificación del Titular. <br>
 				Datos personales: cualquier información vinculada o que pueda asociarse a una o varias personas naturales o jurídicas determinadas o determinables. <br>
 				Dato público: es el dato que no sea semiprivado, privado o sensible. Son considerados datos públicos, entre otros, los datos relativos al estado civil de las personas, a su profesión u oficio y a su calidad de comerciante o de servidor público. Por su naturaleza, los datos públicos pueden estar contenidos, entre otros, en registros púbicos, documentos públicos, gacetas y boletines oficiales y sentencias judiciales debidamente ejecutoriadas que no estén sometidas a reserva. <br>
@@ -41,7 +41,7 @@
 				<br>
 				Habeas data: derecho fundamental que permite conocer, actualizar y rectificar la información almacenada sobre las personas en bancos de datos y en archivos de entidades públicas y privadas.
 				<br>
-				Reclamo: solicitud de corrección, actualización o supresión de la información contenida en una base de datos tratada por LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, o solicitud por presunto incumplimiento de cualquiera de los deberes contenidos en la Ley 1581 de 2012, realizada por el Titular o sus causahabientes.
+				Reclamo: solicitud de corrección, actualización o supresión de la información contenida en una base de datos tratada por LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, o solicitud por presunto incumplimiento de cualquiera de los deberes contenidos en la Ley 1581 de 2012, realizada por el Titular o sus causahabientes.
 				<br>
 				Responsable del tratamiento: persona natural o jurídica, pública o privada, que por sí misma o en asocio con otros, decida sobre la base de datos y/o el tratamiento de éstos. <br>
 				Titular: persona natural o jurídica cuyos datos personales sean objeto de tratamiento. <br>
@@ -68,20 +68,20 @@
 				Principios para el tratamiento de datos personales
 			</p>
 			<p class="menuItem-text">
-				Los siguientes principios serán tenidos en cuenta por LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, en el proceso de administración de datos personales.
+				Los siguientes principios serán tenidos en cuenta por LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, en el proceso de administración de datos personales.
 			</p>
 			<p class="menuItem-text2">
 				Legalidad en materia de tratamiento de datos: el tratamiento de datos, debe sujetarse a las disposiciones contenidas en la Ley 1581 de 2012 y en cualquier norma que desarrolle o reglamente tal disposición. <br> <br>
 				Finalidad y tratamiento: el tratamiento de datos debe obedecer a una finalidad legítima de acuerdo con la Constitución y la Ley, la cual debe ser informada al Titular.
 			</p>
 			<p class="menuItem-text">
-				El tratamiento de datos y la finalidad de la información de las bases de datos de LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S se encuentran fundamentados en la prestación del servicio, la relación contractual, los fines comerciales y/o publicitarios LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, podrá transmitir la información a terceros, proveedores y autoridades. <br>
+				El tratamiento de datos y la finalidad de la información de las bases de datos de LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S se encuentran fundamentados en la prestación del servicio, la relación contractual, los fines comerciales y/o publicitarios LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, podrá transmitir la información a terceros, proveedores y autoridades. <br>
 				El tratamiento sólo puede ejercerse con el consentimiento, previo, expreso e informado del Titular. Los datos personales no podrán ser obtenidos o divulgados sin previa autorización, o en ausencia de mandato legal o judicial que releve el consentimiento.
 			</p>
 			<p class="menuItem-text2">
 				Veracidad o calidad: la información sujeta a tratamiento debe ser veraz, completa, exacta, actualizada, comprobable y comprensible. Se prohíbe el tratamiento de datos parciales, incompletos, fraccionados o que induzcan a error.
 				<br><br>
-				Transparencia: en el tratamiento debe garantizarse el derecho del Titular a obtener por parte de LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, o del encargado del tratamiento, en cualquier momento y sin restricciones, información acerca de la existencia de datos que le conciernan de su interés o titularidad.
+				Transparencia: en el tratamiento debe garantizarse el derecho del Titular a obtener por parte de LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, o del encargado del tratamiento, en cualquier momento y sin restricciones, información acerca de la existencia de datos que le conciernan de su interés o titularidad.
 				<br><br>
 				Acceso y circulación restringida: el tratamiento se sujeta a los límites que se derivan de la naturaleza de los datos personales, de las disposiciones de la Ley 1581 de 2012 y la Constitución. En este sentido, el tratamiento sólo podrá hacerse por personas autorizadas por el Titular y/o por las personas previstas en la Ley.
 			</p>
@@ -136,26 +136,26 @@
 				Derechos de los Titulares:
 			</p>
 			<p class="menuItem-text2">
-				Conocer, actualizar y rectificar sus datos personales frente a LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, o frente al encargado del tratamiento designado. Este derecho se podrá ejercer, entre otros frente a datos parciales, inexactos, incompletos, fraccionados, que induzcan a error, o aquellos cuyo tratamiento esté expresamente prohibido o no haya sido autorizado.
+				Conocer, actualizar y rectificar sus datos personales frente a LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, o frente al encargado del tratamiento designado. Este derecho se podrá ejercer, entre otros frente a datos parciales, inexactos, incompletos, fraccionados, que induzcan a error, o aquellos cuyo tratamiento esté expresamente prohibido o no haya sido autorizado.
 			</p>
 			<p class="menuItem-text2">
-				Solicitar prueba de la autorización otorgada a LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, salvo cuando expresamente se exceptúe como requisito para el tratamiento, de conformidad con lo previsto en el artículo 10 de la Ley1581 de 2012.
+				Solicitar prueba de la autorización otorgada a LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, salvo cuando expresamente se exceptúe como requisito para el tratamiento, de conformidad con lo previsto en el artículo 10 de la Ley1581 de 2012.
 			</p>
 			<p class="menuItem-text2">
-				Ser informado por parte de LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A. .o por parte del encargado del tratamiento designado, previa solicitud, respecto del uso que le ha dado a sus datos personales.
+				Ser informado por parte de LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S .o por parte del encargado del tratamiento designado, previa solicitud, respecto del uso que le ha dado a sus datos personales.
 			</p>
 			<p class="menuItem-text2">
 				Presentar ante la Superintendencia de Industria y Comercio quejas por infracciones a lo dispuesto en la Ley 1581 de 2012 y las demás normas que la modifiquen, adicionen o complementen.
 			</p>
 			<p class="menuItem-text2">
-				Revocar la autorización y/o solicitar la supresión del dato cuando en el tratamiento no se respeten los principios, derechos y garantías constitucionales y legales. La revocatoria y/o supresión procederá cuando la Superintendencia de Industria y Comercio haya determinado que en el tratamiento, LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, o el encargado designado, han incurrido en conductas contrarias a Ley 1581 de 2012 ya la Constitución.
+				Revocar la autorización y/o solicitar la supresión del dato cuando en el tratamiento no se respeten los principios, derechos y garantías constitucionales y legales. La revocatoria y/o supresión procederá cuando la Superintendencia de Industria y Comercio haya determinado que en el tratamiento, LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, o el encargado designado, han incurrido en conductas contrarias a Ley 1581 de 2012 ya la Constitución.
 			</p>
 			<p class="menuItem-text2">
 				Acceder en forma gratuita en las condiciones definidas en este documento, a sus datos personales que hayan sido objeto de tratamiento.
 			</p>
 			<h2 class="menuItem-subtitle">CONDICIONES PARA EL TRATAMIENTO DE DATOS</h2>
 			<p class="menuItem-text">
-				8.1	Autorización: en desarrollo de los principios de finalidad y libertad, la recolección de los datos realizada por LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S, deberá limitarse a aquellos datos personales que son pertinentes y adecuados para la finalidad para la cual son recolectados o requeridos conforme a la normativa vigente, salvo en los casos expresamente previstos en la Ley. 8.2	Autorización del Titular: para que LAGOBO DISTRIBCIONES S.A.S L.G.B. S.A.S realice cualquier acción de tratamiento de datos personales, se requiere la autorización previa e informada del Titular, la cual deberá ser obtenida por cualquier medio que pueda ser objeto de consulta posterior. Estos mecanismos podrán ser predeterminados a través de medios técnicos que faciliten al Titular su manifestación automatizada o pueden ser por escrito o de forma oral. Las autorizaciones por parte de Titulares se registrarán así:
+				8.1	Autorización: en desarrollo de los principios de finalidad y libertad, la recolección de los datos realizada por LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S, deberá limitarse a aquellos datos personales que son pertinentes y adecuados para la finalidad para la cual son recolectados o requeridos conforme a la normativa vigente, salvo en los casos expresamente previstos en la Ley. 8.2	Autorización del Titular: para que LAGOBO DISTRIBUCIONES S.A.S L.G.B. S.A.S realice cualquier acción de tratamiento de datos personales, se requiere la autorización previa e informada del Titular, la cual deberá ser obtenida por cualquier medio que pueda ser objeto de consulta posterior. Estos mecanismos podrán ser predeterminados a través de medios técnicos que faciliten al Titular su manifestación automatizada o pueden ser por escrito o de forma oral. Las autorizaciones por parte de Titulares se registrarán así:
 			</p>
 			<p class="menuItem-text">
 				LAGOBO DISTRIBUCIONES S.A.S L.G.B S.A.S, solicita autorización para el tratamiento de la información a todos sus titulares, siempre y cuando dicha recolección implique la realización de un tratamiento de información por parte de LAGOBO DISTRIBUCIONES S.A.S L.G.B S.A.S, o terceros (previa autorización), esta solicitud de autorización se realiza al momento de generarse relaciones comerciales con clientes (Ventas Crédito y Contado), compra de productos y servicios con proveedores y contratación de personal para el desempeño de las labores inherentes a la organización. LAGOBO DISTRIBUCIONES S.A.S L.G.B S.A.S, adopta los procedimientos para solicitar, a más tardar en el momento de recolección de los datos, la autorización del Titular para el tratamiento de los mismos e informará los datos personales que serán recolectados así como todas las finalidades específicas del dicho tratamiento para los cuales se obtiene el consentimiento. Los datos personales que se encuentren en fuentes de acceso público, con independencia del medio por el cual se tenga acceso, entiéndase por tales aquellos datos o bases de datos que se encuentren a disposición del público, podrán ser tratados por LAGOBO DISTRIBUCIONES S.A.S L.G.B S.A.S, siempre y cuando, por su naturaleza, sean datos públicos. En caso de realizar cambios sustanciales en el contenido de las Políticas del tratamiento, referidos a la identificación del Responsable y a la Finalidad del tratamiento de los datos personales, los cuales puedan afectar el contenido de la autorización, LAGOBO DISTRIBUCIONES S.A.S L.G.B S.A.S, comunicará estos cambios a los Titulares, como mínimo 3 días antes de la entrada en vigencia de la nueva política, además obtendrá del Titular una nueva autorización cuando el cambio se refiera a la Finalidad del Tratamiento. Para la comunicación de los cambios y la autorización.
