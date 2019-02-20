@@ -132,7 +132,7 @@
 						<span>Tarjeta de crédito Blue<i class="fa fa-check-square-o checkIcon"></i></span>  
 					</h1>
 					<p class="descriptionContentCard">
-						¿Aún no la tienes? ¡Pidela ya!
+						¿Aún no la tienes? ¡Pídela ya!
 					</p>
 					<p  class="buttonCard">
 						<a href="" class="buttonCreditCard  buttonCreditCardBlue" data-toggle="modal" data-target="#tarjetaBlueModal">Conoce más</a>
@@ -211,7 +211,7 @@
 
 					<b>Estas interesado en obtenerla?	</b> <br>
 					<br>	
-					Solo debes ingresar los datos y te llamaremos, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
+					Solo debes ingresar los datos y te llamaremos, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del País, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
 
 				</p>
 

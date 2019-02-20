@@ -38,7 +38,7 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
-
+        /* change a strct configuration to group by in leads controller */
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -52,6 +52,21 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+        ],
+
+        'oportudata'=>[
+                'driver'=>'mysql',
+                'host'=> env('DB_HOST_OPORTUDATA','10.238.14.132'),
+                'port'=> env('DB_PORT_OPORTUDATA','3306'),
+                'database'=>env('DB_DATABASE_OPORTUDATA','forge'),
+                'username'=>env('DB_USERNAME_2','forge'),
+                'password'=>env('DB_PASSWORD_2',''),
+                'unix_socket'=>env('DB_SOCKET',''),
+                'charset'=>'utf8mb4',
+                'collation'=>'utf8mb4_unicode_ci',
+                'prefix'=>'',
+                'strict'=>false,
+                'engine'=> null,
         ],
 
         'pgsql' => [

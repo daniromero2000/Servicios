@@ -17,7 +17,7 @@ class faqsController extends Controller
     }
     /**
      * Display a listing of the resource and filter by question.
-     /Proyect: SERVICIOS FINANCIEROS
+    **Proyect: SERVICIOS FINANCIEROS
     **Case of use: MODULO FAQS
     **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
