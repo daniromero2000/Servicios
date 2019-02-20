@@ -304,7 +304,6 @@ class OportuyaV2Controller extends Controller
 			$turnosOportuya = new TurnosOportuya;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			//establishing connection to OPORTUDATA data base
-
 			$datosCliente->setConnection('oportudata');
 			$turnosOportuya->setConnection('oportudata');
 			$flag=0;
@@ -315,7 +314,8 @@ class OportuyaV2Controller extends Controller
 			//$queryCity = sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = %s AND `PRINCIPAL` = 1", $oportudataLead[0]->);
 			$codeAssessor=$selectAssessor[0]->assessor;
 			$dateLead=$selectAssessor[0]->dateLead;
-			$sucursal=$oportudataLead[0]->CIUD_UBI;
+			$sucursal=DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
+			$sucursal=$sucursal[0]->CODIGO; 
 			$estado='ANALISIS';
 			$ftp=0;
 			$state='A';
@@ -379,17 +379,14 @@ class OportuyaV2Controller extends Controller
 
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
-
 				if($this->creditPolicyAdvance($identificationNumber)){
 					$quotaApproved='500000';
 				}else{
 					$quotaApproved=-2;
 				}
-
 			}else{
 				$quotaApproved = $this->execCreditPolicy($identificationNumber);
 			}
-			
 			$con3 = "";
 			if($quotaApproved > 0){
 				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
@@ -702,23 +699,21 @@ class OportuyaV2Controller extends Controller
 	public function creditPolicyAdvance($identificationNumber){
 
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		
 		if(($queryScoreClient[0]->score) < 686 ){
 			return response()->json([false]);	
 		}
 
 		$sfMainAccount=sprintf("SELECT COUNT(`fdcalid`) AS sumFdCalid FROM `cifin_findia` WHERE `fdcedula`=%s AND fdcalid='PRIN'",$identificationNumber);
 		$paymentFinDia=sprintf("SELECT fdcompor FROM OPORTUDATA1.cifin_findia WHERE fdcedula=%s AND fdcalid='PRIN'",$identificationNumber);
-		
 		$sfMainAccountQuery= DB::connection('oportudata')->select($sfMainAccount);
-
+		
 		if(($sfMainAccountQuery[0]->sumFdCalid) < 1){
 			return response()->json([false]);
 		}
 
 		$paymentFinDiaQuery= DB::connection('oportudata')->select($paymentFinDia);
 		$totalPayment=0;
-
+		
 		foreach($paymentFinDiaQuery as $key => $payment){
 
 			$paymentArray = explode('|',$payment->fdcompor);
@@ -730,25 +725,19 @@ class OportuyaV2Controller extends Controller
 
 		}
 
-
 		if($totalPayment < 12 ){
-
 			$paymentFinExt = sprintf("SELECT extcompor  FROM OPORTUDATA1.cifin_finext WHERE extcedula=%s AND extcalid='PRIN'",$identificationNumber);
 			$queryPaymentExt=DB::connection('oportudata')->select($paymentFinExt);
-
 			$totalPaymentExt=0;
-
 			foreach($queryPaymentExt as $key => $paymentExt){
-
 				$paymentExtArray = explode('|',$paymentExt->extcompor);
-				$paymentExtArray = array_map(array($this,'applyTrim',$paymentExtArray));
+				$paymentExtArray = array_map(array($this,'applyTrim'),$paymentExtArray);
 				$elementsPaymentExt = array_keys($paymentExtArray,'N ');
 				$paymentsExtNumber = count($elementsPaymentExt);
 	
 				$totalPaymentExt=$totalPaymentExt+$paymentsExtNumber;
 	
 			}
-
 			$sumPayments = $totalPayment + $totalPaymentExt;
 
 			if($sumPayments < 12){
@@ -758,7 +747,6 @@ class OportuyaV2Controller extends Controller
 			return response()->json([false]);
 			
 		}
-
 		return  response()->json([true]);
 	}
 
