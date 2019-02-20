@@ -36,6 +36,7 @@ use App\OportuyaV2;
 use App\Tarjeta;
 use App\TurnosOportuya;
 use App\CodeUserVerification;
+use App\codeUserVerificationOportudata;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -555,6 +556,49 @@ class OportuyaV2Controller extends Controller
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
+	public function getCodeVerificationOportudata($identificationNumber, $celNumber){
+		$this->setCodesStateOportudata($identificationNumber);
+		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
+		$options = [
+			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+			['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
+		];
+		$code = '';
+		$codeExist = 1;
+		while ($codeExist >= 1){
+			for ($i=0; $i < 6; $i++) {
+				$randomOption = rand(0,1);
+				if($randomOption == 0){
+					$randomNumChar = rand(0, 9);
+				}else{
+					$randomNumChar = rand(0, 51);
+				}
+				$code = $code.$options[$randomOption][$randomNumChar];
+			}
+
+			$codeExist = DB::connection('oportudata')->select('SELECT COUNT(`id`) as `totalCodes` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+			$codeExist = $codeExist[0]->totalCodes;
+		}
+
+		$codeUserVerificationOportudata->code = $code;
+		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
+		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
+
+		$codeUserVerificationOportudata->save();
+
+		$date = DB::connection('oportudata')->select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+		
+		$dateTwo = gettype($date[0]->created_at);
+		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		return response()->json(true);
+		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+	}
+
+	private function setCodesStateOportudata($identificationNumber){
+		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($query);
+	}
 	
 	public function enviarMensaje(){
 		return true;
@@ -633,6 +677,7 @@ class OportuyaV2Controller extends Controller
 			return response()->json(-2);
 		}
 	}
+	
 
 	private function setCodesState($identificationNumber){
 		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);

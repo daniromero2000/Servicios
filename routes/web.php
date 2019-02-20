@@ -438,5 +438,7 @@ Route::group(['prefix'=>'/libranza'],function(){
     Route::get('/step1', 'Admin\LibranzaV2Controller@step1')->name('step1Libranza');
 });
 
+// Servicios Oportudata
+Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
 include "web2.php";
 include "web3.php";
