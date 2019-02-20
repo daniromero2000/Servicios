@@ -95,13 +95,16 @@ class LeadsController extends Controller
         //join a lead and oportudata info
         $resp = $resp->map(function ($item, $key) use ($oportudataLead) {
             $score = $oportudataLead->where('CEDULA',$item->identificationNumber)->values();//searcha a respectiv information in oportidata
-            $score = $score->toArray()[0];
-            //asignation in resp item
-            $item->score=$score->score;
-            $item->ocupacion=$score->ACTIVIDAD;
-            $item->estadoCredito=$score->CON3;
-            return $item;
-            
+            $score = $score->toArray();
+            //asignation in resp item if empty return fields "" else assigns values 
+            if (empty($score)) {
+                return $item;
+            }else{
+                $item->score=$score[0]->score;
+                $item->ocupacion=$score[0]->ACTIVIDAD;
+                $item->estadoCredito=$score[0]->CON3;
+                return $item;
+            }
         });
 
         return  $resp;
