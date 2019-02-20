@@ -126,6 +126,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
+				console.log($scope.leads);
 			}
 		}, function errorCallback(response) {
 		    

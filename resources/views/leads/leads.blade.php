@@ -102,8 +102,8 @@
                 <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
                 <td>
-                    <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
-                    <i class="far fa-eye-slash" ng-if="lead.typeService != 'Credito libranza'"></i>
+                    <i class="fas fa-eye cursor"  ng-click="vewLead(lead)"></i>
+                
                     <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-arrow-alt-circle-right cursor" 
@@ -234,6 +234,20 @@
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Salario:</label>
                             <span class="textViewLead">$@{{ lead.salary | number:0 }}</span>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label class="labelViewLead">Estado:</label>
+                            <span class="textViewLead">@{{ lead.estadoCredito}}</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 col-md-6">
+                            <label class="labelViewLead">Ocupación:</label>
+                            <span class="textViewLead">@{{ lead.ocupacion}}</span>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label class="labelViewLead">Score:</label>
+                            <span class="textViewLead">@{{ lead.score}}</span>
                         </div>
                     </div>
                 </div>

@@ -21,14 +21,16 @@ class LeadsController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
-     *
+    **Author: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Description: return a filter leads list 
+    **Date: 20/02/2019
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
 
-        $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
+        $query = "SELECT leads.`id`, leads.`identificationNumber`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
             FROM leads 
             LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`      
             LEFT JOIN `campaigns` ON campaigns.`id` = leads.`campaign`
@@ -75,8 +77,34 @@ class LeadsController extends Controller
         $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));
 
         $resp = DB::select($query);
+        //take a list of identification number
+        $resp = collect($resp);
+        $identification = $resp->pluck('identificationNumber');
+        //take the last score store
+        $latestScore = DB::connection('oportudata')->table('cifin_score')
+                                                ->select('scocedula', 'score', DB::raw(' MAX(scoconsul) AS last'))
+                                                ->groupBy('scocedula');
+        //join a client info and score                                         
+        $oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')
+                                                    ->joinSub($latestScore, 'latestScore',function ($join){
+                                                        $join->on('CEDULA','=', 'scocedula');
+                                                    })
+                                                    ->select('CON3','ACTIVIDAD','score','last','CEDULA')
+                                                    ->whereIN('CEDULA',$identification)
+                                                    ->get();
+        //join a lead and oportudata info
+        $resp = $resp->map(function ($item, $key) use ($oportudataLead) {
+            $score = $oportudataLead->where('CEDULA',$item->identificationNumber)->values();//searcha a respectiv information in oportidata
+            $score = $score->toArray()[0];
+            //asignation in resp item
+            $item->score=$score->score;
+            $item->ocupacion=$score->ACTIVIDAD;
+            $item->estadoCredito=$score->CON3;
+            return $item;
+            
+        });
 
-        return $resp;
+        return  $resp;
     }
 
 

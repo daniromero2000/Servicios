@@ -15,7 +15,6 @@ app.controller('ControllerDetails', function($scope, $http, $rootScope, $routePa
 
 	//  index and filter  products
 	$scope.getProduct = function(){
-		showLoader();
 		$http({
 		  method: 'GET',
 		  url: 'Catalog/productDetails?id='+$routeParams.id_product
@@ -24,13 +23,14 @@ app.controller('ControllerDetails', function($scope, $http, $rootScope, $routePa
 				$scope.product = response.data;
 				console.log($scope.product);
 			}
-			hideLoader();	
+				
 		}, function errorCallback(response) {
 		});
 	};
 
 
     setTimeout(() => {
+    	showLoader();
         $(".multiple-items").slick({
           arrows: false,
 		  infinite: true,
@@ -46,6 +46,7 @@ app.controller('ControllerDetails', function($scope, $http, $rootScope, $routePa
 			arrows: false,
 			asNavFor: '.multiple-items'
 		});
+		hideLoader();
     },2000);
 
     $scope.getProduct();
