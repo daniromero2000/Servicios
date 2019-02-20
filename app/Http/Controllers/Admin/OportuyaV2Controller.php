@@ -557,7 +557,6 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber){
-		return response()->json([$identificationNumber, $celNumber]);
 		$this->setCodesStateOportudata($identificationNumber);
 		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
 		$options = [
