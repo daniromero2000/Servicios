@@ -556,7 +556,7 @@ class OportuyaV2Controller extends Controller
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-	public function getCodeVerificationOportudata(Request $request){
+	public function getCodeVerificationOportudata($identificationNumber, $celNumber){
 		$this->setCodesStateOportudata($identificationNumber);
 		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
 		$options = [
