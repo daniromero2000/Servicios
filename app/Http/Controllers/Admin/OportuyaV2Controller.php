@@ -556,7 +556,7 @@ class OportuyaV2Controller extends Controller
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-	public function getCodeVerificationOportudata($identificationNumber, $celNumber){
+	public function getCodeVerificationOportudata(Request $request){
 		$this->setCodesStateOportudata($identificationNumber);
 		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
 		$options = [
@@ -590,7 +590,6 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
-		return response()->json(true);
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
