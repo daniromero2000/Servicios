@@ -185,8 +185,8 @@ class OportuyaV2Controller extends Controller
 				];
 				
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
-				/*$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
-				$clienteCelular = new CliCel;
+				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
+				/*$clienteCelular = new CliCel;
 				$clienteCelular->CEDULA = $identificationNumber;
 				$clienteCelular->CELULAR = trim($request->get('telephone'));
 				$clienteCelular->FECHA = date("Y-m-d H:i:s");

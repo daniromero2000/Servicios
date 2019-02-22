@@ -150,7 +150,7 @@ angular.module('appAdvanceStep1', [])
 		showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/verificationCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
+			url: '/api/oportudata/getCodeVerification/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
