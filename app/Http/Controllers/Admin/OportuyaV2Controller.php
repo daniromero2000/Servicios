@@ -672,7 +672,7 @@ class OportuyaV2Controller extends Controller
 		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
 		if($dateNow <= $dateCodeNew){
 			if($code === $getCode[0]->code){
-				$updateCode = DB::select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `code` = "%s" ', $code));
+				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `code` = "%s" ', $code));
 				return response()->json(true);
 			}else{
 				return response()->json(-1);
