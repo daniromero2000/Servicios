@@ -107,7 +107,7 @@ class LeadsController extends Controller
             }
         });
 
-        return  $resp;
+        return   $oportudataLead;
     }
 
 
