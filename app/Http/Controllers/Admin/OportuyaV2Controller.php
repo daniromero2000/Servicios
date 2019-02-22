@@ -36,6 +36,7 @@ use App\LeadInfo;
 use App\OportuyaV2;
 use App\Tarjeta;
 use App\TurnosOportuya;
+use App\Analisis;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
 use Illuminate\Http\Request;
@@ -308,6 +309,7 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');			
 			$datosCliente= new DatosCliente;
 			$turnosOportuya = new TurnosOportuya;
+			$analisis = new Analisis;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			//establishing connection to OPORTUDATA data base
 			$datosCliente->setConnection('oportudata');
@@ -405,6 +407,39 @@ class OportuyaV2Controller extends Controller
 				
 				$solic_fab->save();
 				$numSolic = $this->getNumSolic($identificationNumber);
+				$analisis->solicitud = $numSolic->SOLICITUD;
+				$analisis->ini_analis = date("Y-m-d H:i:s");
+				$analisis->fec_datacli = "1900-01-01 00:00:00";
+				$analisis->fec_datacod1 = "1900-01-01 00:00:00";
+				$analisis->fec_datacod2 = "1900-01-01 00:00:00";
+				$analisis->ini_ref = "1900-01-01 00:00:00";
+				$analisis->valor = "0";
+				$analisis->rf_fpago = "1900-01-01 00:00:00";
+				$analisis->fin_analis = "1900-01-01 00:00:00";
+				$analisis->fin_analis = "1900-01-01 00:00:00";
+				$analisis->Fin_ref = "1900-01-01 00:00:00";
+				$analisis->autoriz = "0";
+				$analisis->fact_aur = "0";
+				$analisis->ini_def = "1900-01-01 00:00:00";
+				$analisis->fin_def = "1900-01-01 00:00:00";
+				$analisis->fec_aur = "1900-01-01 00:00:00";
+				$analisis->aurfe_cli1 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cli3 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cli3 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod1 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod12 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod13 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod2 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod21 = "1900-01-01 00:00:00";
+				$analisis->aurfe_cod22 = "1900-01-01 00:00:00";
+				$analisis->aurcu_cli1 = "0";
+				$analisis->aurcu_cli2 = "0";
+				$analisis->aurcu_cli3 = "0";
+				$analisis->aurcu_cod1 = "0";
+				$analisis->aurcu_cod12 = "0";
+				$analisis->aurcu_cod13 = "0";
+				$analisis->aurcu_cod2 = "0";
+				$analisis->save();
 				$con3 = "PREAPROBADO";
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
 				$turnosOportuya->CEDULA = $identificationNumber;
@@ -595,6 +630,7 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		return response()->json(true);
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
