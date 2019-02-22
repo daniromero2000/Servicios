@@ -107,7 +107,7 @@ class LeadsController extends Controller
             }
         });
 
-        return   $oportudataLead->where('CEDULA',10016486)->values();
+        return   $oportudataLead;
     }
 
 
