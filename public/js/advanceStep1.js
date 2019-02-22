@@ -145,6 +145,10 @@ angular.module('appAdvanceStep1', [])
 		}
 	};
 
+	$scope.cerrar = function(){
+		$('#confirmNumCel').modal('hide');
+	};
+
 	$scope.getCodeVerification = function(renew = false){
 		$('#confirmNumCel').modal('hide');
 		showLoader();
