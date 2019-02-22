@@ -154,7 +154,7 @@ angular.module('appStep1', [])
 		showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/getCode/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
+			url: '/api/oportudata/getCodeVerification/'+$scope.leadInfo.identificationNumber+'/'+$scope.leadInfo.telephone,
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){

@@ -30,6 +30,7 @@ use App\Imagenes;
 use App\Application;
 use App\Lead;
 use App\DatosCliente;
+use App\cliCel;
 use App\CreditPolicy;
 use App\LeadInfo;
 use App\OportuyaV2;
@@ -182,10 +183,14 @@ class OportuyaV2Controller extends Controller
 					'SUC' => ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999,
 					'CREACION' => date("Y-m-d H:i:s")
 				];
-
+				
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
-				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
-
+				/*$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
+				$clienteCelular = new CliCel;
+				$clienteCelular->CEDULA = $identificationNumber;
+				$clienteCelular->CELULAR = trim($request->get('telephone'));
+				$clienteCelular->FECHA = date("Y-m-d H:i:s");
+				$clienteCelular->save();*/
 				//if updateOrCreate method fails save data without verify its existent, then save data into CLIENTES_FAB table
 				if($createOportudaLead != true){
 
@@ -661,7 +666,7 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function verificationCode($code, $identificationNumber){
-		$getCode = DB::select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `id` DESC LIMIT 1 ', $identificationNumber));
+		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `id` DESC LIMIT 1 ', $identificationNumber));
 		$dateNow =strtotime(date('Y-m-d H:i:s'));
 		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
 		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
