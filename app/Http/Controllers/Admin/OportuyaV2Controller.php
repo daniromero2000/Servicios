@@ -581,17 +581,17 @@ class OportuyaV2Controller extends Controller
 				$code = $code.$options[$randomOption][$randomNumChar];
 			}
 
-			$codeExist = DB::connection('oportudata')->select('SELECT COUNT(`id`) as `totalCodes` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+			$codeExist = DB::connection('oportudata')->select('SELECT COUNT(`identificador`) as `totalCodes` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
 			$codeExist = $codeExist[0]->totalCodes;
 		}
 
-		$codeUserVerificationOportudata->code = $code;
+		$codeUserVerificationOportudata->token = $code;
 		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
 		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
 
 		$codeUserVerificationOportudata->save();
 
-		$date = DB::connection('oportudata')->select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
+		$date = DB::connection('oportudata')->select('SELECT `created_at` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
@@ -666,13 +666,13 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function verificationCode($code, $identificationNumber){
-		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `id` DESC LIMIT 1 ', $identificationNumber));
+		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `identificador` DESC LIMIT 1 ', $identificationNumber));
 		$dateNow =strtotime(date('Y-m-d H:i:s'));
 		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
 		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
 		if($dateNow <= $dateCodeNew){
 			if($code === $getCode[0]->code){
-				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `code` = "%s" ', $code));
+				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `token` = "%s" ', $code));
 				return response()->json(true);
 			}else{
 				return response()->json(-1);

@@ -10,7 +10,9 @@ class codeUserVerificationOportudata extends Model
 
     public $connection='oportudata';
 
+    protected $primaryKey= 'identificador';
+
     public $timestamps = false;
 
-    protected $fillable = ['code', 'identification', 'created_at'];
+    protected $fillable = ['token', 'identification', 'created_at'];
 }
