@@ -666,12 +666,12 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function verificationCode($code, $identificationNumber){
-		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `code`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `identificador` DESC LIMIT 1 ', $identificationNumber));
+		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `token`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `identificador` DESC LIMIT 1 ', $identificationNumber));
 		$dateNow =strtotime(date('Y-m-d H:i:s'));
 		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
 		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
 		if($dateNow <= $dateCodeNew){
-			if($code === $getCode[0]->code){
+			if($code === $getCode[0]->token){
 				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `token` = "%s" ', $code));
 				return response()->json(true);
 			}else{
