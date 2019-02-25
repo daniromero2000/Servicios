@@ -120,7 +120,9 @@
 						</div>
 					</div>
 				</div>
+				@if(!(Auth::guard('assessor')->check()))
 				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
+				@endif				
 				<div class="form-group">
 					<input type="checkbox" ng-model="leadInfo.termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
@@ -131,9 +133,16 @@
 					**Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
 				<div class="form-group text-center">
+					@if(!(Auth::guard('assessor')->check()))
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
 					</button>
+					@else	
+					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
+						Siguiente
+					</button>
+					@endif	
+					
 					<a href="/oportuya" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
 						Volver
 					</a>

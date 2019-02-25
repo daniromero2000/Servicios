@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-6 assessorModule text-center">
 				<p>
-					<a href="{{route('step1Assessor')}}">Crédito Oportuya </a>
+					<a href="{{route('step1Oportuya')}}">Crédito Oportuya </a>
 				</p>	
 			</div>
 			<div class="col-6 assessorModule text-center">
