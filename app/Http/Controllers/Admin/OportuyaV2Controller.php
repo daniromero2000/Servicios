@@ -126,7 +126,6 @@ class OportuyaV2Controller extends Controller
 				'typeProduct' =>  '',
 				'typeService' =>  trim($request->get('typeService'))
 			];
-
 			
 			//verify if a customer exist before save a lead , then save data into leads table.
 			$createLead = $lead->updateOrCreate(['identificationNumber'=>$identificationNumber],$dataLead)->save();
@@ -141,7 +140,6 @@ class OportuyaV2Controller extends Controller
 
 			//if updateOrCreate method fails save data without verify its existent, then save data into leads table
 			if($createLead != true){
-
 				$identificationNumber = $request->get('identificationNumber');
 				$lead->typeDocument=$request->get('typeDocument');
 				$lead->identificationNumber=$identificationNumber;	
@@ -156,9 +154,7 @@ class OportuyaV2Controller extends Controller
 				$lead->typeProduct = $request->get('typeProduct');
 				$lead->typeService = $request->get('typeService');
 				$response = $lead->save();
-
 			}
-
 
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
@@ -714,7 +710,9 @@ class OportuyaV2Controller extends Controller
 		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `token`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `identificador` DESC LIMIT 1 ', $identificationNumber));
 		$dateNow =strtotime(date('Y-m-d H:i:s'));
 		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
-		$dateCodeNew = strtotime ("+ 10 minute", strtotime ( $dateCode ) );
+		$smsVigency = DB::connection('oportudata')->select("SELECT `sms_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$smsVigency = $smsVigency[0]->sms_vigencia;
+		$dateCodeNew = strtotime ("+ $smsVigency minute", strtotime ( $dateCode ) );
 		if($dateNow <= $dateCodeNew){
 			if($code === $getCode[0]->token){
 				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `token` = "%s" ', $code));
