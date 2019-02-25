@@ -5,6 +5,40 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 		timeLimitPublic : ''
 	};
 
+	$scope.optionsSms = [
+		{
+			label: '10',
+			value: 10
+		},
+		{
+			label: '20',
+			value: 20
+		},
+		{
+			label: '30',
+			value: 30
+		},
+		{
+			label: '40',
+			value: 40
+		}
+	];
+
+	$scope.optionsVigenciaRechazados = [
+		{
+			label: '60',
+			value: 60
+		},
+		{
+			label: '90',
+			value: 90
+		},
+		{
+			label: '120',
+			value: 120
+		}
+	];
+
 	$scope.getCreditPolicy = function(){
 		showLoader();
 		$scope.cargando = true;

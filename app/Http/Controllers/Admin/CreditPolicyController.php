@@ -81,7 +81,9 @@ class CreditPolicyController extends Controller
 
         $creditPolicy = [
             'pub_vigencia' => $request->get('pub_vigencia'),
-            'fab_vigencia' => $request->get('fab_vigencia')
+            'fab_vigencia' => $request->get('fab_vigencia'),
+            'sms_vigencia' => $request->get('sms_vigencia'),
+            'rechazado_vigencia' => $request->get('rechazado_vigencia')
         ];
 
         $creditPolicy = DB::connection('oportudata')->table('VIG_CONSULTA')->update($creditPolicy);
