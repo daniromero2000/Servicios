@@ -109,7 +109,8 @@ class OportuyaV2Controller extends Controller
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
 			$response = false;
-			$assessorCode=($request->get('assessor') !== NULL)?$request->get('assessor'):998877;
+			$authAssessor= (Auth::guard('assessor')->check())?Auth::guard('assessor')->user()->CODIGO:NULL;
+			$assessorCode=($authAssessor !== NULL)?$authAssessor:998877;
 			$dataLead=[
 				'typeDocument'=> $request->get('typeDocument'),
 				'identificationNumber'=> $identificationNumber,
@@ -559,6 +560,15 @@ class OportuyaV2Controller extends Controller
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 	**/
+
+	public function validationLead($identificationNumber){
+		$existCard = $this->getExistCard($identificationNumber);
+		if($existCard == true){
+			return -1; // Tiene tarjeta
+		}
+
+		return response()->json(true);
+	}
 
 	public function getCodeVerification($identificationNumber, $celNumber){
 		$this->setCodesState($identificationNumber);
