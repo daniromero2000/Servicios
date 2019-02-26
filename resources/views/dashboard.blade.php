@@ -130,7 +130,7 @@
 		</nav>
 		<div id="dashboardContent" class="tab-content">        
 			<div id="modulesDashboard" ng-controller="dashboardAppController" role="tabpanel" class="container dashboardContainer tab-pane tab-content">
-				@include('dashboard.modules')
+				@include('dashboard.modulesV2')
 			</div>
 
 			<div id="homeDashboard" role="tabpanel" class="current tab-pane tab-content"> 
