@@ -133,6 +133,31 @@ angular.module('appAdvanceStep1', [])
 		}
 	};
 	
+	$scope.getValidationLead = function(){
+		if($scope.emailValidate == false){
+			showLoader();
+			$http({
+				method: 'GET',
+				url: '/api/oportuya/validationLead/'+$scope.leadInfo.identificationNumber,
+			}).then(function successCallback(response) {
+				hideLoader();
+				if(response.data == -1){
+					$('#cardExist').modal('show');
+				}else if(response.data == -2){
+					window.location = "/Employed";
+				}else{
+					$scope.confirmnumCel();
+				}
+			}, function errorCallback(response) {
+				hideLoader();
+				console.log(response);
+			});
+		}else{
+			alert('Los correos no coinciden');
+		}
+		
+	}
+
 	$scope.confirmnumCel = function(){
 		if($scope.leadInfo.typeDocument == ''){
 			alert('Por favor selecciona el tipo de documento');
@@ -194,31 +219,26 @@ angular.module('appAdvanceStep1', [])
 	};
 
 	$scope.saveStep1 = function(){
-		if($scope.emailValidate == false){
-			$('#proccess').modal('show');
-			$http({
-				method: 'POST',
-				url: '/oportuyaV2',
-				data: $scope.leadInfo,
-			  }).then(function successCallback(response) {
-				  console.log(response.data);
-				  if(response.data == "-1"){
-					  window.location = "/OPN_gracias_denied_advance"
-				  }
-				  if(response.data == "-2"){
-					$('#proccess').modal('hide');
-					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
-				  }
-				  if (response.data == "1") {
-					  $scope.encryptText();
-				  }
-			  }, function errorCallback(response) {
-				  console.log(response);
-			  });
-		}else{
-			alert('Los correos no coinciden');
-		}
-		
+		$('#proccess').modal('show');
+		$http({
+			method: 'POST',
+			url: '/oportuyaV2',
+			data: $scope.leadInfo,
+			}).then(function successCallback(response) {
+				console.log(response.data);
+				if(response.data == "-1"){
+					window.location = "/OPN_gracias_denied_advance"
+				}
+				if(response.data == "-2"){
+				$('#proccess').modal('hide');
+				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+				}
+				if (response.data == "1") {
+					$scope.encryptText();
+				}
+			}, function errorCallback(response) {
+				console.log(response);
+			});
 	};
 
 	$scope.encryptText = function(){

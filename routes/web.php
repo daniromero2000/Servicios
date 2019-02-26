@@ -28,6 +28,10 @@ Route::get('/OP_gracias_FRM',function(){
     return view('oportuya.thankYouPage');
 })->name('thankYouPageOportuya');
 
+Route::get('/Employed',function(){
+    return view('advance.pageEmployed');
+})->name('pageEmployed');
+
 Route::get('/OPN_gracias_FRM',function(){
     return view('oportuya.thankYouPageDenied');
 })->name('thankYouPageOportuyaDenied');
@@ -113,6 +117,7 @@ Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaControl
 Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
 Route::get('/step2/{numIdentification}', 'Admin\OportuyaV2Controller@step2')->name('step2Oportuya');
 Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->name('step3Oportuya');
+Route::get('api/oportuya/validationLead/{identificationNumber}', 'Admin\OportuyaV2Controller@validationLead');
 Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerification');
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');

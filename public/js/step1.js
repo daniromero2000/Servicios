@@ -145,6 +145,31 @@ angular.module('appStep1', [])
 		}
 	};
 
+	$scope.getValidationLead = function(){
+		if($scope.emailValidate == false){
+			showLoader();
+			$http({
+				method: 'GET',
+				url: '/api/oportuya/validationLead/'+$scope.leadInfo.identificationNumber,
+			}).then(function successCallback(response) {
+				hideLoader();
+				if(response.data == -1){
+					$('#cardExist').modal('show');
+				}else if(response.data == -2){
+					window.location = "/Employed";
+				}else{
+					$scope.confirmnumCel();
+				}
+			}, function errorCallback(response) {
+				hideLoader();
+				console.log(response);
+			});
+		}else{
+			alert('Los correos no coinciden');
+		}
+		
+	}
+
 	$scope.cerrar = function(){
 		$('#confirmNumCel').modal('hide');
 	};
@@ -194,30 +219,25 @@ angular.module('appStep1', [])
 	};
 
 	$scope.saveStep1 = function(){
-		if($scope.emailValidate == false){
-			$('#proccess').modal('show');
-			$http({
-				method: 'POST',
-				url: '/oportuyaV2',
-				data: $scope.leadInfo,
-			  }).then(function successCallback(response) {
-				  if(response.data == "-1"){
-					  window.location = "/OPN_gracias_FRM"
-				  }
-				  if(response.data == "-2"){
-					$('#proccess').modal('hide');
-					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
-				  }
-				  if (response.data == "1") {
-					  $scope.encryptText();
-				  }
-			  }, function errorCallback(response) {
-				  console.log(response);
-			  });
-		}else{
-			alert('Los correos no coinciden');
-		}
-		
+		$('#proccess').modal('show');
+		$http({
+			method: 'POST',
+			url: '/oportuyaV2',
+			data: $scope.leadInfo,
+			}).then(function successCallback(response) {
+				if(response.data == "-1"){
+					window.location = "/OPN_gracias_FRM"
+				}
+				if(response.data == "-2"){
+				$('#proccess').modal('hide');
+				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+				}
+				if (response.data == "1") {
+					$scope.encryptText();
+				}
+			}, function errorCallback(response) {
+				console.log(response);
+			});
 	};
 
 	$scope.encryptText = function(){

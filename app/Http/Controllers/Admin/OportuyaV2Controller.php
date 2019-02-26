@@ -562,6 +562,11 @@ class OportuyaV2Controller extends Controller
 		if($existCard == true){
 			return -1; // Tiene tarjeta
 		}
+		
+		$empleado = $this->getExistEmployed($identificationNumber);
+		if($empleado == true){
+			return -2; // Es empleado
+		}
 
 		return response()->json(true);
 	}
@@ -748,7 +753,7 @@ class OportuyaV2Controller extends Controller
 		return $resp[0];
 	}
 
-	function getExistCard($identificationNumber){
+	private function getExistCard($identificationNumber){
 		$queryExistCard = sprintf("SELECT COUNT(`NUMERO`) as numTarjeta FROM `TARJETA` WHERE `CLIENTE` = %s ", $identificationNumber);
 
 		$resp = DB::connection('oportudata')->select($queryExistCard);
@@ -757,6 +762,18 @@ class OportuyaV2Controller extends Controller
 			return true; // Tiene tarjeta
 		}else{
 			return false; // No tiene tarjeta
+		}
+	}
+
+	private function getExistEmployed($identificationNumber){
+		$queryExistEmployed = sprintf("SELECT COUNT(`identificador`) as totalEmployes FROM `LISTA_EMPLEADOS` WHERE `num_documento` = %s ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($queryExistEmployed);
+
+		if($resp[0]->totalEmployes > 0){
+			return true; // Es empleado
+		}else{
+			return false; // No es empelado
 		}
 	}
 
