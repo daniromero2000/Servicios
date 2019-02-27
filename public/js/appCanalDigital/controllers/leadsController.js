@@ -163,7 +163,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$scope.idLead = idLead;
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/getComentsLeads/'+idLead
+		  url: '/api/leads/getComentsLeads/'+idLead
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				angular.forEach(response.data, function(value, key) {
@@ -192,7 +192,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$scope.comment.idLead = $scope.idLead;
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
+		  url: '/api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.viewComments("","",$scope.state,$scope.idLead, false);
@@ -216,7 +216,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	$scope.changeStateLeadComment = function(){
 		$http({
 		  method: 'GET',
-		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
+		  url: '/api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.comment.comment = "";

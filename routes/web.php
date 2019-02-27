@@ -177,13 +177,6 @@ Route::group(['prefix'=>'api/'],function(){
 
 /*Users routes*/
 
-Route::get("/canalDigital",function(){
-     if(Auth::guest()){
-            return view('auth.login');
-        }
-	return view('leads.index');
-});
-
 Route::get("/libranzaLeads",function(){
      if(Auth::guest()){
             return view('auth.login');
@@ -196,14 +189,6 @@ Route::get("/fabricaLeads",function(){
             return view('auth.login');
         }
 	return view('fabricaLeads.index');
-});
-
-
-Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
-
-    Route::get('/leads', function(){
-        return view('leads.leads');
-    });
 });
 
 Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
@@ -349,6 +334,20 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         //delete products images
         Route::get('deleteImage/{id}', 'Admin\ProductsController@deleteImage');
     });
+
+    // Gestion de Leads
+    Route::group(['prefix'=>'/canalDigital/','middleware' => 'auth'],function(){
+        Route::get('/', function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
+            return view('leads.index');
+        });
+        Route::get('/leads', function(){
+            return view('leads.leads');
+        });
+    });
+    
 
     // Administrador de politicas de credito
     Route::group(['prefix' => '/AdminCreditPolicy'], function(){
