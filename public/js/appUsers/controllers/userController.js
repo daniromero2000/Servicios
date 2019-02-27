@@ -125,30 +125,24 @@ app.controller('userController', function($scope, $http, $rootScope){
 		  url: '/users?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&profileUser='+$scope.q.profileUser+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin,
 		}).then(function successCallback(response) {
 			if(response.data[0] != false){
-				
 				$scope.q.initFrom += response.data.length;
 				angular.forEach(response.data[0], function(value, key) {					
 					$scope.users.push(value);
 				});
-				
 				$scope.cargando = false;
-
 			}
 
 			if(response.data[1] != false){
 				angular.forEach(response.data[1], function(value, key) {					
 					$scope.profiles.push(value);
-				});
-					
+				});	
 			}
 
 			if(response.data[2] != false){
 				angular.forEach(response.data[2], function(value, key) {					
 					$scope.assessors.push(value);
-				});
-					
-			}
-			
+				});	
+			}	
 		}, function errorCallback(response) {
 		    
 		});
@@ -174,8 +168,6 @@ app.controller('userController', function($scope, $http, $rootScope){
 		$scope.filtros = false;
 		$scope.getUsers();
 	};
-
-
 
 	$scope.addUser = function(){
 		$http({
@@ -211,24 +203,17 @@ app.controller('userController', function($scope, $http, $rootScope){
 				data: $scope.assessor
 		}).then(function successCallback(response){
 			if(response.data != false) {
-				
 				if(response.data == '-1'){
 					$scope.errorFlag=1;
 					$scope.error='El asesor no existe en oportudata';
-
 				}else if((response.data == 'false') ){
-					
 					$scope.errorFlag=1;
 					$scope.error='El asesor ya se le ha asignado un perfil';
-
 				}else{
-					
 					$scope.errorFlag=0;
 					$scope.successFlag=1;
 					$scope.error='Perfil asignado correctamente';
-
 				}
-
 				$("#assessorAddProfile").modal("hide");		
 			}
 
@@ -251,8 +236,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 			}
 		},function errorCallback(response){
 			
-		}
-		);
+		});
 	}
 
 	$scope.updateUserForm=function(idUser){
@@ -269,7 +253,6 @@ app.controller('userController', function($scope, $http, $rootScope){
 
 
 	$scope.deleteUser=function(){
-		
 		$http({
 		  method: 'DELETE',
 		  url: 'users/'+$scope.idUser,

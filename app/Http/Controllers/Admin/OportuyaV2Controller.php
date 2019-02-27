@@ -436,6 +436,9 @@ class OportuyaV2Controller extends Controller
 				$analisis->aurcu_cod12 = "0";
 				$analisis->aurcu_cod13 = "0";
 				$analisis->aurcu_cod2 = "0";
+				$analisis->scor_cli = "0";
+				$analisis->scor_cod1 = "0";
+				$analisis->scor_cod2 = "0";
 				$analisis->save();
 				$con3 = "PREAPROBADO";
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
@@ -563,10 +566,10 @@ class OportuyaV2Controller extends Controller
 			return -1; // Tiene tarjeta
 		}
 		
-		$empleado = $this->getExistEmployed($identificationNumber);
+		/*$empleado = $this->getExistEmployed($identificationNumber);
 		if($empleado == true){
 			return -2; // Es empleado
-		}
+		}*/
 
 		return response()->json(true);
 	}

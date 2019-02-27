@@ -70,45 +70,27 @@ class LoginController extends Controller
 
      */
 
-    public function __construct()
-
-    {
-
+    public function __construct(){
         $this->middleware('guest:assessor')->except('logout');
-
     }
 
-
-
-    public function showLoginForm()
-
-    {
-
+    public function showLoginForm(){
         return view('assessors.login');
-
     }
 
- 
-
-    public function login(Request $request)
-
-    {
+    public function login(Request $request){
         $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->codigo)->where('NUM_DOC','=',$request->num_doc)->first();
-
         $codeAssessor=ProfilesAssessor::selectRaw('code,profile')->where('code','=',$request->codigo)->first();
-
         $request->session()->put('idProfile',$codeAssessor->profile);
-
         $codeAssessor->code =trim($codeAssessor->code);
         $assessor->CODIGO =trim($assessor->CODIGO);
         $assessor->NUM_DOC=trim($assessor->NUM_DOC);
 
-        if (($assessor) && ($assessor->CODIGO == $codeAssessor->code)) {
-
+        if(($assessor) && ($assessor->CODIGO == $codeAssessor->code)){
             Auth::guard('assessor')->loginUsingId($assessor->CODIGO);   
             return view('assessors.dashboard');
-        }            
-        
+        }         
+
         return back()->withErrors(['email' => 'Email or password are wrong.']);
 
     }
