@@ -199,7 +199,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.addAssessorProfile = function(){
 		$http({
 				method:'POST',
-				url:'profileAssessor',
+				url:'/profileAssessor',
 				data: $scope.assessor
 		}).then(function successCallback(response){
 			if(response.data != false) {

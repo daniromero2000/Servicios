@@ -104,30 +104,22 @@ class UserController extends Controller
 
     }
 
-    public function addAssessorProfile(Request $request){
-        
+    public function addAssessorProfile(Request $request){        
         $assessor = new ProfilesAssessor;
-
         $oportudataAssessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->get('code'))->first();
 
         if($oportudataAssessor != NULL){
-
             $AssessorProfile = ProfilesAssessor::select('code')->where('code','=',$request->get('code'))->first();
 
             if(!$AssessorProfile != NULL){
-
                 $assessor->code = $request->get('code');
                 $assessor->profile = $request->get('profile');
                 $assessor->save();
-
                 return response()->json([true]);
             }
-
-
-            return response()->json([false]);            
-
+            return response()->json([false]);
         }
-
+        
         return response()->json([-1]);       
     }
 

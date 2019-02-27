@@ -87,9 +87,12 @@ class LoginController extends Controller
         $assessor->NUM_DOC=trim($assessor->NUM_DOC);
 
         if(($assessor) && ($assessor->CODIGO == $codeAssessor->code)){
-            Auth::guard('assessor')->loginUsingId($assessor->CODIGO);   
+            Auth::guard('assessor')->loginUsingId($assessor->CODIGO);
+            if($codeAssessor->profile == 9){
+                return view('assessors.convenios.pipa');
+            }
             return view('assessors.dashboard');
-        }         
+        }
 
         return back()->withErrors(['email' => 'Email or password are wrong.']);
 
