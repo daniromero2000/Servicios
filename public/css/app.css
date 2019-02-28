@@ -2545,6 +2545,9 @@ p.wantToSecondTex{
 .no-padding-right{
 	padding-right: 0 !important;
 }
+.containerLogoLibranza{
+	background-color:#FFF!important; 
+}
 
 /*assesors profile*/
 
@@ -2567,6 +2570,7 @@ p.wantToSecondTex{
 .angucomplete-row:hover{
 	background-color: rgba(28,171,226,0.4);
 }
+
 
 
 /* Media Queries */

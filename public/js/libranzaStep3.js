@@ -127,7 +127,6 @@ angular.module('appLibranzaStep3', ['moment-picker', 'ng-currency'])
 		  url: '/creditoLibranza/getDataStep3/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
-			
 			$scope.ced=$scope.leadInfo.identificationNumber;
 			$scope.banks = response.data.banks;
 			$scope.analyst = response.data.digitalAnalyst;
@@ -158,7 +157,8 @@ angular.module('appLibranzaStep3', ['moment-picker', 'ng-currency'])
 				  'X-CSRF-TOKEN': csrftoken
 				},
 			  }).then(function successCallback(response) {
-				  if (response.data != false) {
+				  if (response.data[0] != false) {
+					  console.log(response.data);
 					  $('#congratulations').modal('show');
 				  }
 			  }, function errorCallback(response) {

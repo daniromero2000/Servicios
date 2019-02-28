@@ -212,7 +212,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salaryInd">Salario</label>
-							<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
+							<input type="text" id="salaryInd" ng-model="leadInfo.salary" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row resetRow">
@@ -222,7 +222,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="membershipNumber">Numero de afiliación*</label>
-							<input type="text" id="membershipNumber" ng-model="leadInfo.membershipNumber" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
+							<input type="text" id="membershipNumber" ng-model="leadInfo.membershipNumber"  fraction="0" min="0" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row resetRow">
@@ -230,11 +230,11 @@
 							<label for="eps">EPS*</label>
 							<input type="text" id="eps" required="" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" />
 						</div>
-						<div class="col-sm-12 col-md-6 form-group">
+						<!--<div class="col-sm-12 col-md-6 form-group">
 							<label for="bankSavingsAccount">Banco*</label>
 							<select ng-model="leadInfo.bankSavingsAccount" id="bankSavingsAccount" class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks" required="">
 							</select>
-						</div>
+						</div>-->
 					</div>
 				</div>				
 				<div class="row resetRow">
@@ -249,8 +249,8 @@
 				<div class="modal-content modalStepsContent">
 					<div class="modal-body modalStepsBody" style="padding: 0">
 						<div class="row resetRow">
-							<div class="col-12 text-center containerLogoModalStep">
-								<img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
+							<div class="col-12 text-center containerLogoModalStep  containerLogoLibranza">
+								<img src="{{ asset('images/logo_Creo.png') }}" alt="" class="img-fluid">
 							</div>
 						</div>
 						<div class="row resetRow">
@@ -262,7 +262,21 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
-								
+							<form ng-submit="sendComment()">
+									<div class="form-group">
+										<label for="">A que hora te podemos llamar*</label>
+										<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact" class="form-control" required="">
+										</select>
+									</div>
+									<div class="form-group">
+										<textarea ng-model="comment.comment" class="form-control" rows="10" placeholder="Algún comentario adicional"></textarea>
+									</div>
+									<div class="row">
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-primary btnStep">Enviar</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -315,5 +329,5 @@
 	<script type="text/javascript" src="{{ asset('js/libranzaStep3.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
-	<script src="https://rawgit.com/aguirrel/ng-currency/latest/dist/ng-currency.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-currency/1.2.7/ng-currency.min.js"></script>
 @endsection

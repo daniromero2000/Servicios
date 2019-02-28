@@ -26,7 +26,19 @@ class LibranzaV2Controller extends Controller
      */
     public function index()
     {
-        //
+		$query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
+		FROM leads 
+		LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`
+		WHERE 1";
+
+
+	
+	$query .= " ORDER BY leads.`id` DESC";
+
+
+	$resp = DB::select($query);
+
+	return response()->json([$resp]);
     }
 
     /**
@@ -131,10 +143,7 @@ class LibranzaV2Controller extends Controller
 
             if($flag==2){
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
-				if($assessorCode != 998877){
-					return redirect()->route('libranzaStep2', ['numIdentification' => $identificationNumberEncrypt]);
-				}
-				return redirect()->route('libranzaStep2', ['numIdentification' => $identificationNumberEncrypt]);
+			 	return response()->json([1,$identificationNumberEncrypt]);
 			}elseif ($flag==1) {
 
 				return response()->json(['servicios'=>$response]);
@@ -359,7 +368,7 @@ class LibranzaV2Controller extends Controller
 
             if($flag==2){
 			
-				return response()->json([true]);
+				return response()->json([true,$lead]);
 			}elseif ($flag==1) {
 
 				return response()->json(['servicios'=>$response]);
@@ -484,6 +493,65 @@ class LibranzaV2Controller extends Controller
 		}
 	}
 
+	public function cities(){
+		$cities = [
+			[ 'label' => 'ARMENIA', 'value' => 'ARMENIA' ],
+			[ 'label' => 'MANIZALES', 'value' => 'MANIZALES' ],
+			[ 'label' => 'SINCELEJO', 'value' => 'SINCELEJO' ],
+			[ 'label' => 'YOPAL', 'value' => 'YOPAL' ],
+			[ 'label' => 'CERETÉ', 'value' => 'CERETÉ' ],
+			[ 'label' => 'TULUÁ', 'value' => 'TULUÁ' ],
+			[ 'label' => 'ACACÍAS', 'value' => 'ACACÍAS' ],
+			[ 'label' => 'ESPINAL', 'value' => 'ESPINAL' ],
+			[ 'label' => 'MARIQUITA', 'value' => 'MARIQUITA' ],
+			[ 'label' => 'CARTAGENA', 'value' => 'CARTAGENA' ],
+			[ 'label' => 'LA DORADA', 'value' => 'LA DORADA' ],
+			[ 'label' => 'IBAGUÉ', 'value' => 'IBAGUÉ' ],
+			[ 'label' => 'MONTERÍA', 'value' => 'MONTERÍA' ],
+			[ 'label' => 'MAGANGUÉ', 'value' => 'MAGANGUÉ' ],
+			[ 'label' => 'PEREIRA', 'value' => 'PEREIRA' ],
+			[ 'label' => 'CALI', 'value' => 'CALI' ],
+			[ 'label' => 'MONTELIBANO', 'value' => 'MONTELIBANO' ],
+			[ 'label' => 'SAHAGÚN', 'value' => 'SAHAGÚN' ],
+			[ 'label' => 'PLANETA RICA', 'value' => 'PLANETA RICA' ],
+			[ 'label' => 'COROZAL', 'value' => 'COROZAL' ],
+			[ 'label' => 'CIÉNAGA', 'value' => 'CIÉNAGA' ],
+			[ 'label' => 'MONTELÍ', 'value' => 'MONTELÍ' ],
+			[ 'label' => 'PLATO', 'value' => 'PLATO' ],
+			[ 'label' => 'SABANALARGA', 'value' => 'SABANALARGA' ],
+			[ 'label' => 'GRANADA', 'value' => 'GRANADA' ],
+			[ 'label' => 'PUERTO BERRÍ', 'value' => 'PUERTO BERRÍ' ],
+			[ 'label' => 'VILLAVICENCIO', 'value' => 'VILLAVICENCIO' ],
+			[ 'label' => 'TAURAMENA', 'value' => 'TAURAMENA' ],
+			[ 'label' => 'PUERTO GAITÁN', 'value' => 'PUERTO GAITÁN' ],
+			[ 'label' => 'PUERTO BOYACÁ', 'value' => 'PUERTO BOYACÁ' ],
+			[ 'label' => 'PUERTO LÓPEZ', 'value' => 'PUERTO LÓPEZ' ],
+			[ 'label' => 'SEVILLA', 'value' => 'SEVILLA' ],
+			[ 'label' => 'CHINCHINÁ', 'value' => 'CHINCHINÁ' ],
+			[ 'label' => 'AGUACHICA', 'value' => 'AGUACHICA' ],
+			[ 'label' => 'BARRANCABERMEJA', 'value' => 'BARRANCABERMEJA' ],
+			[ 'label' => 'LA VIRGINIA', 'value' => 'LA VIRGINIA' ],
+			[ 'label' => 'SANTA ROSA DE CABAL', 'value' => 'SANTA ROSA DE CABAL' ],
+			[ 'label' => 'GIRARDOT', 'value' => 'GIRARDOT' ],
+			[ 'label' => 'VILLANUEVA', 'value' => 'VILLANUEVA' ],
+			[ 'label' => 'PITALITO', 'value' => 'PITALITO' ],
+			[ 'label' => 'GARZÓN', 'value' => 'GARZÓN' ],
+			[ 'label' => 'NEIVA', 'value' => 'NEIVA' ],
+			[ 'label' => 'LORICA', 'value' => 'LORICA' ],
+			[ 'label' => 'AGUAZUL',  'value' => 'AGUAZUL']
+		];
+
+		return response()->json([$cities]);
+	}
+
+	public function getDataStep1(){
+		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
+
+		$resp = DB::connection('oportudata')->select($query);
+
+		return $resp;
+	}
+
 
     public function step1(){
 		
@@ -555,7 +623,7 @@ class LibranzaV2Controller extends Controller
 		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
 		$resp = DB::select($query);
 
-		return $resp[0];
+		return $resp;
     }
 
 
@@ -597,8 +665,8 @@ class LibranzaV2Controller extends Controller
 		$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
 		$idLead_info= $idLead_info[0]->id;
 
-		$pagaduria=DB::select('SELECT `id`, `name`,`address`,`office` as name FROM `pagaduria` WHERE 1');
-		$lead_info=DB::select('SELECT `nit`,`indicative`,`companyName`,`companyAddres`,`companyTelephone`,`companyTelephone2`, `companyPosition`,`antiquity`,`salary`,`typeContract`, `otherRevenue`,`camaraComercio`,`eps`,`admissionDate`,`dateCreationCompany`,`bankSavingsAccount`,`whatSell` FROM `leads_info` WHERE `id`=:idLead ',['idLead'=>$idLead_info]);
+		$pagaduria=DB::select('SELECT `id`, `name`,`address`,`office` FROM `pagaduria` WHERE 1');
+		$lead_info=DB::select('SELECT `nit`,`indicative`,`companyName`,`companyAddres`,`companyTelephone`,`companyTelephone2`, `companyPosition`,`antiquity`,`salary`,`typeContract`, `otherRevenue`,`camaraComercio`,`eps`,`admissionDate`,`dateCreationCompany`,`bankSavingsAccount`,`whatSell`,`membershipNumber` FROM `leads_info` WHERE `id`=:idLead ',['idLead'=>$idLead_info]);
 		
 		$data = [];
 		$digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
@@ -653,7 +721,7 @@ class LibranzaV2Controller extends Controller
 		$data['dataLead']=$lead_info;
 		$data['idLead']=$idLead_info;
 		$data['occupation']=$occupation;
-		return $data;
+		return response()->json([$data]);
 
   }
 
@@ -666,6 +734,11 @@ class LibranzaV2Controller extends Controller
 
 	return $string;
 } 
+
+public function getIDStep2($string){
+	$identificactionNumber = $this->decrypt($string);
+	return response()->json([$identificactionNumber]);
+}
 
 public function step2($string){
 	

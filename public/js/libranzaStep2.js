@@ -82,19 +82,20 @@ angular.module('appLibranzaStep2', ['moment-picker', 'ng-currency'])
 		  url: '/creditoLibranza/getDataStep2/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			hideLoader();
-				$scope.countries = response.data.countries;
-				$scope.analyst = response.data.digitalAnalyst;
-				$scope.cities = response.data.cities;
-				$scope.leadInfo.occupation=response.data.occupation;
-			if(response.data.dataLead != false){
+			
+				$scope.countries = response.data[0].countries;
+				$scope.analyst = response.data[0].digitalAnalyst;
+				$scope.cities = response.data[0].cities;
+				$scope.leadInfo.occupation=response.data[0].occupation;
+			if(response.data[0].dataLead != false){
 				$scope.ced=$scope.leadInfo.identificationNumber;
-				$scope.leadInfo = response.data.dataLead[0];
-				$scope.cities = response.data.cities;
+				$scope.leadInfo = response.data[0].dataLead[0];
+				$scope.cities = response.data[0].cities;
 				$scope.leadInfo.identificationNumber = $scope.ced;		
 			}
 			$scope.leadInfo.step = 2;
-
-			console.log($scope.leadInfo);
+			console.log(response.data[0]);
+		
 			
 		}, function errorCallback(response) {
 			
