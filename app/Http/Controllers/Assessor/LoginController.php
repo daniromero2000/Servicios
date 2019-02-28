@@ -89,7 +89,7 @@ class LoginController extends Controller
         if(($assessor) && ($assessor->CODIGO == $codeAssessor->code)){
             Auth::guard('assessor')->loginUsingId($assessor->CODIGO);
             if($codeAssessor->profile == 9){
-                return view('assessors.convenios.pipa');
+               return redirect()->route('laPipa');
             }
             return view('assessors.dashboard');
         }

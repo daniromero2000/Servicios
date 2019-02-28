@@ -91,7 +91,10 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
 	Route::get('/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
 	Route::get('/getData/{identificationNumber}','Admin\OportuyaV2Controller@getDataConsultation');
-	Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
+    Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
+    Route::get('/LaPipa/assesor', function(){
+        return view('assessors.convenios.pipa');
+    })->name('laPipa');
 });
 
 // All resource routes
