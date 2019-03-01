@@ -10,5 +10,7 @@ var app =  angular.module('WarrantyApp',['ngRoute']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/', { templateUrl: 'digitalWarranty/Query',controller:'warrantyController' })
+            when('/Query', { templateUrl: 'digitalWarranty/Query',controller:'warrantyController' })
+
+            .otherwise({ redirectTo: '/Query' })
 }]);
