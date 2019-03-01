@@ -97,6 +97,8 @@ Route::group(['prefix'=>'/assessor/'],function(){
     })->name('laPipa');
 });
 
+Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
+
 // All resource routes
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages','Admin\PageController');
