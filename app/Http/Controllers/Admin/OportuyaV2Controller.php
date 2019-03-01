@@ -60,6 +60,28 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2',['images'=>$images]);
 	}
 
+
+	public function validateEmail(){
+		return response()->json(true);
+		$emailsValidos = [];
+		foreach ($listaCorreos as $value) {
+			
+			$re = '/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/m';
+			$str = strtolower($value);
+			if(preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0)){
+				if($str != '00000@0000.com' && $str != 'no@hotmail.com' && $str != 'ninguno@hotmail.com' && $str != 'no@hotmail.co' && $str != 'na@hotmail.com' && $str != 'na@na.com' && $str != 'na@gmail.com' && $str != 'notiene@hotmail.com'){
+					$pos = strpos($str, 'xxx');
+					if($pos === false){
+						if (!in_array($str, $emailsValidos)) {
+							$emailsValidos[] = $str;
+						}
+					}
+				}
+			}
+		}
+		return $emailsValidos;
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -375,7 +397,7 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->CLIENTE=$identificationNumber;
 			$solic_fab->CODASESOR=$codeAssessor;
-			$solic_fab->FECHASOL=date("Y-m-d H:i:s",strtotime($dateLead));
+			$solic_fab->FECHASOL=date("Y-m-d H:i:s");
 			$solic_fab->SUCURSAL=$sucursal;
 			$solic_fab->ESTADO=$estado;
 			$solic_fab->FTP=$ftp;
@@ -439,6 +461,33 @@ class OportuyaV2Controller extends Controller
 				$analisis->scor_cli = "0";
 				$analisis->scor_cod1 = "0";
 				$analisis->scor_cod2 = "0";
+				$analisis->data_cli= "0";
+				$analisis->data_cod1= "0";
+				$analisis->data_cod2= "0";
+				$analisis->rec_cod1= "0";
+				$analisis->rec_cod2= "0";
+				$analisis->io_cod1 = "0";
+				$analisis->io_cod2 = "0";
+				$analisis->aurcu_cod21 = "0";
+				$analisis->aurcu_cod22 = "0";
+				$analisis->vcu_cli1 = "0";
+				$analisis->vcu_cli2 = "0";
+				$analisis->vcu_cli3 = "0";
+				$analisis->vcu_cod1 = "0";
+				$analisis->vcu_cod12 = "0";
+				$analisis->vcu_cod13 = "0";
+				$analisis->vcu_cod2 = "0";
+				$analisis->vcu_cod21 = "0";
+				$analisis->vcu_cod22 = "0";
+				$analisis->aurcre_cli1 = "0";
+				$analisis->aurcre_cli2 = "0";
+				$analisis->aurcre_cli3 = "0";
+				$analisis->aurcre_cod1 = "0";
+				$analisis->aurcre_cod12 = "0";
+				$analisis->aurcre_cod13 = "0";
+				$analisis->aurcre_cod2 = "0";
+				$analisis->aurcre_cod21 = "0";
+				$analisis->aurcre_cod22 = "0";
 				$analisis->save();
 				$con3 = "PREAPROBADO";
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
@@ -566,10 +615,10 @@ class OportuyaV2Controller extends Controller
 			return -1; // Tiene tarjeta
 		}
 		
-		/*$empleado = $this->getExistEmployed($identificationNumber);
+		$empleado = $this->getExistEmployed($identificationNumber);
 		if($empleado == true){
 			return -2; // Es empleado
-		}*/
+		}
 
 		return response()->json(true);
 	}
