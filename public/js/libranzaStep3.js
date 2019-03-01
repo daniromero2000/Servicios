@@ -176,7 +176,7 @@ angular.module('appLibranzaStep3', ['moment-picker', 'ng-currency'])
 		  data: $scope.comment,
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				window.location="/OP_gracias_FRM";
+				window.location="/creditoLibranza/step1";
 			}
 		}, function errorCallback(response) {
 		});

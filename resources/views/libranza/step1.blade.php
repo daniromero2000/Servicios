@@ -12,7 +12,9 @@
 	<div id="step1" ng-app="appLibranzaStep1" ng-controller="libranzaStep1Ctrl">
 		<div class="row resetRow container-header-forms  container-libranza-forms">
 			<div class="form-container-logoHeader form-container-logoLibranza">
+				<a href="/">
 				<img src="{{ asset('images/logo_Creo.png') }}" class="img-fluid libranzaSteplogo" alt="Oportuya" />
+				</a>
 			</div>
 			<div class="col-12 conatiner-logoImg">
 				<img src="/{{ $digitalAnalyst['img'] }}" alt="{{ $digitalAnalyst['name'] }}" class="img-fluid steps-imgAnalista" />
