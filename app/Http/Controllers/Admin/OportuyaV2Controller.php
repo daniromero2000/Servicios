@@ -615,10 +615,10 @@ class OportuyaV2Controller extends Controller
 			return -1; // Tiene tarjeta
 		}
 		
-		/*$empleado = $this->getExistEmployed($identificationNumber);
+		$empleado = $this->getExistEmployed($identificationNumber);
 		if($empleado == true){
 			return -2; // Es empleado
-		}*/
+		}
 
 		return response()->json(true);
 	}
@@ -693,7 +693,6 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
-		return response()->json(true);
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
