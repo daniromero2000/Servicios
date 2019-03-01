@@ -718,23 +718,7 @@ span.renewCode:hover {
 }
 
 
-.form-container-logoHeader{
-	background: #167efa;
-	padding: 40px;
-	position: relative;
-}
 
-.form-container-logoHeader:before {
-    background: #167efa;
-    content: "";
-    height: 156px;
-    position: absolute;
-    top: 0;
-    right: -32px;
-    transform: skew(338deg);
-    width: 64px;
-    z-index: 2;
-}
 
 .forms-text-analyst{
 	color: #167efa;
@@ -1101,6 +1085,31 @@ label {
 	margin-bottom: 15px;
 }
 
+
+/**
+**Caso de Uso: WARRANTY MODULE
+**Autor: Luis David Giraldo Grajales 
+**Email: desarrolladorjunior@lagobo.com
+**Fecha: 28/02/2018
+**/
+.logoHeaderWarranty{
+	background: #167efa;
+	padding: 40px;
+	position: relative;
+}
+
+.logoHeaderWarranty:before {
+    background: #167efa;
+    content: "";
+    height: 121px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+    transform: skew(338deg);
+    width: 64px;
+    z-index: 2;
+}
+
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;
@@ -1117,7 +1126,15 @@ label {
 	.form-container-logoHeader{
 		margin-bottom: 80px;
 	}
+	.logoHeaderWarranty{
+		padding: 30px;
+		margin-bottom: 80px;
+		width:100%;
+	}
 	.form-container-logoHeader:before{
+		width: 0;
+	}
+	.logoHeaderWarranty:before{
 		width: 0;
 	}
 	.imgStartProgress, .imgEndProgress{
