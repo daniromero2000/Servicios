@@ -29,9 +29,6 @@ Route::group(['prefix'=>'/Catalog/'],function(){
     Route::get('/productDetails','Admin\ProductsController@productsDetails');
 });
 
-Route::get('/warantyQuery', function(){
-    return "view('warranty.public.warantyQuery')";
-});
 
 /**
     **Proyect: SERVICIOS FINANCIEROS
