@@ -28,3 +28,26 @@ Route::group(['prefix'=>'/Catalog/'],function(){
     //get information of selected product
     Route::get('/productDetails','Admin\ProductsController@productsDetails');
 });
+
+Route::get('/warantyQuery', function(){
+    return "view('warranty.public.warantyQuery')";
+});
+
+/**
+    **Proyect: SERVICIOS FINANCIEROS
+    **Case of use: MODULO GARANTIA DIGITAL
+    **Author: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Date: 28/02/2019
+     **/
+Route::group(['prefix'=>'/digitalWarranty/'],function(){
+
+	//display layout warrty app 
+    Route::get("/",function(){
+        return view('warranty.public.layout');
+    })->name('warranty');
+    //render query
+    Route::get('/Query', function(){
+        return view('warranty.public.query');
+    });
+});
