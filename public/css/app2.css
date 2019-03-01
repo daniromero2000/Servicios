@@ -718,6 +718,23 @@ span.renewCode:hover {
 }
 
 
+.form-container-logoHeader{
+	background: #167efa;
+	padding: 40px;
+	position: relative;
+}
+
+.form-container-logoHeader:before {
+    background: #167efa;
+    content: "";
+    height: 156px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+    transform: skew(338deg);
+    width: 64px;
+    z-index: 2;
+}
 
 
 .forms-text-analyst{
