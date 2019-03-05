@@ -1,10 +1,10 @@
     <!--
     **Proyect: SERVICIOS FINANCIEROS
-    **Case of use: MODULO CATALOGO
+    **Case of use: MODULO GARANTIAS
     **Author: Luis David Giraldo Grajales 
     **Email: desarrolladorjunior@lagobo.com
-    **Description: public view to catalog
-    **Date: 18/01/2019
+    **Description: public view to warranty form
+    **Date: 05/03/2019
      -->
      
 @extends('layouts.basicIncludes')
@@ -16,5 +16,5 @@
         </ng-view>
     </div>
     <script src="{{ asset('js/appWarranty/appPublic/app.js') }}"></script>
-    <script src="{{ asset('js/appWarranty/appPublic/Controllers/warrantyController.js') }}"></script>
+    <script src="{{ asset('js/appWarranty/appPublic/Controllers/warranty.js') }}"></script>
 @stop

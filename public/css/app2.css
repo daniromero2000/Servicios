@@ -1118,13 +1118,101 @@ label {
 .logoHeaderWarranty:before {
     background: #167efa;
     content: "";
-    height: 121px;
+    height: 140px;
     position: absolute;
     top: 0;
     right: -32px;
     transform: skew(338deg);
     width: 64px;
     z-index: 2;
+}
+.imgAnalista{
+	position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.conatiner-imgAnalista{
+	border-bottom: 1px solid #969393;
+    padding: 0;
+    position: relative;
+    min-height: 0 !important;
+}
+
+.stepBystep{
+	color: #4a4a4a;
+	margin: 10px 30px;
+}
+.contentGarantias{
+	background-color: #FAFAFA; 
+}
+.Garantia-containerForm{
+	max-width: 1200px;
+	margin: auto;
+	position: relative;
+}
+.descriptionStep{
+	background: #167efa;
+	border-radius: 10px;
+	color: white;
+	line-height: 1;
+	padding: 10px 100px 15px 50px;
+	position: relative;
+	margin: 40px 0;
+}
+.descText{
+	font-size: 12px;
+}
+.descImg{
+	position: absolute;
+	right: 16px;
+	top: 13px;
+	width: 40px;
+}
+.descStepNum{
+	background: #908c8c;
+	border: 3px solid white;
+	border-radius: 50%;
+	font-weight: 700;
+	height: 35px;
+	left: -5px;
+	padding: 7px 0 0 0;
+	position: absolute;
+	text-align: -webkit-center;
+	top: -7px;
+	width: 35px;
+}
+.warrantyInputs{
+	border-radius: 8px !important;;
+	height: 52px;
+}
+
+.warrantyInputs::-webkit-input-placeholder, .inputSelect {
+	font-size: 15px;
+	font-weight: 500;
+}
+.WarrantyInputText{
+	color: black;
+	font-size: 18px;
+}
+.containTitle{
+	margin: 50px 0 30px;
+}
+.titleAnalista{
+	color: #4a4a4a;
+	font-size: 28px;
+	font-weight: 200;
+	margin:0;
+}
+.textAnalista{
+	color: #4a4a4a;
+	font-size: 18px;
+	font-weight: 200;
+}
+.text-analyst{
+	color: #167efa;
+}
+.warranty-info p{
+	color: #9c9c9c;
 }
 
 @media(max-width: 991px){
@@ -1137,15 +1225,26 @@ label {
 }
 
 @media(max-width: 768px){
+	/**
+	**Caso de Uso: WARRANTY MODULE
+	**Autor: Luis David Giraldo Grajales 
+	**Email: desarrolladorjunior@lagobo.com
+	**Fecha: 28/02/2018
+	**/
 	.steps-textStep{
 		bottom: -50px;
+	}
+	.stepBystep{
+		width: 100%;
+		text-align: center;
+		margin-top: 55px;
 	}
 	.form-container-logoHeader{
 		margin-bottom: 80px;
 	}
 	.logoHeaderWarranty{
 		padding: 30px;
-		margin-bottom: 80px;
+		margin-bottom: 60px;
 		width:100%;
 	}
 	.form-container-logoHeader:before{
