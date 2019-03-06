@@ -7,7 +7,7 @@
     **Date: 05/03/2019
      -->
      
-@extends('layouts.app')
+@extends('layouts.basicIncludes')
 
 @section('content')
 
