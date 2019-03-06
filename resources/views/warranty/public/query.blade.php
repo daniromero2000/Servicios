@@ -7,15 +7,21 @@
     **Date: 05/03/2019
      -->
 <div Class="contentGarantias">
+    <div class="align-self-center ml-auto ">
+            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y condiciones</a>
+    </div>
     <div class="row resetRow">
         <div class="logoHeaderWarranty">
             <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" />
+        </div>
+        <div class="align-self-center ml-auto conditions">
+            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal">Términos y condiciones</a>
         </div>
         <div class="col-12 conatiner-imgAnalista">
             <img src="{{ asset('images/analistaGarantiaDigital.png') }}"  alt="" class="img-fluid imgAnalista" />
         </div>
         <div class="stepBystep">
-            <span><strong>Reclamacion de Garantia </strong></span>
+            <span><strong>Reclamación de Garantía</strong></span>
         </div>
     </div>
     <div class="row resetRow">
@@ -117,13 +123,19 @@
                     <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.city" id="city" required="" ng-options="city as city.name for city in cities"></select>               
                 </div>               
             </div>
-            <div class="row resetRow" ng-if="WarrantyRequest.meansSale == 5 ">
+            <div class="row resetRow" ng-if="WarrantyRequest.meansSale == 5">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="store">Tienda *</label>
                     <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.store" id="store" required="" >              
                         <option value="store" ng-repeat="store in stores">@{{store}}</option>
                     </select> 
                 </div>             
+            </div>
+            <div class="row resetRow">
+                <div class="col-12 form-group">
+                    <label for="fault ">Descripción de la falla *</label>
+                    <textarea rows="3" class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.faultDescription" ></textarea>               
+                </div>               
             </div>
         </form>
     </div>

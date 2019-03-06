@@ -7,7 +7,7 @@
     **Date: 05/03/2019
      -->
      
-@extends('layouts.appFooter')
+@extends('layouts.basicIncludes')
 
 @section('content')
 
