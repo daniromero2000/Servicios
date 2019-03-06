@@ -7,7 +7,7 @@
     **Date: 05/03/2019
      -->
      
-@extends('layouts.BasicIncludes.blade')
+@extends('layouts.BasicIncludes')
 
 @section('content')
 
