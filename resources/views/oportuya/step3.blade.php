@@ -134,7 +134,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
+				<div ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO' || leadInfo.occupation == 'NO CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="camaraComercio">Cámara de Comercio</label>

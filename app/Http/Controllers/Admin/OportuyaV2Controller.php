@@ -818,7 +818,7 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function getExistEmployed($identificationNumber){
-		$queryExistEmployed = sprintf("SELECT COUNT(`identificador`) as totalEmployes FROM `LISTA_EMPLEADOS` WHERE `num_documento` = %s ", $identificationNumber);
+		$queryExistEmployed = sprintf("SELECT COUNT(`identificador`) as totalEmployes FROM `LISTA_EMPLEADOS` WHERE `num_documento` = %s AND `estado` = 1 ", $identificationNumber);
 
 		$resp = DB::connection('oportudata')->select($queryExistEmployed);
 
