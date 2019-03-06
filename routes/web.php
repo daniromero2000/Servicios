@@ -440,7 +440,19 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('modules.modules');
         });
     });
+
+    // Administrador Lista de Empleados
+    Route::group(['prefix' => '/ListaEmpleados'], function(){
+        Route::get('/', function(){
+            return view('listaEmpleados.index');
+        });
+
+        Route::get('/ListaEmpleados', function(){
+            return view('listaEmpleados.listaEmpleados');
+        });
+    });
 });
+Route::resource('listaEmpleados', 'Admin\ListaEmpleadosController');
 
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
 Route::group(['prefix'=>'/libranza'],function(){
@@ -449,5 +461,18 @@ Route::group(['prefix'=>'/libranza'],function(){
 
 // Servicios Oportudata
 Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
+
+// Campañas Marketing
+Route::group(['prefix'=>'/campaigns'],function(){
+    Route::get('/experiencia-auteco', function(){
+        return view('campaignsMarketing.campaignAuteco1');
+    });
+    
+    Route::get('/renovacion-auteco', function(){
+        return view('campaignsMarketing.campaignAuteco2');
+    });
+});
+
+Route::get('/campaigns/auteco2');
 include "web2.php";
 include "web3.php";
