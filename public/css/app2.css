@@ -1263,6 +1263,9 @@ label {
 	.formularioSimulador-containerFormulario{
 		margin-top: 40px;
 	}
+	.Garantia-containerForm{
+		padding: 10px;
+	}
 }
 
 @media(max-width: 768px){
