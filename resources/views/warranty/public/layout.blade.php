@@ -7,7 +7,7 @@
     **Date: 05/03/2019
      -->
      
-@extends('layouts.appFooter')
+@extends('layouts.BasicIncludes')
 
 @section('content')
 
@@ -16,5 +16,5 @@
         </ng-view>
     </div>
     <script src="{{ asset('js/appWarranty/appPublic/app.js') }}"></script>
-    <script src="{{ asset('js/appWarranty/appPublic/Controllers/warranty.js') }}"></script>
+    <script src="{{ asset('js/appWarranty/appPublic/controllers/warranty.js') }}"></script>
 @stop
