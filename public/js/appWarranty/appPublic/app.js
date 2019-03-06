@@ -11,6 +11,5 @@ app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', { templateUrl: 'digitalWarranty/Query', controller:'warrantyController' })
-
             .otherwise({ redirectTo: '/' })
 }]);
