@@ -16,5 +16,5 @@
         </ng-view>
     </div>
     <script src="{{ asset('js/appWarranty/appPublic/app.js') }}"></script>
-    <script src="{{ asset('js/appWarranty/appPublic/Controllers/warranty.js') }}"></script>
+    <script src="{{ asset('js/appWarranty/appPublic/controllers/warranty.js') }}"></script>
 @stop
