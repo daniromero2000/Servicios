@@ -5,6 +5,10 @@ use App\Imagenes;
 use App\Fee;
 use App\Lead;
 use App\Liquidator;
+use App\Pagaduria;
+use App\LibranzaLines;
+use App\LibranzaProfile;
+use App\PagaduriaProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -39,6 +43,7 @@ class LibranzaController extends Controller
      */
     public function store(Request $request)
     {
+        
         $lead= new Lead;
         $liquidator = new Liquidator;
 
@@ -150,6 +155,29 @@ class LibranzaController extends Controller
         return response()->json($arrayResult);
     }
 
+    public function getData(){
+
+        $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
+        $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
+        $libranza_profile=LibranzaProfile::select('id','name')->orderBy('id','desc')->get();
+        $data=[];
+        $data['lines']=$lines;
+        $data['pagaduria']=$pagaduria;
+        $data['profiles']=$libranza_profile;
+        return response()->json($data);
+
+    }
+
+    public function assignPagaduria($idLibranzaProfile){
+
+        $pagaduriaProfile=PagaduriaProfile::selectRaw('pagadurias_libranza_profiles.idPagaduria,pagaduria.name')
+        ->leftJoin('pagaduria','pagadurias_libranza_profiles.idPagaduria','=','pagaduria.id')
+        ->where('pagadurias_libranza_profiles.idProfile','=',$idLibranzaProfile)
+        ->where('pagaduria.active','=',1)
+        ->get();
+
+        return response()->json($pagaduriaProfile);
+    }
 
     public function test($request){
         $array = [1,2,3,4,5,6,7];

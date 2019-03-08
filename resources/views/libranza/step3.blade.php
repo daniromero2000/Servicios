@@ -196,7 +196,7 @@
 							<label for="dateCreationCompany">Fecha de Pensión*</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
-							     format="YYYY-MM">
+							     format="YYYY-MM-DD">
 							    <input class="form-control inputsSteps inputText"
 							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" required="" />
 							    <span class="input-group-addon">

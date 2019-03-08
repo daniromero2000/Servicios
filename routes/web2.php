@@ -20,9 +20,20 @@ Route::group(['prefix'=>'/creditoLibranza/'],function(){
     Route::get('/cities', 'Admin\LibranzaV2Controller@cities')->name('step1Cities');
 
 })  ;
-
 Route::resource('avance','Admin\AdvanceController');
+//Route::get('libranza-lines','Admin\LibranzaController@index');
 
 Route::get('/OPN_gracias_denied_advance',function(){
     return view('advance.pageDeniedAdvance');
 })->name('thankYouPageAdvanceDenied');
+
+//Route::get('/getDataLibranza','Admin\LibranzaController@getData');
+
+Route::group(['prefix'=>'/libranza-principal/'],function(){
+    Route::get('/', function(){
+        return view('libranza.index');
+    });
+    Route::get('/libranza-lines',function(){
+        return view('libranza.libranza');
+    });
+});
