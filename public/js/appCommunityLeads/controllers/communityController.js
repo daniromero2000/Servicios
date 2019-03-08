@@ -203,7 +203,8 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response){
 				if(response.data != false){
 					$scope.searchLeads();
-					$('#addCommunityLead').modal('hide');	
+					$('#addCommunityLead').modal('hide');
+					$scope.lead = {};
 				}
 			},function errorCallback(response){
 				

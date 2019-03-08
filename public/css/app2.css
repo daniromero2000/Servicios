@@ -1107,8 +1107,16 @@ label {
 **Caso de Uso: WARRANTY MODULE
 **Autor: Luis David Giraldo Grajales 
 **Email: desarrolladorjunior@lagobo.com
-**Fecha: 28/02/2018
+**Fecha: 28/02/2019
 **/
+.titleTerms{
+	color: #348dc7;
+	font-size: 25px;
+	font-weight: normal;
+	margin-bottom: 40px;
+	margin-top: 40px;
+	position: relative;
+}
 .logoHeaderWarranty{
 	background: #167efa;
 	padding: 40px;
@@ -1214,6 +1222,39 @@ label {
 .warranty-info p{
 	color: #9c9c9c;
 }
+.warrantyLegal {
+	font-family: barlow;
+    margin-right: 3vw;
+    color: #909090;
+    font-weight: bold;
+}
+.warrantyLegal:hover{
+    color: #909090;
+}
+.warrantyLegal-xs{
+	display: none;
+}
+
+.logoHeaderTerms{
+	background: #167efa;
+	padding: 40px;
+	position: relative;
+}
+
+.logoHeaderTerms:before {
+    background: #167efa;
+    content: "";
+    height: 140px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+    transform: skew(338deg);
+    width: 64px;
+    z-index: 2;
+}
+.TermsHeader{
+	border-bottom: 1px solid #1111115c;
+}
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
@@ -1221,6 +1262,9 @@ label {
 	}
 	.formularioSimulador-containerFormulario{
 		margin-top: 40px;
+	}
+	.Garantia-containerForm{
+		padding: 10px;
 	}
 }
 
@@ -1231,6 +1275,16 @@ label {
 	**Email: desarrolladorjunior@lagobo.com
 	**Fecha: 28/02/2018
 	**/
+	.warrantyLegal{
+		color: #e1e1e1;
+	}
+	.warrantyLegal:hover{
+		color: #e1e1e1;
+	}
+	.conditions{
+		margin-top: -239px;
+		z-index: 1;
+	}
 	.steps-textStep{
 		bottom: -50px;
 	}
@@ -1253,8 +1307,20 @@ label {
 	.logoHeaderWarranty:before{
 		width: 0;
 	}
+	.logoHeaderTerms{
+		padding: 30px;
+		margin-bottom: 60px;
+		width:100%;
+	}
+
+	.logoHeaderTerms:before{
+		width: 0;
+	}
 	.imgStartProgress, .imgEndProgress{
 		display: none;
+	}
+	.warrantyLegal{
+		margin-right: 3vw;
 	}
 }
 
@@ -1279,6 +1345,20 @@ label {
 }
 
 @media(max-width: 450px){
+	.warrantyLegal{
+		display: none;
+	}
+
+	.warrantyLegal-xs{
+		text-align: center;
+		display: block;
+		font-family: barlow;
+		color: #656464;
+		font-weight: bold;
+	}
+	.warrantyLegal-xs:hover{
+		color: #656464;
+	}
 	.progreso > .puntos ~ label {
 	    font-size: 8px;
 	}

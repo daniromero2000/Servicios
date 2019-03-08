@@ -245,90 +245,82 @@
            <div class="modal-body">
                 <div class="container">
                     <div class="row resetRow " >
-                        <div class="col-12 form-group row">
-                            <form ng-submit="addCommunityLeads()" id="addCommunityForm">
-                                {{ csrf_field() }}
-
-
-                                <div class="form-group row">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="name">Nombre</label>
-                                        <input type="text" ng-model="lead.name" id="name" cols="10" class="form-control" required>    
-                                    </div>
-                                     <div class="col-12 col-sm-6 no-padding-right">
-                                        <label for="lastName">Apellido</label>
-                                        <input type="text" ng-model="lead.lastName" id="lastName" cols="10" class="form-control" required>
-                                    </div>                                   
+                        <form ng-submit="addCommunityLeads()" id="addCommunityForm">
+                            {{ csrf_field() }}
+                            <div class="row">
+                                <div class="col-12 form-group">
+                                    <label for="identificationNumber">Cédula</label>
+                                    <input type="text" class="form-control" id="identificationNumber" ng-model="lead.identificationNumber" />
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="email">email</label>
-                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control" required>                                       
-                                    </div>
-                                    <div class="col-12 col-sm-6 no-padding-right">
-                                        <label for="telephone">telefono</label>
-                                        <input type="text" ng-model="lead.telephone" id="telephone" cols="10" class="form-control" required>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="name">Nombre</label>
+                                    <input type="text" ng-model="lead.name" id="name" cols="10" class="form-control" required>    
                                 </div>
-
-
-                                 <div class="form-group row">            
-                                    <div class="col-12 col-sm-6">
-                                        <label for="city">Ciudad</label>
-                                         <select id="city" class="form-control" ng-model="lead.city">
-                                             <option ng-repeat="city in cities" value="@{{city.value}}">
-                                                 @{{city.value}}
-                                             </option>
-                                        </select>                                        
-                                    </div>
-                                    <div class="col-12 col-sm-6 no-padding-right">
-                                        <label for="socialNetwork">Canal de adquisición</label>
-                                        <select id="socialNetwork" class="form-control" ng-model="lead.channel">
-                                            <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}">
-                                                 @{{socialNetwork.label}}
+                                    <div class="col-12 col-sm-6 form-group no-padding-right">
+                                    <label for="lastName">Apellido</label>
+                                    <input type="text" ng-model="lead.lastName" id="lastName" cols="10" class="form-control" required>
+                                </div>                                   
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control">
+                                </div>
+                                <div class="col-12 col-sm-6 form-group no-padding-right">
+                                    <label for="telephone">Teléfono</label>
+                                    <input type="text" ng-model="lead.telephone" id="telephone" cols="10" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row">            
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="city">Ciudad</label>
+                                        <select id="city" class="form-control" ng-model="lead.city">
+                                            <option ng-repeat="city in cities" value="@{{city.value}}">
+                                                @{{city.value}}
                                             </option>
-                                        </select>                            
-
-                                    </div>                               
+                                    </select>                                        
                                 </div>
+                                <div class="col-12 col-sm-6 form-group no-padding-right">
+                                    <label for="socialNetwork">Canal de Adquisición</label>
+                                    <select id="socialNetwork" class="form-control" ng-model="lead.channel">
+                                        <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}">
+                                                @{{socialNetwork.label}}
+                                        </option>
+                                    </select>                            
 
-
-                                 <div class="form-group row">            
-
+                                </div>                               
+                            </div>
+                            <div class="row">
+                                <div class="col-12 form-group">
                                     <label for="socialNetwork">Campaña</label>
-                                     <select id="socialNetwork" class="form-control" ng-model="lead.campaign">
-                                         <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}">
-                                             @{{campaign.name}}
-                                         </option>
-                                     </select>
+                                    <select id="socialNetwork" class="form-control" ng-model="lead.campaign">
+                                        <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}">
+                                            @{{campaign.name}}
+                                        </option>
+                                    </select>
                                 </div>
-
-
-
-
-
-                                <div class="form-group row">            
-                                    <div class="col-12 col-sm-6">
-                                        <label for="service">Servicio</label>
-                                         <select id="service" class="form-control" ng-model="lead.typeService">
-                                             <option ng-repeat="service in typeServices" value="@{{service.value}}">
-                                                 @{{service.value}}
-                                             </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-sm-6 no-padding-right">
-                                        <label for="product">Producto</label>
-                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" required>
-                                    </div>
+                            </div>
+                            <div class="row">       
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="service">Servicio</label>
+                                    <select id="service" class="form-control" ng-model="lead.typeService">
+                                        <option ng-repeat="service in typeServices" value="@{{service.value}}">
+                                            @{{service.value}}
+                                        </option>
+                                    </select>
                                 </div>
-
-
-                                <div class="form-group text-left">
-                                    <button class="btn btn-primary">Agregar</button>
-                                    <button class=" btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                                <div class="col-12 col-sm-6 form-group no-padding-right">
+                                    <label for="product">Producto</label>
+                                    <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" required>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="form-group text-left">
+                                <button class="btn btn-primary">Agregar</button>
+                                <button class=" btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            </div>
+                        </form>
                         <hr>
                     </div>
                 </div>
