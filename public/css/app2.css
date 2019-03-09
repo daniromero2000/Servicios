@@ -1151,7 +1151,8 @@ label {
 	margin: 10px 30px;
 }
 .contentGarantias{
-	background-color: #FAFAFA; 
+	background-color: #FAFAFA;
+	margin-bottom: 20px; 
 }
 .Garantia-containerForm{
 	max-width: 1200px;
@@ -1254,6 +1255,30 @@ label {
 }
 .TermsHeader{
 	border-bottom: 1px solid #1111115c;
+}
+.isUserCheck{
+	margin-left: 15px;
+}
+.addPhone{
+	color: white;
+	border-radius: 50%;	
+}
+.deletePhone{
+	color: white;
+	border-radius: 50%;	
+}
+.addPhoneContainer{
+	padding-bottom: 26px;
+	padding-left: 0px;
+
+}
+.deletePhoneContainer{
+	padding-bottom: 10px;
+	padding-left: 0px;
+}
+.sendRequest{
+	border-radius: 20px;
+	padding: 5px 45px;
 }
 
 @media(max-width: 991px){

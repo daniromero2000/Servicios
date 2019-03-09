@@ -43,18 +43,20 @@
         <form ng-submit="WarrantyRequest()">
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="identificationNumber"> Número de identificación*</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text" validation-pattern="number" ng-model="WarrantyRequest.identificationNumber" id="identificationNumber" required="" placeholder="Titular de la factura"/>
+                    <label for="identificationNumber"> Número de identificación* @{{WarrantyRequest.confirmmail}}</label>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text" validation-pattern="IdentificationNumber" ng-model="WarrantyRequest.identificationNumber" id="identificationNumber" required="" placeholder="Titular de la factura"/>
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="clientName"> Nombre*</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="WarrantyRequest.clientName" id="clientName" required="" placeholder="Titular de la factura"/>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="WarrantyRequest.clientName" id="clientName" required validation-pattern="textOnly" placeholder="Titular de la factura"/>
                 </div>           
             </div>
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="typeRequestes">Tipo de reclamación*</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.type" id="typeRequestes" required="" ng-options="typeRequest.name for typeRequest in typeRequestes"></select>                
+                    <select required class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.type" id="typeRequestes"  ng-options="typeRequest.name for typeRequest in typeRequestes">
+                        <option></option>
+                    </select>                
                 </div>
             </div>
             <div class="row resetRow">
@@ -71,11 +73,15 @@
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="product">Producto*</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.product" id="product" required="" ng-options="product.name for product in products"></select>                
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.product" id="product" required ng-options="product.name for product in products">
+                        <option></option>
+                    </select>                
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="brand">Marca*</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.brand" id="brand" required="" ng-options="brand.name for brand in brands"></select>               
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.brand" id="brand" required ng-options="brand.name for brand in brands">
+                        <option></option>
+                    </select>               
                 </div>               
             </div>
             <div class="row resetRow">
@@ -106,37 +112,120 @@
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="invoiceNumber">Numero de factura (opcional)</label>
-                    <input class="form-control warrantyInputs inputSelect" type="number" ng-model="WarrantyRequest.invoiceNumber" id="invoiceNumber" min="0"></select>                        
+                    <input class="form-control warrantyInputs inputSelect" type="number" ng-model="WarrantyRequest.invoiceNumber" id="invoiceNumber" min="0">                        
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="meansSale">Medio de compra*</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.meansSale" id="meansSale" required="" ng-options="meansSale.id as meansSale.name for meansSale in meansSales"></select>               
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.meansSale" id="meansSale" required ng-options="meansSale.id as meansSale.name for meansSale in meansSales">
+                        <option></option>
+                    </select>               
                 </div>               
             </div>
             <div class="row resetRow" ng-if="WarrantyRequest.meansSale == 5 ">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="departamento">Departamento *</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.departamento" id="departamento" required="" ng-options="departamento as departamento.name for departamento in departamentos"></select>               
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.departamento" id="departamento" required ng-options="departamento as departamento.name for departamento in departamentos">
+                        <option></option>
+                    </select>               
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="city">ciudad *</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.city" id="city" required="" ng-options="city as city.name for city in cities"></select>               
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.city" id="city" required ng-options="city as city.name for city in cities">
+                        <option></option>
+                    </select>               
                 </div>               
             </div>
             <div class="row resetRow" ng-if="WarrantyRequest.meansSale == 5">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="store">Tienda *</label>
-                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.store" id="store" required="" >              
-                        <option value="store" ng-repeat="store in stores">@{{store}}</option>
-                    </select> 
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.store" id="store" required>              
+                        <option value="@{{store}}" ng-repeat="store in stores">@{{store}}</option>
+                    </select>              
                 </div>             
             </div>
             <div class="row resetRow">
                 <div class="col-12 form-group">
-                    <label for="fault ">Descripción de la falla *</label>
-                    <textarea rows="3" class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.faultDescription" ></textarea>               
+                    <label for="fault">Descripción de la falla *</label>
+                    <textarea id="fault" rows="3" class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.faultDescription" required></textarea>               
                 </div>               
             </div>
+            <div class="row resetRow">
+                <div class="descriptionStep">
+                    <strong>Información de ubicación </strong><br>
+                    <span class="descText">Ingresa tus datos de ubicación y de contacto</span>
+                    <img src="{{ asset('images/datosPersonales2-min.png') }}" class="img-fluid forms-descImg" />
+                    <span class="descStepNum">3</span>
+                </div>
+            </div>
+            <div class="row resetRow">
+                <div class="col-12 form-group">
+                    <label for="Yes">¿El usuario del producto es el titular de la cuenta? *</label>            
+                </div>
+                <div class="form-check isUserCheck">
+                    <input class="form-check-input" ng-model="isUser"  name="isuser" type="radio"  id="yes"  value="True" checked required>
+                    <label class="form-check-label" for="exampleRadios1">Si</label>
+                </div>
+                <div class="form-check isUserCheck">
+                    <input class="form-check-input" ng-model="isUser"   name="isuser" type="radio" id="yes" value="False" required>
+                    <label class="form-check-label" for="exampleRadios2">No</label>
+                </div>               
+            </div>
+            <div class="row resetRow" ng-if="isUser == 'False'">
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="userName">Nombre del Usuario*</label>
+                    <input class="form-control warrantyInputs inputSelect" type="Text" ng-model="WarrantyRequest.userName" id="userName" validation-pattern="textOnly" required>                   
+                </div>
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="city">Relación *</label>
+                    <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.relationship" id="relationship" ng-options="relationship.id as relationship.name for relationship in relations" required>
+                        <option></option>
+                    </select>               
+                </div>               
+            </div>
+            <div class="row resetRow" >
+                <div class="col-12 col-sm-6 form-group">
+                    <div class="row resetRow" >
+                        <div class="col-11 form-group" ng-repeat="phone in WarrantyRequest.phones">
+                            <div class="row resetRow">
+                                <div class="col-11 form-group"> 
+                                    <label for="phone">Teléfono*</label>
+                                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="phone.number" id="phone" validation-pattern="telephone" required>
+                                </div>
+                                <div class="col-1 form-group align-self-end deletePhoneContainer">
+                                    <button type="button" class="btn btn-danger deletePhone"  ng-click="WarrantyRequest.phones.splice($index,1)" ng-if="!$first"><i class="fas fa-minus"></i></button> 
+                                </div> 
+                            </div>
+                                              
+                        </div>
+                        <div class="col-1 form-group align-self-end addPhoneContainer">
+                            <button type="button" class="btn btn-success addPhone"  ng-click="WarrantyRequest.phones.push({number:null})" ><i class="fas fa-plus"></i></button> 
+                        </div> 
+                    </div>
+                </div>             
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="validEmail">
+                Los campos de correo electrónico y confirmación deben coincidir 
+            </div>
+            <div class="row resetRow">
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="email">Correo electrónico*</label>
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="WarrantyRequest.email" id="email"  validation-pattern="email" required>                   
+                </div>
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="confirmEmail">Confirma tu correo electrónico</label>
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="WarrantyRequest.confirmEmail" id="confirmEmail" >                   
+                </div>             
+            </div>
+            <div class="row resetRow">
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="address">Dirección (Donde se encuentra ubicado el producto) *</label>
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="WarrantyRequest.address" id="address" required>                   
+                </div>             
+            </div>
+            <div class="row justify-content-center">
+                <button type="submit" class="btn btn-primary sendRequest"  ng-click="sendRequest()" >Enviar</button> 
+            </div> 
         </form>
     </div>
 </div>
+<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>

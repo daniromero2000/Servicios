@@ -9,7 +9,11 @@ $( document ).ready(function() {
 			switch(name) {
 			    case 'number':
 			    	validateNumber(inputs[i]);
-			        break;
+					break;
+					
+				case 'IdentificationNumber':
+					validateIdentificationNumber(inputs[i]);
+					break;
 
 			    case 'name':
 			        validateName(inputs[i]);
@@ -29,6 +33,10 @@ $( document ).ready(function() {
 
 			    case 'email':
 			    	validateEmail(inputs[i]);
+					break;
+
+				case 'age':
+			    	validateAge(inputs[i]);
 			    	break;
 			}
 		}
@@ -76,6 +84,12 @@ $( document ).ready(function() {
 	/* Type Number */
 	function validateNumber(input){
 		var patt = "[0-9]*";
+		setAttributePatternInput(input, patt);
+	};
+	/* Identification Number */
+	function validateIdentificationNumber(input){
+		
+		var patt = "[0-9]{5,10}";
 		setAttributePatternInput(input, patt);
 	};
 	/* Age */

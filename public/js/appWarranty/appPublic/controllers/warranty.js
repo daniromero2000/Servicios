@@ -71,7 +71,11 @@ app.controller('warrantyController', function($scope, $http, $location){
 					{id:'35',name:'Lanix'},{id:'36',name:'Ecofrial'},
 					{id:'37',name:'Philips'},{id:'38',name:'Haceb'},
 					{id:'39',name:'Mabe'},{id:'40',name:'Centrales'}];			
-	$scope.WarrantyRequest = {};//Request Data
+	//Request Data
+	$scope.WarrantyRequest = {
+		phones:[{number:null}],//phones list
+	};
+	
 	$scope.meansSales = [{id:1,name:'PÁGINA OPORTUNIDADES'},
 						{id:2,name:'MERCADO LIBRE'},
 						{id:3,name:'PÁGINA ÉXITO'},
@@ -96,6 +100,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 			return;
 		}
 		$scope.cities=newValue.cities;
+		console.log($scope.isUserCheck);
 	},true);
 	// watch a city changes in order to update a stores list
 	$scope.$watch("WarrantyRequest.city",function(newValue,oldValue) {
@@ -105,7 +110,34 @@ app.controller('warrantyController', function($scope, $http, $location){
 		}
 		$scope.stores=newValue.stores;
 	},true);
+	$scope.$watchGroup(["WarrantyRequest.confirmEmail","WarrantyRequest.email"],function(newValues,oldValues) {
+		if (newValues === oldValues) {
+			return;
+		  }
+		  if (newValues[0] == newValues[1]) {
+			$scope.validEmail=false;
+		  }else{
+			$scope.validEmail=true;
+		  }
+		
+	},true);
 
+	$scope.relations = [{id:1,name:'Padre/Madre'},{id:2,name:'Hijo (a)'},
+						{id:3,name:'Abuelo (a)'},{id:4,name:'Esposo (a)'},
+						{id:5,name:'Abuelo (a)'},{id:6,name:'Nieto (a)'},
+						{id:7,name:'Amigo (a)'},{id:8,name:'Vecino (a)'},
+						{id:9,name:'Tío (a)'},{id:10,name:'Otro'}];
+	
+	$scope.sendRequest = function() {
+		if ($scope.validEmail){
+			console.log("corro");
+			return;
+		}
+		console.log($scope.WarrantyRequest);
+	}
+	$scope.casa = function(){
+		return WarrantyRequest.address
+	}
 });
 	/*
 	$scope.linesBrands = [];// list the lines and with their associated brands
