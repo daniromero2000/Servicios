@@ -67,7 +67,7 @@
 		</div>
 
 		
-		
+		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>		
 		@yield('scriptsJs')
 
 	</body>
