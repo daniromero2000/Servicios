@@ -127,17 +127,31 @@ app.controller('warrantyController', function($scope, $http, $location){
 						{id:5,name:'Abuelo (a)'},{id:6,name:'Nieto (a)'},
 						{id:7,name:'Amigo (a)'},{id:8,name:'Vecino (a)'},
 						{id:9,name:'Tío (a)'},{id:10,name:'Otro'}];
-	
+	// take a WarrantyRequest Object and send a info
 	$scope.sendRequest = function() {
-		if ($scope.validEmail){
-			console.log("corro");
+		if ($scope.validEmail){ // only star if email an confirm email match
 			return;
 		}
-		console.log($scope.WarrantyRequest);
+		$('#ValidRequest').modal('show');
+		console.log($scope.validEmail);
+		/* showLoader();
+		$http({
+		  method: 'GET',
+		  url: '/Catalog/linesBrands'
+		}).then(function successCallback(response) {
+			if(response != false){
+				$scope.linesBrands = response.data;
+				hideLoader();
+				angular.forEach($scope.linesBrands,function(value,key){
+					value.color = $scope.color.pop();
+				});
+			}
+
+		}, function errorCallback(response) {
+			hideLoader();
+		});*/
 	}
-	$scope.casa = function(){
-		return WarrantyRequest.address
-	}
+
 });
 	/*
 	$scope.linesBrands = [];// list the lines and with their associated brands
