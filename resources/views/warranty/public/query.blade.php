@@ -6,10 +6,8 @@
     **Description: public view of the Warranty Request
     **Date: 05/03/2019
      -->
+
 <div Class="contentGarantias">
-    <div class="align-self-center ml-auto ">
-            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y condiciones</a>
-    </div>
     <div class="row resetRow">
         <div class="logoHeaderWarranty">
             <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" />
@@ -40,15 +38,15 @@
                 <span class="descStepNum">1</span>
             </div>
         </div>
-        <form ng-submit="WarrantyRequest()">
+        <form ng-submit="sendRequest()">
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="identificationNumber"> Número de identificación* @{{WarrantyRequest.confirmmail}}</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text" validation-pattern="IdentificationNumber" ng-model="WarrantyRequest.identificationNumber" id="identificationNumber" required="" placeholder="Titular de la factura"/>
+                    <label for="identificationNumber"> Número de identificación*</label>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text" validation-pattern="IdentificationNumber" ng-model="WarrantyRequest.identificationNumber" id="identificationNumber" required="" placeholder="Número de identificación titular de la factura"/>
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="clientName"> Nombre*</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="WarrantyRequest.clientName" id="clientName" required validation-pattern="textOnly" placeholder="Titular de la factura"/>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="WarrantyRequest.clientName" id="clientName" required validation-pattern="textOnly" placeholder="Nombre titular de la factura"/>
                 </div>           
             </div>
             <div class="row resetRow">
@@ -112,7 +110,7 @@
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="invoiceNumber">Numero de factura (opcional)</label>
-                    <input class="form-control warrantyInputs inputSelect" type="number" ng-model="WarrantyRequest.invoiceNumber" id="invoiceNumber" min="0">                        
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="WarrantyRequest.invoiceNumber" id="invoiceNumber">                        
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="meansSale">Medio de compra*</label>
@@ -183,15 +181,15 @@
                 </div>               
             </div>
             <div class="row resetRow" >
-                <div class="col-12 col-sm-6 form-group">
-                    <div class="row resetRow" >
+                <div class="col-12 col-sm-9 col-md-6 form-group">
+                    <div class="row" >
                         <div class="col-11 form-group" ng-repeat="phone in WarrantyRequest.phones">
-                            <div class="row resetRow">
-                                <div class="col-11 form-group"> 
+                            <div class="row resetRow ">
+                                <div class="col-11 form-group "> 
                                     <label for="phone">Teléfono*</label>
                                     <input class="form-control warrantyInputs inputSelect" type="text" ng-model="phone.number" id="phone" validation-pattern="telephone" required>
                                 </div>
-                                <div class="col-1 form-group align-self-end deletePhoneContainer">
+                                <div class="col-1 form-group align-self-end deletePhoneContainer resetCol">
                                     <button type="button" class="btn btn-danger deletePhone"  ng-click="WarrantyRequest.phones.splice($index,1)" ng-if="!$first"><i class="fas fa-minus"></i></button> 
                                 </div> 
                             </div>
@@ -222,10 +220,32 @@
                     <input class="form-control warrantyInputs inputSelect" type="text" ng-model="WarrantyRequest.address" id="address" required>                   
                 </div>             
             </div>
-            <div class="row justify-content-center">
-                <button type="submit" class="btn btn-primary sendRequest"  ng-click="sendRequest()" >Enviar</button> 
+            <div class="row justify-content-center resetRow">
+                <button type="submit" class="btn btn-primary sendRequest"  >Enviar</button> 
             </div> 
         </form>
     </div>
 </div>
+
+<!-- Valid request Modal -->
+<div class="modal fade" id="ValidRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Solicitud exitosa!!!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Regresar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>

@@ -1265,21 +1265,21 @@ label {
 }
 .deletePhone{
 	color: white;
-	border-radius: 50%;	
+	border-radius: 50%;
+	margin-bottom: 10px 	
 }
 .addPhoneContainer{
 	padding-bottom: 26px;
 	padding-left: 0px;
 
 }
-.deletePhoneContainer{
-	padding-bottom: 10px;
-	padding-left: 0px;
-}
+
 .sendRequest{
 	border-radius: 20px;
 	padding: 5px 45px;
 }
+
+
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
@@ -1330,7 +1330,7 @@ label {
 		width: 0;
 	}
 	.logoHeaderWarranty:before{
-		width: 0;
+		display: none;
 	}
 	.logoHeaderTerms{
 		padding: 30px;
@@ -1339,7 +1339,7 @@ label {
 	}
 
 	.logoHeaderTerms:before{
-		width: 0;
+		display:none;
 	}
 	.imgStartProgress, .imgEndProgress{
 		display: none;
