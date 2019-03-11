@@ -185,7 +185,7 @@
 						<div class="collapse navbar-collapse header-containerItems" id="navbarNavAltMarkup">
 							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp">
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp" href="/oportuya"> 
-									<span class="header-textoItem">Crédito Oportuya</span>
+									<span class="header-textoItem">tarjeta Oportuya</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
@@ -317,7 +317,7 @@
 			]
 		});
 
-		$('#sliderPrincipalLibranza').slick({
+		/*$('#sliderPrincipalLibranza').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,
 			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
@@ -330,7 +330,7 @@
 					}
 				}
 			]
-		});
+		});*/
 
 		$('#creditoLibranza-slider').slick({
 			slidesToShow : 3,
