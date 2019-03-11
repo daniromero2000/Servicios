@@ -317,7 +317,7 @@
 			]
 		});
 
-		$('#sliderPrincipalLibranza').slick({
+		/*$('#sliderPrincipalLibranza').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,
 			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
@@ -330,7 +330,7 @@
 					}
 				}
 			]
-		});
+		});*/
 
 		$('#creditoLibranza-slider').slick({
 			slidesToShow : 3,
