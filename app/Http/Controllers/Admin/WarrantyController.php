@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-class WarrantyController extends Controller
+class ProductsController extends Controller
 {
 
     public function __construct()
