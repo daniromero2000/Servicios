@@ -39,7 +39,7 @@ Route::group(['prefix'=>'/Catalog/'],function(){
      **/
 
 Route::get('/TermsConditions', function(){
-    return view('warranty.public.termsAndConditions');
+    return "casa";
 });
 Route::group(['prefix'=>'/digitalWarranty/'],function(){
 
