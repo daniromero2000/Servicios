@@ -6,7 +6,9 @@
     **Description: public view to warranty terms and conditions
     **Date: 6/03/2019
      -->
-     
+@extends('layouts.BasicIncludes')
+
+@section('content')
   
      <div>
         <div class="row resetRow TermsHeader">
@@ -27,3 +29,4 @@
             </p>
         </div>
     </div>
+@stop
