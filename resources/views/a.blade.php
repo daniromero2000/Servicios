@@ -8,7 +8,11 @@
      -->
 
 
+     @extends('layouts.basicIncludes')
+
+     @section('content')
      <div>
+        
         <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES</h1>
         <div class="container">
             <p class="menuItem-text" align="justify">
@@ -22,4 +26,4 @@
             </p>
         </div>
     </div>
-  
+     @stop
