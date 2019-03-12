@@ -84,7 +84,7 @@ class LeadsController extends Controller
         $latestScore = DB::connection('oportudata')->table('cifin_score')
                                                 ->select('scocedula', 'score', DB::raw(' MAX(scoconsul) AS last'))
                                                 ->groupBy('scocedula');
-        //join a client info and score                                         
+        //join a client info and score
         $oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')
                                                     ->joinSub($latestScore, 'latestScore',function ($join){
                                                         $join->on('CEDULA','=', 'scocedula');
@@ -186,11 +186,12 @@ class LeadsController extends Controller
     }
 
      public function addCommunityLeads(Request $request){
+        $idCampaign = NULL;
 
         $nameCampaign = (string)$request->get('campaign');
         $idCampaign =Campaigns::selectRaw('`id`,`name`')->where('name','=',$nameCampaign)->get();
         //return $idCampaign;
-        $idCampaign = $idCampaign[0]->id; 
+        $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
 
         $lead= new Lead;
 
@@ -286,16 +287,6 @@ class LeadsController extends Controller
     public function deniedRequest($idLead, $comment){
         $employee = Lead::find($idLead);
         $employee->state = 4;
-        $employee->save();
-
-        $this->addComent($idLead, $comment);
-
-        return response()->json([true]);
-    }
-
-    public function cahngeStateLead($idLead, $comment, $state){
-        $employee = Lead::find($idLead);
-        $employee->state = $state;
         $employee->save();
 
         $this->addComent($idLead, $comment);
