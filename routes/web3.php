@@ -38,9 +38,6 @@ Route::group(['prefix'=>'/Catalog/'],function(){
     **Date: 28/02/2019
      **/
 
-Route::get('/TermsConditions', function(){
-    return view('a');
-});
 Route::group(['prefix'=>'/digitalWarranty/'],function(){
 
 	//display layout warrty app 
