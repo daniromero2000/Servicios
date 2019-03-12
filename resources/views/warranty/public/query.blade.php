@@ -8,6 +8,9 @@
      -->
 
 <div Class="contentGarantias">
+    <div class="align-self-center ml-auto ">
+        <a href="{{ route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y condiciones</a>
+    </div>
     <div class="row resetRow">
         <div class="logoHeaderWarranty">
             <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" />
@@ -151,7 +154,7 @@
                 <div class="descriptionStep">
                     <strong>Información de ubicación </strong><br>
                     <span class="descText">Ingresa tus datos de ubicación y de contacto</span>
-                    <img src="{{ asset('images/datosPersonales2-min.png') }}" class="img-fluid forms-descImg" />
+                    <img src="{{ asset('images/datosLaborales-min.png') }}" class="img-fluid forms-descImg" />
                     <span class="descStepNum">3</span>
                 </div>
             </div>
@@ -170,11 +173,11 @@
             </div>
             <div class="row resetRow" ng-if="isUser == 'False'">
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="userName">Nombre del Usuario*</label>
+                    <label for="userName">Nombre del usuario del producto*</label>
                     <input class="form-control warrantyInputs inputSelect" type="Text" ng-model="WarrantyRequest.userName" id="userName" validation-pattern="textOnly" required>                   
                 </div>
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="city">Relación *</label>
+                    <label for="city">Relación con el titular de la factura*</label>
                     <select class="form-control warrantyInputs inputSelect" ng-model="WarrantyRequest.relationship" id="relationship" ng-options="relationship.id as relationship.name for relationship in relations" required>
                         <option></option>
                     </select>               

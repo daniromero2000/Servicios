@@ -37,6 +37,10 @@ Route::group(['prefix'=>'/Catalog/'],function(){
     **Email: desarrolladorjunior@lagobo.com
     **Date: 28/02/2019
      **/
+
+Route::get('/TermsConditions', function(){
+    return view('warranty.public.termsAndConditions');
+});
 Route::group(['prefix'=>'/digitalWarranty/'],function(){
 
 	//display layout warrty app 
