@@ -8,11 +8,15 @@
      -->
 
 
-     @extends('layouts.basicIncludes')
+     @extends('layouts.BasicIncludes')
 
      @section('content')
      <div>
-        
+        <div class="row resetRow TermsHeader">
+            <div class="logoHeaderTerms">
+                <a href="{{ url()->previous() }}"> <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" /> </a>
+            </div>
+         </div>
         <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES</h1>
         <div class="container">
             <p class="menuItem-text" align="justify">
