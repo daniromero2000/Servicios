@@ -80,8 +80,8 @@
         <thead class="headTableLeads">
             <tr>
                 <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
+                <th scope="col">Canal Adquisición</th>
                 <th scope="col">Ciudad</th>
                 <th scope="col">Servicio</th>
                 <th scope="col">Producto</th>
@@ -92,9 +92,13 @@
         </thead>
         <tbody>
             <tr ng-repeat="lead in leads">
-                <td>@{{ lead.name }}</td>
-                <td>@{{ lead.lastName }}</td>
+                <td>@{{ lead.nameLast }}</td>
                 <td>@{{ lead.telephone }}</td>
+                <td>
+                    <span ng-if="lead.channel == 1">Página Web</span>
+                    <span ng-if="lead.channel == 2">Facebook</span>
+                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                </td>
                 <td>@{{ lead.city }}</td>
                 <td>@{{ lead.typeService }}</td>
                 <td>@{{ lead.typeProduct }}</td>

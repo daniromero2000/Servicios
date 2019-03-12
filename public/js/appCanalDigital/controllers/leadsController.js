@@ -203,30 +203,6 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		    
 		});
 	};
-
-	$scope.changeStateLead = function(name, lastName, idLead, state, title){
-		$scope.title = title;
-		$scope.nameLead = name;
-		$scope.lastNameLead = lastName;
-		$scope.comment.idLead = idLead;
-		$scope.comment.state = state;
-		$("#changeStateLead").modal("show");
-	};
-
-	$scope.changeStateLeadComment = function(){
-		$http({
-		  method: 'GET',
-		  url: '/api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.comment.comment = "";
-				$scope.searchLeads();
-				$("#changeStateLead").modal("hide");			
-			}
-		}, function errorCallback(response) {
-		    
-		});
-	};
-
+	
 	$scope.getLeads();
 })

@@ -30,7 +30,7 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
-        $query = "SELECT leads.`id`, leads.`identificationNumber`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
+        $query = "SELECT leads.`id`, leads.`identificationNumber`, CONCAT(leads.`name`,' ',leads.`lastName`) as nameLast,leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
             FROM leads 
             LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`      
             LEFT JOIN `campaigns` ON campaigns.`id` = leads.`campaign`

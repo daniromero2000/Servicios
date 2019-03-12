@@ -75,12 +75,12 @@
         <thead class="headTableLeads">
             <tr>
                 <th scope="col">Estado</th>
+                <th scope="col">Cedula</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
+                <th scope="col">Canal Adquisición</th>
                 <th scope="col">Ciudad</th>
                 <th scope="col">Servicio</th>
-                <th scope="col">Producto</th>
                 <th scope="col">Fecha de registro</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -89,41 +89,21 @@
             <tr ng-repeat="lead in leads">
                 <td scope="row">
                     <i class="fas fa-hand-paper" ng-if="lead.state==0" style="color: yellow; font-size: 22px;" title="Pendiente"></i>
-                    <i class="far fa-bell" ng-if="lead.state==1" style="color: gray; font-size: 22px;" title="En estudio"></i>
-                    <i class="fas fa-stopwatch" ng-if="lead.state==2" style="color: orange; font-size: 22px;" title="Es Espera"></i>
-                    <i class="fas fa-clipboard-check" ng-if="lead.state==3" style="color: green; font-size: 22px;" title="Aprobado"></i>
-                    <i class="fas fa-ban" ng-if="lead.state==4" style="color: red; font-size: 22px;" title="Negado"></i>
                 </td>
-                <td>@{{ lead.name }}</td>
-                <td>@{{ lead.lastName }}</td>
+                <td>@{{ lead.identificationNumber }}</td>
+                <td>@{{ lead.nameLast }}</td>
                 <td>@{{ lead.telephone }}</td>
+                <td>
+                    <span ng-if="lead.channel == 1">Página Web</span>
+                    <span ng-if="lead.channel == 2">Facebook</span>
+                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                </td>
                 <td>@{{ lead.city }}</td>
                 <td>@{{ lead.typeService }}</td>
-                <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
                 <td>
                     <i class="fas fa-eye cursor"  ng-click="vewLead(lead)"></i>
-                
                     <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
-                    <br>
-                    <i class="fas fa-arrow-alt-circle-right cursor" 
-                    ng-if="lead.state == 0" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 1, 'Poner solicitud en estudio')" title="Poner solicitud en estudio"></i>
-
-                    <i class="fas fa-check-double cursor"
-                    ng-if="(lead.state == 1 || lead.state == 2) && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos')" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 3, 'Aprobar solicitud')" 
-                    title="Aprobar solicitud" ></i>
-
-                    <i class="far fa-clock cursor" 
-                    ng-if="lead.state == 1 && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos')"
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 2, 'Poner solicitud en espera')" 
-                    title="Poner solicitud en espera"></i>
-
-                    <i class="fas fa-times cursor" 
-                    ng-if="lead.state == 0 || ((lead.state == 1 || lead.state == 2) && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos'))" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 4, 'Negar Solicitud')" 
-                    title="Negar Solicitud"></i>
                 </td>
             </tr>
         </tbody>
@@ -134,32 +114,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="changeStateLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">@{{ title }} - @{{ nameLead + " " +lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
-                <div class="container">
-                    <form ng-submit="changeStateLeadComment()">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="comment">Comentario</label>
-                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group text-left">
-                            <button class="btn btn-primary">Agregar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div class="modal fade" id="viewLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

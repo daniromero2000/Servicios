@@ -126,6 +126,7 @@ Route::get('api/oportuya/validationLead/{identificationNumber}', 'Admin\Oportuya
 Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerification');
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');
+Route::get('api/oportuya/getNumLead/{identificationNumber}', 'Admin\OportuyaV2Controller@getNumLead');
 // Pasos solictud cupo
 Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
 Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');
@@ -163,7 +164,6 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 /* Admin Leads */
 Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
-Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
 /* Apis */
 Route::group(['prefix'=>'api/'],function(){
