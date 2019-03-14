@@ -120,14 +120,12 @@
 
 <div class="row">
     <div class="col-6 text-right">
-        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
+        <a href="/Administrator/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
     </div>
     <div class="col-6 text-left">
         <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
     </div>
 </div>
-
-
 
 <div class="modal fade" id="changeStateLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -153,7 +151,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="viewLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -235,7 +232,6 @@
         </div>
     </div>
 </div>
-
 
 <!--AddCommunityLead modal-->
 
@@ -404,7 +400,7 @@
                                 <div class="form-group row">
                                     <div class="col-12 col-sm-6">
                                         <label for="email">email</label>
-                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control" value="@{{lead.email}}" required>
+                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control" value="@{{lead.email}}">
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="telephone">telefono</label>
@@ -456,7 +452,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="product">Producto</label>
-                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" value="@{{lead.typeProduct}}" required>
+                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" value="@{{lead.typeProduct}}">
                                     </div>
                                 </div>
 
