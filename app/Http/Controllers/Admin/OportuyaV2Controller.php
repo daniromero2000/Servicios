@@ -10,7 +10,7 @@
     **				en un formulario divido en tres pasos se puede pre-aprobar
     **				o negar una solicitud de tarjeta oportuya.
     **Fecha: 15/11/2018
-     **/
+**/
 
 
 /**
@@ -206,14 +206,18 @@ class OportuyaV2Controller extends Controller
 				
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
-				/*$clienteCelular = new CliCel;
-				$clienteCelular->CEDULA = $identificationNumber;
-				$clienteCelular->CELULAR = trim($request->get('telephone'));
-				$clienteCelular->FECHA = date("Y-m-d H:i:s");
-				$clienteCelular->save();*/
+				/*if($request->get('CEL_VAL') == 0){
+					$clienteCelular = new CliCel;
+					$clienteCelular->CEDULA = $identificationNumber;
+					$clienteCelular->NUMERO = trim($request->get('telephone'));
+					$clienteCelular->TIPO = 'CEL';
+					$clienteCelular->CEL_VAL = 1;
+					$clienteCelular->FECHA = date("Y-m-d H:i:s");
+					$clienteCelular->save();
+				}*/
+				
 				//if updateOrCreate method fails save data without verify its existent, then save data into CLIENTES_FAB table
 				if($createOportudaLead != true){
-
 					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
 					$oportudataLead->CEDULA = $identificationNumber;
 					$oportudataLead->NOMBRES = trim($request->get('name'));
@@ -221,9 +225,7 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->EMAIL = trim($request->get('email'));
 					$oportudataLead->CELULAR = trim($request->get('telephone'));
 					$oportudataLead->PROFESION = trim($request->get('occupation'));
-
 					$response = $oportudataLead->save();
-
 				}
 
 				if(($response == true) || ($createOportudaLead== true)){
@@ -406,22 +408,20 @@ class OportuyaV2Controller extends Controller
 
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
-				if($this->creditPolicyAdvance($identificationNumber)){
-					$quotaApproved='500000';
-				}else{
-					$quotaApproved=-2;
-				}
+				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
-				$quotaApproved = $this->execCreditPolicy($identificationNumber);
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
 			}
 			$con3 = "";
-			if($quotaApproved > 0){
+			if($quotaApprovedProduct > 0){
 				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 				if($typeServiceSol[0]->typeService == 'Avance'){
 					$solic_fab->AVANCE_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}else{
-					$solic_fab->PRODUC_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}				
 				
 				$solic_fab->save();
@@ -501,7 +501,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->SUB_TIPO = 'WEB';
 				$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
 				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
-				$turnosOportuya->VALOR = $quotaApproved;
+				$turnosOportuya->VALOR = '0';
 				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
 				$turnosOportuya->SCORE = $respScoreLead[0]->score;
 				$turnosOportuya->TIPO_CLI = '';
@@ -608,6 +608,21 @@ class OportuyaV2Controller extends Controller
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 	**/
+
+	public function getNumLead($identificationNumber){
+		$getNumVal = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL_PRU` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(count($getNumVal) > 0){
+			return response()->json(['resp' => $getNumVal]);
+		}
+
+		$getNum = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL_PRU` WHERE `TIPO` = 'CEL' AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+
+		if(count($getNum) > 0){
+			return response()->json(['resp' => $getNum]);
+		}
+
+		return response()->json(['resp' => -1]);
+	}
 
 	public function validationLead($identificationNumber){
 		$existCard = $this->getExistCard($identificationNumber);
