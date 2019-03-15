@@ -133,23 +133,21 @@ app.controller('warrantyController', function($scope, $http, $location){
 			return;
 		}
 		$('#ValidRequest').modal('show');
-		console.log($scope.validEmail);
-		/* showLoader();
 		$http({
-		  method: 'GET',
-		  url: '/Catalog/linesBrands'
-		}).then(function successCallback(response) {
-			if(response != false){
-				$scope.linesBrands = response.data;
-				hideLoader();
-				angular.forEach($scope.linesBrands,function(value,key){
-					value.color = $scope.color.pop();
-				});
-			}
-
-		}, function errorCallback(response) {
-			hideLoader();
-		});*/
+			method: 'POST',
+			url: '/digitalWarranty/request',
+			data: $scope.WarrantyRequest
+		  }).then(function successCallback(response) {
+			  if(response.data != false){
+				  console.log(response.data);  
+			  }
+		  }, function errorCallback(response) {
+			console.log(response.data);
+		  });
+	}
+	$scope.send = function() {
+		$('#ValidRequest').modal('show');
+		console.log($scope.validEmail);
 	}
 
 });

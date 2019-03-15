@@ -1278,7 +1278,30 @@ label {
 	border-radius: 20px;
 	padding: 5px 45px;
 }
-
+.dialog{
+	max-width: 816px;
+}
+.successfulText{
+	position:absolute;
+    width: 60%;
+    font-size: 20px;
+    font-family: barlow;
+    font-weight: bold;
+    left: 35%;
+    top: 25%;
+}
+.containerReturn{
+	position:absolute;
+	margin-left: 65%;
+    margin-top: -8%;
+}
+.returnButton{
+	border-radius: 25px;
+    padding: 5px 40px;
+}
+.imageSuccessful{
+	position: relative;
+}
 
 
 @media(max-width: 991px){
@@ -1298,7 +1321,7 @@ label {
 	**Caso de Uso: WARRANTY MODULE
 	**Autor: Luis David Giraldo Grajales 
 	**Email: desarrolladorjunior@lagobo.com
-	**Fecha: 28/02/2018
+	**Fecha: 28/02/2019
 	**/
 	.warrantyLegal{
 		color: #e1e1e1;
@@ -1367,9 +1390,34 @@ label {
 	.progreso{
 		width: 82%;
 	}
+	/**
+	**Caso de Uso: WARRANTY MODULE
+	**Autor: Luis David Giraldo Grajales 
+	**Email: desarrolladorjunior@lagobo.com
+	**Fecha: 14/03/2019
+	**/
+	.successfulText{
+		position: absolute;
+		width: 60%;
+		font-size: 15px;
+		font-family: barlow;
+		font-weight: bold;
+		left: 35%;
+		top: 20%;
+	}
+	.containerReturn{
+		margin-left: 60%;
+		margin-top: -10%;
+	}
+	.returnButton{
+		border-radius: 15px;
+    	padding: 3px 30px;
+	}
 }
 
 @media(max-width: 450px){
+
+
 	.warrantyLegal{
 		display: none;
 	}

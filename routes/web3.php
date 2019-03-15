@@ -39,7 +39,8 @@ Route::group(['prefix'=>'/Catalog/'],function(){
      **/
 
 Route::group(['prefix'=>'/digitalWarranty/'],function(){
-
+    //CRUD routes digital warranty 
+    Route::resource('request','Admin\WarrantyController');
 	//display layout warrty app 
     Route::get("/",function(){
         return view('warranty.public.layout');

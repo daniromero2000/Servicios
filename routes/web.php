@@ -18,7 +18,7 @@ Route::get('/', function () {
 
     return view('index')
     		->with('sliderPrincipal', $sliders->all());
-});
+})->name('start');
 
 Route::get('/LIB_gracias_FRM', function(){
 	return view('libranza.thankYouPage');

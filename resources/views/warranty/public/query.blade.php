@@ -224,31 +224,31 @@
                 </div>             
             </div>
             <div class="row justify-content-center resetRow">
-                <button type="submit" class="btn btn-primary sendRequest"  >Enviar</button> 
-            </div> 
+                <button type="submit" class="btn btn-primary sendRequest">Enviar</button> 
+            </div>
         </form>
     </div>
 </div>
 
 <!-- Valid request Modal -->
-<div class="modal fade" id="ValidRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal" tabindex="-1" role="dialog" id="ValidRequest">
+  <div class="modal-dialog dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span>&times;</span>
-        </button>
-      </div>
       <div class="modal-body">
-        Solicitud exitosa!!!
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Regresar</button>
+            <div class="imageSuccessful">
+                <img src="{{ asset('images/successful.png')}}" class="img-fluid rounded">
+            </div>
+            <div class="successfulText"> 
+                <p>Su solicitud de garantía se ha procesado exitosamente. un asesor se comunicará contigo lo mas pronto posible, debes estar atento a los teléfonos ingresados.</p>
+            </div>
+            <div class="containerReturn">
+                <a href="{{ route('start') }}"><button type="button" class="btn btn-primary returnButton" >Regresar</button></a>
+            </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
