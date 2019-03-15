@@ -464,6 +464,14 @@ span.renewCode:hover {
 	color: #fff;
 }
 
+#simularModal .modal-content {
+	position: absolute;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 30vw;
+    min-height: 90vh;
+}
 
 /* ThakYouPage */
 
