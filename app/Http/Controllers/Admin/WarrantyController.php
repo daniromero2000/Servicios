@@ -17,7 +17,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Mail;
-use DateTime;
 
 
 
@@ -129,13 +128,12 @@ class WarrantyController extends Controller
         }else{
             return false;
         }
-        */
-        Mail::send('Emails.alertWarranty', $request->all(), function($msj){
-            $date = new DateTime();
+        
+        Mail::send('emails.alertWarranty', $request->all(), function($msj){
             $msj->subject(time());
             $msj->to('desarrolladorjunior@lagobo.com');
         });
-
+        */
         return response()->json($request);
     }
     
