@@ -128,12 +128,12 @@ class WarrantyController extends Controller
         }else{
             return false;
         }
-        
+        */
         Mail::send('emails.alertWarranty', $request->all(), function($msj){
             $msj->subject(time());
             $msj->to('desarrolladorjunior@lagobo.com');
         });
-        */
+        
         return response()->json($request);
     }
     
