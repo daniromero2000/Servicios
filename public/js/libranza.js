@@ -194,6 +194,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 					  url: 'api/libranza/liquidator/'+$scope.libranza.maxQuota+'/'+$scope.libranza.quaotaAvailable
 					}).then(function successCallback(response) {
 						$scope.plazos = response.data;
+						$('#solicitarModal').modal('hide');
 					   	$('#simularModal').modal('show');
 					}, function errorCallback(response) {
 					    
@@ -204,8 +205,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	};
 
 	$scope.solicitar = function(){
-		$('#simularModal').modal('hide');
-		$('#solicitarModal').modal('show');
+		
+		window.location = "/LIB_gracias_FRM";		
 	};
 
 	$scope.addLead = function(){
@@ -217,7 +218,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			  url: '/libranza',
 			  data: $scope.libranza
 			}).then(function successCallback(response) {
-				window.location = "/LIB_gracias_FRM";
+				$('#solicitarModal').modal('show');
 			}, function errorCallback(response) {
 			    
 			});
