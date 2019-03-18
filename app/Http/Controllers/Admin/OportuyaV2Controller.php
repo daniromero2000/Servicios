@@ -610,12 +610,12 @@ class OportuyaV2Controller extends Controller
 	**/
 
 	public function getNumLead($identificationNumber){
-		$getNumVal = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL_PRU` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$getNumVal = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(count($getNumVal) > 0){
 			return response()->json(['resp' => $getNumVal]);
 		}
 
-		$getNum = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL_PRU` WHERE `TIPO` = 'CEL' AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$getNum = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 
 		if(count($getNum) > 0){
 			return response()->json(['resp' => $getNum]);
