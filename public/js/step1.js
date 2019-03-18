@@ -2,7 +2,6 @@ angular.module('appStep1', [])
 .controller("step1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
-	$scope.disabledInputs = true;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
@@ -22,7 +21,8 @@ angular.module('appStep1', [])
 		'telephone' : '',
 		'occupation' : '',
 		'city' : '',
-		'termsAndConditions' : ''
+		'termsAndConditions' : '',
+		'CEL_VAL' : 0
 	};
 
 	$scope.typesDocuments = [
@@ -143,6 +143,23 @@ angular.module('appStep1', [])
 		}else{
 			$('#confirmNumCel').modal('show');
 		}
+	};
+
+	$scope.getNumCel = function(){
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/getNumLead/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			console.log(typeof response.data.resp);
+			if(typeof response.data.resp == 'number'){
+				
+			}else{
+				$scope.leadInfo.CEL_VAL = response.data.resp[0].CEL_VAL;
+				$scope.leadInfo.telephone = response.data.resp[0].NUMERO;
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
 	};
 
 	$scope.getValidationLead = function(){

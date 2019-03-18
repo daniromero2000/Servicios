@@ -2,7 +2,6 @@ angular.module('appAdvanceStep1', [])
 .controller("advanceStep1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
-	$scope.disabledInputs = true;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
@@ -19,7 +18,8 @@ angular.module('appAdvanceStep1', [])
 		'telephone' : '',
 		'occupation' : '',
 		'city' : '',
-		'termsAndConditions' : ''
+		'termsAndConditions' : '',
+		'CEL_VAL' : 0
 	};
 	$scope.code = {
 		'code' : ''
@@ -133,6 +133,23 @@ angular.module('appAdvanceStep1', [])
 		}
 	};
 	
+	$scope.getNumCel = function(){
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/getNumLead/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			console.log(typeof response.data.resp);
+			if(typeof response.data.resp == 'number'){
+				
+			}else{
+				$scope.leadInfo.CEL_VAL = response.data.resp[0].CEL_VAL;
+				$scope.leadInfo.telephone = response.data.resp[0].NUMERO;
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
+
 	$scope.getValidationLead = function(){
 		if($scope.emailValidate == false){
 			showLoader();
@@ -155,7 +172,6 @@ angular.module('appAdvanceStep1', [])
 		}else{
 			alert('Los correos no coinciden');
 		}
-		
 	}
 
 	$scope.confirmnumCel = function(){
