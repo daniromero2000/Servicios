@@ -155,7 +155,7 @@ angular.module('appStep1', [])
 				
 			}else{
 				$scope.leadInfo.CEL_VAL = response.data.resp[0].CEL_VAL;
-				$scope.leadInfo.telephone = response.data.resp[0].NUMERO;
+				$scope.leadInfo.telephone = response.data.resp[0].NUM;
 			}
 		}, function errorCallback(response) {
 			console.log(response);
