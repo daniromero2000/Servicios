@@ -14,5 +14,5 @@ class cliCel extends Model
 
     public $timestamps = false;
 
-    protected $fillable=['CEDULA','NUMERO','CEL_VAL','TIPO','FECHA'];
+    protected $fillable=['IDENTI','NUM','CEL_VAL','TIPO','FECHA'];
 }

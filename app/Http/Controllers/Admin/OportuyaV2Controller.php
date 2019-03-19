@@ -208,8 +208,8 @@ class OportuyaV2Controller extends Controller
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
 				if($request->get('CEL_VAL') == 0){
 					$clienteCelular = new CliCel;
-					$clienteCelular->CEDULA = $identificationNumber;
-					$clienteCelular->NUMERO = trim($request->get('telephone'));
+					$clienteCelular->IDENTI = $identificationNumber;
+					$clienteCelular->NUM = trim($request->get('telephone'));
 					$clienteCelular->TIPO = 'CEL';
 					$clienteCelular->CEL_VAL = 1;
 					$clienteCelular->FECHA = date("Y-m-d H:i:s");
@@ -610,12 +610,12 @@ class OportuyaV2Controller extends Controller
 	**/
 
 	public function getNumLead($identificationNumber){
-		$getNumVal = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$getNumVal = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(count($getNumVal) > 0){
 			return response()->json(['resp' => $getNumVal]);
 		}
 
-		$getNum = DB::connection('oportudata')->select("SELECT `NUMERO`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEDULA` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$getNum = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 
 		if(count($getNum) > 0){
 			return response()->json(['resp' => $getNum]);
@@ -708,6 +708,8 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		return response()->json(true);
+
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
