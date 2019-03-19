@@ -286,6 +286,9 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 **/
+Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'Admin\LeadsController@assignAssesorDigitalToLead');
+Route::get('/api/canalDigital/checkLeadProcess/{idLead}', 'Admin\LeadsController@checkLeadProcess');
+
 Route::resource('creditPolicy','Admin\CreditPolicyController');
 
 Route::resource('users','Admin\UserController');

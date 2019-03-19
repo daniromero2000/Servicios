@@ -1,13 +1,15 @@
 app.controller('communityController', function($scope, $http, $rootScope){
 	$scope.q = {
 		'q': '',
+		'qCM': '',
 		'initFrom': 0,
+		'initFromCM': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
 		'typeService': '',
 		'state': '',
-		'communityLead':true
+		'channel':''
 	};
 
 	$scope.campaign = {};
@@ -130,11 +132,12 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&communityLead'+$scope.q.communityLead,
+		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data != false){
-				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {
+				$scope.q.initFromCM += response.data.leadsCM.length;
+				angular.forEach(response.data.leadsCM, function(value, key) {
 					if((value.channel != 1) && (value.channel != 0)){
 						if(value.campaignName==null){
 							value.campaignName = 'N/A';
@@ -146,6 +149,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.cargando = false;
 			}
 		}, function errorCallback(response) {
+			console.log(response);
 		});
 	};
 
@@ -170,7 +174,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	};
 
 	$scope.searchLeads = function(){
-		$scope.q.initFrom = 0;
+		$scope.q.initFromCM = 0;
 		$scope.leads = [];
 		$scope.getLeads();
 	};
@@ -179,7 +183,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.leads = [];
 		$scope.q = {
 			'q': '',
-			'initFrom': 0,
+			'initFromCM': 0,
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',

@@ -83,8 +83,6 @@
                 <th scope="col">Teléfono</th>
                 <th scope="col">Canal Adquisición</th>
                 <th scope="col">Ciudad</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Producto</th>
                 <th scope="col">Fecha de registro</th>
                 <th scope="col">Campaña</th>
                 <th scope="col">Acciones</th>
@@ -100,8 +98,6 @@
                     <span ng-if="lead.channel == 3">WhatsApp</span>
                 </td>
                 <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeService }}</td>
-                <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
                 <td>@{{ lead.campaignName }}</td>
                 <td>

@@ -10,10 +10,10 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LeadsController extends Controller
 {
-
 
     public function __construct()
     {
@@ -27,91 +27,70 @@ class LeadsController extends Controller
     **Date: 20/02/2019
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
+        $leadsDigital = [];
 
-        $query = "SELECT leads.`id`, leads.`identificationNumber`, CONCAT(leads.`name`,' ',leads.`lastName`) as nameLast,leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`, campaigns.`name` as campaignName, campaigns.`socialNetwork` as socialNetwork
-            FROM leads 
-            LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`      
-            LEFT JOIN `campaigns` ON campaigns.`id` = leads.`campaign`
-            WHERE 1 ";
+        $query = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
+        WHERE sb.`CLIENTE` = cf.`CEDULA` AND cf.`SUBTIPO` = 'WEB' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND tar.`CLIENTE` = cf.`CEDULA`";
 
-        if($request->get('q')){
-            $query .= sprintf(" AND (leads.`name` LIKE '%s' OR leads.`lastName` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
+        if($request->q != ''){
+            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%'.$request->q.'%', '%'.$request->q.'%', '%'.$request->q.'%');
         }
 
-        if($request->get('state')){
-            $query .= sprintf(" AND leads.`state` = %s ", $request->get('state'));
-        }
+        $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
 
-        if($request->get('city')){
-            $query .= sprintf(" AND leads.`city` = '%s' ", $request->get('city'));
-        }
+        $query .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
 
-        if($request->get('typeProduct')){
-            $query .= sprintf(" AND leads.`typeProduct` = '%s' ", $request->get('typeProduct'));
-        }
+        $resp = DB::connection('oportudata')->select($query);
 
-        if($request->get('typeService')){
-            $query .= sprintf(" AND leads.`typeService` = '%s' ", $request->get('typeService'));
-        }
-
-        if($request->get('fecha_ini')){
-            $query .= sprintf(" AND leads.`created_at` > '%s' ", $request->get('fecha_ini').' 00:00:00');
-        }
-
-        if($request->get('fecha_fin')){
-            $query .= sprintf(" AND leads.`created_at` < '%s' ", $request->get('fecha_fin').' 23:59:59');
-        }
-
-        if($request->get('libranzaLead')){
-            $query .= sprintf(" AND leads.`state` != 0 ");
-        }
-
-         if($request->get('communityLead')){
-            $query .= sprintf(" AND leads.`channel` = 2");
-        }
-        
-        $query .= " ORDER BY leads.`id` DESC";
-
-        $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));
-
-        $resp = DB::select($query);
-        //take a list of identification number
-        $resp = collect($resp);
-        $identification = $resp->pluck('identificationNumber');
-        //take the last score store
-        $latestScore = DB::connection('oportudata')->table('cifin_score')
-                                                ->select('scocedula', 'score', DB::raw(' MAX(scoconsul) AS last'))
-                                                ->groupBy('scocedula');
-        //join a client info and score
-        $oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')
-                                                    ->joinSub($latestScore, 'latestScore',function ($join){
-                                                        $join->on('CEDULA','=', 'scocedula');
-                                                    })
-                                                    ->select('CON3','ACTIVIDAD','score','last','CEDULA')
-                                                    ->whereIN('CEDULA',$identification)
-                                                    ->get();
-        //join a lead and oportudata info
-        $resp = $resp->map(function ($item, $key) use ($oportudataLead) {
-            $score = $oportudataLead->where('CEDULA',$item->identificationNumber)->values();//searcha a respectiv information in oportidata
-            $score = $score->toArray();
-            //asignation in resp item if empty return fields "" else assigns values 
-            if (empty($score)) {
-                return $item;
-            }else{
-                $item->score=$score[0]->score;
-                $item->ocupacion=$score[0]->ACTIVIDAD;
-                $item->estadoCredito=$score[0]->CON3;
-                return $item;
+        foreach ($resp as $key => $lead) {
+            $queryChannel = sprintf("SELECT `channel`, `id`, `state` FROM `leads` WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
+            $respChannel = DB::select($queryChannel);
+            if($lead->ASESOR_DIG != ''){
+                $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
+                $respAsesorDigital = DB::select($queryAsesorDigital);
+                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '' ;
             }
-        });
+            $resp[$key]->channel = $respChannel[0]->channel;
+            $resp[$key]->id = $respChannel[0]->id;
+            $resp[$key]->state = $respChannel[0]->state;
+            $leadsDigital[] = $resp[$key];
+        }
 
-        return   $resp;
+        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName
+        FROM `leads` as lead
+        LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign 
+        WHERE (`channel` = 2 OR `channel` = 3)";
+        if($request->qCM !=''){
+            $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request->qCM.'%', '%'.$request->qCM.'%', '%'.$request->qCM.'%');
+        }
+
+        $queryCM .= sprintf(" LIMIT %s,30", $request->get('initFromCM'));
+        $respCM = DB::select($queryCM);
+
+        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $respCM]);
     }
 
+    public function assignAssesorDigitalToLead($solicitud){
+        $idAsesor = Auth::user()->id;
 
+        $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
+        $resp = DB::connection('oportudata')->select($query);
+
+        return $resp;
+    }
    
+    public function checkLeadProcess($idLead){
+        if($idLead == '') return -1;
+
+        $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
+
+        $resp = DB::select($query);
+
+        return $resp;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

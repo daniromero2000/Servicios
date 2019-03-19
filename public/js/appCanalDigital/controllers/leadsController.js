@@ -1,7 +1,10 @@
-app.controller('leadsController', function($scope, $http, $rootScope){
+app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox){
+	$ngBootbox.setLocale('es');
 	$scope.q = {
 		'q': '',
+		'qCM': '',
 		'initFrom': 0,
+		'initFromCM': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
@@ -9,6 +12,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		'state': '',
 		'channel':''
 	};
+	$scope.tabs = 1;
 	$scope.cargando = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
@@ -21,6 +25,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	};
 	$scope.comments = [];
 	$scope.leads = [];
+	$scope.leadsCM = [];
 	$scope.cities = [
 		{ label : 'ARMENIA',value: 'ARMENIA' },
 		{ label : 'MANIZALES',value: 'MANIZALES' },
@@ -115,26 +120,37 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	];
 
 	$scope.getLeads = function(){
+		showLoader();
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
+		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {
+			if(response.data.leadsDigital != false){
+				$scope.q.initFrom += response.data.leadsDigital.length;
+				angular.forEach(response.data.leadsDigital, function(value, key) {
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
 			}
+			if(response.data.leadsCM != false){
+				$scope.q.initFromCM += response.data.leadsCM.length;
+				angular.forEach(response.data.leadsCM, function(value, key) {
+					$scope.leadsCM.push(value);
+				});
+				$scope.cargando = false;
+			}
+			hideLoader();
 		}, function errorCallback(response) {
-		    
+			console.log(response);
 		});
 	};
 
 	$scope.searchLeads = function(){
 		$scope.q.initFrom = 0;
+		$scope.q.initFromCM = 0;
 		$scope.leads = [];
+		$scope.leadsCM = [];
 		$scope.getLeads();
 	};
 
@@ -158,6 +174,39 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 		$("#viewLead").modal("show");
 	};
 
+	$scope.assignAssesorDigitalToLead = function(solicitud){
+		$ngBootbox.confirm('Desea hacer la gestión de este lead ?')
+      	.then(function() {
+			showLoader();	
+			$http({
+				method: 'GET',
+				url: '/api/canalDigital/assignAssesorDigitalToLead/'+solicitud,
+			  }).then(function successCallback(response) {
+				  $scope.searchLeads();
+				  hideLoader();
+			  }, function errorCallback(response) {
+				  console.log(response);
+			  });
+		});
+	};
+
+	$scope.checkLeadProcess = function(idLead){
+		$ngBootbox.confirm('Desea marcar a este lead como procesado ?')
+      	.then(function() {
+			showLoader();	
+			$http({
+				method: 'GET',
+				url: '/api/canalDigital/checkLeadProcess/'+idLead,
+			  }).then(function successCallback(response) {
+				  console.log(response);
+				  $scope.searchLeads();
+				  hideLoader();
+			  }, function errorCallback(response) {
+				  console.log(response);
+			  });
+		});
+	}
+
 	$scope.viewComments = function(name, lastName, state, idLead, init=true){
 		$scope.comments = [];
 		$scope.idLead = idLead;
@@ -177,7 +226,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 				$scope.state = state;
 			}
 		}, function errorCallback(response) {
-		    
+			
 		});
 	};
 
@@ -185,9 +234,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 	$scope.viewCommentChange = function(){
 		$scope.viewAddComent = !$scope.viewAddComent;
 	};
-
 	
-
 	$scope.addComment = function(){
 		$scope.comment.idLead = $scope.idLead;
 		$http({
@@ -200,7 +247,7 @@ app.controller('leadsController', function($scope, $http, $rootScope){
 				$scope.viewAddComent = false;
 			}
 		}, function errorCallback(response) {
-		    
+			
 		});
 	};
 	
