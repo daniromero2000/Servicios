@@ -175,7 +175,7 @@
 								<label for="">Número de Celular</label>
 								<input type="text" ng-model="leadInfo.telephone" class="form-control" ng-disabled="leadInfo.CEL_VAL" />
 								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
-									Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente 018000117787
+									Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 018000117787
 								</div>
 							</div>
 							<div class="col-12 text-center form-group">
