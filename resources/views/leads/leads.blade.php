@@ -143,6 +143,7 @@
                         <th scope="col">Celular</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Servicio</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -158,6 +159,7 @@
                         <td>@{{ leadCM.telephone }}</td>
                         <td>@{{ leadCM.city }}</td>
                         <td>@{{ leadCM.typeService }}</td>
+                        <td>@{{ leadCM.created_at }}</td>
                         <td>
                             <i ng-if="leadCM.state == 1" class="fas fa-check cursor" title="Marcar cliente como procesado" ng-click="checkLeadProcess(leadCM.id)"></i>
                         </td>
