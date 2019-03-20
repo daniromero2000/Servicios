@@ -160,13 +160,16 @@ class LibranzaController extends Controller
         $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
         $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
         $libranza_profile=LibranzaProfile::select('id','name')->orderBy('id','desc')->get();
+        $timeLimits=[13,18,24,36,48,60,72,84,96,108];
         $data=[];
         $data['lines']=$lines;
         $data['pagaduria']=$pagaduria;
         $data['profiles']=$libranza_profile;
+        $data['timeLimits']=$timeLimits;
         return response()->json($data);
 
     }
+
 
     public function assignPagaduria($idLibranzaProfile){
 

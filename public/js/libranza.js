@@ -78,6 +78,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			value : 'Militares Activos'
 		}
 	];
+
+	
+
 	$scope.libranza = {
 		creditLine: '',
 		pagaduria : '',
@@ -119,7 +122,12 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		}
 	};
 
-
+	$scope.plazo={
+		amount:0.0,
+		timeLimit:''
+	}
+	$scope.timeLimits=[];
+	$scope.plazos=[];
 	$scope.lines=[];
 	$scope.pagaduriaLibranza=[];
 	$scope.libranzaProfiles=[];
@@ -137,6 +145,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 
 				angular.forEach(response.data.profiles, function(value, key) {
 					$scope.libranzaProfiles.push(value);
+				});
+
+				angular.forEach(response.data.timeLimits, function(value, key) {
+					$scope.timeLimits.push(value);
 				});
 			}
 
@@ -189,20 +201,37 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
 					alert("Para poder simular el Salario Básico no puede ser menor a 0");
 				}else{
-					$http({
-					  method: 'GET',
-					  url: 'api/libranza/liquidator/'+$scope.libranza.maxQuota+'/'+$scope.libranza.quaotaAvailable
-					}).then(function successCallback(response) {
-						$scope.plazos = response.data;
-						$('#solicitarModal').modal('hide');
-					   	$('#simularModal').modal('show');
-					}, function errorCallback(response) {
-					    
-					});
+					var rate=0.019;
+					var gap=2;
+					var loanAssurance=0.005;
+					var gapTop=0.0;
+					var gapBottom=0.0;
+					for(var i =0;i < $scope.timeLimits.length; i++){
+						var aux = {
+							amount : 0.0,
+							timeLimit : ''
+						};
+						var fee=Math.pow((1+rate),$scope.timeLimits[i]);
+						if($scope.plazo.amount<=$scope.libranza.maxQuota){
+							gapTop=$scope.libranza.quaotaAvailable*(fee-1);
+							gapBottom=((1+(rate*gap))*(rate*fee))+(loanAssurance*(fee-1));
+							$scope.plazo.amount=gapTop/gapBottom;
+							$scope.plazo.timeLimit=$scope.timeLimits[i];
+							aux = angular.extend({},$scope.plazo);
+							$scope.plazos[i] = aux;							
+						}
+					}					
 				}
 			}
 		}
 	};
+
+	$scope.showModal=function(){
+		$scope.simular();
+		$('#solicitarModal').modal('hide');
+		$('#simularModal').modal('show');
+	}
+
 
 	$scope.solicitar = function(){
 		
