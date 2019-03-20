@@ -134,7 +134,6 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
-			console.log(response);
 			if(response.data != false){
 				$scope.q.initFromCM += response.data.leadsCM.length;
 				angular.forEach(response.data.leadsCM, function(value, key) {
@@ -348,6 +347,29 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.comment.idLead = idLead;
 		$scope.comment.state = state;
 		$("#changeStateLead").modal("show");
+	};
+
+	$scope.viewComments = function(name, lastName, state, idLead, init=true){
+		$scope.comments = [];
+		$scope.idLead = idLead;
+		$http({
+		  method: 'GET',
+		  url: '/api/leads/getComentsLeads/'+idLead
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				angular.forEach(response.data, function(value, key) {
+					$scope.comments.push(value);
+				});
+			}
+			if(init){
+				$("#viewComments").modal("show");
+				$scope.nameLead = name;
+				$scope.lastNameLead = lastName;
+				$scope.state = state;
+			}
+		}, function errorCallback(response) {
+			
+		});
 	};
 
 	$scope.changeStateLeadComment = function(){
