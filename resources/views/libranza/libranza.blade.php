@@ -44,9 +44,9 @@
                 {{-- <a href="#formularioSimulador" class="sliderPrincipalLibranza-button">@php echo $slider['textButton']; @endphp</a> --}}
                 <a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
             </div>
-        </div>-->
+        </div>
 {{-- 	@foreach($images as $slider)
-    @endforeach --}}
+    @endforeach --}}-->
 </div>
 
 
@@ -371,7 +371,7 @@
                             Simula tu crédito
                     </h3>
                     <div class="containerFormulario">
-                        <form ng-submit="simular()" id="formEx">
+                        <form ng-submit="showModal()" id="formEx">
                             <div class="formularioSimulador-containInput">
                                 <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito :</label>
                                 <select id="creditLine" class="form-control" ng-model="libranza.creditLine" ng-options="linea.id as linea.name for linea in lines" required="true" ></select>
