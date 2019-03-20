@@ -14,7 +14,15 @@
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
         <div class="row resetRow">
-            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeads }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
@@ -123,7 +131,15 @@
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
         <div class="row resetRow">
-            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsCM }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="q.qCM" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
