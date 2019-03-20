@@ -16,6 +16,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.totalLeads = 0;
 	$scope.totalLeadsCM = 0;
 	$scope.cargando = true;
+	$scope.cargandoCM = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.lead = {};
@@ -124,6 +125,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.getLeads = function(){
 		showLoader();
 		$scope.cargando = true;
+		$scope.cargandoCM = true;
 		$http({
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
@@ -142,7 +144,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 				angular.forEach(response.data.leadsCM, function(value, key) {
 					$scope.leadsCM.push(value);
 				});
-				$scope.cargando = false;
+				$scope.cargandoCM = false;
 			}
 			hideLoader();
 		}, function errorCallback(response) {

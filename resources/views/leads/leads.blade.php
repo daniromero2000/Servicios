@@ -182,6 +182,11 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargandoCM" ng-click="getLeads()">Cargar Más</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
