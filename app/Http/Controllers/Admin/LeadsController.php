@@ -66,6 +66,7 @@ class LeadsController extends Controller
             $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request->qCM.'%', '%'.$request->qCM.'%', '%'.$request->qCM.'%');
         }
 
+        $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request->get('initFromCM'));
         $respCM = DB::select($queryCM);
 
