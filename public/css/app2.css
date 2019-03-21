@@ -3,6 +3,13 @@ span.renewCode:hover {
     cursor: pointer;
 }
 
+.totalLeadsDigital{
+	font-size: 25px;
+    color: #1d84c3;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
 .bootbox-close-button{
 	position: absolute;
     right: 9px;

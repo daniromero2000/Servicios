@@ -10,7 +10,7 @@ class cliCel extends Model
 
     public $connection='oportudata';
 
-    protected $primaryKey= 'CEDULA, NUMERO';
+    protected $primaryKey= 'IDENTI, NUM';
 
     public $timestamps = false;
 

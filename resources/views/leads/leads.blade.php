@@ -14,7 +14,15 @@
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
         <div class="row resetRow">
-            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeads }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
@@ -35,7 +43,7 @@
                         <th scope="col">Canal adquisición</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Cupo Producto/Avance</th>
-                        <th scope="col" style="width: 10%;">Fecha de registro</th>
+                        <th scope="col" style="width: 10%;">Fecha registro</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -123,7 +131,15 @@
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
         <div class="row resetRow">
-            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsCM }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="q.qCM" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
@@ -166,6 +182,11 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargandoCM" ng-click="getLeads()">Cargar Más</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

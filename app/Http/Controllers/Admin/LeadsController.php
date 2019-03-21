@@ -29,10 +29,16 @@ class LeadsController extends Controller
      */
     public function index(Request $request){
         $leadsDigital = [];
-
+        $totalLeadsDigital = 0;
+        $totalLeadsCM = 0;
+        
         $query = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
         WHERE sb.`CLIENTE` = cf.`CEDULA` AND cf.`SUBTIPO` = 'WEB' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND tar.`CLIENTE` = cf.`CEDULA`";
+
+        $respTotalLeads = DB::connection('oportudata')->select($query);
+
+        $totalLeadsDigital = count($respTotalLeads);
 
         if($request->q != ''){
             $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%'.$request->q.'%', '%'.$request->q.'%', '%'.$request->q.'%');
@@ -62,6 +68,8 @@ class LeadsController extends Controller
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign 
         WHERE (`channel` = 2 OR `channel` = 3)";
+        $respTotalLeadsCM = DB::select($queryCM);
+        $totalLeadsCM = count($respTotalLeadsCM);
         if($request->qCM !=''){
             $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request->qCM.'%', '%'.$request->qCM.'%', '%'.$request->qCM.'%');
         }
@@ -70,7 +78,7 @@ class LeadsController extends Controller
         $queryCM .= sprintf(" LIMIT %s,30", $request->get('initFromCM'));
         $respCM = DB::select($queryCM);
 
-        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $respCM]);
+        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $respCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM]);
     }
 
     public function assignAssesorDigitalToLead($solicitud){

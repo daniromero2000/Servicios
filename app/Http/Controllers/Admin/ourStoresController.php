@@ -17,24 +17,10 @@ class ourStoresController extends Controller
         $stores = [
             [
                 'number' => 1,
-                'name' => 'ALMACÉN PLANETA RICA',
-                'addres' => 'CL 20 No. 7-46', 
-                'city' => 'PLANETA RICA - CORDOBA',
-                'telephone' => '(4)7767598 -(4)7767291'
-            ],
-            [
-                'number' => 2,
                 'name' => 'ALMACÉN COROZAL', 
                 'addres' => 'CR 26 No. 32-55 BRR San Juan Centro',
                 'city' => 'COROZAL - SUCRE',
                 'telephone'=>'(5) 2841374'
-            ],
-            [
-                'number' => 3,
-                'name' => 'ALMACÉN MONTELIBANO',
-                'addres' => 'CR 13 No. 14A–67 LC 1 ESQ',
-                'city' => 'MONTELIBANO - CORDOBA',
-                'telephone' => '(4)7722157-(4)7721674'
             ],
             [
                 'number' => 4,
@@ -49,13 +35,6 @@ class ourStoresController extends Controller
                 'addres' => 'CR 13 No.22-30',
                 'city' => 'GRANADA - META',
                 'telephone' => '(8)6582415'
-            ],
-            [
-                'number' => 6,
-                'name' => 'ALMACÉN PUERTO BERRIO',
-                'addres' => 'CR 4 ED David-Premier No. 53-27/25 CENTRO',
-                'city' => 'PUERTO BERRIO - ANTIOQUIA',
-                'telephone' => '(4)8327546-(4)8330252'
             ],
             [
                 'number' => 7,
