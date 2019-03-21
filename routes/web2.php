@@ -40,10 +40,8 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
 
 Route::resource('simulator','Admin\SimulatorController');
 
-
-
 Route::group(['prefix'=>'/simulador/'],function(){ 
-    Route::get('/getDataSimulator','Admin\SimulatorController@getData');
+    Route::get('/getDataSimulador','Admin\SimulatorController@getData');
     Route::get('/','Admin\SimulatorController@index'); 
     Route::get('/admin', function(){
         return view('simulator.simulator');
