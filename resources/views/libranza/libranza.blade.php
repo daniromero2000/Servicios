@@ -1,17 +1,17 @@
 <div id="sliderPrincipalLibranza">
         <div class="containImg">
-            <img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
-            <img src="/images/creditoLibranza.jpg" class="img-fluid img-responsive" title="Libranza">
+            <!--<img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">-->
+            <img src="/images/creo_oportunidades_slider.jpg" class="img-fluid img-responsive" title="Libranza">
             <div class="sliderPrincipal-containTextLeft">
-                <p class="sliderPrincipalLibranza-text">
+               <!-- <p class="sliderPrincipalLibranza-text">
                     {{-- @php
                         echo $slider['description'];
                     @endphp --}}
                     Te damos <strong>más</strong> que <strong>Crédito,</strong>  te damos la <br><strong>Oportunidad</strong> de vivir viajando
-                </p>
+                </p>-->
 
                 {{-- <a href="#formularioSimulador" class="sliderPrincipalLibranza-button">@php echo $slider['textButton']; @endphp</a> --}}
-                <a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>
+                <!--<a href="#formularioSimulador" class="sliderPrincipalLibranza-button" tabindex="0">Solicítalo ya</a>-->
             </div>
         </div>
         <!--<div class="containImg">
@@ -49,7 +49,7 @@
     @endforeach --}}-->
 </div>
 
-
+<br>
 <div id="creditoLibranza">
     <div class="containerCreditoLibranza">
         <h2 class="creditoLibranza-title text-center">Todo lo que puedes hacer con <br> nuestro <strong>crédito de libranza</strong></h2>
@@ -341,9 +341,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             <tr ng-repeat="plazo in plazos">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
-                                <td>@{{ plazo.timeLimit }}</td>
+                                <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>
                         </tbody>
                     </table>
