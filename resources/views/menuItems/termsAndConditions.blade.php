@@ -7,7 +7,7 @@
 		<h1 class="menuItem-title text-center">TÉRMINOS Y CONDICIONES GENERALES</h1>
 		<div class="container">
 			<p class="menuItem-text">
-				Este documento describe los términos y condiciones generales aplicables al acceso y uso de los servicios ofrecidos por LAGOBO DISTRIBUCIONES S.A.S. L.G.B. S.A.S., (“En adelante LAGOBO”) dentro del sitio https://www.serviciosoportunidades.com y/u otros dominios relacionados, en donde éstos términos y condiciones se encuentren. Cualquier persona que desee acceder y/o suscribirse y/o usar la página web o los servicios podrá hacerlo sujetándose a los términos y condiciones generales, junto con todas las demás políticas y principios que rigen en la página web https://www.oportunidades.com.co y que son incorporados al presente directamente o por referencia o que son explicados y/o detallados en otras secciones del sitio. En consecuencia, todas las visitas y todos los contratos y transacciones que se deriven de esta página, así como sus efectos jurídicos, quedarán regidos por estas reglas y sometidos a la legislación vigente y aplicable en Colombia.
+				Este documento describe los términos y condiciones generales aplicables al acceso y uso de los servicios ofrecidos por LAGOBO DISTRIBUCIONES S.A.S. L.G.B. S.A.S., (“En adelante LAGOBO”) dentro del sitio https://www.serviciosoportunidades.com y/u otros dominios relacionados, en donde éstos términos y condiciones se encuentren. Cualquier persona que desee acceder y/o suscribirse y/o usar la página web o los servicios podrá hacerlo sujetándose a los términos y condiciones generales, junto con todas las demás políticas y principios que rigen en la página web https://www.serviciosoportunidades.com/ y que son incorporados al presente directamente o por referencia o que son explicados y/o detallados en otras secciones del sitio. En consecuencia, todas las visitas y todos los contratos y transacciones que se deriven de esta página, así como sus efectos jurídicos, quedarán regidos por estas reglas y sometidos a la legislación vigente y aplicable en Colombia.
 			</p>
 			<p class="menuItem-text">
 				El usuario debe leer, entender y aceptar todas las condiciones establecidas en los términos y condiciones generales, así como los demás documentos incorporados a los mismos por referencia, previas a su registro como usuario de https://www.serviciosoportunidades.com/ y/o la adquisición de productos y/o entrega de datos de carácter personal con los fines estipulados en nuestra “Política de tratamiento de la información y protección de datos personales”.
@@ -70,7 +70,7 @@
 				Utilizar cualquier dispositivo, software o rutina para interferir con el adecuado funcionamiento del https://www.serviciosoportunidades.com/ o sus transacciones.
 			</p>
 			<p class="menuItem-text">
-				Intentar manipular cualquier información transmitida hacia o desde el www.oportunidades.com.co para suplantar a otra persona o a https://www.serviciosoportunidades.com/.
+				Intentar manipular cualquier información transmitida hacia o desde el https://www.serviciosoportunidades.com/ para suplantar a otra persona o a https://www.serviciosoportunidades.com/.
 			</p>
 			<p class="menuItem-text">
 				Utilizar el Sitio Web para fines o efectos ilícitos, lesivos de los derechos e intereses de terceros o que vayan en contra de estos Términos y Condiciones de Uso, así como la moral, las buenas costumbres generalmente aceptadas y el orden público.
