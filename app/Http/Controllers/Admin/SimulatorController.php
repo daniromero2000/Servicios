@@ -129,11 +129,11 @@ class SimulatorController extends Controller
 
     public function getData(){
 
-        $params=Simulator::select('rate','gap','assurance')->get();
+       /* $params=Simulator::select('rate','gap','assurance')->get();
         $timeLimits=TimeLimits::select('id','timeLimit')->get();
         $data['params']=$params;
-        $data['timeLimits']=$timeLimits;
+        $data['timeLimits']=$timeLimits;*/
 
-        return response()->json($data);
+        return response()->json(2);
     }
 }
