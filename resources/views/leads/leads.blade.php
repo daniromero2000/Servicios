@@ -43,7 +43,7 @@
                         <th scope="col">Canal adquisición</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Cupo Producto/Avance</th>
-                        <th scope="col" style="width: 10%;">Fecha de registro</th>
+                        <th scope="col" style="width: 10%;">Fecha registro</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
