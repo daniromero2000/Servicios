@@ -34,7 +34,7 @@ app.controller('simulatorController', function($scope, $http, $rootScope){
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/simulador/getDataSimulator',
+		  url: '/simulador/getDataSimulador',
 		}).then(function successCallback(response) {
 			if(response.data != false){
 			
