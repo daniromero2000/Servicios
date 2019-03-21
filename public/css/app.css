@@ -125,6 +125,10 @@ a:hover, a:active, a:focus, a:visited{
 	background: #3fcf64;
 }
 
+.header-item6{
+	background: #f5d134;
+}
+
 .header-menu:before{
 	background: #1d84c3;
 	content: "";
@@ -1386,6 +1390,11 @@ a:hover, a:active, a:focus, a:visited{
 	color: #000 !important;
 }
 
+
+#creditoLibranza-slider{
+	width: 100%;
+	margin: auto;
+}
 /* Video */
 
 
