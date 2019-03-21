@@ -47,7 +47,7 @@ app.controller('simulatorController', function($scope, $http, $rootScope){
 				
 			}
 		}, function errorCallback(response) {
-			
+			console.log(response);
 		});
 	};
 
