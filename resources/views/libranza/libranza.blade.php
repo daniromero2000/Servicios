@@ -49,7 +49,7 @@
     @endforeach --}}-->
 </div>
 
-<br>
+<br> 
 <div id="creditoLibranza">
     <div class="containerCreditoLibranza">
         <h2 class="creditoLibranza-title text-center">Todo lo que puedes hacer con <br> nuestro <strong>crédito de libranza</strong></h2>
@@ -149,7 +149,7 @@
     <div class="formularioSimulador-container">
         <div class="row resetRow">
             <div class="col-12 col-md-12 col-lg-4 resetCol">
-                <h2 class="formularioSimulador-title text-center"><strong>Libranza</strong> para pensionados y docentes</h2>
+                <h2 class="formularioSimulador-title text-center"><strong>Libranza</strong> para pensionados, docentes y militartes</h2>
                 <p class="formularioSimulador-textPrincipal text-justify">
                     Con nuestro simulador puedes calcular el monto y plazo que se ajuste a tus necesidades y estarás un paso más cerca de realizar tus sueños. Te invitamos para que dejes tus datos antes de simular tu crédito y uno de nuestros asesores se comunicará contigo para acompañarte en el proceso de aprobación.
                 </p>
