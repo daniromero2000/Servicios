@@ -126,6 +126,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		amount:0.0,
 		timeLimit:''
 	}
+	$scope.params=[]
 	$scope.timeLimits=[];
 	$scope.plazos=[];
 	$scope.lines=[];
@@ -150,9 +151,14 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				angular.forEach(response.data.timeLimits, function(value, key) {
 					$scope.timeLimits.push(value);
 				});
+
+				angular.forEach(response.data.params, function(value, key) {
+					$scope.params.push(value);
+				});
 			}
 
-			console.log($scope.pagaduriaLibranza);
+			console.log(typeof $scope.timeLimits);
+			console.log($scope.timeLimits[5]);
 		},function errorCallback(response){
 			
 		});
@@ -191,6 +197,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		}
 	};
 
+
 	$scope.simular = function(){
 		if($scope.libranza.age == '' || $scope.libranza.creditLine == '' || $scope.libranza.customerType == '' || $scope.libranza.pagaduria == ''){
 			alert('Debes de llenar todos los datos');
@@ -201,26 +208,34 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
 					alert("Para poder simular el Salario Básico no puede ser menor a 0");
 				}else{
-					var rate=0.019;
-					var gap=2;
-					var loanAssurance=0.005;
+					var rate=$scope.params[0].rate;
+					var gap=$scope.params[0].gap;
+					var loanAssurance=($scope.params[0].assurance)/1000000;
 					var gapTop=0.0;
 					var gapBottom=0.0;
+					var result=0;
+					console.log(loanAssurance);
 					for(var i =0;i < $scope.timeLimits.length; i++){
 						var aux = {
 							amount : 0.0,
 							timeLimit : ''
 						};
-						var fee=Math.pow((1+rate),$scope.timeLimits[i]);
+						var fee=Math.pow((1+rate),$scope.timeLimits[i].timeLimit);
+						
 						if($scope.plazo.amount<=$scope.libranza.maxQuota){
+							
 							gapTop=$scope.libranza.quaotaAvailable*(fee-1);
 							gapBottom=((1+(rate*gap))*(rate*fee))+(loanAssurance*(fee-1));
-							$scope.plazo.amount=gapTop/gapBottom;
+							result=gapTop/gapBottom;
+							$scope.plazo.amount=(Math.floor((result)/100000))*100000;
 							$scope.plazo.timeLimit=$scope.timeLimits[i];
 							aux = angular.extend({},$scope.plazo);
-							$scope.plazos[i] = aux;							
+							$scope.plazos[i]= aux;
+							console.log($scope.plazos);
+													
 						}
-					}					
+					}	
+									
 				}
 			}
 		}
