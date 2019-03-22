@@ -27,21 +27,21 @@
                     <tr>
                         <td>TASA</td>
                         <td>
-                        <input type="" value="@{{ params[0].rate}}" ng-model="params[0].rate">
+                        <input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].rate">
                         </td>
                     </tr>
                     <tr>
                         <td>DESFASE</td>
-                        <td><input type="" value="@{{ params[0].rate}}" ng-model="params[0].gap"></td>
+                        <td><input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].gap"></td>
                     </tr>
                     <tr>
                         <td>SEGURO</td>
-                        <td><input type="" value="@{{ params[0].rate}}" ng-model="params[0].assurance"></td>
+                        <td><input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].assurance"></td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-4">
+                <div class="col-md-6 offset-md-4 text-center">
                     <button type="submit" class="btn btn-primary">
                         Actualizar
                     </button>
@@ -69,19 +69,18 @@
                                 </button>
                             </td>
                         </tr>
-                        
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control text-center" value="" ng-model="plazo.timeLimit">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">
+                                    Agregar
+                                </button>
+                            </td>
+                        </tr>                        
                     </tbody>
                 </table>                    
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center">
-                        <input type="text" value="" ng-model="plazo.timeLimit">
-                    </div>
-                    <div class="col-12 col-sm-6 text-center">
-                        <button type="submit" class="btn btn-primary">
-                            Agregar
-                        </button>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
