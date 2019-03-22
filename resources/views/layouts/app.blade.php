@@ -167,9 +167,9 @@
 							<a class="nav-item nav-link header-item header-item1" href="{{url('oportuya')}}">
 								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
-							<a class="nav-item nav-link header-item header-item1" href="/libranza">
+							<!--<a class="nav-item nav-link header-item header-item1" href="/libranza">
 								<span class="header-textoItem">Libranza</span>
-							</a>
+							</a>-->
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
 							</a>
@@ -187,9 +187,6 @@
 							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp">
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp" href="/oportuya"> 
 									<span class="header-textoItem">Crédito Oportuya</span>
-								</a>
-								<a class="nav-item nav-link header-item header-item6 @php echo $activeLibranza @endphp " href="/libranza"> 
-									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Libranza</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
