@@ -855,7 +855,10 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function getExistSolicFab($identificationNumber){
-		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE `ESTADO` = 'ANALISIS' AND `CLIENTE` = '%s' ", $identificationNumber);
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- 30 day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNew);
 
 		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
 
