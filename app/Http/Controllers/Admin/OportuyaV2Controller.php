@@ -405,7 +405,8 @@ class OportuyaV2Controller extends Controller
 			$solic_fab->FTP=$ftp;
 			$solic_fab->STATE=$state;
 			$solic_fab->GRAN_TOTAL=$granTotal;
-
+			$solic_fab->SOLICITUD_WEB = 1;
+			
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
