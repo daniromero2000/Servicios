@@ -146,6 +146,9 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
+			if(response.data == -3){
+				window.location = "/UsuarioPendiente";
+			}
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
 				$('#congratulations').modal('show');

@@ -327,7 +327,11 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
-			$identificationNumber = $request->get('identificationNumber');			
+			$identificationNumber = $request->get('identificationNumber');
+			$existSolicFab = $this->getExistSolicFab($identificationNumber);
+			if($existSolicFab == true){
+				return -3; // Tiene solicitud
+			}
 			$datosCliente= new DatosCliente;
 			$turnosOportuya = new TurnosOportuya;
 			$analisis = new Analisis;
@@ -406,7 +410,7 @@ class OportuyaV2Controller extends Controller
 			$solic_fab->STATE=$state;
 			$solic_fab->GRAN_TOTAL=$granTotal;
 			$solic_fab->SOLICITUD_WEB = 1;
-			
+
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
@@ -636,6 +640,11 @@ class OportuyaV2Controller extends Controller
 			return -2; // Es empleado
 		}
 
+		$existSolicFab = $this->getExistSolicFab($identificationNumber);
+		if($existSolicFab == true){
+			return -3; // Es empleado
+		}
+
 		return response()->json(true);
 	}
 
@@ -842,6 +851,18 @@ class OportuyaV2Controller extends Controller
 			return true; // Es empleado
 		}else{
 			return false; // No es empelado
+		}
+	}
+
+	private function getExistSolicFab($identificationNumber){
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE `ESTADO` = 'ANALISIS' AND `CLIENTE` = '%s' ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
+
+		if($resp[0]->totalSolicitudes > 0){
+			return true; // Tiene Solictud
+		}else{
+			return false; // No tiene solicitud
 		}
 	}
 

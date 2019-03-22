@@ -174,6 +174,8 @@ angular.module('appStep1', [])
 					$('#cardExist').modal('show');
 				}else if(response.data == -2){
 					window.location = "/Employed";
+				}else if(response.data == -3){
+					window.location = "/UsuarioPendiente";
 				}else{
 					$scope.confirmnumCel();
 				}

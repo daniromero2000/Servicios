@@ -32,6 +32,10 @@ Route::get('/Employed',function(){
     return view('advance.pageEmployed');
 })->name('pageEmployed');
 
+Route::get('/UsuarioPendiente',function(){
+    return view('advance.pageUserExist');
+})->name('usuarioPendiente');
+
 Route::get('/OPN_gracias_FRM',function(){
     return view('oportuya.thankYouPageDenied');
 })->name('thankYouPageOportuyaDenied');
