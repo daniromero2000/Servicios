@@ -401,16 +401,6 @@ class OportuyaV2Controller extends Controller
 				'STATE'=>$state
 			];
 
-			$solic_fab->CLIENTE=$identificationNumber;
-			$solic_fab->CODASESOR=$codeAssessor;
-			$solic_fab->FECHASOL=date("Y-m-d H:i:s");
-			$solic_fab->SUCURSAL=$sucursal;
-			$solic_fab->ESTADO=$estado;
-			$solic_fab->FTP=$ftp;
-			$solic_fab->STATE=$state;
-			$solic_fab->GRAN_TOTAL=$granTotal;
-			$solic_fab->SOLICITUD_WEB = 1;
-
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
@@ -428,9 +418,72 @@ class OportuyaV2Controller extends Controller
 				}else{
 					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}				
-				
+				$solic_fab->CLIENTE=$identificationNumber;
+				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
+				$solic_fab->SUCURSAL=$sucursal;
+				$solic_fab->ESTADO="ANALISIS";
+				$solic_fab->FTP=$ftp;
+				$solic_fab->STATE=$state;
+				$solic_fab->GRAN_TOTAL=$granTotal;
+				$solic_fab->SOLICITUD_WEB = 1;
 				$solic_fab->save();
 				$numSolic = $this->getNumSolic($identificationNumber);
+				$datosCliente->CEDULA = $identificationNumber;
+				$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
+				$datosCliente->NOM_REFPER = trim($request->get('NOM_REFPER'));
+				$datosCliente->DIR_REFPER = 'NA';
+				$datosCliente->BAR_REFPER = 'NA';
+				$datosCliente->TEL_REFPER = trim($request->get('TEL_REFPER'));
+				$datosCliente->CIU_REFPER = 'NA';
+				$datosCliente->NOM_REFPE2 = 'NA';
+				$datosCliente->DIR_REFPE2 = 'NA';
+				$datosCliente->BAR_REFPE2 = 'NA';
+				$datosCliente->TEL_REFPE2 = 0;
+				$datosCliente->CIU_REFPE2 = " ";
+				$datosCliente->NOM_REFFAM = trim($request->get('NOM_REFFAM'));
+				$datosCliente->DIR_REFFAM = 'NA';
+				$datosCliente->BAR_REFFAM = 'NA';
+				$datosCliente->TEL_REFFAM = trim($request->get('TEL_REFFAM'));
+				$datosCliente->PARENTESCO = " ";
+				$datosCliente->NOM_REFFA2 = 'NA';
+				$datosCliente->DIR_REFFA2 = 'NA';
+				$datosCliente->BAR_REFFA2 = 'NA';
+				$datosCliente->TEL_REFFA2 = 0;
+				$datosCliente->PARENTESC2 = " ";
+				$datosCliente->NOM_REFCOM = 'NA';
+				$datosCliente->TEL_REFCOM = 'NA';
+				$datosCliente->NOM_REFCO2 = 'NA';
+				$datosCliente->TEL_REFCO2 = 'NA';
+				$datosCliente->NOM_CONYUG = 'NA';
+				$datosCliente->CED_CONYUG = 'NA';
+				$datosCliente->DIR_CONYUG = 'NA';
+				$datosCliente->PROF_CONYU = " ";
+				$datosCliente->EMP_CONYUG = 'NA';
+				$datosCliente->CARGO_CONY = 'NA';
+				$datosCliente->EPS_CONYUG = 'NA';
+				$datosCliente->TEL_CONYUG = 'NA';
+				$datosCliente->ING_CONYUG = 0;
+				$datosCliente->CON_CLI1 = " ";
+				$datosCliente->CON_CLI2 = " ";
+				$datosCliente->CON_CLI3 = " ";
+				$datosCliente->CON_CLI4 = " ";
+				$datosCliente->EDIT_RFCLI = " ";
+				$datosCliente->EDIT_RFCL2 = " ";
+				$datosCliente->EDIT_RFCL3 = " ";
+				$datosCliente->INFORMA1 = 'NA';
+				$datosCliente->CARGO_INF1 = 'NA';
+				$datosCliente->FEC_COM1 = 'NA';
+				$datosCliente->FEC_COM2 = 'NA';
+				$datosCliente->ART_COM1 = 'NA';
+				$datosCliente->ART_COM2 = 'NA';
+				$datosCliente->CUOT_COM1 = 'NA';
+				$datosCliente->CUOT_COM2 = "Al Dia";
+				$datosCliente->HABITO1 = "Al Dia";
+				$datosCliente->HABITO2 = "Al Dia";
+				$datosCliente->STATE = "A";
+
+				$createData = $datosCliente->save();
 				$analisis->solicitud = $numSolic->SOLICITUD;
 				$analisis->ini_analis = date("Y-m-d H:i:s");
 				$analisis->fec_datacli = "1900-01-01 00:00:00";
@@ -525,63 +578,7 @@ class OportuyaV2Controller extends Controller
 			$dataLead=[
 				'CON3' => $con3
 			];
-			$numSolic = $this->getNumSolic($identificationNumber);
-
-			$datosCliente->CEDULA = $identificationNumber;
-			$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
-			$datosCliente->NOM_REFPER = trim($request->get('NOM_REFPER'));
-			$datosCliente->DIR_REFPER = 'NA';
-			$datosCliente->BAR_REFPER = 'NA';
-			$datosCliente->TEL_REFPER = trim($request->get('TEL_REFPER'));
-			$datosCliente->CIU_REFPER = 'NA';
-			$datosCliente->NOM_REFPE2 = 'NA';
-			$datosCliente->DIR_REFPE2 = 'NA';
-			$datosCliente->BAR_REFPE2 = 'NA';
-			$datosCliente->TEL_REFPE2 = 0;
-			$datosCliente->CIU_REFPE2 = " ";
-			$datosCliente->NOM_REFFAM = trim($request->get('NOM_REFFAM'));
-			$datosCliente->DIR_REFFAM = 'NA';
-			$datosCliente->BAR_REFFAM = 'NA';
-			$datosCliente->TEL_REFFAM = trim($request->get('TEL_REFFAM'));
-			$datosCliente->PARENTESCO = " ";
-			$datosCliente->NOM_REFFA2 = 'NA';
-			$datosCliente->DIR_REFFA2 = 'NA';
-			$datosCliente->BAR_REFFA2 = 'NA';
-			$datosCliente->TEL_REFFA2 = 0;
-			$datosCliente->PARENTESC2 = " ";
-			$datosCliente->NOM_REFCOM = 'NA';
-			$datosCliente->TEL_REFCOM = 'NA';
-			$datosCliente->NOM_REFCO2 = 'NA';
-			$datosCliente->TEL_REFCO2 = 'NA';
-			$datosCliente->NOM_CONYUG = 'NA';
-			$datosCliente->CED_CONYUG = 'NA';
-			$datosCliente->DIR_CONYUG = 'NA';
-			$datosCliente->PROF_CONYU = " ";
-			$datosCliente->EMP_CONYUG = 'NA';
-			$datosCliente->CARGO_CONY = 'NA';
-			$datosCliente->EPS_CONYUG = 'NA';
-			$datosCliente->TEL_CONYUG = 'NA';
-			$datosCliente->ING_CONYUG = 0;
-			$datosCliente->CON_CLI1 = " ";
-			$datosCliente->CON_CLI2 = " ";
-			$datosCliente->CON_CLI3 = " ";
-			$datosCliente->CON_CLI4 = " ";
-			$datosCliente->EDIT_RFCLI = " ";
-			$datosCliente->EDIT_RFCL2 = " ";
-			$datosCliente->EDIT_RFCL3 = " ";
-			$datosCliente->INFORMA1 = 'NA';
-			$datosCliente->CARGO_INF1 = 'NA';
-			$datosCliente->FEC_COM1 = 'NA';
-			$datosCliente->FEC_COM2 = 'NA';
-			$datosCliente->ART_COM1 = 'NA';
-			$datosCliente->ART_COM2 = 'NA';
-			$datosCliente->CUOT_COM1 = 'NA';
-			$datosCliente->CUOT_COM2 = "Al Dia";
-			$datosCliente->HABITO1 = "Al Dia";
-			$datosCliente->HABITO2 = "Al Dia";
-			$datosCliente->STATE = "A";
-
-			$createData = $datosCliente->save();
+			
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 			if($con3 == 'RECHAZADO'){
 				return response()->json(['data' => false]);
@@ -718,6 +715,7 @@ class OportuyaV2Controller extends Controller
 		
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		return response()->json(true);
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
@@ -866,6 +864,18 @@ class OportuyaV2Controller extends Controller
 			return true; // Tiene Solictud
 		}else{
 			return false; // No tiene solicitud
+		}
+	}
+
+	private function getExistLeadDefault($identificationNumber){
+		$queryExistDefault = sprintf("SELECT COUNT(`cedula`) as `totalDefault` FROM `TB_CASTIGO` WHERE `cedula` = %s ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($queryExistDefault);
+
+		if($resp[0]->totalDefault > 0){
+			return true; // Esta en mora
+		}else{
+			return false; // No esta en mora
 		}
 	}
 
