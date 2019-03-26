@@ -642,6 +642,11 @@ class OportuyaV2Controller extends Controller
 			return -3; // Es empleado
 		}
 
+		$existDefault = $this->getExistLeadDefault($identificationNumber);
+		if($existDefault == true){
+			return -4;
+		}
+
 		return response()->json(true);
 	}
 
@@ -776,7 +781,7 @@ class OportuyaV2Controller extends Controller
 		$context  = stream_context_create($options);
 		$result = json_decode((file_get_contents($url, false, $context)), true);
 	
-		if ($result["resultado"]===0){
+		if($result["resultado"]===0){
 			$mensaje = 'Se ha enviado el SMS exitosamente';
 		}else{
 			$mensaje = 'ha ocurrido un error!!';

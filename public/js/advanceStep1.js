@@ -164,6 +164,8 @@ angular.module('appAdvanceStep1', [])
 					window.location = "/Employed";
 				}else if(response.data == -3){
 					window.location = "/UsuarioPendiente";
+				}else if(response.data == -4){
+					window.location = "/UsuarioMoroso";
 				}else{
 					$scope.confirmnumCel();
 				}
