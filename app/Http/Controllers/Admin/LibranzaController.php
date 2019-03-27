@@ -190,4 +190,33 @@ class LibranzaController extends Controller
         $array = [1,2,3,4,5,6,7];
         return response()->json($array);
     }
+
+    public function libranzaData(Request $request){
+
+        $leads=Lead::select('id','name','lastName','email','telephone','city','typeService','typeProduct','state','channel','created_at','termsAndConditions','typeDocument','identificationNumber','occupation');
+
+
+        if(!is_null($request->city)){
+            $leads->where('city', $request->city);
+        }
+        
+        if(!is_null($request->fecha_ini)){
+            $leads->where('fecha_ini', $request->fecha_ini);
+        }
+        
+        if(!is_null($request->fecha_fin)){
+            $leads->where('fecha_fin', $request->fecha_fin);
+        }
+
+        if(!is_null($request->state)){
+            $leads->where('state', $request->state);
+        }
+        
+        $leads->orderBy('id', 'desc')
+                ->skip($request->page*($request->actual-1))
+                ->take($request->page);
+                
+        return response()->json($leads->get());
+    }
+
 }

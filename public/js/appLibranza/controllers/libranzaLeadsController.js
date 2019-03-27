@@ -1,13 +1,13 @@
 app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 	$scope.q = {
+		'page':30,
+		'current':1,
 		'q': '',
-		'initFrom': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
-		'typeService': 'Credito libranza',
+		'typeService': 'libranza',
 		'state': '',
-		'libranzaLeads' : true
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
@@ -114,7 +114,7 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&libranzaLead='+$scope.q.libranzaLeads,
+		  url: '/api/admin/getDataLibranza?q='+$scope.q.q+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&libranzaLead='+$scope.q.libranzaLeads+'&page='+$scope.q.page+'&current='+$scope.q.current,
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.q.initFrom += response.data.length;
@@ -122,14 +122,16 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
+				console.log(response);
 			}
 		}, function errorCallback(response) {
-		    
+			console.log(response);
 		});
 	};
 
 	$scope.searchLeads = function(){
-		$scope.q.initFrom = 0;
+		$scope.q.current = 1;
+		$scope.q.page = 30;
 		$scope.leads = [];
 		$scope.getLeads();
 	};
@@ -137,18 +139,23 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 	$scope.resetFiltros = function (){
 		$scope.leads = [];
 		$scope.q = {
+			'page':30,
+			'current':1,
 			'q': '',
-			'initFrom': 0,
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',
-			'typeService': 'Credito libranza',
+			'typeService': 'libranza',
 			'state': '',
-			'libranzaLeads' : true
 		};
 		$scope.filtros = false;
 		$scope.getLeads();
 	};
+
+	$scope.more=function(){
+		$scope.q.current = $scope.q.current + 1;
+		$scope.getLeads();
+	}
 
 	$scope.vewLead = function(lead){
 		$scope.lead = lead;

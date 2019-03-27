@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
 Route::get('/getPagadurias/{idProfile}','Admin\LibranzaController@assignPagaduria');
 Route::get('/getDataLibranza','Admin\LibranzaController@getData');
+Route::get('/admin/getDataLibranza','Admin\LibranzaController@libranzaData');
+/*Route::get('/getDataSimulator','Admin\SimulatorController@getData');
+Route::put('/updateSimulator','Admin\SimulatorController@update');*/
 
 /*Route::group(['prefix'=>'/creditoLibranza/'],function(){
 
