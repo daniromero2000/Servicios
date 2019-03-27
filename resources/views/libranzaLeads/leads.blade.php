@@ -84,10 +84,7 @@
         <tbody>
             <tr ng-repeat="lead in leads">
                 <td scope="row">
-                    <i class="far fa-bell" ng-if="lead.state==1" style="color: gray; font-size: 22px;" title="En estudio"></i>
-                    <i class="fas fa-stopwatch" ng-if="lead.state==2" style="color: orange; font-size: 22px;" title="Es Espera"></i>
-                    <i class="fas fa-clipboard-check" ng-if="lead.state==3" style="color: green; font-size: 22px;" title="Aprobado"></i>
-                    <i class="fas fa-ban" ng-if="lead.state==4" style="color: red; font-size: 22px;" title="Negado"></i>
+                    @{{lead.id}}
                 </td>
                 <td>@{{ lead.name }}</td>
                 <td>@{{ lead.lastName }}</td>
@@ -120,7 +117,7 @@
     </table>
     <div class="row">
         <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar Más</button>
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="more()">Cargar Más</button>
         </div>
     </div>
 </div>

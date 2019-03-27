@@ -102,7 +102,7 @@
                     <div class="containerText-creditoLibranzaCards">
                         <h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
                         <p class="creditoLibranza-text">
-                            Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 mese para que te la lleves. <br>
+                            Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 meses para que te la lleves. <br>
                             <strong>¡Compra tu moto a crédito!</strong>
                         </p>
                     </div>
