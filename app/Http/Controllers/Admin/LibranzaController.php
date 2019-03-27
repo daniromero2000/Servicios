@@ -193,7 +193,8 @@ class LibranzaController extends Controller
 
     public function libranzaData(Request $request){
 
-        $leads=Lead::select('id','name','lastName','email','telephone','city','typeService','typeProduct','state','channel','created_at','termsAndConditions','typeDocument','identificationNumber','occupation');
+        $leads=Lead::select('id','name','lastName','email','telephone','city','typeService','typeProduct','state','channel','created_at','termsAndConditions','typeDocument','identificationNumber','occupation')
+        ->where('typeService','=','Libranza');
 
 
         if(!is_null($request->city)){
