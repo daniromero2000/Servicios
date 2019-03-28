@@ -85,8 +85,8 @@
                     <div class="containerText-creditoLibranzaCards">
                         <h3 class="creditoLibranza-titleText">Crédito para <br> electrodomésticos</h3>
                         <p class="creditoLibranza-text">
-                            A través de nuestras tiendas Oportunidades a nivel nacional, Te financiamos hasta por 60 meses en el electrodoméstico que tanto quieres. <br>
-                            <strong>¡Compralo a crédito!</strong>
+                            En nuestras tiendas Oportunidades ubicadas a nivel nacional, financia con tu crédito de libranza hasta 60 meses,el electrodoméstico o artículo de tecnología que tanto quieres. <br>
+                            <strong>¡Cómpralo a crédito!</strong>
                         </p>
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
@@ -102,7 +102,7 @@
                     <div class="containerText-creditoLibranzaCards">
                         <h3 class="creditoLibranza-titleText">Crédito <br> para motos</h3>
                         <p class="creditoLibranza-text">
-                            Accede a la moto que quieres a través de nuestras líneas de crédito que se adaptan a tus posibilidades de pago. te damos hasta 108 meses para que te la lleves. <br>
+                        Fácil y sin complicaciones, accede a la moto que quieres a través de tu crédito de libranza, el cual se adapta a tus posibilidades de pago con plazo hasta de 108 meses y cutas fijas mensuales. <br>
                             <strong>¡Compra tu moto a crédito!</strong>
                         </p>
                     </div>
@@ -119,7 +119,7 @@
                     <div class="containerText-creditoLibranzaCards">
                         <h3 class="creditoLibranza-titleText">Crédito <br> para viajes</h3>
                         <p class="creditoLibranza-text">
-                            Ahora puedes viajar por el mundo financiando tus paquetes turísticos nacionales hasta por 24 meses e internacionales hasta por 48 meses. <br>
+                        Ahora puedes viajar por el mundo financiando tus paquetes turísticos y los de tu familia, con destinos nacionales hasta en 24 cuotas e internacionales en 48 cuotas a través de tu crédito de Libranza. <br>
                             <strong>¡Viaja Ahora!</strong>
                         </p>
                     </div>
@@ -133,10 +133,11 @@
             <div class="col-md-12 col-lg-4 container-creditoLibranzaCards">
                 <div class="creditoLibranza-contianerTexto creditoLibranza-libreInversion">
                     <img src="{{ asset('images/libranza-libreInversion.png') }}" alt="Crédito Libre Inversión" class="img-fluid creditoLibranza-img">
-                    <div class="containerText-creditoLibranzaCards">
+                    <div class="containerText-creditoLibranzaCards adjust-libranzaCard">
                         <h3 class="creditoLibranza-titleText">Crédito <br> libre inversión</h3>
                         <p class="creditoLibranza-text">
-                            Es un préstamo de Libre Destino que se aprueba a personas naturales, vinculadas a entidades con las cuales existen convenios previamente establecido con LAGOBO y cuyas cuotas se descuentan mensualmente del pago de nómina.
+                        Con el crédito de Libre inversión puedes financiar lo que quieres, viajes, electrodomésticos, motocicletas, o simplemente ir de compras, simula tu crédito de libranza,conoce el plazo y monto que más se ajuste a tus necesidades y adquiere todo lo que has soñado. <br>
+                        <strong>¡Pide tu crédito ahora!</strong>
                         </p>
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
@@ -152,7 +153,8 @@
                     <div class="containerText-creditoLibranzaCards">
                         <h3 class="creditoLibranza-titleText">Compra <br> de cartera</h3>
                         <p class="creditoLibranza-text">
-                            Sabemos lo importante administrar mejor tu dinero. Por eso, te ofrecemos unificar tus deudas que presentas con otras entidades en un solo crédito con Tasa y Plazo Fijo para mejorar tu flujo de caja.
+                        Si lo que necesitas es mejorar tu flujo de caja, con tu crédito de libranza podrás unificar todas tus deudas con una cuota fija mensual y amplios plazos que se ajustan a tu necesidad. <br>
+                        <strong>¡Alivia tus finanzas ya!</strong>
                         </p>
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
