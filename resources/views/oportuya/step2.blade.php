@@ -94,7 +94,7 @@
 					</div>
 					<div class="col-sm-12 col-md-4 form-group" ng-hide="leadInfo.housingType == 'PROPIA'">
 						<label for="housingOwner">Propietario de la Vivienda</label>
-						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" validation-pattern="name" ng-model="leadInfo.housingOwner" />
+						<input type="text" class="form-control inputsSteps inputText" id="housingOwner" ng-model="leadInfo.housingOwner" />
 					</div>
 				</div>
 				<div class="row resetRow">
