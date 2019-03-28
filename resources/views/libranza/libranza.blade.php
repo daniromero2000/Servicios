@@ -8,10 +8,10 @@
             <div class="col-12 col-md-12 col-lg-4 resetCol">
                 <h2 class="formularioSimulador-title text-center"><strong>Libranza</strong> para pensionados, docentes y militartes</h2>
                 <p class="formularioSimulador-textPrincipal text-justify">
-                    Con nuestro simulador puedes calcular el monto y plazo que se ajuste a tus necesidades y estarás un paso más cerca de realizar tus sueños. Te invitamos para que dejes tus datos antes de simular tu crédito y uno de nuestros asesores se comunicará contigo para acompañarte en el proceso de aprobación.
+                Con nuestro simulador puedes calcular el monto y plazo que se ajuste a tus necesidades y estarás  un paso más cerca de realizar tus sueños. Te invitamos para que dejes tus datos antes de simular tu crédito y uno de nuestros asesores se comunicará contigo para acompañarte en el proceso de aprobación.
                 </p>
                 <p class="formularioSimulador-textPrincipal text-justify">
-                    El cupo y cuota del crédito, producto de esta simulación, son aproximados e informativos y podrán variar de acuerdo a las políticas de financiación y de crédito vigentes al momento de su estudio y aprobación por parte de Lagobo.
+                El cupo y cuota del crédito, producto de esta simulación, son aproximados e informativos y podrán variar de acuerdo a las políticas de financiación y de crédito vigentes al momento de su estudio y aprobación.
                 </p>
             </div>
 
@@ -47,7 +47,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="formularioSimulador-containInput">
                                     <label class="formularioSimulador-labelFormulario" for="city">Ciudad</label>
-                                            <select class="form-control" id="city" ng-model="libranza.city" ng-options="city.value as city.label for city in cities" required="true" ></select>
+                                            <select class="form-control" id="city" ng-model="libranza.city" ng-options="city.city as city.city for city in cities" ng-required="true"></select>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -173,6 +173,30 @@
     </div>
 </div>
 
+<div class="modal fade hide" id="negacionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body simularModal-modalBody">
+                <div class="row resetRow">
+                    <i class="fas fa-times cursor formularioSimulador-closeModal" data-dismiss="modal"></i>
+                    <div class="col-12 text-center form-group">
+                        <h3 class="formularioSimulador-title"><strong>Capacidad de endeudamiento insuficiente</strong></h3>
+                        <br>
+                    </div>
+                </div>
+                <div class="text-justify textModalSimular">
+                    Lastimosamente no cuentas con la capacidad de endeudamiento necesaria para obtener crédito con nosotros. Gracias por preferirnos!
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center" style="padding: 20px 0">
+                        <a href="https://api.whatsapp.com/send?phone=573105216830&amp;text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza" class="creditoLibranza-buttonWhatsAppmodal" target="_blank" tabindex="0">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade hide" id="simularModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -181,7 +205,7 @@
                 <div class="row resetRow">
                     <i class="fas fa-times cursor formularioSimulador-closeModal" data-dismiss="modal"></i>
                     <div class="col-12 text-center form-group">
-                        <h3 class="formularioSimulador-title"><strong>Cuota Disponible</strong></h3>
+                        <h3 class="formularioSimulador-title"><strong>Cuota del crédito</strong></h3>
                         <br>
                         <span class="simularModal-quaotaAvailable">$ @{{ libranza.quaotaAvailable | number:0 }}</span>
                     </div>
@@ -193,24 +217,24 @@
                     <table class="table table-hover">
                         <thead class="simularModal-thead">
                             <tr>
-                                <td class="col-sm-8">Monto máximo aprobado por plazo</td>
+                                <td class="col-sm-8">Cupo máximo aprobado según plazo</td>
                                 <td class="col-sm-4">Plazo</td>
                             </tr>
                         </thead>
                         <tbody>
                             
-                            <tr ng-repeat="plazo in plazos">
+                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine==4">
+                                <td ng-if="plazo.timeLimit.timeLimit <=60">$@{{ plazo.amount | number:0 }}</td>
+                                <td ng-if="plazo.timeLimit.timeLimit <=60" >@{{ plazo.timeLimit.timeLimit }}</td>
+                            </tr>
+                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine!=4">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
                                 <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-12 text-center" style="padding: 20px 0">
-                        <a href="https://api.whatsapp.com/send?phone=573105216830&amp;text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza" class="creditoLibranza-buttonWhatsAppmodal" target="_blank" tabindex="0">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
+                <br>
                 <div class="text-justify textModalSimular">
                     *El cupo y cuota del crédito, producto de esta simulación, son aproximados e informativos y podrán variar de acuerdo a las políticas de financiación y de crédito vigentes al momento de su estudio y aprobación por parte de Lagobo.
                 </div>
@@ -232,7 +256,7 @@
                         <form ng-submit="showModal()" id="formEx">
                             <div class="formularioSimulador-containInput">
                                 <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito :</label>
-                                <select id="creditLine" class="form-control" ng-model="libranza.creditLine" ng-options="linea.id as linea.name for linea in lines" required="true" ></select>
+                                <select id="creditLine" class="form-control" ng-blur="ableField()" ng-model="libranza.creditLine" ng-options="linea.id as linea.name for linea in lines" required="true" ></select>
                             </div>
                             <div class="formularioSimulador-containInput">
                                 <label for="customerType" class="formularioSimulador-labelFormulario">Tipo de Cliente :</label>
@@ -266,16 +290,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="formularioSimulador-containInput">
+                            <div class="formularioSimulador-containInput" ng-if="!quotaBuy">
                                 <label for="otherDesc" class="formularioSimulador-labelFormulario">Otros Descuentos :</label>
                                 <input type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="calculateData()" ng-change="validateInt()" />
                             </div>
+                            <div class="row" ng-if="quotaBuy">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="formularioSimulador-containInput">
+                                        <label for="otherDesc" class="formularioSimulador-labelFormulario">Otros Descuentos :</label>
+                                    <input type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="calculateData()" ng-change="validateInt()" />
+                                </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="formularioSimulador-containInput">
+                                        <label for="quotaBuy" class="formularioSimulador-labelFormulario">Valor Cuota Compra :</label>
+                                        <input type="number" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="calculateData()" ng-change="validateInt()" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="formularioSimulador-containInput">
                                 <input type="hidden" id="segMargen" class="form-control" ng-model="libranza.segMargen">
-                            </div>
-                            <div class="formularioSimulador-containInput" ng-if="libranza.creditLine == 'Libre inversion + Compra de cartera'">
-                                <label for="quotaBuy" class="formularioSimulador-labelFormulario">Valor Cuota Compra :</label>
-                                <input type="number" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="calculateData()" ng-change="validateInt()" />
                             </div>
                             <div class="formularioSimulador-containInput text-center">
                                 <button type="submit" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Simular</button>
