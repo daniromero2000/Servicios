@@ -2,6 +2,10 @@
     td{
         vertical-align: middle !important;
     }
+    .container{
+        max-width: 1300px !important;
+        margin: auto;
+    }
 </style>
 
 <nav>
@@ -36,8 +40,9 @@
                 <thead class="headTableLeads">
                     <tr>
                         <th scope="col">Cedula</th>
-                        <th scope="col">N° solicitud</th>
+                        <th scope="col">Sucursal / N° solicitud</th>
                         <th scope="col">Asesor</th>
+                        <th scope="col">Asesor OP</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Canal adquisición</th>
@@ -50,8 +55,9 @@
                 <tbody>
                     <tr ng-repeat="lead in leads">
                         <td>@{{ lead.CEDULA }}</td>
-                        <td>@{{ lead.SOLICITUD }}</td>
+                        <td>@{{ lead.SUCURSAL }} - @{{ lead.SOLICITUD }}</td>
                         <td>@{{ lead.nameAsesor }}</td>
+                        <td>@{{ lead.CODASESOR }}</td>
                         <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                         <td>@{{ lead.CELULAR }}</td>
                         <td>
