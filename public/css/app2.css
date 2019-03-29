@@ -1317,6 +1317,9 @@ label {
 .imageSuccessful{
 	position: relative;
 }
+.NumberCase{
+	color: #167efa;
+}
 
 
 @media(max-width: 991px){

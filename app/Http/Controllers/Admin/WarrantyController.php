@@ -7,11 +7,17 @@
     **Email: desarrolladorjunior@lagobo.com
     **Description: controlador REST para la administracion de solicitudes de garantias.
     ** todos los metodos se dividen en dos partes consulta a BD y respuesta en json
-    **Date: 26/12/2018
+    **Date: 29/03/2019
      **/
+
+// includes
 
 namespace App\Http\Controllers\Admin;
 
+use App\codeUserVerificationOportudata;
+use App\GARANTIA;
+use App\CLIENTE;
+use App\cliCel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -25,116 +31,175 @@ class WarrantyController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['store']]);
+        // except a authenticable methods 
+        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create'] ]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        //query list of lines
-        $lines = DB::table('lines')
-                ->select('name','id')
-                ->whereNull("deleted_at")
-                ->get();
+    public function index(Request $request){
 
-         //query list of brands
-        $brands = DB::table('brands')
-                ->select('name','id')
-                ->whereNull("deleted_at")
-                ->get();
-        //query list of cities
-             
-
-        $cities = DB::table('profiles')
-                ->select('name','id')
-                ->where('city',true)
-                ->get();
-        
-
-          //consulta join products brands lines cities tables 
-        
-                
-        $products = DB::table('products')
-                    ->join('brands', 'idBrand', '=', 'brands.id')
-                    ->join('profiles', 'id_city', '=', 'profiles.id')
-                    ->join('lines', 'idLine', '=', 'lines.id')
-                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city')
-                    ->where(function ($query) use ($request){
-                            $query->where('products.name','LIKE','%' . $request->q . '%')
-                                  ->Orwhere('products.reference','LIKE','%' . $request->q . '%');
-                    });
-                    
-
-         // delete filter      
-        if($request->delete=="true"){
-             $products->where('products.deleted_at', '<>' , null);
-        }else{
-            $products->whereNull("products.deleted_at");
-        }
-        //city filter
-        if(!is_null($request->city)){
-             $products->where('id_city', $request->city);
-        }
-        //line filter
-        if(!is_null($request->line)){
-             $products->where('idLine', $request->line);
-        }
-        //brand filter
-        if(!is_null($request->brand)){
-             $products->where('idBrand', $request->brand);
-        }
-        // pagination 
-        $products->orderBy('products.id', 'desc')
-                 ->skip($request->page*($request->actual-1))
-                 ->take($request->page);
-        //json response
-        return response()->json(['products' => $products->get(),'lines' => $lines,'brands' => $brands, 'cities' =>$cities]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response [listaOfStores,ListOfGroupsWithTheirRespectiveBrands,listOfTypeOfIdentification]
      */
     public function create()
     {
-        //
+        $idType = DB::connection('oportudata')->table('MAESTRO_TIPO_DOC')
+                                            ->select('codigo','descripcion')
+                                            ->get();
+
+        $stores = DB::connection('oportudata')->table('SUCURSALES_GAR')
+                                            ->select('CODIGO','NOMBRE','DOMICILIO','CIUDAD','SUCURSALES_GAR.DEPARTAMENTO_ID','name')
+                                            ->join('departamentos', 'SUCURSALES_GAR.DEPARTAMENTO_ID', '=', 'departamentos.departamento_id')
+                                            ->orderBy('departamentos.departamento_id')
+                                            ->orderBy('CIUDAD')
+                                            ->get();
+        $stores = $stores->groupBy('name')->map(function ($item, $key) {
+            return collect($item)->groupBy('CIUDAD');
+        });
+
+        $groupsBrands = DB::connection('oportudata')->table('GRUPO_brands')
+                                                ->select('GRUPO_brands_id','GRUPO_brands.brand_id','GRUPO_id','NOMBRE','name')
+                                                ->join('GRUPO', 'GRUPO_brands.GRUPO_id', '=', 'GRUPO.CODIGO')
+                                                ->join('brands', 'GRUPO_brands.brand_id', '=', 'brands.brand_id')
+                                                ->where('GRUPO.active_warranty','=',1)
+                                                ->get();
+        return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType];
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request a warranty request
+     * @return \Illuminate\Http\Response id of the new warranty request 
      */
     public function store(Request $request)
-    {
+    {   
+        //send a mail for alert that have a new warranty request 
+        Mail::send('emails.alertWarranty',$request->all(), function($msj){
+            $msj->subject(date("d-m-Y G:i:s"));
+            $msj->to('desarrolladorjunior@lagobo.com');
+        });
 
-        /*
-        //query
-        $product = new Product();
-        //asignation
-        $product->name = $request->get('name');
-        $product->idBrand = $request->get('idBrand');
-        $product->idLine = $request->get('idLine');
-        $product->id_city = $request->get('idCity');
+        //add phone if exist
+        if(isset($request->phone)){
+            if(DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $request->phone])){
+                // if exist don't save
+            }else{
+                //else save a new register 
+                $clienteCelular = new CliCel;
+                $clienteCelular->IDENTI = $request->identificationNumber;
+                $clienteCelular->NUM = $request->phone;
+                $clienteCelular->TIPO = 'FIJO';
+                $clienteCelular->CEL_VAL = 0;
+                $clienteCelular->FECHA = date("Y-m-d H:i:s");
+                $clienteCelular->save();
+            }
+        }
+        $firstphone=True;//flag for identify a first phone
+        foreach ($request->cellPhones as $cellPhone) {
+            if(DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $cellPhone['number']])){
+                // if exist update
+                if ($firstphone) {
+                    //if is the first phone CEL_VEL = 1 becouse it was verified 
+                    DB::connection('oportudata')->select("UPDATE `CLI_CEL` SET `CEL_VAL` = 1 WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $cellPhone['number']]);
+                    $firstphone = False; // the next is´t a first cellphone
+                }
+            }else{
+                //else save a new register 
+                $warrantyPhone = new CliCel;
+                $warrantyPhone->IDENTI = $request->identificationNumber;
+                $warrantyPhone->NUM = $cellPhone['number'];
+                $warrantyPhone->TIPO = 'CEL';
+                if ($firstphone) {
+                    $warrantyPhone->CEL_VAL = 1;
+                    $firstphone = False;  // the next is´t a first cellphone
+                }else{
+                    $warrantyPhone->CEL_VAL = 0;// only is verified a first phone the othes in state 0
+                }
+                $warrantyPhone->FECHA = date("Y-m-d H:i:s");
+                $warrantyPhone->save();
+            }
+        }        
+        
 
-        //response
-        if($product->save()){
-            return $product->id;
+        if(CLIENTE::find($request->identificationNumber)){
+            // if client already exist the register should be update
+            $warrantyClient = CLIENTE::find($request->identificationNumber);
+        }else{
+            //  if client don't exist create a new register
+            $warrantyClient = new CLIENTE;
+        }
+        // set a values 
+        $warrantyClient->TIPO_DOC = $request->idType;
+        $warrantyClient->CEDULA = $request->identificationNumber;
+        $warrantyClient->APELLIDOS = $request->clientLastNames;
+        $warrantyClient->NOMBRES = $request->clientNames;
+        $warrantyClient->DIRECCION = $request->address;
+        $warrantyClient->EMAIL = $request->email;
+        $warrantyClient->save();
+        // create a new warranty request
+        $warrantyRequest = new GARANTIA;
+
+        $warrantyRequest->CEDULA = $request->identificationNumber;
+        $warrantyRequest->NOM_CLIENT = $request->clientNames." ".$request->clientLastNames;
+        
+        if ($request->meansSale['id'] == 5){
+            //if a client shop a product in a physical store
+            $warrantyRequest->COD_SUC = $request->store['CODIGO'];
+            $warrantyRequest->NOM_SUC = $request->store['CODIGO']." ".$request->store['NOMBRE'];
+        }else{
+            $warrantyRequest->NOM_SUC = $request->meansSale['name'];
+        }
+    
+        if ($request->isUser == 'False'){
+            // if a client is't a user of a product
+            $warrantyRequest->PRODUCT_USER = $request->userName;
+            $warrantyRequest->RELACION = $request->relationship;
+        }
+        // set a request data
+        $warrantyRequest->FACTURA = $request->invoiceNumber;
+        $warrantyRequest->FECHAFAC = $request->year."-".$request->month."-".$request->day;
+        $warrantyRequest->VALOR = 0;
+        $warrantyRequest->N_ENTRADA = 0;
+        $warrantyRequest->COD_ARTIC = "WEB";
+        $warrantyRequest->NOM_ARTIC = $request->reference;
+        $warrantyRequest->MARCA = $request->productBrand['name'];
+        $warrantyRequest->NSERVICIO = 0;
+        $warrantyRequest->GRUPO = $request->productBrand['GRUPO_id'];
+        $warrantyRequest->SERIAL = 0;
+        $warrantyRequest->IMEI = 0;
+        $warrantyRequest->DIAGNOSTIC = 'NA';
+        $warrantyRequest->NOM_TALLER = $request->type['name'];
+        $warrantyRequest->OBSERVAC = $request->faultDescription;
+        $warrantyRequest->INVENTARIO = 'NA';
+        $warrantyRequest->UBICACION = 'CASA';
+        $warrantyRequest->SOLUCION = '';
+        $warrantyRequest->FEC_LLEGA = date("Y-m-d G:i:s");
+        $warrantyRequest->FEC_SALIDA = '0000-00-00 00:00:00';
+        $warrantyRequest->FEC_SOL = '0000-00-00 00:00:00';
+        $warrantyRequest->FEC_ENTREG = '0000-00-00 00:00:00';
+        $warrantyRequest->USUARIO = 'JARVIS';
+        $warrantyRequest->ANULA = '';
+        $warrantyRequest->USU_SOL = '';
+        $warrantyRequest->CIERRE = '';
+        $warrantyRequest->CALIFICA = 'SIN CALIFICAR';
+        $warrantyRequest->BONO = 0;
+        $warrantyRequest->ESTADO = 'A';
+        $warrantyRequest->STATE = 'A';
+        $warrantyRequest->TOT_FAC = 0;
+        if($warrantyRequest->save()){
+            // if save is successfull return a request id
+            return $warrantyRequest->NUMERO;
         }else{
             return false;
         }
-        */
-        Mail::send('casa', ['userName' => 'casa'], function($msj){
-            $msj->subject('time()');
-            $msj->to('desarrolladorjunior@lagobo.com');
-        });
-        
-        return response()->json($request);
     }
     
 
@@ -157,34 +222,7 @@ class WarrantyController extends Controller
      */
     public function edit($id)
     {
-        //query list of lines
-        $lines = DB::table('lines')
-                ->select('name','id')
-                ->whereNull("deleted_at")
-                ->get();
-
-         //query list of brands
-        $brands = DB::table('brands')
-                ->select('name','id')
-                ->whereNull("deleted_at")
-                ->get();
-        //query list of cities
-             
-       $cities = DB::table('profiles')
-                ->select('name','id')
-                ->where('city',true)
-                ->get();
-
-         //images list query
-        $images = DB::table('product_images')
-                ->select('id','name')
-                ->where('idProduct',$id)
-                ->orderBy('order')
-                ->get();
-        // recover product to edit
-        $product = Product::Find($id);
-
-        return response()->json(['product' => $product, 'lines' => $lines, 'brands' => $brands, 'cities' => $cities, 'images' => $images]);
+   
     }
 
     /**
@@ -197,20 +235,6 @@ class WarrantyController extends Controller
     public function update(Request $request, $id)
     {
         
-        //query
-        $product = Product::Find($id);
-        //update
-        $product->name = $request->name;
-        $product->reference = $request->reference;
-        $product->specifications = $request->specifications;
-        $product->price = $request->price;
-        $product->idBrand = $request->idBrand;
-        $product->idLine = $request->idLine;
-        $product->id_city = $request->id_city;
-
-        $product->save();
-        //response
-        return response()->json(true);
     }
 
     /**
@@ -221,171 +245,104 @@ class WarrantyController extends Controller
      */
     public function destroy($id)
     {
-        //query
-        $product = Product::findOrfail($id)->delete();
-        //response
-        return response()->json(true);
+
     }
 
-    /**
-     * Remove the specified images from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
-     public function deleteImage($id)
-    {
-        //query
-        $images = ProductImage::findOrfail($id);
-        //detect os
-        if(PHP_OS == "Linux"){
-            //delete whit path
-            unlink(storage_path("app/public/".$images->name));
-        }else{
-            unlink(storage_path("app\public\\".$images->name));
+
+//------------------------------- Token verification  ------------------------------------------------------
+ 
+public function getCodeVerificationOportudata($identificationNumber, $celNumber){
+    $this->setCodesStateOportudata($identificationNumber);
+    $codeUserVerificationOportudata = new codeUserVerificationOportudata;
+    $options = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
+    ];
+    $code = '';
+    $codeExist = 1;
+    while ($codeExist >= 1){
+        for ($i=0; $i < 6; $i++) {
+            $randomOption = rand(0,1);
+            if($randomOption == 0){
+                $randomNumChar = rand(0, 9);
+            }else{
+                $randomNumChar = rand(0, 51);
+            }
+            $code = $code.$options[$randomOption][$randomNumChar];
         }
-        
-        $images->delete();
-        return response()->json(true);
+
+        $codeExist = DB::connection('oportudata')->select('SELECT COUNT(`identificador`) as `totalCodes` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
+        $codeExist = $codeExist[0]->totalCodes;
     }
 
-    /**
-     * store a grup of images in server and store de name in DB
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response whit a set of images
-     */
+    $codeUserVerificationOportudata->token = $code;
+    $codeUserVerificationOportudata->identificationNumber = $identificationNumber;
+    $codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
+    $codeUserVerificationOportudata->type = "GARANTIA";
 
-    public function images(Request $request)
-    {
-      
-        for ($i=0; $i < (int)$request->nImages ; $i++) { 
+    $codeUserVerificationOportudata->save();
 
-            //query
-            $images = new ProductImage();
-            // to save in public/storage  execute php artisan storage:link
-            $images->name =  Explode("/",$request->file('imgs'.$i)->store('public'))[1];//take only name
-            //put a new image in the last position
-            $count = ProductImage::where('idProduct', $request->idProduct)->count();
-            $images->order = $count;
+    $date = DB::connection('oportudata')->select('SELECT `created_at` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
+    
+    $dateTwo = gettype($date[0]->created_at);
+    $dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+    return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+}
 
-            $images->idProduct = $request->idProduct;
-            $images->save();
+	private function setCodesStateOportudata($identificationNumber){
+		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);
 
-        }
-        return response()->json(true);
-    }
+		$resp = DB::connection('oportudata')->select($query);
+	}
 
-      /**
-     * store a grup of images in server and store de name in DB
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response with a set of images
-     */ 
+	public function sendMessageSms($code, $identificationNumber, $date, $celNumber){
+		$url = 'https://api.hablame.co/sms/envio/';
+		$data = array(
+			'cliente' => 10013280, //Numero de cliente
+			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
+			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
+			'sms' => 'Tu token de verificacion para el servicio de garantias es '.$code." el cual tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2JluEUv - " . $date, //Mensaje de texto a enviar
+			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
+			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
+		);
+		
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = json_decode((file_get_contents($url, false, $context)), true);
+	
+		if ($result["resultado"]===0){
+			$mensaje = 'Se ha enviado el SMS exitosamente';
+		}else{
+			$mensaje = 'ha ocurrido un error!!';
+		}
+	
+		return response()->json(true);
+	}
 
-    public function imagesUpdate(Request $request)
-    {
-        $i=0;//images order 
-        $images = $request->all();
-        foreach ($images as $value) {
-            //query
-            $updateImage = ProductImage::find($value['id']);
-            //update
-            $updateImage->order = $i++;
-            $updateImage->save();
-        }
-        //response
-        return response()->json(true);
-        
-    }
-
-       /**
-     * 
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response  list of lines with their sespective brands [[idLine,nameLine,[[idBrand,nameBrand]......[others brand]]].......[others line]]
-     */ 
-
-    public function linesBrands(Request $request)
-    {
-        //All the combinations of lines and brands of the products there are products.
-        $linesBrands = DB::table('products')
-                    ->join('brands', 'idBrand', '=', 'brands.id')
-                    ->join('lines', 'idLine', '=', 'lines.id')
-                    ->select('products.idLine AS idLine','lines.name AS lineName','products.idBrand AS idBrand','brands.name AS brandsName')
-                    ->whereNull("products.deleted_at")
-                    //->whereNull("lines.deleted_at")//uncomment if a client can saw a product with deleted line
-                    ->distinct()
-                    ->get();
-        
-
-        $linesBrands = $linesBrands->groupBy('lineName');
-        //agrup a brands with our sespectiv line
-        $linesBrands = $linesBrands->map(function ($item, $key){
-            return [ 'id' => $item->first()->idLine, 'name' => $item->first()->lineName,
-            'brands' => $item->map(function ($item2, $key){
-                                        return [ 'id' => $item2->idBrand, 'name' => $item2->brandsName];
-                                    })];
-        });
-
-        return response()->json($linesBrands);
-    }
-
-    public function productsPublic(Request $request)
-    {
-        //consulta join products brands lines cities tables       
-        $products = DB::table('products')
-                    ->join('brands', 'idBrand', '=', 'brands.id')
-                    ->join('profiles', 'id_city', '=', 'profiles.id')
-                    ->join('lines', 'idLine', '=', 'lines.id')
-                    ->leftJoin('product_images',function($q) use ($request){
-                        $q->on('product_images.idProduct', 'products.id')
-                            ->where('product_images.order',0);
-                    })
-                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city','product_images.name AS image')
-                    ->whereNull("products.deleted_at");
-
-        //line filter
-        if(!is_null($request->line)){
-             $products->where('idLine', $request->line);
-        }
-        //brand filter
-        if(!is_null($request->brand)){
-             $products->where('idBrand', $request->brand);
-        }
-        // pagination  
-        $products->orderBy('products.id', 'desc')
-                 ->skip($request->page*($request->actual-1))
-                 ->take($request->page);
-        
-         //json response
-        return response()->json($products->get());
-       
-    }
-
-    public function productsDetails(Request $request)
-    {
-        //consulta join product images       
-        $product = DB::table('products')
-                    ->join('brands', 'idBrand', '=', 'brands.id')
-                    ->join('profiles', 'id_city', '=', 'profiles.id')
-                    ->join('lines', 'idLine', '=', 'lines.id')
-                    ->leftJoin('product_images','product_images.idProduct','=','products.id')
-                    ->select('products.name','products.id','products.reference AS reference','specifications','price','brands.name AS brand','brands.id AS brandId','lines.name AS line','lines.id AS lineId','profiles.name AS city','product_images.name AS image')
-                    ->where("products.id",$request->id)
-                    ->get();
-
-
-
-        //agrup a product with our respectiv images
-        $product = [ 'id' => $product->first()->id, 'name' => $product->first()->name,'brand' => $product->first()->brand,'brandId' => $product->first()->brandId,'city' => $product->first()->city,'line' => $product->first()->line,'lineId' => $product->first()->lineId,'price' => $product->first()->price,'reference' => $product->first()->reference,'specifications' => $product->first()->specifications,
-             'images' => $product->map(function ($item2, $key){
-                                    return $item2->image;
-                                })];
-        //json response
-        return response()->json($product);
-       
-    }
-
+	public function verificationCode($code, $identificationNumber){
+		$getCode = DB::connection('oportudata')->select(sprintf('SELECT `token`, `created_at` FROM `code_user_verification` WHERE `identificationNumber` = %s AND `state` = 0 ORDER BY `identificador` DESC LIMIT 1 ', $identificationNumber));
+		$dateNow =strtotime(date('Y-m-d H:i:s'));
+		$dateCode = date('Y-m-d H:i:s', strtotime($getCode[0]->created_at));
+		$smsVigency = DB::connection('oportudata')->select("SELECT `sms_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$smsVigency = $smsVigency[0]->sms_vigencia;
+		$dateCodeNew = strtotime ("+ $smsVigency minute", strtotime ( $dateCode ) );
+		if($dateNow <= $dateCodeNew){
+			if($code === $getCode[0]->token){
+				$updateCode = DB::connection('oportudata')->select(sprintf('UPDATE `code_user_verification` SET `state` = 1 WHERE `token` = "%s" ', $code));
+				return response()->json(true);
+			}else{
+				return response()->json(-1);
+			}
+		}else{
+			return response()->json(-2);
+		}
+	}
+	
 }

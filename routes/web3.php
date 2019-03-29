@@ -45,11 +45,16 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     Route::get("/",function(){
         return view('warranty.public.layout');
     })->name('warranty');
-    //render query
+    //render query view
     Route::get('/Query', function(){
         return view('warranty.public.query');
     });
+    //display terms and conditions view
     Route::get('/TermsConditions', function(){
         return view('warranty.public.termsAndConditions');
     })->name('TermsAndConditions');
+    //Request a code verification by sms
+    Route::get('/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\WarrantyController@getCodeVerificationOportudata');
+    //Confirm a code verification
+    Route::get('/verificationCode/{code}/{identificationNumber}', 'Admin\WarrantyController@verificationCode');
 });

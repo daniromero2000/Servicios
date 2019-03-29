@@ -11,7 +11,7 @@
         <p>Hola,</p>
         <p>Un cliente ha solicitado servicio de garantía y está esperando tu llamada, recuerda que lo debes contactar telefónicamente el día de hoy, a más tardar mañana en la mañana.</p>
         <p> <b> CÉDULA: </b> {!! $identificationNumber !!}</p>
-        <p> <b> NOMBRE TITULAR: </b> {!! $clientName !!}</p>
+        <p> <b> NOMBRE TITULAR: </b> {!! $clientNames." ".$clientLastNames !!}</p>
         <p> <b> NOMBRE USUARIO: </b> N/a</p>
         <table>
             <tr>
