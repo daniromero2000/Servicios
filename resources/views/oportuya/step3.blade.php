@@ -286,6 +286,9 @@
 								<p class="text-quotamodal text-center">
 									$@{{ quota | number:0 }}
 								</p>
+								<p class="textModalNumSolic text-center">
+									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+								</p>
 							</div>
 						</div>
 						<div class="row resetRow containerFormModal">
