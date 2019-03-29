@@ -22,7 +22,7 @@
     **Email: desarrollo1@lagobo.com
     **Description:Oportuya credit request controller, where people by a form can know if a oportuya credit is pre-approve 
     **Date: 15/11/2018
-     **/
+**/
 
 namespace App\Http\Controllers\Admin;
 
@@ -327,6 +327,8 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
+			$quotaApproved = 0;
+			$quotaApprovedProduct = 0;
 			$identificationNumber = $request->get('identificationNumber');
 			$existSolicFab = $this->getExistSolicFab($identificationNumber);
 			if($existSolicFab == true){
@@ -583,7 +585,7 @@ class OportuyaV2Controller extends Controller
 			if($con3 == 'RECHAZADO'){
 				return response()->json(['data' => false]);
 			}elseif($con3 == 'PREAPROBADO'){
-				return response()->json(['data' => true, 'quota' => $quotaApproved]);
+				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD]);
 			}
 		}
 

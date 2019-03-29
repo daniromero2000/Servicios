@@ -1,6 +1,7 @@
 angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 .controller("advanceStep3Ctrl", function($scope, $http) {
 	$scope.quota = 0;
+	$scope.numSolic = 0;
 	$scope.leadInfo = {
 		step: 3,
 		identificationNumber: '',
@@ -151,6 +152,7 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 			}
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
+				$scope.numSolic = response.data.numSolic;
 				$('#congratulations').modal('show');
 			}
 			

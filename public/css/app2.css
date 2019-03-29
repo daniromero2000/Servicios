@@ -127,6 +127,7 @@ span.renewCode:hover {
 	padding: 30px;
 }
 
+
 .creditoLibranza-contianerTexto{
 	background: #fff;
 	border-radius: 10px;
@@ -151,6 +152,15 @@ span.renewCode:hover {
 .containerText-creditoLibranzaCards{
 	padding: 60px 30px 10px 110px;
 	min-height: 280px;
+}
+
+.adjust-libranzaCard{
+	padding: 60px 28px 10px 90px;
+}
+
+.adjust-libranzaCard p{
+	line-height: 18px;
+	margin: 0;
 }
 
 .creditoLibranza-buttonWhatsApp{

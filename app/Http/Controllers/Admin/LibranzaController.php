@@ -11,6 +11,7 @@ use App\LibranzaProfile;
 use App\PagaduriaProfile;
 use App\Simulator;
 use App\TimeLimits;
+use App\CiudadesSoc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -161,15 +162,18 @@ class LibranzaController extends Controller
 
         $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
         $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
-        $libranza_profile=LibranzaProfile::select('id','name')->orderBy('id','desc')->get();
+        $libranza_profile=LibranzaProfile::select('id','name')->where('name','!=','OTRO')->orderBy('id','desc')->get();
         $params=Simulator::select('rate','gap','assurance')->get();
         $timeLimits=TimeLimits::select('timeLimit')->get();
+        $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
+
         $data=[];
         $data['lines']=$lines;
         $data['pagaduria']=$pagaduria;
         $data['profiles']=$libranza_profile;
         $data['timeLimits']=$timeLimits;
         $data['params']=$params;
+        $data['cities']=$cities;
         return response()->json($data);
 
     }
