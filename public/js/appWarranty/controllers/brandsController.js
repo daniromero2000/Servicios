@@ -71,7 +71,7 @@ app.controller('brandsController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				if(response.data=="23000"){
-					//if element already exist display a alert arror
+					//if element already exist display a alert error
 					document.getElementById('p').innerHTML = "La marca  <b>" + $scope.brand.name + "</b>  ya esta registrada en la base de datos";
 					$("#alertBrand").show();
 				}else if (response.data==true) {

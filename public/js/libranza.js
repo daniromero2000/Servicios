@@ -1,52 +1,6 @@
 app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	
-	$scope.cities = [
-		{ label : 'ARMENIA',value: 'ARMENIA' },
-		{ label : 'MANIZALES',value: 'MANIZALES' },
-		{ label : 'SINCELEJO',value: 'SINCELEJO' },
-		{ label : 'YOPAL',value: 'YOPAL' },
-		{ label : 'CERETÉ',value: 'CERETÉ' },
-		{ label : 'TULUÁ',value: 'TULUÁ' },
-		{ label : 'ACACÍAS',value: 'ACACÍAS' },
-		{ label : 'ESPINAL',value: 'ESPINAL' },
-		{ label : 'MARIQUITA',value: 'MARIQUITA' },
-		{ label : 'CARTAGENA',value: 'CARTAGENA' },
-		{ label : 'LA DORADA',value: 'LA DORADA' },
-		{ label : 'IBAGUÉ',value: 'IBAGUÉ' },
-		{ label : 'BOGOTÁ',value: 'BOGOTÁ' },
-		{ label : 'MONTERÍA',value: 'MONTERÍA' },
-		{ label : 'MAGANGUÉ',value: 'MAGANGUÉ' },
-		{ label : 'PEREIRA',value: 'PEREIRA' },
-		{ label : 'CALI',value: 'CALI' },
-		{ label : 'MONTELIBANO',value: 'MONTELIBANO' },
-		{ label : 'SAHAGÚN',value: 'SAHAGÚN' },
-		{ label : 'PLANETA RICA',value: 'PLANETA RICA' },
-		{ label : 'COROZAL',value: 'COROZAL' },
-		{ label : 'CIÉNAGA',value: 'CIÉNAGA' },
-		{ label : 'MONTELÍ',value: 'MONTELÍ' },
-		{ label : 'PLATO',value: 'PLATO' },
-		{ label : 'SABANALARGA',value: 'SABANALARGA' },
-		{ label : 'GRANADA',value: 'GRANADA' },
-		{ label : 'PUERTO BERRÍ',value: 'PUERTO BERRÍ' },
-		{ label : 'VILLAVICENCIO',value: 'VILLAVICENCIO' },
-		{ label : 'TAURAMENA',value: 'TAURAMENA' },
-		{ label : 'PUERTO GAITÁN',value: 'PUERTO GAITÁN' },
-		{ label : 'PUERTO BOYACÁ',value: 'PUERTO BOYACÁ' },
-		{ label : 'PUERTO LÓPEZ',value: 'PUERTO LÓPEZ' },
-		{ label : 'SEVILLA',value: 'SEVILLA' },
-		{ label : 'CHINCHINÁ',value: 'CHINCHINÁ' },
-		{ label : 'AGUACHICA',value: 'AGUACHICA' },
-		{ label : 'BARRANCABERMEJA',value: 'BARRANCABERMEJA' },
-		{ label : 'LA VIRGINIA',value: 'LA VIRGINIA' },
-		{ label : 'SANTA ROSA DE CABAL',value: 'SANTA ROSA DE CABAL' },
-		{ label : 'GIRARDOT',value: 'GIRARDOT' },
-		{ label : 'VILLANUEVA',value: 'VILLANUEVA' },
-		{ label : 'PITALITO',value: 'PITALITO' },
-		{ label : 'GARZÓN',value: 'GARZÓN' },
-		{ label : 'NEIVA',value: 'NEIVA' },
-		{ label : 'LORICA',value: 'LORICA' },
-		{ label : 'AGUAZUL', value: 'AGUAZUL' }
-	];
+	$scope.cities =[];
 	$scope.typeProducts = [
 		{
 			label: 'Crédito para electrodomésticos', value: 'Crédito para electrodomésticos'
@@ -78,6 +32,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			value : 'Militares Activos'
 		}
 	];
+
+	
+
 	$scope.libranza = {
 		creditLine: '',
 		pagaduria : '',
@@ -119,7 +76,14 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		}
 	};
 
-
+	$scope.plazo={
+		amount:0.0,
+		timeLimit:''
+	}
+	$scope.quotaBuy=false;
+	$scope.params=[]
+	$scope.timeLimits=[];
+	$scope.plazos=[];
 	$scope.lines=[];
 	$scope.pagaduriaLibranza=[];
 	$scope.libranzaProfiles=[];
@@ -138,9 +102,21 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				angular.forEach(response.data.profiles, function(value, key) {
 					$scope.libranzaProfiles.push(value);
 				});
+
+				angular.forEach(response.data.timeLimits, function(value, key) {
+					$scope.timeLimits.push(value);
+				});
+
+				angular.forEach(response.data.params, function(value, key) {
+					$scope.params.push(value);
+				});
+
+				angular.forEach(response.data.cities, function(value, key) {
+					$scope.cities.push(value);
+				});
 			}
 
-			console.log($scope.pagaduriaLibranza);
+			console.log($scope.cities);
 		},function errorCallback(response){
 			
 		});
@@ -169,7 +145,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	$scope.calculateData = function(){
 		$scope.libranza.lawDesc = $scope.libranza.salary * 0.12;
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000 ;
-		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen-$scope.libranza.quotaBuy;
+		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen+$scope.libranza.quotaBuy;
 		if($scope.libranza.age >= 18 && $scope.libranza.age < 80){
 			$scope.libranza.maxQuota = 60000000;
 		}else if($scope.libranza.age >= 80 && $scope.libranza.age < 86){
@@ -179,45 +155,98 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		}
 	};
 
+	$scope.ableField=function(){
+		if($scope.libranza.creditLine==2){
+			$scope.quotaBuy=true;
+		}else{
+			$scope.quotaBuy=false;
+		}		
+	}
+
+
 	$scope.simular = function(){
 		if($scope.libranza.age == '' || $scope.libranza.creditLine == '' || $scope.libranza.customerType == '' || $scope.libranza.pagaduria == ''){
-			alert('Debes de llenar todos los datos');
+			return -1;
 		}else{
 			if($scope.libranza.quaotaAvailable <= 148518 ){
-				alert("No posee capacidad de pago");
+				return 0;
 			}else{
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
-					alert("Para poder simular el Salario Básico no puede ser menor a 0");
+					return -2;
 				}else{
-					$http({
-					  method: 'GET',
-					  url: 'api/libranza/liquidator/'+$scope.libranza.maxQuota+'/'+$scope.libranza.quaotaAvailable
-					}).then(function successCallback(response) {
-						$scope.plazos = response.data;
-					   	$('#simularModal').modal('show');
-					}, function errorCallback(response) {
-					    
-					});
+					var rate=$scope.params[0].rate;
+					var gap=$scope.params[0].gap;
+					var loanAssurance=($scope.params[0].assurance)/1000000;
+					var gapTop=0.0;
+					var gapBottom=0.0;
+					var result=0;
+					console.log(loanAssurance);
+					for(var i =0;i < $scope.timeLimits.length; i++){
+						var aux = {
+							amount : 0.0,
+							timeLimit : ''
+						};
+						var fee=Math.pow((1+rate),$scope.timeLimits[i].timeLimit);
+						
+						if($scope.plazo.amount<=$scope.libranza.maxQuota){
+							
+							gapTop=$scope.libranza.quaotaAvailable*(fee-1);
+							gapBottom=((1+(rate*gap))*(rate*fee))+(loanAssurance*(fee-1));
+							result=gapTop/gapBottom;
+							$scope.plazo.amount=(Math.floor((result)/100000))*100000;
+							$scope.plazo.timeLimit=$scope.timeLimits[i];
+							aux = angular.extend({},$scope.plazo);
+							$scope.plazos[i]= aux;
+							console.log($scope.plazos);
+													
+						}
+					}	
+								
 				}
 			}
 		}
 	};
 
+	$scope.showModal=function(){
+		var sim= $scope.simular();
+
+		if(sim== -1){
+			alert('Debes de llenar todos los datos');
+			console.log(-1);
+		}else if(sim== 0){
+			$('#solicitarModal').modal('hide');
+			$('#negacionModal').modal('show');
+			console.log(0);
+		}else if(sim== -2){
+			alert("Para poder simular el Salario Básico no puede ser menor a 0");
+			console.log(-2);
+		}else{
+			
+			$('#solicitarModal').modal('hide');
+			$('#simularModal').modal('show');
+		}
+		
+	}
+
+
 	$scope.solicitar = function(){
-		$('#simularModal').modal('hide');
-		$('#solicitarModal').modal('show');
+		
+		window.location = "/LIB_gracias_FRM";		
 	};
 
 	$scope.addLead = function(){
 		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
+		}else if($scope.libranza.city == ''){
+			alert("Debes Ingresar una ciudad");
+			document.getElementById("city").focus();
 		}else{
 			$http({
 			  method: 'POST',
 			  url: '/libranza',
 			  data: $scope.libranza
 			}).then(function successCallback(response) {
-				window.location = "/LIB_gracias_FRM";
+				$('#solicitarModal').modal('show');
 			}, function errorCallback(response) {
 			    
 			});

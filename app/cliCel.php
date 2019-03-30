@@ -10,9 +10,9 @@ class cliCel extends Model
 
     public $connection='oportudata';
 
-    protected $primaryKey= 'CEDULA, CELULAR';
+    protected $primaryKey= 'IDENTI, NUM';
 
     public $timestamps = false;
 
-    protected $fillable=['CEDULA','CELULAR','CEL_VAL','FECHA'];
+    protected $fillable=['IDENTI','NUM','CEL_VAL','TIPO','FECHA'];
 }

@@ -9,6 +9,9 @@ use App\Pagaduria;
 use App\LibranzaLines;
 use App\LibranzaProfile;
 use App\PagaduriaProfile;
+use App\Simulator;
+use App\TimeLimits;
+use App\CiudadesSoc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -159,14 +162,22 @@ class LibranzaController extends Controller
 
         $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
         $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
-        $libranza_profile=LibranzaProfile::select('id','name')->orderBy('id','desc')->get();
+        $libranza_profile=LibranzaProfile::select('id','name')->where('name','!=','OTRO')->orderBy('id','desc')->get();
+        $params=Simulator::select('rate','gap','assurance')->get();
+        $timeLimits=TimeLimits::select('timeLimit')->get();
+        $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
+
         $data=[];
         $data['lines']=$lines;
         $data['pagaduria']=$pagaduria;
         $data['profiles']=$libranza_profile;
+        $data['timeLimits']=$timeLimits;
+        $data['params']=$params;
+        $data['cities']=$cities;
         return response()->json($data);
 
     }
+
 
     public function assignPagaduria($idLibranzaProfile){
 
@@ -183,4 +194,34 @@ class LibranzaController extends Controller
         $array = [1,2,3,4,5,6,7];
         return response()->json($array);
     }
+
+    public function libranzaData(Request $request){
+
+        $leads=Lead::select('id','name','lastName','email','telephone','city','typeService','typeProduct','state','channel','created_at','termsAndConditions','typeDocument','identificationNumber','occupation')
+        ->where('typeService','=','Libranza');
+
+
+        if(!is_null($request->city)){
+            $leads->where('city', $request->city);
+        }
+        
+        if(!is_null($request->fecha_ini)){
+            $leads->where('fecha_ini', $request->fecha_ini);
+        }
+        
+        if(!is_null($request->fecha_fin)){
+            $leads->where('fecha_fin', $request->fecha_fin);
+        }
+
+        if(!is_null($request->state)){
+            $leads->where('state', $request->state);
+        }
+        
+        $leads->orderBy('id', 'desc')
+                ->skip($request->page*($request->actual-1))
+                ->take($request->page);
+                
+        return response()->json($leads->get());
+    }
+
 }

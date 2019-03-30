@@ -17,6 +17,12 @@ a:hover, a:active, a:focus, a:visited{
 	text-decoration: none !important;
 }
 
+.textModalNumSolic{
+	color: #4a4a4a;
+	font-size: 13px;
+	margin-bottom: 20px;
+}
+
 .resetCol{
 	padding:0 !important;
 }
@@ -123,6 +129,10 @@ a:hover, a:active, a:focus, a:visited{
 
 .header-item5{
 	background: #3fcf64;
+}
+
+.header-item6{
+	background: #f5d134;
 }
 
 .header-menu:before{
@@ -1386,6 +1396,11 @@ a:hover, a:active, a:focus, a:visited{
 	color: #000 !important;
 }
 
+
+#creditoLibranza-slider{
+	width: 100%;
+	margin: auto;
+}
 /* Video */
 
 

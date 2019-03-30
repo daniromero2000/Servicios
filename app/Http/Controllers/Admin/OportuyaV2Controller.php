@@ -10,7 +10,7 @@
     **				en un formulario divido en tres pasos se puede pre-aprobar
     **				o negar una solicitud de tarjeta oportuya.
     **Fecha: 15/11/2018
-     **/
+**/
 
 
 /**
@@ -22,7 +22,7 @@
     **Email: desarrollo1@lagobo.com
     **Description:Oportuya credit request controller, where people by a form can know if a oportuya credit is pre-approve 
     **Date: 15/11/2018
-     **/
+**/
 
 namespace App\Http\Controllers\Admin;
 
@@ -206,14 +206,18 @@ class OportuyaV2Controller extends Controller
 				
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
-				/*$clienteCelular = new CliCel;
-				$clienteCelular->CEDULA = $identificationNumber;
-				$clienteCelular->CELULAR = trim($request->get('telephone'));
-				$clienteCelular->FECHA = date("Y-m-d H:i:s");
-				$clienteCelular->save();*/
+				if($request->get('CEL_VAL') == 0){
+					$clienteCelular = new CliCel;
+					$clienteCelular->IDENTI = $identificationNumber;
+					$clienteCelular->NUM = trim($request->get('telephone'));
+					$clienteCelular->TIPO = 'CEL';
+					$clienteCelular->CEL_VAL = 1;
+					$clienteCelular->FECHA = date("Y-m-d H:i:s");
+					$clienteCelular->save();
+				}
+				
 				//if updateOrCreate method fails save data without verify its existent, then save data into CLIENTES_FAB table
 				if($createOportudaLead != true){
-
 					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
 					$oportudataLead->CEDULA = $identificationNumber;
 					$oportudataLead->NOMBRES = trim($request->get('name'));
@@ -221,9 +225,7 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->EMAIL = trim($request->get('email'));
 					$oportudataLead->CELULAR = trim($request->get('telephone'));
 					$oportudataLead->PROFESION = trim($request->get('occupation'));
-
 					$response = $oportudataLead->save();
-
 				}
 
 				if(($response == true) || ($createOportudaLead== true)){
@@ -325,7 +327,13 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
-			$identificationNumber = $request->get('identificationNumber');			
+			$quotaApproved = 0;
+			$quotaApprovedProduct = 0;
+			$identificationNumber = $request->get('identificationNumber');
+			$existSolicFab = $this->getExistSolicFab($identificationNumber);
+			if($existSolicFab == true){
+				return -3; // Tiene solicitud
+			}
 			$datosCliente= new DatosCliente;
 			$turnosOportuya = new TurnosOportuya;
 			$analisis = new Analisis;
@@ -395,37 +403,89 @@ class OportuyaV2Controller extends Controller
 				'STATE'=>$state
 			];
 
-			$solic_fab->CLIENTE=$identificationNumber;
-			$solic_fab->CODASESOR=$codeAssessor;
-			$solic_fab->FECHASOL=date("Y-m-d H:i:s");
-			$solic_fab->SUCURSAL=$sucursal;
-			$solic_fab->ESTADO=$estado;
-			$solic_fab->FTP=$ftp;
-			$solic_fab->STATE=$state;
-			$solic_fab->GRAN_TOTAL=$granTotal;
-
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
-				if($this->creditPolicyAdvance($identificationNumber)){
-					$quotaApproved='500000';
-				}else{
-					$quotaApproved=-2;
-				}
+				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
-				$quotaApproved = $this->execCreditPolicy($identificationNumber);
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
 			}
 			$con3 = "";
-			if($quotaApproved > 0){
+			if($quotaApprovedProduct > 0){
 				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 				if($typeServiceSol[0]->typeService == 'Avance'){
 					$solic_fab->AVANCE_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}else{
-					$solic_fab->PRODUC_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}				
-				
+				$solic_fab->CLIENTE=$identificationNumber;
+				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
+				$solic_fab->SUCURSAL=$sucursal;
+				$solic_fab->ESTADO="ANALISIS";
+				$solic_fab->FTP=$ftp;
+				$solic_fab->STATE=$state;
+				$solic_fab->GRAN_TOTAL=$granTotal;
+				$solic_fab->SOLICITUD_WEB = 1;
 				$solic_fab->save();
 				$numSolic = $this->getNumSolic($identificationNumber);
+				$datosCliente->CEDULA = $identificationNumber;
+				$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
+				$datosCliente->NOM_REFPER = trim($request->get('NOM_REFPER'));
+				$datosCliente->DIR_REFPER = 'NA';
+				$datosCliente->BAR_REFPER = 'NA';
+				$datosCliente->TEL_REFPER = trim($request->get('TEL_REFPER'));
+				$datosCliente->CIU_REFPER = 'NA';
+				$datosCliente->NOM_REFPE2 = 'NA';
+				$datosCliente->DIR_REFPE2 = 'NA';
+				$datosCliente->BAR_REFPE2 = 'NA';
+				$datosCliente->TEL_REFPE2 = 0;
+				$datosCliente->CIU_REFPE2 = " ";
+				$datosCliente->NOM_REFFAM = trim($request->get('NOM_REFFAM'));
+				$datosCliente->DIR_REFFAM = 'NA';
+				$datosCliente->BAR_REFFAM = 'NA';
+				$datosCliente->TEL_REFFAM = trim($request->get('TEL_REFFAM'));
+				$datosCliente->PARENTESCO = " ";
+				$datosCliente->NOM_REFFA2 = 'NA';
+				$datosCliente->DIR_REFFA2 = 'NA';
+				$datosCliente->BAR_REFFA2 = 'NA';
+				$datosCliente->TEL_REFFA2 = 0;
+				$datosCliente->PARENTESC2 = " ";
+				$datosCliente->NOM_REFCOM = 'NA';
+				$datosCliente->TEL_REFCOM = 'NA';
+				$datosCliente->NOM_REFCO2 = 'NA';
+				$datosCliente->TEL_REFCO2 = 'NA';
+				$datosCliente->NOM_CONYUG = 'NA';
+				$datosCliente->CED_CONYUG = 'NA';
+				$datosCliente->DIR_CONYUG = 'NA';
+				$datosCliente->PROF_CONYU = " ";
+				$datosCliente->EMP_CONYUG = 'NA';
+				$datosCliente->CARGO_CONY = 'NA';
+				$datosCliente->EPS_CONYUG = 'NA';
+				$datosCliente->TEL_CONYUG = 'NA';
+				$datosCliente->ING_CONYUG = 0;
+				$datosCliente->CON_CLI1 = " ";
+				$datosCliente->CON_CLI2 = " ";
+				$datosCliente->CON_CLI3 = " ";
+				$datosCliente->CON_CLI4 = " ";
+				$datosCliente->EDIT_RFCLI = " ";
+				$datosCliente->EDIT_RFCL2 = " ";
+				$datosCliente->EDIT_RFCL3 = " ";
+				$datosCliente->INFORMA1 = 'NA';
+				$datosCliente->CARGO_INF1 = 'NA';
+				$datosCliente->FEC_COM1 = 'NA';
+				$datosCliente->FEC_COM2 = 'NA';
+				$datosCliente->ART_COM1 = 'NA';
+				$datosCliente->ART_COM2 = 'NA';
+				$datosCliente->CUOT_COM1 = 'NA';
+				$datosCliente->CUOT_COM2 = "Al Dia";
+				$datosCliente->HABITO1 = "Al Dia";
+				$datosCliente->HABITO2 = "Al Dia";
+				$datosCliente->STATE = "A";
+
+				$createData = $datosCliente->save();
 				$analisis->solicitud = $numSolic->SOLICITUD;
 				$analisis->ini_analis = date("Y-m-d H:i:s");
 				$analisis->fec_datacli = "1900-01-01 00:00:00";
@@ -501,7 +561,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->SUB_TIPO = 'WEB';
 				$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
 				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
-				$turnosOportuya->VALOR = $quotaApproved;
+				$turnosOportuya->VALOR = '0';
 				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
 				$turnosOportuya->SCORE = $respScoreLead[0]->score;
 				$turnosOportuya->TIPO_CLI = '';
@@ -520,68 +580,12 @@ class OportuyaV2Controller extends Controller
 			$dataLead=[
 				'CON3' => $con3
 			];
-			$numSolic = $this->getNumSolic($identificationNumber);
-
-			$datosCliente->CEDULA = $identificationNumber;
-			$datosCliente->SOLICITUD = $numSolic->SOLICITUD;
-			$datosCliente->NOM_REFPER = trim($request->get('NOM_REFPER'));
-			$datosCliente->DIR_REFPER = 'NA';
-			$datosCliente->BAR_REFPER = 'NA';
-			$datosCliente->TEL_REFPER = trim($request->get('TEL_REFPER'));
-			$datosCliente->CIU_REFPER = 'NA';
-			$datosCliente->NOM_REFPE2 = 'NA';
-			$datosCliente->DIR_REFPE2 = 'NA';
-			$datosCliente->BAR_REFPE2 = 'NA';
-			$datosCliente->TEL_REFPE2 = 0;
-			$datosCliente->CIU_REFPE2 = " ";
-			$datosCliente->NOM_REFFAM = trim($request->get('NOM_REFFAM'));
-			$datosCliente->DIR_REFFAM = 'NA';
-			$datosCliente->BAR_REFFAM = 'NA';
-			$datosCliente->TEL_REFFAM = trim($request->get('TEL_REFFAM'));
-			$datosCliente->PARENTESCO = " ";
-			$datosCliente->NOM_REFFA2 = 'NA';
-			$datosCliente->DIR_REFFA2 = 'NA';
-			$datosCliente->BAR_REFFA2 = 'NA';
-			$datosCliente->TEL_REFFA2 = 0;
-			$datosCliente->PARENTESC2 = " ";
-			$datosCliente->NOM_REFCOM = 'NA';
-			$datosCliente->TEL_REFCOM = 'NA';
-			$datosCliente->NOM_REFCO2 = 'NA';
-			$datosCliente->TEL_REFCO2 = 'NA';
-			$datosCliente->NOM_CONYUG = 'NA';
-			$datosCliente->CED_CONYUG = 'NA';
-			$datosCliente->DIR_CONYUG = 'NA';
-			$datosCliente->PROF_CONYU = " ";
-			$datosCliente->EMP_CONYUG = 'NA';
-			$datosCliente->CARGO_CONY = 'NA';
-			$datosCliente->EPS_CONYUG = 'NA';
-			$datosCliente->TEL_CONYUG = 'NA';
-			$datosCliente->ING_CONYUG = 0;
-			$datosCliente->CON_CLI1 = " ";
-			$datosCliente->CON_CLI2 = " ";
-			$datosCliente->CON_CLI3 = " ";
-			$datosCliente->CON_CLI4 = " ";
-			$datosCliente->EDIT_RFCLI = " ";
-			$datosCliente->EDIT_RFCL2 = " ";
-			$datosCliente->EDIT_RFCL3 = " ";
-			$datosCliente->INFORMA1 = 'NA';
-			$datosCliente->CARGO_INF1 = 'NA';
-			$datosCliente->FEC_COM1 = 'NA';
-			$datosCliente->FEC_COM2 = 'NA';
-			$datosCliente->ART_COM1 = 'NA';
-			$datosCliente->ART_COM2 = 'NA';
-			$datosCliente->CUOT_COM1 = 'NA';
-			$datosCliente->CUOT_COM2 = "Al Dia";
-			$datosCliente->HABITO1 = "Al Dia";
-			$datosCliente->HABITO2 = "Al Dia";
-			$datosCliente->STATE = "A";
-
-			$createData = $datosCliente->save();
+			
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 			if($con3 == 'RECHAZADO'){
 				return response()->json(['data' => false]);
 			}elseif($con3 == 'PREAPROBADO'){
-				return response()->json(['data' => true, 'quota' => $quotaApproved]);
+				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD]);
 			}
 		}
 
@@ -609,6 +613,21 @@ class OportuyaV2Controller extends Controller
     **Fecha: 20/12/2018
 	**/
 
+	public function getNumLead($identificationNumber){
+		$getNumVal = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(count($getNumVal) > 0){
+			return response()->json(['resp' => $getNumVal]);
+		}
+
+		$getNum = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+
+		if(count($getNum) > 0){
+			return response()->json(['resp' => $getNum]);
+		}
+
+		return response()->json(['resp' => -1]);
+	}
+
 	public function validationLead($identificationNumber){
 		$existCard = $this->getExistCard($identificationNumber);
 		if($existCard == true){
@@ -618,6 +637,16 @@ class OportuyaV2Controller extends Controller
 		$empleado = $this->getExistEmployed($identificationNumber);
 		if($empleado == true){
 			return -2; // Es empleado
+		}
+
+		$existSolicFab = $this->getExistSolicFab($identificationNumber);
+		if($existSolicFab == true){
+			return -3; // Es empleado
+		}
+
+		$existDefault = $this->getExistLeadDefault($identificationNumber);
+		if($existDefault == true){
+			return -4;
 		}
 
 		return response()->json(true);
@@ -754,7 +783,7 @@ class OportuyaV2Controller extends Controller
 		$context  = stream_context_create($options);
 		$result = json_decode((file_get_contents($url, false, $context)), true);
 	
-		if ($result["resultado"]===0){
+		if($result["resultado"]===0){
 			$mensaje = 'Se ha enviado el SMS exitosamente';
 		}else{
 			$mensaje = 'ha ocurrido un error!!';
@@ -826,6 +855,33 @@ class OportuyaV2Controller extends Controller
 			return true; // Es empleado
 		}else{
 			return false; // No es empelado
+		}
+	}
+
+	private function getExistSolicFab($identificationNumber){
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- 30 day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNew);
+
+		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
+
+		if($resp[0]->totalSolicitudes > 0){
+			return true; // Tiene Solictud
+		}else{
+			return false; // No tiene solicitud
+		}
+	}
+
+	private function getExistLeadDefault($identificationNumber){
+		$queryExistDefault = sprintf("SELECT COUNT(`cedula`) as `totalDefault` FROM `TB_CASTIGO` WHERE `cedula` = %s ", $identificationNumber);
+
+		$resp = DB::connection('oportudata')->select($queryExistDefault);
+
+		if($resp[0]->totalDefault > 0){
+			return true; // Esta en mora
+		}else{
+			return false; // No esta en mora
 		}
 	}
 

@@ -37,17 +37,24 @@ Route::group(['prefix'=>'/Catalog/'],function(){
     **Email: desarrolladorjunior@lagobo.com
     **Date: 28/02/2019
      **/
-Route::group(['prefix'=>'/digitalWarranty/'],function(){
 
+Route::group(['prefix'=>'/digitalWarranty/'],function(){
+    //CRUD routes digital warranty 
+    Route::resource('request','Admin\WarrantyController');
 	//display layout warrty app 
     Route::get("/",function(){
         return view('warranty.public.layout');
     })->name('warranty');
-    //render query
+    //render query view
     Route::get('/Query', function(){
         return view('warranty.public.query');
     });
+    //display terms and conditions view
     Route::get('/TermsConditions', function(){
         return view('warranty.public.termsAndConditions');
     })->name('TermsAndConditions');
+    //Request a code verification by sms
+    Route::get('/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\WarrantyController@getCodeVerificationOportudata');
+    //Confirm a code verification
+    Route::get('/verificationCode/{code}/{identificationNumber}', 'Admin\WarrantyController@verificationCode');
 });

@@ -80,11 +80,9 @@
         <thead class="headTableLeads">
             <tr>
                 <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
+                <th scope="col">Canal Adquisición</th>
                 <th scope="col">Ciudad</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Producto</th>
                 <th scope="col">Fecha de registro</th>
                 <th scope="col">Campaña</th>
                 <th scope="col">Acciones</th>
@@ -92,17 +90,20 @@
         </thead>
         <tbody>
             <tr ng-repeat="lead in leads">
-                <td>@{{ lead.name }}</td>
-                <td>@{{ lead.lastName }}</td>
+                <td>@{{ lead.nameLast }}</td>
                 <td>@{{ lead.telephone }}</td>
+                <td>
+                    <span ng-if="lead.channel == 1">Página Web</span>
+                    <span ng-if="lead.channel == 2">Facebook</span>
+                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                </td>
                 <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeService }}</td>
-                <td>@{{ lead.typeProduct }}</td>
                 <td>@{{ lead.created_at }}</td>
                 <td>@{{ lead.campaignName }}</td>
                 <td>
                     <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(lead.id)"></i>
                     <i class="fas fa-times cursor" title="eliminar Lead" ng-click="showDialogDelete(lead.id)"></i>
+                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                 </td>
             </tr>
         </tbody>
@@ -116,14 +117,12 @@
 
 <div class="row">
     <div class="col-6 text-right">
-        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
+        <a href="/Administrator/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
     </div>
     <div class="col-6 text-left">
         <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
     </div>
 </div>
-
-
 
 <div class="modal fade" id="changeStateLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -150,6 +149,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row resetRow" ng-if="state != 4">
+                            <div class="col-12 text-right form-group">
+                                <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="containerCommentsLeads">
+                            <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
+                                <div class="col-12 text-left resetCol">
+                                    <i class="fas fa-user iconoUserLead"></i>
+                                    <span class="nameAdminLead">@{{ comment.name }}</span>
+                                </div>
+                                <div class="col-12">
+                                    <p class="commentUserLead">
+                                        @{{ comment.comment }}
+                                    </p>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <span class="fechaUserLead">@{{ comment.created_at }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="modal fade" id="viewLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -231,7 +265,6 @@
         </div>
     </div>
 </div>
-
 
 <!--AddCommunityLead modal-->
 
@@ -400,7 +433,7 @@
                                 <div class="form-group row">
                                     <div class="col-12 col-sm-6">
                                         <label for="email">email</label>
-                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control" value="@{{lead.email}}" required>
+                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control" value="@{{lead.email}}">
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="telephone">telefono</label>
@@ -452,7 +485,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="product">Producto</label>
-                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" value="@{{lead.typeProduct}}" required>
+                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10" class="form-control" value="@{{lead.typeProduct}}">
                                     </div>
                                 </div>
 

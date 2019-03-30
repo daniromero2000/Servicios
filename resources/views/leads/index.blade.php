@@ -15,6 +15,7 @@
         </div>
 
     </div>
+    <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
     <script src="{{ asset('js/appCanalDigital/app.js') }}"></script>
     <script src="{{ asset('js/appCanalDigital/services/myService.js') }}"></script>
     <script src="{{ asset('js/appCanalDigital/controllers/leadsController.js') }}"></script>

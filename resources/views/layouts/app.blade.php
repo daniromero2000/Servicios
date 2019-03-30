@@ -4,9 +4,10 @@
 	$activeOportuya = ($_SERVER['REQUEST_URI'] == '/oportuya') ? 'activeMenu' : '' ;
 	$barraOportuya = ($_SERVER['REQUEST_URI'] == '/oportuya') ? 'activeMenuOportuya' : '' ;
 	$activeMotos = ($_SERVER['REQUEST_URI'] == '/motos') ? 'activeMenu' : '' ;
-	$activeLibranza = ($_SERVER['REQUEST_URI'] == '/avance') ? 'activeMenu' : '' ;
+	$activeAvance = ($_SERVER['REQUEST_URI'] == '/avance') ? 'activeMenu' : '' ;
 	$activeSeguros = ($_SERVER['REQUEST_URI'] == '/seguros') ? 'activeMenu' : '' ;
 	$activeViajes = ($_SERVER['REQUEST_URI'] == '/viajes') ? 'activeMenu' : '' ;
+	$activeLibranza = ($_SERVER['REQUEST_URI'] == '/libranza') ? 'activeMenu' : '' ;
 @endphp
 
 <html>
@@ -166,18 +167,18 @@
 							<a class="nav-item nav-link header-item header-item1" href="{{url('oportuya')}}">
 								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
+							<!--<a class="nav-item nav-link header-item header-item1" href="/libranza">
+								<span class="header-textoItem">Libranza</span>
+							</a>-->
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
 							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/avance">
-								<span class="header-textoItem">Crédito libranza</span>
+								<span class="header-textoItem">Avances</span>
 							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/seguros">
 								<span class="header-textoItem">Seguros</span>
 							</a>
-							<!--<a class="nav-item nav-link header-item header-item1" href="/viajes">
-								<span class="header-textoItem">Viajes</span>
-							</a>-->
 						</div>
 					</div>
 
@@ -190,7 +191,7 @@
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/avance"> 
+								<a class="nav-item nav-link header-item header-item3 @php echo $activeAvance @endphp " href="/avance"> 
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Avances</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item4 @php echo $activeSeguros @endphp " href="/seguros">
@@ -317,7 +318,7 @@
 			]
 		});
 
-		/*$('#sliderPrincipalLibranza').slick({
+		$('#sliderPrincipalLibranza').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,
 			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
@@ -330,7 +331,7 @@
 					}
 				}
 			]
-		});*/
+		});
 
 		$('#creditoLibranza-slider').slick({
 			slidesToShow : 3,

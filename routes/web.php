@@ -18,7 +18,7 @@ Route::get('/', function () {
 
     return view('index')
     		->with('sliderPrincipal', $sliders->all());
-});
+})->name('start');
 
 Route::get('/LIB_gracias_FRM', function(){
 	return view('libranza.thankYouPage');
@@ -31,6 +31,14 @@ Route::get('/OP_gracias_FRM',function(){
 Route::get('/Employed',function(){
     return view('advance.pageEmployed');
 })->name('pageEmployed');
+
+Route::get('/UsuarioPendiente',function(){
+    return view('advance.pageUserExist');
+})->name('usuarioPendiente');
+
+Route::get('/UsuarioMoroso',function(){
+    return view('advance.pageUserDefault');
+})->name('usuarioMoroso');
 
 Route::get('/OPN_gracias_FRM',function(){
     return view('oportuya.thankYouPageDenied');
@@ -126,6 +134,7 @@ Route::get('api/oportuya/validationLead/{identificationNumber}', 'Admin\Oportuya
 Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerification');
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');
+Route::get('api/oportuya/getNumLead/{identificationNumber}', 'Admin\OportuyaV2Controller@getNumLead');
 // Pasos solictud cupo
 Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
 Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');
@@ -163,7 +172,6 @@ Route::get('/googledd6db54bffdd55e4.html', function(){
 /* Admin Leads */
 Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
-Route::get('api/leads/cahngeStateLead/{idLead}/{comment}/{state}', 'Admin\LeadsController@cahngeStateLead');
 
 /* Apis */
 Route::group(['prefix'=>'api/'],function(){
@@ -286,6 +294,9 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     **Email: desarrollo1@lagobo.com
     **Fecha: 20/12/2018
 **/
+Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'Admin\LeadsController@assignAssesorDigitalToLead');
+Route::get('/api/canalDigital/checkLeadProcess/{idLead}', 'Admin\LeadsController@checkLeadProcess');
+
 Route::resource('creditPolicy','Admin\CreditPolicyController');
 
 Route::resource('users','Admin\UserController');
@@ -430,7 +441,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
     });
 
     // Administrador de modulos
-    Route::resource('modules', 'Admin\ModulesController');
+    /*Route::resource('modules', 'Admin\ModulesController');
     Route::group(['prefix'=>'/Modules/'],function(){
         Route::get('/', function(){
             return view('modules.index');
@@ -439,7 +450,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get('/Modules', function(){
             return view('modules.modules');
         });
-    });
+    });*/
 
     // Administrador Lista de Empleados
     Route::group(['prefix' => '/ListaEmpleados'], function(){

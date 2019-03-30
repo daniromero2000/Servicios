@@ -3,6 +3,13 @@ span.renewCode:hover {
     cursor: pointer;
 }
 
+.totalLeadsDigital{
+	font-size: 25px;
+    color: #1d84c3;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
 .bootbox-close-button{
 	position: absolute;
     right: 9px;
@@ -120,6 +127,7 @@ span.renewCode:hover {
 	padding: 30px;
 }
 
+
 .creditoLibranza-contianerTexto{
 	background: #fff;
 	border-radius: 10px;
@@ -144,6 +152,15 @@ span.renewCode:hover {
 .containerText-creditoLibranzaCards{
 	padding: 60px 30px 10px 110px;
 	min-height: 280px;
+}
+
+.adjust-libranzaCard{
+	padding: 60px 28px 10px 90px;
+}
+
+.adjust-libranzaCard p{
+	line-height: 18px;
+	margin: 0;
 }
 
 .creditoLibranza-buttonWhatsApp{
@@ -464,6 +481,14 @@ span.renewCode:hover {
 	color: #fff;
 }
 
+#simularModal .modal-content {
+	position: absolute;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 30vw;
+    min-height: 90vh;
+}
 
 /* ThakYouPage */
 
@@ -1151,7 +1176,8 @@ label {
 	margin: 10px 30px;
 }
 .contentGarantias{
-	background-color: #FAFAFA; 
+	background-color: #FAFAFA;
+	margin-bottom: 20px; 
 }
 .Garantia-containerForm{
 	max-width: 1200px;
@@ -1255,6 +1281,56 @@ label {
 .TermsHeader{
 	border-bottom: 1px solid #1111115c;
 }
+.isUserCheck{
+	margin-left: 15px;
+}
+.addPhone{
+	color: white;
+	border-radius: 50%;	
+}
+.deletePhone{
+	color: white;
+	border-radius: 50%;
+	margin-bottom: 10px 	
+}
+.addPhoneContainer{
+	padding-bottom: 26px;
+	padding-left: 0px;
+
+}
+
+.sendRequest{
+	border-radius: 20px;
+	padding: 5px 45px;
+}
+.dialog{
+	max-width: 816px;
+}
+.successfulText{
+	position:absolute;
+    width: 60%;
+    font-size: 20px;
+    font-family: barlow;
+    font-weight: bold;
+    left: 35%;
+    top: 25%;
+}
+.containerReturn{
+	position:absolute;
+	margin-left: 65%;
+    margin-top: -8%;
+}
+.returnButton{
+	border-radius: 25px;
+    padding: 5px 40px;
+}
+.imageSuccessful{
+	position: relative;
+}
+.NumberCase{
+	color: #167efa;
+}
+
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
@@ -1273,7 +1349,7 @@ label {
 	**Caso de Uso: WARRANTY MODULE
 	**Autor: Luis David Giraldo Grajales 
 	**Email: desarrolladorjunior@lagobo.com
-	**Fecha: 28/02/2018
+	**Fecha: 28/02/2019
 	**/
 	.warrantyLegal{
 		color: #e1e1e1;
@@ -1305,7 +1381,7 @@ label {
 		width: 0;
 	}
 	.logoHeaderWarranty:before{
-		width: 0;
+		display: none;
 	}
 	.logoHeaderTerms{
 		padding: 30px;
@@ -1314,7 +1390,7 @@ label {
 	}
 
 	.logoHeaderTerms:before{
-		width: 0;
+		display:none;
 	}
 	.imgStartProgress, .imgEndProgress{
 		display: none;
@@ -1342,9 +1418,34 @@ label {
 	.progreso{
 		width: 82%;
 	}
+	/**
+	**Caso de Uso: WARRANTY MODULE
+	**Autor: Luis David Giraldo Grajales 
+	**Email: desarrolladorjunior@lagobo.com
+	**Fecha: 14/03/2019
+	**/
+	.successfulText{
+		position: absolute;
+		width: 60%;
+		font-size: 15px;
+		font-family: barlow;
+		font-weight: bold;
+		left: 35%;
+		top: 20%;
+	}
+	.containerReturn{
+		margin-left: 60%;
+		margin-top: -10%;
+	}
+	.returnButton{
+		border-radius: 15px;
+    	padding: 3px 30px;
+	}
 }
 
 @media(max-width: 450px){
+
+
 	.warrantyLegal{
 		display: none;
 	}

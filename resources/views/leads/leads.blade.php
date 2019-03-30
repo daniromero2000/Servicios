@@ -1,306 +1,196 @@
-<div class="row form-group" ng-if="filtros">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <strong>Filtros</strong>
+<style>
+    td{
+        vertical-align: middle !important;
+    }
+    .container{
+        max-width: 1300px !important;
+        margin: auto;
+    }
+</style>
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">General</a>
+        <a class="nav-item nav-link cursor" id="nav-img-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-img">Facebook</a>
+    </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
+        <div class="row resetRow">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeads }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
             </div>
-            <div class="card-body">
-                <form ng-submit="searchLeads()">
-                    <div class="row form-group">
-                        <div class="col-12 col-sm-4">
-                            <label for="city">Ciudad</label>
-                            <select id="city" class="form-control" ng-model="q.city" ng-options="city.value as city.label for city in cities"></select>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <label for="typeService">Tipo de Servicio</label>
-                            <select id="typeService" class="form-control" ng-model="q.typeService" ng-options="service.value as service.label for service in typeServices"></select>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <label for="state">Estado</label>
-                            <select id="state" class="form-control" ng-model="q.state" ng-options="state.value as state.label for state in typeStates"></select>
-                        </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-sm-6">
-                            <label for="fecha_ini">Fecha Inicial</label>
-                            <div class="input-group"
-                                 moment-picker="q.fecha_ini"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.fecha_ini" id="fecha_ini">
-                                <span class="input-group-addon">
-                                    <i class="octicon octicon-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <label for="fecha_fin">Fecha Final</label>
-                            <div class="input-group"
-                                 moment-picker="q.fecha_fin"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.fecha_fin">
-                                <span class="input-group-addon">
-                                    <i class="octicon octicon-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
-                            <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row resetRow">
-    <div class="col-sm-12 offset-md-7 col-md-4 text-right">
-        <div class="input-group mb-3">
-            <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
-            <div class="input-group-append">
-                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-1 resetCol">
-        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i class="fas fa-filter"></i></button>
-    </div>
-</div>
-<div class="table table-responsive">
-    <table class="table table-hover table-stripped leadTable">
-        <thead class="headTableLeads">
-            <tr>
-                <th scope="col">Estado</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Ciudad</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Fecha de registro</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="lead in leads">
-                <td scope="row">
-                    <i class="fas fa-hand-paper" ng-if="lead.state==0" style="color: yellow; font-size: 22px;" title="Pendiente"></i>
-                    <i class="far fa-bell" ng-if="lead.state==1" style="color: gray; font-size: 22px;" title="En estudio"></i>
-                    <i class="fas fa-stopwatch" ng-if="lead.state==2" style="color: orange; font-size: 22px;" title="Es Espera"></i>
-                    <i class="fas fa-clipboard-check" ng-if="lead.state==3" style="color: green; font-size: 22px;" title="Aprobado"></i>
-                    <i class="fas fa-ban" ng-if="lead.state==4" style="color: red; font-size: 22px;" title="Negado"></i>
-                </td>
-                <td>@{{ lead.name }}</td>
-                <td>@{{ lead.lastName }}</td>
-                <td>@{{ lead.telephone }}</td>
-                <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeService }}</td>
-                <td>@{{ lead.typeProduct }}</td>
-                <td>@{{ lead.created_at }}</td>
-                <td>
-                    <i class="fas fa-eye cursor"  ng-click="vewLead(lead)"></i>
-                
-                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
-                    <br>
-                    <i class="fas fa-arrow-alt-circle-right cursor" 
-                    ng-if="lead.state == 0" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 1, 'Poner solicitud en estudio')" title="Poner solicitud en estudio"></i>
-
-                    <i class="fas fa-check-double cursor"
-                    ng-if="(lead.state == 1 || lead.state == 2) && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos')" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 3, 'Aprobar solicitud')" 
-                    title="Aprobar solicitud" ></i>
-
-                    <i class="far fa-clock cursor" 
-                    ng-if="lead.state == 1 && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos')"
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 2, 'Poner solicitud en espera')" 
-                    title="Poner solicitud en espera"></i>
-
-                    <i class="fas fa-times cursor" 
-                    ng-if="lead.state == 0 || ((lead.state == 1 || lead.state == 2) && (lead.typeService == 'Seguros' || lead.typeService == 'Viajes' || lead.typeService == 'Motos'))" 
-                    ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 4, 'Negar Solicitud')" 
-                    title="Negar Solicitud"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar Más</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="changeStateLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">@{{ title }} - @{{ nameLead + " " +lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
-                <div class="container">
-                    <form ng-submit="changeStateLeadComment()">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="comment">Comentario</label>
-                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group text-left">
-                            <button class="btn btn-primary">Agregar</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="viewLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Ver Contacto</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads">
+                    <tr>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Sucursal / N° solicitud</th>
+                        <th scope="col">Asesor</th>
+                        <th scope="col">Asesor OP</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Canal adquisición</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Cupo Producto/Avance</th>
+                        <th scope="col" style="width: 10%;">Fecha registro</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lead in leads">
+                        <td>@{{ lead.CEDULA }}</td>
+                        <td>@{{ lead.SUCURSAL }} - @{{ lead.SOLICITUD }}</td>
+                        <td>@{{ lead.nameAsesor }}</td>
+                        <td>@{{ lead.CODASESOR }}</td>
+                        <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
+                        <td>@{{ lead.CELULAR }}</td>
+                        <td>
+                            <span ng-if="lead.channel == 1">Página Web</span>
+                            <span ng-if="lead.channel == 2">Facebook</span>
+                            <span ng-if="lead.channel == 3">WhatsApp</span>
+                        </td>
+                        <td>@{{ lead.CIUD_UBI }}</td>
+                        <td>
+                            $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
+                        </td>
+                        <td>@{{ lead.CREACION }}</td>
+                        <td>
+                            <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor" ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id)"></i>
+                            <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-check cursor"  ng-click="assignAssesorDigitalToLead(lead.SOLICITUD)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar Más</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Nombre:</label>
-                            <span class="textViewLead">@{{ lead.name }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Apellido:</label>
-                            <span class="textViewLead">@{{ lead.lastName }}</span>
-                        </div>
+        </div>
+        
+        <div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Teléfono:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Correo Electrónico:</label>
-                            <span class="textViewLead">@{{ lead.email }}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Ciudad:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Fecha registro:</label>
-                            <span class="textViewLead">@{{ lead.created_at }}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Servicio:</label>
-                            <span class="textViewLead">@{{ lead.typeService }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Producto:</label>
-                            <span class="textViewLead">@{{ lead.typeProduct }}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Edad:</label>
-                            <span class="textViewLead">@{{ lead.age }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Tipo de Cliente:</label>
-                            <span class="textViewLead">@{{ lead.customerType }}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Pagaduría:</label>
-                            <span class="textViewLead">@{{ lead.pagaduria }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Línea de Crédito:</label>
-                            <span class="textViewLead">@{{ lead.creditLine }}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Salario:</label>
-                            <span class="textViewLead">$@{{ lead.salary | number:0 }}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Estado:</label>
-                            <span class="textViewLead">@{{ lead.estadoCredito}}</span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Ocupación:</label>
-                            <span class="textViewLead">@{{ lead.ocupacion}}</span>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="labelViewLead">Score:</label>
-                            <span class="textViewLead">@{{ lead.score}}</span>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row resetRow " ng-if="viewAddComent">
+                                <div class="col-12 form-group">
+                                    <form ng-submit="addComment()">
+                                        {{ csrf_field() }}
+                                        <div class="form-group">
+                                            <label for="comment">Comentario</label>
+                                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <button class="btn btn-primary">Agregar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="row resetRow" ng-if="state != 4">
+                                <div class="col-12 text-right form-group">
+                                    <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="containerCommentsLeads">
+                                <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
+                                    <div class="col-12 text-left resetCol">
+                                        <i class="fas fa-user iconoUserLead"></i>
+                                        <span class="nameAdminLead">@{{ comment.name }}</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="commentUserLead">
+                                            @{{ comment.comment }}
+                                        </p>
+                                    </div>
+                                    <div class="col-12 text-right">
+                                        <span class="fechaUserLead">@{{ comment.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
-                <div class="container">
-                    <div class="row resetRow " ng-if="viewAddComent">
-                        <div class="col-12 form-group">
-                            <form ng-submit="addComment()">
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="comment">Comentario</label>
-                                    <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
-                                </div>
-                                <div class="form-group text-left">
-                                    <button class="btn btn-primary">Agregar</button>
-                                </div>
-                            </form>
-                        </div>
-                        <hr>
+    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
+        <div class="row resetRow">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsCM }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.qCM" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
                     </div>
-                    <div class="row resetRow" ng-if="state != 4">
-                        <div class="col-12 text-right form-group">
-                            <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-                    <div class="containerCommentsLeads">
-                        <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
-                            <div class="col-12 text-left resetCol">
-                                <i class="fas fa-user iconoUserLead"></i>
-                                <span class="nameAdminLead">@{{ comment.name }}</span>
-                            </div>
-                            <div class="col-12">
-                                <p class="commentUserLead">
-                                    @{{ comment.comment }}
-                                </p>
-                            </div>
-                            <div class="col-12 text-right">
-                                <span class="fechaUserLead">@{{ comment.created_at }}</span>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads">
+                    <tr>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Celular</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="leadCM in leadsCM">
+                        <td>
+                            <i ng-if="leadCM.state == 1" class="fas fa-clock" title="Cliente en espera de procesar"></i>
+                            <i style="color: green" ng-if="leadCM.state == 2" class="fas fa-check-double" title="Cliente procesado"></i>
+                        </td>
+                        <td>@{{ leadCM.identificationNumber }}</td>
+                        <td>@{{ leadCM.name + " " + leadCM.lastName }}</td>
+                        <td>@{{ leadCM.email }}</td>
+                        <td>@{{ leadCM.telephone }}</td>
+                        <td>@{{ leadCM.city }}</td>
+                        <td>@{{ leadCM.typeService }}</td>
+                        <td>@{{ leadCM.created_at }}</td>
+                        <td>
+                            <i ng-if="leadCM.state == 1" class="fas fa-check cursor" title="Marcar cliente como procesado" ng-click="checkLeadProcess(leadCM.id)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargandoCM" ng-click="getLeads()">Cargar Más</button>
                 </div>
             </div>
         </div>

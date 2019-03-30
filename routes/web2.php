@@ -37,3 +37,15 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
         return view('libranza.libranza');
     });
 });
+
+Route::resource('simulator','Admin\SimulatorController');
+Route::get('simulador/getDataSimulador','Admin\SimulatorController@getData');
+
+Route::group(['prefix'=>'/simulador/'],function(){     
+    Route::get('/','Admin\SimulatorController@index'); 
+    Route::get('/admin', function(){
+        return view('simulator.simulator');
+    });
+   
+});
+

@@ -69,7 +69,7 @@
 					</div>
 					<div class="col-12 col-sm-6 form-group">
 						<label for="identificationNumber">Número de identificación*</label>
-						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" />
+						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" ng-blur="getNumCel()" />
 					</div>
 				</div>
 				<div class="row resetRow">
@@ -98,13 +98,16 @@
 					</div>
 				</div>
 				<div class="row resetRow">
-					<div class="col-12 col-sm-6">
+					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
 							<label for="telephone" class="control-label">Celular*</label>
-							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true"  />
+							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+						</div>
+						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
+							Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 01800017787
 						</div>
 					</div>
-					<div class="col-12 col-sm-6">
+					<div class="col-sm-12 col-md-6">
 						<label for="occupation">Ocupación*</label>
 						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.occupation" required=""   ng-options="occu.value as occu.label for occu in occupations">
 						</select>
@@ -162,7 +165,10 @@
 						<div class="row">
 							<div class="col-12 form-group">
 								<label for="">Número de Celular</label>
-								<input type="text" ng-model="leadInfo.telephone" class="form-control" />
+								<input type="text" ng-model="leadInfo.telephone" class="form-control" ng-disabled="leadInfo.CEL_VAL" />
+								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
+									Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente 01800017787
+								</div>
 							</div>
 							<div class="col-12 text-center form-group">
 								<button class="btn btn-primary " ng-click="getCodeVerification()">Enviar Código</button>

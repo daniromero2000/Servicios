@@ -8,7 +8,7 @@
 			</div>
 			<div class="dialogThakPage">	
 				<img src="{{ asset('images/dialogThankPage.png')}}" class="img-fluid">
-				<p>	Tu solicitud de crédito no ha sido aprobada, un asesor de crédito hará una verificación y se comunicará contigo.</p>
+				<p>	Estimado usuario, por políticas internas de la organización no es posible continuar con el proceso de crédito en Almacenes Oportunidades.</p>
 			</div>
 		</div>
 	</div>
