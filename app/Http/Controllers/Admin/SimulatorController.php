@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Simulator;
 use App\TimeLimits;
+use App\Pagaduria;
+use App\LibranzaProfile;
 
 class SimulatorController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth')->except('logout');
+       // $this->middleware('auth')->except('logout');
     }
     
     
@@ -127,13 +129,54 @@ class SimulatorController extends Controller
           return response()->json([true]);
     }
 
+    /**
+     * get data to simulator administrator
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
     public function getData(){
+
 
         $params=Simulator::select('rate','gap','assurance')->get();
         $timeLimits=TimeLimits::select('id','timeLimit')->get();
+        $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active')->get();
+        $libranzaProfiles=LibranzaProfile::select('id','name')->get();
+
         $data['params']=$params;
         $data['timeLimits']=$timeLimits;
+        $data['pagadurias']=$pagadurias;
+        $data['libranzaProfiles']=$libranzaProfiles;
 
         return response()->json($data);
+    }
+
+    public function addPagaduria(Request $request){
+        
+        try {
+            //create Pagaduria Model Instance and assign values
+           $pagaduria = new Pagaduria;
+           $pagaduria->name = $request->name;
+           $pagaduria->office = $request->office;
+           $pagaduria->city = $request->city;
+           $pagaduria->departament = $request->departament;
+           $pagaduria->address = $request->address;
+           $pagaduria->phoneNumber = $request->phoneNumber;
+           $pagaduria->active = $request->active;
+           $pagaduria->category = $request->category;
+           $pagaduria->save();
+
+           return response()->json(true);
+
+       }
+       catch(\Exception $e) {
+           if ($e->getCode()=="23000"){
+               return response()->json($e->getCode());
+           }else{
+               return response()->json($e->getMessage());
+           }
+       }
+
     }
 }

@@ -1,6 +1,11 @@
 app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	
 	$scope.cities =[];
+	$scope.plazoSelected={
+		amount:'',
+		timeLimit:''
+	};
+
 	$scope.typeProducts = [
 		{
 			label: 'Crédito para electrodomésticos', value: 'Crédito para electrodomésticos'
@@ -55,7 +60,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		typeService: 'Credito libranza',
 		typeProduct: '',
 		termsAndConditions: 0,
-		channel: 1
+		channel: 1,
+
 	};
 
 	$scope.validateInt = function(){
@@ -115,8 +121,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 					$scope.cities.push(value);
 				});
 			}
-
-			console.log($scope.cities);
 		},function errorCallback(response){
 			
 		});
@@ -124,7 +128,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 
 	$scope.assignPagaduria = function(){
 
-	}
+	};
+
 
 	$scope.selectPagaduria = function (){
 
@@ -174,13 +179,13 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
 					return -2;
 				}else{
+					$scope.updateLiquidator();
 					var rate=$scope.params[0].rate;
 					var gap=$scope.params[0].gap;
 					var loanAssurance=($scope.params[0].assurance)/1000000;
 					var gapTop=0.0;
 					var gapBottom=0.0;
-					var result=0;
-					console.log(loanAssurance);
+					var result=0;	
 					for(var i =0;i < $scope.timeLimits.length; i++){
 						var aux = {
 							amount : 0.0,
@@ -227,13 +232,48 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		}
 		
 	}
+	
+	$scope.idLead='';
+
+	$scope.updateLiquidator=function(){
+		$http({
+			method:'PUT',
+			url:'/api/updateLiquidator/'+$scope.idLead,
+			data:$scope.libranza
+		}).then(function successCallback(response){
+			if(response.data != false){
+				console.log(response);
+			}
+
+			console.log(response);
+		},function errorCallback(response){
+			console.log(response);
+		});
+	}
 
 
 	$scope.solicitar = function(){
 		
-		window.location = "/LIB_gracias_FRM";		
+		$http({
+			method:'PUT',
+			url:'api/addAmount/'+$scope.idLead,
+			data:$scope.plazoSelected
+		}).then(function successCallback(response){
+			if(response.data != false){
+				console.log(response.data);
+			}
+		},function errorCallback(response){
+			console.log(response);
+		});
+		//window.location = "/LIB_gracias_FRM";		
 	};
 
+	$scope.setPlazo=function(amount,timeLimit){
+		$scope.plazoSelected.amount=amount;
+		$scope.plazoSelected.timeLimit=timeLimit;		
+	}
+
+	
 	$scope.addLead = function(){
 		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
@@ -246,6 +286,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			  url: '/libranza',
 			  data: $scope.libranza
 			}).then(function successCallback(response) {
+				$scope.idLead=response.data;
 				$('#solicitarModal').modal('show');
 			}, function errorCallback(response) {
 			    
