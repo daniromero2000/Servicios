@@ -69,15 +69,15 @@
 <div class="table table-responsive">
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
-            <tr>
+            <tr> 
                 <th scope="col">Estado</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
                 <th scope="col">Ciudad</th>
-                <th scope="col">Servicio</th>
                 <th scope="col">Producto</th>
-                <th scope="col">Fecha de registro</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Plazo</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -90,9 +90,9 @@
                 <td>@{{ lead.lastName }}</td>
                 <td>@{{ lead.telephone }}</td>
                 <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeService }}</td>
                 <td>@{{ lead.typeProduct }}</td>
-                <td>@{{ lead.created_at }}</td>
+                <td>@{{ lead.amount }}</td>
+                <td>@{{ lead.timeLimit }}</td>
                 <td>
                     <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
                     <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
@@ -210,17 +210,27 @@
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Pagaduría:</label>
-                            <span class="textViewLead">@{{ lead.pagaduria }}</span>
+                            <span class="textViewLead">@{{ lead.pagaduriaName }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Línea de Crédito:</label>
-                            <span class="textViewLead">@{{ lead.creditLine }}</span>
+                            <span class="textViewLead">@{{ lead.creditLineName }}</span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Salario:</label>
                             <span class="textViewLead">$@{{ lead.salary | number:0 }}</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12 col-md-6">
+                            <label class="labelViewLead">Monto seleccionado:</label>
+                            <span class="textViewLead">@{{ lead.amount }}</span>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label class="labelViewLead">Plazo seleccionado:</label>
+                            <span class="textViewLead">@{{ lead.timeLimit }}</span>
                         </div>
                     </div>
                 </div>

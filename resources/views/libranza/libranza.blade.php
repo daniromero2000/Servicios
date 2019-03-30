@@ -223,11 +223,11 @@
                         </thead>
                         <tbody>
                             
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine==4">
+                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine==4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
                                 <td ng-if="plazo.timeLimit.timeLimit <=60">$@{{ plazo.amount | number:0 }}</td>
                                 <td ng-if="plazo.timeLimit.timeLimit <=60" >@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine!=4">
+                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine!=4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
                                 <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>

@@ -62,8 +62,8 @@ class LibranzaController extends Controller
 
         $lead->save();
 
-        $liquidator->creditLine = $request->get('creditLine');
-        $liquidator->pagaduria = $request->get('pagaduria');
+        $liquidator->idCreditLine = $request->get('creditLine');
+        $liquidator->idPagaduria = $request->get('pagaduria');
         $liquidator->age = $request->get('age');
         $liquidator->customerType = $request->get('customerType');
         $liquidator->salary = $request->get('salary');
@@ -71,7 +71,7 @@ class LibranzaController extends Controller
 
         
         $liquidator->save();
-        return redirect()->route('thankYouPageLibranza');
+        return response()->json($lead->id);
     }
 
     /**
@@ -197,12 +197,16 @@ class LibranzaController extends Controller
 
     public function libranzaData(Request $request){
 
-        $leads=Lead::select('id','name','lastName','email','telephone','city','typeService','typeProduct','state','channel','created_at','termsAndConditions','typeDocument','identificationNumber','occupation')
-        ->where('typeService','=','Libranza');
+        $data=[];
 
+        $leads=Liquidator::selectRaw('pagaduria.name as pagaduriaName, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria, liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id ,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
+        ->leftJoin('leads','liquidator.idLead','=','leads.id')
+        ->leftJoin('pagaduria','liquidator.idPagaduria','=','pagaduria.id')
+        ->leftJoin('libranza_lines','liquidator.idCreditLine','=','libranza_lines.id')
+        ->where('leads.typeService','=','Credito libranza');
 
         if(!is_null($request->city)){
-            $leads->where('city', $request->city);
+            $leads->where('leads.city', $request->city);
         }
         
         if(!is_null($request->fecha_ini)){
@@ -214,14 +218,40 @@ class LibranzaController extends Controller
         }
 
         if(!is_null($request->state)){
-            $leads->where('state', $request->state);
+            $leads->where('leads.state', $request->state);
         }
         
-        $leads->orderBy('id', 'desc')
+        $leads->orderBy('leads.id', 'desc')
                 ->skip($request->page*($request->actual-1))
                 ->take($request->page);
-                
+
         return response()->json($leads->get());
     }
 
+    public function addAmount(Request $request,$id){
+        
+        $idLiquidator=Liquidator::select('id')->where('idLead','=',$id)->get(); 
+        $liquidator=Liquidator::find($idLiquidator[0]->id);
+        $liquidator->amount = $request->get('amount');
+        $liquidator->timeLimit = $request->get('timeLimit');
+                
+        $liquidator->save();
+
+        return response()->json(true);
+    }
+
+    public function updateLiquidator(Request $request,$id){
+        
+        $idLiquidator=Liquidator::select('id')->where('idLead','=',$id)->get();     
+        $liquidator=Liquidator::find($idLiquidator[0]->id);
+        $liquidator->salary = $request->get('salary');
+        $liquidator->age = $request->get('age');
+        $liquidator->idCreditLine = $request->get('creditLine');
+        $liquidator->customerType = $request->get('customerType');
+        $liquidator->idPagaduria = $request->get('pagaduria');
+
+        $liquidator->save();
+
+        return response()->json(true);
+    }
 }
