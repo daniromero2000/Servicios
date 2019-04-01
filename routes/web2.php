@@ -54,3 +54,4 @@ Route::group(['prefix'=>'/simulador/'],function(){
    
 });
 
+Route::get('/getDataLibranza','Admin\LibranzaController@getData');
