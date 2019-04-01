@@ -97,7 +97,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	$scope.getData=function(){
 		$http({
 			method:'GET',
-			url:'api/getDataLibranza'
+			url:'/getDataLibranza'
 		}).then(function successCallback(response){
 			if(response.data != false){
 				
@@ -272,7 +272,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 		$scope.plazoSelected.amount=amount;
 		$scope.plazoSelected.timeLimit=timeLimit;
 		//$scope.updateCSS();
-		//$('#plazo'+timeLimit).css('box-shadow','black 2px 2px 7px');
+		//$('#plazo'+timeLimit).css('box-shadow','black 2px 2px 7px');	
 		
 	}
 
