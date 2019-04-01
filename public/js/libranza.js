@@ -97,7 +97,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	$scope.getData=function(){
 		$http({
 			method:'GET',
-			url:'/getDataLibranza'
+			url:'/api/getDataLibranza'
 		}).then(function successCallback(response){
 			if(response.data != false){
 				
