@@ -151,7 +151,7 @@
             <div class="col-md-12 col-lg-4 text-center">
                 <img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
                 <p class="credibilidad-text ">
-                    56 puntos de atención  <br>
+                    55 puntos de atención  <br>
                     al público
                 </p>
             </div>
