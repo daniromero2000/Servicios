@@ -97,7 +97,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	$scope.getData=function(){
 		$http({
 			method:'GET',
-			url:'api/getDataLibranza'
+			url:'/api/getDataLibranza'
 		}).then(function successCallback(response){
 			if(response.data != false){
 				
@@ -270,10 +270,21 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 
 	$scope.setPlazo=function(amount,timeLimit){
 		$scope.plazoSelected.amount=amount;
-		$scope.plazoSelected.timeLimit=timeLimit;		
+		$scope.plazoSelected.timeLimit=timeLimit;
+		//$scope.updateCSS();
+		//$('#plazo'+timeLimit).css('box-shadow','black 2px 2px 7px');	
+		
 	}
 
-	
+	$scope.updateCSS=function(flag){
+		if(flag==true){
+			return 'box-shadow: black 2px 2px 7px';
+		}else{
+			return 'box-shadow: unset;';
+		}
+		
+	}
+
 	$scope.addLead = function(){
 		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");

@@ -185,6 +185,21 @@ span.renewCode:hover {
 	border-bottom: 30px solid transparent !important;
 }
 
+.container-plazos:focus{
+	color:#888 !important;
+}
+
+
+.selected-row div p{
+	font-weight: 600;
+}
+
+.selected-row div p span{
+	font-weight: 800 !important;
+	color: #1a59a0;
+	font-size: 24px;
+}
+
 /*Slider Avances*/
 
 .oportuyaSliderContentAdvance{

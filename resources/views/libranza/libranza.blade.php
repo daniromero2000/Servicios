@@ -213,6 +213,23 @@
                         <button class="btn formularioSimulador-buttonForm" ng-click="solicitar()">Solicitar</button>
                     </div>
                 </div>
+                <div class="text-center row selected-row" ng-if="plazoSelected.amount != '' || plazoSelected.timeLimit != ''">
+                    <div class="col-12 col-sm-6">
+                        <p>
+                            Monto seleccionado:
+                            <br> 
+                            <span>@{{plazoSelected.amount}}</span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p>
+                            Plazo seleccionado:
+                            <br> 
+                            <span>@{{plazoSelected.timeLimit}}</span>
+                        </p>
+                    </div>
+
+                </div>
                 <div class="table">
                     <table class="table table-hover">
                         <thead class="simularModal-thead">
@@ -223,11 +240,11 @@
                         </thead>
                         <tbody>
                             
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine==4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine==4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
                                 <td ng-if="plazo.timeLimit.timeLimit <=60">$@{{ plazo.amount | number:0 }}</td>
                                 <td ng-if="plazo.timeLimit.timeLimit <=60" >@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine!=4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine!=4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
                                 <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>
