@@ -8,5 +8,5 @@ class CodeUserVerification extends Model
 {
     protected $table = 'code_user_verification';
 
-    protected $fillable = ['code', 'identification'];
+    protected $fillable = ['code', 'identification', 'type', 'telephone'];
 }
