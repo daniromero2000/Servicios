@@ -151,7 +151,7 @@
             <div class="col-md-12 col-lg-4 text-center">
                 <img src="{{ asset('images/libranza-experienciaMapa.png') }}" alt="" class="img-fluid credibilidad-img">
                 <p class="credibilidad-text ">
-                    56 puntos de atención  <br>
+                    55 puntos de atención  <br>
                     al público
                 </p>
             </div>
@@ -213,6 +213,25 @@
                         <button class="btn formularioSimulador-buttonForm" ng-click="solicitar()">Solicitar</button>
                     </div>
                 </div>
+                <div class="text-center row selected-row" ng-if="plazoSelected.amount != '' || plazoSelected.timeLimit != ''">
+                    <div class="col-12 col-sm-6">
+                        <p>
+                            Monto seleccionado:
+                            <br> 
+                            <span>@{{plazoSelected.amount}}</span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p>
+                            Plazo seleccionado:
+                            <br> 
+                            <span>@{{plazoSelected.timeLimit.timeLimit}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="text-justify textModalSimular text-center">
+                    Selecciona el monto y plazo que prefieras para terminar y posteriormente pulsa clic SOLICITAR
+                </div>
                 <div class="table">
                     <table class="table table-hover">
                         <thead class="simularModal-thead">
@@ -223,11 +242,11 @@
                         </thead>
                         <tbody>
                             
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine==4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine==4" ng-click="$parent.$parent.plazoSelected = plazo" style="@{{updateCSS(plazo)}}">
                                 <td ng-if="plazo.timeLimit.timeLimit <=60">$@{{ plazo.amount | number:0 }}</td>
                                 <td ng-if="plazo.timeLimit.timeLimit <=60" >@{{ plazo.timeLimit.timeLimit }}</td>
-                            </tr>
-                            <tr ng-repeat="plazo in plazos" ng-if="libranza.creditLine!=4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            </tr>   
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine!=4" ng-click="$parent.$parent.plazoSelected = plazo" style="@{{updateCSS(plazo)}}">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
                                 <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>

@@ -97,7 +97,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	$scope.getData=function(){
 		$http({
 			method:'GET',
-			url:'api/getDataLibranza'
+			url:'/api/getDataLibranza'
 		}).then(function successCallback(response){
 			if(response.data != false){
 				
@@ -142,7 +142,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 				$scope.pagaduriaLibranza.push(value);
 			});
 		},function errorCallback(response){	
-			console.log(response);
+			
 		});
 		
 	};
@@ -202,7 +202,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 							$scope.plazo.timeLimit=$scope.timeLimits[i];
 							aux = angular.extend({},$scope.plazo);
 							$scope.plazos[i]= aux;
-							console.log($scope.plazos);
 													
 						}
 					}	
@@ -217,14 +216,11 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 
 		if(sim== -1){
 			alert('Debes de llenar todos los datos');
-			console.log(-1);
 		}else if(sim== 0){
 			$('#solicitarModal').modal('hide');
 			$('#negacionModal').modal('show');
-			console.log(0);
 		}else if(sim== -2){
 			alert("Para poder simular el Salario Básico no puede ser menor a 0");
-			console.log(-2);
 		}else{
 			
 			$('#solicitarModal').modal('hide');
@@ -242,12 +238,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			data:$scope.libranza
 		}).then(function successCallback(response){
 			if(response.data != false){
-				console.log(response);
 			}
-
-			console.log(response);
 		},function errorCallback(response){
-			console.log(response);
 		});
 	}
 
@@ -260,20 +252,26 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			data:$scope.plazoSelected
 		}).then(function successCallback(response){
 			if(response.data != false){
-				console.log(response.data);
 			}
 		},function errorCallback(response){
-			console.log(response);
 		});
-		//window.location = "/LIB_gracias_FRM";		
+		window.location = "/LIB_gracias_FRM";		
 	};
-
+	
 	$scope.setPlazo=function(amount,timeLimit){
 		$scope.plazoSelected.amount=amount;
 		$scope.plazoSelected.timeLimit=timeLimit;		
 	}
 
-	
+	$scope.updateCSS=function(plazoSelected){
+		if($scope.plazoSelected.amount == plazoSelected.amount){
+			return 'background-color: #348dc7;color: #FFF;font-weight: 700;';
+		}else{
+			return '';
+		}
+		
+	}
+
 	$scope.addLead = function(){
 		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
