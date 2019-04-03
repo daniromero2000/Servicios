@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterLiquidatorTable extends Migration
+class CreateTablePagaduriasLibranzasProfiles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AlterLiquidatorTable extends Migration
      */
     public function up()
     {
-        Schema::table('liquidator', function (Blueprint $table) {
-            
-            $table->integer('idCreditLine')->unsigned()->nullable();
-            $table->foreign('idCreditLine')->references('id')->on('libranza_lines');
-            $table->integer('idPagaduria')->unsigned()->nullable();
+        Schema::create('pagadurias_libranza_profiles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('idPagaduria')->unsigned();
+            $table->integer('idProfile')->unsigned();
+            $table->foreign('idProfile')->references('id')->on('libranza_profiles');
             $table->foreign('idPagaduria')->references('id')->on('pagaduria');
         });
     }
