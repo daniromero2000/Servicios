@@ -350,7 +350,7 @@ class OportuyaV2Controller extends Controller
 			$codeAssessor=$selectAssessor[0]->assessor;
 			$dateLead=$selectAssessor[0]->dateLead;
 			$sucursal=DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
-			$sucursal=$sucursal[0]->CODIGO; 
+			$sucursal=$sucursal[0]->CODIGO;
 			$estado='ANALISIS';
 			$ftp=0;
 			$state='A';
@@ -714,6 +714,7 @@ class OportuyaV2Controller extends Controller
 
 		$codeUserVerificationOportudata->token = $code;
 		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
+		$codeUserVerificationOportudata->telephone = $celNumber;
 		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
 
 		$codeUserVerificationOportudata->save();
@@ -905,6 +906,25 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	private function validateDateExperto($identificationNumber){
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$dateLastExperto = DB::connection('oportudata')->select("SELECT fecha FROM consulta_exp WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(empty($dateLastExperto)){
+			return 'true';
+		}else{
+			$dateLastConsulta = $dateLastExperto[0]->fecha;
+
+			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
+				return 'true';
+			}else{
+				return 'false';
+			}
+		}
+	}
 
 	private function applyTrim($charItem){
 		
@@ -1188,6 +1208,82 @@ class OportuyaV2Controller extends Controller
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
 
+	public function execConsultaExperto($identificationNumber){
+		$solic_fab= new Application;
+		if($identificationNumber == '') return -1;
+		$query = sprintf("SELECT `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, CONCAT(`APELLIDOS`, ' ', `NOMBRES`) as name, `DIRECCION` as address, `FEC_NAC` as birthdate, expTi.`id` as housingTime, expTipo.`id` as housingType, `SUELDO` as salary, `ANTIG` as antiquity, expActi.`id` as occupation
+						FROM `CLIENTE_FAB` as cf
+						LEFT JOIN `exp_tiempoviv` as expTi ON cf.`TIEMPO_VIV` = expTi.`consec`
+						LEFT JOIN `exp_tipoviv` as expTipo ON cf.`TIPOV` = expTipo.`consec`
+						LEFT JOIN `exp_actividad` as expActi ON cf.`ACTIVIDAD` = expActi.`consec`
+						WHERE `CEDULA` = %s ", $identificationNumber);
+
+		$respLead = DB::connection('oportudata')->select($query);
+		$obj = new \stdClass();
+		$lead = $respLead[0];
+		$obj->typeDocument = $lead->typeDocument; // Tipo de documento
+		$obj->identificationNumber = $lead->identificationNumber; // Numero de identificacion
+		$obj->name = $lead->name; // NOMBRE
+		$obj->address = $lead->address; // DIRECCION ACTUAL
+		$obj->birthdate = $lead->birthdate; // FECHA DE NACIMIENTO
+		$obj->housingTime = $lead->housingTime; // TIEMPO DE VIVIENDA ARRENDADA
+		$obj->housingType = $lead->housingType; // TIPO_DE_VIVIENDA
+		$obj->salary = $lead->salary; // INGRESOS
+		$obj->antiquity = $lead->antiquity; // TIEMPO LABOR MESES
+		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
+		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
+		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
+		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
+		$obj->term = "0"; // PLAZO_
+		$obj->suc = "9999"; // SUCURSAL, FIJO
+		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
+		$obj->rateInterest = "1"; // Tasa de interes , FIJO
+		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
+		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
+		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA
+
+		/*$obj = new \stdClass();
+
+		$obj->typeDocument = 1; // Tipo de documento
+		$obj->identificationNumber = "43185409"; // Numero de identificacion
+		$obj->name = "CRUZ QUIMBAYO YINA ROCIO"; // NOMBRE
+		$obj->address = "Centro"; // DIRECCION ACTUAL
+		$obj->birthdate = "1990-02-20"; // FECHA DE NACIMIENTO
+		$obj->housingTime = "13573"; // TIEMPO DE VIVIENDA ARRENDADA
+		$obj->housingType = "13575"; // TIPO_DE_VIVIENDA
+		$obj->salary = "2000000"; // INGRESOS
+		$obj->antiquity = "3"; // TIEMPO LABOR MESES
+		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
+		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
+		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
+		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
+		$obj->term = "0"; // PLAZO_
+		$obj->suc = "9999"; // SUCURSAL, FIJO
+		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
+		$obj->rateInterest = "1"; // Tasa de interes , FIJO
+		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
+		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
+		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA*/
+
+		$ws = new \SoapClient("http://10.238.14.181:3000/Experto.svc?singleWsdl",array()); //correcta
+		$result = $ws->ConsultarExperto($obj);  // correcta
+		return response()-json($result);
+		$solic_fab->setConnection('oportudata');
+		$solic_fab->CLIENTE=$identificationNumber;
+		$solic_fab->CODASESOR="998877";
+		$solic_fab->FECHASOL=date("Y-m-d H:i:s");
+		$solic_fab->SUCURSAL="9999";
+		$solic_fab->ESTADO="ANALISIS";
+		$solic_fab->FTP=0;
+		$solic_fab->STATE="A";
+		$solic_fab->GRAN_TOTAL=0;
+		$solic_fab->SOLICITUD_WEB = 1;
+		$solic_fab->save();
+
+		$numSolic = $this->getNumSolic($identificationNumber);
+		return response()->json(['numSolic' => $numSolic]);
+	}
+
 	private function getCity($code){
 		$queryCity = sprintf("SELECT `CIUDAD` FROM `SUCURSALES` WHERE `CODIGO` = %s ", $code);
 
@@ -1287,6 +1383,16 @@ class OportuyaV2Controller extends Controller
 		return $resp;
 	}
 
+	public function getDataStep1New(){
+		$queryActividad = "SELECT `consec` as value, `actividad` as label FROM `exp_actividad` ORDER BY `consec` ASC ";
+		$respActividad = DB::connection('oportudata')->select($queryActividad);
+
+		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
+		$resp = DB::connection('oportudata')->select($query);
+
+		return response()->json(['occupations' => $respActividad, 'cities' => $resp]);
+	}
+
 	public function getDataStep2($identificationNumber){
 	      $data = [];
 
@@ -1305,6 +1411,32 @@ class OportuyaV2Controller extends Controller
 
 	      return $data;
 
+	}
+
+	public function getDataStep2New($identificationNumber){
+		$data = [];
+
+		$query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
+		$resp2 = DB::select($query2);
+
+		$queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, CELULAR as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+		$respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
+
+		$queryTipoViv = "SELECT `consec` as value, `tipoviv` as label FROM `exp_tipoviv` ORDER BY `consec` ASC";
+		$respTipoViv = DB::connection('oportudata')->select($queryTipoViv);
+
+		$queryAntiquity = "SELECT `consec` as value, `tiempoviv` as label FROM `exp_tiempoviv` ORDER BY `consec` ASC";
+		$respAntiquity = DB::connection('oportudata')->select($queryAntiquity);
+
+		$digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
+
+		$data['digitalAnalyst'] = $digitalAnalysts[0];
+		$data['cities'] = $resp2;
+		$data['housingTypes'] = $respTipoViv;
+		$data['housingTimes'] = $respAntiquity;
+		$data['oportudataLead'] = $respOportudataLead[0];
+
+		return $data;
 	}
 
 
