@@ -225,10 +225,12 @@
                         <p>
                             Plazo seleccionado:
                             <br> 
-                            <span>@{{plazoSelected.timeLimit}}</span>
+                            <span>@{{plazoSelected.timeLimit.timeLimit}}</span>
                         </p>
                     </div>
-
+                </div>
+                <div class="text-justify textModalSimular text-center">
+                    Selecciona el monto y plazo que prefieras para terminar y posteriormente pulsa clic SOLICITAR
                 </div>
                 <div class="table">
                     <table class="table table-hover">
@@ -240,11 +242,11 @@
                         </thead>
                         <tbody>
                             
-                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine==4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine==4" ng-click="$parent.$parent.plazoSelected = plazo" style="@{{updateCSS(plazo)}}">
                                 <td ng-if="plazo.timeLimit.timeLimit <=60">$@{{ plazo.amount | number:0 }}</td>
                                 <td ng-if="plazo.timeLimit.timeLimit <=60" >@{{ plazo.timeLimit.timeLimit }}</td>
-                            </tr>
-                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine!=4" ng-click="setPlazo(plazo.amount,plazo.timeLimit.timeLimit)">
+                            </tr>   
+                            <tr ng-repeat="plazo in plazos" class="cursor" ng-if="libranza.creditLine!=4" ng-click="$parent.$parent.plazoSelected = plazo" style="@{{updateCSS(plazo)}}">
                                 <td>$@{{ plazo.amount | number:0 }}</td>
                                 <td>@{{ plazo.timeLimit.timeLimit }}</td>
                             </tr>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TimeLimits extends Model
 {
-    protected $table = 'timelimits';    
+    protected $table = 'timeLimits';    
  
     protected $fillable = ['timeLimit'];
 
