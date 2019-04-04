@@ -688,7 +688,7 @@ class OportuyaV2Controller extends Controller
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-	public function getCodeVerificationOportudata($identificationNumber, $celNumber){
+	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN"){
 		$this->setCodesStateOportudata($identificationNumber);
 		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
 		$options = [
@@ -715,6 +715,7 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata->token = $code;
 		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
 		$codeUserVerificationOportudata->telephone = $celNumber;
+		$codeUserVerificationOportudata->type = $type;
 		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
 
 		$codeUserVerificationOportudata->save();
@@ -769,7 +770,7 @@ class OportuyaV2Controller extends Controller
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El token de verificacion para Servicios Oportunidades es '.$code." el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2SaiaOu - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El token de verificacion para Servicios Oportunidades es '.$code." el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
