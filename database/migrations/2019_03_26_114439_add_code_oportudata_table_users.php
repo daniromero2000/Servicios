@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterAddForeignPagaduria extends Migration
+class AddCodeOportudataTableUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AlterAddForeignPagaduria extends Migration
      */
     public function up()
     {
-        Schema::table('leads_info', function (Blueprint $table) {
-            $table->integer('pagaduria')->unsigned()->nullable();
-            $table->foreign('pagaduria')->references('id')->on('pagaduria');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('codeOportudata', 10)->nullable();
         });
     }
 
@@ -26,6 +25,8 @@ class AlterAddForeignPagaduria extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }
