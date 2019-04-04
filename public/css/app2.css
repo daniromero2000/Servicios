@@ -1245,6 +1245,8 @@ label {
 .text-analyst{
 	color: #167efa;
 }
+
+
 .warranty-info p{
 	color: #9c9c9c;
 }
@@ -1329,6 +1331,14 @@ label {
 }
 .NumberCase{
 	color: #167efa;
+}
+.text-greeting{
+	color: #167efa;
+}
+.textGreeting{
+	color: #4a4a4a;
+	font-size: 18px;
+	font-weight: 200;
 }
 
 

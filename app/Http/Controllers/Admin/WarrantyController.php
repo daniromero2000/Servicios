@@ -32,7 +32,7 @@ class WarrantyController extends Controller
     public function __construct()
     {
         // except a authenticable methods 
-        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create'] ]);
+        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products'] ]);
     }
     /**
      * Display a listing of the resource.
@@ -50,20 +50,22 @@ class WarrantyController extends Controller
      */
     public function create()
     {
+        // return a list of a identification number type
         $idType = DB::connection('oportudata')->table('MAESTRO_TIPO_DOC')
                                             ->select('codigo','descripcion')
                                             ->get();
-
+        // return a list of a identification number type
         $stores = DB::connection('oportudata')->table('SUCURSALES_GAR')
                                             ->select('CODIGO','NOMBRE','DOMICILIO','CIUDAD','SUCURSALES_GAR.DEPARTAMENTO_ID','name')
                                             ->join('departamentos', 'SUCURSALES_GAR.DEPARTAMENTO_ID', '=', 'departamentos.departamento_id')
                                             ->orderBy('departamentos.departamento_id')
                                             ->orderBy('CIUDAD')
                                             ->get();
+        // group a stores by departamento and city
         $stores = $stores->groupBy('name')->map(function ($item, $key) {
             return collect($item)->groupBy('CIUDAD');
         });
-
+        // return a list of a brands 
         $groupsBrands = DB::connection('oportudata')->table('GRUPO_brands')
                                                 ->select('GRUPO_brands_id','GRUPO_brands.brand_id','GRUPO_id','NOMBRE','name')
                                                 ->join('GRUPO', 'GRUPO_brands.GRUPO_id', '=', 'GRUPO.CODIGO')
@@ -81,12 +83,7 @@ class WarrantyController extends Controller
      */
     public function store(Request $request)
     {   
-        //send a mail for alert that have a new warranty request 
-        Mail::send('emails.alertWarranty',$request->all(), function($msj){
-            $msj->subject(date("d-m-Y G:i:s"));
-            $msj->to('desarrolladorjunior@lagobo.com');
-        });
-
+        
         //add phone if exist
         if(isset($request->phone)){
             if(DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $request->phone])){
@@ -154,8 +151,12 @@ class WarrantyController extends Controller
             //if a client shop a product in a physical store
             $warrantyRequest->COD_SUC = $request->store['CODIGO'];
             $warrantyRequest->NOM_SUC = $request->store['CODIGO']." ".$request->store['NOMBRE'];
+        }elseif( $request->shop){
+            //if client have register in oportudata
+            $warrantyRequest->COD_SUC = $request->shop;
         }else{
-            $warrantyRequest->NOM_SUC = $request->meansSale['name'];
+            //else the client shop in any web store
+            $warrantyRequest->COD_SUC = 9999;
         }
     
         if ($request->isUser == 'False'){
@@ -165,10 +166,11 @@ class WarrantyController extends Controller
         }
         // set a request data
         $warrantyRequest->FACTURA = $request->invoiceNumber;
-        $warrantyRequest->FECHAFAC = $request->year."-".$request->month."-".$request->day;
+        
+        $warrantyRequest->FECHAFAC = $request->dateShop;
         $warrantyRequest->VALOR = 0;
         $warrantyRequest->N_ENTRADA = 0;
-        $warrantyRequest->COD_ARTIC = "WEB";
+        $warrantyRequest->COD_ARTIC = $request->idProduct;
         $warrantyRequest->NOM_ARTIC = $request->reference;
         $warrantyRequest->MARCA = $request->productBrand['name'];
         $warrantyRequest->NSERVICIO = 0;
@@ -195,9 +197,18 @@ class WarrantyController extends Controller
         $warrantyRequest->STATE = 'A';
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
-            // if save is successfull return a request id
+            //  if save is construct a email data
+            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->clientNames,'clientLastNames' => $request->clientLastNames,'userName' => $request->userName];
+            //send a mail for alert that have a new warranty request 
+            Mail::send('emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
+                $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
+                $msj->to('desarrolladorjunior@lagobo.com');
+            });
+            // return a request id
             return $warrantyRequest->NUMERO;
+
         }else{
+            // if the saving process fail return false 
             return false;
         }
     }
@@ -302,7 +313,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'Tu token de verificacion para el servicio de garantias es '.$code." el cual tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2JluEUv - " . $date, //Mensaje de texto a enviar
+			'sms' => 'Tu codogo de verificacion para el servicio de garantias es '.$code." el cual tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2JluEUv - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
@@ -343,6 +354,41 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 		}else{
 			return response()->json(-2);
 		}
+    }
+    
+    /**
+     *  // gGet the list of the bought products by the client in the last four years.
+     *
+     * @param  int  $identificationNumber
+     * @return \Illuminate\Http\Response [$cilentNameAndLastName,$listOfTheProducts]
+     */
+	public function products(Request $request){
+        // get a full name of de client 
+        $getClient = DB::connection('oportudata')->table('CLIENTE_FAB')
+                                                ->select('APELLIDOS','NOMBRES')
+                                                ->where('CEDULA','=',$request->identificationNumber)
+                                                ->get();
+        if(count($getClient) == 0){
+            //if don't find register 
+            return 'no records';
+        }
+        // if find register  get a list of the products 
+        $products = DB::connection('oportudata')->table('SOLIC_FAB')
+                                                ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
+                                                ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
+                                                ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
+                                                ->join('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
+                                                ->where('CLIENTE','=',$request->identificationNumber)
+                                                ->where(function($q){
+                                                    $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
+                                                    ->orWhere('FEC_AUR','=','1900-01-01');
+                                                })
+                                                ->get();
+        if(count($products)==0){
+            // if don't find products 
+            return 'no records';
+        }
+        //return a client information and list of products
+        return [$getClient['0'],$products];
 	}
-	
 }

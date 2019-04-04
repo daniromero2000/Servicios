@@ -7,7 +7,23 @@
     **Date: 05/03/2019
      **/
 app.controller('warrantyController', function($scope, $http, $location){
+	$scope.step = 1;//shows the format according to the step in which you are
+	$scope.other = 0;//display or not a name and last name and alert for itentification number 
+	$scope.selectedProduct = {};//store a selected product in the step 2
 
+
+	// change a row style of the selected product
+	$scope.style = function(product){
+		if (product.CODIGO == $scope.selectedProduct.CODIGO){
+			// if de current product is a  selected product change a style 
+			return 'background-color: #1cabe2; color:white';
+		}else{
+			//  don't change
+			return '';
+		}
+	
+	}
+	
 	$scope.typeRequestes = [{id:'1',name:'Garantía legal'},
 					{id:'2',name:'Garantía suplementaria'} ];
 	//Request Data
@@ -40,6 +56,18 @@ app.controller('warrantyController', function($scope, $http, $location){
 						{id:7,name:'Amigo (a)'},{id:8,name:'Vecino (a)'},
 						{id:9,name:'Tío (a)'},{id:10,name:'Otro'}];
 
+	// save a information product and redirect to step 3
+	$scope.sendStep2 = function() {
+		$scope.WarrantyRequest.idProduct = $scope.selectedProduct.CODIGO; 
+		$scope.WarrantyRequest.dateShop = $scope.selectedProduct.FEC_AUR;  
+		$scope.WarrantyRequest.shop = $scope.selectedProduct.SUCURSAL;
+		$scope.WarrantyRequest.invoiceNumber = $scope.selectedProduct.FACTURA;
+		$scope.step=3;
+	}
+	$scope.sendStep21 = function() {
+		$scope.step=3;
+	}
+
 	// open a confirm cel number modal 
 	$scope.sendRequest = function() {
 		if ($scope.validEmail){ // only star if email an confirm email match
@@ -47,6 +75,29 @@ app.controller('warrantyController', function($scope, $http, $location){
 		}
 		$('#confirmNumCel').modal('show');
 		
+	}
+ // get the list of the bought products by the client in the last four years
+	$scope.getProducts = function() {
+		showLoader();
+		$http({
+			method: 'POST',
+			url: '/digitalWarranty/products',
+			data: $scope.WarrantyRequest
+			}).then(function successCallback(response) {
+				if(response.data == 'no records'){
+					$scope.step = 21;
+					hideLoader();
+				}else{
+					$scope.step = 2;
+					$scope.WarrantyRequest.names = response.data[0].NOMBRES;
+					$scope.WarrantyRequest.lastNames = response.data[0].APELLIDOS;
+					$scope.products = response.data[1];
+					hideLoader();
+				}
+			}, function errorCallback(response) {
+				console.log(response.data);
+				hideLoader();
+			});
 	}
 	// send a confirmation sms and show a input token modal
 	$scope.sendSms = function() {
@@ -70,7 +121,6 @@ app.controller('warrantyController', function($scope, $http, $location){
 			url: '/digitalWarranty/verificationCode/'+$scope.code+'/'+$scope.WarrantyRequest.identificationNumber,
 		}).then(function successCallback(response) {
 			if(response.data == true){
-				console.log($scope.WarrantyRequest);
 				$('#confirmCodeVerification').modal('hide');
 				$('#ValidRequest').modal('show');
 				$http({
@@ -80,7 +130,6 @@ app.controller('warrantyController', function($scope, $http, $location){
 				  }).then(function successCallback(response) {
 					  if(response.data != false){
 							$scope.WarrantyRequest.number = response.data;
-							console.log(response.data);
 							hideLoader();
 						}
 				  }, function errorCallback(response) {
@@ -109,7 +158,6 @@ app.controller('warrantyController', function($scope, $http, $location){
 				$scope.stores = response.data[0];
 				$scope.groups = response.data[1];
 				$scope.idTypes = response.data[2];
-				console.log(response.data);
 			}
   
 		  }, function errorCallback(response) {
