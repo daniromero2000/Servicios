@@ -233,8 +233,8 @@ class LibranzaController extends Controller
         $idLiquidator=Liquidator::select('id')->where('idLead','=',$id)->get(); 
         $liquidator=Liquidator::find($idLiquidator[0]->id);
         $liquidator->amount = $request->get('amount');
-        $liquidator->timeLimit = $request->get('timeLimit');
-                
+        $liquidator->timeLimit = $request->get('timeLimit')['timeLimit'];
+        
         $liquidator->save();
 
         return response()->json(true);
