@@ -200,7 +200,7 @@ class WarrantyController extends Controller
             //  if save is construct a email data
             $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->clientNames,'clientLastNames' => $request->clientLastNames,'userName' => $request->userName];
             //send a mail for alert that have a new warranty request 
-            Mail::send('emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
+            Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
                 $msj->to('desarrolladorjunior@lagobo.com');
             });
