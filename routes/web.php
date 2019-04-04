@@ -472,6 +472,7 @@ Route::group(['prefix'=>'/libranza'],function(){
 
 // Servicios Oportudata
 Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
+Route::get('/api/oportudata/getCodeVerification/{identificationNumber}/{celNumber}/{type}', 'Admin\OportuyaV2Controller@getCodeVerificationOportudata');
 
 // Campañas Marketing
 Route::group(['prefix'=>'/campaigns'],function(){
