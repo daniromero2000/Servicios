@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterAddIdCampaignImages extends Migration
+class AddNumCelCodeUserVerification extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterAddIdCampaignImages extends Migration
      */
     public function up()
     {
-        Schema::table('campaign_images',function(Blueprint $table){
-            $table->increments('id');
+        Schema::table('code_user_verification', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,6 +25,8 @@ class AlterAddIdCampaignImages extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('code_user_verification', function (Blueprint $table) {
+            //
+        });
     }
 }
