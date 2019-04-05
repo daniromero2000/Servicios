@@ -110,6 +110,26 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		}
 	];
 
+	$scope.slides=[{
+		img:'creditoLibranza.jpg',
+		description:'Te damos <strong>más</strong> que <strong>Crédito,</strong>  te damos la <br><strong>Oportunidad</strong> de vivir viajando',
+		textButton:'Solicítalo ya',
+		link:'#formularioSimulador'
+	},{
+		img:'creditoLibranzaSuenos.jpg',
+		description:'¿Soñando con remodelar tu casa? <br> hazlo realidad con nuestro <strong>crédito de libranza</strong>',
+		textButton:'Solicítalo ya',
+		link:'#formularioSimulador'
+	}];
+
+
+	$scope.slickConfig = {
+        enabled: true,
+    }
+    $scope.toggleSlick = function() {
+      $scope.slickConfig.enabled = !$scope.slickConfig.enabled;
+    }
+
 	$scope.getLeads = function(){
 		$scope.cargando = true;
 		$http({

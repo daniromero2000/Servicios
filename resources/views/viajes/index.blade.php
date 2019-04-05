@@ -74,7 +74,7 @@
 	</div>
 
 <!-- Header viajes -->
-<!--
+
 <div id="viajesHeader">
 	<div class="row viajesHeaderContent">
 		<div class="col-sm-3 col-xl-3 col-lg-2 helperRow">
@@ -189,12 +189,12 @@
 </div>
 
 
--->
+
 
 
 <!-- Slider Viajes -->
 
-<!---
+
 <div id="viajesSlider">
 	@foreach($imagesViajes as $slider)
 		<div class="containImg">
@@ -314,10 +314,10 @@
 		</div>
 	</div>
 </div>
--->
+
 
 <!-- conoce Colombia -->
-<!--
+
 <div id="conoceViajes">
 	<div class="containImg">
 		<img src="/images/viajesConoce.jpg" class="img-fluid">
@@ -332,10 +332,10 @@
 		</div>
 	</div>
 </div>	
--->
+
 <!-- Bustour -->
 
-<!--
+
 
 <div id="bustour" class="w-100">
 	<div class="row">
@@ -387,10 +387,10 @@
 
 	</div>
 </div>
--->
+
 
 <!--Plans-->
-<!--
+
 <div id="plans">
 	<div class="row">
 		<div class="plansTitle">
@@ -406,7 +406,7 @@
 			<div class="col-sm-12 col-md-12 col-lg-3">
 			<section>
 				<div class="imgPLan">
-					<img src="images/<?php //echo $plan['img']; ?>" class="img-fluid">
+					<img src="images/<?php echo $plan['img']; ?>" class="img-fluid">
 				</div>
 				<div class="plansdate">
 					
@@ -445,7 +445,7 @@
 -->
 <!--Travel Offers-->
 
-<!--
+
 
 <div id="travelOffers">
 	<div class="row">
@@ -525,10 +525,10 @@
 	</div>
 </div>
 
--->
+
 
 <!-- Want to Travel -->
-<!--
+
 <div id="wantToTravel">
 	<div class="containImg">
 		<img src="{{asset('images/viajes-quieroViajar.jpg')}}" class="img-fluid">
@@ -550,6 +550,6 @@
 		</div>
 	</div>
 </div>	
--->
+
 	
 @endsection

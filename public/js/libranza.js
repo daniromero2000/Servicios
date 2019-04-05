@@ -137,7 +137,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			method:'GET',
 			url:'/api/getPagadurias/'+$scope.libranza.customerType
 		}).then(function successCallback(response){
-			console.log(typeof $scope.libranza.customerType);
+			
 			angular.forEach(response.data, function(value, key) {
 				$scope.pagaduriaLibranza.push(value);
 			});

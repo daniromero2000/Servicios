@@ -126,7 +126,9 @@ angular.module('appLibranzaStep3', ['moment-picker', 'ng-currency'])
 		  method: 'GET',
 		  url: '/creditoLibranza/getDataStep3/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
+
 			hideLoader();
+			console.log(response);
 			$scope.ced=$scope.leadInfo.identificationNumber;
 			$scope.banks = response.data.banks;
 			$scope.analyst = response.data.digitalAnalyst;
