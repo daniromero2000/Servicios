@@ -6,7 +6,7 @@
     **Description: union with warranty route
     **Date: 05/03/2019
      **/
-var app =  angular.module('WarrantyApp',['ngRoute']);
+var app =  angular.module('WarrantyApp',['ngRoute','moment-picker']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

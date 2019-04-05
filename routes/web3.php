@@ -57,4 +57,6 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     Route::get('/getCodeVerification/{identificationNumber}/{celNumber}', 'Admin\WarrantyController@getCodeVerificationOportudata');
     //Confirm a code verification
     Route::get('/verificationCode/{code}/{identificationNumber}', 'Admin\WarrantyController@verificationCode');
+    // get the list of the bought products by the client in the last four years
+    Route::post('/products', 'Admin\WarrantyController@products');
 });
