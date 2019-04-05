@@ -15,7 +15,7 @@ class AlterLeadsInfoIdLeadUnique extends Migration
     {
         Schema::table('leads_info',function(Blueprint $table){
 
-            $table->integer('idLead')->unsigned()->unique()->change();
+            $table->integer('idLead')->unsigned()->change();
             $table->string('gender')->nullable()->change();
             $table->date('dateDocumentExpedition')->nullable()->change();
             $table->string('cityExpedition')->nullable()->change();

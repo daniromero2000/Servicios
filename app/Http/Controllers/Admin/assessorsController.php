@@ -81,19 +81,19 @@ class assessorsController extends Controller
         ];
         $digitalAnalyst = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
         //return $cities;
-        return view('assessors.oportuya.step1', ['digitalAnalyst' => $digitalAnalyst[0], 'cities' => array_sort($cities, 'label', SORT_DESC)]);
+        return view('oportuya.step1', ['digitalAnalyst' => $digitalAnalyst[0], 'cities' => array_sort($cities, 'label', SORT_DESC)]);
     }
 
     public function step2($string){
         $identificactionNumber = $this->decrypt($string);
 
-        return view('assessors.oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
+        return view('oportuya.step2', ['identificactionNumber' => $identificactionNumber]);
     }
 
     public function step3($string){
         $identificactionNumber = $this->decrypt($string);
 
-        return view('assessors.oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
+        return view('oportuya.step3', ['identificactionNumber' => $identificactionNumber]);
     }
 
     public function encrypt($string) {

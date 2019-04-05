@@ -548,6 +548,8 @@ class LibranzaV2Controller extends Controller
 		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
 
 		$resp = DB::connection('oportudata')->select($query);
+		$verbose='localhost:8000';
+		$getCode =$verbose.'/api/oportudata/getCodeVerification/';
 
 		return $resp;
 	}
@@ -659,9 +661,10 @@ class LibranzaV2Controller extends Controller
 
 
 	public function getDataStep3($identificationNumber){
-
+		$identificationNumber=$this->decrypt($identificationNumber);
 		$idLeadQuery=DB::select('SELECT `id`,`occupation` FROM `leads` WHERE `identificationNumber`= :identificationNumber',['identificationNumber'=>$identificationNumber]);
 		$idLead = $idLeadQuery[0]->id;
+		return $idLead;
 		$idLead_info = DB::select('SELECT `id` FROM `leads_info` WHERE `idLead`=:idlead',['idlead'=>$idLead]);
 		$idLead_info= $idLead_info[0]->id;
 

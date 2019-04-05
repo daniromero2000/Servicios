@@ -14,7 +14,7 @@ class AddDisponibilityCommentLeadsInfo extends Migration
     public function up()
     {
         Schema::table('leads_info', function (Blueprint $table) {
-            $table->string('availability')->nullable();
+            //$table->string('availability')->nullable();
             $table->string('comment')->nullable();
         });
     }

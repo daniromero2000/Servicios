@@ -155,6 +155,7 @@ class CampaignController extends Controller
     {
 
         $campaign=Campaigns::findOrfail($request->get('id'));
+        
         $campaign->name = $request->get('name');
         $campaign->socialNetwork = $request->get('socialNetwork');
         $campaign->description = $request->get('description');

@@ -18,7 +18,7 @@ app.controller('modulesController', function($scope, $http, $rootScope){
          
 		$http({
 		  method: 'GET',
-		  url: '/modules'
+		  url: 'Administrator/modules'
 		}).then(function successCallback(response) {
 			if(response != false){
 				angular.forEach(response.data, function(value) {
