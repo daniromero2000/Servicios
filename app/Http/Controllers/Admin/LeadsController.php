@@ -28,13 +28,28 @@ class LeadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+        $getLeadsDigital = $this->getLeadsCanalDigital($request);
+        $leadsDigital = $getLeadsDigital['leadsDigital'];
+        $totalLeadsDigital = $getLeadsDigital['totalLeads'];
+
+        $getLeadsCM = $this->getLeadsCM($request);
+        $leadsCM = $getLeadsCM['leadsCM'];
+        $totalLeadsCM = $getLeadsCM['totalLeadsCM'];
+        
+        $getLeadsRejected = $this->getLeadsRejected($request);
+        $leadsRejected = $getLeadsRejected['leadsRejected'];
+
+        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected]);
+    }
+
+    private function getLeadsCanalDigital(Request $request){
         $leadsDigital = [];
         $totalLeadsDigital = 0;
-        $totalLeadsCM = 0;
-        
-        $query = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
-        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
-        WHERE sb.`CLIENTE` = cf.`CEDULA` AND sb.`SOLICITUD_WEB` = '1' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND tar.`CLIENTE` = cf.`CEDULA`";
+
+        $query = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
+        WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` ) 
+        AND sb.`SOLICITUD_WEB` = '1' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 ";
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
@@ -51,7 +66,9 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
-            $queryChannel = sprintf("SELECT `channel`, `id`, `state` FROM `leads` WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
+            $queryChannel = sprintf("SELECT `channel`, `id`, `state` 
+            FROM `leads` 
+            WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
             $respChannel = DB::select($queryChannel);
             if($lead->ASESOR_DIG != ''){
                 $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
@@ -64,6 +81,12 @@ class LeadsController extends Controller
             $leadsDigital[] = $resp[$key];
         }
 
+        return ['leadsDigital' => $leadsDigital, 'totalLeads' => $totalLeadsDigital];
+    }
+
+    private function getLeadsCM(Request $request){
+        $totalLeadsCM = 0;
+        
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign 
@@ -78,7 +101,33 @@ class LeadsController extends Controller
         $queryCM .= sprintf(" LIMIT %s,30", $request->get('initFromCM'));
         $respCM = DB::select($queryCM);
 
-        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $respCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM]);
+        return ['leadsCM' => $respCM, 'totalLeadsCM' => $totalLeadsCM];
+    }
+
+    private function getLeadsRejected(Request $request){
+        $queryLeads1 = "SELECT `NOMBRES`, `APELLIDOS`, `CELULAR`,`CON3`, `CIUD_UBI`, `CEDULA`, `CREACION`  
+        FROM `CLIENTE_FAB` 
+        WHERE `SUBTIPO` = 'WEB' AND (`CON3` = 'NEGADO' OR `CON3` = 'RECHAZADO')";
+        if($request->q != ''){
+            $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request->q.'%', '%'.$request->q.'%');
+        }
+        $queryLeads1 .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
+
+        $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`  
+        FROM `CLIENTE_FAB` as cf, SOLIC_FAB as sb
+        WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`CON3` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO'";
+
+        if($request->q != ''){
+            $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request->q.'%', '%'.$request->q.'%');
+        }
+
+        $queryLeads2 .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
+
+        $query = $queryLeads1." UNION ".$queryLeads2;
+
+        $resp = DB::connection('oportudata')->select($query);
+
+        return ['leadsRejected' => $resp];
     }
 
     public function assignAssesorDigitalToLead($solicitud){
