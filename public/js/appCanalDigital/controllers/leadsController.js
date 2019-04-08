@@ -169,6 +169,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		$scope.q.initFromCM = 0;
 		$scope.leads = [];
 		$scope.leadsCM = [];
+		$scope.leadsRejected = [];
 		$scope.getLeads();
 	};
 
