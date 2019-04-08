@@ -143,7 +143,7 @@
                     <table class="table table-hover leadTable">
                         <thead class="headTableLeads">
                             <tr>
-                                <th scope="col">Cedula</th>
+                                <th scope="col">Cédula</th>
                                 <th scope="col">Nombre / Score</th>
                                 <th scope="col">Celular</th>
                                 <th scope="col">Fecha</th>
@@ -169,11 +169,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <button class="btn btn-secondary" ng-disabled="cargandoRL" ng-click="getLeads()">Cargar Más</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
