@@ -28,21 +28,21 @@ class LeadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $getLeadsDigital = $this->getLeadsCanalDigital($request);
+        $getLeadsDigital = $this->getLeadsCanalDigital(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
         $leadsDigital = $getLeadsDigital['leadsDigital'];
         $totalLeadsDigital = $getLeadsDigital['totalLeads'];
 
-        $getLeadsCM = $this->getLeadsCM($request);
+        $getLeadsCM = $this->getLeadsCM(['qCM' => $request->get('qCM'), 'initFromCM' => $request->get('initFromCM')]);
         $leadsCM = $getLeadsCM['leadsCM'];
         $totalLeadsCM = $getLeadsCM['totalLeadsCM'];
         
-        $getLeadsRejected = $this->getLeadsRejected($request);
+        $getLeadsRejected = $this->getLeadsRejected(['qRL' => $request->get('qRL'), 'initFromRL' => $request->get('initFromRL')]);
         $leadsRejected = $getLeadsRejected['leadsRejected'];
 
         return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected]);
     }
 
-    private function getLeadsCanalDigital(Request $request){
+    private function getLeadsCanalDigital($request){
         $leadsDigital = [];
         $totalLeadsDigital = 0;
 
@@ -55,13 +55,13 @@ class LeadsController extends Controller
 
         $totalLeadsDigital = count($respTotalLeads);
 
-        if($request->q != ''){
-            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%'.$request->q.'%', '%'.$request->q.'%', '%'.$request->q.'%');
+        if($request['q'] != ''){
+            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%'.$request['q'].'%', '%'.$request['q'].'%', '%'.$request['q'].'%');
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
 
-        $query .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
+        $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp = DB::connection('oportudata')->select($query);
 
@@ -84,7 +84,7 @@ class LeadsController extends Controller
         return ['leadsDigital' => $leadsDigital, 'totalLeads' => $totalLeadsDigital];
     }
 
-    private function getLeadsCM(Request $request){
+    private function getLeadsCM($request){
         $totalLeadsCM = 0;
         
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName
@@ -93,38 +93,35 @@ class LeadsController extends Controller
         WHERE (`channel` = 2 OR `channel` = 3)";
         $respTotalLeadsCM = DB::select($queryCM);
         $totalLeadsCM = count($respTotalLeadsCM);
-        if($request->qCM !=''){
-            $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request->qCM.'%', '%'.$request->qCM.'%', '%'.$request->qCM.'%');
+        if($request['qCM'] !=''){
+            $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request['qCM'].'%', '%'.$request['qCM'].'%', '%'.$request->qCM.'%');
         }
 
         $queryCM .= "ORDER BY `created_at` DESC ";
-        $queryCM .= sprintf(" LIMIT %s,30", $request->get('initFromCM'));
+        $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
         $respCM = DB::select($queryCM);
 
         return ['leadsCM' => $respCM, 'totalLeadsCM' => $totalLeadsCM];
     }
 
-    private function getLeadsRejected(Request $request){
-        $queryLeads1 = "SELECT `NOMBRES`, `APELLIDOS`, `CELULAR`,`CON3`, `CIUD_UBI`, `CEDULA`, `CREACION`  
-        FROM `CLIENTE_FAB` 
-        WHERE `SUBTIPO` = 'WEB' AND (`CON3` = 'NEGADO' OR `CON3` = 'RECHAZADO')";
-        if($request->q != ''){
-            $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request->q.'%', '%'.$request->q.'%');
-        }
-        $queryLeads1 .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
-
-        $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`  
-        FROM `CLIENTE_FAB` as cf, SOLIC_FAB as sb
-        WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`CON3` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO'";
-
-        if($request->q != ''){
-            $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request->q.'%', '%'.$request->q.'%');
+    private function getLeadsRejected($request){
+        $queryLeads1 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, score.`score`  
+        FROM `CLIENTE_FAB` as cf, `cifin_score` as score
+        WHERE `SUBTIPO` = 'WEB' AND (`CON3` = 'NEGADO' OR `CON3` = 'RECHAZADO') AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+        if($request['qRL'] != ''){
+            $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $queryLeads2 .= sprintf(" LIMIT %s,30", $request->get('initFrom'));
+        $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, score.`score`
+        FROM `CLIENTE_FAB` as cf, SOLIC_FAB as sb, `cifin_score` as score
+        WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`CON3` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO' AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+
+        if($request['qRL'] != ''){
+            $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
+        }
 
         $query = $queryLeads1." UNION ".$queryLeads2;
-
+        
         $resp = DB::connection('oportudata')->select($query);
 
         return ['leadsRejected' => $resp];

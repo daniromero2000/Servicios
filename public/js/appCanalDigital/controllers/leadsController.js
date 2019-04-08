@@ -3,8 +3,10 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.q = {
 		'q': '',
 		'qCM': '',
+		'qRL' : '',
 		'initFrom': 0,
 		'initFromCM': 0,
+		'initFromRL': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
@@ -17,6 +19,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.totalLeadsCM = 0;
 	$scope.cargando = true;
 	$scope.cargandoCM = true;
+	$scope.cargandoRL = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.lead = {};
@@ -29,6 +32,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.comments = [];
 	$scope.leads = [];
 	$scope.leadsCM = [];
+	$scope.leadsRejected = [];
 	$scope.cities = [
 		{ label : 'ARMENIA',value: 'ARMENIA' },
 		{ label : 'MANIZALES',value: 'MANIZALES' },
@@ -126,9 +130,10 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		showLoader();
 		$scope.cargando = true;
 		$scope.cargandoCM = true;
+		$scope.cargandoRL = true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
+		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
 			$scope.totalLeads = response.data.totalLeads;
 			$scope.totalLeadsCM = response.data.totalLeadsCM;
@@ -145,6 +150,13 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 					$scope.leadsCM.push(value);
 				});
 				$scope.cargandoCM = false;
+			}
+			if(response.data.leadsRejected != false){
+				$scope.q.initFromRL += response.data.leadsRejected.length;
+				angular.forEach(response.data.leadsRejected, function(value, key) {
+					$scope.leadsRejected.push(value);
+				});
+				$scope.cargandoRL = false;
 			}
 			hideLoader();
 		}, function errorCallback(response) {
