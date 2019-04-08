@@ -137,6 +137,16 @@
         </div>
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
+        <div class="row">
+            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.qRL" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row resetRow">
             <div class="col-12 resetCol">
                 <div class="table table-responsive">
