@@ -1195,6 +1195,7 @@ class OportuyaV2Controller extends Controller
 			if($respScoreClient >= 686){
 				return true;
 			}else{
+				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				return false;
 			}
 		}
