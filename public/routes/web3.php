@@ -47,6 +47,7 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     Route::get('/Query', function(){
         return view('warranty.public.query');
     });
+    //render terms and conditions view 
     Route::get('/TermsConditions', function(){
         return view('warranty.public.termsAndConditions');
     })->name('TermsAndConditions');

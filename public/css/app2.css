@@ -1451,8 +1451,8 @@ label {
 	**/
 	.successfulText{
 		position: absolute;
-		width: 60%;
-		font-size: 15px;
+		width: 2vw;
+		font-size: 3.1vw;
 		font-family: barlow;
 		font-weight: bold;
 		left: 35%;

@@ -40,7 +40,27 @@ class WarrantyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+        $products = DB::connection('oportudata')->table('SOLIC_FAB')
+                                                ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
+                                                ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
+                                                ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
+                                                ->join('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
+                                                ->where('CLIENTE','=',20498736)
+                                                ->where(function($q){
+                                                    $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
+                                                    ->orWhere('FEC_AUR','=','1900-01-01');
+                                                })
+                                                ->get();
 
+            $stores = DB::connection('oportudata')->table('SUCURSALES_GAR')
+                                                ->select('CODIGO','NOMBRE','DOMICILIO','CIUDAD','SUCURSALES_GAR.DEPARTAMENTO_ID','name')
+                                                ->join('departamentos', 'SUCURSALES_GAR.DEPARTAMENTO_ID', '=', 'departamentos.departamento_id')
+                                                ->orderBy('departamentos.departamento_id')
+                                                ->orderBy('CIUDAD')
+                                                ->get();
+            // group a stores by departamento and city
+            
+        dd($stores);                                        
     }
     
     /**
@@ -136,8 +156,8 @@ class WarrantyController extends Controller
         // set a values 
         $warrantyClient->TIPO_DOC = $request->idType;
         $warrantyClient->CEDULA = $request->identificationNumber;
-        $warrantyClient->APELLIDOS = $request->clientLastNames;
-        $warrantyClient->NOMBRES = $request->clientNames;
+        $warrantyClient->APELLIDOS = $request->lastNames;
+        $warrantyClient->NOMBRES = $request->names;
         $warrantyClient->DIRECCION = $request->address;
         $warrantyClient->EMAIL = $request->email;
         $warrantyClient->save();
@@ -145,7 +165,7 @@ class WarrantyController extends Controller
         $warrantyRequest = new GARANTIA;
 
         $warrantyRequest->CEDULA = $request->identificationNumber;
-        $warrantyRequest->NOM_CLIENT = $request->clientNames." ".$request->clientLastNames;
+        $warrantyRequest->NOM_CLIENT = $request->names." ".$request->lastNames;
         
         if ($request->meansSale['id'] == 5){
             //if a client shop a product in a physical store
@@ -198,7 +218,7 @@ class WarrantyController extends Controller
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
             //  if save is construct a email data
-            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->clientNames,'clientLastNames' => $request->clientLastNames,'userName' => $request->userName];
+            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName];
             //send a mail for alert that have a new warranty request 
             Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
@@ -313,7 +333,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'Tu codogo de verificacion para el servicio de garantias es '.$code." el cual tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2JluEUv - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code."tiene una de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
@@ -384,6 +404,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
                                                     ->orWhere('FEC_AUR','=','1900-01-01');
                                                 })
                                                 ->get();
+        
         if(count($products)==0){
             // if don't find products 
             return 'no records';

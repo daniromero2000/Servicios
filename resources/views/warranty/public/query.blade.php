@@ -1,13 +1,13 @@
 <div Class="contentGarantias">
     <div class="align-self-center ml-auto ">
-        <a href="{{ route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y condiciones</a>
+        <a href="{{ route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y Condiciones</a>
     </div>
     <div class="row resetRow">
         <div class="logoHeaderWarranty">
             <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" />
         </div>
         <div class="align-self-center ml-auto conditions">
-            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal">Términos y condiciones</a>
+            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal">Términos y Condiciones</a>
         </div>
         <div class="col-12 conatiner-imgAnalista">
             <img src="{{ asset('images/analistaGarantiaDigital.png') }}"  alt="" class="img-fluid imgAnalista" />
@@ -109,7 +109,7 @@
             <div class="row resetRow">
                 <div class="col-12 form-group">
                     <label for="fault">Descripción de la falla *</label>
-                    <textarea id="fault" rows="3" class="form-control warrantyInputs inputSelect" ng-model="$parent.WarrantyRequest.faultDescription" required></textarea>               
+                    <textarea id="fault" rows="3" class="form-control warrantyInputs inputSelect" ng-model="$parent.WarrantyRequest.faultDescription" placeholder="Señor usuario explique detalladamente  la falla del producto y/o su inconformidad" required></textarea>               
                 </div>               
             </div>
             <div class="row justify-content-center resetRow">
@@ -160,10 +160,10 @@
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="reference"> Referencia*</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.reference" id="reference" required="" placeholder="Puedes proporcionar una aproximación"/>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.reference" id="reference" required="" placeholder="la referencia la puedes encontrar en la factura y/o en las etiquetas que tiene adheridas el producto"/>
                 </div>
                 <div class="col-sm-12 col-md-6 form-group">
-                    <label for="dateDocumentExpedition">Fecha de compra *</label>
+                    <label for="dateDocumentExpedition">Fecha de compra (puedes digitar una aproximación)*</label>
                     <div class="input-group"
                             moment-picker="WarrantyRequest.dateShop"
                             format="YYYY-MM-DD"
@@ -179,7 +179,7 @@
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
                     <label for="invoiceNumber">Numero de factura (opcional)</label>
-                    <input class="form-control warrantyInputs inputSelect" type="number" max="99999999" min="0" ng-model="$parent.WarrantyRequest.invoiceNumber" id="invoiceNumber">                        
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="$parent.WarrantyRequest.invoiceNumber" id="invoiceNumber">                        
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="meansSale">Medio de compra*</label>
@@ -276,7 +276,7 @@
             </div>
 
             <div class="row resetRow" >
-                <div class="col-5 form-group">
+                <div class="col-12 col-sm-9 col-md-6 form-group">
                         <label for="phone">Teléfono fijo</label>
                         <input class="form-control warrantyInputs inputSelect" type="text" ng-model="$parent.WarrantyRequest.phone" id="phone" validation-pattern="telephone">  
                 </div>             

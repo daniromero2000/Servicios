@@ -16,19 +16,7 @@
                 <a href="{{ url()->previous() }}"> <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" /> </a>
             </div>
          </div>
-        <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES GARANTÍA SUPLEMENTARIA</h1>
-        <div class="container">
-            <p class="menuItem-text" align="justify">
-                El artículo 13 de la ley 1480 del 2011  denomina la “Garantía Suplementaria como la ampliación
-                del término legal de la garantía o el mejoramiento de esta, la garantía suplementaria puede otorgarse
-                de manera gratuita o de manera onerosa, el consumidor debe pagar un porcentaje adicional al precio
-                de la cosa adquirida y además es necesario que este acepte de manera expresa pagar el costo” 
-                Señor usuario este servicio lo presta la aseguradora siempre y cuando usted hay adquirido la
-                garantía suplementaria, por favor verifique sus facturas, para mayor información se puede comunicar
-                a los números: 01 8000 117 787 o (6) 33 91 946 en Pereira.
-            </p>
-        </div>
-        <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES GARANTÍA LEGAL</h1>
+         <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES GARANTÍA LEGAL</h1>
         <div class="container">
             <p class="menuItem-text" align="justify">
                 El artículo 7 de la ley 1480 del 2011 indica que la “garantía legal es una obligación que tiene todo
@@ -38,7 +26,19 @@
                 obligatorio cumplimiento, será el enunciado por el productor  y/o proveedor”. Señor usuario este servicio
                 lo presta el fabricante siempre y cuando este dentro del término vigente de la garantía legal, verifique
                 su manual de funciones y/o factura, para mayor información se puede comunicar
-                a los números: 01 8000 117 787 o (6) 33 91 946 en Pereira.
+                a los números: 01 8000 117 787 o (6) 33 58 557 en Pereira.
+            </p>
+        </div>
+        <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES GARANTÍA SUPLEMENTARIA</h1>
+        <div class="container">
+            <p class="menuItem-text" align="justify">
+                El artículo 13 de la ley 1480 del 2011  denomina la “Garantía Suplementaria como la ampliación
+                del término legal de la garantía o el mejoramiento de esta, la garantía suplementaria puede otorgarse
+                de manera gratuita o de manera onerosa, el consumidor debe pagar un porcentaje adicional al precio
+                de la cosa adquirida y además es necesario que este acepte de manera expresa pagar el costo” 
+                Señor usuario este servicio lo presta la aseguradora siempre y cuando usted haya adquirido la
+                garantía suplementaria, por favor verifique sus facturas, para mayor información se puede comunicar
+                a los números: 01 8000 117 787 o (6) 33 58 557 en Pereira.
             </p>
         </div>
     </div>
