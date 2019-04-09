@@ -132,6 +132,9 @@ class OportuyaV2Controller extends Controller
 			$leadInfo= new LeadInfo;
 			$response = false;
 			$authAssessor= (Auth::guard('assessor')->check())?Auth::guard('assessor')->user()->CODIGO:NULL;
+			if(Auth::user()){
+				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+			}
 			$assessorCode=($authAssessor !== NULL)?$authAssessor:998877;
 			$dataLead=[
 				'typeDocument'=> $request->get('typeDocument'),
@@ -1220,7 +1223,7 @@ class OportuyaV2Controller extends Controller
 						LEFT JOIN `exp_actividad` as expActi ON cf.`ACTIVIDAD` = expActi.`consec`
 						WHERE `CEDULA` = %s ", $identificationNumber);
 
-		$respLead = DB::connection('oportudata')->select($query);
+		/*$respLead = DB::connection('oportudata')->select($query);
 		$obj = new \stdClass();
 		$lead = $respLead[0];
 		$obj->typeDocument = $lead->typeDocument; // Tipo de documento
@@ -1242,9 +1245,9 @@ class OportuyaV2Controller extends Controller
 		$obj->rateInterest = "1"; // Tasa de interes , FIJO
 		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
 		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA
+		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA */
 
-		/*$obj = new \stdClass();
+		$obj = new \stdClass();
 
 		$obj->typeDocument = 1; // Tipo de documento
 		$obj->identificationNumber = "43185409"; // Numero de identificacion
@@ -1265,7 +1268,7 @@ class OportuyaV2Controller extends Controller
 		$obj->rateInterest = "1"; // Tasa de interes , FIJO
 		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
 		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA*/
+		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA
 
 		$ws = new \SoapClient("http://10.238.14.181:3000/Experto.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarExperto($obj);  // correcta

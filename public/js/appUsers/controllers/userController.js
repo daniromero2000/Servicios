@@ -10,6 +10,10 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.user = {};
+	$scope.viewCodeAsesorOportudata = false;
+	$scope.viewCodeAsesorOportudataInput = false;
+	$scope.viewCodeAsesorOportudataUpd = false;
+	$scope.userUpd = {};
 	$scope.errorFlag=0;
 	$scope.successFlag=0;
 	$scope.error='';
@@ -114,32 +118,40 @@ app.controller('userController', function($scope, $http, $rootScope){
 	];
 
 	$scope.selectedCode = function(assessorObject){
-		
 		$scope.assessor.code=assessorObject.originalObject.CODIGO;
-	}
+	};
+
+	$scope.selectedCodeOportudata = function(assessorObject){
+		$scope.user.codeOportudata=assessorObject.originalObject.CODIGO;
+	};
+
+	$scope.selectedCodeOportudataUpd = function(assessorObject){
+		$scope.userUpd.codeOportudata=assessorObject.originalObject.CODIGO;
+	};
 
 	$scope.getUsers = function(){
+		$scope.viewCodeAsesorOportudataUpd = false;
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
-		  url: '/users?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&profileUser='+$scope.q.profileUser+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin,
+		  url: '/users?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom,
 		}).then(function successCallback(response) {
-			if(response.data[0] != false){
-				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data[0], function(value, key) {					
+			if(response.data['users'] != false){
+				$scope.q.initFrom += response.data['users'].length;
+				angular.forEach(response.data['users'], function(value, key) {					
 					$scope.users.push(value);
 				});
 				$scope.cargando = false;
 			}
 
-			if(response.data[1] != false){
-				angular.forEach(response.data[1], function(value, key) {					
+			if(response.data['profiles'] != false){
+				angular.forEach(response.data['profiles'], function(value, key) {					
 					$scope.profiles.push(value);
 				});	
 			}
 
-			if(response.data[2] != false){
-				angular.forEach(response.data[2], function(value, key) {					
+			if(response.data['assesors'] != false){
+				angular.forEach(response.data['assesors'], function(value, key) {					
 					$scope.assessors.push(value);
 				});	
 			}	
@@ -175,6 +187,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 		  url: '/users',
 		  data:$scope.user
 		}).then(function successCallback(response) {
+			$scope.viewCodeAsesorOportudata = false;
 			if(response.data != false){
 				$scope.searchUsers();
 				$("#addUser").modal("hide");
@@ -185,15 +198,11 @@ app.controller('userController', function($scope, $http, $rootScope){
 	};
 
 	$scope.addUserForm = function(){
-		
 		$("#addUser").modal("show");
-	
 	};
 
 	$scope.addAssessorForm = function(){
-		
 		$("#assessorAddProfile").modal("show");
-	
 	};
 
 	$scope.addAssessorProfile = function(){
@@ -225,22 +234,29 @@ app.controller('userController', function($scope, $http, $rootScope){
 	}
 
 	$scope.updateUser = function(){
+		showLoader();
 		$http({
 			method:'PUT',
-			url:'users/'+$scope.idUser,
-			data:$scope.user,
+			url:'/users/'+$scope.idUser,
+			data:$scope.userUpd,
 		}).then(function successCallback(response){
+			$scope.viewCodeAsesorOportudataInput = false;
 			if(response.data != false){
 				$scope.searchUsers();
 				$('#updateUser').modal('hide');
 			}
+			hideLoader();
 		},function errorCallback(response){
-			
+			hideLoader();
 		});
 	}
 
-	$scope.updateUserForm=function(idUser){
-		$scope.idUser=idUser;
+	$scope.updateUserForm=function(user){
+		if(user.codeOportudata != null){
+			$scope.viewCodeAsesorOportudataInput = true;
+		}
+		$scope.userUpd = angular.extend({}, user);
+		$scope.idUser=user.id;
 		$('#updateUser').modal('show');
 	}
 
@@ -250,8 +266,6 @@ app.controller('userController', function($scope, $http, $rootScope){
 		
 	}
 	
-
-
 	$scope.deleteUser=function(){
 		$http({
 		  method: 'DELETE',
