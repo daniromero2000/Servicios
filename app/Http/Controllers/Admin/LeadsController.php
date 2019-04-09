@@ -94,7 +94,7 @@ class LeadsController extends Controller
         $respTotalLeadsCM = DB::select($queryCM);
         $totalLeadsCM = count($respTotalLeadsCM);
         if($request['qCM'] !=''){
-            $queryCM .= sprintf(" AND (`name` LIKE '%s' OR `lastName` LIKE '%s' OR `identificationNumber` LIKE '%s' )", '%'.$request['qCM'].'%', '%'.$request['qCM'].'%', '%'.$request->qCM.'%');
+            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' )", '%'.$request['qCM'].'%', '%'.$request['qCM'].'%', '%'.$request['qCM'].'%');
         }
 
         $queryCM .= "ORDER BY `created_at` DESC ";
@@ -120,7 +120,7 @@ class LeadsController extends Controller
             $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $query = $queryLeads1." UNION ".$queryLeads2;
+        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY score DESC ";
         
         $resp = DB::connection('oportudata')->select($query);
 
