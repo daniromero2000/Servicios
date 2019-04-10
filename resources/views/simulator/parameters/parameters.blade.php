@@ -35,8 +35,18 @@
                         <td><input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].gap"></td>
                     </tr>
                     <tr>
-                        <td>SEGURO</td>
+                        <td>SEGURO
+                            <br>
+                            (18 - 70 años)
+                        </td>
                         <td><input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].assurance"></td>
+                    </tr>
+                    <tr>
+                        <td>SEGURO
+                        <br>
+                            (71 - 89 años)
+                        </td>
+                        <td><input class="form-control text-center" type="" value="@{{ params[0].rate}}" ng-model="params[0].assurance2"></td>
                     </tr>
                 </tbody>
             </table>

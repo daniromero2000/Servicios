@@ -1,4 +1,4 @@
-var app =  angular.module('simulatorApp',['ngRoute', 'moment-picker','nya.bootstrap.select','ngMaterial']);
+var app =  angular.module('simulatorApp',['ngRoute', 'moment-picker','multipleSelect','ngMaterial']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

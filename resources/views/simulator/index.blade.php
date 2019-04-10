@@ -9,7 +9,7 @@
             <div class="col-12 col-sm-4 text-center">
                 <a href="#!/">
                     <img src="{{ asset('images/parametersIcon.png') }}" alt="" class="img-fluid">
-                    <p>PARÁMETROS</p>
+                    <p>PARÁMETR OS</p>
                 </a>
             </div>
             <div class="col-12 col-sm-4 text-center">
@@ -43,6 +43,9 @@
     <script src="{{ asset('js/appSimulator/services/myService.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/simulatorController.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/pagaduriaController.js') }}"></script>
+    <script src="{{ asset('js/appSimulator/controllers/pagaduriaController.js') }}"></script>
+    <script src="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.js')}}"></script>
+    <link href="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.css')}}" rel="stylesheet">
 @stop
 @section('scriptsJs')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
