@@ -197,7 +197,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+               <h4 class="modal-title" id="myModalLabel">Agregar Pagaduría</h4>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
            </div>
            <div class="modal-body">
@@ -243,14 +243,20 @@
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>
                                     <div class="col-md-6">
-                                        <ol class="nya-bs-select" allow-clear="true" live-search="true" ng-model="libProf" title="Select…" >
+                                        <!--<ol class="nya-bs-select" allow-clear="true" live-search="true" ng-model="libProf" title="Select…" multiple>
                                             <li nya-bs-option="p in profiles" data-value="p.name" class="ng-scope nya-bs-option selected">
                                             <a>
                                                 @{{p.name}}
                                                 <i class="fa fa-check check-mark"></i>
                                             </a>
                                             </li>
-                                        </ol>
+                                        </ol>-->
+
+                                        <multiple-autocomplete ng-model="pagaduria.profiles"
+                                            suggestions-arr="profiles"
+                                            object-property="name"
+                                            >
+                                        </multiple-autocomplete>
                                     </div>                                    
                                 </div>
                                 

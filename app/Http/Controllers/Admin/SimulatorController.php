@@ -8,6 +8,7 @@ use App\Simulator;
 use App\TimeLimits;
 use App\Pagaduria;
 use App\LibranzaProfile;
+use App\PagaduriaProfile;
 
 class SimulatorController extends Controller
 {
@@ -139,7 +140,7 @@ class SimulatorController extends Controller
     public function getData(){
 
 
-        $params=Simulator::select('rate','gap','assurance')->get();
+        $params=Simulator::select('rate','gap','assurance','assurance2')->get();
         $timeLimits=TimeLimits::select('id','timeLimit')->get();
         $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active')->get();
         $libranzaProfiles=LibranzaProfile::select('id','name')->get();
@@ -165,7 +166,17 @@ class SimulatorController extends Controller
            $pagaduria->phoneNumber = $request->phoneNumber;
            $pagaduria->active = $request->active;
            $pagaduria->category = $request->category;
+           
            $pagaduria->save();
+
+           $i=0;
+           $idPagaduria= $pagaduria->id;
+            for($i; $i < count($request->profiles);$i++){
+                $profPag = new PagaduriaProfile;
+                $profPag->idProfile= $request->profiles[$i]['id'];
+                $profPag->idPagaduria= $idPagaduria;
+                $profPag->save();
+            }
 
            return response()->json(true);
 
