@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-
-    
     public function __construct()
     {
         $this->middleware('auth')->except('logout');
@@ -30,23 +27,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query="SELECT `profiles`.`id` AS profileID, `profiles`.`name` AS profileName, users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at` FROM users LEFT JOIN profiles ON `profiles`.`id`=`users`.`idProfile` WHERE 1";
-
+        $query="SELECT `profiles`.`id` AS profileID, `profiles`.`name` AS profileName, users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at`, users.`codeOportudata` FROM users LEFT JOIN profiles ON `profiles`.`id`=`users`.`idProfile` WHERE 1";
 
         if($request->get('q')){
             $query .= sprintf(" AND (users.`name` LIKE '%s' OR users.`email` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
-        }
-
-        if($request->get('profileUser')){
-            $query .= sprintf(" AND users.`idProfile` = '%s' ", $request->get('profileUser'));
-        }       
-
-        if($request->get('fecha_ini')){
-            $query .= sprintf(" AND users.`created_at` > '%s' ", $request->get('fecha_ini').' 00:00:00');
-        }
-
-        if($request->get('fecha_fin')){
-            $query .= sprintf(" AND users.`created_at` < '%s' ", $request->get('fecha_fin').' 23:59:59');
         }
 
         $query .= " ORDER BY users.`id` DESC ";
@@ -55,16 +39,13 @@ class UserController extends Controller
 
         $resp = DB::select($query);
 
-        $profiles=Profiles::selectRaw('id AS profileID, name AS profileName')->get();
+        $profiles = Profiles::selectRaw('id AS profileID, name AS profileName')->get();
 
         $assessors = DB::connection('oportudata')->table('ASESORES')->get();
         
-
-        return response()->json([$resp,$profiles,$assessors]);
+        return response()->json(['users' => $resp,'profiles' => $profiles,'assesors' => $assessors]);
  
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -88,6 +69,7 @@ class UserController extends Controller
         $user= new User;
 
         $user->name=$request->get('name');
+        $user->codeOportudata = $request->get('codeOportudata');
         $user->email=$request->get('email');
         $user->password=$request->get('password');
         $user->password=Hash::make($user->password);
@@ -168,6 +150,7 @@ class UserController extends Controller
         $user= User::findOrfail($id);
         $user->name= $request->name;
         $user->email= $request->email;
+        $user->codeOportudata = $request->get('codeOportudata');
         if ($request->get('idProfile') == "admin") {
                 $user->idProfile=1;
         }elseif($request->get('idProfile') == "digital"){
