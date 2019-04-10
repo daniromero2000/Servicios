@@ -40,9 +40,11 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
 
 Route::resource('simulator','Admin\SimulatorController');
 Route::get('simulador/getDataSimulador','Admin\SimulatorController@getData');
+Route::delete('/deletePagaduria/{idPagaduria}','Admin\SimulatorController@deletePagaduria');
 Route::post('/createPagaduria','Admin\SimulatorController@addPagaduria');
+Route::put('/updatePagaduria/{idPagaduria}','Admin\SimulatorController@updatePagaduria');
 
-Route::group(['prefix'=>'/simulador/'],function(){     
+/*Route::group(['prefix'=>'/simulador/'],function(){     
     Route::get('/','Admin\SimulatorController@index'); 
 
     Route::get('/pagaduria',function(){
@@ -52,5 +54,5 @@ Route::group(['prefix'=>'/simulador/'],function(){
         return view('simulator.parameters.parameters');
     });
    
-});
+});*/
 

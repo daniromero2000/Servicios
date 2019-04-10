@@ -95,7 +95,7 @@
                 <td>@{{ lead.timeLimit }}</td>
                 <td>
                     <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
-                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
+                  <!--  <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-check-double cursor"
                     ng-if="lead.state == 1 || lead.state == 2"
@@ -110,7 +110,7 @@
                     <i class="fas fa-times cursor" 
                     ng-if="lead.state == 1 || lead.state == 2"
                     ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 4, 'Negar Solicitud')" 
-                    title="Negar Solicitud"></i>
+                    title="Negar Solicitud"></i>-->
                 </td>
             </tr>
         </tbody>

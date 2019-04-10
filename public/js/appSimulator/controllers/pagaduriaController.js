@@ -31,6 +31,8 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 	$scope.profiles=[];
 	$scope.selectedLines=[];
 	$scope.idParam=1;
+	$scope.idPagaduria='';
+
 
 	$scope.getParams = function(){
 		$scope.pagadurias=[];
@@ -45,6 +47,8 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 			category:0,
 			profiles:[]
 		};
+
+		$scope.cities=[];
 
 		$scope.profile={
 			id:'',
@@ -64,17 +68,65 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 				});	
 				angular.forEach(response.data.libranzaProfiles, function(value, key) {
 					$scope.profiles.push(value);
-				});	
-				
-				console.log($scope.profiles);
+				});
+
+				angular.forEach(response.data.cities, function(value, key) {
+					$scope.cities.push(value);
+				});
 			}
 		}, function errorCallback(response) {
 			
 		});
 	};
 
+	$scope.viewPagaduria = function(pagaduria){
+			$scope.pagaduria = pagaduria;
+			$('#viewPagaduria').modal('show');
+	}
+
+	$scope.showDeleteModal=function(id){
+		$scope.idPagaduria=id;
+		$('#deleteModal').modal('show');
+	}
+
 	$scope.deletePagaduria=function(){
-		
+		showLoader();
+
+		$http({
+			method:'DELETE',
+			url:'/deletePagaduria/'+$scope.idPagaduria,
+		}).then(function successCallback(response){
+			hideLoader();
+			if(response.data != false){
+				$scope.getParams();
+				$('#deleteModal').modal('hide');
+			}
+		},function errorCallback(response){
+			hideLoader();
+		})
+
+	};
+
+	$scope.showUpdate=function(pagaduria){
+		$scope.pagaduria=pagaduria;
+		$scope.idPagaduria=$scope.pagaduria.id;
+		$('#updatePagaduria').modal('show');
+	};
+
+	$scope.updatePagaduria=function(){
+		$http({
+			method:'PUT',
+			url:'/updatePagaduria/'+$scope.idPagaduria,
+			data:$scope.pagaduria,
+		}).then(function successCallback(response){
+			hideLoader();
+			if(response.data != false){
+				$scope.getParams();
+				$('#updatePagaduria').modal('hide');
+			}
+		},function errorCallback(response){
+			console.log(response);
+		});
 	}
 
 	$scope.deleteTimeLimit=function(id){
@@ -112,7 +164,8 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 			hideLoader();
 			if(response.data != false){
 				
-				console.log(response);
+				$scope.getParams();
+				$('#addPagaduria').modal('hide');
 				
 			}
 		},function errorCallback(response){

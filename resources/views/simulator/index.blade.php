@@ -9,7 +9,7 @@
             <div class="col-12 col-sm-4 text-center">
                 <a href="#!/">
                     <img src="{{ asset('images/parametersIcon.png') }}" alt="" class="img-fluid">
-                    <p>PARÁMETR OS</p>
+                    <p>PARÁMETROS</p>
                 </a>
             </div>
             <div class="col-12 col-sm-4 text-center">

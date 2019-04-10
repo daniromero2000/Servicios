@@ -654,6 +654,16 @@ span.renewCode:hover {
 	display: block;
 }
 
+.labelViewLeadPagaduria{
+	margin: 0;
+	display: inline-block;
+	font-size: 12px;
+    line-height: 1em;
+    font-weight: bold;
+    color: #999;
+}
+
+
 .textViewLead{
 	font-weight: 700;
 }
@@ -1346,6 +1356,17 @@ label {
 	color: #167efa;
 }
 
+
+/*Pagaduria*/
+
+.multicomplete-pagaduria .ng-pristine .ng-ms ul,.multicomplete-pagaduria .ng-pristine .ng-ms ul li input{
+	width: 100%
+}
+
+.multicomplete-pagaduria .ng-pristine .ng-ms ul li{
+	width: 100%;
+	padding: 0;
+}
 
 @media(max-width: 991px){
 	.formularioSimulador-textPrincipal{
