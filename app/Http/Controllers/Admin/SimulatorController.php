@@ -9,13 +9,14 @@ use App\TimeLimits;
 use App\Pagaduria;
 use App\LibranzaProfile;
 use App\PagaduriaProfile;
+use App\CiudadesSoc;
 
 class SimulatorController extends Controller
 {
 
     public function __construct()
     {
-       // $this->middleware('auth')->except('logout');
+       $this->middleware('auth')->except('logout');
     }
     
     
@@ -142,13 +143,15 @@ class SimulatorController extends Controller
 
         $params=Simulator::select('rate','gap','assurance','assurance2')->get();
         $timeLimits=TimeLimits::select('id','timeLimit')->get();
-        $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active')->get();
+        $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active','phoneNumber')->get();
         $libranzaProfiles=LibranzaProfile::select('id','name')->get();
+        $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
 
         $data['params']=$params;
         $data['timeLimits']=$timeLimits;
         $data['pagadurias']=$pagadurias;
         $data['libranzaProfiles']=$libranzaProfiles;
+        $data['cities']=$cities;
 
         return response()->json($data);
     }
@@ -181,6 +184,45 @@ class SimulatorController extends Controller
            return response()->json(true);
 
        }
+       catch(\Exception $e) {
+           if ($e->getCode()=="23000"){
+               return response()->json($e->getCode());
+           }else{
+               return response()->json($e->getMessage());
+           }
+       }
+
+    }
+
+    public function deletePagaduria($id){
+        
+        $pagaduriasProfile = PagaduriaProfile::where('idPagaduria',$id)->delete();
+
+        $pagaduria = Pagaduria::findOrFail($id);
+        $pagaduria->delete();
+
+        return response()->json([true]);
+    }
+
+    public function updatePagaduria(Request $request,$id){
+      
+
+        try {
+            
+            $pagaduria = Pagaduria::findOrFail($id);
+            $pagaduria->name= $request->get('name');
+            $pagaduria->address= $request->get('address');
+            $pagaduria->city= $request->get('city');
+            $pagaduria->departament= $request->get('departament');
+            $pagaduria->office= $request->get('office');
+            $pagaduria->phoneNumber= $request->get('phoneNumber');
+
+            $pagaduria->save();
+
+           return response()->json(true);
+
+       }
+       // if resource already exist return error
        catch(\Exception $e) {
            if ($e->getCode()=="23000"){
                return response()->json($e->getCode());

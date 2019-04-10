@@ -190,12 +190,7 @@ Route::group(['prefix'=>'api/'],function(){
 
 /*Users routes*/
 
-Route::get("/libranzaLeads",function(){
-     if(Auth::guest()){
-            return view('auth.login');
-        }
-	return view('libranzaLeads.index');
-});
+
 
 Route::get("/fabricaLeads",function(){
      if(Auth::guest()){
@@ -204,12 +199,6 @@ Route::get("/fabricaLeads",function(){
 	return view('fabricaLeads.index');
 });
 
-Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
-
-    Route::get('/leads', function(){
-        return view('libranzaLeads.leads');
-    });
-});
 
 Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
 
@@ -321,6 +310,35 @@ Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
 
 // Administrator
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
+
+        Route::get("/libranzaLeads",function(){
+            if(Auth::guest()){
+                return view('auth.login');
+            }
+        return view('libranzaLeads.index');
+        });
+
+        Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
+
+            Route::get('/leads', function(){
+                return view('libranzaLeads.leads');
+            });
+        });
+        
+
+        Route::group(['prefix'=>'/simulador/'],function(){     
+        Route::get('/','Admin\SimulatorController@index'); 
+    
+        Route::get('/pagaduria',function(){
+            return view('simulator.pagaduria.pagaduria');
+        });
+        Route::get('/parametros', function(){
+            return view('simulator.parameters.parameters');
+        });
+       
+    });
+
+
     // Módulo Catálogo
     Route::group(['prefix' => '/Catalog'], function(){
         Route::get("/",function(){
