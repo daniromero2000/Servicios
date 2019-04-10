@@ -163,7 +163,7 @@ class LibranzaController extends Controller
         $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
         $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
         $libranza_profile=LibranzaProfile::select('id','name')->where('name','!=','OTRO')->orderBy('id','desc')->get();
-        $params=Simulator::select('rate','gap','assurance')->get();
+        $params=Simulator::select('rate','gap','assurance','assurance2')->get();
         $timeLimits=TimeLimits::select('timeLimit')->get();
         $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
 

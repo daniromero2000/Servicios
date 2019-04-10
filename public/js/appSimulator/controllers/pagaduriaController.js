@@ -29,6 +29,7 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 	$scope.libProf=[];
 	$scope.idPlazo='';
 	$scope.profiles=[];
+	$scope.selectedLines=[];
 	$scope.idParam=1;
 
 	$scope.getParams = function(){
@@ -42,14 +43,15 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 			phoneNumber:'',
 			active:1,
 			category:0,
+			profiles:[]
 		};
+
 		$scope.profile={
 			id:'',
 			name:''
 		}
 		$scope.idPlazo='';
 		$scope.profiles=[];
-		$scope.libProf=[];
 		$scope.cargando = true;
 		$http({
 		  method: 'GET',
@@ -64,12 +66,16 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 					$scope.profiles.push(value);
 				});	
 				
-				console.log(typeof $scope.profiles);
+				console.log($scope.profiles);
 			}
 		}, function errorCallback(response) {
 			
 		});
 	};
+
+	$scope.deletePagaduria=function(){
+		
+	}
 
 	$scope.deleteTimeLimit=function(id){
 		$scope.idPlazo=id;
@@ -105,10 +111,12 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response){
 			hideLoader();
 			if(response.data != false){
-				$scope.getParams();
-				$('#addPagaduria').modal('hide');
+				
+				console.log(response);
+				
 			}
 		},function errorCallback(response){
+			console.log(response);
 			hideLoader();
 
 		});

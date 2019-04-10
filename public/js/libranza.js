@@ -148,7 +148,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 	};
 
 	$scope.calculateData = function(){
-		$scope.libranza.lawDesc = $scope.libranza.salary * 0.12;
+		$scope.libranza.lawDesc = Math.round($scope.libranza.salary * 0.12);
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000 ;
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen+$scope.libranza.quotaBuy;
 		if($scope.libranza.age >= 18 && $scope.libranza.age < 80){
@@ -182,7 +182,12 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 					$scope.updateLiquidator();
 					var rate=$scope.params[0].rate;
 					var gap=$scope.params[0].gap;
-					var loanAssurance=($scope.params[0].assurance)/1000000;
+					var loanAssurance=0;
+					if($scope.libranza.age<=70 && $scope.libranza.age >=18){
+						loanAssurance=($scope.params[0].assurance)/1000000;
+					}else{
+						loanAssurance=($scope.params[0].assurance2)/1000000;
+					}
 					var gapTop=0.0;
 					var gapBottom=0.0;
 					var result=0;	
