@@ -5,6 +5,7 @@ angular.module('appStep1', [])
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
+	$scope.telephone = '';
 	$scope.code = {
 		'code' : ''
 	};
@@ -141,20 +142,24 @@ angular.module('appStep1', [])
 		}else if($scope.leadInfo.city == ''){
 			alert('Por favor selecciona una ciudad');
 		}else{
-			$('#confirmNumCel').modal('show');
+			$scope.getValidationLead();
 		}
 	};
 
 	$scope.getNumCel = function(){
+		$scope.leadInfo.CEL_VAL = 0;
+		$scope.leadInfo.telephone = '';
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/getNumLead/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
-			console.log(typeof response.data.resp);
 			if(typeof response.data.resp == 'number'){
 				
 			}else{
+				var num = response.data.resp[0].NUM.substring(0,6);
+				var telephone = response.data.resp[0].NUM.replace(num, "******");
 				$scope.leadInfo.CEL_VAL = response.data.resp[0].CEL_VAL;
+				$scope.telephone = telephone;
 				$scope.leadInfo.telephone = response.data.resp[0].NUM;
 			}
 		}, function errorCallback(response) {
@@ -179,7 +184,7 @@ angular.module('appStep1', [])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					$scope.confirmnumCel();
+					$('#confirmNumCel').modal('show');					
 				}
 			}, function errorCallback(response) {
 				hideLoader();
@@ -188,7 +193,6 @@ angular.module('appStep1', [])
 		}else{
 			alert('Los correos no coinciden');
 		}
-		
 	}
 
 	$scope.cerrar = function(){
