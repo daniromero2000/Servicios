@@ -16,7 +16,7 @@ class SimulatorController extends Controller
 
     public function __construct()
     {
-       $this->middleware('auth')->except('logout');
+       //$this->middleware('auth')->except('logout');
     }
     
     
@@ -143,13 +143,28 @@ class SimulatorController extends Controller
 
         $params=Simulator::select('rate','gap','assurance','assurance2')->get();
         $timeLimits=TimeLimits::select('id','timeLimit')->get();
-        $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active','phoneNumber')->get();
+        $pagadurias=Pagaduria::select('id','name','office','address','city','departament','category','active','phoneNumber')->orderBy('id','DESC')->get();
         $libranzaProfiles=LibranzaProfile::select('id','name')->get();
         $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
 
+        $i=0;
+        $dataPagaduria=[];
+        
+      
+        for($i;$i<count($pagadurias);$i++){
+            
+            $idPagaduria=$pagadurias[$i]['id'];
+            $profilesQuery=PagaduriaProfile::select('libranza_profiles.id','libranza_profiles.name')
+            ->leftJoin('libranza_profiles','pagadurias_libranza_profiles.idProfile','=','libranza_profiles.id')
+            ->where('idPagaduria',$idPagaduria)->get();
+
+            $dataPagaduria[$i]=$pagadurias[$i];
+            $dataPagaduria[$i]['profiles'] = $profilesQuery;
+        }
+
+        $data['dataProfile']=$dataPagaduria;
         $data['params']=$params;
         $data['timeLimits']=$timeLimits;
-        $data['pagadurias']=$pagadurias;
         $data['libranzaProfiles']=$libranzaProfiles;
         $data['cities']=$cities;
 
@@ -204,11 +219,9 @@ class SimulatorController extends Controller
         return response()->json([true]);
     }
 
-    public function updatePagaduria(Request $request,$id){
-      
+    public function updatePagaduria(Request $request,$id){   
 
-        try {
-            
+        try {            
             $pagaduria = Pagaduria::findOrFail($id);
             $pagaduria->name= $request->get('name');
             $pagaduria->address= $request->get('address');
@@ -216,12 +229,22 @@ class SimulatorController extends Controller
             $pagaduria->departament= $request->get('departament');
             $pagaduria->office= $request->get('office');
             $pagaduria->phoneNumber= $request->get('phoneNumber');
-
             $pagaduria->save();
 
-           return response()->json(true);
+            $pagaduriasProfile = PagaduriaProfile::where('idPagaduria',$id)->delete();
 
+            
+            $i=0;
+            for($i; $i < count($request->profiles);$i++){
+                $profPag = new PagaduriaProfile;
+                $profPag->idProfile= $request->profiles[$i]['id'];
+                $profPag->idPagaduria= $id;
+                $profPag->save();
+            }
+
+            return response()->json(true);
        }
+
        // if resource already exist return error
        catch(\Exception $e) {
            if ($e->getCode()=="23000"){
@@ -232,4 +255,33 @@ class SimulatorController extends Controller
        }
 
     }
+
+    public function addProfile(Request $request){
+        try {
+            //create Pagaduria Model Instance and assign values
+           $profile = new LibranzaProfile;
+           $profile->name = $request->name;
+           $profile->save();
+
+           return response()->json(true);
+
+       }
+       catch(\Exception $e) {
+           if ($e->getCode()=="23000"){
+               return response()->json($e->getCode());
+           }else{
+               return response()->json($e->getMessage());
+           }
+       }
+    }
+
+    public function deleteProfile($id){
+        $pagaduriasProfile = PagaduriaProfile::where('idProfile',$id)->delete();
+
+        $profile = LibranzaProfile::findOrFail($id);
+        $profile->delete();
+
+        return response()->json([true]);
+    }
+
 }
