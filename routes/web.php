@@ -188,9 +188,6 @@ Route::group(['prefix'=>'api/'],function(){
     Route::get('dashBoard/getModules', 'Admin\DashboardController@getModulesDashboard');
 });
 
-/*Users routes*/
-
-
 
 Route::get("/fabricaLeads",function(){
      if(Auth::guest()){
@@ -311,22 +308,39 @@ Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
 // Administrator
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 
-        Route::get("/libranzaLeads",function(){
-            if(Auth::guest()){
-                return view('auth.login');
-            }
-        return view('libranzaLeads.index');
+
+    /**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Libranza leads
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 25/01/2019
+    **/
+
+    Route::get("/libranzaLeads",function(){
+        if(Auth::guest()){
+            return view('auth.login');
+        }
+    return view('libranzaLeads.index');
+    });
+
+
+    Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
+        Route::get('/leads', function(){
+            return view('libranzaLeads.leads');
         });
+    });
+    
+    /**
+    **Proyecto: SERVICIOS FINANCIEROS
+    **Caso de Uso: Simulador de crédito
+    **Autor: Robert García
+    **Email: desarrollo1@lagobo.com
+    **Fecha: 23/02/2019
+    **/
 
-        Route::group(['prefix'=>'/libranzaLeads/','middleware' => 'auth'],function(){
+    Route::group(['prefix'=>'/simulador/'],function(){ 
 
-            Route::get('/leads', function(){
-                return view('libranzaLeads.leads');
-            });
-        });
-        
-
-        Route::group(['prefix'=>'/simulador/'],function(){     
         Route::get('/','Admin\SimulatorController@index'); 
     
         Route::get('/pagaduria',function(){
