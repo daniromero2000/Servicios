@@ -43,19 +43,12 @@
             </tr>
                 </tbody>
             </table>
-            <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-4 text-center">
-                    <button type="submit" class="btn btn-primary">
-                        Actualizar
-                    </button>
-                </div>
-            </div>
         </form>
         </div>
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
         <div class="table table-responsive">
-            <form ng-submit="addTimeLimit()">
+            <form ng-submit="addProfile()">
                 <table class="table table-hover table-stripped leadTable">
                     <thead class="headTableLeads">
                         <tr>
@@ -67,14 +60,14 @@
                         <tr ng-repeat="p in profiles">
                             <td>@{{p.name}}</td>
                             <td>
-                                <button class="btn btn-danger" ng-click="deleteTimeLimit(p.id)">
+                                <button class="btn btn-danger" ng-click="deleteProfile(p.id)">
                                     Eliminar
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" class="form-control text-center" value="" ng-model="plazo.timeLimit">
+                                <input type="text" class="form-control text-center" value="" ng-model="profile.name">
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary">
@@ -327,11 +320,22 @@
                                     <div class="col-md-6">
                                     <select class="form-control" id="city" ng-model="pagaduria.city" ng-options="city.city as city.city for city in cities" ng-required="true"></select>
                                     </div>
-                                </div>s
+                                </div>
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>
+                                    <div class="col-md-6 multicomplete-pagaduria">  
+                                        <multiple-autocomplete ng-model="pagaduria.profiles"
+                                            suggestions-arr="profiles"
+                                            object-property="name"
+                                            >
+                                        </multiple-autocomplete>
+                                    </div>                                    
+                                </div>
+
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Crear Pagaduría
+                                            Actualizar Pagaduría
                                         </button>
                                     </div>
                                 </div>

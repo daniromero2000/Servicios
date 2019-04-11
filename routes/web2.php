@@ -41,7 +41,9 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
 Route::resource('simulator','Admin\SimulatorController');
 Route::get('simulador/getDataSimulador','Admin\SimulatorController@getData');
 Route::delete('/deletePagaduria/{idPagaduria}','Admin\SimulatorController@deletePagaduria');
+Route::delete('/deleteProfileLibranza/{idProfile}','Admin\SimulatorController@deleteProfile');
 Route::post('/createPagaduria','Admin\SimulatorController@addPagaduria');
+Route::post('/createProfileLibranza','Admin\SimulatorController@addProfile');
 Route::put('/updatePagaduria/{idPagaduria}','Admin\SimulatorController@updatePagaduria');
 
 /*Route::group(['prefix'=>'/simulador/'],function(){     

@@ -29,6 +29,7 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 	$scope.libProf=[];
 	$scope.idPlazo='';
 	$scope.profiles=[];
+	$scope.idProfile='';
 	$scope.selectedLines=[];
 	$scope.idParam=1;
 	$scope.idPagaduria='';
@@ -49,7 +50,7 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 		};
 
 		$scope.cities=[];
-
+		$scope.idProfile='';
 		$scope.profile={
 			id:'',
 			name:''
@@ -63,7 +64,7 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data != false){
 			
-				angular.forEach(response.data.pagadurias, function(value, key) {
+				angular.forEach(response.data.dataProfile, function(value, key) {
 					$scope.pagadurias.push(value);
 				});	
 				angular.forEach(response.data.libranzaProfiles, function(value, key) {
@@ -121,6 +122,7 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response){
 			hideLoader();
 			if(response.data != false){
+				console.log(response.data);
 				$scope.getParams();
 				$('#updatePagaduria').modal('hide');
 			}
@@ -194,6 +196,41 @@ app.controller('pagaduriaController', function($scope, $http, $rootScope){
 
 	$scope.confirmUpdate=function(){
 		$("#confirmModal").modal("show");
+	}
+
+	
+	$scope.addProfile=function(){
+		showLoader();
+		$http({
+			method:'POST',
+			url:'/createProfileLibranza',
+			data:$scope.profile,
+		}).then(function successCallback(response){
+			hideLoader();
+			if(response.data != false){
+				$scope.getParams();
+			}
+		},function errorCallback(){
+			hideLoader();
+			alert('Error al guardar perfil');
+		});
+	};
+
+	$scope.deleteProfile=function(id){
+		$scope.idProfile = id;
+		showLoader();
+		$http({
+			method:'DELETE',
+			url:'/deleteProfileLibranza/'+$scope.idProfile
+		}).then(function successCallback(response){
+			hideLoader();
+			if(response.data !=false){
+
+			}
+		},function errorCallback(response){
+			hideLoader();
+			alert('Error al eliminar perfil');
+		});
 	}
 	
 

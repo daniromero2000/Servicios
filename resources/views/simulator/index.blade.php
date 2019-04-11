@@ -43,7 +43,6 @@
     <script src="{{ asset('js/appSimulator/services/myService.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/simulatorController.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/pagaduriaController.js') }}"></script>
-    <script src="{{ asset('js/appSimulator/controllers/pagaduriaController.js') }}"></script>
     <script src="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.js')}}"></script>
     <link href="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.css')}}" rel="stylesheet">
 @stop
