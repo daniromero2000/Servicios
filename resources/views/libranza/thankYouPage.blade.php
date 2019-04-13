@@ -8,7 +8,7 @@
 			</div>
 			<div class="dialogThakPage">	
 				<img src="{{ asset('images/dialogThankPage.png')}}" class="img-fluid">
-				<p>	Gracias por contactarte con nosotros, un asesor de libranza se comunicará contigo para darte más información en un máximo de 12 horas.</p>
+				<p>	Gracias por contactarte con nosotros, un asesor de libranza se comunicará contigo para darte más información.</p>
 			</div>
 		</div>
 	</div>

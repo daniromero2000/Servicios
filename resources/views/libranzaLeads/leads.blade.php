@@ -70,7 +70,7 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr> 
-                <th scope="col">Estado</th>
+                <th scope="col">fecha</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
@@ -84,7 +84,7 @@
         <tbody>
             <tr ng-repeat="lead in leads">
                 <td scope="row">
-                    @{{lead.id}}
+                    @{{lead.created_at}}
                 </td>
                 <td>@{{ lead.name }}</td>
                 <td>@{{ lead.lastName }}</td>

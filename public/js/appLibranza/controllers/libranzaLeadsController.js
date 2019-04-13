@@ -122,11 +122,11 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
-				console.log($scope.leads);
+				
 			}
-			console.log(response);
+		
 		}, function errorCallback(response) {
-			console.log(response);
+			
 		});
 	};
 

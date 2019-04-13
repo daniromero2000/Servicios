@@ -291,7 +291,7 @@
                                 <div class="col-sm-12 col-md-10">
                                     <div class="formularioSimulador-containInput">
                                         <label class="formularioSimulador-labelFormulario" for="pagaduria">Pagaduría : <span class="text-small">*Selecciona  tu administrador de pensión y/o empleador</span></label>
-                                        <select id="pagaduria" class="form-control" ng-model="libranza.pagaduria" ng-options="pagaduriaItem.id as pagaduriaItem.name for pagaduriaItem in pagaduriaLibranza"></select>
+                                        <select id="pagaduria" class="form-control" ng-model="libranza.pagaduria" ng-options="pagaduriaItem.idPagaduria as pagaduriaItem.name for pagaduriaItem in pagaduriaLibranza"></select>
                                     </div>
                                 </div>
                             </div>

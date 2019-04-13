@@ -169,13 +169,19 @@
                         <div class="col-12 form-group">
                             <form ng-submit="addPagaduria()" id="addForm">
                             @csrf
-                                <div class="form-group row">
+                                <!--<div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">Nombre de Pagaduría</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control" name="name" ng-model="pagaduria.name" value="pagaduria.name" required autofocus>
 
                                     </div>
+                                </div>-->
+                                <div layout-gt-xs="row">
+                                    <md-input-container class="md-block" flex-gt-xs="">
+                                        <label>Nombre de Pagaduria</label>
+                                        <input ng-model="pagaduria.name">
+                                    </md-input-container>
                                 </div>
 
                                 <div class="form-group row">

@@ -121,18 +121,17 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 					$scope.cities.push(value);
 				});
 			}
+
 		},function errorCallback(response){
 			
 		});
 	}
 
-	$scope.assignPagaduria = function(){
-
-	};
+	
 
 
 	$scope.selectPagaduria = function (){
-
+		$scope.pagaduriaLibranza=[];
 		$http({
 			method:'GET',
 			url:'/api/getPagadurias/'+$scope.libranza.customerType
@@ -291,6 +290,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http) {
 			}).then(function successCallback(response) {
 				$scope.idLead=response.data;
 				$('#solicitarModal').modal('show');
+				
 			}, function errorCallback(response) {
 			    
 			});
