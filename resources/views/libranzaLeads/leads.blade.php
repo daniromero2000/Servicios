@@ -180,7 +180,7 @@
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Ciudad:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
+                            <span class="textViewLead">@{{ lead.city }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Fecha registro:</label>
