@@ -11,9 +11,15 @@
 @section('content')
   
      <div>
+        <div class="align-self-center ml-auto ">
+            <a href="{{ route('warranty') }}" class="align-middle warrantyBack-xs">Regresar</a>
+        </div>
         <div class="row resetRow TermsHeader">
             <div class="logoHeaderTerms">
                 <a href="{{ url()->previous() }}"> <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" /> </a>
+            </div>
+            <div class="align-self-center ml-auto conditions">
+                <a href="{{  route('warranty') }}" class="align-middle warrantyLegal">Regresar</a>
             </div>
          </div>
          <h1 class="titleTerms text-center">TÉRMINOS Y CONDICIONES GARANTÍA LEGAL</h1>

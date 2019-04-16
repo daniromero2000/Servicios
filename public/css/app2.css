@@ -1274,6 +1274,15 @@ label {
 .warrantyLegal:hover{
     color: #909090;
 }
+.warrantyBack-xs{
+	display: none;
+}
+.warrantyBack-xs{
+	display: none;
+}
+.warrantyLegal-xs{
+	display: none;
+}
 .warrantyLegal-xs{
 	display: none;
 }
@@ -1475,6 +1484,16 @@ label {
 		display: none;
 	}
 
+	.warrantyBack-xs{
+		text-align: center;
+		display: block;
+		font-family: barlow;
+		color: #656464;
+		font-weight: bold;
+	}
+	.warrantyBack-xs:hover{
+		color: #656464;
+	}
 	.warrantyLegal-xs{
 		text-align: center;
 		display: block;

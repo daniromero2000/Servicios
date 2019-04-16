@@ -45,14 +45,6 @@
                     <input class="form-control warrantyInputs WarrantyInputText" type="text" validation-pattern="IdentificationNumber" ng-model="$parent.WarrantyRequest.identificationNumber" id="identificationNumber" required="" placeholder="Número de identificación titular de la factura"/>
                 </div>          
             </div>
-            <div class="row resetRow">
-                <div class="col-12 col-sm-6 form-group">
-                    <label for="typeRequestes">Tipo de reclamación *</label>
-                    <select required class="form-control warrantyInputs inputSelect" ng-model="$parent.WarrantyRequest.type" id="typeRequestes"  ng-options="typeRequest.name for typeRequest in typeRequestes">
-                        <option></option>
-                    </select>                
-                </div>
-            </div>
             <div class="capchaContetent">
                 {!! NoCaptcha::renderJs() !!}
                 {!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
@@ -130,17 +122,14 @@
             <div class="alert alert-info" role="alert">
                 <p>Señor usuario si requiere garantía para varios productos, por favor realice el trámite para cada uno.</p>
             </div>
-            <div class="alert alert-warning" role="warnig" ng-if='$parent.other == 0'>
-                <p>No se encontraron artículos relacionados con el numero de identificación  @{{WarrantyRequest.identificationNumber}}  si desea puede <button type="button" class="btn btn-link" ng-click="$parent.$parent.step = 1">regresar</button> y modificar su numero de identificación de lo contrario continúe con el proceso.</p>
-            </div>
             <div class="row resetRow" ng-if='$parent.other == 0'>
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="clientNames"> Nombres *</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.clientNames" id="clientName" required validation-pattern="textOnly" placeholder="Nombres titular de la factura"/>
+                    <label for="clientNames"> Nombres * @{{$parent.$parent.WarrantyRequest.names}}</label>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.names" id="clientName" required validation-pattern="textOnly" placeholder="Nombres titular de la factura"/>
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="clientLastNames"> Apellidos *</label>
-                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.clientLastNames" id="clientLastName" required validation-pattern="textOnly" placeholder="Apellidos titular de la factura"/>
+                    <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.lastNames" id="clientLastName" required validation-pattern="textOnly" placeholder="Apellidos titular de la factura"/>
                 </div>   
             </div>
             <div class="row resetRow">
@@ -291,7 +280,7 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group">
                     <label for="confirmEmail">Confirma tu correo electrónico</label>
-                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="$parent.WarrantyRequest.confirmEmail" id="confirmEmail" >                   
+                    <input class="form-control warrantyInputs inputSelect" type="text" ng-model="$parent.WarrantyRequest.confirmEmail" id="confirmEmail" ng-paste="$event.preventDefault();" autocomplete="off">                   
                 </div>             
             </div>
             <div class="row resetRow">

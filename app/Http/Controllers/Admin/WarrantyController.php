@@ -41,26 +41,36 @@ class WarrantyController extends Controller
      */
     public function index(Request $request){
         $products = DB::connection('oportudata')->table('SOLIC_FAB')
+                                                ->select('SUPER_2.*','ESTADO')
+                                                ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
+                                                ->where(function($q){
+                                                    $q->where('ESTADO','=','DESISTIDO')
+                                                    ->orWhere('ESTADO','=','EN FACTURACION');
+                                                })
+                                                ->orderBy('ESTADO','DESC')
+                                                ->take(10)
+                                                //->where('CLIENTE','=',57444498)
+                                                
+                                                ->get();
+        $products2 = DB::connection('oportudata')->table('SOLIC_FAB')
                                                 ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
                                                 ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
                                                 ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
                                                 ->join('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
-                                                ->where('CLIENTE','=',20498736)
+                                                //->where('CLIENTE','=',57444498)
                                                 ->where(function($q){
                                                     $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
                                                     ->orWhere('FEC_AUR','=','1900-01-01');
                                                 })
+                                                ->where(function($q){
+                                                    $q->where('ESTADO','=','FACTURADO')
+                                                    ->orWhere('ESTADO','=','EN FACTURACION');
+                                                })
+                                                ->take(10)
                                                 ->get();
-
-            $stores = DB::connection('oportudata')->table('SUCURSALES_GAR')
-                                                ->select('CODIGO','NOMBRE','DOMICILIO','CIUDAD','SUCURSALES_GAR.DEPARTAMENTO_ID','name')
-                                                ->join('departamentos', 'SUCURSALES_GAR.DEPARTAMENTO_ID', '=', 'departamentos.departamento_id')
-                                                ->orderBy('departamentos.departamento_id')
-                                                ->orderBy('CIUDAD')
-                                                ->get();
-            // group a stores by departamento and city
             
-        dd($stores);                                        
+            
+        dd($products,$products2);                                        
     }
     
     /**
@@ -91,6 +101,8 @@ class WarrantyController extends Controller
                                                 ->join('GRUPO', 'GRUPO_brands.GRUPO_id', '=', 'GRUPO.CODIGO')
                                                 ->join('brands', 'GRUPO_brands.brand_id', '=', 'brands.brand_id')
                                                 ->where('GRUPO.active_warranty','=',1)
+                                                ->orderBy('NOMBRE')
+                                                ->orderBy('name')
                                                 ->get();
         return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType];
     }
@@ -310,6 +322,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
     $codeUserVerificationOportudata->token = $code;
     $codeUserVerificationOportudata->identificationNumber = $identificationNumber;
     $codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
+    $codeUserVerificationOportudata->telephone = $celNumber;
     $codeUserVerificationOportudata->type = "GARANTIA";
 
     $codeUserVerificationOportudata->save();
@@ -402,6 +415,10 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
                                                 ->where(function($q){
                                                     $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
                                                     ->orWhere('FEC_AUR','=','1900-01-01');
+                                                })
+                                                ->where(function($q){
+                                                    $q->where('ESTADO','=','FACTURADO')
+                                                    ->orWhere('ESTADO','=','EN FACTURACION');
                                                 })
                                                 ->get();
         
