@@ -346,7 +346,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code."tiene una de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code." tiene una de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
