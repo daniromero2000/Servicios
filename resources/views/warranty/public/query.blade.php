@@ -124,7 +124,7 @@
             </div>
             <div class="row resetRow" ng-if='$parent.other == 0'>
                 <div class="col-12 col-sm-6 form-group">
-                    <label for="clientNames"> Nombres * @{{$parent.$parent.WarrantyRequest.names}}</label>
+                    <label for="clientNames"> Nombres *</label>
                     <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.names" id="clientName" required validation-pattern="textOnly" placeholder="Nombres titular de la factura"/>
                 </div>
                 <div class="col-12 col-sm-6 form-group">
