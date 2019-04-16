@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'mail.lagobo.com.co'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'davidgira@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'testdesarrollo@lagobo.com'),
         'name' => env('MAIL_FROM_NAME', 'Oportunidades'),
     ],
 

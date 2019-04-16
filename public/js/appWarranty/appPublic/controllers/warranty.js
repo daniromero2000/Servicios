@@ -93,6 +93,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 					$scope.WarrantyRequest.lastNames = response.data[0].APELLIDOS;
 					$scope.products = response.data[1];
 					hideLoader();
+					
 				}
 			}, function errorCallback(response) {
 				console.log(response.data);
