@@ -3,6 +3,7 @@
 //libranza routes
 
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
+Route::resource('newsletter','Admin\newsletterController');
 
 Route::group(['prefix'=>'/creditoLibranza/'],function(){
 
@@ -45,16 +46,8 @@ Route::delete('/deleteProfileLibranza/{idProfile}','Admin\SimulatorController@de
 Route::post('/createPagaduria','Admin\SimulatorController@addPagaduria');
 Route::post('/createProfileLibranza','Admin\SimulatorController@addProfile');
 Route::put('/updatePagaduria/{idPagaduria}','Admin\SimulatorController@updatePagaduria');
+Route::get('/OPN_gracias_newsletter',function(){
+    return view('newsletter.index');
+})->name('thankYouPageNewsletter');
 
-/*Route::group(['prefix'=>'/simulador/'],function(){     
-    Route::get('/','Admin\SimulatorController@index'); 
-
-    Route::get('/pagaduria',function(){
-        return view('simulator.pagaduria.pagaduria');
-    });
-    Route::get('/parametros', function(){
-        return view('simulator.parameters.parameters');
-    });
-   
-});*/
 
