@@ -14,6 +14,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		'state': '',
 		'channel':''
 	};
+	$scope.codeAsesor = "";
 	$scope.tabs = 1;
 	$scope.totalLeads = 0;
 	$scope.totalLeadsCM = 0;
@@ -135,6 +136,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
+			$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
 			$scope.totalLeadsCM = response.data.totalLeadsCM;
 			if(response.data.leadsDigital != false){
