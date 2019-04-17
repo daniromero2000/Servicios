@@ -17,7 +17,7 @@ class Application extends Model
 
     protected $primaryKey= 'CLIENTE';
 
-    protected $fillable=['CLIENTE','CODASESOR','FECHASOL','SUCURSAL','ESTADO','STATE','FTP','GRAN_TOTAL', 'PRODUC_W', 'AVANCE_W', 'SOLICITUD_WEB'];
+    protected $fillable=['CLIENTE','CODASESOR','FECHASOL','SUCURSAL','ESTADO','STATE','FTP','GRAN_TOTAL', 'PRODUC_W', 'AVANCE_W', 'SOLICITUD_WEB', 'ID_EMPRESA'];
     public $timestamps = false;
 
 }
