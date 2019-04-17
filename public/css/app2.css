@@ -1644,10 +1644,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 #obtener-avance .obtener-avance-texto{
 	position: absolute;
-	right: 10em;
-	bottom: 5em;
-	color: #FFF;
-	text-align: center;
+    left: 50%;
+    bottom: 5em;
+    color: #FFF;
+    font-size: 22px;
+    text-align: center;
+    transform: translate(-50%);
+	width: 80%;
 }
 
 #obtener-avance .obtener-avance-texto p{
@@ -1663,7 +1666,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-color: #31D16B;
 	border-radius: 20px;
 	color: #FFF;
-	padding: 10px 40px;
+	padding: 10px 50px;
 	border:solid 1px #FFF;	
 	font-weight: 600;
 }

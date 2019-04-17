@@ -63,28 +63,21 @@
 <div id="requisitos-avaces-iconos">
 	<div class="container">
 		<div class="row">
-			<div class="col-12 col-sm-6 col-md-3 text-center">
+			<div class="col-12 col-sm-4 col-md-4 text-center">
 				<div class="container-avances-iconos">
 					<img src="{{asset('images/18masIcon.jpg')}}" alt="" class="img-fluid">
 					<br>
 					<span>Ser mayor <br> de edad</span>
 				</div>
 			</div>
-			<div class="col-12 col-sm-6 col-md-3 text-center">
+			<div class="col-12 col-sm-4 col-md-4 text-center">
 				<div class="container-avances-iconos">
 					<img src="{{asset('images/cell-icon-avances.jpg')}}" alt="" class="img-fluid">
 					<br>
-					<span>Tener celular <br> propio</span>
+					<span>Tener número de<br> celular propio</span>
 				</div>
 			</div>
-			<div class="col-12 col-sm-6 col-md-3 text-center">
-				<div class="container-avances-iconos">
-					<img src="{{asset('images/calculoIcon-avances.jpg')}}" alt="" class="img-fluid">
-					<br>
-					<span>Tener númeo de <br> celular propio</span>
-				</div>
-			</div>
-			<div class="col-12 col-sm-6 col-md-3 text-center">
+			<div class="col-12 col-sm-4 col-md-4 text-center">
 				<div class="container-avances-iconos">
 					<img src="{{asset('images/ahorroIcon-avances.jpg')}}" alt="" class="img-fluid">
 					<br>
@@ -104,10 +97,10 @@
 	</div>
 </div>
 <div id="credito-online">
-	<img src="{{asset('images/banner3-avances.jpg')}}" alt="" class="img-fluid">
+	<img src="{{asset('images/banner3-top-avances.jpg')}}" alt="" class="img-fluid">
 	<div class="container text-center credito-online-texto">
 		<div>
-			<h3><span>Confiamos en ti</span>, te prestamos <br> efectivo con estos requisitos.	</h3>
+			<h3><span>Crédito Online</span>, desde la  <br> comodidad de tu casa.	</h3>
 		</div>	
 	</div>
 	<div class="credito-online-boton">
