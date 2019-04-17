@@ -124,7 +124,7 @@ class LeadsController extends Controller
             $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION ASC ";
+        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION DESC";
         
         $resp = DB::connection('oportudata')->select($query);
 
