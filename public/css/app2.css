@@ -1647,7 +1647,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
     left: 50%;
     bottom: 5em;
     color: #FFF;
-    font-size: 22px;
+    font-size: 30px;
     text-align: center;
     transform: translate(-50%);
 	width: 80%;
@@ -1655,7 +1655,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 #obtener-avance .obtener-avance-texto p{
 	line-height: 0.5;
-	font-size: 24px;
+	font-size: 35px;
 }
 
 #obtener-avance .obtener-avance-texto span{
@@ -1664,7 +1664,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 #obtener-avance .obtener-avance-texto a{
 	background-color: #31D16B;
-	border-radius: 20px;
+	border-radius: 30px;
 	color: #FFF;
 	padding: 10px 50px;
 	border:solid 1px #FFF;	
@@ -1751,6 +1751,36 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-color: #3760A2;
 	color: #FFF;
 	border-radius: 0;
+}
+
+@media(max-width: 1701px){
+	
+	#obtener-avance .obtener-avance-texto p{
+		font-size: 28px!important;
+	}
+
+	#obtener-avance .obtener-avance-texto a{
+		font-size: 22px;
+		border-radius: 30px;
+	}
+
+}
+
+@media(max-width: 1500px){
+	
+	#obtener-avance .obtener-avance-texto p{
+		font-size: 25px!important;
+	}
+
+	#obtener-avance .obtener-avance-texto a{
+		font-size: 20px;
+		border-radius: 25px;
+	}
+
+	#obtener-avance .obtener-avance-texto{
+		bottom: 2.5em;
+	}
+
 }
 
 
