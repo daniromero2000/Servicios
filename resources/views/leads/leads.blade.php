@@ -11,8 +11,8 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Aprobados</a>
-        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Negados</a>        
-        <a class="nav-item nav-link cursor" id="nav-img-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-img">Facebook</a>
+        <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Negados</a>        
+        <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-img">Facebook</a>
     </div>
 </nav>
 

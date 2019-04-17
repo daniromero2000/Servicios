@@ -358,6 +358,8 @@ class OportuyaV2Controller extends Controller
 			$ftp=0;
 			$state='A';
 			$granTotal=0;
+			$queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAssessor);
+        	$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 	
 			$flag = 1;
 
@@ -396,16 +398,6 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 
-			$soliData=[
-				'CLIENTE'=>$identificationNumber,
-				'CODASESOR'=>$codeAssessor,
-				'FECHASOL'=>date("Y-m-d H:i:s",strtotime($dateLead)),
-				'SUCURSAL'=>$sucursal,
-				'ESTADO'=>$estado,
-				'FTP'=>$ftp,
-				'STATE'=>$state
-			];
-
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
@@ -425,6 +417,7 @@ class OportuyaV2Controller extends Controller
 				}				
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
 				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
 				$solic_fab->SUCURSAL=$sucursal;
 				$solic_fab->ESTADO="ANALISIS";
