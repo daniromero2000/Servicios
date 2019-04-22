@@ -257,17 +257,26 @@
 				<div class="col-12 col-md-12 col-lg-3 resetCol">
 					<div class="footer-containerNewsletter">
 						<h5 class="footer-titleNewsLetter">QUIERES RECIBIR LAS MEJORES OFERTAS</h5>
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Ingresa tu e-mail">
+						<form action="{{route('newsletter.store')}}" method="POST">
+						{{ csrf_field() }}
+						<div class="input-group mb-3">	
+							<input type="email" name="email" class="form-control" placeholder="Ingresa tu e-mail">
 							<div class="input-group-prepend">
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>
+							<br>
+							<div class="form-group">
+								<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
+								<label for="termsAndConditions" style="font-size: 10px; font-style: italic;color:#FFF;">
+									Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
+								</label>
+							</div>
+						</form>
 						</div>
 						<span class="footer-menuText">SÍGUENOS:</span> <a href="https://www.facebook.com/almacenes.oportunidades/" target="_blank"><img src="{{ asset('images/footer-facebookIcon.png')}}" alt="Facebook Oportunidades Servicios Financieros" class="img-fluid"></a>
 					</div>
 				</div>
 			</div>
-
 		</div>
 		</div>
 		<script src="{{ asset('editor/contentbuilder/jquery-ui.min.js')}}" type="text/javascript"></script>
