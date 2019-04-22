@@ -124,8 +124,6 @@ class OportuyaV2Controller extends Controller
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
-
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			$departament = $this->getCodeAndDepartmentCity(trim($cityName[0]->CIUDAD));
 			$flag=0;
 			$lead= new Lead;
@@ -180,7 +178,6 @@ class OportuyaV2Controller extends Controller
 				$lead->typeService = $request->get('typeService');
 				$response = $lead->save();
 			}
-
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
 
@@ -237,6 +234,7 @@ class OportuyaV2Controller extends Controller
 				}
 
 			}
+			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 
 			if($validatePolicyCredit == false){
 				return -1;
