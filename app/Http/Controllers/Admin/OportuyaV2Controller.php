@@ -857,11 +857,12 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function getExistSolicFab($identificationNumber){
+		$timeRejectedVigency = DB::connection('oportudata')->select("SELECT `rechazado_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$timeRejectedVigency = $timeRejectedVigency[0]->rechazado_vigencia;
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime ("- 30 day", strtotime ( $dateNow ) );
-		$dateNew = date ( 'Y-m-d' , $dateNew );
-		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNew);
-
+		$dateNow = strtotime ("- $timeRejectedVigency day", strtotime ( $dateNow ) );
+		$dateNow = date ( 'Y-m-d' , $dateNow );
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNow);
 		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
 
 		if($resp[0]->totalSolicitudes > 0){
