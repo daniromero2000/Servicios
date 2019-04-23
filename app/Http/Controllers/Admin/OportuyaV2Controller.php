@@ -577,7 +577,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->STATE = 'A';
 				$turnosOportuya->save();
 			}else{
-				$con3 = "RECHAZADO";
+				$con3 = "NEGADO";
 			}
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$dataLead=[
@@ -585,7 +585,7 @@ class OportuyaV2Controller extends Controller
 			];
 			
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
-			if($con3 == 'RECHAZADO'){
+			if($con3 == 'NEGADO'){
 				return response()->json(['data' => false]);
 			}elseif($con3 == 'PREAPROBADO'){
 				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD]);
@@ -1198,7 +1198,7 @@ class OportuyaV2Controller extends Controller
 			if($respScoreClient >= 686){
 				return true;
 			}else{
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				return false;
 			}
 		}

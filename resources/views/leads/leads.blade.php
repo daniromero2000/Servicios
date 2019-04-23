@@ -168,8 +168,8 @@
                                 <td>@{{ rl.CELULAR }}</td>
                                 <td>@{{ rl.CREACION }}</td>
                                 <td>
-                                    <span ng-if="rl.CON3 == 'NEGADO'"> Bajo Puntaje Score </span>
-                                    <span ng-if="rl.CON3 == 'RECHAZADO'">Políticas internas</span>
+                                    <span ng-if="rl.CON3 == 'RECHAZADO'"> Bajo Puntaje Score </span>
+                                    <span ng-if="rl.CON3 == 'NEGADO'">Políticas internas</span>
                                     <span ng-if="rl.CON3 == 'PREAPROBADO'">Fábrica</span>
                                 </td>
                                 <td>
