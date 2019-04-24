@@ -41,36 +41,42 @@ class WarrantyController extends Controller
      */
     public function index(Request $request){
         $products = DB::connection('oportudata')->table('SOLIC_FAB')
-                                                ->select('SUPER_2.*','ESTADO')
+                                                ->select('MARCA','REFERENCIA','SUPER_2.COD_ARTIC','SUCURSAL','SOLIC_FAB.SOLICITUD','ARTICULO')
                                                 ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
-                                                ->where(function($q){
-                                                    $q->where('ESTADO','=','DESISTIDO')
-                                                    ->orWhere('ESTADO','=','EN FACTURACION');
-                                                })
-                                                ->orderBy('ESTADO','DESC')
-                                                ->take(10)
-                                                //->where('CLIENTE','=',57444498)
-                                                
-                                                ->get();
-        $products2 = DB::connection('oportudata')->table('SOLIC_FAB')
-                                                ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
-                                                ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
-                                                ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
-                                                ->join('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
-                                                //->where('CLIENTE','=',57444498)
-                                                ->where(function($q){
-                                                    $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
-                                                    ->orWhere('FEC_AUR','=','1900-01-01');
-                                                })
+                                                ->leftJoin('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
+                                                ->where('CLIENTE','=',1088021330)
                                                 ->where(function($q){
                                                     $q->where('ESTADO','=','FACTURADO')
                                                     ->orWhere('ESTADO','=','EN FACTURACION');
-                                                })
-                                                ->take(10)
-                                                ->get();
+                                                });
+
+        $ProductsInvoice =  DB::connection('oportudata')->table('SUPER')
+                                                        ->select('MARCA','REFERENCIA','products.COD_ARTIC as CODIGO','FEC_AUR','FACTURA','SUCURSAL','products.ARTICULO')
+                                                        ->rightJoinSub( $products, 'products', function ($join) {
+                                                            $join->on('SUPER.SOLICITUD', '=', 'products.SOLICITUD')
+                                                            ->where(DB::raw('TRIM(products.COD_ARTIC)'),'=',DB::raw('TRIM(SUPER.CODIGO)'));
+                                                        })
+                                                        ->get();
+
+        $products2 = DB::connection('oportudata')->table('SOLIC_FAB')
+                                                        ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
+                                                        ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
+                                                        ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
+                                                        ->rightJoin('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
+                                                        ->where(DB::raw('TRIM(SUPER_2.COD_ARTIC)'),'=',DB::raw('TRIM(SUPER.CODIGO)'))
+                                                        ->where('CLIENTE','=',$request->identificationNumber)
+                                                        ->where(function($q){
+                                                            $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
+                                                            ->orWhere('FEC_AUR','=','1900-01-01');
+                                                        })
+                                                        ->where(function($q){
+                                                            $q->where('ESTADO','=','FACTURADO')
+                                                            ->orWhere('ESTADO','=','EN FACTURACION');
+                                                        })
+                                                        ->get();
             
             
-        dd($products,$products2);                                        
+        dd($ProductsInvoice,$products2, $products->get());                                        
     }
     
     /**
@@ -230,11 +236,15 @@ class WarrantyController extends Controller
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
             //  if save is construct a email data
-            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName];
+            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO];
             //send a mail for alert that have a new warranty request 
-            Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
+            Mail::send('Emails.alertWarrantyClient', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
                 $msj->to('desarrolladorjunior@lagobo.com');
+                /*$msj->to('garantiasoportunidades@lagobo.com.co');
+                $msj->to('garantiasoportunidades2@lagobo.com.co');
+                $msj->to('garantiasoportunidades3@lagobo.com');
+                $msj->to('gestiondegarantias@lagobo.com.co');*/
             });
             // return a request id
             return $warrantyRequest->NUMERO;
@@ -346,7 +356,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code." tiene una de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code." tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
@@ -406,21 +416,23 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
             return 'no records';
         }
         // if find register  get a list of the products 
-        $products = DB::connection('oportudata')->table('SOLIC_FAB')
-                                                ->select('MARCA','REFERENCIA','ARTICULOS.CODIGO','FEC_AUR','FACTURA','SUCURSAL')
+        $subProducts = DB::connection('oportudata')->table('SOLIC_FAB')
+                                                ->select('MARCA','REFERENCIA','SUPER_2.COD_ARTIC','SUCURSAL','SOLIC_FAB.SOLICITUD','ARTICULO')
                                                 ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
-                                                ->join('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
-                                                ->join('SUPER','SOLIC_FAB.SOLICITUD','=','SUPER.SOLICITUD')
+                                                ->leftJoin('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
                                                 ->where('CLIENTE','=',$request->identificationNumber)
-                                                ->where(function($q){
-                                                    $q->where('FEC_AUR','>',date("Y-m-d",strtotime(date("Y-m-d")."- 4 year")))
-                                                    ->orWhere('FEC_AUR','=','1900-01-01');
-                                                })
                                                 ->where(function($q){
                                                     $q->where('ESTADO','=','FACTURADO')
                                                     ->orWhere('ESTADO','=','EN FACTURACION');
-                                                })
-                                                ->get();
+                                                });
+
+        $products =  DB::connection('oportudata')->table('SUPER')
+                                                        ->select('MARCA','REFERENCIA','products.COD_ARTIC as CODIGO','FEC_AUR','FACTURA','SUCURSAL','products.ARTICULO')
+                                                        ->rightJoinSub( $subProducts, 'products', function ($join) {
+                                                            $join->on('SUPER.SOLICITUD', '=', 'products.SOLICITUD')
+                                                            ->where(DB::raw('TRIM(products.COD_ARTIC)'),'=',DB::raw('TRIM(SUPER.CODIGO)'));
+                                                        })
+                                                        ->get();
         
         if(count($products)==0){
             // if don't find products 

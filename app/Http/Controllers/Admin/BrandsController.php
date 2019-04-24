@@ -72,7 +72,6 @@ class BrandsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     suma(4,7);
      */
     public function store(Request $request){ 
         try {
