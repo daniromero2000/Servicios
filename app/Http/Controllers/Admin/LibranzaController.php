@@ -163,7 +163,7 @@ class LibranzaController extends Controller
         $lines=LibranzaLines::select('id','name')->orderBy('id')->get();
         $pagaduria=Pagaduria::select('id','name','office','departament','category')->where('active','=',1)->get();
         $libranza_profile=LibranzaProfile::select('id','name')->where('name','!=','OTRO')->orderBy('id','desc')->get();
-        $params=Simulator::select('rate','gap','assurance')->get();
+        $params=Simulator::select('rate','gap','assurance','assurance2')->get();
         $timeLimits=TimeLimits::select('timeLimit')->get();
         $cities=CiudadesSoc::select('id','city','address','responsable','state','phone','office')->orderBy('city','ASC')->get()->unique('city');
 
@@ -199,11 +199,12 @@ class LibranzaController extends Controller
 
         $data=[];
 
-        $leads=Liquidator::selectRaw('pagaduria.name as pagaduriaName, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria, liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id ,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
+        $leads=Liquidator::selectRaw('pagaduria.name as pagaduriaName,libranza_profiles.name as customerType, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria, liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id ,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
         ->leftJoin('leads','liquidator.idLead','=','leads.id')
         ->leftJoin('pagaduria','liquidator.idPagaduria','=','pagaduria.id')
         ->leftJoin('libranza_lines','liquidator.idCreditLine','=','libranza_lines.id')
-        ->where('leads.typeService','=','Credito libranza');
+        ->leftJoin('libranza_profiles','liquidator.customerType','=','libranza_profiles.id')
+        ->where('leads.typeService','=','Credito libranza')->orderBy('leads.created_at','DESC');
 
         if(!is_null($request->city)){
             $leads->where('leads.city', $request->city);
@@ -254,4 +255,13 @@ class LibranzaController extends Controller
 
         return response()->json(true);
     }
+
+    private function calculateAge($fecha){
+		$time = strtotime($fecha);
+		$now = time();
+		$age = ($now-$time)/(60*60*24*365.25);
+		$age = floor($age);
+
+		return $age;
+	}
 }

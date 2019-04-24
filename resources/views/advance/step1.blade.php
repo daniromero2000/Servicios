@@ -60,7 +60,7 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form id="saveLeadOportuya" ng-submit="getValidationLead()">
+			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
@@ -101,10 +101,11 @@
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
 							<label for="telephone" class="control-label">Celular*</label>
-							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+							<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+							<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 						</div>
 						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
-							Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 01800017787
+							Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 01 8000 17787
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
@@ -165,7 +166,8 @@
 						<div class="row">
 							<div class="col-12 form-group">
 								<label for="">Número de Celular</label>
-								<input type="text" ng-model="leadInfo.telephone" class="form-control" ng-disabled="leadInfo.CEL_VAL" />
+								<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+								<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
 									Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente 01800017787
 								</div>
@@ -233,15 +235,15 @@
 								<br>
 								<div class="row">
 									<div class="offset-5 col-7">
-									<p>
-										Actualmente ya cuentas <br>
-										con un Avance.
-										<br>
-										Te invitamos a que la utilices en <br>
-										cualquiera de nuestros puntos de venta! <br>
-										<br>Para más información comunicate  <br>
-										a la línea <strong>01 8000 11 77 87</strong>
-									</p>
+										<p>
+											Actualmente ya cuentas <br>
+											con un Avance.
+											<br>
+											Te invitamos a que la utilices en <br>
+											cualquiera de nuestros puntos de venta! <br>
+											<br>Para más información comunicate  <br>
+											a la línea <strong>01 8000 11 77 87</strong>
+										</p>
 									<div class="text-center">
 										<a class="btn btn-danger buttonBackCardExist" href="/">Regresar</a>
 									</div>

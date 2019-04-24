@@ -14,14 +14,14 @@
             </div>
             <div class="col-12 col-sm-4 text-center">
                 <a href="#!/pagaduria">
-                    <img src="{{ asset('images/pagaduriaicon.png') }}" alt="" class="img-fluid">
+                    <img src="{{ asset('images/pagaduriaIcon.png') }}" alt="" class="img-fluid">
                     <p>PAGADURIAS</p>
                 </a>
             </div>
             <div class="col-12 col-sm-4 text-center">
-                <a href="#!/Lines">
+                <a href="/Administrator/dashboard">
                     <img src="{{ asset('images/lines.png') }}" alt="" class="img-fluid">
-                    <p>Líneas</p>
+                    <p>salir</p>
                 </a>
             </div>
         </div>
@@ -43,6 +43,8 @@
     <script src="{{ asset('js/appSimulator/services/myService.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/simulatorController.js') }}"></script>
     <script src="{{ asset('js/appSimulator/controllers/pagaduriaController.js') }}"></script>
+    <script src="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.js')}}"></script>
+    <link href="{{ asset('js/appSimulator/bower_components/angularMultipleSelect/build/multiple-select.min.css')}}" rel="stylesheet">
 @stop
 @section('scriptsJs')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>

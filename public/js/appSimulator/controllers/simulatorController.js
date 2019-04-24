@@ -90,7 +90,7 @@ app.controller('simulatorController', function($scope, $http, $rootScope){
 		showLoader();
 		$http({
 			method:'PUT',
-			url:'simulator/'+$scope.idParam,
+			url:'/simulator/'+$scope.idParam,
 			data:$scope.params[0],
 		}).then(function successCallback(response){
 			hideLoader();

@@ -1,4 +1,4 @@
-var app =  angular.module('appLibranzaLiquidador',['ngRoute']);
+var app =  angular.module('appLibranzaLiquidador',['ngRoute','moment-picker']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.

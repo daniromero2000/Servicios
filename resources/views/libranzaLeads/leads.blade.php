@@ -70,7 +70,7 @@
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
             <tr> 
-                <th scope="col">Estado</th>
+                <th scope="col">fecha</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
@@ -84,7 +84,7 @@
         <tbody>
             <tr ng-repeat="lead in leads">
                 <td scope="row">
-                    @{{lead.id}}
+                    @{{lead.created_at}}
                 </td>
                 <td>@{{ lead.name }}</td>
                 <td>@{{ lead.lastName }}</td>
@@ -95,7 +95,7 @@
                 <td>@{{ lead.timeLimit }}</td>
                 <td>
                     <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
-                    <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
+                  <!--  <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-check-double cursor"
                     ng-if="lead.state == 1 || lead.state == 2"
@@ -110,7 +110,7 @@
                     <i class="fas fa-times cursor" 
                     ng-if="lead.state == 1 || lead.state == 2"
                     ng-click="changeStateLead(lead.name, lead.lastName, lead.id, 4, 'Negar Solicitud')" 
-                    title="Negar Solicitud"></i>
+                    title="Negar Solicitud"></i>-->
                 </td>
             </tr>
         </tbody>
@@ -180,7 +180,7 @@
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Ciudad:</label>
-                            <span class="textViewLead">@{{ lead.telephone }}</span>
+                            <span class="textViewLead">@{{ lead.city }}</span>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Fecha registro:</label>

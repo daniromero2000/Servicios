@@ -521,7 +521,7 @@ span.renewCode:hover {
 }
 
 .modalFormulario-body{
-	background: url(../images/formulario-fondo.png) no-repeat bottom left;
+	background: url(../images/successful.png) no-repeat bottom left;
 	border: 1px solid #f5f4fe;
 	border-radius: 20px;
 	-webkit-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
@@ -653,6 +653,16 @@ span.renewCode:hover {
 	margin: 0;
 	display: block;
 }
+
+.labelViewLeadPagaduria{
+	margin: 0;
+	display: inline-block;
+	font-size: 12px;
+    line-height: 1em;
+    font-weight: bold;
+    color: #999;
+}
+
 
 .textViewLead{
 	font-weight: 700;
@@ -1366,7 +1376,464 @@ label {
 }
 
 
+/*Pagaduria*/
+
+.multicomplete-pagaduria .ng-pristine .ng-ms ul,.multicomplete-pagaduria .ng-pristine .ng-ms ul li input{
+	width: 100%
+}
+
+.multicomplete-pagaduria .ng-pristine .ng-ms ul li{
+	width: 100%;
+	padding: 0;
+}
+md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
+	color:#000 !important;
+}
+
+/*MOTOS*/
+.motoSliderContent {
+    position: absolute;
+    bottom: 10em;
+    left: 3em;
+}
+
+.motoSliderContent .logoMotosMarca{
+	text-align: center;
+}
+
+.motoSliderContent .logoMotosMarca img {
+	width: 55%;
+}
+
+.motoSliderButton{
+	position: absolute;
+    right: 19%;
+    bottom: 12%;
+}
+
+.motoSliderButton a{
+	background-color: #FE0000;
+	border-radius: 20px;
+	color: #FFF;
+	padding: 10px 60px;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 18px;
+	text-transform: uppercase;
+}
+
+.vantajasIconos{
+	min-height: 110px;
+}
+
+#ventajasAuteco{
+	margin-top: 50px;
+}
+
+.ventajasLogoAuteco{
+	padding-top:23px;
+}
+
+.ventajasTexto{
+	color:#4891EC;
+	font-weight: 700;
+}
+
+#motosContact{
+	background-image: url('../images/contactslide.jpg');
+	background-repeat:no-repeat;
+	background-size: 100%; 
+	margin-top: 50px;
+}
+
+#motosContact div.row{
+	padding: 45px 0;
+}
+
+.textMotosContact{
+	width: 60%;
+	margin: auto;
+}
+.textMotosContact h3 span{
+	color: #FE0000!important;
+}
+
+.textMotosContact h3{
+	font-size: 30px;
+	font-weight: 900;
+	line-height: 0.7;
+	font-style: italic;
+}
+
+.textMotosContact p{
+	background-color: #000;
+    color: #888;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 5px 0px 0px 0px;
+    margin-top: 14px;
+    font-style: italic;
+}
+
+#ventajasAuteco .row, #motosContact .row{
+	width: 100%;
+}
+.motosFormContainer form .form-group{
+	margin-bottom: 0;
+}
+
+.motosFormContainer form input:not(#termsAndConditions),.checkBoxContainer,.motosFormContainer form select,.motosFormContainer .buttonMotosContainer{
+	width: 50%!important;
+	height: calc(1.8rem + 2px);
+}
+
+.motosFormContainer form .form-group label{
+	font-weight: 700;
+	color:#000;
+	margin: 0;
+}
+
+.contactFormList{
+	
+	text-align: left;
+}
+
+.contactFormList li{
+		list-style: none;
+}
+
+.contactFormList span{
+	font-weight: 800;
+	color: #000;
+	font-size: 13px;
+}
+
+.buttonMotosContainer button{
+	margin:0;
+	background-color: #F8BC04;
+	color:#FFF;
+	font-weight: 700;
+}
+
+#motosLibranza{
+	position: relative;
+}
+
+.libranzaMotosButton{
+	position: absolute;
+    bottom: 15%;
+    color: #000;
+    left: 14%;
+    background: #EBCF25;
+    padding: 10px 60px;
+    border-radius: 20px;
+    font-weight: 800;
+}
+.tituloMotos{
+	margin-bottom: 30px;
+}
+
+.tituloMotos h2{
+	position: relative;
+	font-weight: 800;
+}
+
+.tituloMotos h2::after{
+	position: absolute;
+	content: '';
+	height: 4px;
+	width:250px;;
+	bottom: -10px;
+	left: 50%;
+	transform: translate(-50%);
+	background-color: #FD0001;
+}
+
+.precio-contado-moto p,.cuotas-moto p{
+	margin: 0;
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #000;
+}
+
+.precio-contado-moto span,.cuotas-moto span{
+	color:#FD0001;
+	font-weight: 900;
+}
+
+.cuotas-moto{
+	background-color:#EDEEF0 ;
+}
+
+.precio-contado-moto span{
+	font-size: 1.7rem;
+}
+
+.cuotas-moto span{
+	font-size: 2rem;
+}
+
+.button-motos{
+	margin-top: 25px;	
+}
+
+.button-motos a{
+	background-color: #FD0001;
+	color:#FFF;
+	border-radius: 20px;
+	padding: 8px 35px;
+	font-size: 15px;
+	font-weight: 800;
+}
+
+.avanceSliderTitle p{
+	font-size: 28px;
+    margin: 0;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: #FFF 1px 1px 1px;
+}
+
+.avanceSliderContent{
+	position: absolute;
+    bottom: 3em;
+	left: 50%;
+	transform:translate(-50%);
+}
+
+.avanceSliderButton a{
+	background-image:linear-gradient(#1D70B2,#044B89);
+	color:#FFF;
+	border-radius: 20px;
+	padding: 10px 60px;
+	font-weight: 700;
+	font-size: 18px;
+	border: #FFF solid 1px;
+}
+
+#requisitos-avances{
+	margin:30px 0;
+}
+
+#requisitos-avances div.container.text-center h3{
+	font-family: 'barlow', sans-serif;
+	position: relative;
+}
+
+#requisitos-avances div.container.text-center h3::after{
+	position:absolute;
+	background-color:#1984C8;
+	content: '';
+	height: 4px;
+	width: 10%;
+	bottom: -10px;
+	left: 50%;
+	transform: translate(-50%); 
+}
+
+#requisitos-avances div.container.text-center h3 span{
+	font-weight: 800;
+}
+
+.container-avances-iconos img{
+	width: 60%;
+	margin-bottom: 18px;
+}
+
+.container-avances-iconos span{
+	font-weight: 700;
+	font-size: 18px;
+}
+
+#obtener-avance{
+	position: relative;
+	margin:70px 0 0 0; 
+	text-align: center;
+}
+
+#obtener-avance .obtener-avance-texto{
+	position: absolute;
+    left: 50%;
+    bottom: 5em;
+    color: #FFF;
+    font-size: 30px;
+    text-align: center;
+    transform: translate(-50%);
+	width: 80%;
+}
+
+#obtener-avance .obtener-avance-texto p{
+	line-height: 0.5;
+	font-size: 35px;
+}
+
+#obtener-avance .obtener-avance-texto span{
+	font-weight: 700;
+}
+
+#obtener-avance .obtener-avance-texto a{
+	background-color: #31D16B;
+	border-radius: 30px;
+	color: #FFF;
+	padding: 10px 50px;
+	border:solid 1px #FFF;	
+	font-weight: 600;
+}
+
+#credito-online{
+	position: relative;
+	text-align: center;
+}
+
+#credito-online .credito-online-texto{
+	position: absolute;
+	top: 2em;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+#credito-online .credito-online-texto h3{
+	font-family: 'barlow', sans-serif;
+	position: relative;
+}
+
+#credito-online .credito-online-texto h3:after{
+	position:absolute;
+	background-color:#1984C8;
+	content: '';
+	height: 4px;
+	width: 10%;
+	bottom: -10px;
+	left: 50%;
+	transform: translate(-50%); 
+}
+
+.credito-online-boton{
+	position: absolute;
+	left: 15em;
+	bottom: 10em;
+}
+
+.credito-online-boton a{
+	background-color: #186DB0;
+	color: #FFF;
+	font-weight: 700;
+	font-size: 18px;
+	padding: 10px 50px;
+	border-radius: 20px;
+}
+
+.containImg{
+	left: 50%;
+	transform: translate(-50%);
+}
+
+#newsletter-avance{
+	padding-top: 30px;
+	background-color: #E9E9E9;
+}
+
+#newsletter-avance div.container div.row div h3{
+	font-size: 22px;
+	font-weight: 700;
+	text-align: right;
+}
+
+#newsletter-avance div.container div.row{
+	width: 100%;
+	margin: 0;
+}
+
+.newsletter-avance-input{
+	width: 70%;
+}
+
+.newsletter-avance-input div.row div{
+	padding: 0;
+}
+.newsletter-avance-input div.row div input{
+	font-weight: 600;
+	border-radius: 0;
+}
+
+.btn-newsletter-avances{
+	background-color: #3760A2;
+	color: #FFF;
+	border-radius: 0;
+}
+
+@media(max-width: 1701px){
+	
+	#obtener-avance .obtener-avance-texto p{
+		font-size: 28px!important;
+	}
+
+	#obtener-avance .obtener-avance-texto a{
+		font-size: 22px;
+		border-radius: 30px;
+	}
+
+}
+
+@media(max-width: 1500px){
+	
+	#obtener-avance .obtener-avance-texto p{
+		font-size: 25px!important;
+	}
+
+	#obtener-avance .obtener-avance-texto a{
+		font-size: 20px;
+		border-radius: 25px;
+	}
+
+	#obtener-avance .obtener-avance-texto{
+		bottom: 2.5em;
+	}
+
+}
+
+
 @media(max-width: 991px){
+
+	#newsletter-avance div.container div.row div h3	{
+		text-align: center;
+	}
+
+	.newsletter-avance-input{
+		width: 100%;
+	}
+
+	#credito-online .credito-online-texto{
+		top: unset!important;
+		left: unset!important;
+		transform: none!important;
+		margin:30px auto !important;
+	}
+
+	#credito-online .credito-online-texto,#credito-online .credito-online-boton{
+		position: relative;
+		text-align: center;
+	}
+	#credito-online .credito-online-boton{
+		left: unset!important;
+		transform:none!important;
+		bottom: unset!important;
+		margin-bottom: 40px;
+	}
+
+	#obtener-avance .obtener-avance-texto{
+		position: relative;
+		bottom: 0!important;
+		color:#000;
+		right: unset;
+		margin:40px 0px; 
+		
+	}
+
+	#obtener-avance .obtener-avance-texto{
+		bottom: 4em;
+	}
+
 	.formularioSimulador-textPrincipal{
 		padding: 0 30px;
 	}
@@ -1375,6 +1842,9 @@ label {
 	}
 	.Garantia-containerForm{
 		padding: 10px;
+	}
+	.avanceSliderTitle p{
+		font-size: 27px;
 	}
 }
 
@@ -1385,6 +1855,10 @@ label {
 	**Email: desarrolladorjunior@lagobo.com
 	**Fecha: 28/02/2019
 	**/
+	.avanceSliderContent{
+		position: relative;
+		bottom: 0;
+	}
 	.warrantyLegal{
 		color: #e1e1e1;
 	}

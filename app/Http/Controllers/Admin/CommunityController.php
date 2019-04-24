@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CommunityController extends Controller
 {
@@ -12,57 +13,21 @@ class CommunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-         $query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary` 
-            FROM leads 
-            LEFT JOIN `liquidator` ON liquidator.`idLead` = leads.`id`
-            WHERE 1 AND leads.`channel` = 0";
+    public function index(Request $request){
+        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName
+        FROM `leads` as lead
+        LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign 
+        WHERE (`channel` = 2 OR `channel` = 3)";
 
-        if($request->get('q')){
-            $query .= sprintf(" AND (leads.`name` LIKE '%s' OR leads.`lastName` LIKE '%s') ", '%'.$request->get('q').'%', '%'.$request->get('q').'%');
+        if($request->get('q') !=''){
+            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' )", '%'.$request->get('q').'%', '%'.$request->get('q').'%', '%'.$request->get('q').'%');
         }
 
-        if($request->get('state')){
-            $query .= sprintf(" AND leads.`state` = %s ", $request->get('state'));
-        }
+        $queryCM .= "ORDER BY `created_at` DESC ";
+        $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
+        $respCM = DB::select($queryCM);
 
-        if($request->get('city')){
-            $query .= sprintf(" AND leads.`city` = '%s' ", $request->get('city'));
-        }
-
-        if($request->get('typeProduct')){
-            $query .= sprintf(" AND leads.`typeProduct` = '%s' ", $request->get('typeProduct'));
-        }
-
-        if($request->get('typeService')){
-            $query .= sprintf(" AND leads.`typeService` = '%s' ", $request->get('typeService'));
-        }
-
-        if($request->get('fecha_ini')){
-            $query .= sprintf(" AND leads.`created_at` > '%s' ", $request->get('fecha_ini').' 00:00:00');
-        }
-
-        if($request->get('fecha_fin')){
-            $query .= sprintf(" AND leads.`created_at` < '%s' ", $request->get('fecha_fin').' 23:59:59');
-        }
-
-        if($request->get('libranzaLead')){
-            $query .= sprintf(" AND leads.`state` != 0 ");
-        }
-
-        if($request->get('communityLead')){
-            $query .= sprintf(" AND leads.`channel` != 1 ");
-        }
-      
-        
-        $query .= " ORDER BY leads.`id` DESC";
-
-        $query .= sprintf(" LIMIT %s,30", $request->get('limitFrom'));
-
-        $resp = DB::select($query);
-
-        return $resp;
+        return $respCM;
     }
 
     /**

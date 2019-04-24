@@ -178,4 +178,6 @@
 <script src="{{ asset('js/appLibranzaPublic/controllers/libranza.js') }}"></script>
 <script src="{{ asset('js/appLibranzaPublic/controllers/libranza.js') }}"></script>
 <script> src="{{asset('js/bower_components/angular-slick-carousel/dist/slick.js') }}"</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 @stop

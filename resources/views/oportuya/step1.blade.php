@@ -60,7 +60,7 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form id="saveLeadOportuya" ng-submit="getValidationLead()">
+			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
 					<div class="col-12 col-sm-6 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
@@ -101,7 +101,8 @@
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
 							<label for="telephone" class="control-label">Celular*</label>
-							<input type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+							<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+							<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 						</div>
 						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
 							Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente 018000117787
@@ -173,7 +174,8 @@
 						<div class="row">
 							<div class="col-12 form-group">
 								<label for="">Número de Celular</label>
-								<input type="text" ng-model="leadInfo.telephone" class="form-control" ng-disabled="leadInfo.CEL_VAL" />
+								<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+								<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
 									Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 018000117787
 								</div>
