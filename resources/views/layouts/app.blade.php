@@ -304,21 +304,6 @@
 	</body>
 
 	<script type="text/javascript">
-		$('#sliderPrincipal').slick({
-			autoplay: true,
-			autoplaySpeed: 15000,
-			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
-			prevArrow: '<i class="fa fa-chevron-right slidePrev"></i>',
-			responsive: [
-				{
-					breakpoint: 768,
-					settings: {
-						arrows: false,
-					}
-				}
-			]
-		});
-
 		$('#oportuyaSlider').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,

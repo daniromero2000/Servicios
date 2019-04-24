@@ -220,7 +220,7 @@ a:hover, a:active, a:focus, a:visited{
     cursor: pointer;
     font-size: 30px;
     height: 60px;
-    padding: 23px 0 0 5px;
+    padding: 7px 0 0 5px;
     position: absolute;
     right: 0;
     transform: translate(0,-50%);
@@ -236,7 +236,7 @@ a:hover, a:active, a:focus, a:visited{
 	cursor: pointer;
 	font-size: 30px;
 	height: 60px;
-	padding: 22px 5px 0 0;
+	padding: 7px 5px 0 0;
 	position: absolute;
 	left: 0;
 	transform: translate(0,-50%);
@@ -2610,8 +2610,6 @@ p.wantToSecondTex{
 	background-color: rgba(28,171,226,0.4);
 }
 
-
-
 /* Media Queries */
 
 @media(min-width: 1701px){
@@ -2623,114 +2621,70 @@ p.wantToSecondTex{
 @media(max-width: 1700px){
 
 	.conoce-TarjetaOportuya, .conoce-creditoMotos, .conoce-creditoLibranza, .conoce-seguros, .conoce-viajes{
-
 		width: 45%;
-
 	}
 
-	
-
-
-
 	.conoce-titleTarjeta{
-
 		font-size: 18px;
-
 		line-height: 20px;
-
 		margin: 10px 0;
-
 	}
 
 	.conoce-tarjetasTexto{
-
 		font-size: 10px;
-
 		margin-top: 10px;
-
 	}
 
 	.conoce-titleTarjetaMotos{
-
 		margin: 10px 0 20px 0;
-
 	}
 
 	.conoce-titleTarjetaSeguros{
-
 		margin: 10px 0 45px 0;
-
 	}
 
 	.conoce-titleTarjeta > strong, .conoce-titleTarjetaMotos > strong, .conoce-titleTarjetaSeguros > strong{
-
 		font-size: 20px;
-
 	}
 
 	.conoce-tarjetasImg{
-
 		width: 32px;
-
 	}
 
 	.conoce-containButton{
-
 		right: 8%;
-
 	}
 
 	.conoce-button{
-
 		font-size: 10px;
-
 	}
 
-
-
 	.oportuyaContentHeader{
-
 		height: 6em;
-
 	}
 
 
 
 	.oportuyaHeaderImage img{
-
-		
     	transform: translateY(15%);
-
 	}
 
 }
 
-
-
-
-
 @media(max-width: 1500px){
 
 	.sliderPrincipal-containTextBottom{
-
 		top: 60%;
-
 	}
 
 
 
 	.oportuyaSliderContent{
-
 		bottom: 7em;
-
 	}
 
-
-
 	.soatImageContainer div img{
-
 		width: 50%;
-
 	}
 
 	.servicesPointCard p, .servicesPointContainer p{
@@ -2744,26 +2698,19 @@ p.wantToSecondTex{
 @media(max-width: 1366px){
 
 	.dialogThakPage p{
-
 		font-size: 1.3em;
 	}
 
 	.conoce-containButton {
-
 	    right: 8%;
-
 	}
 
 	.back ul li{
 		line-height: 1;
 	}
 
-
-
 	.conoce-button{
-
 		padding: 5px 10px;
-
 	}
 
 
@@ -2816,52 +2763,27 @@ p.wantToSecondTex{
 		width: 50%;
 	}
 
-
-
 	.conoce-titleTarjeta {
-
 	    font-size: 15px;
-
 	    line-height: 20px;
-
 	    margin: 10px 0;
-
 	}
-
-
 
 	.conoce-titleTarjetaMotos{
-
 		font-size: 17px;
-
 		margin: 10px 0 30px 0;
-
 	}
-
-
 
 	.conoce-tarjetasImg{
-
 		width: 24px;
-
 	}
-
-
-
-
 
 	.oportuyaSliderTitle p{
-
 		font-size: 2em;
-
 	}
 
-
-
 	.oportuyaSliderDescription p,.oportuyaSliderButton p a{
-
 		font-size: 1em;
-
 	}
 
 	.viajesListItems{
@@ -2872,16 +2794,13 @@ p.wantToSecondTex{
 		padding: 0 0.5em;
 	}
 
-
 	.servicesPointCard p, .servicesPointContainer p{
 		font-size: 1em;
 	}
 
-	
 	.travelOffersButtonAdvance{
 		padding: 0;
 	}
-
 
 }
 
@@ -2894,130 +2813,85 @@ p.wantToSecondTex{
 	}
 
 	.bestPricesImg img{
-		    padding: 11% 0;
+		padding: 11% 0;
 	}
 
 	.tarjetaLAst{
-
 		margin: auto;
-
 	}
 
 	.conoce-containTarjeta{
-
 		margin-bottom: 20px;
-
 	}
 
 	.conoce-TarjetaOportuya, .conoce-creditoMotos, .conoce-creditoLibranza, .conoce-seguros, .conoce-viajes{
-
 		width: 35%;
-
 	}
 
 	.conoce-tarjetasImg{
-
 		width: 48px;
-
 	}
 
 	.conoce-titleTarjeta > strong, .conoce-titleTarjetaMotos > strong, .conoce-titleTarjetaSeguros > strong{
-
 		font-size: 25px;
-
 	}
 
 	.conoce-titleTarjeta {
-
 	    font-size: 25px;
-
 	    line-height: 24px;
-
 	    margin: 15px 0 50px 0;
-
 	}
 
 	.conoce-tarjetasTexto {
-
 		font-size: 13px;
-
     	margin-top: 40px;
-
 	}
 
 	.conoce-titleTarjetaMotos {
-
 	    font-size: 25px;
-
 	    margin: 10px 0 70px 0;
-
 	}
 
 	.conoce-titleTarjetaSeguros {
-
 	    margin: 10px 0 105px 0;
-
 	}
 
 	.conoce-containButton {
-
 	    right: 14%;
-
 	}
 
 	.conoce-button {
-
 	    padding: 7px 30px;
-
 	    font-size: 15px;
-
 	}
-
-
 
 	.oportuyaSliderContent{
-
 		bottom: 5em;
-
 	}
-
-
-
+	
 	.oportuyaSliderContent p{
-
 		margin-bottom: 0;
-
 	}
-
-
 
 	.titleContentCard{
-
 		font-size: 1.2em;
-
 	}
 
-
-
 	.descriptionRequirements{
-
 		width: 90%;
-
 		margin: 3em auto;
-
 	}
 
 	.descriptionRequirements{
-	width: unset;
-	
-}
-.requirementsList{
-	width: unset;
-	
-}
+		width: unset;
+	}
 
-.dialogThakPage p{
+	.requirementsList{
+		width: unset;
+		
+	}
 
+	.dialogThakPage p{
 		font-size: 1.2em;
 	}
 
@@ -3025,37 +2899,40 @@ p.wantToSecondTex{
 		height: unset;
 	}
 
-.viajesWhatsappButton{
-	padding-left: 0;
-	padding-right:  0;
-}
+	.viajesWhatsappButton{
+		padding-left: 0;
+		padding-right:  0;
+	}
 
-.viajesListItems li{
-	padding: 0 0.3em;
-}
+	.viajesListItems li{
+		padding: 0 0.3em;
+	}
 
-.busTourButton p a{
-	width: 65%;
-}
+	.busTourButton p a{
+		width: 65%;
+	}
 
-.servicesPointCard p, .servicesPointContainer p{
+	.servicesPointCard p, .servicesPointContainer p{
 		font-size: 0.9em;
 	}
 
-.serviceContainer {
-    margin-left: 40%;
+	.serviceContainer {
+		margin-left: 40%;
+	}
+
+	.travelOffersButtonAdvance p a{
+		padding: 7px 10px;
+	}
+
 }
-
-.travelOffersButtonAdvance p a{
-	padding: 7px 10px;
-}
-
-}
-
-
 
 @media(max-width: 991px){
-
+	.slidePrev{
+		display: none;
+	}
+	.slideNext{
+		display: none;
+	}
 	.travelOffersButtonAdvance p a{
 		padding: 7px 30px;
 	}
@@ -3069,220 +2946,131 @@ p.wantToSecondTex{
 	}
 
 	.wantToContent {
-    position: relative;
-    top: unset;
-    left: unset;
-    transform: unset;
-    text-align: center;
+		position: relative;
+		top: unset;
+		left: unset;
+		transform: unset;
+		text-align: center;
 	}
 
 	p.wantToMainTex{
 		font-size: 3em;
 	}
+
 	.wantToButton {
-    margin-top: 2em;
+   		margin-top: 2em;
     }
 
 	.dialogThakPage p{
-
 		font-size: 1em;
 		width: 90%;
-    
-    transform: translate(-50%,60%);
-
+   		transform: translate(-50%,60%);
 	}
+
 	.helperRow{
 		display: none;
 	}
 
 	.conoce-titleTarjeta{
-
 		font-size: 35px;
-
 		line-height: 35px;
-
 		margin: 20px 0 50px;
-
 	}
 
 	.conoce-titleTarjetaMotos{
-
 		font-size: 25px;
-
 		padding: 0 40px;
-
 		margin: 25px 0 30px 0;
-
 	}
 
 	.conoce-titleTarjetaSeguros{
-
 		margin: 20px 0 45px 0;
-
 	}
 
 	.conoce-tarjetasTexto{
-
 		font-size: 15px;
-
 		line-height: 17px;
-
 		margin-top: 70px;
-
 	}
-
-	
 
 	#video{
-
 		text-align: center;
-
 	}
 
-
-
 	.video-botonPlay{
-
 		position: inherit;
-
 		transform: none;
-
 		top: 0;
-
 		left: 0;
-
 	}
 
 	.footer-containerNewsletter{
-
 		position: initial;
-
 	}
 
 	.footer-menu{
-
 		padding: 45px 0;
-
 	}
 
 	.footer-containerServicioCliente{
-
 		border: none;
-
 	}
 
 	.contentListFeatures{
-
 		display: none;
-
 	}
 
 	.contentListFeaturesResponsive{
-
 		display: block;
-
 	}
-
-
 
 	.buttonOportuyaSection{
-
 		position: relative;
-
    		float: right;
-
     	margin-top: -69px;
-
    	 	margin-right: 2px;
-
    	 	left: 0;
-
     	transform: translate(0,0);
-
 	}
-
-
 
 	.oportuyaContentImage img{
-
 		margin-top: 14em;
-
 		position: relative;
-
 		right: 0;
-
 	}
-
-
 
 	.soatImageContainer div img{
-
 		width: 100%;
-
 	}
-
-
 
 	.textOportuyaHeader{
-
 		width: 100%;
-
 		position: absolute;
-
     	left: unset;
-
     	right: 10%;
-
     	transform: translate(0);
-
     	text-align: center;
-
 	}
-
-
 
 	.header-menu:before{
-
 		display: none;
-
 	}
-
-
 
 	.header-menu button.navbar-toggler{
-
 		margin-left: 50%;
-
    		transform: translate(-50%);
-
 	} 
 
-
-
 	.toggleResponsive{
-
 		background-color: transparent;
-
 	}
-
-
 
 	.header-item{
-
 		width: 100%;
-
 	}
 
-
-
-	
-
-
-
 	.buttonResponsive{
-
 		display: block;
-
 		margin-right: 0px;
 	    position: fixed;
 	    top: 90%;
@@ -3293,19 +3081,13 @@ p.wantToSecondTex{
 	    background: #ffc100;
 	    border-radius: 100%;
 	    padding-left: 13px;
-
-
-
 	}
 
 	.innerButtonResponsive{
 		top: 13px;
 	}
 
-	
-
 	.innerButtonResponsive, .innerButtonResponsive1, .innerButtonResponsive2 {
-
 		background-color: #1CABE2;
 		position: absolute;
 		width: 25px;
@@ -3315,69 +3097,44 @@ p.wantToSecondTex{
 		transition-timing-function: ease;
 		transition-duration: .2s;
 		transition-property: transform,opacity;
-
 	}
 
 	.innerButtonResponsive1 {
-
         top: 23px;
-
 	}
 
 	.innerButtonResponsive2 {
-
         top: 32px;
-
     }
 
-
-
-
-
     .buttonResponsive.open .innerButtonResponsive {
-
-    transform: translate3d(0,10px,0) rotate(45deg);
-
+    	transform: translate3d(0,10px,0) rotate(45deg);
 	}
 
 	.buttonResponsive.open .innerButtonResponsive1{
-
-    transform: translate3d(0,0px,0) rotate(-45deg);
-
+   		transform: translate3d(0,0px,0) rotate(-45deg);
 	}
 
 	.buttonResponsive.open .innerButtonResponsive2 {
-
-    transform: translate3d(0,-10px,0) rotate(135deg);
-
+    	transform: translate3d(0,-10px,0) rotate(135deg);
 	}
 
 
 
 	.headerImage{
-
 		z-index: 1;
-
 	}
 
 	.header-containerLogo{
 		text-align: center;
 	}
 
-
-
 	.oportuyaSliderTitle{
-
 		font-size: 0.7em;
-
 	}
 
-
-
 	.oportuyaSliderButton{
-
 		font-size: 0.7em;
-
 	}
 
 	.bestPricesImg img{
@@ -3408,10 +3165,8 @@ p.wantToSecondTex{
 	}
 
 	.viajesSliderContent {
-    
-    bottom: 10%;
-    left: 8%;
-    
+		bottom: 10%;
+		left: 8%;
 	}
 
 	.conoceViajesTitle p{
@@ -3450,8 +3205,6 @@ p.wantToSecondTex{
 	.footer-contianerTelefonos{
 		margin-left: 10%;
 	}
-
-
 
 	.conoce-titleTarjeta {
 	    font-size: 25px;
