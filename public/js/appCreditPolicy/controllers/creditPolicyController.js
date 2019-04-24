@@ -26,6 +26,10 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 
 	$scope.optionsVigenciaRechazados = [
 		{
+			label: '30',
+			value: 30 
+		},
+		{
 			label: '60',
 			value: 60
 		},

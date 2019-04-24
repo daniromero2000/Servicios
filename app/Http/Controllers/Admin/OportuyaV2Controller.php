@@ -124,8 +124,6 @@ class OportuyaV2Controller extends Controller
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
-
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 			$departament = $this->getCodeAndDepartmentCity(trim($cityName[0]->CIUDAD));
 			$flag=0;
 			$lead= new Lead;
@@ -180,7 +178,6 @@ class OportuyaV2Controller extends Controller
 				$lead->typeService = $request->get('typeService');
 				$response = $lead->save();
 			}
-
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
 
@@ -237,6 +234,7 @@ class OportuyaV2Controller extends Controller
 				}
 
 			}
+			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
 
 			if($validatePolicyCredit == false){
 				return -1;
@@ -358,6 +356,8 @@ class OportuyaV2Controller extends Controller
 			$ftp=0;
 			$state='A';
 			$granTotal=0;
+			$queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAssessor);
+        	$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 	
 			$flag = 1;
 
@@ -396,16 +396,6 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 
-			$soliData=[
-				'CLIENTE'=>$identificationNumber,
-				'CODASESOR'=>$codeAssessor,
-				'FECHASOL'=>date("Y-m-d H:i:s",strtotime($dateLead)),
-				'SUCURSAL'=>$sucursal,
-				'ESTADO'=>$estado,
-				'FTP'=>$ftp,
-				'STATE'=>$state
-			];
-
 			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
@@ -425,6 +415,7 @@ class OportuyaV2Controller extends Controller
 				}				
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
 				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
 				$solic_fab->SUCURSAL=$sucursal;
 				$solic_fab->ESTADO="ANALISIS";
@@ -577,7 +568,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->STATE = 'A';
 				$turnosOportuya->save();
 			}else{
-				$con3 = "RECHAZADO";
+				$con3 = "NEGADO";
 			}
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$dataLead=[
@@ -585,7 +576,7 @@ class OportuyaV2Controller extends Controller
 			];
 			
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
-			if($con3 == 'RECHAZADO'){
+			if($con3 == 'NEGADO'){
 				return response()->json(['data' => false]);
 			}elseif($con3 == 'PREAPROBADO'){
 				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD]);
@@ -864,11 +855,12 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function getExistSolicFab($identificationNumber){
+		$timeRejectedVigency = DB::connection('oportudata')->select("SELECT `rechazado_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$timeRejectedVigency = $timeRejectedVigency[0]->rechazado_vigencia;
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime ("- 30 day", strtotime ( $dateNow ) );
-		$dateNew = date ( 'Y-m-d' , $dateNew );
-		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNew);
-
+		$dateNow = strtotime ("- $timeRejectedVigency day", strtotime ( $dateNow ) );
+		$dateNow = date ( 'Y-m-d' , $dateNow );
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNow);
 		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
 
 		if($resp[0]->totalSolicitudes > 0){
@@ -1198,7 +1190,7 @@ class OportuyaV2Controller extends Controller
 			if($respScoreClient >= 686){
 				return true;
 			}else{
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				return false;
 			}
 		}

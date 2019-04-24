@@ -19,28 +19,40 @@
 
 
 @section('content')
-	<div id="sliderPrincipal">
-		@foreach($sliderPrincipal as $slider)
-			<div class="containImg">
-				<img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
-				<img src="/images/{{ $slider['img'] }}" class="img-fluid" title="{{ $slider['title'] }}" />
-				@if($slider['position_text'] == 'bottom')
-					<div class="sliderPrincipal-containTextBottom">
-						@php
-							echo $slider['texto'];
-						@endphp
-						<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button" style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
+	<div id="sliderPrincipal" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner">
+			@foreach($sliderPrincipal as $key => $slider)
+				<div class="carousel-item @if($key == 0) active @endif" data-interval="15000">
+					<div class="containImg">
+						<img src="/images/sombra.png" alt="Sombra" class="img-fluid sombraSliderPrincipal">
+						<img src="/images/{{ $slider['img'] }}" class="img-fluid" title="{{ $slider['title'] }}" />
+						@if($slider['position_text'] == 'bottom')
+							<div class="sliderPrincipal-containTextBottom">
+								@php
+									echo $slider['texto'];
+								@endphp
+								<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button" style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
+							</div>
+						@else
+							<div class="sliderPrincipal-containTextLeft">
+								@php
+									echo $slider['texto'];
+								@endphp
+								<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button" style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
+							</div>
+						@endif
 					</div>
-				@else
-					<div class="sliderPrincipal-containTextLeft">
-						@php
-							echo $slider['texto'];
-						@endphp
-						<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button" style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
-					</div>
-				@endif
-			</div>
-		@endforeach
+				</div>
+			@endforeach
+		</div>
+		<a class="slideNext" href="#sliderPrincipal" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="slidePrev" href="#sliderPrincipal" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 	</div>
 
 	<div id="conoce">
