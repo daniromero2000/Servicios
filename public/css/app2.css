@@ -1284,6 +1284,15 @@ label {
 .warrantyLegal:hover{
     color: #909090;
 }
+.warrantyBack-xs{
+	display: none;
+}
+.warrantyBack-xs{
+	display: none;
+}
+.warrantyLegal-xs{
+	display: none;
+}
 .warrantyLegal-xs{
 	display: none;
 }
@@ -1925,8 +1934,8 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	**/
 	.successfulText{
 		position: absolute;
-		width: 60%;
-		font-size: 15px;
+		width: 2vw;
+		font-size: 3.1vw;
 		font-family: barlow;
 		font-weight: bold;
 		left: 35%;
@@ -1949,6 +1958,16 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		display: none;
 	}
 
+	.warrantyBack-xs{
+		text-align: center;
+		display: block;
+		font-family: barlow;
+		color: #656464;
+		font-weight: bold;
+	}
+	.warrantyBack-xs:hover{
+		color: #656464;
+	}
 	.warrantyLegal-xs{
 		text-align: center;
 		display: block;

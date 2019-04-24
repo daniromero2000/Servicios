@@ -56,12 +56,15 @@
                         <td>{!! $userName !!}</td>
                     </tr>
                     <tr style="height:50px">
-                        <td>PEPE</td>
+                        <td>{!! $ !!}<br>{!! $shop !!}." ".{!! $shop !!}</td>
                     </tr>
                 </table>
             </td >
         </tr>
     </table>
+    <div style="max-width:600px;margin: auto;border-spacing: 0px;text-align: center;margin-top: -40px;">
+        <p>Por favor, NO responda a este mensaje, es un envío automático. </p>
+    </div>
     
 </body>
 </html>
