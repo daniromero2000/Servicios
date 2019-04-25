@@ -234,8 +234,8 @@ class OportuyaV2Controller extends Controller
 				}
 
 			}
+			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
 			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
-
 			if($validatePolicyCredit == false){
 				return -1;
 			}
