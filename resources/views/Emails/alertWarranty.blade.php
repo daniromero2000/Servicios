@@ -56,7 +56,7 @@
                         <td>{!! $userName !!}</td>
                     </tr>
                     <tr style="height:50px">
-                        <td><br>{!! $shop !!}</td>
+                        <td><br></td>
                     </tr>
                 </table>
             </td >
