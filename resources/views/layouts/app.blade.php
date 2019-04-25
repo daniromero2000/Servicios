@@ -174,9 +174,9 @@
 							<a class="nav-item nav-link header-item header-item1" href="{{url('oportuya')}}">
 								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
-							<!--<a class="nav-item nav-link header-item header-item1" href="/libranza">
+							<a class="nav-item nav-link header-item header-item1" href="/libranza">
 								<span class="header-textoItem">Libranza</span>
-							</a>-->
+							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
 							</a>
@@ -198,14 +198,14 @@
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item3 @php echo $activeAvance @endphp " href="/avance"> 
+								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/libranza"> 
+									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Libranza</span>
+								</a>
+								<a class="nav-item nav-link header-item header-item4 @php echo $activeAvance @endphp " href="/avance">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Avances</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item4 @php echo $activeSeguros @endphp " href="/seguros">
+								<a class="nav-item nav-link header-item header-item5 @php echo $activeSeguros @endphp " href="/seguros">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Seguros</span>
-								</a>
-								<a class="nav-item nav-link header-item header-item5 @php echo $activeViajes @endphp " href="/viajes">
-									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Viajes</span>
 								</a>
 							</div>
 						</div>
@@ -377,6 +377,23 @@
             ],
             
         });
+
+		$(".multiple-items-motos").slick({
+          arrows: false,
+		  infinite: true,
+		  slidesToShow: 3,
+		  slidesToScroll:3,
+		  vertical: true,
+	      verticalSwiping: true,
+	      asNavFor: '.single-item-motos',
+	      centerMode: true,
+	      focusOnSelect: true
+        });
+        $('.single-item-motos').slick({
+			arrows: false,
+			asNavFor: '.multiple-items-motos'
+		});
+		
 	</script>
 
 </html>
