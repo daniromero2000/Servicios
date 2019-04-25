@@ -241,14 +241,16 @@ class WarrantyController extends Controller
             Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
                 $msj->to('desarrolladorjunior@lagobo.com');
-                /*$msj->to('garantiasoportunidades@lagobo.com.co');
+                $msj->to('garantiasoportunidades@lagobo.com.co');
                 $msj->to('garantiasoportunidades2@lagobo.com.co');
                 $msj->to('garantiasoportunidades3@lagobo.com');
-                $msj->to('gestiondegarantias@lagobo.com.co');*/
+                $msj->to('gestiondegarantias@lagobo.com.co');
             });
-            Mail::send('Emails.alertWarrantyClient', $warrantyRequest->NUMERO, function($msj) use ($warrantyRequest){
-                $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
-                $msj->to($warrantyRequest->email);
+            
+            
+            Mail::send('Emails.alertWarrantyClient', ['caso' => $warrantyRequest->NUMERO], function($msj) use ($warrantyRequest){
+                $msj->subject('OPORTUNIDADES  /  ELECTRO OFERTAS, SOLICITUD DE GARANTÍA  CASO'.$warrantyRequest->NUMERO);
+                $msj->to('davidgigra@gmail.com');
             });
             // return a request id
             return $warrantyRequest->NUMERO;
