@@ -1,37 +1,5 @@
 <div Class="contentGarantias">
-    <div class="align-self-center ml-auto ">
-        <a href="{{ route('TermsAndConditions') }}" class="align-middle warrantyLegal-xs">Términos y Condiciones</a>
-    </div>
-    <div class="row resetRow">
-        <div class="logoHeaderWarranty">
-            <img src="{{ asset('images/warranty-oportunidades.png') }}" class="img-fluid" alt="Oportuya" />
-        </div>
-        <div class="align-self-center ml-auto conditions">
-            <a href="{{  route('TermsAndConditions') }}" class="align-middle warrantyLegal">Términos y Condiciones</a>
-        </div>
-        <div class="col-12 conatiner-imgAnalista">
-            <img src="{{ asset('images/analistaGarantiaDigital.png') }}"  alt="" class="img-fluid imgAnalista" />
-        </div>
-        <div class="stepBystep">
-            <span><strong>Reclamación de Garantía</strong></span>
-        </div>
-    </div>
-    <div class="row resetRow">
-        <div class="col-12 containTitle">
-            <h2 class="text-center titleAnalista"><strong>Hola!</strong> soy Marcela tu asesora digital</h2>
-            <p class="text-center textAnalista">En este momento te encuentras haciendo tu reclamación de garantía, por favor diligencia <br>todos los datos para que la gestión sea más fácil</p>
-            <h3 class="text-analyst text-center">Solo te tomará unos minutos solicitar tu Garantía</h3>
-        </div>
-    </div>
     <div class="Garantia-containerForm" id='WarrantyStep1' ng-if='step == 1'>
-        <div class="row resetRow">
-            <div class="descriptionStep">
-                <strong>Información básica</strong><br>
-                <span class="descText">Ingresa tus datos personales</span>
-                <img src="{{ asset('images/datosPersonales-min.png') }}" class="img-fluid forms-descImg" />
-                <span class="descStepNum">1</span>
-            </div>
-        </div>
         <form ng-submit="getProducts()">
             <div class="row resetRow">
                 <div class="col-12 col-sm-6 form-group">
@@ -55,14 +23,7 @@
         </form>
     </div>
     <div class="Garantia-containerForm" id='WarrantyStep2' ng-if='step == 2'>
-        <div class="row resetRow">
-            <div class="descriptionStep">
-                <strong>Información del producto</strong><br>
-                <span class="descText">Ingresa la descripción de tu producto</span>
-                <img src="{{ asset('images/datosPersonales2-min.png') }}" class="img-fluid forms-descImg" />
-                <span class="descStepNum">2</span>
-            </div>
-        </div>
+        
         <form ng-submit="sendStep2()">
             <div class="row resetRow text-center">
                 <div class="col resetCol text-center">
@@ -152,7 +113,7 @@
                     <input class="form-control warrantyInputs WarrantyInputText" type="text"  ng-model="$parent.WarrantyRequest.reference" id="reference" required="" placeholder="la referencia la puedes encontrar en la factura y/o en las etiquetas que tiene adheridas el producto"/>
                 </div>
                 <div class="col-sm-12 col-md-6 form-group">
-                    <label for="dateDocumentExpedition">Fecha de compra (puedes digitar una aproximación)*</label>
+                    <label for="dateDocumentExpedition">Fecha de compra (puedes digitar una aproximación)</label>
                     <div class="input-group"
                             moment-picker="WarrantyRequest.dateShop"
                             format="YYYY-MM-DD"
@@ -206,15 +167,7 @@
             </div>
         </form>
     </div>
-    <div class="Garantia-containerForm" id='WarrantyStep21' ng-if='step == 3'>
-        <div class="row resetRow">
-            <div class="descriptionStep">
-                <strong>Información de ubicación </strong><br>
-                <span class="descText">Ingresa tus datos de ubicación y de contacto</span>
-                <img src="{{ asset('images/datosLaborales-min.png') }}" class="img-fluid forms-descImg" />
-                <span class="descStepNum">3</span>
-            </div>
-        </div>
+    <div class="Garantia-containerForm" id='WarrantyStep3' ng-if='step == 3'>
         <form ng-submit="sendRequest()">
             <div class="row resetRow">
                 <div class="col-12 form-group">
