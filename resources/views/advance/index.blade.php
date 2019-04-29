@@ -104,6 +104,9 @@
 		</div>	
 	</div>
 	<div class="credito-online-boton">
+		<p class="textTarjeta">
+			<i>*Tarjeta Oportuya NO VIGILADA por la SUPERINTENDENCIA FINANCIERA de Colombia</i>
+		</p>
 		<div>
 			<a href="/avance/step1">Click para Crédito</a>
 		</div>
