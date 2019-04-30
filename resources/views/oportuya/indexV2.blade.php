@@ -52,9 +52,11 @@
 					<br>
 					<div class="oportuyaSliderDescription">
 						<p>
-							@php
-							  echo $slider['description'];
-							@endphp
+							<i>
+								@php
+								echo $slider['description'];
+								@endphp
+							</i>
 						</p>
 					</div>
 					<br>
