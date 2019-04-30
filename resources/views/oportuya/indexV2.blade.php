@@ -189,13 +189,14 @@
 				</p>
 				<p class="descriptionRequirements">
 					<ul class="requirementsList">
-						<li>Ser empleado o independiente con un tiempo mínimo de cuatro (4) meses.</li>
-						<li>No presentar reportes negativos en las centrales de riesgo.</li>
+						<li>Pertenecer al perímetro urbano de las ciudades donde se encuentran los <a href="/Nuestras-tiendas">puntos</a> de venta físicos de ALMACENES OPORTUNIDADES. </li>
+						<li>En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social.</li>
+						<li>Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. .</li>	
 						<li>Tener ingresos iguales o superior a 1 SMMLV.</li>
-						<li>No haber cumplido los 70 años de edad.</li>
-						<li>Si tiene entre 70 y 80 años debe ser pensionado.</li>
+						<li>Edad Máxima de 70 años.</li>
 						<li>Presentar un buen historial de crédito en el sector financiero.</li>
 						<li>Ser mayor de edad.</li>
+						<li>Tener nacionalidad colombiana </li>
 					</ul>
 				</p>
 			</div>
