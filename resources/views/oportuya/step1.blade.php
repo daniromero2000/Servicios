@@ -1,5 +1,7 @@
 @extends('layouts.steps')
-
+@section('eventTag')
+	<!-- Event snippet for Generación de Crédito conversion page --> <script> gtag('event', 'conversion', { 'send_to': 'AW-781153823/2Ee7CKT9l5sBEJ_svfQC', 'value': 200.0, 'currency': 'COP' }); </script> 
+@endsection
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 
 @section('metaTags')

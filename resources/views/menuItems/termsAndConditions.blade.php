@@ -298,6 +298,22 @@
 			<h2 class="menuItem-subtitle">MANEJO DE USUARIO Y CONTRASEÑA:</h2>
 			<p class="menuItem-text">El usuario se compromete a guardar de forma confidencial y con la máxima diligencia su clave de acceso personal al Sitio Web.
 			</p>
+			<h2 class="menuItem-subtitle">CAMPAÑA $1.000 PESITOS A CRÉDITO :</h2>
+			<p class="menuItem-text">
+				Vigencia: Del 01 al 31 de julio de 2019. La presente campaña aplica para compras con Tarjeta Oportuya según el cupo asignado. El valor de la cuota inicial es por valor de 1.000 pesos incluye IVA, capital, no incluye seguro deudores. 
+				TARJETA OPORTUYA: Sujeta a aprobación, por capacidad de pago, cuota de manejo $14.400, siempre y cuando tenga saldo, las cuotas deberán ser pagadas en la caja de almacenes oportunidades a nivel nacional y/o Efecty. Tarjeta Oportuya NO VIGILADA por la Superintendencia Financiera de Colombia. La cuota de referencia es para un plazo de 18 meses. La tasa efectiva anual de financiación de crédito será la máxima autorizada por la Superintendencia Financiera para este periodo; Productos sujetos hasta agotar existencias o hasta que finalice la campaña, lo primero que ocurra. 
+				La presente campaña NO APLICA para compra de SOAT, motos, compras superiores a $3.500.000.oo, televisores superiores a 43” y celulares. Garantía suplementaria, no aplica para muebles (bases, colchones, salas, comedores). Entrega gratis dentro del perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES.
+
+				Condiciones para acceder a la tarjeta OPORTUYA :
+				<ul>
+					<li type="disc">Edad mínima para acceder a la tarjeta es 18 años. </li>
+					<li type="disc">Edad máxima 70 años. </li>
+					<li type="disc">Tener nacionalidad colombiana. </li>
+					<li type="disc">Pertenecer al perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES. </li>
+					<li type="disc">En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social. </li>
+					<li type="disc">Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. </li>
+				</ul>
+			</p>
 		</div>
 	</div>
 @endsection
