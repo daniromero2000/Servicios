@@ -52,9 +52,11 @@
 					<br>
 					<div class="oportuyaSliderDescription">
 						<p>
-							@php
-							  echo $slider['description'];
-							@endphp
+							<i>
+								@php
+								echo $slider['description'];
+								@endphp
+							</i>
 						</p>
 					</div>
 					<br>
@@ -90,8 +92,7 @@
 									crédito en el sector financiero.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
 									<li>Cuenta con un cupo hasta por $2.000.000 dependiendo de su 
 									capacidad de endeudamiento.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
-									<li>Todas las compras tienen un descuento del 10%.							 
-									Cupo rotativo.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
+									<hr style="visibility: hidden;height: 1pt; margin:7px;">
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
 									la tarjeta.</li>
 								</ul>
@@ -122,7 +123,7 @@
 									<li>Cuenta con un cupo hasta por $3.000.000.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li>Tiene avance en efectivo hasta $500.000.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li> Puede diferir el avance desde 6 hasta 9 meses.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
-									<li>Todas las compras tienen un descuento del 10%.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
+									<li>Todas las compras tienen un descuento especial.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li>Cupo rotativo.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">								
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
 									la tarjeta.</li>
@@ -154,7 +155,7 @@
 									<li>Cuenta con cupo hasta por $3.000.000.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Tiene avance en efectivo hasta $500.000.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li> Puede diferir el avance desde 6 hasta 9 meses.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
-									<li>Todas las compras tienen un descuento del 10%.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
+									<li>Todas las compras tienen un descuento especial.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Promociones y descuentos en temporadas especiales en nuestras 
 									tiendas.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
@@ -188,13 +189,14 @@
 				</p>
 				<p class="descriptionRequirements">
 					<ul class="requirementsList">
-						<li>Ser empleado o independiente con un tiempo mínimo de cuatro (4) meses.</li>
-						<li>No presentar reportes negativos en las centrales de riesgo.</li>
+						<li>Pertenecer al perímetro urbano de las ciudades donde se encuentran los <a href="/Nuestras-tiendas">puntos</a> de venta físicos de ALMACENES OPORTUNIDADES. </li>
+						<li>En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social.</li>
+						<li>Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. .</li>	
 						<li>Tener ingresos iguales o superior a 1 SMMLV.</li>
-						<li>No haber cumplido los 70 años de edad.</li>
-						<li>Si tiene entre 70 y 80 años debe ser pensionado.</li>
+						<li>Edad Máxima de 70 años.</li>
 						<li>Presentar un buen historial de crédito en el sector financiero.</li>
 						<li>Ser mayor de edad.</li>
+						<li>Tener nacionalidad colombiana </li>
 					</ul>
 				</p>
 			</div>

@@ -87,8 +87,7 @@
 									<li>Aplica para aquellas personas que aún no cuentan con historial de 
 									crédito en el sector financiero.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
 									<li>Cuenta con un cupo hasta por $2.000.000 dependiendo de su 
-									capacidad de endeudamiento.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
-									<li>Todas las compras tienen un descuento del 10%.							 
+									capacidad de endeudamiento.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">					 
 									Cupo rotativo.</li><hr style="visibility: hidden;height: 1pt; margin:7px;">
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
 									la tarjeta.</li>
@@ -120,7 +119,7 @@
 									<li>Cuenta con un cupo hasta por $3.000.000.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li>Tiene avance en efectivo hasta $500.000.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li> Puede diferir el avance desde 6 hasta 9 meses.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
-									<li>Todas las compras tienen un descuento del 10%.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
+									<li>Todas las compras tienen un descuento especial.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">
 									<li>Cupo rotativo.</li><hr style="visibility: hidden;height: 1pt; margin:4px;">								
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
 									la tarjeta.</li>
@@ -152,7 +151,7 @@
 									<li>Cuenta con cupo hasta por $3.000.000.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Tiene avance en efectivo hasta $500.000.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li> Puede diferir el avance desde 6 hasta 9 meses.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
-									<li>Todas las compras tienen un descuento del 10%.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
+									<li>Todas las compras tienen un descuento especial.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>Promociones y descuentos en temporadas especiales en nuestras 
 									tiendas.</li><hr style="visibility: hidden;height: 1pt; margin:3px;">
 									<li>No aplica cuota de manejo si no se está haciendo uso del cupo de 
