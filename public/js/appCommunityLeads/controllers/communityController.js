@@ -146,7 +146,6 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.cargando = false;
 			}
 		}, function errorCallback(response) {
-			console.log(response);
 		});
 	};
 
@@ -192,11 +191,11 @@ app.controller('communityController', function($scope, $http, $rootScope){
 	};
 
 	$scope.addCommunityForm = function(){
+		$scope.lead = {};
 		$("#addCommunityLead").modal("show");
 	};
 
-	$scope.addCommunityLeads =function(){
-		
+	$scope.addCommunityLeads = function(){
 		$http({
 			method:'POST',
 			url:'/communityLeads/addCommunityLeads',
@@ -208,7 +207,6 @@ app.controller('communityController', function($scope, $http, $rootScope){
 					$scope.lead = {};
 				}
 			},function errorCallback(response){
-				
 			});
 		};
 
@@ -310,6 +308,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.lastNameLead = lastName;
 				$scope.state = state;
 			}
+			$("#viewComments").modal("show");
 		}, function errorCallback(response) {
 		    
 		});
@@ -329,7 +328,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		  url: '/api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
-				$scope.viewComments("","",$scope.idLead, false);
+				$scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.lead.state, $scope.idLead,false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}

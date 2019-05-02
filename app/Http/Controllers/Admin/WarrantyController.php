@@ -23,7 +23,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Mail;
-
+use App\Imagenes;
 
 
 class WarrantyController extends Controller
@@ -35,11 +35,25 @@ class WarrantyController extends Controller
         $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products'] ]);
     }
     /**
-     * Display a listing of the resource.
+     * Display a main page of Warranty App.
+     *
+     * @return \Illuminate\Http\Response with  a list of pages images
+     */
+    public function index(Request $request)
+    {
+        $images=Imagenes::selectRaw('*')
+						->where('category','=','1')
+						->where('isSlide','=','1')
+						->get();
+        return view('warranty.public.layout',['images'=>$images]);
+    }
+    
+    /**
+     * Display a test queries.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
+    public function test(Request $request){
         $products = DB::connection('oportudata')->table('SOLIC_FAB')
                                                 ->select('MARCA','REFERENCIA','SUPER_2.COD_ARTIC','SUCURSAL','SOLIC_FAB.SOLICITUD','ARTICULO')
                                                 ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
@@ -249,8 +263,8 @@ class WarrantyController extends Controller
             
             
             Mail::send('Emails.alertWarrantyClient', ['caso' => $warrantyRequest->NUMERO], function($msj) use ($warrantyRequest){
-                $msj->subject('OPORTUNIDADES  /  ELECTRO OFERTAS, SOLICITUD DE GARANTÍA  CASO'.$warrantyRequest->NUMERO);
-                $msj->to('davidgigra@gmail.com');
+                $msj->subject('OPORTUNIDADES  /  ELECTROFERTAS, SOLICITUD DE GARANTÍA  CASO'.$warrantyRequest->NUMERO);
+                $msj->to($warrantyRequest->email);
             });
             // return a request id
             return $warrantyRequest->NUMERO;
