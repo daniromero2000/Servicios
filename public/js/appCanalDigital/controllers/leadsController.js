@@ -162,7 +162,6 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 			}
 			hideLoader();
 		}, function errorCallback(response) {
-			console.log(response);
 		});
 	};
 
@@ -206,7 +205,6 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 				  $scope.searchLeads();
 				  hideLoader();
 			  }, function errorCallback(response) {
-				  console.log(response);
 			  });
 		});
 	};
@@ -219,11 +217,9 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 				method: 'GET',
 				url: '/api/canalDigital/checkLeadProcess/'+idLead,
 			  }).then(function successCallback(response) {
-				  console.log(response);
 				  $scope.searchLeads();
 				  hideLoader();
 			  }, function errorCallback(response) {
-				  console.log(response);
 			  });
 		});
 	}
@@ -240,8 +236,33 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 					$scope.comments.push(value);
 				});
 			}
+			
 			if(init){
 				$("#viewComments").modal("show");
+				$scope.nameLead = name;
+				$scope.lastNameLead = lastName;
+				$scope.state = state;
+			}
+		}, function errorCallback(response) {
+			
+		});
+	};
+    // get a comments for a community manager lead and show a modal
+	$scope.viewCommentsCM = function(name, lastName, state, idLead, init=true){
+		$scope.comments = [];
+		$scope.idLead = idLead;
+		$http({
+		  method: 'GET',
+		  url: '/api/leads/getComentsLeads/'+idLead
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				angular.forEach(response.data, function(value, key) {
+					$scope.comments.push(value);
+				});
+			}
+			
+			if(init){
+				$("#viewCommentsCM").modal("show");
 				$scope.nameLead = name;
 				$scope.lastNameLead = lastName;
 				$scope.state = state;
@@ -263,7 +284,25 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		  url: '/api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
 		}).then(function successCallback(response) {
 			if(response.data != false){
-				$scope.viewComments("","",$scope.state,$scope.idLead, false);
+				$scope.viewComments($scope.lead.name,$scope.lead.lastName,$scope.state,$scope.idLead, false);
+				$scope.comment.comment = "";
+				$scope.viewAddComent = false;
+			}
+		}, function errorCallback(response) {
+			
+		});
+	};
+
+    //store a community manager lead comment and reload a comments
+
+	$scope.addCommentCM = function(){
+		$scope.comment.idLead = $scope.idLead;
+		$http({
+		  method: 'GET',
+		  url: '/api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
+		}).then(function successCallback(response) {
+			if(response.data != false){
+				$scope.viewComments($scope.lead.NOMBRES,$scope.lead.APELLIDOS,$scope.state,$scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}

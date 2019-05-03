@@ -91,7 +91,7 @@ class LeadsController extends Controller
     private function getLeadsCM($request){
         $totalLeadsCM = 0;
         
-        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName
+        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign 
         WHERE (`channel` = 2 OR `channel` = 3)";
@@ -244,7 +244,8 @@ class LeadsController extends Controller
         $lead->channel=$request->get('channel'); 
         $lead->termsAndConditions = 2;
         $lead->campaign= $idCampaign;
-
+        $lead->channel=$request->get('channel');
+        $lead->nearbyCity=$request->get('nearbyCity');
         $lead->save();
 
         return response()->json($lead);
@@ -290,6 +291,7 @@ class LeadsController extends Controller
         $lead->typeProduct = $request->get('typeProduct');
         $lead->typeService = $request->get('typeService');
         $lead->channel = $request->get('channel');
+        $lead->nearbyCity = $request->get('nearbyCity');
         
 
         $lead->save();

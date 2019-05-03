@@ -7,6 +7,8 @@
     **Date: 17/01/2019
      **/
 
+
+
 Route::group(['prefix'=>'/Catalog/'],function(){
 
 	//display catalog layout
@@ -42,9 +44,7 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     //CRUD routes digital warranty 
     Route::resource('request','Admin\WarrantyController');
 	//display layout warrty app 
-    Route::get("/",function(){
-        return view('warranty.public.layout');
-    })->name('warranty');
+    Route::get("/",'Admin\WarrantyController@index')->name('warranty');
     //render query view
     Route::get('/Query', function(){
         return view('warranty.public.query');
@@ -59,6 +59,7 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     Route::get('/verificationCode/{code}/{identificationNumber}', 'Admin\WarrantyController@verificationCode');
     // get the list of the bought products by the client in the last four years
     Route::post('/products', 'Admin\WarrantyController@products');
+    //test a mail view
     Route::get("mail",function(){
         return view('emails.alertWarrantyClient');
     });

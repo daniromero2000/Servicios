@@ -97,7 +97,8 @@
                     <span ng-if="lead.channel == 2">Facebook</span>
                     <span ng-if="lead.channel == 3">WhatsApp</span>
                 </td>
-                <td>@{{ lead.city }}</td>
+                <td ng-if="lead.nearbyCity == null">@{{ lead.city }} </td>
+                <td ng-if="lead.nearbyCity != null">@{{ lead.city+" / "+lead.nearbyCity }} </td>
                 <td>@{{ lead.created_at }}</td>
                 <td>@{{ lead.campaignName }}</td>
                 <td>
@@ -149,41 +150,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row resetRow" ng-if="state != 4">
-                            <div class="col-12 text-right form-group">
-                                <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="containerCommentsLeads">
-                            <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
-                                <div class="col-12 text-left resetCol">
-                                    <i class="fas fa-user iconoUserLead"></i>
-                                    <span class="nameAdminLead">@{{ comment.name }}</span>
-                                </div>
-                                <div class="col-12">
-                                    <p class="commentUserLead">
-                                        @{{ comment.comment }}
-                                    </p>
-                                </div>
-                                <div class="col-12 text-right">
-                                    <span class="fechaUserLead">@{{ comment.created_at }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 <div class="modal fade" id="viewLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -325,6 +292,12 @@
 
                                 </div>                               
                             </div>
+                            <div class="row">            
+                                <div class="col-12 col-sm-6 form-group">
+                                    <label for="name">Ciudad aledaña</label>
+                                    <input type="text" ng-model="lead.nearbyCity" id="nearbyCity" cols="10" class="form-control" >    
+                                </div>                              
+                            </div>
                             <div class="row">
                                 <div class="col-12 form-group">
                                     <label for="socialNetwork">Campaña</label>
@@ -447,15 +420,14 @@
                                         <label for="city">Ciudad</label>
                                          <select id="city" class="form-control" ng-model="lead.city">
                                             <option ng-repeat="city in cities" value="@{{city.value}}" label="@{{city.label}}">
-                                             @{{city.value}}
+                                             
                                             </option>
                                         </select>                                      
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="socialNetwork">Canal de adquisición</label>
-                                        <select id="socialNetwork" class="form-control" ng-model="lead.socialNetwork">
-                                         <option ng-repeat="socialNetwork in socialNetworks" value="@{{socialNetwork.value}}" label="@{{lead.socialNetwork}}">
-                                             @{{socialNetwork.label}}
+                                        <select id="socialNetwork" class="form-control" ng-model="lead.channel" ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks">
+                                         <option>    
                                          </option>
                                      </select>                       
 
@@ -463,17 +435,18 @@
                                 </div>
 
                                 
-
+                                <div class="row">            
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="name">Ciudad aledaña</label>
+                                        <input type="text" ng-model="lead.nearbyCity" id="nearbyCity" cols="10" class="form-control" >    
+                                    </div>                              
+                                </div>
 
                                  <div class="form-group row">
                                     <label for="socialNetwork">Campaña</label>
-                                     <select id="socialNetwork" class="form-control" ng-model="lead.campaignName">
-                                         <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}" label="@{{lead.campaignName}}">
-                                             @{{campaign.name}}
-                                         </option>
+                                     <select id="socialNetwork" class="form-control" ng-model="lead.campaign" ng-options="campaign.id as campaign.name for campaign in campaigns">
                                      </select>
                                 </div>
-                                <p>@{{lead.campaignName}}</p>
                                 <div class="form-group row">            
                                     <div class="col-12 col-sm-6">
                                         <label for="service">Servicio</label>
@@ -490,7 +463,7 @@
                                 </div>
 
                                 <div class="form-group text-left">
-                                    <button class="btn btn-primary">Agregar</button>
+                                    <button class="btn btn-primary">Actualizar</button>
                                 </div>
                             </form>
                         </div>
@@ -502,7 +475,7 @@
     </div>
 </div>
 
-
+<!-- Add comments -->
 
 <div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
