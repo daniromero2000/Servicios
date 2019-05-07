@@ -112,8 +112,7 @@ class OportuyaV2Controller extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 
-	public function store(Request $request)
-	{
+	public function store(Request $request){
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
 			$identificationNumber = trim($request->get('identificationNumber'));
@@ -235,7 +234,8 @@ class OportuyaV2Controller extends Controller
 
 			}
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
+			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			return $validatePolicyCredit;
 			if($validatePolicyCredit == false){
 				return -1;
 			}
@@ -860,7 +860,7 @@ class OportuyaV2Controller extends Controller
 		$dateNow = date('Y-m-d');
 		$dateNow = strtotime ("- $timeRejectedVigency day", strtotime ( $dateNow ) );
 		$dateNow = date ( 'Y-m-d' , $dateNow );
-		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' ", $identificationNumber, $dateNow);
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' AND 'STATE' = 'A' ", $identificationNumber, $dateNow);
 		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
 
 		if($resp[0]->totalSolicitudes > 0){
@@ -1176,18 +1176,22 @@ class OportuyaV2Controller extends Controller
 		return $quotaApproved;
 	}
 
-	private function validatePolicyCredit($identificationNumber){
+	private function validatePolicyCredit($identificationNumber, $cityName){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		
 		if(empty($queryScoreClient)){
 			return false;
 		}else{
 			$respScoreClient = $queryScoreClient[0]->score;
-
+			
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
-			
-			if($respScoreClient >= 686){
+			$scoreMin = 686;
+			if($cityName == 'MEDELLÍN' || $cityName =='BOGOTÁ'){
+				$scoreMin = 726;
+			}
+
+			if($respScoreClient >= $scoreMin){
 				return true;
 			}else{
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `CON3` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
