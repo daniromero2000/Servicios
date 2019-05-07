@@ -72,7 +72,7 @@
                         </td>
                         <td>@{{ lead.CREACION }}</td>
                         <td>
-                            <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor" ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id)"></i>
+                            <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor" ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id);$parent.$parent.lead=lead"></i>
                             <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-check cursor"  ng-click="assignAssesorDigitalToLead(lead.SOLICITUD)"></i>
                         </td>
                     </tr>
@@ -202,6 +202,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="table table-responsive">
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads">
@@ -227,10 +228,12 @@
                         <td>@{{ leadCM.name + " " + leadCM.lastName }}</td>
                         <td>@{{ leadCM.email }}</td>
                         <td>@{{ leadCM.telephone }}</td>
-                        <td>@{{ leadCM.city }}</td>
+                        <td ng-if="leadCM.nearbyCity == null">@{{ leadCM.city }}</td>
+                        <td ng-if="leadCM.nearbyCity != null">@{{ leadCM.city + " / " + leadCM.nearbyCity}}</td>
                         <td>@{{ leadCM.typeService }}</td>
                         <td>@{{ leadCM.created_at }}</td>
                         <td>
+                            <i class="fas fa-comment cursor" ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                             <i ng-if="leadCM.state == 1" class="fas fa-check cursor" title="Marcar cliente como procesado" ng-click="checkLeadProcess(leadCM.id)"></i>
                         </td>
                     </tr>
@@ -242,5 +245,58 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="viewCommentsCM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row resetRow " ng-if="viewAddComent">
+                                <div class="col-12 form-group">
+                                    <form ng-submit="addComment()">
+                                        {{ csrf_field() }}
+                                        <div class="form-group">
+                                            <label for="comment">Comentario</label>
+                                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
+                                        </div>
+                                        <div class="form-group text-left">
+                                            <button class="btn btn-primary">Agregar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="row resetRow" ng-if="state != 4">
+                                <div class="col-12 text-right form-group">
+                                    <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="containerCommentsLeads">
+                                <div ng-repeat="comment in comments" class="row resetRow form-group contianerCommentLead">
+                                    <div class="col-12 text-left resetCol">
+                                        <i class="fas fa-user iconoUserLead"></i>
+                                        <span class="nameAdminLead">@{{ comment.name }}</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="commentUserLead">
+                                            @{{ comment.comment }}
+                                        </p>
+                                    </div>
+                                    <div class="col-12 text-right">
+                                        <span class="fechaUserLead">@{{ comment.created_at }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>

@@ -7,11 +7,22 @@
     **Date: 05/03/2019
      -->
      
-@extends('layouts.BasicIncludes')
+@extends('layouts.app')
 
-<link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-
+@section('linkStyleSheets')
+    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+@stop
 @section('content')
+
+<!-- Slider Section Oportuya Page -->
+    <div id="warrantySlider">
+		@foreach($images as $slider)
+			<div class="containImg">
+				<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
+			</div>
+		@endforeach
+	</div>
+
 
     <div ng-app="WarrantyApp">
         <ng-view>
