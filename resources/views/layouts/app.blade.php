@@ -8,6 +8,7 @@
 	$activeSeguros = ($_SERVER['REQUEST_URI'] == '/seguros') ? 'activeMenu' : '' ;
 	$activeViajes = ($_SERVER['REQUEST_URI'] == '/viajes') ? 'activeMenu' : '' ;
 	$activeLibranza = ($_SERVER['REQUEST_URI'] == '/libranza') ? 'activeMenu' : '' ;
+	$activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu' : '' ;
 @endphp
 
 <html>
@@ -186,6 +187,9 @@
 							<a class="nav-item nav-link header-item header-item1" href="/seguros">
 								<span class="header-textoItem">Seguros</span>
 							</a>
+							<a class="nav-item nav-link header-item header-item1" href="/digitalWarranty">
+								<span class="header-textoItem">Garantía digital</span>
+							</a>
 						</div>
 					</div>
 
@@ -206,6 +210,9 @@
 								</a>
 								<a class="nav-item nav-link header-item header-item5 @php echo $activeViajes @endphp " href="/viajes">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Viajes</span>
+								</a>
+								<a class="nav-item nav-link header-item header-item6 @php echo $activeWarranty @endphp " href="/digitalWarranty">
+									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Garantía digital</span>
 								</a>
 							</div>
 						</div>
@@ -236,12 +243,18 @@
 					</div>
 				</div>
 				<div class="col-12 col-md-12 col-lg-6 resetCol footer-containMenu">
+				@if( Request::path() != 'digitalWarranty')
 					<h4 class="text-center footer-title">Si tienes alguna inquietud <strong>¡Contáctanos!</strong></h4>
+				@endif	
 					<div class="footer-containerServicioCliente">
 						<div class="footer-contianerTelefonos">
 							<img src="{{ asset('images/footer-telefonoIcon.png')}}" alt="Línea Nacional" class="img-fluid footer-imgNosotros" />
 							<p class="footer-textTelefonos">
-								<span class="footer-textTelefonosNal">Línea nacional: 57 (1)484 2122 - 01 8000 11 77 87</span> <br />
+							@if( Request::path() == 'digitalWarranty')
+								<span class="footer-textTelefonosNal">  Línea nacional: 01 8000 11 77 87</span> <br />
+							@else
+								<span class="footer-textTelefonosNal">  Línea nacional: 57 (1)484 2122 - 01 8000 11 77 87</span> <br />
+							@endif
 								<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
 							</p>
 						</div>
@@ -278,7 +291,7 @@
 				</div>
 			</div>
 		</div>
-		</div>
+		</div>		
 		<script src="{{ asset('editor/contentbuilder/jquery-ui.min.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('editor/contentbuilder/contentbuilder.js')}}" type="text/javascript"></script>
 		<script type="text/javascript" src="{{ asset('js/libranza.js') }}"></script>
@@ -329,6 +342,23 @@
 					breakpoint: 768,
 					settings: {
 						arrows: false,
+					}
+				}
+			]
+		});
+
+		$('#warrantyBrandsSlider').slick({
+			slidesToShow: 5,
+			arrows:false,
+			responsive: [
+				{
+					breakpoint: 768,
+					settings: {
+						infinite: true,
+						autoplay: true,
+						autoplaySpeed: 3000,
+						slidesToShow : 1,
+						slidesToScroll : 1,
 					}
 				}
 			]
@@ -393,5 +423,5 @@
             
         });
 	</script>
-
+	
 </html>

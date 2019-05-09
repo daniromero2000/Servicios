@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class OportuyaV2 extends Model
 {
+    public $connection='oportudata';
+    
     protected $table = 'CLIENTE_FAB';
+
     protected $primaryKey = 'CEDULA';
 
     public $timestamps = false;

@@ -16,7 +16,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 	$scope.style = function(product){
 		if (product.CODIGO == $scope.selectedProduct.CODIGO){
 			// if de current product is a  selected product change a style 
-			return 'background-color: #1cabe2; color:white';
+			return 'background-color: #DE005D; color:white';
 		}else{
 			//  don't change
 			return '';
@@ -84,16 +84,24 @@ app.controller('warrantyController', function($scope, $http, $location){
 			url: '/digitalWarranty/products',
 			data: $scope.WarrantyRequest
 			}).then(function successCallback(response) {
+				// if identification number don't correspond to any register client
 				if(response.data == 'no records'){
 					$scope.step = 21;
 					hideLoader();
+				}else if(response.data.length == 1){
+					// if identification number correspond to a register client, but this don't register a credit
+					$scope.step = 21;
+					$scope.WarrantyRequest.names = response.data[0].NOMBRES;
+					$scope.WarrantyRequest.lastNames = response.data[0].APELLIDOS;
+					$scope.other=1;
+					hideLoader();
 				}else{
+					// if identification number correspond to a register client and register a credit
 					$scope.step = 2;
 					$scope.WarrantyRequest.names = response.data[0].NOMBRES;
 					$scope.WarrantyRequest.lastNames = response.data[0].APELLIDOS;
 					$scope.products = response.data[1];
 					hideLoader();
-					
 				}
 			}, function errorCallback(response) {
 				console.log(response.data);
@@ -124,6 +132,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 			if(response.data == true){
 				$('#confirmCodeVerification').modal('hide');
 				$('#ValidRequest').modal('show');
+				console.log($scope.WarrantyRequest)
 				$http({
 					method: 'POST',
 					url: '/digitalWarranty/request',

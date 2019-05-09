@@ -566,6 +566,8 @@ span.renewCode:hover {
 	display: none;
 }
 
+
+
 .titleForm-avances, .titleForm-avances:before{
 	background: #FDBF3D;
 }
@@ -1159,6 +1161,10 @@ label {
 **Email: desarrolladorjunior@lagobo.com
 **Fecha: 28/02/2019
 **/
+
+#WarrantyStep21{
+	padding: 10px;
+}
 .titleTerms{
 	color: #348dc7;
 	font-size: 25px;
@@ -1201,16 +1207,33 @@ label {
 	margin: 10px 30px;
 }
 .contentGarantias{
-	background-color: #FAFAFA;
+	background-image: url('../images/Warrantysnipe.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
 	margin-bottom: 20px; 
 }
+.warrantyBlack{
+	background-color:black;
+	color: #b4b0b0;
+    font-family: barlow;
+    font-weight: bold;
+	font-size: 79%;
+	padding: 5px 30px
+}
+
 .Garantia-containerForm{
-	max-width: 1200px;
-	margin: auto;
-	position: relative;
+	max-width: 1000px;
+	padding: 40px;
+}
+
+.Garantia-containerForm2{
+	max-width: 900px;
+	
 }
 .descriptionStep{
-	background: #167efa;
+	background: #DE005D;
 	border-radius: 10px;
 	color: white;
 	line-height: 1;
@@ -1338,7 +1361,20 @@ label {
 .sendRequest{
 	border-radius: 20px;
 	padding: 5px 45px;
+	background-color: #DE005D;
+	border-color: white;
 }
+.sendRequest:hover{
+	background-color: #DE005D;
+	border-color: white;
+}
+
+.headTableProducts{
+	background-color: #DE005D;
+}
+
+
+
 .dialog{
 	max-width: 816px;
 }
@@ -1370,9 +1406,8 @@ label {
 	color: #167efa;
 }
 .textGreeting{
-	color: #4a4a4a;
 	font-size: 18px;
-	font-weight: 200;
+	font-weight: bold;
 }
 
 
@@ -1744,6 +1779,23 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	margin: 0;
 }
 
+.color-black{
+	color: #000;
+}
+.color-white{
+	color:white;
+}
+
+.warrantyTh {
+    vertical-align:top;
+}
+.WarrantyStep1Container{
+	margin: 40px 0px;
+}
+.warrantyContainerStep1{
+	max-width: 590px;
+}
+
 .newsletter-avance-input{
 	width: 70%;
 }
@@ -1760,6 +1812,56 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-color: #3760A2;
 	color: #FFF;
 	border-radius: 0;
+}
+/**
+**Caso de Uso: WARRANTY MODULE
+**Autor: Luis David Giraldo Grajales 
+**Email: desarrolladorjunior@lagobo.com
+**Fecha: 28/02/2019
+**/
+
+.Warrantyicons{
+	padding-top: 30px !important;
+    font-family: barlow;
+    font-weight: bold;
+    color: #2F87ED;
+}
+.WarrantyBrandsContainer{
+    padding-top:30px;
+}
+.WarrantyLogosTitle{
+    font-family: barlow;
+	font-weight: bold;
+	border-bottom: solid red 5px;
+}
+.brandsSlider{
+	padding-top:30px;
+}
+.WarrantyBrandImage{
+	height:113px;
+}
+.warrantyCoverage{
+	background-color:#1C84C3;
+	padding:30px 0px;
+	color:#ffffff;
+	font-size: 20px;
+	font-weight:bold;
+}
+
+.warrantyFeatures{
+	padding: 80px 0px;
+}
+
+.hereWarranty{
+	font-family: fantasy;
+    font-size: 33px;
+}
+
+.sendWarrantyStep1{
+	border-radius: 20px;
+	padding: 5px 45px;
+	background-color:#DE005D;
+	color:#ffffff;
 }
 
 @media(max-width: 1701px){
@@ -1840,9 +1942,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	.formularioSimulador-containerFormulario{
 		margin-top: 40px;
 	}
-	.Garantia-containerForm{
-		padding: 10px;
-	}
+	
 	.avanceSliderTitle p{
 		font-size: 27px;
 	}
@@ -1909,6 +2009,14 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 550px){
+	
+	.Garantia-containerForm{
+		padding: 10px;
+	}
+	.Garantia-containerForm2{
+		padding: 10px;
+	}
+
 	.modal-containerFormulario, .formularioSimulador-containerFormulario{
 		min-width: 320px;
 	}
@@ -1952,6 +2060,11 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 450px){
+
+	.g-recaptcha {
+		transform:scale(0.7);-webkit-transform:scale(0.7);
+		transform-origin:0 0;-webkit-transform-origin:0 0;
+		}
 
 
 	.warrantyLegal{

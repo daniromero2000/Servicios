@@ -10,6 +10,6 @@ var app =  angular.module('WarrantyApp',['ngRoute','moment-picker']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/', { templateUrl: 'digitalWarranty/Query', controller:'warrantyController' })
+            when('/', { templateUrl: '/digitalWarranty/Query', controller:'warrantyController' })
             .otherwise({ redirectTo: '/' })
 }]);

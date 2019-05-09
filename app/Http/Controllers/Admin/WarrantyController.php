@@ -16,7 +16,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\codeUserVerificationOportudata;
 use App\GARANTIA;
-use App\CLIENTE;
+use App\OportuyaV2;
 use App\cliCel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,11 +41,17 @@ class WarrantyController extends Controller
      */
     public function index(Request $request)
     {
-        $images=Imagenes::selectRaw('*')
-						->where('category','=','1')
+        $images=Imagenes::selectRaw('id,img,category,isSlide')
+						->where('category','=','4')
 						->where('isSlide','=','1')
-						->get();
-        return view('warranty.public.layout',['images'=>$images]);
+                        ->get();
+
+        $logos=Imagenes::selectRaw('id,img,category,isSlide')
+						->where('category','=','5')
+						->where('isSlide','=','1')
+                        ->get();
+                        
+        return view('warranty.public.layout',['images'=>$images,'logos'=>$logos]);
     }
     
     /**
@@ -105,22 +111,25 @@ class WarrantyController extends Controller
                                             ->select('codigo','descripcion')
                                             ->get();
         // return a list of a identification number type
-        $stores = DB::connection('oportudata')->table('SUCURSALES_GAR')
-                                            ->select('CODIGO','NOMBRE','DOMICILIO','CIUDAD','SUCURSALES_GAR.DEPARTAMENTO_ID','name')
-                                            ->join('departamentos', 'SUCURSALES_GAR.DEPARTAMENTO_ID', '=', 'departamentos.departamento_id')
-                                            ->orderBy('departamentos.departamento_id')
+        $stores = DB::connection('oportudata')->table('SUCURSALES')
+                                            ->select('SUCURSALES.CODIGO','SUCURSALES.NOMBRE','SUCURSALES.DIRECCION','SUCURSALES.CIUDAD','SUCURSALES.DEPARTAMENTO_ID','DEPARTAMENTOS.NAME')
+                                            ->join('DEPARTAMENTOS', 'SUCURSALES.DEPARTAMENTO_ID', '=', 'DEPARTAMENTOS.DEPARTAMENTO_ID')
+                                            ->orderBy('DEPARTAMENTOS.DEPARTAMENTO_ID')
                                             ->orderBy('CIUDAD')
+                                            ->where('ALMACEN','=','1')
+                                            ->where('STATE','=','A')
                                             ->get();
         // group a stores by departamento and city
-        $stores = $stores->groupBy('name')->map(function ($item, $key) {
+        $stores = $stores->groupBy('NAME')->map(function ($item, $key) {
             return collect($item)->groupBy('CIUDAD');
         });
         // return a list of a brands 
-        $groupsBrands = DB::connection('oportudata')->table('GRUPO_brands')
-                                                ->select('GRUPO_brands_id','GRUPO_brands.brand_id','GRUPO_id','NOMBRE','name')
-                                                ->join('GRUPO', 'GRUPO_brands.GRUPO_id', '=', 'GRUPO.CODIGO')
-                                                ->join('brands', 'GRUPO_brands.brand_id', '=', 'brands.brand_id')
+        $groupsBrands = DB::connection('oportudata')->table('GRUPO_MARCAS')
+                                                ->select('GRUPO_MARCAS.GRUPO_MARCAS_ID','MARCA_ID','GRUPO_ID','GRUPO.NOMBRE','MARCAS.NOMBRE AS name')
+                                                ->join('GRUPO', 'GRUPO_MARCAS.GRUPO_ID', '=', 'GRUPO.CODIGO')
+                                                ->join('MARCAS', 'GRUPO_MARCAS.MARCA_ID', '=', 'MARCAS.CODIGO')
                                                 ->where('GRUPO.active_warranty','=',1)
+                                                ->where('MARCAS.active_warranty','=',1)
                                                 ->orderBy('NOMBRE')
                                                 ->orderBy('name')
                                                 ->get();
@@ -178,21 +187,24 @@ class WarrantyController extends Controller
         }        
         
 
-        if(CLIENTE::find($request->identificationNumber)){
+        if(OportuyaV2::find($request->identificationNumber)){
             // if client already exist the register should be update
-            $warrantyClient = CLIENTE::find($request->identificationNumber);
+            $warrantyClient = OportuyaV2::find($request->identificationNumber);
+            $warrantyClient->DIRECCION = $request->address;
+            $warrantyClient->EMAIL = $request->email;
+            $warrantyClient->save();
         }else{
             //  if client don't exist create a new register
             $warrantyClient = new CLIENTE;
+            // set a values 
+            $warrantyClient->TIPO_DOC = $request->idType;
+            $warrantyClient->CEDULA = $request->identificationNumber;
+            $warrantyClient->APELLIDOS = $request->lastNames;
+            $warrantyClient->NOMBRES = $request->names;
+            $warrantyClient->EMAIL = $request->email;
+            $warrantyClient->save();
         }
-        // set a values 
-        $warrantyClient->TIPO_DOC = $request->idType;
-        $warrantyClient->CEDULA = $request->identificationNumber;
-        $warrantyClient->APELLIDOS = $request->lastNames;
-        $warrantyClient->NOMBRES = $request->names;
-        $warrantyClient->DIRECCION = $request->address;
-        $warrantyClient->EMAIL = $request->email;
-        $warrantyClient->save();
+        
         // create a new warranty request
         $warrantyRequest = new GARANTIA;
 
@@ -226,14 +238,14 @@ class WarrantyController extends Controller
         $warrantyRequest->NOM_ARTIC = $request->reference;
         $warrantyRequest->MARCA = $request->productBrand['name'];
         $warrantyRequest->NSERVICIO = 0;
-        $warrantyRequest->GRUPO = $request->productBrand['GRUPO_id'];
+        $warrantyRequest->GRUPO = $request->productBrand['GRUPO_ID'];
         $warrantyRequest->SERIAL = 0;
         $warrantyRequest->IMEI = 0;
         $warrantyRequest->DIAGNOSTIC = 'NA';
         $warrantyRequest->NOM_TALLER = $request->type['name'];
         $warrantyRequest->OBSERVAC = $request->faultDescription;
         $warrantyRequest->INVENTARIO = 'NA';
-        $warrantyRequest->UBICACION = 'CASA';
+        $warrantyRequest->UBICACION = $request->address;
         $warrantyRequest->SOLUCION = '';
         $warrantyRequest->FEC_LLEGA = date("Y-m-d G:i:s");
         $warrantyRequest->FEC_SALIDA = '0000-00-00 00:00:00';
@@ -261,11 +273,12 @@ class WarrantyController extends Controller
                 $msj->to('gestiondegarantias@lagobo.com.co');
             });
             
-            
-            Mail::send('Emails.alertWarrantyClient', ['caso' => $warrantyRequest->NUMERO], function($msj) use ($warrantyRequest){
+        
+            Mail::send('Emails.alertWarrantyClient', ['caso' => $warrantyRequest->NUMERO], function($msj) use ($warrantyRequest,$request){
                 $msj->subject('OPORTUNIDADES  /  ELECTROFERTAS, SOLICITUD DE GARANTÍA  CASO'.$warrantyRequest->NUMERO);
-                $msj->to($warrantyRequest->email);
+                $msj->to($request->email);
             });
+
             // return a request id
             return $warrantyRequest->NUMERO;
 
@@ -456,7 +469,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
         
         if(count($products)==0){
             // if don't find products 
-            return 'no records';
+            return [$getClient['0']];
         }
         //return a client information and list of products
         return [$getClient['0'],$products];

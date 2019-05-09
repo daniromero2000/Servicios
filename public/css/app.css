@@ -132,7 +132,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .header-item6{
-	background: #f5d134;
+	background: #DE005D;
 }
 
 .header-menu:before{
@@ -2068,6 +2068,10 @@ a[data-toggle="collapse"] {
 
 
 .table thead.headTableWarranty th{
+	vertical-align: middle !important;
+}
+
+.table thead.headTableProducts th{
 	vertical-align: middle !important;
 }
 
