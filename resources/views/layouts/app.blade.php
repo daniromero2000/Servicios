@@ -13,15 +13,8 @@
 
 <html>
 	<head>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128431645-1"></script>
-		<script>
-		 window.dataLayer = window.dataLayer || [];
-		 function gtag(){dataLayer.push(arguments);}
-		 gtag('js', new Date());
-
-		 gtag('config', 'UA-128431645-1');
-		</script>
+		<!-- Global site tag (gtag.js) - Google Ads: 781153823 --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823'); </script> 
+		@yield('eventTag')
 		<!-- Google Tag Manager -->
 		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -175,9 +168,9 @@
 							<a class="nav-item nav-link header-item header-item1" href="{{url('oportuya')}}">
 								<span class="header-textoItem">Crédito Oportuya</span>
 							</a>
-							<!--<a class="nav-item nav-link header-item header-item1" href="/libranza">
+							<a class="nav-item nav-link header-item header-item1" href="/libranza">
 								<span class="header-textoItem">Libranza</span>
-							</a>-->
+							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
 							</a>
@@ -202,10 +195,13 @@
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp" href="/motos">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito motos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item3 @php echo $activeAvance @endphp " href="/avance"> 
+								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp " href="/libranza"> 
+									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Libranza</span>
+								</a>
+								<a class="nav-item nav-link header-item header-item4 @php echo $activeAvance @endphp " href="/avance">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Avances</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item4 @php echo $activeSeguros @endphp " href="/seguros">
+								<a class="nav-item nav-link header-item header-item5 @php echo $activeSeguros @endphp " href="/seguros">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Seguros</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item5 @php echo $activeViajes @endphp " href="/viajes">
@@ -422,6 +418,23 @@
             ],
             
         });
+
+		$(".multiple-items-motos").slick({
+          arrows: false,
+		  infinite: true,
+		  slidesToShow: 3,
+		  slidesToScroll:3,
+		  vertical: true,
+	      verticalSwiping: true,
+	      asNavFor: '.single-item-motos',
+	      centerMode: true,
+	      focusOnSelect: true
+        });
+        $('.single-item-motos').slick({
+			arrows: false,
+			asNavFor: '.multiple-items-motos'
+		});
+		
 	</script>
 	
 </html>

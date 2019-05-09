@@ -460,8 +460,13 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaSliderDescription p {
-	font-size: 1.2em;
-	font-weight: 500;
+	font-size: 13px;
+}
+
+.textTarjeta{
+	color: #332d74;
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .oportuyaSliderButton p a{

@@ -563,7 +563,7 @@ span.renewCode:hover {
 }
 
 .header-item5{
-	display: none;
+	display: block;
 }
 
 
@@ -1482,11 +1482,11 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 #motosContact div.row{
-	padding: 45px 0;
+	padding: 25px 0;
 }
 
 .textMotosContact{
-	width: 60%;
+	width: 75%;
 	margin: auto;
 }
 .textMotosContact h3 span{
@@ -1518,8 +1518,12 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .motosFormContainer form input:not(#termsAndConditions),.checkBoxContainer,.motosFormContainer form select,.motosFormContainer .buttonMotosContainer{
-	width: 50%!important;
+	width: 65%!important;
 	height: calc(1.8rem + 2px);
+}
+
+.motosContainer div.row div.col-12{
+	margin-top:30px;	
 }
 
 .motosFormContainer form .form-group label{
@@ -1528,8 +1532,233 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	margin: 0;
 }
 
+.wp-motosButton{
+	background-color: #31D16B;
+	border-radius: 20px;
+	font-size: 14px;
+	color: #FFF;
+	padding: 10px 20px;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.wp-motosButton:hover{
+	color: #FFF;
+}
+
+#motoPrecios{
+	margin:50px 0;
+}
+
+.slideContainerMotos .containerSlickMiniature img{
+	width: 150px!important;
+}
+
+.slideContainerMotos .containerSlickMiniature .multiple-items-motos .slick-list.draggable{
+	height: 460px!important; 
+	padding: 0!important;
+}
+
+.motosBrandContainer{
+	position: relative;
+}
+
+.motosBrandContainer div .absImage{
+	position: absolute;
+	bottom: 90px;
+	width: 80%;
+}
+
+.motosBrandContainer div .logoAutecoMarca{
+	margin-top: 80px;
+}
+
+.motosPrecioContado{
+	line-height: 1;
+}
+
+.motosPrecioContado .precioContadoTexto,.motosCuotasMensuales p{
+	font-weight: 900;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+.motosPrecioContado span,.motosCuotasMensuales span{
+	font-weight: 800;
+	color: #FF0000;
+	font-size: 36px;
+}
+
+.motosCuotaSimulador{
+	margin-bottom: 20px;
+}
+
+.motosCuotaSimulador a{
+	background-color: #355DA4;
+	color:#FFF;
+	border-radius: 20px;
+	text-transform: uppercase;
+	font-weight: 700;
+	padding: 5px 20px;
+}
+
+.motosCuotasMensuales span{
+	background-color:#EDEEF1; 
+	padding: 10px 20px;
+	margin-top: 20px;
+}
+
+.no-padding{
+	padding: 0;
+}
+
+.motosComprarBoton{
+	background-color: #FF0000;
+	color:#FFF;
+	border-radius: 20px;
+	text-transform: uppercase;
+	font-weight: 700;
+	padding: 10px 30px;
+}
+
+.motosComprarBoton:hover{
+	color:#FFF;
+}
+
+.motosInfoText{
+	margin: 0;
+	font-size: 14px;
+}
+
+.fix-width{
+	width: 100%;
+	margin: auto;
+}
+
+.motosTextDescription{
+	padding: 0 7vw;
+}
+
+.motosTextDescription h3{
+	font-weight: 800;
+	position: relative;
+}
+
+.motosTextDescription p{
+	text-align: justify;
+	font-size: 14px;
+}
+
+.motosTextDescription h3:after{
+	position: absolute;
+	height: 4px;
+	width: 40%;
+	bottom: -5px;
+	left: 0;
+	content: "";
+	background-color:#FF0000; 
+}
+
+.motosDescriptionContainer{
+	background-color: #F8F9F8;
+	padding: 40px 0;
+}
+
+.manualBoton{
+	width: 70%;
+	margin: auto;
+}
+
+.manualBoton a p{
+	color: #FFF;
+	background-color: #ff0000;
+	border-radius: 40px;
+	text-align: center;
+	padding: 10px 30px;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.motosPaddingTop{
+	padding-top:50px;
+}
+
+.nav-link.nav-link-motos{
+	padding: 0 0 0 1rem;
+	color: #000;
+	text-transform: uppercase;
+	border-bottom: solid 1px #FF0000;
+}
+
+.nav-pills.nav-pills-motos .nav-link.active{
+	padding: 0 0 0 1rem;
+	background-color: #F8F9F8!important;
+	color: #000!important;
+	font-weight: 700;
+}
+
+.motos-nav-title{
+	text-transform: uppercase;
+	color: #FFF;
+	background-color: #FF0000;
+	font-size: 1.5em;
+	margin: 0;
+	font-weight: 800;
+}
+
+.motosEspecificacionesTabla{
+	max-width: 991px;
+	margin:auto;
+	border:solid 1px #FF0000;
+}
+
+.motosEspecificacionesTabla .motosNavContent,.motosEspecificacionesTabla .motosNavLinks{
+	padding: 0;
+}
+
+.motosNavItems{
+	padding:0 2rem;
+}
+
+.motosNavItems> div{
+	border-bottom: solid 1px #FF0000;
+	margin:0;
+	padding: .5rem 0;
+}
+
+.motosNavLinks{
+	border-right: solid 1px #FF0000;
+}
+
+.motos-nav-title b{
+	color:#000;
+	font-weight: 900;
+}
+
+.motos-nav-title{
+	padding: 1rem 2rem;
+}
+
+.motosMainTitle h3{
+	margin-left: 50%;
+	transform: translate(-50%);
+	position: relative;
+	font-weight: 800;
+}
+
+.motosMainTitle h3::after{
+	position: absolute;
+	content: "";
+	height: 4px;
+	width: 100%;
+	bottom: -10px;
+	left: 0;
+	background-color: #FF0000;
+}
+
+
 .contactFormList{
-	
 	text-align: left;
 }
 
