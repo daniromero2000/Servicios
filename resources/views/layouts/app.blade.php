@@ -204,10 +204,10 @@
 								<a class="nav-item nav-link header-item header-item5 @php echo $activeSeguros @endphp " href="/seguros">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Seguros</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item5 @php echo $activeViajes @endphp " href="/viajes">
+								<a class="nav-item nav-link header-item header-item6 @php echo $activeViajes @endphp " href="/viajes">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Viajes</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item6 @php echo $activeWarranty @endphp " href="/digitalWarranty">
+								<a class="nav-item nav-link header-item header-item7 @php echo $activeWarranty @endphp " href="/digitalWarranty">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú" class="img-fluid imgSombraMenu"> <span class="header-textoItem">Garantía digital</span>
 								</a>
 							</div>
