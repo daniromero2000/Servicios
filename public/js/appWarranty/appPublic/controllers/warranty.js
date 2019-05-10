@@ -84,6 +84,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 			url: '/digitalWarranty/products',
 			data: $scope.WarrantyRequest
 			}).then(function successCallback(response) {
+				console.log(response.data);
 				// if identification number don't correspond to any register client
 				if(response.data == 'no records'){
 					$scope.step = 21;

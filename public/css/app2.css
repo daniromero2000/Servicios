@@ -1162,6 +1162,11 @@ label {
 **Fecha: 28/02/2019
 **/
 
+.popovers{
+	z-index: -1;
+	top: 90px;
+}
+
 #WarrantyStep21{
 	padding: 10px;
 }
@@ -1321,13 +1326,32 @@ label {
 }
 
 .warrantyUserBox{
-	border: 1px solid #1c84c3;
+	border: 5px solid #de005d;
+    border-radius: 5px;
+	padding: 10px;
+	min-height: 90px;
+	max-width: 286px;
+}
+.boxForm input[type="radio"]:checked + label{
+	background: #de005d;
+	color:white;
+}
+.warrantyTargetHead{
+	padding: 6px 0;
+    font-size: 20px;
+}
+.warrantyTargetHead{
+	padding: 6px 0;
+    font-size: 20px;
 }
 
 .logoHeaderTerms{
 	background: #167efa;
 	padding: 40px;
 	position: relative;
+}
+#WarrantyStep3{
+	min-height: 816px;
 }
 
 .logoHeaderTerms:before {
@@ -1345,7 +1369,10 @@ label {
 	border-bottom: 1px solid #1111115c;
 }
 .isUserCheck{
-	margin-left: 15px;
+	padding: 10px 10px !important;
+}
+.d-i-b{
+	display: inline-block;
 }
 .addPhone{
 	color: white;
@@ -2242,6 +2269,9 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 550px){
+	#WarrantyStep3{
+		min-height: 1009px;
+	}
 	
 	.Garantia-containerForm{
 		padding: 10px;
