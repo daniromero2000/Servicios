@@ -227,18 +227,20 @@
                         <span class="descText">Ingresa la descripción de tu producto</span>
                         <img src="{{ asset('images/datosPersonales2-min.png') }}" class="img-fluid forms-descImg" />
                         <span class="descStepNum">2</span>
-                    </div>
+                    </div>              
+                </div>
+                <div class="row resetRow">
                     <div class="col-12 form-group">
-                        <label for="Yes">¿El usuario del producto es el titular de la cuenta? *</label>            
+                        <label class="clolor-black">¿Eres el usuario del producto? *</label>            
                     </div>
-                    <div class="form-check isUserCheck">
-                        <input class="form-check-input" ng-model="$parent.WarrantyRequest.isUser"  name="isuser" type="radio"  id="yes"  value="True" checked required>
-                        <label class="form-check-label" for="exampleRadios1">Si</label>
+                    <div class="col-12 col-sm-6 resetCol form-check isUserCheck">
+                        <input class="form-check-input d-none" ng-model="$parent.WarrantyRequest.isUser"  name="isuser" type="radio"  id="yes"  value="True" checked required>
+                        <label class="form-check-label warrantyUserBox" for="yes" > <span> Usuario </span> <br> <span> No es el titular de la factura, pero es quien utiliza el producto. </span> </label>
                     </div>
-                    <div class="form-check isUserCheck">
-                        <input class="form-check-input" ng-model="$parent.WarrantyRequest.isUser"   name="isuser" type="radio" id="yes" value="False" required>
-                        <label class="form-check-label" for="exampleRadios2">No</label>
-                    </div>               
+                    <div class=" col-12 col-sm-6 resetCol form-check isUserCheck">
+                        <input class="form-check-input d-none" ng-model="$parent.WarrantyRequest.isUser"   name="isuser" type="radio" id="no" value="False" required>
+                        <label class="form-check-label warrantyUserBox" for="no" > <span> Titular </span> <br> <span> Es quien aparece en la factura y usa el producto. </span> </label>
+                    </div>              
                 </div>
                 <div class="row resetRow" ng-if="WarrantyRequest.isUser == 'False'">
                     <div class="col-12 col-sm-6 form-group">

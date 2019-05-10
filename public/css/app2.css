@@ -1320,6 +1320,10 @@ label {
 	display: none;
 }
 
+.warrantyUserBox{
+	border: 1px solid #1c84c3;
+}
+
 .logoHeaderTerms{
 	background: #167efa;
 	padding: 40px;
