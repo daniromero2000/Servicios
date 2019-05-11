@@ -1,3 +1,4 @@
+
 <div Class="contentGarantias">
     <div class=" row resetRow" id='WarrantyStep1' ng-if='step == 1'>
         <div class="col-6 d-none d-md-block warrantyFeatures">
@@ -35,7 +36,7 @@
         <div class="col resetCol align-self-center WarrantyStep1Container">
             <h3 class="text-center font-weight-bold hereWarranty"> AQUÍ PUEDES <span class="text-primary"> SOLICITAR GARANTÍA </span> <br> PARA TU PRODUCTO </h3>
             <form ng-submit="getProducts()" class="w-100">
-                <div class="row resetRow justify-content-center warrantyContainerStep1">
+                <div class="row m-auto justify-content-center warrantyContainerStep1">
                     <div class="col-12 col-sm-10 col-md-8 form-group">
                         <label for="idType" class="color-black">Tipo de identificación *</label>
                         <select class="form-control form-control-sm" ng-model="$parent.WarrantyRequest.idType" id="idType" required ng-options="idType.codigo as idType.descripcion for idType in idTypes">
@@ -68,7 +69,7 @@
 
 
     <div class="row resetRow justify-content-center" id='WarrantyStep2' ng-if='step == 2'>
-        
+        <script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
         <form ng-submit="sendStep2()" class="Garantia-containerForm w-100">
             <div class="row resetRow text-center">
                 <div class="col resetCol text-center">
@@ -116,6 +117,7 @@
         </form>
     </div>
     <div class="resetRow row justify-content-center" id='WarrantyStep21' ng-if='step == 21'>
+        <script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
         <div class="Garantia-containerForm col-lg-6 col-md-8 col-sm-10 col-12" >
             <div class="row resetRow">
                 <div class="descriptionStep">
@@ -204,7 +206,7 @@
                     <div class="row resetRow">
                         <div class="col-12 form-group">
                             <label for="fault" class="color-black">Descripción de la falla *</label>
-                            <textarea id="fault" rows="3" class="form-control form-control-sm" ng-model="$parent.WarrantyRequest.faultDescription" required></textarea>               
+                            <textarea id="fault" rows="3" class="form-control form-control-sm" ng-model="$parent.WarrantyRequest.faultDescription" placeholder="Señor usuario explique detalladamente  la falla del producto y/o su inconformidad" required></textarea>               
                         </div>               
                     </div>
                 
@@ -219,6 +221,7 @@
 
     
     <div class="row resetRow justify-content-center" id='WarrantyStep3' ng-if='step == 3'>
+        <script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
         <div class="Garantia-containerForm col-lg-6 col-md-8 col-sm-10 col-12">
             <form ng-submit="sendRequest()" class="w-100 boxForm">
                 <div class="row resetRow">
@@ -310,25 +313,6 @@
     </div>
 </div>
 
-<!-- Valid request Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="ValidRequest" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-            <div class="imageSuccessful">
-                <img src="{{ asset('images/successful.png')}}" class="img-fluid rounded">
-            </div>
-            <div class="successfulText">
-            
-                <p>Su solicitud de garantía se ha procesado exitosamente, en el transcurso de 36 horas un asesor se comunicará con usted, por favor esté pendiente de los teléfonos ingresados. Tenga presente el número de caso asignado<b class="NumberCase"> @{{WarrantyRequest.number}}</b> </p>
-            </div>
-            <div class="containerReturn">
-                <a href="{{ route('start') }}"><button type="button" class="btn btn-primary returnButton" >Salir</button></a>
-            </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmNumCel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modalCode">
@@ -382,6 +366,26 @@
             </div>
         </div>
     </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalThaks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-contentWarranty">
+      <div class="modal-header modal-headerWarranty">
+        <h5 class="modal-title color-white m-auto font-weight-bold" id="exampleModalLabel">¡Gracias!</h5>
+      </div>
+      <div class="modal-body modal-bodyWarranty">
+        <p class="color-black w-90 m-auto font-weight-bold text-justify "> Su solicitud de garantía se ha procesado exitosamente, en el transcurso de 36 horas un asesor se comunicará con usted, por favor esté pendiente de los teléfonos ingresados. Tenga presente el número de caso asignado.</p>
+        <p class="m-auto numeroWarranty font-weight-bold"> @{{WarrantyRequest.number}}</p>
+        <div class="text-center fixed-bottom mb-3">
+            <a href="{{ route('start') }}" class=" text-center"><button type="button" class="btn btn-primary returnButton" >Salir</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

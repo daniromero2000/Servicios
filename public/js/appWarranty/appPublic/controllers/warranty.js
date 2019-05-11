@@ -84,7 +84,6 @@ app.controller('warrantyController', function($scope, $http, $location){
 			url: '/digitalWarranty/products',
 			data: $scope.WarrantyRequest
 			}).then(function successCallback(response) {
-				console.log(response.data);
 				// if identification number don't correspond to any register client
 				if(response.data == 'no records'){
 					$scope.step = 21;
@@ -132,7 +131,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 		}).then(function successCallback(response) {
 			if(response.data == true){
 				$('#confirmCodeVerification').modal('hide');
-				$('#ValidRequest').modal('show');
+				$('#ModalThaks').modal('show');
 				console.log($scope.WarrantyRequest)
 				$http({
 					method: 'POST',

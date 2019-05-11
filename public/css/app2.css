@@ -2080,6 +2080,35 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 **Fecha: 28/02/2019
 **/
 
+.modal-headerWarranty, .modal-headerWarranty h5 {
+	background-color: #1185FF;
+	font-size: 30px;
+	padding: 2px;
+	border-top-left-radius: 15px;
+	border-top-right-radius : 15px;
+}
+.modal-contentWarranty{
+	border-radius: 15px
+}
+.w-90{
+	width:90%;
+}
+
+.modal-bodyWarranty{
+	background-image: url('../images/peopleWarranty-min.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	min-height: 454px;
+}
+
+.numeroWarranty{
+	color: #1185ff;
+	font-size: 30px;
+	width:fit-content;
+}
+
 .Warrantyicons{
 	padding-top: 30px !important;
     font-family: barlow;
