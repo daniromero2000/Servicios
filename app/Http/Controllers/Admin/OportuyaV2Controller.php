@@ -210,7 +210,7 @@ class OportuyaV2Controller extends Controller
 					$clienteCelular->IDENTI = $identificationNumber;
 					$clienteCelular->NUM = trim($request->get('telephone'));
 					$clienteCelular->TIPO = 'CEL';
-					$clienteCelular->CEL_VAL = 1;
+					$clienteCelular->CEL_VAL = 0;
 					$clienteCelular->FECHA = date("Y-m-d H:i:s");
 					$clienteCelular->save();
 				}
