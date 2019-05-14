@@ -878,7 +878,7 @@ class OportuyaV2Controller extends Controller
 		$dateNow = date('Y-m-d');
 		$dateNow = strtotime ("- $timeRejectedVigency day", strtotime ( $dateNow ) );
 		$dateNow = date ( 'Y-m-d' , $dateNow );
-		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' AND 'STATE' = 'A' ", $identificationNumber, $dateNow);
+		$queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' AND `STATE` = 'A' ", $identificationNumber, $dateNow);
 		$resp = DB::connection('oportudata')->select($queryExistSolicFab);
 
 		if($resp[0]->totalSolicitudes > 0){
