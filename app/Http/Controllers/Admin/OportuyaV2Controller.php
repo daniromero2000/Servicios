@@ -116,10 +116,10 @@ class OportuyaV2Controller extends Controller
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
 			$identificationNumber = trim($request->get('identificationNumber'));
-			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
+			/*$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
-			}
+			}*/
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
@@ -210,7 +210,7 @@ class OportuyaV2Controller extends Controller
 					$clienteCelular->IDENTI = $identificationNumber;
 					$clienteCelular->NUM = trim($request->get('telephone'));
 					$clienteCelular->TIPO = 'CEL';
-					$clienteCelular->CEL_VAL = 0;
+					$clienteCelular->CEL_VAL = 1;
 					$clienteCelular->FECHA = date("Y-m-d H:i:s");
 					$clienteCelular->save();
 				}
@@ -234,7 +234,8 @@ class OportuyaV2Controller extends Controller
 
 			}
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			//$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			$validatePolicyCredit = true;
 
 			if($validatePolicyCredit == false){
 				return -1;
@@ -396,23 +397,36 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 
-			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
+			// Comentado por problema cifin
+			/*$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
 			if($typeServiceSol[0]->typeService == 'Avance'){
 				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
 				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
-			}
+			}*/
+			// fin
+
+			// quitar esta linea problema cifin
+			$quotaApprovedProduct = 1;
+			// fin
 			$con3 = "";
 			if($quotaApprovedProduct > 0){
-				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+				// Linea comentada por error de cifin
+				/*$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 				if($typeServiceSol[0]->typeService == 'Avance'){
 					$solic_fab->AVANCE_W=$quotaApproved;
 					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 				}else{
 					$solic_fab->PRODUC_W=$quotaApprovedProduct;
-				}				
+				}*/
+
+				// Quitar estas dos lineas problemas cifin
+				$solic_fab->AVANCE_W=0;
+				$solic_fab->PRODUC_W=0;
+				// fin
+
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
 				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
@@ -557,7 +571,11 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
 				$turnosOportuya->VALOR = '0';
 				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
-				$turnosOportuya->SCORE = $respScoreLead[0]->score;
+				//Linea comentada probema cifin
+				//$turnosOportuya->SCORE = $respScoreLead[0]->score;
+				//quitar esta linea problema cifin
+				$turnosOportuya->SCORE = 0;
+				//fin
 				$turnosOportuya->TIPO_CLI = '';
 				$turnosOportuya->CED_COD1 = '';
 				$turnosOportuya->SCO_COD1 = '0';
