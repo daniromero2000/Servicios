@@ -1207,7 +1207,7 @@ class OportuyaV2Controller extends Controller
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
 		// 2923 Produccion, 2020 Pruebas
-		$ws = new \SoapClient("http://10.238.14.181:2923/Service1.svc?singleWsdl",array()); //correcta
+		$ws = new \SoapClient("http://10.238.14.181:2801/Service1.svc?singleWsdl",array()); //correcta
 		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 	}
 
