@@ -261,7 +261,7 @@ class WarrantyController extends Controller
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
             //  if save is construct a email data
-            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO, 'mainSale' => $request.meansSale['name']];
+            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO, 'casa' => $request->meansSale['name']];
             //send a mail for alert that have a new warranty request 
             Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
