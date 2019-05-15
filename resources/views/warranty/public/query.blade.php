@@ -91,10 +91,10 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="product in products" ng-click="$parent.$parent.selectedProduct = product" style=@{{style(product)}}>
-                            <td>@{{product.MARCA}}</td>
-                            <td>@{{product.REFERENCIA}}</td>
-                            <td>@{{product.FEC_AUR}}</td>
-                            <td>@{{product.FACTURA}}</td>
+                            <td>@{{mask(product.MARCA)}}</td>
+                            <td>@{{mask(product.ARTICULO)}}</td>
+                            <td>@{{mask(product.FEC_AUR)}}</td>
+                            <td>@{{mask(product.FACTURA)}}</td>
                         </tr>
                         <tr ng-click="$parent.step = 21;$parent.other=1">
                             <td>OTRO</td>
@@ -157,11 +157,11 @@
                     </div>
                     <div class="row resetRow">
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="reference" class="color-black"> Referencia*</label>
-                            <input class="form-control form-control-sm" type="text"  ng-model="$parent.WarrantyRequest.reference" id="reference" required="" placeholder="la referencia la puedes encontrar en la factura y/o en las etiquetas que tiene adheridas el producto"/>
+                            <label for="reference" class="color-black"> Referencia* <br> <span class="color-gray slimWarranty"> (la puedes encontrar en la factura) </span> </label>
+                            <input class="form-control form-control-sm" type="text"  ng-model="$parent.WarrantyRequest.reference" id="reference" required="" placeholder="y/o en las etiquetas del producto"/>
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="dateDocumentExpedition" class="color-black">Fecha de compra (puedes digitar una aproximación)</label>
+                            <label for="dateDocumentExpedition" class="color-black">Fecha de compra <br> <span class="color-gray slimWarranty"> (puedes digitar una aproximación) </span> </label>
                             <div class="input-group"
                                     moment-picker="WarrantyRequest.dateShop"
                                     format="YYYY-MM-DD"
@@ -238,11 +238,11 @@
                     </div>
                     <div class="col-12 col-sm-6 resetCol form-check isUserCheck">
                         <input class="form-check-input d-none " ng-model="$parent.WarrantyRequest.isUser"  name="isuser" type="radio"  id="yes"  value="True" checked required >
-                        <label class="form-check-label warrantyUserBox d-i-b color-black" for="yes"> <span class="d-i-b warrantyTargetHead"> Usuario </span> <br> <span class="d-i-b"> No es el titular de la factura, pero es quien utiliza el producto. </span></label>
+                        <label class="form-check-label warrantyUserBox d-i-b color-black" for="yes"> <span class="d-i-b warrantyTargetHead"> Titular </span> <br> <span class="d-i-b"> Es quien aparece en la factura y usa el producto. </span>  </label>
                     </div>
                     <div class=" col-12 col-sm-6 resetCol form-check isUserCheck">
                         <input class="form-check-input popovers" ng-model="$parent.WarrantyRequest.isUser"   name="isuser" type="radio" id="no" value="False" required>
-                        <label class="form-check-label warrantyUserBox d-i-b color-black" for="no" > <span class="d-i-b warrantyTargetHead"> Titular </span> <br> <span class="d-i-b"> Es quien aparece en la factura y usa el producto. </span> </label>
+                        <label class="form-check-label warrantyUserBox d-i-b color-black" for="no" > <span class="d-i-b warrantyTargetHead"> Usuario </span> <br> <span class="d-i-b"> No es el titular de la factura, pero es quien utiliza el producto. </span> </label>
                     </div>              
                 </div>
                 <div class="row resetRow" ng-if="WarrantyRequest.isUser == 'False'">
@@ -265,7 +265,7 @@
                                 <div class="row resetRow ">
                                     <div class="col-11 form-group "> 
                                         <label for="phone" class="color-black">Celular*</label>
-                                        <input class="form-control form-control-sm" type="text" ng-model="phone.number" id="phone" validation-pattern="telephone" required>
+                                        <input class="form-control form-control-sm" type="text" ng-model="phone.number" id="phone" validation-pattern="telephone" pattern="[0-9]+" required>
                                     </div>
                                     <div class="col-1 form-group align-self-end deletePhoneContainer resetCol">
                                         <button type="button" class="btn btn-danger deletePhone"  ng-click="$parent.WarrantyRequest.cellPhones.splice($index,1)" ng-if="!$first"><i class="fas fa-minus"></i></button> 
@@ -301,7 +301,7 @@
                 </div>
                 <div class="row resetRow">
                     <div class="col-12 col-sm-6 form-group">
-                        <label for="address" class="color-black" >Dirección (Donde se encuentra ubicado el producto) *</label>
+                        <label for="address" class="color-black" >Dirección* <br> <span class="color-gray slimWarranty"> (Donde se encuentra ubicado el producto) </span> </label>
                         <input class="form-control form-control-sm" type="text" ng-model="$parent.WarrantyRequest.address" id="address" required>                   
                     </div>             
                 </div>
@@ -371,7 +371,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="ModalThaks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalThaks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content modal-contentWarranty">
       <div class="modal-header modal-headerWarranty">
@@ -379,7 +379,7 @@
       </div>
       <div class="modal-body modal-bodyWarranty">
         <p class="color-black w-90 m-auto font-weight-bold text-justify "> Su solicitud de garantía se ha procesado exitosamente, en el transcurso de 36 horas un asesor se comunicará con usted, por favor esté pendiente de los teléfonos ingresados. Tenga presente el número de caso asignado.</p>
-        <p class="m-auto numeroWarranty font-weight-bold"> @{{WarrantyRequest.number}}</p>
+        <p class=" numeroWarranty font-weight-bold"> @{{WarrantyRequest.number}}</p>
         <div class="text-center fixed-bottom mb-3">
             <a href="{{ route('start') }}" class=" text-center"><button type="button" class="btn btn-primary returnButton" >Salir</button></a>
         </div>

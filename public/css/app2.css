@@ -2045,6 +2045,15 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .color-white{
 	color:white;
 }
+.color-gray{
+	color:gray;
+}
+
+.slimWarranty{
+	font-weight:600;
+}
+
+#apellidos::-webkit-input-placeholder { color: green; text-transform:uppercase; }
 
 .warrantyTh {
     vertical-align:top;
@@ -2104,9 +2113,9 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .numeroWarranty{
-	color: #1185ff;
-	font-size: 30px;
-	width:fit-content;
+	font-size: 40px;
+    width: 90%;
+    margin: auto;
 }
 
 .Warrantyicons{

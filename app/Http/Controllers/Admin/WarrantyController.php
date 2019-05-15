@@ -195,7 +195,7 @@ class WarrantyController extends Controller
             $warrantyClient->save();
         }else{
             //  if client don't exist create a new register
-            $warrantyClient = new CLIENTE;
+            $warrantyClient = new  OportuyaV2;
             // set a values 
             $warrantyClient->TIPO_DOC = $request->idType;
             $warrantyClient->CEDULA = $request->identificationNumber;
@@ -230,7 +230,6 @@ class WarrantyController extends Controller
         }
         // set a request data
         $warrantyRequest->FACTURA = $request->invoiceNumber;
-        
         $warrantyRequest->FECHAFAC = $request->dateShop;
         $warrantyRequest->VALOR = 0;
         $warrantyRequest->N_ENTRADA = 0;
@@ -262,11 +261,10 @@ class WarrantyController extends Controller
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
             //  if save is construct a email data
-            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO];
+            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO, 'casa' => $request->meansSale['name']];
             //send a mail for alert that have a new warranty request 
             Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
                 $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
-                $msj->to('desarrolladorjunior@lagobo.com');
                 $msj->to('garantiasoportunidades@lagobo.com.co');
                 $msj->to('garantiasoportunidades2@lagobo.com.co');
                 $msj->to('garantiasoportunidades3@lagobo.com');
@@ -389,7 +387,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
 			'cliente' => 10013280, //Numero de cliente
 			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
 			'numero' => '57'.$celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code." tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2CXo1SC - " . $date, //Mensaje de texto a enviar
+			'sms' => 'El código de verificación para el servicio de garantía de su producto es: '.$code." tiene una vigencia de 10 minutos. Aplican Terminos y Condiciones https://bit.ly/2JluEUv - " . $date, //Mensaje de texto a enviar
 			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
 			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
 		);
@@ -460,7 +458,7 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
                                                 });
 
         $products =  DB::connection('oportudata')->table('SUPER')
-                                                        ->select('MARCA','REFERENCIA','products.COD_ARTIC as CODIGO','FEC_AUR','FACTURA','SUCURSAL','products.ARTICULO')
+                                                        ->select('MARCA','REFERENCIA','products.ARTICULO','products.COD_ARTIC as CODIGO','FEC_AUR','FACTURA','SUCURSAL','products.ARTICULO')
                                                         ->rightJoinSub( $subProducts, 'products', function ($join) {
                                                             $join->on('SUPER.SOLICITUD', '=', 'products.SOLICITUD')
                                                             ->where(DB::raw('TRIM(products.COD_ARTIC)'),'=',DB::raw('TRIM(SUPER.CODIGO)'));
