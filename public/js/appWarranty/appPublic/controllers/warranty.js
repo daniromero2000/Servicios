@@ -51,7 +51,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 	},true);
 
 	$scope.relations = [{id:1,name:'Padre/Madre'},{id:2,name:'Hijo (a)'},
-						{id:3,name:'Abuelo (a)'},{id:4,name:'Esposo (a)'},
+						{id:4,name:'Esposo (a)'},
 						{id:5,name:'Abuelo (a)'},{id:6,name:'Nieto (a)'},
 						{id:7,name:'Amigo (a)'},{id:8,name:'Vecino (a)'},
 						{id:9,name:'Tío (a)'},{id:10,name:'Otro'}];
@@ -173,6 +173,13 @@ app.controller('warrantyController', function($scope, $http, $location){
 		  }, function errorCallback(response) {
 				console.log(response.data);
 		  });
+	}
+	$scope.mask = function(attribute) {
+		if(attribute==null){
+			return	'No encontrado';
+		}else{
+			return attribute;
+		}
 	}
 	$scope.create();
 

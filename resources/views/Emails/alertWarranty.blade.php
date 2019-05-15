@@ -53,7 +53,7 @@
                         <td>{!! $identificationNumber !!}</td>
                     </tr>
                     <tr style="height:50px">
-                        <td>{!! $userName !!}</td>
+                        <td>{!! $mainSale !!}</td>
                     </tr>
                     <tr style="height:50px">
                         <td><br></td>
