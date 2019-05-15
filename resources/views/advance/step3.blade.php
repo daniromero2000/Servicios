@@ -278,21 +278,13 @@
 						</div>
 						<div class="row resetRow">
 							<div class="col-12">
-								<!--<p class="textModal text-center">
+								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
 									Tienes un cupo pre-aprobado para avances en efectivo de:
 								</p>
 								<p class="text-quotamodal text-center">
 									$@{{ quota | number:0 }}
-								</p>
-								<p class="textModalNumSolic text-center">
-									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
-								</p>-->
-								<p class="textModal text-center">
-									<strong>Felicitaciones!!</strong>
-									<br>
-									Tu solicitud ha sido creada exitosamente
 								</p>
 								<p class="textModalNumSolic text-center">
 									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
