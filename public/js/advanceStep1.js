@@ -172,8 +172,7 @@ angular.module('appAdvanceStep1', [])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					//$('#confirmNumCel').modal('show');
-					$scope.saveStep1();
+					$('#confirmNumCel').modal('show');
 				}
 			}, function errorCallback(response) {
 				hideLoader();
