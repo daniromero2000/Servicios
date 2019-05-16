@@ -179,7 +179,17 @@ class OportuyaV2Controller extends Controller
 			}
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
-
+				$estado = "";
+				switch ($request->get('typeService')) {
+					case 'Avance':
+						$estado = "A-PASO1";
+						break;
+					
+					case 'Oportuya':
+						$estado = "O-PASO1";
+						break;
+				}
+				$estado = ($consultaComercial == 0) ? 'SIN COMERCIAL' : $estado ;
 				// $flag =1 means  data into leads table was saved correctly
 				$flag=1;
 				
@@ -200,9 +210,11 @@ class OportuyaV2Controller extends Controller
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
 					'SUC' => ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999,
-					'CREACION' => date("Y-m-d H:i:s")
+					'CREACION' => date("Y-m-d H:i:s"),
+					'CON3' => $estado,
+					'ORIGEN' => $request->get('typeService')
 				];
-				
+				$celVal = ($consultaComercial == 0) ? 0 : 1 ;
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
 				if($request->get('CEL_VAL') == 0){
@@ -210,7 +222,7 @@ class OportuyaV2Controller extends Controller
 					$clienteCelular->IDENTI = $identificationNumber;
 					$clienteCelular->NUM = trim($request->get('telephone'));
 					$clienteCelular->TIPO = 'CEL';
-					$clienteCelular->CEL_VAL = 1;
+					$clienteCelular->CEL_VAL = $celVal;
 					$clienteCelular->FECHA = date("Y-m-d H:i:s");
 					$clienteCelular->save();
 				}
@@ -219,11 +231,21 @@ class OportuyaV2Controller extends Controller
 				if($createOportudaLead != true){
 					$oportudataLead->TIPO_DOC = $request->get('typeDocument');
 					$oportudataLead->CEDULA = $identificationNumber;
-					$oportudataLead->NOMBRES = trim($request->get('name'));
-					$oportudataLead->APELLIDOS = trim($request->get('lastName'));
+					$oportudataLead->NOMBRES = trim(strtoupper($request->get('name')));
+					$oportudataLead->APELLIDOS = trim(strtoupper($request->get('lastName')));
 					$oportudataLead->EMAIL = trim($request->get('email'));
-					$oportudataLead->CELULAR = trim($request->get('telephone'));
-					$oportudataLead->PROFESION = trim($request->get('occupation'));
+					$oportudataLead->CELULAR =trim($request->get('telephone'));
+					$oportudataLead->PROFESION = 'NO APLICA';
+					$oportudataLead->ACTIVIDAD = strtoupper($request->get('occupation'));
+					$oportudataLead->CIUD_UBI = trim($cityName[0]->CIUDAD);
+					$oportudataLead->DEPTO = trim($departament->departament);
+					$oportudataLead->TIPOCLIENTE = 'OPORTUYA';
+					$oportudataLead->SUBTIPO = 'WEB';
+					$oportudataLead->STATE = 'A';
+					$oportudataLead->SUC = ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999;
+					$oportudataLead->CREACION = date("Y-m-d H:i:s");
+					$oportudataLead->CON3 = $estado;
+					$oportudataLead->ORIGEN = $request->get('typeService');
 					$response = $oportudataLead->save();
 				}
 
@@ -234,7 +256,11 @@ class OportuyaV2Controller extends Controller
 
 			}
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
-			$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			if($consultaComercial == 1){
+				$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			}else{
+				$validatePolicyCredit = true;
+			}
 
 			if($validatePolicyCredit == false){
 				return -1;
@@ -339,6 +365,7 @@ class OportuyaV2Controller extends Controller
 			$turnosOportuya = new TurnosOportuya;
 			$analisis = new Analisis;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$estadoLead = $oportudataLead[0]->CON3;
 			//establishing connection to OPORTUDATA data base
 			$datosCliente->setConnection('oportudata');
 			$turnosOportuya->setConnection('oportudata');
@@ -395,26 +422,34 @@ class OportuyaV2Controller extends Controller
 			$solic_fab= new Application;
 
 			$solic_fab->setConnection('oportudata');
-
-			$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
-			if($typeServiceSol[0]->typeService == 'Avance'){
-				$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
-				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
+			if($estadoLead != 'SIN COMERCIAL'){
+				$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
+				if($typeServiceSol[0]->typeService == 'Avance'){
+					$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
+					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
+				}else{
+					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
+				}
 			}else{
-				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
+				$quotaApprovedProduct = 1;
 			}
 
 			$con3 = "";
 			if($quotaApprovedProduct > 0){
-				$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
-				$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
-				if($typeServiceSol[0]->typeService == 'Avance'){
-					$solic_fab->AVANCE_W=$quotaApproved;
-					$solic_fab->PRODUC_W=$quotaApprovedProduct;
-				}else{
-					$solic_fab->PRODUC_W=$quotaApprovedProduct;
-				}
+				if($estadoLead != 'SIN COMERCIAL'){
+					$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+					$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+					if($typeServiceSol[0]->typeService == 'Avance'){
+						$solic_fab->AVANCE_W=$quotaApproved;
+						$solic_fab->PRODUC_W=$quotaApprovedProduct;
+					}else{
+						$solic_fab->PRODUC_W=$quotaApprovedProduct;
+					}
 
+					$scoreLead = $respScoreLead[0]->score;
+				}else{
+					$scoreLead = 0;
+				}
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
 				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
@@ -559,7 +594,7 @@ class OportuyaV2Controller extends Controller
 				$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
 				$turnosOportuya->VALOR = '0';
 				$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
-				$turnosOportuya->SCORE = $respScoreLead[0]->score;
+				$turnosOportuya->SCORE = $scoreLead;
 				$turnosOportuya->TIPO_CLI = '';
 				$turnosOportuya->CED_COD1 = '';
 				$turnosOportuya->SCO_COD1 = '0';
@@ -572,6 +607,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$con3 = "NEGADO";
 			}
+			$con3 = ($estadoLead != 'SIN COMERCIAL') ? $con3 : "SIN COMERCIAL" ;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$dataLead=[
 				'CON3' => $con3
@@ -580,8 +616,9 @@ class OportuyaV2Controller extends Controller
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 			if($con3 == 'NEGADO'){
 				return response()->json(['data' => false]);
-			}elseif($con3 == 'PREAPROBADO'){
-				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD]);
+			}elseif($con3 == 'PREAPROBADO' || $con3 == 'SIN COMERCIAL'){
+				$textPreaprobado = ($estadoLead != 'SIN COMERCIAL') ? 1 : 0 ;
+				return response()->json(['data' => true, 'quota' => ($quotaApproved > 0) ? $quotaApproved : $quotaApprovedProduct, 'numSolic' => $numSolic->SOLICITUD, 'textPreaprobado' => $textPreaprobado]);				
 			}
 		}
 
@@ -1206,9 +1243,14 @@ class OportuyaV2Controller extends Controller
 		$obj = new \stdClass();
 		$obj->typeDocument = trim($typeDocument);
 		$obj->identificationNumber = trim($identificationNumber);
-		// 2923 Produccion, 2020 Pruebas
-		$ws = new \SoapClient("http://10.238.14.181:2801/Service1.svc?singleWsdl",array()); //correcta
-		$result = $ws->ConsultarInformacionComercial($obj);  // correcta
+		try {
+			// 2923 Produccion, 2020 Pruebas, 2801 CreditVision Produccion, 2001 CreditVision Pruebas
+			$ws = new \SoapClient("http://10.238.14.181:2801/Service1.svc?singleWsdl",array()); //correcta
+			$result = $ws->ConsultarInformacionComercial($obj);  // correcta
+			return 1;
+		} catch (\Throwable $th) {
+			return 0;
+		}
 	}
 
 	public function execConsultaExperto($identificationNumber){

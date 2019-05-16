@@ -250,6 +250,7 @@ angular.module('appAdvanceStep1', [])
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
+				console.log(response);
 				if(response.data == "-1"){
 					window.location = "/OPN_gracias_denied_advance"
 				}
@@ -260,6 +261,7 @@ angular.module('appAdvanceStep1', [])
 				if (response.data == "1") {
 					$scope.encryptText();
 				}
+				$('#proccess').modal('hide');
 			}, function errorCallback(response) {
 				console.log(response);
 			});
