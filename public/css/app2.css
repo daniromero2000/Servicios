@@ -388,6 +388,15 @@ span.renewCode:hover {
 	font-weight: 700;
 }
 
+.link-modal-oportuya a{
+	background-color: #167EFA;
+    font-size: 20px;
+    padding: 10px 35px;
+    color: #FFEC00;
+    font-weight: 600;
+    border-radius: 7px;
+}
+
 /*Slider Avances*/
 
 .oportuyaSliderContentAdvance{
@@ -2737,6 +2746,10 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 @media(max-width: 768px){
 
+	.link-modal-oportuya a{
+		font-size: 12px;
+	}
+
 	#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya img{
 		width: 30%;
 		margin-top:unset;
@@ -2869,7 +2882,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 550px){
-<<<<<<< HEAD
+
+	.link-modal-oportuya a{
+		padding: 7px 5px;
+		font-size: 2.7vw;
+		font-weight: unset;
+	}
+
 	#WarrantyStep3{
 		min-height: 1009px;
 	}
@@ -2879,8 +2898,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	}
 	.Garantia-containerForm2{
 		padding: 10px;
-=======
-
+	}
 	#oportuyaBeneficiosModal .modal-content h4{
 		font-size: 14px;
 	}
@@ -2891,7 +2909,6 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 	.motosFormContainer form .form-group label{
 		font-size: 10px;
->>>>>>> modal
 	}
 
 	.modal-containerFormulario, .formularioSimulador-containerFormulario{
@@ -2938,16 +2955,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 @media(max-width: 450px){
 
-<<<<<<< HEAD
 	.g-recaptcha {
 		transform:scale(0.7);-webkit-transform:scale(0.7);
 		transform-origin:0 0;-webkit-transform-origin:0 0;
 		}
-=======
 	.motosFormContainer form .form-group label{
 		font-size: 9px;
 	}
->>>>>>> modal
 
 
 	.warrantyLegal{
