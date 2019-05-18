@@ -1022,6 +1022,54 @@ class OportuyaV2Controller extends Controller
 		return  response()->json([true]);
 	}
 
+	public function execCreditPolicyNew($identificationNumber){
+		// Negacion, condicion 1, vectores comportamiento
+		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respVectores = DB::connection('oportudata')->select($queryVectores);
+		foreach ($respVectores as $key => $payment) {
+			$aprobado = false;
+			$paymentArray = explode('|',$payment->fdcompor);
+			$paymentArray = array_map(array($this,'applyTrim'),$paymentArray);
+			$popArray = array_pop($paymentArray);
+			$paymentArray = array_reverse($paymentArray);
+			$paymentArray = array_splice($paymentArray, 0, 12);
+			$elementsPaymentExt = array_keys($paymentArray,'N');
+			$paymentsExtNumber = count($elementsPaymentExt);
+			if ($paymentsExtNumber == 12) {
+				$aprobado = true;
+				break;
+			}
+		}
+
+		if($aprobado == false){
+			return -1; // Credito negado
+		}
+
+		
+		// Negacion, codicion 2, saldo en mora
+
+		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
+		FROM `cifin_finmora` 
+		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
+		AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
+
+		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
+		FROM `cifin_realmora` 
+		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
+		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
+
+		$totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
+		
+		if($totalValorMora > 100){
+			return -2; // Credito negado
+		}
+	}
+
 	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicional 3
 		$queryFinMora = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
@@ -1112,7 +1160,6 @@ class OportuyaV2Controller extends Controller
 		if($totalCodeFinDia >= 1 || $totalCodeFinDia >= 1){
 			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
 		}
-
 
 		// Condicion 1.3: Sin creditos ultimos 2 años
 		$dateNow = date('Y-m-d');
