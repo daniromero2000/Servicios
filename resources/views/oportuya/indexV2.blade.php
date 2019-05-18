@@ -187,7 +187,7 @@
 					<p class="text-center">
 						Confiamos en ti, es por eso que tenemos una aprobación <br>
 						inmediata si cumples con nuestras políticas de crédito <br>
-						Podemos otorgarte uncupo desde $1.800.000 para que <br>
+						Podemos otorgarte un cupo desde $1.800.000 para que <br>
 						lo utilices en nuestras tiendas, <br>
 						<span>Rápido, confiables y sin moverte de casa.</span>
 						<br>
