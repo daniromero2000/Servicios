@@ -12,7 +12,7 @@ angular.module('appStep1', [])
 	$scope.leadInfo = {
 		'step' : 1,
 		'channel' : 1,
-		'typeService' : 'Terjeta de crédito Oportuya',
+		'typeService' : 'Oportuya',
 		'typeDocument' : '',
 		'identificationNumber' : '',
 		'name' : '',
