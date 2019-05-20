@@ -119,6 +119,8 @@ class OportuyaV2Controller extends Controller
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
+			}else{
+				$consultaComercial = 1;
 			}
 			$cityName = $this->getCity($request->get('city'));
 
@@ -293,7 +295,16 @@ class OportuyaV2Controller extends Controller
 			// CEDULA query from OPORTUDATA data base
 
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-
+			$estado = "";
+			switch ($oportudataLead[0]->ORIGEN) {
+				case 'Avance':
+					$estado = "A-PASO2";
+					break;
+				
+				case 'Oportuya':
+					$estado = "O-PASO2";
+					break;
+			}
 			//Assign data from request to CLIENTE_FAB colums
 
 			$dataLead=[
@@ -318,6 +329,7 @@ class OportuyaV2Controller extends Controller
 				'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? trim($request->get('spouseSalary')) : '0',
 				'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? trim($request->get('spouseTelephone')) : '0',
 				'ESTRATO' => $request->get('stratum'),
+				'CON3' => $estado,
 				'PERSONAS' => 0,
 				'ESTUDIOS' => 'NA',
 				'POSEEVEH' => 'N',
@@ -423,13 +435,7 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
-				$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
-				if($typeServiceSol[0]->typeService == 'Avance'){
-					$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
-					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
-				}else{
-					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
-				}
+				$quotaApprovedProduct = $this->execCreditPolicyNew($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = 1;
 			}
@@ -437,17 +443,17 @@ class OportuyaV2Controller extends Controller
 			$con3 = "";
 			if($quotaApprovedProduct > 0){
 				if($estadoLead != 'SIN COMERCIAL'){
+					$quotaApproved = '500000';
 					$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 					$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
-					if($typeServiceSol[0]->typeService == 'Avance'){
-						$solic_fab->AVANCE_W=$quotaApproved;
-						$solic_fab->PRODUC_W=$quotaApprovedProduct;
-					}else{
-						$solic_fab->PRODUC_W=$quotaApprovedProduct;
-					}
+					
+					$solic_fab->AVANCE_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 
 					$scoreLead = $respScoreLead[0]->score;
 				}else{
+					$solic_fab->AVANCE_W=0;
+					$solic_fab->PRODUC_W=0;
 					$scoreLead = 0;
 				}
 				$solic_fab->CLIENTE=$identificationNumber;
@@ -1022,6 +1028,56 @@ class OportuyaV2Controller extends Controller
 		return  response()->json([true]);
 	}
 
+	public function execCreditPolicyNew($identificationNumber){
+		// Negacion, condicion 1, vectores comportamiento
+		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respVectores = DB::connection('oportudata')->select($queryVectores);
+		foreach ($respVectores as $key => $payment) {
+			$aprobado = false;
+			$paymentArray = explode('|',$payment->fdcompor);
+			$paymentArray = array_map(array($this,'applyTrim'),$paymentArray);
+			$popArray = array_pop($paymentArray);
+			$paymentArray = array_reverse($paymentArray);
+			$paymentArray = array_splice($paymentArray, 0, 12);
+			$elementsPaymentExt = array_keys($paymentArray,'N');
+			$paymentsExtNumber = count($elementsPaymentExt);
+			if ($paymentsExtNumber == 12) {
+				$aprobado = true;
+				break;
+			}
+		}
+
+		if($aprobado == false){
+			return -1; // Credito negado
+		}
+
+		
+		// Negacion, codicion 2, saldo en mora
+
+		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
+		FROM `cifin_finmora` 
+		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
+		AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
+
+		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
+		FROM `cifin_realmora` 
+		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
+		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
+
+		$totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
+		
+		if($totalValorMora > 100){
+			return -2; // Credito negado
+		}
+
+		return 1300000;
+	}
+
 	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicional 3
 		$queryFinMora = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
@@ -1112,7 +1168,6 @@ class OportuyaV2Controller extends Controller
 		if($totalCodeFinDia >= 1 || $totalCodeFinDia >= 1){
 			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
 		}
-
 
 		// Condicion 1.3: Sin creditos ultimos 2 años
 		$dateNow = date('Y-m-d');
@@ -1225,7 +1280,7 @@ class OportuyaV2Controller extends Controller
 			
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
-			$scoreMin = 686;
+			$scoreMin = 675;
 			if($cityName == 'MEDELLÍN' || $cityName =='BOGOTÁ'){
 				$scoreMin = 726;
 			}
