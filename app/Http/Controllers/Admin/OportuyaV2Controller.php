@@ -119,6 +119,8 @@ class OportuyaV2Controller extends Controller
 			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 			if($dateConsultaComercial == 'true'){
 				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
+			}else{
+				$consultaComercial = 1;
 			}
 			$cityName = $this->getCity($request->get('city'));
 
@@ -293,7 +295,16 @@ class OportuyaV2Controller extends Controller
 			// CEDULA query from OPORTUDATA data base
 
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-
+			$estado = "";
+			switch ($oportudataLead[0]->ORIGEN) {
+				case 'Avance':
+					$estado = "A-PASO2";
+					break;
+				
+				case 'Oportuya':
+					$estado = "O-PASO2";
+					break;
+			}
 			//Assign data from request to CLIENTE_FAB colums
 
 			$dataLead=[
@@ -318,6 +329,7 @@ class OportuyaV2Controller extends Controller
 				'SALARIO_CONYU' => ($request->get('spouseSalary') != '') ? trim($request->get('spouseSalary')) : '0',
 				'CELULAR_CONYU' => ($request->get('spouseTelephone') != '') ? trim($request->get('spouseTelephone')) : '0',
 				'ESTRATO' => $request->get('stratum'),
+				'CON3' => $estado,
 				'PERSONAS' => 0,
 				'ESTUDIOS' => 'NA',
 				'POSEEVEH' => 'N',
@@ -423,13 +435,7 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
-				$typeServiceSol= DB::select(sprintf("SELECT `typeService` FROM `leads` WHERE `identificationNumber`= %s LIMIT 1", $identificationNumber));
-				if($typeServiceSol[0]->typeService == 'Avance'){
-					$quotaApproved = ($this->creditPolicyAdvance($identificationNumber)) ? '500000' : -2 ;
-					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
-				}else{
-					$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);
-				}
+				$quotaApprovedProduct = $this->execCreditPolicyNew($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = 1;
 			}
@@ -437,17 +443,17 @@ class OportuyaV2Controller extends Controller
 			$con3 = "";
 			if($quotaApprovedProduct > 0){
 				if($estadoLead != 'SIN COMERCIAL'){
+					$quotaApproved = '500000';
 					$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 					$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
-					if($typeServiceSol[0]->typeService == 'Avance'){
-						$solic_fab->AVANCE_W=$quotaApproved;
-						$solic_fab->PRODUC_W=$quotaApprovedProduct;
-					}else{
-						$solic_fab->PRODUC_W=$quotaApprovedProduct;
-					}
+					
+					$solic_fab->AVANCE_W=$quotaApproved;
+					$solic_fab->PRODUC_W=$quotaApprovedProduct;
 
 					$scoreLead = $respScoreLead[0]->score;
 				}else{
+					$solic_fab->AVANCE_W=0;
+					$solic_fab->PRODUC_W=0;
 					$scoreLead = 0;
 				}
 				$solic_fab->CLIENTE=$identificationNumber;
@@ -1068,6 +1074,8 @@ class OportuyaV2Controller extends Controller
 		if($totalValorMora > 100){
 			return -2; // Credito negado
 		}
+
+		return 1300000;
 	}
 
 	public function execCreditPolicy($identificationNumber){
@@ -1272,7 +1280,7 @@ class OportuyaV2Controller extends Controller
 			
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
-			$scoreMin = 686;
+			$scoreMin = 675;
 			if($cityName == 'MEDELLÍN' || $cityName =='BOGOTÁ'){
 				$scoreMin = 726;
 			}
