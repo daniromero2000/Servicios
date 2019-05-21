@@ -435,7 +435,7 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
-				$quotaApprovedProduct = $this->execCreditPolicyNew($identificationNumber);	
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = 1;
 			}
@@ -1028,7 +1028,7 @@ class OportuyaV2Controller extends Controller
 		return  response()->json([true]);
 	}
 
-	public function execCreditPolicyNew($identificationNumber){
+	public function execCreditPolicy($identificationNumber){
 		// Negacion, condicion 1, vectores comportamiento
 		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
 
@@ -1076,134 +1076,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		return 1300000;
-	}
-
-	public function execCreditPolicy($identificationNumber){
-		// Negacion, condicional 3
-		$queryFinMora = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
-		FROM `cifin_finmora` 
-		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
-		AND `fincedula` = %s AND `fincalid` != 'CODE' ", $identificationNumber, $identificationNumber);
-
-		$respFinMora = DB::connection('oportudata')->select($queryFinMora);
-
-		if(!empty($respFinMora)){
-			if($respFinMora[0]->totalMoraFin > 0){
-				return -1; // Credito Negado
-			}
-		}
-
-		$queryRealMora = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
-		FROM `cifin_realmora` 
-		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
-		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') ", $identificationNumber, $identificationNumber);
-
-		$respRealMora = DB::connection('oportudata')->select($queryRealMora);
-
-		if(!empty($respRealMora)){
-			if($respRealMora[0]->totalMoraReal > 0){
-				return -2; // Credito Negado
-			}
-		}
-
-		// Con Historia Comercial, condicion 2
-
-		$queryFindia = sprintf("SELECT SUM(`fdsaldob`) as totalSaldoFin
-		FROM `cifin_findia` 
-		WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
-		AND fdcedula = %s ", $identificationNumber, $identificationNumber);
-
-		$respFindia = DB::connection('oportudata')->select($queryFindia);
-
-		$totalSaldoFin = (empty($respFindia)) ? 0 : $respFindia[0]->totalSaldoFin ;
-
-		$queryRealdia = sprintf("SELECT SUM(`rdsaldob`) as totalSaldoReal
-		FROM `cifin_realdia` 
-		WHERE `rdconsul` = (SELECT MAX(`rdconsul`) FROM `cifin_realdia` WHERE `rdcedula` = %s  ) 
-		AND rdcedula = %s ", $identificationNumber, $identificationNumber);
-
-		$respRealdia = DB::connection('oportudata')->select($queryRealdia);
-
-		$totalSaldoReal = (empty($respRealdia)) ? 0 : $respRealdia[0]->totalSaldoReal ;
-
-		$totalSaldo = ($totalSaldoFin + $totalSaldoReal) * 1000;
-
-		if ($totalSaldo >= 1000000) {
-			return $this->getQuotaApproved(2, $identificationNumber);
-		}
-
-		// Sin Historia Comercial, condicion 1
-		$queryNoHistorial = sprintf("SELECT COUNT(vigconsul) as totalCuentas
-		FROM `cifin_ctavigen` 
-		WHERE `vigcedula` = %s AND `vigconsul` = (SELECT MAX(`vigconsul`) FROM `cifin_ctavigen` WHERE `vigcedula` = %s  ) AND `vigestado` = 'NORMA' ", $identificationNumber, $identificationNumber);
-
-		$respNoHistorial = DB::connection('oportudata')->select($queryNoHistorial);
-
-		if ($respNoHistorial[0]->totalCuentas >= 1) {
-			return $this->getQuotaApproved(1, $identificationNumber); // Sin Historia comercial pero tiene cuentas bancarias, condicion 1
-		}
-
-		//Condicion 1.1: Creditos < 1000000
-
-		if ($totalSaldo <= 1000000) {
-			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
-		}
-
-		// Condicion 1.2: Solo Codeudorouhhu
-
-		$queryCodeFinDia = sprintf("SELECT COUNT(`fdconsul`) as totalCodeFinDia 
-		FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
-		AND fdcedula = %s AND `fdcalid` = 'CODE' ", $identificationNumber, $identificationNumber);
-
-		$respCodeFinDia = DB::connection('oportudata')->select($queryCodeFinDia);
-		$totalCodeFinDia = $respCodeFinDia[0]->totalCodeFinDia;
-
-		$queryCodeRealDia = sprintf("SELECT COUNT(`rdconsul`) as totalCodeRealDia 
-		FROM `cifin_realdia` WHERE `rdconsul` = (SELECT MAX(`rdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s  ) 
-		AND rdcedula = %s AND `rdcalid` = 'CODE' ", $identificationNumber, $identificationNumber);
-
-		$respCodeRealDia = DB::connection('oportudata')->select($queryCodeRealDia);
-		$totalCodeFinDia = $respCodeFinDia[0]->totalCodeFinDia;
-
-		if($totalCodeFinDia >= 1 || $totalCodeFinDia >= 1){
-			return $this->getQuotaApproved(1, $identificationNumber); // Preaprobado Sin historial crediticio
-		}
-
-		// Condicion 1.3: Sin creditos ultimos 2 años
-		$dateNow = date('Y-m-d');
-		$dateTwoYears = strtotime ("-2 year", strtotime ( $dateNow ) ) ;
-		$dateTwoYears = date ( 'Y-m-d' , $dateTwoYears );
-
-		$queryFinExtCorte = sprintf("SELECT `extcorte`
-		FROM `cifin_finext` 
-		WHERE `extcedula` = %s AND `extconsul` = (SELECT MAX(`extconsul`) FROM `cifin_finext` WHERE `extcedula` = %s  )  ", $identificationNumber, $identificationNumber);
-
-		$respFinExtCorte = DB::connection('oportudata')->select($queryFinExtCorte);
-		if(!empty($respFinExtCorte)){
-			foreach($respFinExtCorte as $date){
-				$time = explode("/", $date->extcorte);
-				$newTime = strtotime($time[1]."/".$time[0]."/".$time[2]);
-				if($newTime >= strtotime($dateTwoYears)){
-					return $this->getQuotaApproved(1, $identificationNumber);
-				}
-			}
-		}
-
-		$queryRealExtCorte = sprintf("SELECT `rexcorte`
-		FROM `cifin_realext` 
-		WHERE `rexcedula` = %s AND `rexconsul` = (SELECT MAX(`rexconsul`) FROM `cifin_realext` WHERE `rexcedula` = %s  )  ", $identificationNumber, $identificationNumber);
-		
-		$respRealExtCorte = DB::connection('oportudata')->select($queryRealExtCorte);
-
-		if(!empty($respRealExtCorte)){
-			foreach($respRealExtCorte as $date){
-				$time = explode("/", $date->rexcorte);
-				$newTime = strtotime($time[1]."/".$time[0]."/".$time[2]);
-				if($newTime >= strtotime($dateTwoYears)){
-					return $this->getQuotaApproved(1, $identificationNumber);
-				}
-			}
-		}
 	}
 
 	private function getQuotaApproved($typeValidation, $identificationNumber){
