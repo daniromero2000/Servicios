@@ -200,6 +200,203 @@ span.renewCode:hover {
 	font-size: 24px;
 }
 
+/*Oportuya*/
+
+#oportuyaBanner .max-width-content-19{
+		background-color:#2585C0;
+		color:#FFF;
+		position: relative;
+		padding-top:60px;
+		margin-top:100px !important; 
+}
+
+#oportuyaBanner .max-width-content-19:before{
+		position: absolute;
+		content: '';
+		width: 0;
+		border-top:solid #FFF 70px;
+		border-left:solid #2585C0 70px;
+		right: 0;
+		top: 0; 
+}
+
+#oportuyaBanner .max-width-content-19:after{
+	position: absolute;
+	content: '';
+	width: 0;
+	border-bottom:solid #FFF 70px;
+	border-right:solid #2585C0 70px;
+	left: 0;
+	bottom: 0; 
+}
+#oportuyaBanner .max-width-content-19 div.row .offset-lg-1{
+	margin-bottom: 45px;
+}
+
+#oportuyaBanner .max-width-content-19 div.row  p{
+	font-size: 18px;
+}
+
+#oportuyaBanner .max-width-content-19 div.row  p a{
+	color:#FFF;
+	background-color: #E72665;
+	padding: 5px 30px;
+	font-weight: 600;
+	font-size:18px;
+	border-radius: 20px;
+}
+
+#oportuyaBanner .max-width-content-19 div.row  span{
+	font-size: 24px;
+	font-weight: 500;
+}
+
+#oportuyaBanner .max-width-content-19 div.row .col-sm-4{
+	position: relative;
+} 
+
+
+
+#oportuyaBanner .max-width-content-19 div.row img{
+	position: absolute;
+	bottom: 0;
+}
+
+#oportuyaBeneficiosModal .oportuyaModal-body{
+	background: #2585C0 no-repeat bottom left;
+	border: 1px solid #f5f4fe;
+	border-radius: 20px 20px 0 0;
+	-webkit-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 31px -11px rgba(0,0,0,0.75);
+	max-width: 816px;
+    min-height: 650px;
+	padding: 0;
+	position: relative;
+	color:#FFF;
+}
+
+#oportuyaBeneficiosModal .modal-content{
+	border-radius: 20px;
+}
+#oportuyaBeneficiosModal .modal-content h4{
+	line-height: 0;
+	margin-top: 30px;
+}
+
+#oportuyaBeneficiosModal .modal-content .row{
+	width: 100%;
+	margin: 0;
+}
+
+.border-top{
+	border-top:solid 1px #93C177;
+}
+
+.border-bottom{
+	border-bottom:solid 1px #93C177;
+}
+
+#oportuyaBeneficiosModal .modal-content .border-top{
+	font-size: 15px;
+	min-height: 80px;
+	padding: 20px 0;
+}
+
+
+#oportuyaBeneficiosModal .modal-content .min-height-modal-item{
+	min-height: 110px;
+}
+
+#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya{
+	width: 80%;
+	margin: auto;
+}
+
+#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya div span{
+	font-size: 28px;
+	font-weight: 700;
+	color:#C8CACD;
+}
+
+#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya img{
+	width: 80%;
+}
+
+#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya .asesor-img-modal img{
+	width: 50%;
+}
+
+.pasos-oportuya{
+	position: relative;
+}
+
+.pasos-oportuya img{
+	margin-top:50%;
+	transform:translateY(-50%);
+}
+
+.paso-oportuya-numero{
+	padding: 35px 0 0 0;
+}
+
+.paso-oportuya-vertica-centrar{
+	padding-top: 45px;
+}
+
+.padding-top-30{
+	padding-top:30px; 
+}
+
+.footer-modal-oportuya{
+	color: #000;
+	line-height: 1;
+}
+
+.bg-oportuya-modal-footer{
+	background: #FFF;
+}
+
+.footer-modal-oportuya .col-md-7{
+	height: 50px;
+    margin-top: 30px;
+}
+
+.footer-modal-oportuya .col-md-5{
+	height: 80px;
+	position: relative;
+}
+
+.footer-modal-oportuya .col-md-5:before{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    border-top: solid #2585C0 30px;
+    border-right: solid #FFF 30px;
+
+}
+
+.footer-modal-oportuya .col-md-5 p{
+	padding-left:20px;
+	margin-bottom:0;
+	margin-top: 10px; 
+	text-align: center; 
+}
+
+.footer-modal-oportuya .col-md-5 p span{
+	font-weight: 700;
+}
+
+.link-modal-oportuya a{
+	background-color: #167EFA;
+    font-size: 20px;
+    padding: 10px 35px;
+    color: #FFEC00;
+    font-weight: 600;
+    border-radius: 7px;
+}
+
 /*Slider Avances*/
 
 .oportuyaSliderContentAdvance{
@@ -458,6 +655,7 @@ span.renewCode:hover {
 	color: #fff;
     font-size: 18px;
 	padding: 5px 60px;
+	font-weight: 600;
 }
 
 .formularioSimulador-textInferior{
@@ -1509,7 +1707,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-image: url('../images/contactslide.jpg');
 	background-repeat:no-repeat;
 	background-size: 100%; 
-	margin-top: 50px;
+	margin-top: 50px !important;
 }
 
 #motosContact div.row{
@@ -1543,6 +1741,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 #ventajasAuteco .row, #motosContact .row{
 	width: 100%;
+	margin: 0;
 }
 .motosFormContainer form .form-group{
 	margin-bottom: 0;
@@ -1788,6 +1987,201 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-color: #FF0000;
 }
 
+
+
+#motoPrecios .row{
+	width: 100%;
+	margin: 0;
+}
+
+.motosFormContainer .checkBoxContainer label{
+	font-size: 12px;
+	font-style: italic;
+}
+
+.max-width-content-12{
+	max-width: 1200px;
+	margin: auto !important;
+	position: relative;
+}
+
+.max-width-content-19{
+	max-width: 1960px;
+	margin: auto!important;
+	position: relative;
+}
+
+.containImgMotos{
+	left: unset!important;
+	transform: unset!important;
+}
+
+#motosLiquidadorModal div.modal-content{
+	background-color:transparent;
+	border:none !important;
+}
+
+.modalFormulario-body-motos{
+	background: url(../images/motos/bg_modal_motos.jpg) no-repeat bottom left;
+    max-width: 816px;
+    min-height: 650px;
+    padding: 0;
+	position: relative;
+	border-radius: 10px;
+}
+
+.modalFormulario-proyecciones-motos{
+	background: #FFF;
+    max-width: 816px;
+    min-height: 650px;
+    padding: 0;
+	position: relative;
+	border-radius: 10px;
+}
+
+.modalFormulario-proyecciones-motos div.row{
+	width: 100%;
+	margin: 0;
+}
+
+
+.backToCuota-btn a{
+	margin-left: 50%;
+	transform: translate(-50%);
+	cursor: pointer;
+}
+
+.motosHeaderModal{
+	background: url(../images/motos/bg_formulario_liquidador.jpg) no-repeat center center;
+	padding: 3% 0 2% 4%;
+	color: #FFF;
+	border-radius: 10px 10px 0 0;
+}
+
+.motosHeaderModal h3{
+	font-size: 1.65em;
+}
+
+.formularioSimulador-titleForm{
+	background: url(../images/libranza-formularioEncabezado.png) no-repeat center center;
+	color: #fff;
+	border-radius: 15px 15px 0 0;
+	margin: 0;
+	padding: 20px 30px;
+	position: relative;
+}
+
+
+.modalFormulario-proyecciones-motos .table ul li.ng-scope a{
+	padding: 5px 10px!important;
+	border:solid #D7D4D7 1px;
+	background-color: #FFF;
+}
+
+.modalFormulario-proyecciones-motos .table ul li.ng-scope a:hover{
+	background-color: #4289CA;
+	color: #FFF!important;
+}
+
+.infoPayment{
+	min-width: 530px;
+    right: 0;
+    position: absolute;
+}
+
+.infoPayment div.row{
+	width: 100%;
+}
+
+.infoPayment div.col-12{
+	padding: 20px 3%;
+	text-align: center;
+}
+
+.infoPaymentContainer{
+	padding: 20px 20px;
+	border: solid 1px;
+}
+
+.infoPaymentFee div h3{
+	font-weight: 700;
+	font-size: 42px;
+	color: red;
+}
+
+.formularioSimulador-containInput input[type=range]{
+	height: 34px;
+	-webkit-appearance: none;
+	margin: 10px 0;
+	width: 100%;
+}
+
+.formularioSimulador-containInput input[type=range]::-webkit-slider-runnable-track{
+	width: 100%;
+	height: 9px;
+	cursor: pointer;
+	background: #C4E0FA;
+	border-radius: 5px;
+	border: 0px solid #010101;
+}
+
+.formularioSimulador-containInput input[type=range]::-webkit-slider-thumb {
+    border: 2px solid #1E589D;
+    height: 1.7em;
+    width: 1.7em;
+    border-radius: 15px;
+    background: #3277C2;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -9px;
+  }
+
+  .initialFeeValue span{
+	font-weight: 800;
+    font-size: 2.5em;
+    color: red;
+  }
+
+  .initialFeeValue div{
+	  display: table;
+  }
+
+  .initialFeeValue span, .initialFeeValue label{
+	  vertical-align: middle;
+	  margin: 0;
+  }
+
+  .motosTimeLimit span{
+	  font-weight: 800;
+  }
+
+#motosLiquidadorModal label{
+	font-weight: 800;
+	color: #000;
+}
+
+.motosContainerFormulario{
+	background: none !important;
+}
+
+.btn-credito{
+	color: #FFF !important;
+}
+
+
+.btn-viewCuota .formularioSimulador-buttonForm{
+	background: #1a59a0;
+	border-radius: 30px;
+	color: #fff;
+    font-size: 18px;
+	padding: 8px 30px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.headerTableMotos tr td{
+	font-weight: 600;
+}
 
 .contactFormList{
 	text-align: left;
@@ -2190,10 +2584,114 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		bottom: 2.5em;
 	}
 
+	.motosFormContainer .checkBoxContainer{
+		height: 20px;
+	}
+
+	.motosFormContainer .checkBoxContainer label{
+		font-size: 10px;
+		font-style: italic;
+	}
+	.motosFormContainer form .form-group:not(.checkBoxContainer){
+		height: 50px;
+	}
+
+	.textMotosContact .contactFormList img{
+		width: 15%;
+	}
+}
+
+@media(max-width: 1200px){
+
+	.motosCuotaSimulador a{
+		font-size: 14px;
+		padding: 5px 10px;
+	}
+	
+	.motoSliderContent .logoMotosMarca img{
+		width: 40%;
+	}
+
+	.motoSliderContent{
+		bottom: 7em;
+	}
+
+
+	.textMotosContact .contactFormList img{
+		width: 10%;
+	}
+
+	#motosContact div.row{
+		padding: 15px 0;
+	}
+	
+	#motosContact{
+		line-height: 1;
+	}
+	.motosFormContainer form .form-group:not(.checkBoxContainer){
+		height: 43px;
+	}
+
+	.motosFormContainer p{
+		margin-bottom: 0.5rem;
+	}
+
+	.motosFormContainer .checkBoxContainer{
+		height: 18px;
+	}
+
+	.motosFormContainer .checkBoxContainer label{
+		font-size: 9px;
+		font-style: italic;
+	}
+
+	.buttonFormModal{
+		padding: 3px 40px;
+	}
+
 }
 
 
 @media(max-width: 991px){
+
+
+	.libranzaMotosButton{
+		font-size: 14px;
+		padding: 6px 40px;
+	}
+
+	.motosFormContainer form .form-group:not(.checkBoxContainer){
+		height: 60px;
+	}
+	.motosFormContainer .checkBoxContainer label{
+		font-size: 13px;
+	}
+
+	.motosFormContainer form input:not(#termsAndConditions),.motosFormContainer form select, .motosFormContainer .buttonMotosContainer{
+		width: 100%!important;
+	}
+	.motosFormContainer form .form-group,.motosFormContainer form p{
+		width: 60%!important;
+		margin: auto;
+	}
+
+	#motosContact{
+		background: none;
+	}
+
+	.bg-responsive{
+		background-image: url(../images/contactslide.jpg);
+    	background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		padding: 25px 0;
+		margin: 25px 0;
+	}
+
+	.motoSliderButton a{
+		padding: 10px 40px;
+		font-size: 14px;
+	}
 
 	#newsletter-avance div.container div.row div h3	{
 		text-align: center;
@@ -2247,12 +2745,89 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 768px){
+
+	.link-modal-oportuya a{
+		font-size: 12px;
+	}
+
+	#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya img{
+		width: 30%;
+		margin-top:unset;
+		transform: unset;
+		margin-bottom:30px;  
+	}
+
+	#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya .asesor-img-modal img{
+		width: 22%!important;
+	}
+
+	#oportuyaBanner .max-width-content-19 div.row img{
+		position: relative;
+	}
+
+	#oportuyaBanner .max-width-content-19:after,#oportuyaBanner .max-width-content-19:before{
+		display: none;
+	}
+
+	.footer-modal-oportuya .col-md-5:before,.footer-modal-oportuya .col-md-7{
+		display: none;
+	}
+
+	.footer-modal-oportuya .col-md-5{
+		height: 120px;;
+	}
+	
 	/**
 	**Caso de Uso: WARRANTY MODULE
 	**Autor: Luis David Giraldo Grajales 
 	**Email: desarrolladorjunior@lagobo.com
 	**Fecha: 28/02/2019
 	**/
+
+	.tituloMotos h2{
+		padding: 0 30px;
+		font-size: 1.5rem;
+	}
+
+	#motosLibranza{
+		text-align: center;
+	}
+
+	#motosLibranza,#motosLibranza img{
+		margin-bottom: 25px;
+	}
+
+	#motosLibranza .libranzaMotosButton{
+		position: relative;
+		bottom: unset;
+		left: unset;
+
+	}
+
+	.motosFormContainer form .form-group, .motosFormContainer form p{
+		width: 90%!important;
+	}
+
+	.motoSliderContent{
+		bottom: 5em;
+		left:3em;
+		
+	}
+
+	.motoSliderContent .logoMotosMarca img{
+		width: 25% !important;
+		float: left;
+	}
+
+	.motoSliderButton{
+		position: relative;
+		text-align: center;
+		margin-top:10px;
+		left: unset;
+		bottom: unset;
+		right: unset;
+	}
+
 	.avanceSliderContent{
 		position: relative;
 		bottom: 0;
@@ -2307,6 +2882,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 550px){
+
+	.link-modal-oportuya a{
+		padding: 7px 5px;
+		font-size: 2.7vw;
+		font-weight: unset;
+	}
+
 	#WarrantyStep3{
 		min-height: 1009px;
 	}
@@ -2316,6 +2898,17 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	}
 	.Garantia-containerForm2{
 		padding: 10px;
+	}
+	#oportuyaBeneficiosModal .modal-content h4{
+		font-size: 14px;
+	}
+
+	.motoSliderContent .logoMotosMarca img{
+		width: 15% !important;
+	}
+
+	.motosFormContainer form .form-group label{
+		font-size: 10px;
 	}
 
 	.modal-containerFormulario, .formularioSimulador-containerFormulario{
@@ -2366,6 +2959,9 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		transform:scale(0.7);-webkit-transform:scale(0.7);
 		transform-origin:0 0;-webkit-transform-origin:0 0;
 		}
+	.motosFormContainer form .form-group label{
+		font-size: 9px;
+	}
 
 
 	.warrantyLegal{

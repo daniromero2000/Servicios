@@ -91,7 +91,7 @@
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
                         <div class="col-12 text-center">
-                            <a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20electrodoméstico" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20adquirir%20un%20cr%C3%A9dito%20en%20libranza%20para%20un%20electrodom%C3%A9stico" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
                         <div class="col-12 text-center">
-                            <a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20una%20moto" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20adquirir%20un%20cr%C3%A9dito%20en%20libranza%20para%20moto." class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
                         <div class="col-12 text-center">
-                            <a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20para%20un%20viaje" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20adquirir%20un%20cr%C3%A9dito%20en%20libranza%20para%20un%20viaje" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
                         <div class="col-12 text-center">
-                            <a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20libre%20inversión" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                                <a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20adquirir%20un%20cr%C3%A9dito%20en%20libranza%20libre%20inversi%C3%B3n" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="row" style="padding-bottom: 15px;">
                         <div class="col-12 text-center">
-                            <a href="https://api.whatsapp.com/send?phone=573105216830&text=Estoy%20interesado%20adquirir%20un%20crédito%20en%20libranza%20por%20medio%20de%20compra%20de%20cartera" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20adquirir%20un%20cr%C3%A9dito%20en%20libranza%20por%20medio%20de%20compra%20de%20cartera" class="creditoLibranza-buttonWhatsApp" target="_blank">Pregúntanos por WhatsApp <i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>

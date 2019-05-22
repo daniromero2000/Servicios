@@ -25,6 +25,7 @@
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy {{ $digitalAnalyst['name'] }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
+				<p class="text-center link-modal-oportuya"><a data-toggle="modal" href="#oportuyaBeneficiosModal"> Obtén más información sobre los beneficios y condiciones de tu tarjeta </a></p>
 				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu tarjeta Oportuya</h3>
 			</div>
 			<div class="col-12">
@@ -270,6 +271,133 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal modalFormulario fade hide" id="oportuyaBeneficiosModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body oportuyaModal-body">
+						<h4 class="text-center">
+							Conoce la manera más fácil de tener todos <hr>
+							los beneficios de nuestros clientes.
+						</h4>
+						<br>
+						<br>
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<div class="row border-top min-height-modal-item">
+									<div class="col-2 text-center">
+										<img src="{{asset('images/icon-accede-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+									<div class="col-10">
+										Accede con facilidad a una gran variedad  de electrodomésticos para tu hogar.
+									</div>
+								</div>
+								<div class="row border-top">
+									<div class="col-2 text-center">
+										<img src="{{asset('images/icon-cupo-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+									<div class="col-10">
+										Un cupo de avances para que utilices cuando más lo necesites (Hasta $500.000)
+									</div>
+								</div>
+								<div class="row border-top border-bottom">
+									<div class="col-2 text-center">
+										<img src="{{asset('images/icon-rotativo-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+									<div class="col-10">
+										El cupo de crédito con nuestra tarjeta es rotativo.
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="row border-top min-height-modal-item">
+									<div class="col-2 text-center">
+										<img src="{{asset('images/icon-descuentos-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+									<div class="col-10">
+										Tienes acceso a los súper descuentos que lanzamos cada semana con los mejores precios por ser cliente Oportuya.
+									</div>
+								</div>
+								<div class="row border-top border-bottom">
+									<div class="col-2 text-center">
+										<img src="{{asset('images/icon-seguros-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+									<div class="col-10">
+										Descuentos en SOAT y otros seguros para que estés protegido siempre.
+									</div>
+								</div>	
+							</div>
+						</div>
+						<br>
+						<h5 class="text-center">
+							Antes de iniciar con los pasos queremos que sepas que <br> tenemos muchas oportunidades de crédito para ti.
+						</h5>
+						<br>
+						<div class="row content-pasos-oportuya">
+							<div class="col-12 border-bottom pasos-oportuya">
+								<div class="row">
+									<div class="col-md-1 col-2 text-center paso-oportuya-numero"> <span>1</span></div>
+									<div class="col-md-8 col-10 paso-oportuya-vertica-centrar"> <p> Ingresa nuestra solicitud de crédito para comenzar </p></div>
+									<div class="col-md-3 col-12 text-center">
+									<a href="/step1"><img src="{{asset('images/icon-ingresar-modal.png')}}" alt="" class="img-fluid"></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 border-bottom pasos-oportuya">
+								<div class="row">
+									<div class="col-2 col-md-1 text-center paso-oportuya-numero"> <span>2</span></div>
+									<div class="col-10 col-md-8"> <p>Deja tus datos completos según la solicitud de crédito 
+														que estés diligenciando.De la calidad de la información 
+														dependerá la velocidad en el resultado.
+														Además recuerda que todos los datos son verificados.</p>
+									</div>
+									<div class="col-12 col-md-3 text-center">
+										<a href="/step1"><img src="{{asset('images/icon-datos-oportuya.png')}}" alt="" class="img-fluid"></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 border-bottom pasos-oportuya">
+								<div class="row">
+									<div class="col-md-1 col-2 text-center paso-oportuya-numero"> <span>3</span></div>
+									<div class="col-md-8 col-10"> <p>En el intermedio del proceso recibirás un token de 
+														confirmación para verificar la existencia de tu número 
+														telefónico;no lo elimines, el proceso te lo exigirá para 
+														continuar con tu solicitud.</p>
+									</div>
+									<div class="col-md-3 col-12	 text-center">
+										<img src="{{asset('images/icon-token-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+								</div>
+							</div>
+							<div class="col-12 pasos-oportuya">
+								<div class="row">
+									<div class="col-md-1 col-2 text-center paso-oportuya-numero"> <span>4</span></div>
+									<div class="col-md-8 col-10 padding-top-30"> <p>Una vez haya sido aprobada tu solicitud de crédito.
+														un asesor se comunicará contigo para finalizar el proceso.
+														</p>
+									</div>
+									<div class="col-md-3 col-12 text-center asesor-img-modal">
+										<img src="{{asset('images/icon-asesor-oportuya.png')}}" alt="" class="img-fluid">
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row footer-modal-oportuya">
+							<div class="col-md-7 bg-oportuya-modal-footer">
+							</div>
+							<div class="col-md-5 bg-oportuya-modal-footer">
+								<p>Avances  aplica para las tres tarjetas <br>
+								Black, Blue y Gray: <br>
+								<span>Blue y Black:</span>hasta $500.000<br>
+								<span>Gray:</span>hasta $200.000	
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 @endsection
 

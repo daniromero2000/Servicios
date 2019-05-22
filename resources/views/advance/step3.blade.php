@@ -277,8 +277,8 @@
 							</div>
 						</div>
 						<div class="row resetRow">
-							<div class="col-12">
-								<!--<p class="textModal text-center">
+							<div class="col-12" ng-show="textPreaprobado">
+								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
 									Tienes un cupo pre-aprobado para avances en efectivo de:
@@ -288,11 +288,13 @@
 								</p>
 								<p class="textModalNumSolic text-center">
 									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
-								</p>-->
+								</p>
+							</div>
+							<div class="col-12" ng-hide="textPreaprobado">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tu solicitud ha sido creada exitosamente
+									Tu solictud fue creada exitosamente.
 								</p>
 								<p class="textModalNumSolic text-center">
 									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
