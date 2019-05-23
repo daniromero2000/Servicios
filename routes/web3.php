@@ -63,4 +63,6 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     Route::get("mail",function(){
         return view('emails.alertWarrantyClient');
     });
+    //Confirm a code verification
+    Route::get('/test', 'Admin\WarrantyController@test');
 });

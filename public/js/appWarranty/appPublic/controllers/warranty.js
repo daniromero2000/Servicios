@@ -14,7 +14,7 @@ app.controller('warrantyController', function($scope, $http, $location){
 
 	// change a row style of the selected product
 	$scope.style = function(product){
-		if (product.CODIGO == $scope.selectedProduct.CODIGO){
+		if (product.CODIGO == $scope.selectedProduct.CODIGO && product.CONSEC == $scope.selectedProduct.CONSEC){
 			// if de current product is a  selected product change a style 
 			return 'background-color: #DE005D; color:white';
 		}else{

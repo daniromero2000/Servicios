@@ -94,9 +94,23 @@ class WarrantyController extends Controller
                                                             ->orWhere('ESTADO','=','EN FACTURACION');
                                                         })
                                                         ->get();
-            
-            
-        dd($ProductsInvoice,$products2, $products->get());                                        
+        $theLastHope = sprintf("SELECT SOLIC_FAB.SUCURSAL, SOLIC_FAB.SOLICITUD,SUPER_2.articulo AS ARTICULO, SUPER_2.cod_artic AS CODIGO,ARTICULOS.MARCA, SUPER.FACTURA, SUPER.FEC_AUR,ARTICULOS.REFERENCIA
+                                    FROM OPORTUDATA1.SOLIC_FAB AS SOLIC_FAB
+                                    INNER JOIN  OPORTUDATA1.SUPER_2  as SUPER_2  ON (SOLIC_FAB.SOLICITUD = SUPER_2.SOLICITUD 
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                    )
+                                    LEFT JOIN OPORTUDATA1.ARTICULOS AS ARTICULOS ON (SUPER_2.COD_ARTIC = ARTICULOS.CODIGO)
+                                    LEFT JOIN OPORTUDATA1.SUPER AS SUPER ON (SOLIC_FAB.SOLICITUD = SUPER.SOLICITUD AND ARTICULOS.CODIGO = SUPER.CODIGO AND SUPER.CONSEC = SUPER_2.CONSEC)
+                                    WHERE CLIENTE = %s AND (ESTADO = 'FACTURADO' OR ESTADO = 'EN FACTURACION')","'%AV%'","'%AP%'","'%IVA%'","'%MS%'","'%SOAT%'","'%GR%'",30360248);
+                                    
+        $theLastHope = DB::connection('oportudata')->select($theLastHope);
+        dd($theLastHope);    
+        //dd($ProductsInvoice,$products2, $products->get());                                        
     }
     
     /**
@@ -447,23 +461,21 @@ public function getCodeVerificationOportudata($identificationNumber, $celNumber)
             return 'no records';
         }
         // if find register  get a list of the products 
-        $subProducts = DB::connection('oportudata')->table('SOLIC_FAB')
-                                                ->select('MARCA','REFERENCIA','SUPER_2.COD_ARTIC','SUCURSAL','SOLIC_FAB.SOLICITUD','ARTICULO')
-                                                ->join('SUPER_2','SOLIC_FAB.SOLICITUD','=','SUPER_2.SOLICITUD')
-                                                ->leftJoin('ARTICULOS','SUPER_2.COD_ARTIC','=','ARTICULOS.CODIGO')
-                                                ->where('CLIENTE','=',$request->identificationNumber)
-                                                ->where(function($q){
-                                                    $q->where('ESTADO','=','FACTURADO')
-                                                    ->orWhere('ESTADO','=','EN FACTURACION');
-                                                });
-
-        $products =  DB::connection('oportudata')->table('SUPER')
-                                                        ->select('MARCA','REFERENCIA','products.ARTICULO','products.COD_ARTIC as CODIGO','FEC_AUR','FACTURA','SUCURSAL','products.ARTICULO')
-                                                        ->rightJoinSub( $subProducts, 'products', function ($join) {
-                                                            $join->on('SUPER.SOLICITUD', '=', 'products.SOLICITUD')
-                                                            ->where(DB::raw('TRIM(products.COD_ARTIC)'),'=',DB::raw('TRIM(SUPER.CODIGO)'));
-                                                        })
-                                                        ->get();
+        $products = sprintf("SELECT SOLIC_FAB.SUCURSAL, SOLIC_FAB.SOLICITUD,SUPER_2.articulo AS ARTICULO, SUPER_2.cod_artic AS CODIGO,ARTICULOS.MARCA, SUPER.FACTURA, SUPER.FEC_AUR,ARTICULOS.REFERENCIA,SUPER_2.CONSEC
+                                    FROM OPORTUDATA1.SOLIC_FAB AS SOLIC_FAB
+                                    INNER JOIN  OPORTUDATA1.SUPER_2  as SUPER_2  ON (SOLIC_FAB.SOLICITUD = SUPER_2.SOLICITUD 
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                        AND SUPER_2.COD_ARTIC NOT LIKE %s
+                                    )
+                                    LEFT JOIN OPORTUDATA1.ARTICULOS AS ARTICULOS ON (SUPER_2.COD_ARTIC = ARTICULOS.CODIGO)
+                                    LEFT JOIN OPORTUDATA1.SUPER AS SUPER ON (SOLIC_FAB.SOLICITUD = SUPER.SOLICITUD AND ARTICULOS.CODIGO = SUPER.CODIGO AND SUPER.CONSEC = SUPER_2.CONSEC)
+                                    WHERE CLIENTE = %s AND (ESTADO = 'FACTURADO' OR ESTADO = 'EN FACTURACION')","'%AV%'","'%AP%'","'%IVA%'","'%MS%'","'%SOAT%'","'%GR%'",$request->identificationNumber);
+                                    
+        $products = DB::connection('oportudata')->select($products);
         
         if(count($products)==0){
             // if don't find products 
