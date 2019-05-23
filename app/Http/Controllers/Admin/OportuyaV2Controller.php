@@ -37,6 +37,9 @@ use App\OportuyaV2;
 use App\Tarjeta;
 use App\TurnosOportuya;
 use App\Analisis;
+use App\ConsultaFR;
+use App\Bdua;
+use App\EstadoCedula;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
 use Illuminate\Http\Request;
@@ -1178,6 +1181,72 @@ class OportuyaV2Controller extends Controller
 		} catch (\Throwable $th) {
 			return 0;
 		}
+	}
+
+	public function execConsultaFosyga($identificationNumber, $tipoDocumento){
+		/*
+			use App\ConsultaFR;
+			use App\Bdua;
+			use App\EstadoCedula;
+		*/
+		$consultaFR = new ConsultaFR;
+		$bdua = new Bdua;
+		$estadoCedula = new EstadoCedula;
+
+		$consultaFR->cedula = $identificationNumber;
+		$consultaFR->save();
+		$idConsulta = $consultaFR->idConsulta;
+
+		// Consulta bdua - Base de datos unificada
+		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $tipoDocumento)->original;
+		$bdua->idConsulta = $idConsulta;
+		$bdua->cedula = $infoBdua['personaVO']['numeroDocumento'];
+		$bdua->tipoDocumento = $infoBdua['personaVO']['tipoDocumento'];
+		$bdua->pais = $infoBdua['personaVO']['pais'];
+		$bdua->primerNombre = $infoBdua['personaVO']['nombres']['BDUA']['primerNombre'];
+		$bdua->primerApellido = $infoBdua['personaVO']['nombres']['BDUA']['primerApellido'];
+		$bdua->tipoNombre = $infoBdua['personaVO']['nombres']['BDUA']['tipoNombre'];
+		$bdua->estado = $infoBdua['estado'];
+		$bdua->entidad = $infoBdua['entidad'];
+		$bdua->regimen = $infoBdua['regimen'];
+		$bdua->fechaAfiliacion = $infoBdua['fechaAfiliacion'];
+		$bdua->fechaFinalAfiliacion = $infoBdua['fechaFinalAfiliacion'];
+		$bdua->departamento = $infoBdua['departamento'];
+		$bdua->ciudad = $infoBdua['ciudad'];
+		$bdua->tipoAfiliado = $infoBdua['tipoAfiliado'];
+		$bdua->fechaConsulta = $infoBdua['fechaConsulta'];
+		$bdua->fuenteFallo = $infoBdua['fuenteFallo'];
+		$bdua->save();
+
+		// Consulta estado cedula
+		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $tipoDocumento)->original;
+		$estadoCedula->idConsulta = $idConsulta;
+		$estadoCedula->cedula = $infoEstadoCedula['personaVO']['numeroDocumento'];
+		$estadoCedula->tipoDocumento = $infoEstadoCedula['personaVO']['tipoDocumento'];
+		$estadoCedula->pais = $infoEstadoCedula['personaVO']['pais'];
+		$estadoCedula->primerNombre = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['primerNombre'];
+		$estadoCedula->tipoNombre = $infoEstadoCedula['personaVO']['nombres']['ESTADO-CEDULA-COLOMBIA']['tipoNombre'];
+		$estadoCedula->fechaExpedicion = $infoEstadoCedula['fechaExpedicion'];
+		$estadoCedula->lugarExpedicion = $infoEstadoCedula['lugarExpedicion'];
+		$estadoCedula->estado = $infoEstadoCedula['estado'];
+		$estadoCedula->resolucion = $infoEstadoCedula['resolucion'];
+		$estadoCedula->fechaResolucion = $infoEstadoCedula['fechaResolucion'];
+		$estadoCedula->fechaConsulta = $infoEstadoCedula['fechaConsulta'];
+		$estadoCedula->fuenteFallo = $infoEstadoCedula['fuenteFallo'];
+		$estadoCedula->save();
+		return response()->json(true);
+	}
+
+	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento){
+		$curl_handle=curl_init();
+		curl_setopt($curl_handle,CURLOPT_URL,'http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor='.$idConsultaWebService.'&icf='.$tipoDocumento.'&thy=co&klm='.$identificationNumber);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+		$buffer = curl_exec($curl_handle);
+		curl_close($curl_handle);
+		$persona = json_decode($buffer, true);
+
+		return response()->json($persona);
 	}
 
 	public function execConsultaExperto($identificationNumber){
