@@ -1,4 +1,4 @@
-angular.module('appStep1', [])
+angular.module('appStep1', ['moment-picker'])
 .controller("step1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
@@ -15,6 +15,7 @@ angular.module('appStep1', [])
 		'typeService' : 'Oportuya',
 		'typeDocument' : '',
 		'identificationNumber' : '',
+		'dateDocumentExpedition' : '',
 		'name' : '',
 		'lastName' : '',
 		'email' : '',

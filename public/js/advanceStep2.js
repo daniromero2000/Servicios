@@ -4,7 +4,6 @@ angular.module('appAdvanceStep2', ['moment-picker', 'ng-currency'])
 	$scope.leadInfo = {
 		step: 2,
 		identificationNumber: '',
-		dateDocumentExpedition: '',
 		cityExpedition: null,
 		housingType: null,
 		housingTime: '',

@@ -125,6 +125,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$consultaComercial = 1;
 			}
+			//$this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'));
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
@@ -211,6 +212,7 @@ class OportuyaV2Controller extends Controller
 					'ACTIVIDAD' => strtoupper($request->get('occupation')),
 					'CIUD_UBI' => trim($cityName[0]->CIUDAD),
 					'DEPTO' => trim($departament->departament),
+					'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
@@ -244,6 +246,7 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->ACTIVIDAD = strtoupper($request->get('occupation'));
 					$oportudataLead->CIUD_UBI = trim($cityName[0]->CIUDAD);
 					$oportudataLead->DEPTO = trim($departament->departament);
+					$oportudataLead->FEC_EXP = trim($request->get('dateDocumentExpedition'));
 					$oportudataLead->TIPOCLIENTE = 'OPORTUYA';
 					$oportudataLead->SUBTIPO = 'WEB';
 					$oportudataLead->STATE = 'A';
@@ -316,7 +319,6 @@ class OportuyaV2Controller extends Controller
 				'EDAD' => $this->calculateAge($request->get('birthdate')),
 				'CIUD_EXP' => $request->get('cityExpedition'),
 				'ESTADOCIVIL' => strtoupper($request->get('civilStatus')),
-				'FEC_EXP' => $request->get('dateDocumentExpedition'),
 				'PROPIETARIO' => ($request->get('housingOwner') != '') ? strtoupper($request->get('housingOwner')) : 'NA' ,
 				'SEXO' => strtoupper($request->get('gender')),
 				'TIPOV' => strtoupper($request->get('housingType')),
@@ -1184,11 +1186,6 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function execConsultaFosyga($identificationNumber, $tipoDocumento){
-		/*
-			use App\ConsultaFR;
-			use App\Bdua;
-			use App\EstadoCedula;
-		*/
 		$consultaFR = new ConsultaFR;
 		$bdua = new Bdua;
 		$estadoCedula = new EstadoCedula;
@@ -1249,7 +1246,7 @@ class OportuyaV2Controller extends Controller
 		return response()->json($persona);
 	}
 
-	public function execConsultaExperto($identificationNumber){
+	private function execConsultaExperto($identificationNumber){
 		$solic_fab= new Application;
 		if($identificationNumber == '') return -1;
 		$query = sprintf("SELECT `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, CONCAT(`APELLIDOS`, ' ', `NOMBRES`) as name, `DIRECCION` as address, `FEC_NAC` as birthdate, expTi.`id` as housingTime, expTipo.`id` as housingType, `SUELDO` as salary, `ANTIG` as antiquity, expActi.`id` as occupation
@@ -1439,7 +1436,7 @@ class OportuyaV2Controller extends Controller
 
 	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
 
-	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, FEC_EXP as dateDocumentExpedition, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, CELULAR as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, CELULAR as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 	      $resp2 = DB::select($query2);

@@ -1,4 +1,4 @@
-angular.module('appAdvanceStep1', [])
+angular.module('appAdvanceStep1', ['moment-picker'])
 .controller("advanceStep1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
@@ -12,6 +12,7 @@ angular.module('appAdvanceStep1', [])
 		'typeService' : 'Avance',
 		'typeDocument' : '',
 		'identificationNumber' : '',
+		'dateDocumentExpedition' : '',
 		'name' : '',
 		'lastName' : '',
 		'email' : '',
@@ -173,6 +174,7 @@ angular.module('appAdvanceStep1', [])
 					window.location = "/UsuarioMoroso";
 				}else{
 					$('#confirmNumCel').modal('show');
+					//$scope.saveStep1();
 				}
 			}, function errorCallback(response) {
 				hideLoader();
