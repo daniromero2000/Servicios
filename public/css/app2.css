@@ -1789,6 +1789,14 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	padding: 0!important;
 }
 
+.multiple-items-motos .slick-current,.multiple-items-motos .slick-slide:hover{
+	border:solid 2px #000!important;
+}
+
+.multiple-items-motos .slick-slide{
+	margin:2px 0;
+}
+
 .motosBrandContainer{
 	position: relative;
 }
@@ -1879,15 +1887,18 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	font-size: 14px;
 }
 
-.motosTextDescription h3:after{
+.motosTextDescription.text-center h3:after{
 	position: absolute;
 	height: 4px;
 	width: 40%;
 	bottom: -5px;
-	left: 0;
+	left: 50%;
+	transform: translate(-50%);
 	content: "";
 	background-color:#FF0000; 
 }
+
+.motosTextDescription h3:after
 
 .motosDescriptionContainer{
 	background-color: #F8F9F8;
@@ -1897,6 +1908,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .manualBoton{
 	width: 70%;
 	margin: auto;
+}
+.manualBoton2{
+	width: 40%!important;
+}
+
+#motos-especificaciones-responsive{
+	display: none;
 }
 
 .manualBoton a p{
@@ -1917,7 +1935,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .nav-link.nav-link-motos{
 	padding: 0 0 0 1rem;
 	color: #000;
-	text-transform: uppercase;
+	text-transform: uppercase;	
 	border-bottom: solid 1px #FF0000;
 }
 
@@ -1926,6 +1944,10 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	background-color: #F8F9F8!important;
 	color: #000!important;
 	font-weight: 700;
+}
+
+.nav-pills.nav-pills-motos .nav-link{
+	font-size: 1.2vw;
 }
 
 .motos-nav-title{
@@ -2081,6 +2103,47 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .modalFormulario-proyecciones-motos .table ul li.ng-scope a:hover{
 	background-color: #4289CA;
 	color: #FFF!important;
+}
+
+.modal-motos{
+	width: 80%;
+	max-width: 80%!important;
+	margin: auto!important;
+	
+}
+
+.modal-motos .modal-header{
+	text-align: center;
+    background-color: #23266b;
+    color: #FFF;
+}
+
+.modal-motos .modal-header button,.modal-motos .modal-header h4{
+	color: #FFF;
+}
+
+.modal-motos .modal-body .tab-content div.row h3{
+		color:red;
+		font-weight: 700;
+		width: 100%;
+} 
+
+.modal-motos .modal-body .tab-content div.row h3 i{
+	float: right;
+}
+
+.modal-motos .modal-body .tab-content .tab-pane .colInfo div.row.fix-width h4{
+	font-weight: 600;
+	border-bottom: solid 2px #23266b;
+	
+}
+
+.modal-motos .modal-body .tab-content .tab-pane .colInfo div.row.fix-width p{
+	font-weight: 700;
+}
+
+.row-shadow{
+	background-color: rgba(125,125,125,0.1);
 }
 
 .infoPayment{
@@ -2654,6 +2717,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 @media(max-width: 991px){
 
+	.margin-bottom-prices{
+		margin-bottom: 30px;
+	}
+
+	.manualBoton2{
+		width: 70%!important;
+	}
 
 	.libranzaMotosButton{
 		font-size: 14px;
@@ -2745,6 +2815,18 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 768px){
+
+	#motos-especificaciones{
+		display: none;
+	}
+
+	#motos-especificaciones-responsive{
+		display: block;
+	}
+
+	#motos-especificaciones-responsive .motosEspecificacionesTabla .nav a span{
+		display: none;
+	}
 
 	.link-modal-oportuya a{
 		font-size: 12px;
@@ -2882,6 +2964,15 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 550px){
+
+	#obtener-avance .obtener-avance-texto a{
+		font-size: 12px;
+		padding: 10px 30px;
+	}
+
+	#obtener-avance .obtener-avance-texto p{
+		font-size: 18px!important;
+	}
 
 	.link-modal-oportuya a{
 		padding: 7px 5px;
