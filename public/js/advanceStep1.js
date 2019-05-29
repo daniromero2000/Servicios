@@ -33,39 +33,39 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			'label' : 'Seleccione...'
 		},
 		{
-			'value' : "1",
+			'value' : "01",
 			'label' : 'Cédula de ciudadanía'
 		},
 		{
-			'value' : "2",
+			'value' : "02",
 			'label' : 'NIT'
 		},
 		{
-			'value' : "3",
+			'value' : "03",
 			'label' : 'Cédula de extranjería'
 		},
 		{
-			'value' : "4",
+			'value' : "04",
 			'label' : 'Tarjeta de Identidad'
 		},
 		{
-			'value' : "5",
+			'value' : "05",
 			'label' : 'Pasaporte'
 		},
 		{
-			'value' : "6",
+			'value' : "06",
 			'label' : 'Tarjeta seguro social extranjero'
 		},
 		{
-			'value' : "7",
+			'value' : "07",
 			'label' : 'Sociedad extranjera sin NIT en Colombia'
 		},
 		{
-			'value' : "8",
+			'value' : "08",
 			'label' : 'Fidecoismo'
 		},
 		{
-			'value' : "9",
+			'value' : "09",
 			'label' : 'Registro Civil'
 		},
 		{
@@ -173,8 +173,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					$('#confirmNumCel').modal('show');
-					//$scope.saveStep1();
+					//$('#confirmNumCel').modal('show');
+					$scope.saveStep1();
 				}
 			}, function errorCallback(response) {
 				hideLoader();
@@ -246,7 +246,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 	};
 
 	$scope.saveStep1 = function(){
-		$('#proccess').modal('show');
+		//$('#proccess').modal('show');
 		$http({
 			method: 'POST',
 			url: '/oportuyaV2',

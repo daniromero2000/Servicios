@@ -125,7 +125,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$consultaComercial = 1;
 			}
-			//$this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'));
+			$this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'));
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
@@ -1195,7 +1195,9 @@ class OportuyaV2Controller extends Controller
 		$idConsulta = $consultaFR->idConsulta;
 
 		// Consulta bdua - Base de datos unificada
-		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $tipoDocumento)->original;
+		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $tipoDocumento);
+		$infoBdua = (array) $infoBdua;
+		$infoBdua = $infoBdua['original'];
 		$bdua->idConsulta = $idConsulta;
 		$bdua->cedula = $infoBdua['personaVO']['numeroDocumento'];
 		$bdua->tipoDocumento = $infoBdua['personaVO']['tipoDocumento'];
@@ -1216,7 +1218,9 @@ class OportuyaV2Controller extends Controller
 		$bdua->save();
 
 		// Consulta estado cedula
-		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $tipoDocumento)->original;
+		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $tipoDocumento);
+		$infoEstadoCedula = (array) $infoEstadoCedula;
+		$infoEstadoCedula = $infoEstadoCedula['original'];
 		$estadoCedula->idConsulta = $idConsulta;
 		$estadoCedula->cedula = $infoEstadoCedula['personaVO']['numeroDocumento'];
 		$estadoCedula->tipoDocumento = $infoEstadoCedula['personaVO']['tipoDocumento'];
@@ -1231,7 +1235,43 @@ class OportuyaV2Controller extends Controller
 		$estadoCedula->fechaConsulta = $infoEstadoCedula['fechaConsulta'];
 		$estadoCedula->fuenteFallo = $infoEstadoCedula['fuenteFallo'];
 		$estadoCedula->save();
-		return response()->json(true);
+		return response()->json([$infoBdua, $infoEstadoCedula]);
+	}
+
+	public function validateConsultaFosyga($identificationNumber){
+		$queryDataLead = sprintf("SELECT LOWER(`APELLIDOS`) as APELLIDOS, LOWER(`NOMBRES`) as NOMBRES, `FEC_EXP` FROM `CLIENTE_FAB` WHERE `CEDULA` = '%s' ", $identificationNumber);
+		$respDataLead = DB::connection('oportudata')->select($queryDataLead);
+		
+		// Fosyga
+		$queryBdua = sprintf("SELECT LOWER(`primerNombre`) as primerNombre, LOWER(`primerApellido`) as primerApellido, `regimen`, `tipoAfiliado` 
+		FROM `fosyga_bdua` 
+		WHERE `idConsulta` = (SELECT MAX(`idConsulta`) FROM `fosyga_bdua` WHERE `cedula` = '%s' ORDER BY `idConsulta` LIMIT 1 ) AND `cedula` = '%s'", $identificationNumber, $identificationNumber);
+		$respBdua = DB::connection('oportudata')->select($queryBdua);
+
+		$nameDataLead = explode(" ",$respDataLead[0]->NOMBRES);
+		$nameBdua = explode(" ",$respBdua[0]->primerNombre);
+		$coincideNames = $this->compareNamesLastName($nameDataLead, $nameBdua);
+		
+		$lastNameDataLead = explode(" ",$respDataLead[0]->APELLIDOS);
+		$lastNameBdua = explode(" ",$respBdua[0]->primerApellido);
+		$coincideLastNames = $this->compareNamesLastName($lastNameDataLead, $lastNameBdua);
+		
+		if($coincideNames == 0 || $coincideLastNames == 0){
+			return -1;
+		}
+	}
+
+	private function compareNamesLastName($arrayCompare, $arrayCompareTo){
+		$coincide = 0;
+		foreach ($arrayCompare as $value) {
+			if (in_array($value, $arrayCompareTo)) {
+				$coincide = 1;
+			}else{
+				$coincide = 0;
+			}
+		}
+
+		return $coincide;
 	}
 
 	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento){
