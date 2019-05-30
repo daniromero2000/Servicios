@@ -55,7 +55,12 @@ a:hover, a:active, a:focus, a:visited{
 	background-color: #F5F4FE;
 }
 
-#header .row.resetRow, #viajesHeader .row,.containImg,#bustour .row,.plansContent,#travelOffers .row{
+#header .row{
+	width: 100%;
+	margin: auto;
+}
+
+#header .row.resetRow, #viajesHeader .row,#bustour .row,.plansContent,#travelOffers .row{
 	max-width: 1960px;
 	margin: auto !important;
 }
@@ -494,6 +499,7 @@ a:hover, a:active, a:focus, a:visited{
 
 .containImg img {
 	margin: auto;
+	width: 100%;
 }
 
 /*Credit cards section*/
@@ -651,6 +657,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .oportuyaContentHeader{
+	padding: 20px 0;
 	background-color: #D5EAEF;
 	border-radius: 10px 10px 0 0;
 }
@@ -2708,7 +2715,6 @@ p.wantToSecondTex{
 }
 
 
-
 @media(max-width: 1366px){
 
 	.dialogThakPage p{
@@ -2751,6 +2757,10 @@ p.wantToSecondTex{
 
 
 @media(max-width: 1300px){
+
+	.header-textoItem{
+		font-size: 15px;
+	}
 
 	.cardsProfiles .col-6 .card{
 		width: 70%;
@@ -2821,6 +2831,10 @@ p.wantToSecondTex{
 
 
 @media(max-width: 1200px){
+
+	.header-textoItem{
+		font-size: 14px;
+	}
 
 	.planButton a{
 		font-size: 12px;

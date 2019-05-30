@@ -212,7 +212,6 @@ span.renewCode:hover {
 
 #oportuyaBanner .max-width-content-19:before{
 		position: absolute;
-		content: '';
 		width: 0;
 		border-top:solid #FFF 70px;
 		border-left:solid #2585C0 70px;
@@ -222,7 +221,6 @@ span.renewCode:hover {
 
 #oportuyaBanner .max-width-content-19:after{
 	position: absolute;
-	content: '';
 	width: 0;
 	border-bottom:solid #FFF 70px;
 	border-right:solid #2585C0 70px;
@@ -291,6 +289,10 @@ span.renewCode:hover {
 
 .border-top{
 	border-top:solid 1px #93C177;
+}
+
+.border-top div i {
+	color: rgba(255,255,255,0.6)
 }
 
 .border-bottom{
@@ -2028,7 +2030,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .max-width-content-19{
-	max-width: 1960px;
+	max-width: 100%;
 	margin: auto!important;
 	position: relative;
 }
@@ -2437,6 +2439,10 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	text-align: center;
 }
 
+#credito-online img{
+	width: 100%;
+}
+
 #credito-online .credito-online-texto{
 	position: absolute;
 	top: 2em;
@@ -2463,7 +2469,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .credito-online-boton{
 	position: absolute;
 	left: 15em;
-	bottom: 10em;
+	bottom: 8em;
 }
 
 .credito-online-boton a{
@@ -2617,6 +2623,10 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	padding: 5px 45px;
 	background-color:#DE005D;
 	color:#ffffff;
+}
+
+.no-display{
+	display: none;
 }
 
 @media(max-width: 1701px){
