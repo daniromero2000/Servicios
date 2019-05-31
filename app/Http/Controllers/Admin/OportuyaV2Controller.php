@@ -125,7 +125,14 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$consultaComercial = 1;
 			}
-			$this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'));
+
+			$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
+			if($dateConsultaFosyga == "true"){
+				$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+			}else{
+				$consultaFosyga = 1;
+			}
+			return response()->json([$consultaFosyga, $dateConsultaFosyga]);
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
@@ -952,6 +959,26 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	private function validateDateConsultaFosyga($identificationNumber){
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fecha FROM fosyga_consulta_fr WHERE cedula = :identificationNumber ORDER BY idConsulta DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(empty($dateLastConsultaFosyga)){
+			return 'true';
+		}else{
+			$dateLastConsulta = $dateLastConsultaFosyga[0]->fecha;
+
+			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
+				return 'true';
+			}else{
+				return 'false';
+			}
+		}
+	}
+
 	private function validateDateExperto($identificationNumber){
 		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
 		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
@@ -1180,12 +1207,12 @@ class OportuyaV2Controller extends Controller
 			$ws = new \SoapClient("http://10.238.14.181:2801/Service1.svc?singleWsdl",array()); //correcta
 			$result = $ws->ConsultarInformacionComercial($obj);  // correcta
 			return 1;
-		} catch (\Throwable $th) {
+		}catch (\Throwable $th){
 			return 0;
 		}
 	}
 
-	public function execConsultaFosyga($identificationNumber, $tipoDocumento){
+	public function execConsultaFosyga($identificationNumber, $typeDocument, $dateExpeditionDocument){
 		$consultaFR = new ConsultaFR;
 		$bdua = new Bdua;
 		$estadoCedula = new EstadoCedula;
@@ -1195,7 +1222,7 @@ class OportuyaV2Controller extends Controller
 		$idConsulta = $consultaFR->idConsulta;
 
 		// Consulta bdua - Base de datos unificada
-		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $tipoDocumento);
+		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
 		$infoBdua = (array) $infoBdua;
 		$infoBdua = $infoBdua['original'];
 		$bdua->idConsulta = $idConsulta;
@@ -1218,9 +1245,12 @@ class OportuyaV2Controller extends Controller
 		$bdua->save();
 
 		// Consulta estado cedula
-		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $tipoDocumento);
+		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $typeDocument, $dateExpeditionDocument);
 		$infoEstadoCedula = (array) $infoEstadoCedula;
 		$infoEstadoCedula = $infoEstadoCedula['original'];
+		if($infoEstadoCedula['fuenteFallo'] == "SI"){
+			return -1; // Problemas con la fecha de expedicion
+		}
 		$estadoCedula->idConsulta = $idConsulta;
 		$estadoCedula->cedula = $infoEstadoCedula['personaVO']['numeroDocumento'];
 		$estadoCedula->tipoDocumento = $infoEstadoCedula['personaVO']['tipoDocumento'];
@@ -1250,33 +1280,120 @@ class OportuyaV2Controller extends Controller
 
 		$nameDataLead = explode(" ",$respDataLead[0]->NOMBRES);
 		$nameBdua = explode(" ",$respBdua[0]->primerNombre);
-		$coincideNames = $this->compareNamesLastName($nameDataLead, $nameBdua);
+		$coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 		
 		$lastNameDataLead = explode(" ",$respDataLead[0]->APELLIDOS);
 		$lastNameBdua = explode(" ",$respBdua[0]->primerApellido);
-		$coincideLastNames = $this->compareNamesLastName($lastNameDataLead, $lastNameBdua);
+		$coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
 		
 		if($coincideNames == 0 || $coincideLastNames == 0){
-			return -1;
+			return -1; // Nombres y/o apellidos no coinciden
 		}
+
+		// Registraduria
+		$queryEstadoCedula = sprintf("SELECT LOWER(`fechaExpedicion`) as fechaExpedicion, estado 
+		FROM `fosyga_estadoCedula` 
+		WHERE  `idConsulta` = (SELECT MAX(`idConsulta`) FROM `fosyga_estadoCedula` WHERE `cedula` = '%s' ORDER BY `idConsulta` LIMIT 1 ) AND `cedula` = '%s'", $identificationNumber, $identificationNumber);
+
+		$respEstadoCedula = DB::connection('oportudata')->select($queryEstadoCedula);
+
+		$dateExpEstadoCedula = $respEstadoCedula[0]->fechaExpedicion;
+		$dateExpEstadoCedula = str_replace(" de ", "/", $dateExpEstadoCedula);
+		
+		$dateExplode = explode("/", $dateExpEstadoCedula);
+		$numMonth = $this->getNumMonthOfText($dateExplode[1]);
+		$dateExpEstadoCedula = str_replace($dateExplode[1],$numMonth,$dateExpEstadoCedula);
+		$dateExplode = explode("/", $dateExpEstadoCedula);
+		$dateExpEstadoCedula = $dateExplode[2]."/".$dateExplode[1]."/".$dateExplode[0];
+
+		if(strtotime($respDataLead[0]->FEC_EXP) != strtotime($dateExpEstadoCedula)){
+			return -2; // Fecha de expedicion no coincide
+		}
+
+		if ($respEstadoCedula[0]->estado != 'VIGENTE') {
+			return -3; // Cedula no vigente
+		}
+
+		return response()->json($respEstadoCedula);
 	}
 
-	private function compareNamesLastName($arrayCompare, $arrayCompareTo){
+	private function compareNamesLastNames($arrayCompare, $arrayCompareTo){
 		$coincide = 0;
 		foreach ($arrayCompare as $value) {
 			if (in_array($value, $arrayCompareTo)) {
 				$coincide = 1;
 			}else{
 				$coincide = 0;
+				break;
 			}
 		}
 
 		return $coincide;
 	}
 
-	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento){
+	private function getNumMonthOfText($monthText){
+		$numMonth;
+		switch ($monthText) {
+			case 'enero':
+				$numMonth = "01";
+				break;
+			
+			case 'febrero':
+				$numMonth = "02";
+				break;
+
+			case 'marzo':
+				$numMonth = "03";
+				break;
+
+			case 'abril':
+				$numMonth = "04";
+				break;
+
+			case 'mayo':
+				$numMonth = "05";
+				break;
+
+			case 'junio':
+				$numMonth = "06";
+				break;
+
+			case 'julio':
+				$numMonth = "07";
+				break;
+
+			case 'agosto':
+				$numMonth = "08";
+				break;
+
+			case 'septiembre':
+				$numMonth = "09";
+				break;
+
+			case 'octubre':
+				$numMonth = "10";
+				break;
+
+			case 'noviembre':
+				$numMonth = "11";
+				break;
+
+			case 'diciembre':
+				$numMonth = "12";
+				break;
+		}
+
+		return $numMonth;
+	}
+
+	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = ""){
+		$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
+		if ($dateExpeditionDocument != '') {
+			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
+		}
+		return $urlConsulta;
 		$curl_handle=curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL,'http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor='.$idConsultaWebService.'&icf='.$tipoDocumento.'&thy=co&klm='.$identificationNumber);
+		curl_setopt($curl_handle,CURLOPT_URL,$urlConsulta);
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
 		$buffer = curl_exec($curl_handle);
