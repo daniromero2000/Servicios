@@ -206,50 +206,68 @@
 </div>
 <!--Requirements Section -->
 
-	<div id="requirements">
-		<div class="row requirementsContent">
-			<div class="col-md-6 col-xs-12 contentRequirements ">
-				<img src="{{asset('/images/requirementsIcon.png')}}" class="img-responsive">
-				<p class="titleRequirements">
-					Requisitos
-				</p>
-				<p class="descriptionRequirements">
-					<ul class="requirementsList">
-						<li>Pertenecer al perímetro urbano de las ciudades donde se encuentran los <a href="/Nuestras-tiendas">puntos</a> de venta físicos de ALMACENES OPORTUNIDADES. </li>
-						<li>En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social.</li>
-						<li>Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. .</li>	
-						<li>Tener ingresos iguales o superior a 1 SMMLV.</li>
-						<li>Edad Máxima de 70 años.</li>
-						<li>Presentar un buen historial de crédito en el sector financiero.</li>
-						<li>Ser mayor de edad.</li>
-						<li>Tener nacionalidad colombiana </li>
-					</ul>
-				</p>
-			</div>
+<div id="credito-online">
+	<img src="{{asset('images/banner3-top-avances-new.png')}}" alt="" class="img-fluid">
+	<div class="container text-center credito-online-texto">
+		<div>
+			<h3><span>Crédito Online</span>, desde la  <br> comodidad de tu casa.	</h3>
+		</div>	
+	</div>
+	<div class="credito-online-boton">
+		<p class="textTarjeta">
+			<i>*Tarjeta Oportuya NO VIGILADA por la SUPERINTENDENCIA FINANCIERA de Colombia</i>
+		</p>
+		<div>
+			<a href="/avance/step1">Click para Crédito</a>
+		</div>
+	</div>
+</div>
 
-			<div class="col-md-6 col-xs-12 contentRequirements requirementsLine">
 
-				<img src="{{asset('/images/howGetIcon.png')}}" class="img-responsive">
+<div id="requirements">
+	<div class="row requirementsContent">
+		<div class="col-md-6 col-xs-12 contentRequirements ">
+			<img src="{{asset('/images/requirementsIcon.png')}}" class="img-responsive">
+			<p class="titleRequirements">
+				Requisitos
+			</p>
+			<p class="descriptionRequirements">
+				<ul class="requirementsList">
+					<li>Pertenecer al perímetro urbano de las ciudades donde se encuentran los <a href="/Nuestras-tiendas">puntos</a> de venta físicos de ALMACENES OPORTUNIDADES. </li>
+					<li>En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social.</li>
+					<li>Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. .</li>	
+					<li>Tener ingresos iguales o superior a 1 SMMLV.</li>
+					<li>Edad Máxima de 70 años.</li>
+					<li>Presentar un buen historial de crédito en el sector financiero.</li>
+					<li>Ser mayor de edad.</li>
+					<li>Tener nacionalidad colombiana </li>
+				</ul>
+			</p>
+		</div>
 
-				<p class="titleRequirements">
+		<div class="col-md-6 col-xs-12 contentRequirements requirementsLine">
 
-					Como Tenerla
+			<img src="{{asset('/images/howGetIcon.png')}}" class="img-responsive">
 
-				</p>
+			<p class="titleRequirements">
 
-				<p class="descriptionRequirements">
+				Como Tenerla
 
-					<b>Estas interesado en obtenerla?	</b> <br>
-					<br>	
-					Solo debes ingresar los datos y un asesor se pondrá en contacto contigo, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
+			</p>
 
-				</p>
+			<p class="descriptionRequirements">
 
-			</div>
+				<b>Estas interesado en obtenerla?	</b> <br>
+				<br>	
+				Solo debes ingresar los datos y un asesor se pondrá en contacto contigo, o si quieres ir a nuestras oficinas ubicadas en 48 ciudades del Pais, Cualquiera de nuestros asesores estará listo para atenderte. <br> <br>	<b>Te esperamos! </b>
+
+			</p>
 
 		</div>
 
 	</div>
+
+</div>
 	
 <!-- Oportuya section -->
 	<div id="oportuyaSection">
@@ -444,7 +462,7 @@
 								<img src="{{asset('images/icon-cupo-oportuya.png')}}" alt="" class="img-fluid">
 							</div>
 							<div class="col-10">
-								Un cupo de avances para que utilices cuando más lo necesites (Hasta $500.000)
+							Un cupo de avances para que utilices cuando más lo necesites (Desde $100.000 - hasta $500.000)
 							</div>
 						</div>
 						<div class="row border-top border-bottom">
@@ -465,14 +483,22 @@
 								Tienes acceso a los súper descuentos que lanzamos cada semana con los mejores precios por ser cliente Oportuya.
 							</div>
 						</div>
-						<div class="row border-top border-bottom">
+						<div class="row border-top">
 							<div class="col-2 text-center">
 								<img src="{{asset('images/icon-seguros-oportuya.png')}}" alt="" class="img-fluid">
 							</div>
 							<div class="col-10">
 								Descuentos en SOAT y otros seguros para que estés protegido siempre.
 							</div>
-						</div>	
+						</div>
+						<div class="row border-top border-bottom">
+							<div class="col-2 text-center">
+								<i class="fas fa-credit-card"></i>
+							</div>
+							<div class="col-10">
+							Cuota de manejo $14.400 mensuales.
+							</div>
+						</div>		
 					</div>
 				</div>
 				<br>
