@@ -96,8 +96,8 @@
 		<a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20en%20obtener%20informaci%C3%B3n%20acerca%20de%20Avances%20Oportunidades." target="_blank">Escribenos por Whatsapp <i class="fab fa-whatsapp"></i></a>
 	</div>
 </div>
-<div id="credito-online">
-	<img src="{{asset('images/banner3-top-avances.jpg')}}" alt="" class="img-fluid">
+<div id="credito-online" class="no-display">
+	<img src="{{asset('images/banner3-top-avances-new.png')}}" alt="" class="img-fluid">
 	<div class="container text-center credito-online-texto">
 		<div>
 			<h3><span>Crédito Online</span>, desde la  <br> comodidad de tu casa.	</h3>
