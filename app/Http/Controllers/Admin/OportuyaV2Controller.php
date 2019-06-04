@@ -132,7 +132,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$consultaFosyga = 1;
 			}
-			return response()->json([$consultaFosyga, $dateConsultaFosyga]);
+
 			$cityName = $this->getCity($request->get('city'));
 
 			//catch data from request and values assigning to leads table columns
@@ -228,7 +228,6 @@ class OportuyaV2Controller extends Controller
 					'CON3' => $estado,
 					'ORIGEN' => $request->get('typeService')
 				];
-				$celVal = ($consultaComercial == 0) ? 0 : 1 ;
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
 				if($request->get('CEL_VAL') == 0){
@@ -236,7 +235,7 @@ class OportuyaV2Controller extends Controller
 					$clienteCelular->IDENTI = $identificationNumber;
 					$clienteCelular->NUM = trim($request->get('telephone'));
 					$clienteCelular->TIPO = 'CEL';
-					$clienteCelular->CEL_VAL = $celVal;
+					$clienteCelular->CEL_VAL = 1;
 					$clienteCelular->FECHA = date("Y-m-d H:i:s");
 					$clienteCelular->save();
 				}
@@ -270,6 +269,8 @@ class OportuyaV2Controller extends Controller
 				}
 
 			}
+			$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber);
+			return $validateConsultaFosyga;
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
 			if($consultaComercial == 1){
 				$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
@@ -1314,7 +1315,7 @@ class OportuyaV2Controller extends Controller
 			return -3; // Cedula no vigente
 		}
 
-		return response()->json($respEstadoCedula);
+		return 1;
 	}
 
 	private function compareNamesLastNames($arrayCompare, $arrayCompareTo){

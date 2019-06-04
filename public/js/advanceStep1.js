@@ -253,7 +253,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
 				console.log(response);
-				if(response.data == "-1"){
+				/*if(response.data == "-1"){
 					window.location = "/OPN_gracias_denied_advance"
 				}
 				if(response.data == "-2"){
@@ -262,7 +262,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}
 				if (response.data == "1") {
 					$scope.encryptText();
-				}
+				}*/
 				$('#proccess').modal('hide');
 			}, function errorCallback(response) {
 				console.log(response);
