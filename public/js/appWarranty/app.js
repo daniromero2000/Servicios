@@ -1,12 +1,15 @@
-var app =  angular.module('catalogApp',['ngRoute', 'ngBootbox','flow','ui.sortable']);
+	/**
+     /Project: SERVICIOS FINANCIEROS
+    **Case of Use: MODULO GARANTIAS
+    **Author: Luis David Giraldo Grajales 
+    **Email: desarrolladorjunior@lagobo.com
+    **Description: union with warranty route
+    **Date: 05/03/2019
+     **/
+var app =  angular.module('WarrantyApp',['ngRoute','moment-picker']);
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/Products', { templateUrl: '/Administrator/Catalog/Products',controller: 'productsController' })
-            .when('/Products/:id_product', { templateUrl: '/Administrator/Catalog/edtProduct',controller: 'productsEdtController' })
-
-            .when('/Lines', { templateUrl: '/Administrator/Catalog/Lines',controller: 'linesController' })
-            .when('/Brands', { templateUrl: '/Administrator/Catalog/Brands',controller: 'brandsController' })
-
-            .otherwise({ redirectTo: '/Products' })
+            when('/', { templateUrl: '/digitalWarranty/Query', controller:'warrantyController' })
+            .otherwise({ redirectTo: '/' })
 }]);

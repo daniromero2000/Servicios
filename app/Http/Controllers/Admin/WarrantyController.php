@@ -274,11 +274,22 @@ class WarrantyController extends Controller
         $warrantyRequest->STATE = 'A';
         $warrantyRequest->TOT_FAC = 0;
         if($warrantyRequest->save()){
-            //  if save is construct a email data
-            $emailData = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO, 'mainSale' => $request->meansSale['name']];
+            $response = ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->names,'clientLastNames' => $request->lastNames,'userName' => $request->userName,'caso' => $warrantyRequest->NUMERO, 'meanSale' => $request->meansSale['name'],'email'=>$request->email];
+            // return a request id
+            if ($request->meansSale['id'] == 5){
+                //if a client shop a product in a physical store
+                $response['meanSale'] = $request->store['CODIGO'];
+            }
+            return $response;
+        }else{
+            // if the saving process fail return false 
+            return false;
+        }
+    }
+    public function sendAWarrantyEmail(Request $request){ 
             //send a mail for alert that have a new warranty request 
-            Mail::send('Emails.alertWarranty', $emailData, function($msj) use ($warrantyRequest){
-                $msj->subject(date("d-m-Y G:i:s").' caso: '.$warrantyRequest->NUMERO.' cedula: '.$warrantyRequest->CEDULA);
+            Mail::send('Emails.alertWarranty', ['identificationNumber' => $request->identificationNumber,'clientNames' => $request->clientNames,'clientLastNames' => $request->clientLastNames,'userName' => $request->userName,'caso' => $request->caso, 'meanSale' => $request->meanSale], function($msj) use ($request){
+                $msj->subject(date("d-m-Y G:i:s").' caso: '.$request->caso.' cedula: '.$request->identificationNumber);
                 $msj->to('garantiasoportunidades@lagobo.com.co');
                 $msj->to('garantiasoportunidades2@lagobo.com.co');
                 $msj->to('garantiasoportunidades3@lagobo.com');
@@ -286,18 +297,10 @@ class WarrantyController extends Controller
             });
             
         
-            Mail::send('Emails.alertWarrantyClient', ['caso' => $warrantyRequest->NUMERO], function($msj) use ($warrantyRequest,$request){
-                $msj->subject('OPORTUNIDADES  /  ELECTROFERTAS, SOLICITUD DE GARANTÍA  CASO'.$warrantyRequest->NUMERO);
+            Mail::send('Emails.alertWarrantyClient', ['caso' => $request->caso], function($msj) use ($request){
+                $msj->subject('OPORTUNIDADES  /  ELECTROFERTAS, SOLICITUD DE GARANTÍA  CASO  '.$request->caso);
                 $msj->to($request->email);
             });
-
-            // return a request id
-            return $warrantyRequest->NUMERO;
-
-        }else{
-            // if the saving process fail return false 
-            return false;
-        }
     }
     
 

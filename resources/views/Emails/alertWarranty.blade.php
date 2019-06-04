@@ -44,7 +44,7 @@
             <td  style="width: 300px;color:white;font-size:20px">
                 <table style="margin-top: -140px;color:#001372">
                     <tr style="height:50px">
-                        <td>{!! $caso !!}</td>
+                        <td>{!! $caso !!}</td>  
                     </tr>
                     <tr style="height:50px">
                         <td>{!! $clientNames." ".$clientLastNames !!}</td>
@@ -53,10 +53,10 @@
                         <td>{!! $identificationNumber !!}</td>
                     </tr>
                     <tr style="height:50px">
-                        <td>{!! $mainSale !!}</td>
+                        <td>{!! $userName !!}</td>
                     </tr>
                     <tr style="height:50px">
-                        <td><br></td>
+                        <td>{!! $meanSale !!}</td>
                     </tr>
                 </table>
             </td >
