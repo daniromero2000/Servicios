@@ -246,23 +246,25 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 	};
 
 	$scope.saveStep1 = function(){
-		//$('#proccess').modal('show');
+		$('#proccess').modal('show');
 		$http({
 			method: 'POST',
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				console.log(response);
-				/*if(response.data == "-1"){
+				if(response.data == "-1"){
 					window.location = "/OPN_gracias_denied_advance"
 				}
 				if(response.data == "-2"){
-				$('#proccess').modal('hide');
-				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+					$('#proccess').modal('hide');
+					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
 				}
 				if (response.data == "1") {
 					$scope.encryptText();
-				}*/
+				}
+				if (response.data == "-3" || response.data == "-4") {
+					alert("Datos erróneos, por favor verifícalos");
+				}
 				$('#proccess').modal('hide');
 			}, function errorCallback(response) {
 				console.log(response);
