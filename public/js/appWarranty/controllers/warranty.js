@@ -132,14 +132,14 @@ app.controller('warrantyController', function($scope, $http, $location){
 			if(response.data == true){
 				$('#confirmCodeVerification').modal('hide');
 				$('#ModalThaks').modal('show');
-				console.log($scope.WarrantyRequest)
 				$http({
 					method: 'POST',
 					url: '/digitalWarranty/request',
 					data: $scope.WarrantyRequest
 				  }).then(function successCallback(response) {
 					  if(response.data != false){
-							$scope.WarrantyRequest.number = response.data;
+							$scope.WarrantyRequest.number = response.data.caso;
+							$scope.sendAWarrantyEmail(response.data);
 							hideLoader();
 						}
 				  }, function errorCallback(response) {
@@ -157,6 +157,17 @@ app.controller('warrantyController', function($scope, $http, $location){
 		}, function errorCallback(response) {
 			hideLoader();
 		});
+	}
+	// send a Email notification for a new warranty request
+	$scope.sendAWarrantyEmail = function(data) {
+		  $http({
+			method: 'POST',
+			url: '/digitalWarranty/sendAWarrantyEmail',
+			data: data
+			}).then(function successCallback(response) {
+			}, function errorCallback(response) {
+				console.log(response.data);
+			});
 	}
 	// load a required information to create a request
 	$scope.create = function() {

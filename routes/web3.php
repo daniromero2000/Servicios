@@ -65,4 +65,6 @@ Route::group(['prefix'=>'/digitalWarranty/'],function(){
     });
     //Confirm a code verification
     Route::get('/test', 'Admin\WarrantyController@test');
+    // send a emails notification for new Warranty
+    Route::post('/sendAWarrantyEmail', 'Admin\WarrantyController@sendAWarrantyEmail');
 });
