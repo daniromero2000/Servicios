@@ -56,7 +56,7 @@ class LeadsController extends Controller
         $respTotalLeadsGen = DB::select($queryGenLeads);
         $totalLeadsGen = count($respTotalLeadsGen);
         if($request['qGen'] !=''){
-            $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%S' ) ", '%'.$request['qGen'].'%', '%'.$request['qGen'].'%','%'.$request['qGen'].'%');
+            $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%s ' ) ", '%'.$request['qGen'].'%', '%'.$request['qGen'].'%','%'.$request['qGen'].'%');
         }
 
         $queryGenLeads .= "ORDER BY `created_at` DESC ";
