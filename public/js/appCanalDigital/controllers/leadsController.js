@@ -178,13 +178,6 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 				$scope.cargandoCM = false;
 			}
 
-			if(response.data.leadsRejected != false){
-				$scope.q.initFromRL += response.data.leadsRejected.length;
-				angular.forEach(response.data.leadsRejected, function(value, key) {
-					$scope.leadsRejected.push(value);
-				});
-				$scope.cargandoRL = false;
-			}
 			hideLoader();
 		}, function errorCallback(response) {
 
@@ -207,6 +200,9 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		$scope.leads = [];
 		$scope.q = {
 			'q': '',
+			'qCM': '',
+			'qRL' : '',
+			'qGen' : '',
 			'initFrom': 0,
 			'city': '',
 			'fecha_ini': '',
