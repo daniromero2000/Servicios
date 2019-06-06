@@ -39,8 +39,31 @@ class LeadsController extends Controller
         $getLeadsRejected = $this->getLeadsRejected(['qRL' => $request->get('qRL'), 'initFromRL' => $request->get('initFromRL')]);
         $leadsRejected = $getLeadsRejected['leadsRejected'];
 
+        $getLeadsGen = $this->getGenLeads(['qGen' => $request->get('qGen'), 'initFromGen' => $request->get('initFromGen')]);
+        $leadsGen = $getLeadsGen['leadsGen'];
+        $totalLeadsGen = $getLeadsGen['totalLeadsGen'];
+
         $codeAsessor = Auth::user()->codeOportudata;
-        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected, 'codeAsesor' => $codeAsessor]);
+        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected, 'codeAsesor' => $codeAsessor,'leadsGen' => $leadsGen,'totalLeadsGen' => $totalLeadsGen]);
+    }
+
+    private function getGenLeads($request){
+        $totalLeadsCM = 0;
+        
+        $queryGenLeads = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`
+        FROM `leads` as lead
+        WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza') AND lead.`state` !=  3 ";
+        $respTotalLeadsGen = DB::select($queryGenLeads);
+        $totalLeadsGen = count($respTotalLeadsGen);
+        if($request['qGen'] !=''){
+            $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%S' ) ", '%'.$request['qGen'].'%', '%'.$request['qGen'].'%','%'.$request['qGen'].'%');
+        }
+
+        $queryGenLeads .= "ORDER BY `created_at` DESC ";
+        $queryGenLeads .= sprintf(" LIMIT %s,30", $request['initFromGen']);
+        $respGen = DB::select($queryGenLeads);
+
+        return ['leadsGen' => $respGen, 'totalLeadsGen' => $totalLeadsGen];
     }
 
     private function getLeadsCanalDigital($request){
@@ -53,8 +76,8 @@ class LeadsController extends Controller
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
         WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` ) 
-        AND sb.`SOLICITUD_WEB` = '1' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA);
-
+        AND sb.`SOLICITUD_WEB` = '1' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA );
+        
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
         $totalLeadsDigital = count($respTotalLeads);
