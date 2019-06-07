@@ -246,13 +246,14 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 	};
 
 	$scope.saveStep1 = function(){
-		$('#proccess').modal('show');
+		//$('#proccess').modal('show');
 		$http({
 			method: 'POST',
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				if(response.data == "-1"){
+				console.log(response);
+				/*if(response.data == "-1"){
 					window.location = "/OPN_gracias_denied_advance"
 				}
 				if(response.data == "-2"){
@@ -265,7 +266,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				if (response.data == "-3" || response.data == "-4") {
 					alert("Datos erróneos, por favor verifícalos");
 				}
-				$('#proccess').modal('hide');
+				$('#proccess').modal('hide');*/
 			}, function errorCallback(response) {
 				console.log(response);
 			});

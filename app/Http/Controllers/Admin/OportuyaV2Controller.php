@@ -121,7 +121,7 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = trim($request->get('identificationNumber'));
 			$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 			if($dateConsultaFosyga == "true"){
-				$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+				return $consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
 			}else{
 				$consultaFosyga = 1;
 			}
@@ -388,9 +388,11 @@ class OportuyaV2Controller extends Controller
 		//get step three data from request form
 
 		if($request->get('step')==3){
+			$identificationNumber = $request->get('identificationNumber');
+			$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ", $identificationNumber);
+			$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
 			$quotaApproved = 0;
 			$quotaApprovedProduct = 0;
-			$identificationNumber = $request->get('identificationNumber');
 			$existSolicFab = $this->getExistSolicFab($identificationNumber);
 			if($existSolicFab == true){
 				return -3; // Tiene solicitud
@@ -618,6 +620,8 @@ class OportuyaV2Controller extends Controller
 				$analisis->aurcre_cod2 = "0";
 				$analisis->aurcre_cod21 = "0";
 				$analisis->aurcre_cod22 = "0";
+				$analisis->paz_cli = $respQueryTemp[0]->paz_cli;
+				$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;
 				$analisis->save();
 				$estado = "PREAPROBADO";
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
@@ -646,6 +650,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$estado = "NEGADO";
 			}
+			$daleteTemp = DB::connection('oportudata')->select('DELETE FROM `temp_consultaFosyga` WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			$estado = ($estadoLead != 'SIN COMERCIAL') ? $estado : "SIN COMERCIAL" ;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$dataLead=[
@@ -1243,7 +1248,7 @@ class OportuyaV2Controller extends Controller
 		$idConsulta = $consultaFR->idConsulta;
 
 		// Consulta bdua - Base de datos unificada
-		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
+		/*$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
 		$infoBdua = (array) $infoBdua;
 		$infoBdua = $infoBdua['original'];
 		$bdua->idConsulta = $idConsulta;
@@ -1263,7 +1268,7 @@ class OportuyaV2Controller extends Controller
 		$bdua->tipoAfiliado = $infoBdua['tipoAfiliado'];
 		$bdua->fechaConsulta = $infoBdua['fechaConsulta'];
 		$bdua->fuenteFallo = $infoBdua['fuenteFallo'];
-		$bdua->save();
+		$bdua->save();*/
 
 		// Consulta estado cedula
 		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $typeDocument, $dateExpeditionDocument);
@@ -1287,7 +1292,7 @@ class OportuyaV2Controller extends Controller
 		$estadoCedula->fuenteFallo = $infoEstadoCedula['fuenteFallo'];
 		$estadoCedula->save();
 		
-		return true;
+		return response()->json([$infoEstadoCedula]);
 	}
 
 	public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition){
@@ -1417,13 +1422,14 @@ class OportuyaV2Controller extends Controller
 
 	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = ""){
 		$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
+		//$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
 		if ($dateExpeditionDocument != '') {
 			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
 		}
-		return $urlConsulta;
+		
 		$curl_handle=curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$urlConsulta);
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,0);
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
 		$buffer = curl_exec($curl_handle);
 		curl_close($curl_handle);
