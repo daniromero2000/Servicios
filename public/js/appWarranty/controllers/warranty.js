@@ -178,6 +178,11 @@ app.controller('warrantyController', function($scope, $http, $location){
 			if(response != false){
 				$scope.stores = response.data[0];
 				$scope.groups = response.data[1];
+				$scope.groups.OTROS = response.data[3];//all brands for others products
+				$scope.groups.OTROS.OTRA = {GRUPO_ID:999,MARCA_ID:9999,name:'OTRA'};//all brands for others products
+				angular.forEach($scope.groups.OTROS,function(value){//set GRUPO_ID = 999 because it is part of the others group
+					value.GRUPO_ID = 999;
+				});
 				$scope.idTypes = response.data[2];
 			}
   
