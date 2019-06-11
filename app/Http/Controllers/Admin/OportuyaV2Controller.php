@@ -119,15 +119,35 @@ class OportuyaV2Controller extends Controller
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
 			$identificationNumber = trim($request->get('identificationNumber'));
+
+			// Fosyga
 			$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 			if($dateConsultaFosyga == "true"){
-				return $consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+				$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
 			}else{
 				$consultaFosyga = 1;
 			}
-			$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($request->get('name'))), strtolower(trim($request->get('lastName'))), trim($request->get('dateDocumentExpedition')));
 
-			if ($validateConsultaFosyga > 0) {
+			if ($consultaFosyga > 0) {
+				$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($request->get('name'))), strtolower(trim($request->get('lastName'))), trim($request->get('dateDocumentExpedition')));
+			}else{
+				$validateConsultaFosyga = 0;
+			}
+			// Registraduria
+			$dateConsultaRegistraduria = $this->validateDateConsultaRegistraduria($identificationNumber);
+			if($dateConsultaRegistraduria == "true"){
+				$consultaRegistraduria = $this->execConsultaRegistraduria($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+			}else{
+				$consultaRegistraduria = 1;
+			}
+
+			if ($consultaRegistraduria > 0) {
+				$validateConsultaRegistraduria = $this->validateConsultaRegistraduria($identificationNumber, strtolower(trim($request->get('name'))), strtolower(trim($request->get('lastName'))), trim($request->get('dateDocumentExpedition')));
+			}else{
+				$validateConsultaRegistraduria = 0;
+			}
+
+			if ($validateConsultaFosyga > 0 && $validateConsultaRegistraduria > 0) {
 				$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
 				if($dateConsultaComercial == 'true'){
 					$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
@@ -275,9 +295,14 @@ class OportuyaV2Controller extends Controller
 				}
 
 			}
-			
+
 			if ($validateConsultaFosyga < 1) {
 				return $validateConsultaFosyga;
+			}
+
+
+			if($validateConsultaRegistraduria < 1){
+				return $validateConsultaRegistraduria;
 			}
 
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
@@ -389,7 +414,7 @@ class OportuyaV2Controller extends Controller
 
 		if($request->get('step')==3){
 			$identificationNumber = $request->get('identificationNumber');
-			$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ", $identificationNumber);
+			$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
 			$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
 			$quotaApproved = 0;
 			$quotaApprovedProduct = 0;
@@ -991,14 +1016,42 @@ class OportuyaV2Controller extends Controller
 		$dateNow = date('Y-m-d');
 		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
 		$dateNew = date ( 'Y-m-d' , $dateNew );
-		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fecha FROM fosyga_consulta_fr WHERE cedula = :identificationNumber ORDER BY idConsulta DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fechaConsulta, fuenteFallo FROM fosyga_bdua WHERE cedula = :identificationNumber ORDER BY idBdua DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(empty($dateLastConsultaFosyga)){
 			return 'true';
 		}else{
-			$dateLastConsulta = $dateLastConsultaFosyga[0]->fecha;
+			if($dateLastConsultaFosyga[0]->fuenteFallo == "SI"){
+				return 'true';
+			}
+
+			$dateLastConsulta = $dateLastConsultaFosyga[0]->fechaConsulta;
 
 			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
 				return 'true';
+			}else{
+				return 'false';
+			}
+		}
+	}
+
+	private function validateDateConsultaRegistraduria($identificationNumber){
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fechaConsulta, fuenteFallo FROM fosyga_estadoCedula WHERE cedula = :identificationNumber ORDER BY idEstadoCedula DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(empty($dateLastConsultaFosyga)){
+			return "true";
+		}else{
+			if($dateLastConsultaFosyga[0]->fuenteFallo == "SI"){
+				return "true";
+			}
+
+			$dateLastConsulta = $dateLastConsultaFosyga[0]->fechaConsulta;
+
+			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
+				return "true";
 			}else{
 				return 'false';
 			}
@@ -1239,19 +1292,18 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function execConsultaFosyga($identificationNumber, $typeDocument, $dateExpeditionDocument){
-		$consultaFR = new ConsultaFR;
 		$bdua = new Bdua;
-		$estadoCedula = new EstadoCedula;
-
-		$consultaFR->cedula = $identificationNumber;
-		$consultaFR->save();
-		$idConsulta = $consultaFR->idConsulta;
 
 		// Consulta bdua - Base de datos unificada
-		/*$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
+		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
 		$infoBdua = (array) $infoBdua;
 		$infoBdua = $infoBdua['original'];
-		$bdua->idConsulta = $idConsulta;
+		if($infoBdua['fuenteFallo'] == "SI"){
+			$bdua->cedula = $identificationNumber;
+			$bdua->fuenteFallo = "SI";
+			$bdua->save();
+			return -1; 
+		}
 		$bdua->cedula = $infoBdua['personaVO']['numeroDocumento'];
 		$bdua->tipoDocumento = $infoBdua['personaVO']['tipoDocumento'];
 		$bdua->pais = $infoBdua['personaVO']['pais'];
@@ -1268,16 +1320,23 @@ class OportuyaV2Controller extends Controller
 		$bdua->tipoAfiliado = $infoBdua['tipoAfiliado'];
 		$bdua->fechaConsulta = $infoBdua['fechaConsulta'];
 		$bdua->fuenteFallo = $infoBdua['fuenteFallo'];
-		$bdua->save();*/
+		$bdua->save();
 
+		return 1;
+	}
+
+	public function execConsultaRegistraduria($identificationNumber, $typeDocument, $dateExpeditionDocument){
+		$estadoCedula = new EstadoCedula;
 		// Consulta estado cedula
 		$infoEstadoCedula = $this->execWebServiceFosyga($identificationNumber, '91891024', $typeDocument, $dateExpeditionDocument);
 		$infoEstadoCedula = (array) $infoEstadoCedula;
 		$infoEstadoCedula = $infoEstadoCedula['original'];
 		if($infoEstadoCedula['fuenteFallo'] == "SI"){
-			return -1; // Problemas con la fecha de expedicion
+			$estadoCedula->cedula = $identificationNumber;
+			$estadoCedula->fuenteFallo = "SI";
+			$estadoCedula->save();
+			return -1; 
 		}
-		$estadoCedula->idConsulta = $idConsulta;
 		$estadoCedula->cedula = $infoEstadoCedula['personaVO']['numeroDocumento'];
 		$estadoCedula->tipoDocumento = $infoEstadoCedula['personaVO']['tipoDocumento'];
 		$estadoCedula->pais = $infoEstadoCedula['personaVO']['pais'];
@@ -1292,15 +1351,14 @@ class OportuyaV2Controller extends Controller
 		$estadoCedula->fuenteFallo = $infoEstadoCedula['fuenteFallo'];
 		$estadoCedula->save();
 		
-		return response()->json([$infoEstadoCedula]);
+		return 1;
 	}
 
 	public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition){
-		$daleteTemp = DB::connection('oportudata')->select('DELETE FROM `temp_consultaFosyga` WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 		// Fosyga
 		$queryBdua = sprintf("SELECT LOWER(`primerNombre`) as primerNombre, LOWER(`primerApellido`) as primerApellido, `regimen`, `tipoAfiliado` 
 		FROM `fosyga_bdua` 
-		WHERE `idConsulta` = (SELECT MAX(`idConsulta`) FROM `fosyga_bdua` WHERE `cedula` = '%s' ORDER BY `idConsulta` LIMIT 1 ) AND `cedula` = '%s'", $identificationNumber, $identificationNumber);
+		WHERE `cedula` = '%s' ORDER BY `idBdua` DESC LIMIT 1 ", $identificationNumber, $identificationNumber);
 		$respBdua = DB::connection('oportudata')->select($queryBdua);
 
 		$daleteTemp = DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua[0]->tipoAfiliado]);
@@ -1314,15 +1372,19 @@ class OportuyaV2Controller extends Controller
 		$coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
 		
 		if($coincideNames == 0 || $coincideLastNames == 0){
-			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua[0]->tipoAfiliado]);
+			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "FOSYGA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			return -3; // Nombres y/o apellidos no coinciden
 		}
 
+		return 1;
+	}
+
+	public function validateConsultaRegistraduria($identificationNumber, $names, $lastName, $dateExpedition){
 		// Registraduria
 		$queryEstadoCedula = sprintf("SELECT LOWER(`fechaExpedicion`) as fechaExpedicion, estado 
 		FROM `fosyga_estadoCedula` 
-		WHERE  `idConsulta` = (SELECT MAX(`idConsulta`) FROM `fosyga_estadoCedula` WHERE `cedula` = '%s' ORDER BY `idConsulta` LIMIT 1 ) AND `cedula` = '%s'", $identificationNumber, $identificationNumber);
+		WHERE  `cedula` = '%s' ORDER BY `idEstadoCedula` DESC LIMIT 1 ", $identificationNumber, $identificationNumber);
 
 		$respEstadoCedula = DB::connection('oportudata')->select($queryEstadoCedula);
 
@@ -1426,7 +1488,6 @@ class OportuyaV2Controller extends Controller
 		if ($dateExpeditionDocument != '') {
 			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
 		}
-		
 		$curl_handle=curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$urlConsulta);
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,0);

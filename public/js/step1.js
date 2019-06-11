@@ -5,6 +5,7 @@ angular.module('appStep1', ['moment-picker'])
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
+	$scope.showWarningErrorData = false;
 	$scope.telephone = '';
 	$scope.code = {
 		'code' : ''
@@ -256,9 +257,15 @@ angular.module('appStep1', ['moment-picker'])
 					window.location = "/OPN_gracias_FRM"
 				}
 				if(response.data == "-2"){
-				$('#proccess').modal('hide');
-				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+					$('#proccess').modal('hide');
+					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
 				}
+
+				if (response.data == "-3" || response.data == "-4") {
+					$scope.showWarningErrorData = true;
+					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
+				}
+
 				if (response.data == "1") {
 					$scope.encryptText();
 				}

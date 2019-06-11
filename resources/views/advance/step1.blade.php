@@ -150,6 +150,13 @@
 				<p class="textCityForm">
 					**Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
+				<div class="row" ng-show="showWarningErrorData">
+					<div class="col-12">
+						<p class="alert alert-danger">
+							Lo sentimos, los datos no coinciden, por favor verifícalos
+						</p>
+					</div>
+				</div>
 				<div class="form-group text-center">
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
