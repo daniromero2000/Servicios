@@ -32,7 +32,7 @@ class WarrantyController extends Controller
     public function __construct()
     {
         // except a authenticable methods 
-        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products'] ]);
+        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products','sendAWarrantyEmail'] ]);
     }
     /**
      * Display a main page of Warranty App.
@@ -147,7 +147,7 @@ class WarrantyController extends Controller
                                                 ->orderBy('NOMBRE')
                                                 ->orderBy('name')
                                                 ->get();
-        return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType];
+        return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType,$groupsBrands->keyBy('MARCA_ID')];
     }
 
     /**
