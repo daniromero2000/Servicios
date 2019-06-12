@@ -131,7 +131,7 @@ class WarrantyController extends Controller
                                             ->orderBy('DEPARTAMENTOS.DEPARTAMENTO_ID')
                                             ->orderBy('CIUDAD')
                                             ->where('ALMACEN','=','1')
-                                            ->where('STATE','=','A')
+                                            //->where('STATE','=','A') uncomment if can´t view the closed stores
                                             ->get();
         // group a stores by departamento and city
         $stores = $stores->groupBy('NAME')->map(function ($item, $key) {
