@@ -204,7 +204,6 @@ class WarrantyController extends Controller
         if(OportuyaV2::find($request->identificationNumber)){
             // if client already exist the register should be update
             $warrantyClient = OportuyaV2::find($request->identificationNumber);
-            $warrantyClient->DIRECCION = $request->address;
             $warrantyClient->EMAIL = $request->email;
             $warrantyClient->save();
         }else{
@@ -216,6 +215,7 @@ class WarrantyController extends Controller
             $warrantyClient->APELLIDOS = $request->lastNames;
             $warrantyClient->NOMBRES = $request->names;
             $warrantyClient->EMAIL = $request->email;
+            $warrantyClient->ORIGEN = "GARANTIAS";
             $warrantyClient->save();
         }
         
