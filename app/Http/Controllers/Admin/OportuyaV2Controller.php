@@ -37,7 +37,6 @@ use App\OportuyaV2;
 use App\Tarjeta;
 use App\TurnosOportuya;
 use App\Analisis;
-use App\ConsultaFR;
 use App\Bdua;
 use App\EstadoCedula;
 use App\CodeUserVerification;
@@ -63,6 +62,30 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2',['images'=>$images]);
 	}
 
+
+	public function getPageDeniedTr(){
+		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 2 ');
+		
+		return view('advance.pageDeniedTradicional',['mensaje'=>$mensaje[0]->MSJ]);
+	}
+
+	public function getPageDeniedAl(){
+		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 3 ');
+		
+		return view('advance.pageDeniedAlmacen',['mensaje'=>$mensaje[0]->MSJ]);
+	}
+
+	public function getPageDeniedSH(){
+		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 5 ');
+		
+		return view('advance.pageDeniedSinHistorial',['mensaje'=>$mensaje[0]->MSJ]);
+	}
+
+	public function getPageDenied(){
+		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 4 ');
+		
+		return view('advance.pageDeniedAdvance',['mensaje'=>$mensaje[0]->MSJ]);
+	}
 
 	public function validateEmail(){
 		return response()->json(true);
@@ -119,7 +142,7 @@ class OportuyaV2Controller extends Controller
 		//get step one request from data sended by form
 		if(($request->get('step'))==1){
 			$identificationNumber = trim($request->get('identificationNumber'));
-
+			/*
 			// Fosyga
 			$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 			if($dateConsultaFosyga == "true"){
@@ -154,6 +177,13 @@ class OportuyaV2Controller extends Controller
 				}else{
 					$consultaComercial = 1;
 				}
+			}*/
+
+			$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
+			if($dateConsultaComercial == 'true'){
+				$consultaComercial = $this->execConsultaComercial($identificationNumber, $request->get('typeDocument'));
+			}else{
+				$consultaComercial = 1;
 			}
 
 			$cityName = $this->getCity($request->get('city'));
@@ -227,9 +257,10 @@ class OportuyaV2Controller extends Controller
 						$paso = "O-PASO1";
 						break;
 				}
-				if ($validateConsultaFosyga > 0) {
-					$estado = ($consultaComercial == 0) ? 'SIN COMERCIAL' : $estado ;					
-				}
+				/*if ($validateConsultaFosyga > 0 && $validateConsultaRegistraduria > 0) {
+					$estado = ($consultaComercial == 0) ? 'SIN COMERCIAL' : $estado ;
+				}*/
+				$estado = ($consultaComercial == 0) ? 'SIN COMERCIAL' : $estado ;
 				// $flag =1 means  data into leads table was saved correctly
 				$flag=1;
 				
@@ -296,14 +327,14 @@ class OportuyaV2Controller extends Controller
 
 			}
 
-			if ($validateConsultaFosyga < 1) {
+			/*if ($validateConsultaFosyga < 1) {
 				return $validateConsultaFosyga;
 			}
 
 
 			if($validateConsultaRegistraduria < 1){
 				return $validateConsultaRegistraduria;
-			}
+			}*/
 
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
 			if($consultaComercial == 1){
@@ -414,8 +445,8 @@ class OportuyaV2Controller extends Controller
 
 		if($request->get('step')==3){
 			$identificationNumber = $request->get('identificationNumber');
-			$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
-			$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
+			/*$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
+			$respQueryTemp = DB::connection('oportudata')->select($queryTemp);*/
 			$quotaApproved = 0;
 			$quotaApprovedProduct = 0;
 			$existSolicFab = $this->getExistSolicFab($identificationNumber);
@@ -495,6 +526,10 @@ class OportuyaV2Controller extends Controller
 
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
+				$decisionCredit = $this->decisionCredit($identificationNumber);
+				if ($decisionCredit < 0) {
+					return $decisionCredit;
+				}
 				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = 1;
@@ -645,8 +680,8 @@ class OportuyaV2Controller extends Controller
 				$analisis->aurcre_cod2 = "0";
 				$analisis->aurcre_cod21 = "0";
 				$analisis->aurcre_cod22 = "0";
-				$analisis->paz_cli = $respQueryTemp[0]->paz_cli;
-				$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;
+				/*$analisis->paz_cli = $respQueryTemp[0]->paz_cli;
+				$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;*/
 				$analisis->save();
 				$estado = "PREAPROBADO";
 				$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
@@ -1263,9 +1298,13 @@ class OportuyaV2Controller extends Controller
 			
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
-			$scoreMin = 675;
+			$scoreMin = 528;
 			if($cityName == 'MEDELLÍN' || $cityName =='BOGOTÁ'){
 				$scoreMin = 726;
+			}
+
+			if($respScoreClient >= -7 && $respScoreClient <= 0){
+				return true;
 			}
 
 			if($respScoreClient >= $scoreMin){
@@ -1274,6 +1313,30 @@ class OportuyaV2Controller extends Controller
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				return false;
 			}
+		}
+	}
+
+	private function decisionCredit($identificationNumber){
+		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+
+		$respScoreClient = $queryScoreClient[0]->score;
+
+		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
+			return -4; // Sin Historial Crediticio
+		}
+
+		if ($respScoreClient >= 528 && $respScoreClient <= 624) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "ALMACEN" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			return -1; // En almacen
+		}
+
+		if ($respScoreClient >= 625 && $respScoreClient <= 675) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "TRADICIONAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			return -2; // Tradicional
+		}
+
+		if ($respScoreClient > 676) {
+			return 1;
 		}
 	}
 
@@ -1398,7 +1461,7 @@ class OportuyaV2Controller extends Controller
 		$dateExpEstadoCedula = $dateExplode[2]."/".$dateExplode[1]."/".$dateExplode[0];
 
 		if(strtotime($dateExpedition) != strtotime($dateExpEstadoCedula)){
-			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua[0]->tipoAfiliado]);
+			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "REGISTRADURIA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			return -4; // Fecha de expedicion no coincide
 		}

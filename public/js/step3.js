@@ -148,8 +148,20 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
+			if(response.data == -1){
+				window.location = "/OPNAL_gracias_denied";
+			}
+
+			if(response.data == -2){
+				window.location = "/OPNTR_gracias_denied";
+			}
+
 			if(response.data == -3){
 				window.location = "/UsuarioPendiente";
+			}
+
+			if(response.data == -4){
+				window.location = "/OPNSH_gracias_denied";
 			}
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
