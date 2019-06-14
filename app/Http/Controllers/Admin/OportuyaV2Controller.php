@@ -710,7 +710,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$estado = "NEGADO";
 			}
-			$daleteTemp = DB::connection('oportudata')->select('DELETE FROM `temp_consultaFosyga` WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			//$daleteTemp = DB::connection('oportudata')->select('DELETE FROM `temp_consultaFosyga` WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			$estado = ($estadoLead != 'SIN COMERCIAL') ? $estado : "SIN COMERCIAL" ;
 			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
 			$dataLead=[
