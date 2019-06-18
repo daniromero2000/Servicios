@@ -94,7 +94,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 		},
 		{
 			'value'	: 'INDEPENDIENTE CERTIFICADO',
-			'label' : 'Independiente Certificado'
+			'label' : 'Independiente Certificado - (Con cámara de comercio)'
 		},
 		{
 			'value'	: 'NO CERTIFICADO',
