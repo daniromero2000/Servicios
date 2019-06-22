@@ -11,7 +11,7 @@
 						</div>
 						<div class="col-sm-12 col-md-8 text-center" style="position:relative">
 							<div class="mensajeFinal-containText">
-								@php
+								@php 
 									echo $mensaje;
 								@endphp
 							</div>

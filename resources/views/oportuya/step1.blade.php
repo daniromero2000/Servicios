@@ -9,6 +9,10 @@
 	<meta name="robots" content="noindex">
 @endsection()
 
+@section('linkStyleSheets')
+    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+@endsection
+
 @section('content')
 	 {!! NoCaptcha::renderJs() !!}
 	<div id="step1" ng-app="appStep1" ng-controller="step1Ctrl">
@@ -65,14 +69,26 @@
 			</div>
 			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
-					<div class="col-12 col-sm-6 form-group">
+					<div class="col-12 col-sm-4 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
 						<select class="form-control inputsSteps inputSelect" ng-model="leadInfo.typeDocument" id="typeDocument" required="" ng-options="type.value as type.label for type in typesDocuments">
 						</select>
 					</div>
-					<div class="col-12 col-sm-6 form-group">
+					<div class="col-12 col-sm-4 form-group">
 						<label for="identificationNumber">Número de identificación*</label>
 						<input class="form-control inputsSteps inputText" type="text" validation-pattern="number" ng-model="leadInfo.identificationNumber" id="identificationNumber" required="" ng-blur="getNumCel()" />
+					</div>
+					<div class="col-sm-12 col-md-4 form-group">
+						<label for="dateDocumentExpedition">Fecha Expedición Documento*</label>
+					    <div class="input-group"
+					         moment-picker="leadInfo.dateDocumentExpedition"
+					         format="YYYY-MM-DD">
+					        <input class="form-control inputsSteps inputText"
+					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" required="" placeholder="Año/Mes/Día">
+					        <span class="input-group-addon">
+					            <i class="octicon octicon-calendar"></i>
+					        </span>
+					    </div>
 					</div>
 				</div>
 				<div class="row resetRow">
@@ -138,6 +154,13 @@
 				<p class="textCityForm">
 					**Válido solo para ciudades que se desplieguen en la casilla.
 				</p>
+				<div class="row" ng-show="showWarningErrorData">
+					<div class="col-12">
+						<p class="alert alert-danger">
+							Lo sentimos, los datos no coinciden, por favor verifícalos
+						</p>
+					</div>
+				</div>
 				<div class="form-group text-center">
 					@if(!(Auth::guard('assessor')->check()))
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
@@ -402,9 +425,10 @@
 @endsection
 
 @section('scriptsJs')
+	<script type="text/javascript" src="{{ asset('js/step1.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/humanize-duration/3.17.0/humanize-duration.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
-	<script type="text/javascript" src="{{ asset('js/step1.js') }}"></script>
+	<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 	<script>
 		document.getElementById("button1").disabled = true;
 		function enableBtn(){

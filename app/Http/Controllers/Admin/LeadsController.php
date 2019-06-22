@@ -76,7 +76,7 @@ class LeadsController extends Controller
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
         WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` ) 
-        AND sb.`SOLICITUD_WEB` = '1' AND cf.`CON3` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA );
+        AND sb.`SOLICITUD_WEB` = '1' AND cf.`ESTADO` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA );
         
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
@@ -132,22 +132,22 @@ class LeadsController extends Controller
     }
 
     private function getLeadsRejected($request){
-        $queryLeads1 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
+        $queryLeads1 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score
-        WHERE `SUBTIPO` = 'WEB' AND (`CON3` = 'NEGADO' OR `CON3` = 'RECHAZADO') AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+        WHERE `SUBTIPO` = 'WEB' AND (`ESTADO` = 'NEGADO' OR `ESTADO` = 'RECHAZADO') AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
         if($request['qRL'] != ''){
             $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CON3`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
+        $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
         FROM `CLIENTE_FAB` as cf, SOLIC_FAB as sb, `cifin_score` as score
-        WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`CON3` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO' AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+        WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`ESTADO` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO' AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
         if($request['qRL'] != ''){
             $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION DESC";
+        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION, score DESC";
         
         $resp = DB::connection('oportudata')->select($query);
 

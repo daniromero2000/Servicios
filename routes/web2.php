@@ -24,10 +24,6 @@ Route::group(['prefix'=>'/creditoLibranza/'],function(){
 Route::resource('avance','Admin\AdvanceController');
 //Route::get('libranza-lines','Admin\LibranzaController@index');
 
-Route::get('/OPN_gracias_denied_advance',function(){
-    return view('advance.pageDeniedAdvance');
-})->name('thankYouPageAdvanceDenied');
-
 //Route::get('/getDataLibranza','Admin\LibranzaController@getData');
 
 Route::group(['prefix'=>'/libranza-principal/'],function(){

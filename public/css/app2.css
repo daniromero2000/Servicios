@@ -2614,8 +2614,9 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .hereWarranty{
-	font-family: fantasy;
-    font-size: 33px;
+	font-family: 'Barlow';
+	font-weight: 900 !important;
+	font-size: 25px;
 }
 
 .sendWarrantyStep1{

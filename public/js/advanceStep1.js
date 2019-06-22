@@ -1,10 +1,11 @@
-angular.module('appAdvanceStep1', [])
+angular.module('appAdvanceStep1', ['moment-picker'])
 .controller("advanceStep1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
+	$scope.showWarningErrorData = false;
 	$scope.telephone = '';
 	$scope.leadInfo = {
 		'step' : 1,
@@ -12,6 +13,7 @@ angular.module('appAdvanceStep1', [])
 		'typeService' : 'Avance',
 		'typeDocument' : '',
 		'identificationNumber' : '',
+		'dateDocumentExpedition' : '',
 		'name' : '',
 		'lastName' : '',
 		'email' : '',
@@ -32,39 +34,39 @@ angular.module('appAdvanceStep1', [])
 			'label' : 'Seleccione...'
 		},
 		{
-			'value' : "1",
+			'value' : "01",
 			'label' : 'Cédula de ciudadanía'
 		},
 		{
-			'value' : "2",
+			'value' : "02",
 			'label' : 'NIT'
 		},
 		{
-			'value' : "3",
+			'value' : "03",
 			'label' : 'Cédula de extranjería'
 		},
 		{
-			'value' : "4",
+			'value' : "04",
 			'label' : 'Tarjeta de Identidad'
 		},
 		{
-			'value' : "5",
+			'value' : "05",
 			'label' : 'Pasaporte'
 		},
 		{
-			'value' : "6",
+			'value' : "06",
 			'label' : 'Tarjeta seguro social extranjero'
 		},
 		{
-			'value' : "7",
+			'value' : "07",
 			'label' : 'Sociedad extranjera sin NIT en Colombia'
 		},
 		{
-			'value' : "8",
+			'value' : "08",
 			'label' : 'Fidecoismo'
 		},
 		{
-			'value' : "9",
+			'value' : "09",
 			'label' : 'Registro Civil'
 		},
 		{
@@ -92,7 +94,7 @@ angular.module('appAdvanceStep1', [])
 		},
 		{
 			'value'	: 'INDEPENDIENTE CERTIFICADO',
-			'label' : 'Independiente Certificado'
+			'label' : 'Independiente Certificado - (Con cámara de comercio)'
 		},
 		{
 			'value'	: 'NO CERTIFICADO',
@@ -250,16 +252,19 @@ angular.module('appAdvanceStep1', [])
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				console.log(response);
 				if(response.data == "-1"){
-					window.location = "/OPN_gracias_denied_advance"
+					window.location = "/OPN_gracias_FRM"
 				}
 				if(response.data == "-2"){
-				$('#proccess').modal('hide');
-				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+					$('#proccess').modal('hide');
+					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
 				}
 				if (response.data == "1") {
 					$scope.encryptText();
+				}
+				if (response.data == "-3" || response.data == "-4") {
+					$scope.showWarningErrorData = true;
+					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 				}
 				$('#proccess').modal('hide');
 			}, function errorCallback(response) {

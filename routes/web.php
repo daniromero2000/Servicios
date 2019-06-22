@@ -40,10 +40,6 @@ Route::get('/UsuarioMoroso',function(){
     return view('advance.pageUserDefault');
 })->name('usuarioMoroso');
 
-Route::get('/OPN_gracias_FRM',function(){
-    return view('oportuya.thankYouPageDenied');
-})->name('thankYouPageOportuyaDenied');
-
 Route::get('/SG_gracias_FRM',function(){
 	return view('seguros.thankYouPage');
 })->name('thankYouPageSeguros');
@@ -59,6 +55,11 @@ Route::get('/VJ_gracias_FRM',function(){
 Route::get('/AD_gracias_FRM',function(){
 	return view('advance.thankYouPage');
 })->name('thankYouPageAvance');
+
+Route::get('/OPNTR_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedTr');
+Route::get('/OPNAL_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedAl');
+Route::get('/OPNSH_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedSh');
+Route::get('/OPN_gracias_FRM', 'Admin\OportuyaV2Controller@getPageDenied');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
