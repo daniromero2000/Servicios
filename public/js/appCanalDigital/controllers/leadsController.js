@@ -5,10 +5,14 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		'qCM': '',
 		'qRL' : '',
 		'qGen' : '',
+		'qTR' : '',
+		'qAL' : '',
 		'initFrom': 0,
 		'initFromCM': 0,
 		'initFromRL': 0,
 		'initFromGen': 0,
+		'initFromTR': 0,
+		'initFromAL': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
@@ -140,7 +144,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		$scope.cargandoGen= true;
 		$http({
 		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&qGen='+$scope.q.qGen+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&initFromGen='+$scope.q.initFromGen+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
+		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&qGen='+$scope.q.qGen+'&qTR='+$scope.q.qTR+'&qAL='+$scope.q.qAL+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&initFromGen='+$scope.q.initFromGen+'&initFromTR='+$scope.q.initFromTR+'&initFromAL='+$scope.q.initFromAL+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
 			$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
