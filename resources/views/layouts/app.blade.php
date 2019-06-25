@@ -418,7 +418,7 @@
         });
 
 		$(".multiple-items-motos").slick({
-          arrows: false,
+          
 		  infinite: true,
 		  slidesToShow: 3,
 		  slidesToScroll:3,
@@ -426,11 +426,13 @@
 	      verticalSwiping: true,
 	      asNavFor: '.single-item-motos',
 	      centerMode: true,
-	      focusOnSelect: true
+		  focusOnSelect: true,
+		  nextArrow: '<img src="/images/motos/arrow2.png" class="img-fluid not-shadow">',
+          prevArrow: '<img src="/images/motos/arrow.png" class="img-fluid not-shadow">',
         });
         $('.single-item-motos').slick({
 			arrows: false,
-			asNavFor: '.multiple-items-motos'
+			asNavFor: '.multiple-items-motos', 
 		});
 		
 	</script>

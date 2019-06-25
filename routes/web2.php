@@ -50,4 +50,45 @@ Route::get('/OPN_gracias_newsletter',function(){
     return view('newsletter.index');
 })->name('thankYouPageNewsletter');
 
+Route::group(['prefix'=>'/motos/solicitud/'],function(){
+    
+    Route::get('/step1', function(){
+        return view('motos.step1');
+    });
+    Route::get('/thankYouPage', function(){
+        return view('motos.thankYouPage');
+    });    
+    Route::get('/step2/{numIdentification}', 'Admin\MotosController@step2')->name('step2Motos');
+    Route::get('/step3/{numIdentification}', 'Admin\MotosController@step3')->name('step3Motos');
+    Route::get('getDataMotoStep1','Admin\MotosController@getDataStep1');
+    Route::get('getDataMotoStep2/{identificationNumber}','Admin\MotosController@getDataStep2');
+    Route::get('getDataMotoStep3/{identificationNumber}','Admin\MotosController@getDataStep3');
+    Route::get('getNumLead/{identificationNumber}', 'Admin\MotosController@getNumLead');
+    Route::get('validationLead/{identificationNumber}', 'Admin\MotosController@validationLead');
+    Route::get('getCodeVerification/{identificationNumber}/{celNumber}/{type}', 'Admin\MotosController@getCodeVerificationOportudata');
+    Route::get('verificationCode/{code}/{identificationNumber}', 'Admin\MotosController@verificationCode');
+    Route::post('saveMotoLead','Admin\MotosController@storeData');
+    Route::get('encryptText/{string}','Admin\MotosController@encrypt');
+    
+});
 
+Route::group(['prefix'=>'/motos/simulador/'],function(){
+    
+    Route::get('getData/{idMoto}','Admin\MotosController@getDataLiquidator');
+
+});
+
+Route::resource('adminMotos','Admin\MotosAdminController');
+
+
+Route::group(['prefix'=>'/admin/motos/'],function(){
+    Route::get('/',function(){
+        return view('motos.adminMotos.index');
+    });
+    Route::get('/leads',function(){
+        return view('motos.adminMotos.leads');
+    });
+
+    Route::put('addImage/{idMoto}','Admin\MotosAdminController@storeImageMoto');
+
+});
