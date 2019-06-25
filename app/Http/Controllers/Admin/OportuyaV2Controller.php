@@ -553,6 +553,7 @@ class OportuyaV2Controller extends Controller
 				}
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->id_asesor=$codeAssessor;
 				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
 				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
 				$solic_fab->SUCURSAL=$sucursal;
