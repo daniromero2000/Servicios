@@ -59,7 +59,7 @@ Route::get('/AD_gracias_FRM',function(){
 Route::get('/OPNTR_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedTr');
 Route::get('/OPNAL_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedAl');
 Route::get('/OPNSH_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedSh');
-Route::get('/OPN_gracias_FRM', 'Admin\OportuyaV2Controller@getPageDenied');
+Route::get('/OPN_gracias_denied', 'Admin\OportuyaV2Controller@getPageDenied');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

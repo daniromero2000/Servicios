@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<form ng-submit="saveStep3()" id="formEmpleado" >
-				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA'">
+				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA' || leadInfo.occupation == 'PRESTACIÓN DE SERVICIOS'">
 					<div class="row resetRow">
 						<div class="col-12 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
