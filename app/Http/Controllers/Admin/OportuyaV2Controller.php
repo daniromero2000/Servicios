@@ -246,7 +246,7 @@ class OportuyaV2Controller extends Controller
 
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
-				$estado = ".";
+				$estado = "";
 				$paso = "";
 				switch ($request->get('typeService')) {
 					case 'Avance':
@@ -1322,6 +1322,7 @@ class OportuyaV2Controller extends Controller
 		$respScoreClient = $queryScoreClient[0]->score;
 
 		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "SIN HISTORIAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			return -4; // Sin Historial Crediticio
 		}
 
