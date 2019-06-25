@@ -161,13 +161,25 @@
 							<label for="eps">EPS*</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
-						<div class="col-sm-12 col-md-6 form-group">
+						<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO'">
 							<label for="dateCreationCompany">Fecha de Constitución*</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
 							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" required="" />
+							    <span class="input-group-addon">
+							        <i class="octicon octicon-calendar"></i>
+							    </span>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.occupation == 'NO CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
+							<label for="dateCreationCompany">Fecha de Constitución</label>
+							<div class="input-group"
+							     moment-picker="leadInfo.dateCreationCompany"
+							     format="YYYY-MM">
+							    <input class="form-control inputsSteps inputText"
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>

@@ -32,7 +32,7 @@ class WarrantyController extends Controller
     public function __construct()
     {
         // except a authenticable methods 
-        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products'] ]);
+        $this->middleware('auth', ['except' => ['index','store','sendMessageSms','setCodesStateOportudata','getCodeVerificationOportudata','verificationCode','create','products','sendAWarrantyEmail'] ]);
     }
     /**
      * Display a main page of Warranty App.
@@ -131,7 +131,7 @@ class WarrantyController extends Controller
                                             ->orderBy('DEPARTAMENTOS.DEPARTAMENTO_ID')
                                             ->orderBy('CIUDAD')
                                             ->where('ALMACEN','=','1')
-                                            ->where('STATE','=','A')
+                                            //->where('STATE','=','A') uncomment if can´t view the closed stores
                                             ->get();
         // group a stores by departamento and city
         $stores = $stores->groupBy('NAME')->map(function ($item, $key) {
@@ -147,7 +147,7 @@ class WarrantyController extends Controller
                                                 ->orderBy('NOMBRE')
                                                 ->orderBy('name')
                                                 ->get();
-        return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType];
+        return [$stores,$groupsBrands->groupBy('NOMBRE'),$idType,$groupsBrands->keyBy('MARCA_ID')];
     }
 
     /**
@@ -204,7 +204,6 @@ class WarrantyController extends Controller
         if(OportuyaV2::find($request->identificationNumber)){
             // if client already exist the register should be update
             $warrantyClient = OportuyaV2::find($request->identificationNumber);
-            $warrantyClient->DIRECCION = $request->address;
             $warrantyClient->EMAIL = $request->email;
             $warrantyClient->save();
         }else{
@@ -216,6 +215,7 @@ class WarrantyController extends Controller
             $warrantyClient->APELLIDOS = $request->lastNames;
             $warrantyClient->NOMBRES = $request->names;
             $warrantyClient->EMAIL = $request->email;
+            $warrantyClient->ORIGEN = "GARANTIAS";
             $warrantyClient->save();
         }
         

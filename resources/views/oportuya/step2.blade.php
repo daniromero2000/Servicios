@@ -65,17 +65,17 @@
 			<form id="step2Form" ng-submit="saveStep2()">
 				{{ csrf_field() }}
 				<div class="row resetRow">
-					<div class="col-sm-12 col-md-6 form-group">
-						<label for="dateDocumentExpedition">Fecha Expedición Documento*</label>
-					    <div class="input-group"
-					         moment-picker="leadInfo.dateDocumentExpedition"
-					         format="YYYY-MM-DD">
-					        <input class="form-control inputsSteps inputText"
-					               ng-model="leadInfo.dateDocumentExpedition" id="dateDocumentExpedition" readonly="" required="" placeholder="Año/Mes/Día">
-					        <span class="input-group-addon">
-					            <i class="octicon octicon-calendar"></i>
-					        </span>
-					    </div>
+					<div class="col-sm-12 col-md-6">
+						<label for="birthdate">Fecha de Nacimiento</label>
+						<div class="input-group"
+						     moment-picker="leadInfo.birthdate"
+						     format="YYYY-MM-DD">
+						    <input class="form-control inputsSteps inputText"
+						           ng-model="leadInfo.birthdate" id="birthdate" readonly="" placeholder="Año/Mes/Día">
+						    <span class="input-group-addon">
+						        <i class="octicon octicon-calendar"></i>
+						    </span>
+						</div>
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="cityExpedition">Ciudad Expedición Documento* </label>
@@ -118,24 +118,12 @@
 					</div>
 				</div>
 				<div class="row resetRow">
-					<div class="col-sm-12 col-md-4">
-						<label for="birthdate">Fecha de Nacimiento</label>
-						<div class="input-group"
-						     moment-picker="leadInfo.birthdate"
-						     format="YYYY-MM-DD">
-						    <input class="form-control inputsSteps inputText"
-						           ng-model="leadInfo.birthdate" id="birthdate" readonly="" placeholder="Año/Mes/Día">
-						    <span class="input-group-addon">
-						        <i class="octicon octicon-calendar"></i>
-						    </span>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
+					<div class="col-sm-12 col-md-6 form-group">
 						<label for="gender">Género*</label>
 						<select class="form-control inputsSteps inputSelect" id="gender" ng-model="leadInfo.gender" ng-options="gender.value as gender.label for gender in genders" required="">
 						</select>
 					</div>
-					<div class="col-sm-12 col-md-4 form-group">
+					<div class="col-sm-12 col-md-6 form-group">
 						<label for="civilStatus">Estado Civil*</label>
 						<select class="form-control inputsSteps inputSelect" id="civilStatus" ng-model="leadInfo.civilStatus" ng-options="civilType.value as civilType.label for civilType in civilTypes" required="">
 						</select>

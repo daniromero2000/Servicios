@@ -1,10 +1,11 @@
-angular.module('appStep1', [])
+angular.module('appStep1', ['moment-picker'])
 .controller("step1Ctrl", function($scope, $http) {
 	$scope.myModel = "";
 	$scope.emailValidate = false;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
+	$scope.showWarningErrorData = false;
 	$scope.telephone = '';
 	$scope.code = {
 		'code' : ''
@@ -15,6 +16,7 @@ angular.module('appStep1', [])
 		'typeService' : 'Oportuya',
 		'typeDocument' : '',
 		'identificationNumber' : '',
+		'dateDocumentExpedition' : '',
 		'name' : '',
 		'lastName' : '',
 		'email' : '',
@@ -92,7 +94,7 @@ angular.module('appStep1', [])
 		},
 		{
 			'value'	: 'INDEPENDIENTE CERTIFICADO',
-			'label' : 'Independiente Certificado'
+			'label' : 'Independiente Certificado - (Con cámara de comercio)'
 		},
 		{
 			'value'	: 'NO CERTIFICADO',
@@ -255,9 +257,15 @@ angular.module('appStep1', [])
 					window.location = "/OPN_gracias_FRM"
 				}
 				if(response.data == "-2"){
-				$('#proccess').modal('hide');
-				setTimeout(function(){ $('#cardExist').modal('show');}, 100);
+					$('#proccess').modal('hide');
+					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
 				}
+
+				if (response.data == "-3" || response.data == "-4") {
+					$scope.showWarningErrorData = true;
+					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
+				}
+
 				if (response.data == "1") {
 					$scope.encryptText();
 				}

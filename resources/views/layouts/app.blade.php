@@ -257,7 +257,8 @@
 							<li><a href="/Por-que-comprar-con-nosotros" class="footer-menuItem" title="Por qué comprar con nosotros">Por qué comprar con nosotros</a></li>
 							<li><a href="/Cambios-devoluciones-y-atencion-de-garantias" class="footer-menuItem" title="Cambios , devoluciones y atención de garantías">Cambios , devoluciones y atención de garantías</a></li>
 							<li><a href="http://www.sic.gov.co/proteccion-del-consumidor" target="_blank" class="footer-menuItem" title="Protección al consumidor">Protección al consumidor</a></li>
-							<li><a href="{{route('preguntas.frecuentes')}}" class="footer-menuItem" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
+							<li><a href="{{route('preguntas.frecuentes')}}" class="footer-menuItem" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li> 
+							<li><a href="{{ route('TermsAndConditions') }}" class="footer-menuItem" title="Términos y condiciones garantía">Términos y condiciones garantía</a></li>
 						</ul>
 					</div>
 				</div>
