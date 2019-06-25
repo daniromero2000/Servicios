@@ -74,27 +74,31 @@ class LoginController extends Controller
         $this->middleware('guest:assessor')->except('logout');
     }
 
-    public function showLoginForm(){
+    public function showLoginForm(){    
         return view('assessors.login');
     }
 
     public function login(Request $request){
         $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->codigo)->where('NUM_DOC','=',$request->num_doc)->first();
         $codeAssessor=ProfilesAssessor::selectRaw('code,profile')->where('code','=',$request->codigo)->first();
-        $request->session()->put('idProfile',$codeAssessor->profile);
-        $codeAssessor->code =trim($codeAssessor->code);
+        // $request->session()->put('idProfile',$codeAssessor->profile);}
+        if($codeAssessor){
+            $codeAssessor->code =trim($codeAssessor->code);
+        }else{
+            return back()->withErrors(['codigo' => 'codigo o contraseña incorrecta.']);
+        }
         $assessor->CODIGO =trim($assessor->CODIGO);
         $assessor->NUM_DOC=trim($assessor->NUM_DOC);
 
-        if(($assessor) && ($assessor->CODIGO == $codeAssessor->code)){
+        if((($assessor) && ($assessor->CODIGO == $codeAssessor->code))&& ($codeAssessor)){  
             Auth::guard('assessor')->loginUsingId($assessor->CODIGO);
             if($codeAssessor->profile == 9){
                return redirect()->route('laPipa');
             }
-            return view('assessors.dashboard');
+            return view('assessors.dashboard'); 
         }
 
-        return back()->withErrors(['email' => 'Email or password are wrong.']);
+        return back()->withErrors(['codigo' => 'codigo or password are wrong.']);
 
     }
 
