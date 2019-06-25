@@ -1179,7 +1179,7 @@ class OportuyaV2Controller extends Controller
 		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
 
 		$respVectores = DB::connection('oportudata')->select($queryVectores);
-		$aprobado = false;
+		$aprobado = false;   
 		foreach ($respVectores as $key => $payment) {
 			$aprobado = false;
 			$paymentArray = explode('|',$payment->fdcompor);
