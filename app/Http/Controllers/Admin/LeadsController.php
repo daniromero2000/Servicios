@@ -38,6 +38,7 @@ class LeadsController extends Controller
         
         $getLeadsRejected = $this->getLeadsRejected(['qRL' => $request->get('qRL'), 'initFromRL' => $request->get('initFromRL')]);
         $leadsRejected = $getLeadsRejected['leadsRejected'];
+        $totalLeadsRejected = $getLeadsRejected['totalLeadsRejected'];
         
         $getLeadsGen = $this->getGenLeads(['qGen' => $request->get('qGen'), 'initFromGen' => $request->get('initFromGen')]);
         $leadsGen = $getLeadsGen['leadsGen'];
@@ -47,8 +48,12 @@ class LeadsController extends Controller
         $leadsTR = $getLeadsTR['leadsTR'];
         $totalLeadsTR = $getLeadsTR['totalLeadsTR'];
 
+        $getLeadsAL = $this->getLeadsAlmacen(['qAL' => $request->get('qAL'), 'initFromAL' => $request->get('initFromAL')]);
+        $leadsAL = $getLeadsAL['leadsAL'];
+        $totalLeadsAL = $getLeadsAL['totalLeadsAL'];
+
         $codeAsessor = Auth::user()->codeOportudata;
-        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected, 'codeAsesor' => $codeAsessor,'leadsGen' => $leadsGen,'totalLeadsGen' => $totalLeadsGen]);
+        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'leadsRejected' => $leadsRejected, 'totalLeadsRejected' => $totalLeadsRejected, 'codeAsesor' => $codeAsessor,'leadsGen' => $leadsGen,'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'totalLeadsTR' => $totalLeadsTR, 'leadsAL' => $leadsAL, 'totalLeadsAL' => $totalLeadsAL]);
     }
 
     private function getGenLeads($request){
@@ -139,27 +144,33 @@ class LeadsController extends Controller
         $queryLeads1 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score
         WHERE `SUBTIPO` = 'WEB' AND (`ESTADO` = 'NEGADO' OR `ESTADO` = 'RECHAZADO') AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
-        if($request['qRL'] != ''){
-            $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
-        }
 
         $queryLeads2 = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`,cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
         FROM `CLIENTE_FAB` as cf, SOLIC_FAB as sb, `cifin_score` as score
         WHERE `SUBTIPO` = 'WEB' AND cf.`CEDULA` = sb.`CLIENTE` AND cf.`ESTADO` = 'PREAPROBADO' AND sb.`SOLICITUD_WEB` = 1 AND sb.ESTADO = 'NEGADO' AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
+        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION DESC, score DESC";
+
+        $respTotalLeadsRejected = DB::connection('oportudata')->select($query);
+        $totalLeadsRejected = count($respTotalLeadsRejected);
+
+        if($request['qRL'] != ''){
+            $queryLeads1 .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
+        }
+
         if($request['qRL'] != ''){
             $queryLeads2 .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%'.$request['qRL'].'%', '%'.$request['qRL'].'%');
         }
 
-        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION, score DESC";
+        $query = $queryLeads1." UNION ".$queryLeads2 . " ORDER BY CREACION DESC, score DESC";
         
         $resp = DB::connection('oportudata')->select($query);
 
-        return ['leadsRejected' => $resp];
+        return ['leadsRejected' => $resp, 'totalLeadsRejected' => $totalLeadsRejected];
     }
 
     private function getLeadsTradicional($request){
-        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
+        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score
         WHERE `ESTADO` = 'TRADICIONAL'
                 AND score.`scocedula` = cf.`CEDULA` 
@@ -167,7 +178,6 @@ class LeadsController extends Controller
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
-
         if($request['qTR'] != ''){
             $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qTR'].'%', '%'.$request['qTR'].'%');
         }
@@ -180,24 +190,24 @@ class LeadsController extends Controller
     }
 
     private function getLeadsAlmacen($request){
-        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
+        $queryAlmacen = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`  
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score
         WHERE `ESTADO` = 'ALMACEN'
                 AND score.`scocedula` = cf.`CEDULA` 
                 AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
-        $respTotalLeadsTradicional = DB::select($queryTradicional);
+        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryAlmacen);
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
 
         if($request['qAL'] != ''){
-            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qAL'].'%', '%'.$request['qAL'].'%');
+            $queryAlmacen .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%'.$request['qAL'].'%', '%'.$request['qAL'].'%');
         }
 
-        $query .= sprintf(" LIMIT %s,30", $request['initFromAL']);
+        $queryAlmacen .= sprintf(" LIMIT %s,30", $request['initFromAL']);
 
-        $resp = DB::connection('oportudata')->select($queryTradicional);
+        $resp = DB::connection('oportudata')->select($queryAlmacen);
 
-        return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];
+        return ['leadsAL' => $resp, 'totalLeadsAL' => $totalLeadsTradicional];
     }
 
     public function assignAssesorDigitalToLead($solicitud){
@@ -246,8 +256,7 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $leads=Lead::find($id);
         $leadsQuery = Lead::selectRaw('leads.*,liquidator.*')
                     ->leftjoin('liquidator','leads.id','=','liquidator.idLead')

@@ -23,12 +23,16 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.codeAsesor = "";
 	$scope.tabs = 1;
 	$scope.totalLeads = 0;
+	$scope.totalLeadsRejected = 0;
 	$scope.totalLeadsCM = 0;
 	$scope.totalLeadsGen = 0;
+	$scope.totalLeadsTR = 0;
 	$scope.cargando = true;
 	$scope.cargandoCM = true;
 	$scope.cargandoRL = true;
 	$scope.cargandoGen = true;
+	$scope.cargandoTR = true;
+	$scope.cargandoAL = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.lead = {};
@@ -43,6 +47,8 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.leadsCM = [];
 	$scope.leadsGen = [];
 	$scope.leadsRejected = [];
+	$scope.leadsTR = [];
+	$scope.leadsAL = [];
 	$scope.cities = [
 		{ label : 'ARMENIA',value: 'ARMENIA' },
 		{ label : 'MANIZALES',value: 'MANIZALES' },
@@ -93,7 +99,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 	$scope.typeServices = [
 		{
 			label: 'Oportuya',
-			value: 'terjeta de crédito Oportuya'
+			value: 'Oportuya'
 		},
 		{
 			label: 'Crédito Motos',
@@ -142,20 +148,35 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		$scope.cargandoCM = true;
 		$scope.cargandoRL = true;
 		$scope.cargandoGen= true;
+		$scope.cargandoTR = true;
+		$scope.cargandoAL = true;
 		$http({
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&qGen='+$scope.q.qGen+'&qTR='+$scope.q.qTR+'&qAL='+$scope.q.qAL+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&initFromGen='+$scope.q.initFromGen+'&initFromTR='+$scope.q.initFromTR+'&initFromAL='+$scope.q.initFromAL+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
+			console.log(response);
 			$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
+			$scope.totalLeadsRejected = response.data.totalLeadsRejected;
 			$scope.totalLeadsCM = response.data.totalLeadsCM;
 			$scope.totalLeadsGen = response.data.totalLeadsGen;
+			$scope.totalLeadsTR = response.data.totalLeadsTR;
+			$scope.totalLeadsAL = response.data.totalLeadsAL;
+
 			if(response.data.leadsDigital != false){
 				$scope.q.initFrom += response.data.leadsDigital.length;
 				angular.forEach(response.data.leadsDigital, function(value, key) {
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
+			}
+
+			if(response.data.leadsTR != false){
+				$scope.q.initFromTR += response.data.leadsTR.length;
+				angular.forEach(response.data.leadsTR, function(value, key){
+					$scope.leadsTR.push(value);
+				});
+				$scope.cargandoTR = false;
 			}
 
 			if(response.data.leadsRejected != false){
@@ -180,6 +201,14 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 					$scope.leadsCM.push(value);
 				});
 				$scope.cargandoCM = false;
+			}
+
+			if(response.data.leadsAL != false){
+				$scope.q.initFromAL += response.data.leadsAL.length;
+				angular.forEach(response.data.leadsAL, function(value, key){
+					$scope.leadsAL.push(value);
+				});
+				$scope.cargandoAL = false;
 			}
 
 			hideLoader();

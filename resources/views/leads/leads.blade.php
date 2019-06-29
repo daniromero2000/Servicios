@@ -140,14 +140,114 @@
         </div>
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
-        Tradicional
+        <div class="row resetRow">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsTR }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.qTR" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads">
+                    <tr>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Celular</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lead in leadsTR">
+                        <td>@{{ lead.CEDULA }}</td>
+                        <td>@{{ lead.NOMBRES + ' ' + lead.APELLIDOS }}</td>
+                        <td>@{{ lead.CELULAR }}</td>
+                        <td>@{{ lead.EMAIL }}</td>
+                        <td>@{{ lead.CIUD_UBI }}</td>
+                        <td>@{{ lead.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargandoTR" ng-click="getLeads()">Cargar Más</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 3 }">
-        Almacen
+        <div class="row resetRow">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsAL }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.qAL" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads">
+                    <tr>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Celular</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lead in leadsAL">
+                        <td>@{{ lead.CEDULA }}</td>
+                        <td>@{{ lead.NOMBRES + ' ' + lead.APELLIDOS }}</td>
+                        <td>@{{ lead.CELULAR }}</td>
+                        <td>@{{ lead.EMAIL }}</td>
+                        <td>@{{ lead.CIUD_UBI }}</td>
+                        <td>@{{ lead.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-secondary" ng-disabled="cargandoAL" ng-click="getLeads()">Cargar Más</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 4 }">
         <div class="row">
-            <div class="col-sm-12 offset-md-9 col-md-3 text-right">
+            <div class="col-sm-12 col-md-1">
+                <p class="totalLeadsDigital text-center">
+                    @{{ totalLeadsRejected }}
+                </p>
+                <p class="text-center">
+                    Leads
+                </p>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="q.qRL" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
