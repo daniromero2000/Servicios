@@ -171,7 +171,7 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 			}
 			
 			if(response.data.data == false){
-				window.location = "/OPN_gracias_FRM";
+				window.location = "/OPN_gracias_denied";
 			}
 		}, function errorCallback(response) {
 		    console.log(response);

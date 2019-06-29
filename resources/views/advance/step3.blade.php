@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<form ng-submit="saveStep3()" id="formEmpleado" >
-				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA'">
+				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA' || leadInfo.occupation == 'PRESTACIÓN DE SERVICIOS'">
 					<div class="row resetRow">
 						<div class="col-12 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
@@ -161,13 +161,25 @@
 							<label for="eps">EPS*</label>
 							<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
 						</div>
-						<div class="col-sm-12 col-md-6 form-group">
+						<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO'">
 							<label for="dateCreationCompany">Fecha de Constitución*</label>
 							<div class="input-group"
 							     moment-picker="leadInfo.dateCreationCompany"
 							     format="YYYY-MM">
 							    <input class="form-control inputsSteps inputText"
 							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" required="" />
+							    <span class="input-group-addon">
+							        <i class="octicon octicon-calendar"></i>
+							    </span>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.occupation == 'NO CERTIFICADO' || leadInfo.occupation == 'RENTISTA'">
+							<label for="dateCreationCompany">Fecha de Constitución</label>
+							<div class="input-group"
+							     moment-picker="leadInfo.dateCreationCompany"
+							     format="YYYY-MM">
+							    <input class="form-control inputsSteps inputText"
+							           ng-model="leadInfo.dateCreationCompany" id="dateCreationCompany" readonly="" placeholder="Año/Mes" />
 							    <span class="input-group-addon">
 							        <i class="octicon octicon-calendar"></i>
 							    </span>

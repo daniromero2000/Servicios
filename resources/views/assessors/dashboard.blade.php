@@ -9,14 +9,14 @@
 			</h3>
 		</div>
 		<div class="row">
-			<div class="col-6 assessorModule text-center">
+			<div class="col-12 col-sm-6	 assessorModule text-center">
 				<p>
 					<a href="{{route('step1Oportuya')}}">Crédito Oportuya </a>
 				</p>	
 			</div>
-			<div class="col-6 assessorModule text-center">
+			<div class="col-12 col-sm-6	 assessorModule text-center">
 				<p>
-					<a href="{{route('solicitudes.clientes')}}">Clientes </a>
+					<a href="{{route('step1Avance')}}">Avances </a>
 				</p>	
 			</div>			
 		</div>

@@ -246,7 +246,7 @@ class OportuyaV2Controller extends Controller
 
 			//if data was saving into leads table successfully, data is stored into Oportudata CLIENTES_FAB table 
 			if(($response == true) || ($createLead == true)){
-				$estado = ".";
+				$estado = "";
 				$paso = "";
 				switch ($request->get('typeService')) {
 					case 'Avance':
@@ -553,6 +553,7 @@ class OportuyaV2Controller extends Controller
 				}
 				$solic_fab->CLIENTE=$identificationNumber;
 				$solic_fab->CODASESOR=$codeAssessor;
+				$solic_fab->id_asesor=$codeAssessor;
 				$solic_fab->ID_EMPRESA=$IdEmpresa[0]->ID_EMPRESA;
 				$solic_fab->FECHASOL=date("Y-m-d H:i:s");
 				$solic_fab->SUCURSAL=$sucursal;
@@ -1179,6 +1180,7 @@ class OportuyaV2Controller extends Controller
 		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
 
 		$respVectores = DB::connection('oportudata')->select($queryVectores);
+		$aprobado = false;   
 		foreach ($respVectores as $key => $payment) {
 			$aprobado = false;
 			$paymentArray = explode('|',$payment->fdcompor);
@@ -1322,6 +1324,7 @@ class OportuyaV2Controller extends Controller
 		$respScoreClient = $queryScoreClient[0]->score;
 
 		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "SIN HISTORIAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 			return -4; // Sin Historial Crediticio
 		}
 
