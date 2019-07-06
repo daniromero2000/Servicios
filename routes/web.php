@@ -101,6 +101,9 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/encryptText/{string}','Admin\OportuyaV2Controller@encrypt');
 	Route::get('/getData/{identificationNumber}','Admin\OportuyaV2Controller@getDataConsultation');
     Route::post('/saveStep1','Admin\OportuyaV2Controller@store')->name('assessors.saveStep1');
+    Route::group(['prefix' => '/forms/'], function(){
+        Route::get('ventaContado/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+    });
     Route::get('/LaPipa/assesor', function(){
         return view('assessors.convenios.pipa');
     })->name('laPipa');
