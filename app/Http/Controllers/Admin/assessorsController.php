@@ -115,4 +115,12 @@ class assessorsController extends Controller
 
         return $string;
     }
+
+    public function getFormVentaContado(){
+        if(Auth::guard('assessor')->check()){
+            return view('assessors.forms.ventaContado');
+        }else{
+            return view('assessors.login');
+        }
+    }
 }
