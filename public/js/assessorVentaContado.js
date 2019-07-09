@@ -62,7 +62,9 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 		'CAMARAC' : '', 
 		'CEL_VAL' : 0
     };
-
+	$scope.code = {
+		'code' : ''
+	};
     $scope.typesDocuments = [
 		{
 			'value' : "01",
@@ -135,64 +137,64 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			'value'	: 'PENSIONADO',
 			'label' : 'Pensionado'
 		}
-  ];
+	];
   
-  $scope.housingTypes = [
+	$scope.housingTypes = [
 		{
-			label: 'Propia',
-			value: 'PROPIA'
+		label: 'Propia',
+		value: 'PROPIA'
 		},
 		{
-			label: 'Arriendo',
-			value: 'ARRIENDO'
+		label: 'Arriendo',
+		value: 'ARRIENDO'
 		},
 		{
-			label: 'Familiar',
-			value: 'FAMILIAR'
+		label: 'Familiar',
+		value: 'FAMILIAR'
 		}
-  ];
+	];
   
   $scope.genders = [
 		{ label : 'Masculino',value: 'M' },
 		{ label : 'Femenino',value: 'F' }
   ];
   
-  $scope.civilTypes = [
-    {
-      label: 'Soltero',
-      value: 'SOLTERO'
-    },
-    {
-      label: 'Casado',
-      value: 'CASADO'
-    },
-    {
-      label: 'Unión Libre',
-      value: 'UNION LIBRE'
-    },
-    {
-      label: 'Viudo',
-      value: 'VIUDO'
-    },
-  ];
+	$scope.civilTypes = [
+	{
+		label: 'Soltero',
+		value: 'SOLTERO'
+	},
+	{
+		label: 'Casado',
+		value: 'CASADO'
+	},
+	{
+		label: 'Unión Libre',
+		value: 'UNION LIBRE'
+	},
+	{
+		label: 'Viudo',
+		value: 'VIUDO'
+	},
+	];
 
-  $scope.typesContracts = [
-    {
-      value: 'FIJO',
-      label: 'Fijo'
-    },
-    {
-      value: 'INDEFINIDO',
-      label: 'Indefinido'
-    },
-    {
-      value: 'SERVICIOS',
-      label: 'Servicios'
-    }
-  ];
-  $scope.citiesUbi = {};
-  $scope.cities = {};
-  $scope.banks = {};
+	$scope.typesContracts = [
+	{
+		value: 'FIJO',
+		label: 'Fijo'
+	},
+	{
+		value: 'INDEFINIDO',
+		label: 'Indefinido'
+	},
+	{
+		value: 'SERVICIOS',
+		label: 'Servicios'
+	}
+	];
+	$scope.citiesUbi = {};
+	$scope.cities = {};
+	$scope.banks = {};
 
 	$scope.getInfoVentaContado = function(){
 		showLoader();
@@ -208,9 +210,9 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			hideLoader();
 			console.log(response);
 		});
-  };
+  	};
 
-  	$scope.getNumCel = function(){
+	$scope.getNumCel = function(){
 		$scope.lead.CEL_VAL = 0;
 		$scope.lead.CELULAR = '';
 		$http({
@@ -230,6 +232,48 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			console.log(response);
 		});
 	};
-  
+
+	$scope.getCodeVerification = function(renew = false){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				if(renew == true){
+					alert('Código generado exitosamente');
+				}else{
+					$('#confirmCodeVerification').modal('show');
+				}
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+
+	$scope.verificationCode = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				$('#confirmCodeVerification').modal('hide');
+			}else if(response.data == -1){
+				// En caso de que el codigo sea erroneo
+				$scope.showAlertCode = true;
+			}else if(response.data == -2){
+				// en caso de que el codigo ya expiro
+				$scope.showWarningCode = true;
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+	
   $scope.getInfoVentaContado();
 });

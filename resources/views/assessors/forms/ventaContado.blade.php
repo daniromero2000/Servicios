@@ -24,7 +24,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form name="ventaContado">
+                <form name="ventaContado" ng-submit="getCodeVerification()">
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <md-input-container class="md-block">
@@ -45,7 +45,7 @@
                             </md-input-container>
                         </div>
                         <div class="col-sm-12 col-md-4">
-                            <md-input-container>
+                            <md-input-container class="md-block">
                                 <label class="ventaContado-label">Fecha expedición documento</label>
                                 <md-datepicker required ng-model="lead.FEC_EXP" md-current-view="year"></md-datepicker>
                                 <div ng-messages="ventaContado.FEC_EXP.$error">
@@ -106,7 +106,7 @@
                             </md-input-container>
                         </div>
                         <div class="col-sm-12 col-md-4">
-                            <md-input-container>
+                            <md-input-container class="md-block">
                                 <label class="ventaContado-label">Fecha de Nacimiento</label>
                                 <md-datepicker required ng-model="lead.FEC_NAC" md-current-view="year"></md-datepicker>
                                 <div ng-messages="ventaContado.FEC_NAC.$error">
@@ -201,7 +201,7 @@
                             </md-input-container>
                         </div>
                     </div>
-                    <div ng-show="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                    <div ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                         <div class="row">
                             <div class="col-sm-12 col-md-4">
                                 <md-input-container class="md-block">
@@ -226,7 +226,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Teléfono de la empresa</label>
-                                    <input type="text" required name="TEL_EMP" ng-model="lead.TEL_EMP">
+                                    <input type="text" name="TEL_EMP" ng-model="lead.TEL_EMP">
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -240,7 +240,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">EPS</label>
-                                    <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO" required>
+                                    <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO">
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -287,12 +287,12 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
+                    <div ng-if="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
                         <div class="row">
                             <div class="col-12 col-sm-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Cámara de comercio</label>
-                                    <md-select name="CAMARAC" ng-model="lead.CAMARAC" required>
+                                    <md-select name="CAMARAC" ng-model="lead.CAMARAC">
                                         <md-option value="SI">Si</md-option>
                                         <md-option value="NO">No</md-option>
                                     </md-select>
@@ -309,7 +309,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Nombre de la Empresa</label>
-                                    <input type="text" validation-pattern="text" ng-model="lead.RAZON_IND" required />
+                                    <input type="text" validation-pattern="text" ng-model="lead.RAZON_IND" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -323,13 +323,13 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">EPS</label>
-                                    <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" required />
+                                    <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6" ng-show="lead.occupation == 'INDEPENDIENTE CERTIFICADO'">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Fecha de Constitución</label>
-                                    <md-datepicker required ng-model="lead.FEC_CONST" md-current-view="year" md-mode="month"></md-datepicker>
+                                    <md-datepicker ng-model="lead.FEC_CONST" md-current-view="year" md-mode="month"></md-datepicker>
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6" ng-show="lead.occupation == 'NO CERTIFICADO' || lead.occupation == 'RENTISTA'">
@@ -343,7 +343,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Atigüedad (Meses)</label>
-                                    <input type="number" name="EDAD_INDP" ng-model="lead.EDAD_INDP" validation-pattern="number" required />
+                                    <input type="number" name="EDAD_INDP" ng-model="lead.EDAD_INDP" validation-pattern="number" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -359,13 +359,13 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Nombre de la Empresa</label>
-                                    <input type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" name="RAZON_SOC" required />
+                                    <input type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" name="RAZON_SOC" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Fecha de Pensión</label>
-                                    <md-datepicker required ng-model="lead.FEC_CONST" name="FEC_CONST" md-current-view="year" md-mode="month"></md-datepicker>
+                                    <md-datepicker ng-model="lead.FEC_CONST" name="FEC_CONST" md-current-view="year" md-mode="month"></md-datepicker>
                                 </md-input-container>
                             </div>
                         </div>
@@ -373,7 +373,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Atigüedad (Meses)</label>
-                                    <input type="number" ng-model="lead.ANTIG" name="ANTIG" validation-pattern="number" required />
+                                    <input type="number" ng-model="lead.ANTIG" name="ANTIG" validation-pattern="number" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -387,13 +387,13 @@
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">EPS</label>
-                                    <input required type="text" name="ACT_ECO" required ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
+                                    <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
                                 </md-input-container>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Banco</label>
-                                    <md-select name="BANCOP" ng-model="lead.BANCOP" required>
+                                    <md-select name="BANCOP" ng-model="lead.BANCOP">
                                         <md-option ng-repeat="bank in banks" value="@{{bank.value}}">@{{ bank.label }}</md-option>
                                     </md-select>
                                 </md-input-container>
@@ -459,10 +459,44 @@
 								<input type="text" name="VCON_TEL2" ng-model="lead.VCON_TEL2">
 							</md-input-container>
 						</div>
-					</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <md-button type="submit" class="md-raised md-primary">Enviar</md-button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
+        <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmCodeVerification" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalCode">
+				<div class="modal-content">
+					<div class="modal-body" style="padding: 10px">
+						<form ng-submit="verificationCode()">
+							<div class="row">
+								<div class="col-12 form-group">
+									<label for="">Código de Verificacion</label>
+									<input type="text" ng-model="code.code" class="form-control" />
+								</div>
+								<div class="col-12 text-center">
+									<button class="btn btn-primary form-group">Confirmar Código</button>
+								</div>
+								<div class="col-12 text-center" ng-show="showAlertCode">
+									<div class="alert alert-danger" role="alert">
+										Código erróneo, por favor verifícalo
+									</div>
+								</div>
+								<div class="col-12 text-center" ng-show="showWarningCode">
+									<div class="alert alert-warning" role="alert">
+										El código ya expiró, <span class="renewCode" ng-click="getCodeVerification(true)">clic aquí</span> para generar un nuevo código
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 @endsection
 
