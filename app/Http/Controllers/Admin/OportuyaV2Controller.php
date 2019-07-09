@@ -281,7 +281,7 @@ class OportuyaV2Controller extends Controller
 					'TIPOCLIENTE' => 'OPORTUYA',
 					'SUBTIPO' => 'WEB',
 					'STATE' => 'A',
-					'SUC' => ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999,
+					'SUC' => $request->get('city'),
 					'ESTADO' => $estado,
 					'PASO' => $paso,
 					'ORIGEN' => $request->get('typeService')
@@ -314,7 +314,7 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->TIPOCLIENTE = 'OPORTUYA';
 					$oportudataLead->SUBTIPO = 'WEB';
 					$oportudataLead->STATE = 'A';
-					$oportudataLead->SUC = ($request->get('branchOffice') != '') ? $request->get('branchOffice') : 9999;
+					$oportudataLead->SUC = $request->get('city');
 					$oportudataLead->ESTADO = $estado;
 					$oportudataLead->ORIGEN = $request->get('typeService');
 					$response = $oportudataLead->save();
