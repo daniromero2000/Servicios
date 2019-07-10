@@ -6,9 +6,9 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
        return moment(date).format('YYYY-MM-DD');
     };
 })
-.controller("asessorVentaContadoCtrl", function($scope, $http) {
+.controller("asessorVentaContadoCtrl", function($scope, $http, $mdDialog) {
     $scope.lead = {
-        'TIPO_DOC' : '01', 
+        'TIPO_DOC' : '1', 
         'CEDULA' : '', 
         'APELLIDOS' : '',
         'NOMBRES' : '', 
@@ -18,7 +18,6 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
         'FEC_EXP' : '', 
         'CIUD_EXP' : '', 
         'SEXO' : '', 
-        'PERSONAS' : '',
         'FEC_NAC' : '', 
         'ESTADOCIVIL' : '', 
         'TIPOV' : '', 
@@ -55,7 +54,8 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
         'VCON_TEL1' : '', 
         'VCON_NOM2' : '', 
         'VCON_CED2' : '', 
-        'VCON_TEL2' : '', 
+		'VCON_TEL2' : '',
+		'VCON_DIR' : '',
         'MEDIO_PAGO' : '12', 
 		'TRAT_DATOS' : 'SI', 
 		'BANCOP' : '', 
@@ -67,39 +67,39 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 	};
     $scope.typesDocuments = [
 		{
-			'value' : "01",
+			'value' : "1",
 			'label' : 'Cédula de ciudadanía'
 		},
 		{
-			'value' : "02",
+			'value' : "2",
 			'label' : 'NIT'
 		},
 		{
-			'value' : "03",
+			'value' : "3",
 			'label' : 'Cédula de extranjería'
 		},
 		{
-			'value' : "04",
+			'value' : "4",
 			'label' : 'Tarjeta de Identidad'
 		},
 		{
-			'value' : "05",
+			'value' : "5",
 			'label' : 'Pasaporte'
 		},
 		{
-			'value' : "06",
+			'value' : "6",
 			'label' : 'Tarjeta seguro social extranjero'
 		},
 		{
-			'value' : "07",
+			'value' : "7",
 			'label' : 'Sociedad extranjera sin NIT en Colombia'
 		},
 		{
-			'value' : "08",
+			'value' : "8",
 			'label' : 'Fidecoismo'
 		},
 		{
-			'value' : "09",
+			'value' : "9",
 			'label' : 'Registro Civil'
 		},
 		{
@@ -211,6 +211,47 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			console.log(response);
 		});
   	};
+	
+	$scope.getCodeVerification = function(renew = false){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == true){
+				if(renew == true){
+					alert('Código generado exitosamente');
+				}else{
+					$('#confirmCodeVerification').modal('show');
+				}
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+	
+	$scope.getInfoLead = function(){
+		$scope.getinfoLeadVentaContado();
+		setTimeout(() => {
+			$scope.getNumCel();
+		}, 1000);
+	};
+
+	$scope.getinfoLeadVentaContado = function(){
+		$http({
+			method: 'GET',
+			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			$scope.lead = response.data[0];
+			$scope.lead.CEL_VAL = 0;
+			$scope.lead.CELULAR = '';
+			$scope.lead.EMAIL = '';
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
 
 	$scope.getNumCel = function(){
 		$scope.lead.CEL_VAL = 0;
@@ -262,6 +303,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			hideLoader();
 			if(response.data == true){
 				$('#confirmCodeVerification').modal('hide');
+				$scope.addVentaContado();
 			}else if(response.data == -1){
 				// En caso de que el codigo sea erroneo
 				$scope.showAlertCode = true;
@@ -274,6 +316,107 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			console.log(response);
 		});
 	};
+
+	$scope.addVentaContado = function(){
+		//$('#proccess').modal('show');
+		$http({
+			method: 'POST',
+			url: '/assessor/api/ventaContado/addVentaContado',
+			data: $scope.lead,
+			}).then(function successCallback(response) {
+				$scope.showConfirm();
+				//$('#proccess').modal('hide');
+			}, function errorCallback(response) {
+				console.log(response);
+			});
+	};
 	
-  $scope.getInfoVentaContado();
+	$scope.showConfirm = function(ev) {
+		// Appending dialog to document.body to cover sidenav in docs app
+		var confirm = $mdDialog.confirm()
+				.title('Usuario registrado')
+				.textContent('Usuario registrado satisfactoriamente')
+				.ariaLabel('Lucky day')
+				.targetEvent(ev)
+				.ok('Nuevo Registro')
+				.cancel('Volver')
+				.openFrom({
+					top: -50,
+					width: 30,
+					height: 80
+				})
+				.closeTo({
+					left: 500
+				});
+
+		$mdDialog.show(confirm).then(function() {
+			$scope.resetInfo();
+			location.reload();
+		}, function() {
+			$scope.resetInfo();
+			window.location = '/assessor/dashboard';
+		});
+	};
+
+	$scope.resetInfo = function(){
+		$scope.lead = {
+			'TIPO_DOC' : '1', 
+			'CEDULA' : '', 
+			'APELLIDOS' : '',
+			'NOMBRES' : '', 
+			'TIPOCLIENTE' : '',
+			'SUBTIPO' : '',
+			'EDAD' : '',
+			'FEC_EXP' : '', 
+			'CIUD_EXP' : '', 
+			'SEXO' : '', 
+			'FEC_NAC' : '', 
+			'ESTADOCIVIL' : '', 
+			'TIPOV' : '', 
+			'PROPIETARIO' : '', 
+			'VRARRIENDO' : '', 
+			'DIRECCION' : '', 
+			'TELFIJO' : '', 
+			'CELULAR' : '',  
+			'TIEMPO_VIV' : '', 
+			'CIUD_UBI' : '', 
+			'EMAIL' : '', 
+			'ACTIVIDAD' : 'EMPLEADO', 
+			'ACT_ECO' : '', 
+			'NIT_EMP' : '', 
+			'RAZON_SOC' : '', 
+			'FEC_ING' : '', 
+			'ANTIG' : '', 
+			'CARGO' : '', 
+			'DIR_EMP' : '', 
+			'TEL_EMP' : '', 
+			'TEL2_EMP' : '', 
+			'TIPO_CONT' : '', 
+			'SUELDO' : '', 
+			'NIT_IND' : '', 
+			'RAZON_IND' : '', 
+			'ACT_IND' : '', 
+			'EDAD_INDP' : '', 
+			'FEC_CONST' : '', 
+			'OTROS_ING' : '', 
+			'ESTRATO' : '', 
+			'SUELDOIND' : '', 
+			'VCON_NOM1' : '', 
+			'VCON_CED1' : '', 
+			'VCON_TEL1' : '', 
+			'VCON_NOM2' : '', 
+			'VCON_CED2' : '', 
+			'VCON_TEL2' : '',
+			'VCON_DIR' : '',
+			'MEDIO_PAGO' : '12', 
+			'TRAT_DATOS' : 'SI', 
+			'BANCOP' : '', 
+			'CAMARAC' : '', 
+			'CEL_VAL' : 0
+		};
+		$scope.code = {
+			'code' : ''
+		};
+	};
+	$scope.getInfoVentaContado();
 });

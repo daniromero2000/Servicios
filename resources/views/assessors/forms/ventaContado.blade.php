@@ -37,7 +37,7 @@
                         <div class="col-sm-12 col-md-4">
                             <md-input-container class="md-block">
                                 <label class="ventaContado-label">Número de identificación</label>
-                                <input required name="CEDULA" ng-model="lead.CEDULA" validation-pattern="number" ng-blur="getNumCel()">
+                                <input required name="CEDULA" ng-model="lead.CEDULA" validation-pattern="number" ng-blur="getInfoLead()">
                                 <div ng-messages="ventaContado.CEDULA.$error">
                                     <div ng-message="required">Esta campo es requerido.</div>
                                     <div ng-message="pattern">Solo se permiten números.</div>
@@ -326,13 +326,13 @@
                                     <input type="text" name="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
                                 </md-input-container>
                             </div>
-                            <div class="col-sm-12 col-md-6" ng-show="lead.occupation == 'INDEPENDIENTE CERTIFICADO'">
+                            <div class="col-sm-12 col-md-6" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
                                 <md-input-container class="md-block">
                                     <label class="ventaContado-label">Fecha de Constitución</label>
                                     <md-datepicker ng-model="lead.FEC_CONST" md-current-view="year" md-mode="month"></md-datepicker>
                                 </md-input-container>
                             </div>
-                            <div class="col-sm-12 col-md-6" ng-show="lead.occupation == 'NO CERTIFICADO' || lead.occupation == 'RENTISTA'">
+                            <div class="col-sm-12 col-md-6" ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
                                 <md-input-container class="md-block">
                                     <label for="dateCreationCompany">Fecha de Constitución</label>
                                     <md-datepicker ng-model="lead.FEC_CONST" md-current-view="year"></md-datepicker>
@@ -461,6 +461,14 @@
 						</div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <md-input-container class="md-block">
+								<label class="ventaContado-label">Dirección de entrega</label>
+								<input type="text" name="VCON_DIR" ng-model="lead.VCON_DIR">
+							</md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12 text-center">
                             <md-button type="submit" class="md-raised md-primary">Enviar</md-button>
                         </div>
@@ -493,6 +501,20 @@
 								</div>
 							</div>
 						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalPrincipal" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="text-center" style="padding: 50px;">
+							<img src="{{ asset('images/gif-load.gif') }}" alt="">
+							<p class="text-procces">
+								Procesando Información...
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

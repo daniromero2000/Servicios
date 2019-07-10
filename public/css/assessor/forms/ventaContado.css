@@ -20,3 +20,13 @@
 .md-select-value span{
     color: #404040 !important;
 }
+
+.md-title{
+    font-size: 20px !important;
+    color: #2aace0;
+    font-weight: bold !important;
+}
+
+.md-dialog-content-body{
+    font-size: 16px;
+}

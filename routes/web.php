@@ -98,6 +98,8 @@ Route::group(['prefix'=>'/assessor/'],function(){
     });
     Route::group(['prefix' => '/api/'], function(){
         Route::get('ventaContado/getInfoVentaContado', 'Admin\assessorsController@getInfoVentaContado');
+        Route::get('ventaContado/getinfoLeadVentaContado/{CEDULA}', 'Admin\assessorsController@getinfoLeadVentaContado');
+        Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
     });
     Route::get('/LaPipa/assesor', function(){
         return view('assessors.convenios.pipa');
