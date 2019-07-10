@@ -20,6 +20,9 @@
                 <h4 class="ventaContado-formName">
                     Formulario venta de contado
                 </h4>
+                <p class="ventaContado-text">
+                    <i>* Recuerde que el correcto diligenciamiento de este formulario, agilizará el proceso de facturación de la cajera con Apoteosys.</i>
+                </p>
             </div>
         </div>
         <div class="row">
@@ -151,7 +154,7 @@
                         <div class="col-sm-12 col-md-4">
                             <md-input-container class="md-block">
                                 <label class="ventaContado-label">Propietario de la vivienda</label>
-                                <input required name="PROPIETARIO" ng-model="lead.PROPIETARIO" validation-pattern="name">
+                                <input name="PROPIETARIO" ng-model="lead.PROPIETARIO" validation-pattern="name">
                             </md-input-container>
                         </div>
                     </div>
