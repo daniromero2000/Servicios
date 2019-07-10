@@ -34,39 +34,39 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			'label' : 'Seleccione...'
 		},
 		{
-			'value' : "01",
+			'value' : "1",
 			'label' : 'Cédula de ciudadanía'
 		},
 		{
-			'value' : "02",
+			'value' : "2",
 			'label' : 'NIT'
 		},
 		{
-			'value' : "03",
+			'value' : "3",
 			'label' : 'Cédula de extranjería'
 		},
 		{
-			'value' : "04",
+			'value' : "4",
 			'label' : 'Tarjeta de Identidad'
 		},
 		{
-			'value' : "05",
+			'value' : "5",
 			'label' : 'Pasaporte'
 		},
 		{
-			'value' : "06",
+			'value' : "6",
 			'label' : 'Tarjeta seguro social extranjero'
 		},
 		{
-			'value' : "07",
+			'value' : "7",
 			'label' : 'Sociedad extranjera sin NIT en Colombia'
 		},
 		{
-			'value' : "08",
+			'value' : "8",
 			'label' : 'Fidecoismo'
 		},
 		{
-			'value' : "09",
+			'value' : "9",
 			'label' : 'Registro Civil'
 		},
 		{
