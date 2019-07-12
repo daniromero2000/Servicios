@@ -21,7 +21,7 @@
                     Formulario venta de contado
                 </h4>
                 <p class="ventaContado-text">
-                    <i>* Recuerde que el correcto diligenciamiento de este formulario, agilizará el proceso de facturación de la cajera con Apoteosys.</i>
+                    <i>* Recuerde que el correcto diligenciamiento de este formulario agilizará el proceso de facturación de la cajera con Apoteosys.</i>
                 </p>
             </div>
         </div>
@@ -50,7 +50,7 @@
                         <div class="col-sm-12 col-md-4">
                             <md-input-container class="md-block">
                                 <label class="ventaContado-label">Fecha expedición documento</label>
-                                <md-datepicker required ng-model="lead.FEC_EXP" md-current-view="year"></md-datepicker>
+                                <md-datepicker ng-model="lead.FEC_EXP" md-current-view="year"></md-datepicker>
                                 <div ng-messages="ventaContado.FEC_EXP.$error">
                                     <div ng-message="required">Esta campo es requerido.</div>
                                 </div>
@@ -426,13 +426,13 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-4">
 							<md-input-container class="md-block">
-								<label class="ventaContado-label">Nobre de autorizado 1</label>
+								<label class="ventaContado-label">Nombre de autorizado 1</label>
 								<input type="text" name="VCON_NOM1" ng-model="lead.VCON_NOM1">
 							</md-input-container>
 						</div>
 						<div class="col-sm-12 col-md-4">
 							<md-input-container class="md-block">
-								<label class="ventaContado-label">Cédula de autoizado 1</label>
+								<label class="ventaContado-label">Cédula de autorizado 1</label>
 								<input type="text" name="VCON_CED1" ng-model="lead.VCON_CED1">
 							</md-input-container>
 						</div>
@@ -446,7 +446,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-4">
 							<md-input-container class="md-block">
-								<label class="ventaContado-label">Nobre de autorizado 2</label>
+								<label class="ventaContado-label">Nombre de autorizado 2</label>
 								<input type="text" name="VCON_NOM2" ng-model="lead.VCON_NOM2">
 							</md-input-container>
 						</div>

@@ -339,7 +339,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 				.ariaLabel('Lucky day')
 				.targetEvent(ev)
 				.ok('Nuevo Registro')
-				.cancel('Volver')
+				.cancel('Menú')
 				.openFrom({
 					top: -50,
 					width: 30,
