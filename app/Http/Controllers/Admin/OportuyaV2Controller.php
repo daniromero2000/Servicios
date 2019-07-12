@@ -30,6 +30,7 @@ use App\Imagenes;
 use App\Application;
 use App\Lead;
 use App\DatosCliente;
+use App\Intenciones;
 use App\cliCel;
 use App\CreditPolicy;
 use App\LeadInfo;
@@ -193,11 +194,16 @@ class OportuyaV2Controller extends Controller
 			$flag=0;
 			$lead= new Lead;
 			$leadInfo= new LeadInfo;
+			$intencion = new Intenciones;
 			$response = false;
 			$authAssessor= (Auth::guard('assessor')->check())?Auth::guard('assessor')->user()->CODIGO:NULL;
 			if(Auth::user()){
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
+			// Agregar intencion 
+			$intencion->CEDULA = $identificationNumber;
+			$intencion->save();
+			// Fin intencion
 			$assessorCode=($authAssessor !== NULL)?$authAssessor:998877;
 			$dataLead=[
 				'typeDocument'=> $request->get('typeDocument'),
@@ -338,12 +344,12 @@ class OportuyaV2Controller extends Controller
 
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
 			if($consultaComercial == 1){
-				$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+				$validatePolicyStep1 = $this->validatePolicyStep1($identificationNumber, trim($cityName[0]->CIUDAD));
 			}else{
-				$validatePolicyCredit = true;
+				$validatePolicyStep1 = true;
 			}
 
-			if($validatePolicyCredit == false){
+			if($validatePolicyStep1 == false){
 				return -1;
 			}
 			if($flag==2){
@@ -1290,7 +1296,7 @@ class OportuyaV2Controller extends Controller
 		return $quotaApproved;
 	}
 
-	private function validatePolicyCredit($identificationNumber, $cityName){
+	private function validatePolicyCredit_old($identificationNumber, $cityName){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		
 		if(empty($queryScoreClient)){
@@ -1316,6 +1322,54 @@ class OportuyaV2Controller extends Controller
 				return false;
 			}
 		}
+	}
+
+	private function validatePolicyStep1($identificationNumber, $cityName){
+		// Validate 3.2	Puntaje, 3.3 Estado de obligaciones, 3.4 Calificación Score, 3.5 Historial de Crédito: 1, 4.3 Edad
+
+		// 3.2	Puntaje y 3.4 Calificacion Score
+		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(empty($queryScoreClient)){
+			return false;
+		}else{
+			if($queryScoreClient[0]->score >= 1 && $queryScoreClient[0]->score <= 275){
+				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', 'TIPO D', '3.2');
+				return false;
+			}
+
+			if($queryScoreClient[0]->score >= 275 && $queryScoreClient[0]->score <= 527){
+				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', 'TIPO D');
+			}
+
+			if($queryScoreClient[0]->score >= 528 && $queryScoreClient[0]->score <= 624){
+				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', 'TIPO C');
+			}
+
+			if($queryScoreClient[0]->score >= 625 && $queryScoreClient[0]->score <= 674){
+				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', 'TIPO B');
+			}
+
+			if($queryScoreClient[0]->score >= 675 && $queryScoreClient[0]->score <= 1000){
+				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', 'TIPO A');
+			}
+		}
+
+		return true;
+	}
+
+	private function updateLastIntencionLead($identificationNumber, $campo, $value, $idDef = false){
+		$queryUpdate = sprintf("UPDATE `TB_INTENCIONES` SET `%s` = '%s' ", $campo, $value);
+
+		if($idDef != false){
+			$queryUpdate .= sprintf(", `ID_DEF` = '%s' ", $idDef);
+		}
+
+		$queryUpdate .= sprintf(" WHERE `CEDULA` = '%s' ORDER BY FECHA_INTENCION DESC LIMIT 1", $identificationNumber);
+		
+		$resp = DB::connection('oportudata')->select($queryUpdate);
+
+		return $resp;
 	}
 
 	private function decisionCredit($identificationNumber){
