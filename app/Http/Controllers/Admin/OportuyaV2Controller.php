@@ -535,7 +535,7 @@ class OportuyaV2Controller extends Controller
 			if($estadoLead == 'CODEUDOR O AVAL' || $estadoLead == 'CODEUDOR'){
 				return -2;
 			}
-			
+
 			$solic_fab= new Application;
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
@@ -2070,7 +2070,7 @@ class OportuyaV2Controller extends Controller
 	}
 	
 	public function getDataStep1(){
-		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
+		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 AND STATE='A' ORDER BY CIUDAD ASC";
 
 		$resp = DB::connection('oportudata')->select($query);
 
