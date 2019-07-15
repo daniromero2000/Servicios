@@ -447,10 +447,10 @@ class OportuyaV2Controller extends Controller
 			$respQueryTemp = DB::connection('oportudata')->select($queryTemp);*/
 			$quotaApproved = 0;
 			$quotaApprovedProduct = 0;
-			/*$existSolicFab = $this->getExistSolicFab($identificationNumber);
+			$existSolicFab = $this->getExistSolicFab($identificationNumber);
 			if($existSolicFab == true){
 				return -3; // Tiene solicitud
-			}*/
+			}
 			$datosCliente= new DatosCliente;
 			$turnosOportuya = new TurnosOportuya;
 			$analisis = new Analisis;
@@ -528,13 +528,15 @@ class OportuyaV2Controller extends Controller
 			if($validatePolicyCredit['resp'] == false){
 				return -1;
 			}
+
+			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
+			$estadoLead = $oportudataLead[0]->ESTADO;
 			
-			if($validatePolicyCredit['resp'] == -2){
+			if($estadoLead == 'CODEUDOR O AVAL' || $estadoLead == 'CODEUDOR'){
 				return -2;
 			}
-
+			
 			$solic_fab= new Application;
-
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
 				$quotaApprovedProduct = 1300000;	
