@@ -343,7 +343,15 @@ class OportuyaV2Controller extends Controller
 			}*/
 
 			if(trim($request->get('occupation')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('occupation')) == 6) return -1;
-			
+			if($consultaComercial == 1){
+				$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber, trim($cityName[0]->CIUDAD));
+			}else{
+				$validatePolicyCredit = true;
+			}
+
+			if($validatePolicyCredit == false){
+				return -1;
+			}
 			if($flag==2){
 
 				$identificationNumberEncrypt = $this->encrypt($identificationNumber);
@@ -519,27 +527,15 @@ class OportuyaV2Controller extends Controller
 			// Update/save information in CLIENTE_FAB table
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 
-			if($estadoLead != 'SIN COMERCIAL'){
-				$validatePolicyCredit = $this->validatePolicyCredit($identificationNumber);
-			}else{
-				$validatePolicyCredit = true;
-			}
-
-			if($validatePolicyCredit['resp'] == false){
-				return -1;
-			}
-
-			$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->get();
-			$estadoLead = $oportudataLead[0]->ESTADO;
-			
-			if($estadoLead == 'CODEUDOR O AVAL' || $estadoLead == 'CODEUDOR'){
-				return -2;
-			}
-
 			$solic_fab= new Application;
+
 			$solic_fab->setConnection('oportudata');
 			if($estadoLead != 'SIN COMERCIAL'){
-				$quotaApprovedProduct = 1300000;	
+				$decisionCredit = $this->decisionCredit($identificationNumber);
+				if ($decisionCredit < 0) {
+					return $decisionCredit;
+				}
+				$quotaApprovedProduct = $this->execCreditPolicy($identificationNumber);	
 			}else{
 				$quotaApprovedProduct = 1;
 			}
@@ -1181,7 +1177,7 @@ class OportuyaV2Controller extends Controller
 		return 1300000;
 	}
 
-	private function validatePolicyCredit_old($identificationNumber, $cityName){
+	private function validatePolicyCredit($identificationNumber, $cityName){
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		
 		if(empty($queryScoreClient)){
@@ -1209,7 +1205,7 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	private function validatePolicyCredit($identificationNumber){
+	private function validatePolicyCredit_new($identificationNumber){
 		$getDataCliente = DB::connection('oportudata')->select("SELECT `EDAD`, `ACTIVIDAD`, `ANTIG`, `EDAD_INDP`, `CIUD_UBI`, `SUC` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
 		// 3.2	Puntaje y 3.4 Calificacion Score
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
