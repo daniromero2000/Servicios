@@ -123,6 +123,9 @@
                     <p>
                         <label for="">Estado: </label> @{{ infoLead.ESTADO }}
                     </p>
+                    <p>
+                        <label for="">Definición: </label> @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
+                    </p>
                 </div>
             </div>
         </div>
