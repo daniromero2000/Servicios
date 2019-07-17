@@ -1205,6 +1205,40 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	public function simulatePolicy(Request $request){
+		$intencion = new Intenciones;
+		$intencion->CEDULA = $request->cedula;
+		$intencion->save();
+		$queryLeadExist = DB::connection('oportudata')->select('SELECT COUNT(`CEDULA`) as total 
+		FROM `CLIENTE_FAB`
+		WHERE `CEDULA` = :cedula ', ['cedula' => $request->cedula]);
+
+		if($queryLeadExist[0]->total < 1){
+			return -1;
+		}
+
+		$queryLeadExistConsultaWs = DB::connection('oportudata')->select("SELECT COUNT(`cedula`) as total
+		from `consulta_ws`
+		WHERE `cedula` = :cedula ", ['cedula' => $request->cedula]);
+
+		if($queryLeadExistConsultaWs < 1){
+			return -2;
+		}
+
+		$this->validatePolicyCredit_new($request->cedula);
+
+		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`
+		FROM `CLIENTE_FAB` as cf
+		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
+		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
+		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
+		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
+		ORDER BY FECHA_INTENCION DESC 
+		LIMIT 1', ['cedula' => $request->cedula, 'cedulaScore' => $request->cedula]);
+
+		return $queryDataLead;
+	}
+
 	private function validatePolicyCredit_new($identificationNumber){
 		$getDataCliente = DB::connection('oportudata')->select("SELECT `EDAD`, `ACTIVIDAD`, `ANTIG`, `EDAD_INDP`, `CIUD_UBI`, `SUC` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
 		// 3.2	Puntaje y 3.4 Calificacion Score
