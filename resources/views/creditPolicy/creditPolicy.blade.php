@@ -69,6 +69,9 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h2 class="headerAdmin ng-scope">Resultado política</h2>
+                    <p class="resultadoPolitica">
+                        @{{ infoLead.ESTADO }}
+                    </p>
                 </div>
             </div>
             <div class="row">
@@ -127,9 +130,6 @@
                     </p>
                     <p>
                         <label for="">Tarjeta: </label> @{{ infoLead.TARJETA }}
-                    </p>
-                    <p>
-                        <label for="">Estado: </label> @{{ infoLead.ESTADO }}
                     </p>
                     <p>
                         <label for="">Definición: </label> @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
