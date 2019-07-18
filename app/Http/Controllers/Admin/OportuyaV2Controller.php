@@ -1570,7 +1570,7 @@ class OportuyaV2Controller extends Controller
 		if($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false){
 			if($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO' || $getDataCliente[0]->ACTIVIDAD == 'EMPLEADO'){
 				$aprobado = true;
-				$tarjeta = "Tarjeta Blue";
+				$tarjeta = "Tarjeta Gray";
 			}
 		}
 		
