@@ -1317,7 +1317,7 @@ class OportuyaV2Controller extends Controller
 				$popArray = array_pop($paymentArray);
 				$paymentArray = array_reverse($paymentArray);
 				foreach($paymentArray as $habit){
-					if($totalVector >= 6){
+					if($totalVector >= 6){ // POner parametrizable
 						$historialCrediticio = 1;
 						break;
 					}
@@ -1457,7 +1457,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->updateLastIntencionLead($identificationNumber, 'TIPO_CLIENTE', $tipoCliente);
-		// 4.3 Edad.
+		// 4.3 Edad. - Tomar campo teredad de la tabla cifin_tercero
 		$validateTipoCliente = TRUE;
 
 		if($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO'){
@@ -1532,7 +1532,7 @@ class OportuyaV2Controller extends Controller
 		// 3.6 Tarjeta Black
 		$tarjeta = '';
 		$aprobadoVectores = false;
-		$parobado = false;
+		$aprobado = false;
 		if($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1){
 			$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
 			$respVectores = DB::connection('oportudata')->select($queryVectores);
