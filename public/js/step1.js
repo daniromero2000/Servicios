@@ -254,7 +254,7 @@ angular.module('appStep1', ['moment-picker'])
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
 				if(response.data == "-1"){
-					window.location = "/OPN_gracias_FRM"
+					window.location = "/OPN_gracias_denied"
 				}
 				if(response.data == "-2"){
 					$('#proccess').modal('hide');

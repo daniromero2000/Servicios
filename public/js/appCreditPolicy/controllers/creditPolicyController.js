@@ -1,5 +1,11 @@
 app.controller('creditPolicyController', function($scope, $http, $rootScope, $location, $ngBootbox){
 	$ngBootbox.setLocale('es');
+	$scope.tabs = 1;
+	$scope.infoLead = {};
+	$scope.showResp = false;
+	$scope.lead = {
+		cedula : ''
+	};
 	$scope.credit={
 		timeLimitAdmin : '',
 		timeLimitPublic : ''
@@ -78,6 +84,27 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 				});
 		}, function() {
 			$scope.getCreditPolicy();
+		});
+	};
+
+	$scope.simulate = function(){
+		showLoader();
+		$http({
+			method : 'POST',
+			url : '/api/oportuya/simulatePolicy',
+			data : $scope.lead
+		}).then(function successCallback(response){
+			hideLoader();
+			if(response.data == -1){
+				$scope.showMessageNoExistClienteFab = true;
+			}else if(response.data == -2){
+				$scope.showMessageNoExistConsulta = true;
+			}else{
+				$scope.showResp = true;
+				$scope.infoLead = response.data[0];
+			}
+		}, function errorCallback(response){
+			console.log(response);
 		});
 	};
 

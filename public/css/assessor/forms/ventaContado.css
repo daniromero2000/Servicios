@@ -1,0 +1,38 @@
+.ventaContado-nameAssessor{
+    font-size: 20px;
+    color: #2aace0;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.ventaContado-formName{
+    font-size: 18px;
+}
+
+.ventaContado-label{
+    color: #404040;
+}
+
+.md-input-has-value label{
+    color: #404040 !important;
+}
+
+.md-select-value span{
+    color: #404040 !important;
+}
+
+.md-title{
+    font-size: 20px !important;
+    color: #2aace0;
+    font-weight: bold !important;
+}
+
+.md-dialog-content-body{
+    font-size: 16px;
+}
+
+.ventaContado-text{
+    font-size: 12px;
+    font-weight: bold;
+    color: #696969;
+}

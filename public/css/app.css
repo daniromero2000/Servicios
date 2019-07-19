@@ -4324,3 +4324,19 @@ p.wantToSecondTex{
 	font-family: barlow;
 }
 
+.resultadoPolitica{
+	font-size: 20px;
+    font-weight: bold;
+}
+
+.caracteristicaPolitica{
+	font-size: 14px;
+}
+
+.colourGreen{
+	color: #3fcf64;
+}
+
+.colourRed{
+	color: #ec2d35;
+}
