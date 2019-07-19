@@ -69,8 +69,11 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <h2 class="headerAdmin ng-scope">Resultado política</h2>
-                    <p class="resultadoPolitica">
-                        @{{ infoLead.ESTADO }}
+                    <p class="resultadoPolitica colourGreen" ng-if="infoLead.ESTADO == 'PREAPROBADO'">
+                        @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
+                    </p>
+                    <p class="resultadoPolitica colourRed" ng-if="infoLead.ESTADO != 'PREAPROBADO'">
+                        @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
                     </p>
                 </div>
             </div>
@@ -132,7 +135,14 @@
                         <label for="">Tarjeta: </label> @{{ infoLead.TARJETA }}
                     </p>
                     <p>
-                        <label for="">Definición: </label> @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
+                        <label for="">Estado: </label> @{{ infoLead.ESTADO }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="caracteristicaPolitica">
+                       <i>* @{{ infoLead.CARACTERISTICA }}</i>
                     </p>
                 </div>
             </div>
