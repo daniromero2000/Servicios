@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
 Route::get('/getPagadurias/{idProfile}','Admin\LibranzaController@assignPagaduria');
 Route::get('/getDataLibranza','Admin\LibranzaController@getData');
+Route::get('/getResumen/{idLead}','Admin\LibranzaController@getResumen');
 Route::get('/admin/getDataLibranza','Admin\LibranzaController@libranzaData');
 Route::put('/addAmount/{idLead}','Admin\LibranzaController@addAmount');
 Route::put('/updateLiquidator/{idLead}','Admin\LibranzaController@updateLiquidator');
+Route::post('/upload/file','Admin\LibranzaController@uploadFile');

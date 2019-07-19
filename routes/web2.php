@@ -30,10 +30,31 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
     Route::get('/', function(){
         return view('libranza.index');
     });
+    Route::get('/simulador', function(){
+        return view('libranza.simulador');
+    });
+
+    Route::get('/templateDialog', function(){
+        return view('libranza.template');
+    });
+
+    Route::get('/templateDialog', function(){
+        return view('libranza.template');
+    });
+
+    Route::get('/resumen', function(){
+        return view('libranza.resumen');
+    });
+
+       
     Route::get('/libranza-lines',function(){
         return view('libranza.libranza');
     });
 });
+
+Route::get('/Terminos-y-condiciones-simulador', function(){
+	return view('menuItems.termsLibranza');
+})->name('termsAndConditionsLibranza');
 
 Route::resource('simulator','Admin\SimulatorController');
 Route::get('simulador/getDataSimulador','Admin\SimulatorController@getData');
