@@ -161,7 +161,7 @@
                         <strong>Filtros de búsqueda</strong>
                     </div>
                     <div class="card-body">
-
+                        
                     </div>
                 </div>
             </div>
