@@ -201,8 +201,8 @@ class OportuyaV2Controller extends Controller
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
 			// Agregar intencion 
-			$intencion->CEDULA = $identificationNumber;
-			$intencion->save();
+			/*$intencion->CEDULA = $identificationNumber;
+			$intencion->save();*/
 			// Fin intencion
 			$assessorCode=($authAssessor !== NULL)?$authAssessor:998877;
 			$dataLead=[
@@ -272,6 +272,11 @@ class OportuyaV2Controller extends Controller
 				
 				$oportudataLead= new OportuyaV2;
 				$oportudataLead->setConnection('oportudata');
+				$getExistLead = OportuyaV2::find($identificationNumber);
+				$clienteWeb = 1;
+				if(!empty($getExistLead)){
+					$clienteWeb = $getExistLead->CLIENTE_WEB;
+				}
 				$dataoportudata=[
 					'TIPO_DOC' => $request->get('typeDocument'),
 					'CEDULA' => $identificationNumber,
@@ -290,7 +295,9 @@ class OportuyaV2Controller extends Controller
 					'SUC' => $request->get('city'),
 					'ESTADO' => $estado,
 					'PASO' => $paso,
-					'ORIGEN' => $request->get('typeService')
+					'ORIGEN' => $request->get('typeService'),
+					'CLIENTE_WEB' => $clienteWeb,
+					'MIGRADO' => 1
 				];
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
@@ -322,7 +329,10 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->STATE = 'A';
 					$oportudataLead->SUC = $request->get('city');
 					$oportudataLead->ESTADO = $estado;
+					$oportudataLead->PASO = $paso;
 					$oportudataLead->ORIGEN = $request->get('typeService');
+					$oportudataLead->CLIENTE_WEB = $clienteWeb;
+					$oportudataLead->MIGRADO = 1;
 					$response = $oportudataLead->save();
 				}
 
@@ -2120,12 +2130,12 @@ class OportuyaV2Controller extends Controller
 	public function getDataStep2($identificationNumber){
 	      $data = [];
 
-	      $query2 = "SELECT `code` as value, `name` as label FROM `ciudades` ORDER BY name ";
+	      $query2 = "SELECT `CODIGO` as value, `NOMBRE` as label FROM `CIUDADES` WHERE `STATE` = 'A' ORDER BY NOMBRE ";
 
 	      $queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, CELULAR as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
 
 	      $respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
-	      $resp2 = DB::select($query2);
+	      $resp2 = DB::connection('oportudata')->select($query2);
 
 	      $digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
 
