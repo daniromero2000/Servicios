@@ -588,8 +588,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	}
 
 	$scope.addLead = function(){
-		var getEl = document.getElementById("field_terms");
-		var getElAng  = angular.element("#field_terms");
+		$('#solicitarModal').modal('hide');
 		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
 		}else if($scope.libranza.city == ''){
@@ -603,7 +602,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			  url: '/libranza',
 			  data: $scope.libranza
 			}).then(function successCallback(response) {
-				$('#solicitarModal').modal('hide');
 				$scope.idLead=response.data;
 				$location.url("solicitud/"+$scope.idLead);
 				
