@@ -59,41 +59,18 @@
                             <div class="form-group">
                                 <label for="amount">¿Cuánto dinero necesitas?</label>   
                                 <br>
-                                
-                                <!--<div class="row">
-                                    <div class="offset-4 col-4 text-left">
-                                            <input type="text" id="salary" class="form-control resetCol" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="plazoSelected.amount" ng-blur="calculateData()" readonly>
-                                    </div>
-                                </div>-->
                                 <br>
-                                <rzslider ng-change="simular(0)" ng-model="plazoSelected.amount" rz-slider-model="sliderAmount.value" z-slider-high="maxAmount" rz-slider-options="sliderAmount.options"></rzslider>
-                                <!--<md-slider ng-change="simular(0)" class="md-primary" flex="" md-discrete="" type="number" ng-model="plazoSelected.amount" step="1000000" min="@{{minAmount}}" max="@{{maxAmount}}" aria-label="default"></md-slider>
-                                <div class="row content-rate">
-                                    <div class="col-6 text-left">$ 1,000,000</div>
-                                    <div class="col-6 text-right">$ @{{maxAmount | number}}</div>
-                                </div>-->
+                                <rzslider  ng-change="simular(0)" ng-model="sliderAmount.value" rz-slider-model="sliderAmount.value" z-slider-high="maxAmount" rz-slider-options="sliderAmount.options"></rzslider>
                             </div>
                             <div class="form-group">
                                 <label for="timeLimit">¿Cuánto tiempo necesitas para pagar?</label>
                                 <br> 
-
-                                <rzslider ng-change="simular(2)" ng-model="plazoSelected.timeLimit" rz-slider-model="sliderTime.value" rz-slider-options="sliderTime.options"></rzslider>
-                                <!--<md-slider ng-change="simular(2)" class="md-primary slider-time slider-rate" thumbLabel  tickInterval="1" flex="" md-discrete="true" type="number" ng-model="plazoSelected.timeLimit" min="12" max="108" step="12" aria-label="default"></md-slider>
-                                <div class="row content-rate">
-                                    <div class="col-6 text-left">13 Meses</div>
-                                    <div class="col-6 text-right">108 Meses</div>
-                                </div>-->
+                                <rzslider ng-change="simular(2)" ng-model="sliderTime.value" rz-slider-model="sliderTime.value" rz-slider-options="sliderTime.options"></rzslider>
                             </div>
                             <div class="form-group">
                                 <label for="timeLimit">¿Cuál es tu puntaje de crédito?</label>
                                 <br>
-                                <rzslider ng-model="plazoSelected.rate" rz-slider-model="sliderRate.value" rz-slider-options="sliderRate.options"></rzslider>
-                                <!--<md-slider ng-change="simular(1)" class="md-primary slider-rate" thumbLabel  tickInterval="1" flex="" md-discrete="true" type="number" ng-model="plazoSelected.rate" step="1" min="1" max="3" aria-label="default"></md-slider>
-                                <div class="row content-rate">
-                                    <div class="col-4 text-left">Justo</div>
-                                    <div class="col-4 text-center">Bueno</div>
-                                    <div class="col-4 text-right">Excelente</div>
-                                </div>-->
+                                <rzslider ng-model="sliderRate.value" rz-slider-model="sliderRate.value" rz-slider-options="sliderRate.options"></rzslider>
                             </div>
                         </form>
                         <br>
@@ -106,6 +83,10 @@
                             <br>
                             <div class="w-100">
                                 <p class="color-white">Monto: <span class="font-weight-bold">$ @{{plazoSelected.amount|number:0}}</span></p>
+                            </div>
+                            <br>
+                            <div class="w-100">
+                                <p class="color-white">Monto: <span class="font-weight-bold">$ @{{libranza.quaotaAvailable|number:0}}</span></p>
                             </div>
                         </div>
                     </div>
@@ -128,14 +109,14 @@
                     <h3 class="font-weight-bold">Calcula tu crédito</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="form-body-simulator" ng-class="classForm" ng-model="classForm">
                 <div class="offset-1 offset-lg-1 col-10 col-lg-10 p-0">
                     <div class="form-simulator">
                         <form ng-submit="showModal()" name="myForm">
                             <div layout="row">
                                 <md-input-container flex="100" class="text-left">
                                     <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito </label>
-                                    <md-select name="type" ng-model="libranza.creditLine" required="" ng-blur="ableField()">
+                                    <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.creditLine" required="" ng-blur="ableField()">
                                         <md-option ng-value="linea.id" ng-repeat="linea in lines">@{{linea.name}}</md-option>
                                     </md-select>
                                 </md-input-container>
@@ -143,7 +124,7 @@
                             <div layout="row">
                                 <md-input-container flex="100" class="text-left">
                                     <label class="formularioSimulador-labelFormulario" for="crecustomerTypeditLine">Tipo de cliente </label>
-                                    <md-select name="type" ng-model="libranza.customerType" required="" ng-change="selectPagaduria()">
+                                    <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.customerType" required="" ng-change="selectPagaduria()">
                                         <md-option ng-value="tipo.id" ng-repeat="tipo in libranzaProfiles">@{{tipo.name}}</md-option>
                                     </md-select>
                                 </md-input-container>
@@ -156,7 +137,7 @@
                                 </md-input-container>
                                 <md-input-container flex-gt-xs="100" flex-gt-sm="50" class="text-left m-0">
                                     <label for="birthday">Pagaduría</label>
-                                    <md-select name="type" ng-model="libranza.pagaduria" required="">
+                                    <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.pagaduria" required="">
                                         <md-option ng-value="pagaduriaItem.idPagaduria" ng-repeat="pagaduriaItem in pagaduriaLibranza">@{{pagaduriaItem.name}}</md-option>
                                     </md-select>
                                 </md-input-container>
@@ -164,27 +145,27 @@
                             <div layout="row" layout-xs="column">  
                                 <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
                                     <label>Salario básico</label>
-                                    <input type="text" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="calculateData()">
+                                    <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="calculateData()">
                                 </md-input-container>
                                 <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
                                     <label>Descuentos de ley</label>
-                                    <input type="text" id="lawDesc" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.lawDesc" ng-disabled="true">
+                                    <input  type="text" id="lawDesc" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.lawDesc" ng-disabled="true">
                                 </md-input-container>
                             </div> 
                             <div layout="row"  ng-if="!quotaBuy">  
                                 <md-input-container flex="100" class="text-left">
                                     <label>Otros Descuentos</label>
-                                    <input type="text" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                    <input ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
                                 </md-input-container>
                             </div> 
                             <div layout="row"  ng-if="quotaBuy">  
                                 <md-input-container flex="50" class="text-left">
                                     <label>Otros Descuentos</label>
-                                    <input type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                    <input  ng-disabled="inputDisable" type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
                                 </md-input-container>
                                 <md-input-container flex="50" class="text-left">
                                     <label>Valor Cuota Compra</label>
-                                    <input type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simular(1)" ng-change="validateInt()">
+                                    <input ng-disabled="inputDisable" type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simulate()" ng-change="validateInt()">
                                 </md-input-container>
                             </div>
                             <div class="row">
@@ -193,7 +174,7 @@
                                 </p>
                             </div>
                             <div class="formularioSimulador-containInput text-center">
-                                <button type="submit" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
+                                <button type="submit" ng-disabled="inputDisable" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
                             </div>
                         </form>
                     </div>

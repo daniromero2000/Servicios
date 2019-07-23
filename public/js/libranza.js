@@ -1,4 +1,4 @@
-app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$routeParams,$location) {
+app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$routeParams,$location,$document) {
 	
 	$scope.cities =[];
 	$scope.plazoSelected={
@@ -229,10 +229,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		return quota;
 	}
 
-	$scope.basicSimulation = function(loan,fee){	
+	$scope.basicSimulation = function(loan,fee,timeLimit,amount){	
 		
-		var timeLimit=$scope.plazoSelected.timeLimit;
-		var amount=$scope.plazoSelected.amount;
+		//var timeLimit=$scope.plazoSelected.timeLimit;
+		//var amount=$scope.plazoSelected.amount;
 		var basicFeeTop=amount*(loan*Math.pow((1+loan),timeLimit)); 
 		var basicFeeBottom= (Math.pow((1+loan),timeLimit))-1;
 		var gap = 1;
@@ -252,6 +252,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.libranza.rate=loan;
 		$scope.libranza.amount=amount;
 		$scope.libranza.timeLimit=timeLimit;
+		//$scope.sliderAmount.value=amount;
+		//$scope.sliderTime.validateInt=timeLimit;
 	};
 
 	$scope.calculateAmounts=function(timeLimitList,rate,quaotaAvailable,gap,loanAssurance,factor,amountList){
@@ -287,7 +289,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		gapTop=quaotaAvailable*(fee-1);
 		gapBottom=((1+(rate*gap))*(rate*fee))+((loanAssurance/factor)*(fee-1));
 		result=gapTop/gapBottom;
-		amount=(Math.floor((result)/100000))*100000;
+		amount=(Math.floor((result)/1000000))*1000000;
 		 
 		return amount;
 
@@ -297,7 +299,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		style: 'currency',
 		currency: 'USD',
 		minimumFractionDigits: 0
-	  })
+	  });
+
+	$scope.sliderChanged=0;
+	$scope.classForm='form-body-simulator';
 
 	$scope.sliderAmount = {
 		value:1000000,
@@ -319,6 +324,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  },
 			onChange: function(){
 			  $scope.simular(0);
+			  $scope.sliderChanged=1;
+			  $scope.inputDisable=false;
+			  $scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
 		  	},
 		  	showSelectionBar: true,
     		selectionBarGradient: {
@@ -356,6 +364,11 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  },
 		  onChange: function(){
 			$scope.simular(2);
+			$scope.sliderChanged=1;
+			$scope.inputDisable=false;
+			$scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
+
+			//$scope.sliderAmount.value=$scope.plazoSelected;
 			},
 		}
 	  };
@@ -372,6 +385,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  ],
 		  onChange: function(){
 			$scope.simular(1);
+			$scope.sliderChanged=1;
+			$scope.inputDisable=false;
+			$scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
 			},
 			showSelectionBar: true,
 			getSelectionBarColor: function(value) {
@@ -384,21 +400,24 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}
 	  };
 
+	$scope.inputDisable=true;
 
 	$scope.simular = function(flag){
 
 		
-		$scope.plazoSelected.timeLimit=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
-		$scope.plazoSelected.amount=$scope.sliderAmount.value;
-		$scope.plazoSelected.rate=$scope.sliderRate.value;
+		$scope.sliderTime.value=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
+
+		console.log($scope.sliderAmount.value);
+		console.log($scope.sliderTime.value);
+
 		var rate=0.019;
 		var gap=$scope.params[0].gap;
 		var loanAssurance=0;
 
-		if ($scope.plazoSelected.rate == 3){
+		if ($scope.sliderRate.value == 3){
 			$scope.interest= 1.9;	
 			rate=$scope.interest/100; 	
-		}else if($scope.plazoSelected.rate == 2){
+		}else if($scope.sliderRate.value == 2){
 			$scope.interest= 2.12;
 			rate=$scope.interest/100;	
 		}else{
@@ -414,11 +433,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}else{
 			loanAssurance = 0;
 		}
-		console.log(loanAssurance);
 
 		if($scope.libranza.age == '' || $scope.libranza.creditLine == '' || $scope.libranza.customerType == '' || $scope.libranza.pagaduria == ''){
-			$scope.basicSimulation(rate,loanAssurance);
-			console.log('basic');
+			$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 		}else{
 			if($scope.libranza.quaotaAvailable <= 148518 ){
 				return 0;
@@ -432,38 +449,44 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 						
 						$scope.plazos = $scope.calculateAmounts($scope.timeLimits,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor,plazos);
 						lastPlazo = $scope.plazos[$scope.plazos.length-1];
+						if($scope.sliderAmount.value>lastPlazo.amount){
+							$scope.sliderAmount.value=lastPlazo.amount;
+							$scope.sliderTime.value=lastPlazo.timeLimit.timeLimit;	
+						}
 						$scope.maxAmount=lastPlazo.amount;
 						$scope.sliderAmount.maxValue=lastPlazo.amount;
-						
-						$scope.sliderAmount.options.ceil=lastPlazo.amount
-
-						console.log($scope.sliderAmount.options.ceil);
-						$scope.basicSimulation(rate,loanAssurance);
-						if($scope.basicFee > $scope.libranza.quaotaAvailable){
-							$scope.constraintQuota=true;		
-						}
+						$scope.sliderAmount.options.ceil=lastPlazo.amount>60000000?60000000:lastPlazo.amount;
+						$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 
 					}else if(flag==0){
-						console.log('sii');
-						$scope.plazos = $scope.calculateAmounts($scope.timeLimits,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor,plazos);
-						for(var j=0;j <$scope.plazos.length; j++){
-							if((j>0) &&($scope.plazoSelected.amount >= $scope.plazos[j].amount)){
-								$scope.plazoSelected.timeLimit=$scope.plazos[j].timeLimit.timeLimit;
-								$scope.sliderTime.value=$scope.plazos[j].timeLimit.timeLimit;
-								$scope.basicSimulation(rate,loanAssurance);
-								if($scope.basicFee > $scope.libranza.quaotaAvailable){
-									$scope.constraintQuota=true;
+						
+						$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
+
+						if($scope.basicFee > $scope.libranza.quaotaAvailable){
+							var flagAmount=0;
+							$scope.plazos = $scope.calculateAmounts($scope.timeLimits,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor,plazos);
+							for(var i=0;i <$scope.plazos.length; i++){
+								if(($scope.sliderAmount.value <= $scope.plazos[i].amount) && flagAmount == 0){
+									$scope.sliderTime.value=$scope.plazos[i].timeLimit.timeLimit;
+									flagAmount = 1;
 								}
+								$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 							}
-							
-						}
+						}					
 						
 					}else if(flag==2){
 
-						$scope.plazoSelected.amount = $scope.calculateAmount($scope.plazoSelected.timeLimit,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor);
-						$scope.basicSimulation(rate,loanAssurance);
-						$scope.libranza.timeLimit=$scope.plazoSelected.timeLimit;
-						$scope.sliderTime.value=$scope.plazoSelected.timeLimit;
+						$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
+
+						if($scope.basicFee>$scope.libranza.quaotaAvailable){
+							$scope.sliderAmount.value = $scope.calculateAmount($scope.sliderTime.value,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor);
+							for(var j=0;j <$scope.plazos.length; j++){
+								if(($scope.sliderTime.value == $scope.plazos[j].timeLimit.timeLimit)){
+									$scope.sliderAmount.value=$scope.plazos[j].amount;
+								}
+							}
+							$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
+						}
 					}else{
 
 					}
@@ -471,6 +494,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				}
 			}
 		}
+
 	};
 
 	$scope.simulate= function(){
@@ -514,7 +538,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
  
 
 	$scope.solicitar = function(){
-		$scope.plazoSelected.amount=$scope.plazoSelected.amount*1000000;
+		$scope.plazoSelected.amount=$scope.sliderAmount.value;
+		$scope.plazoSelected.timeLimit=$scope.sliderTime.value;
 		$http({
 			method:'PUT',
 			url:'api/addAmount/'+$scope.idLead,
@@ -527,7 +552,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		window.location = "/LIB_gracias_FRM";		
 	};
 	
-	$scope.setPlazo=function(amount,timeLimit,rate){
+/*	$scope.setPlazo=function(amount,timeLimit,rate){
 		$scope.plazoSelected.amount=amount;
 		$scope.plazoSelected.timeLimit=timeLimit;		
 		$scope.plazoSelected.rate=rate;		
@@ -540,7 +565,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			return '';	
 		}
 		
-	}
+	}*/
 
 	var idLeadURL= $routeParams.idLeadParam;
 
@@ -571,7 +596,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			alert("Debes Ingresar una ciudad");
 			document.getElementById("city").focus();
 		}else if($scope.libranza.termsAndConditions != 1){
-			getElAng				.setCustomValidity("Please indicate that you accept the Terms and Conditions");
+			getElAng.setCustomValidity("Please indicate that you accept the Terms and Conditions");
 		}else{
 			$http({
 			  method: 'POST',
@@ -689,7 +714,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}, function() {
 		  $scope.status = 'You cancelled the dialog.';
 		});
-	  };
+	  };	
 
 
 	  function DialogController($scope, $mdDialog) {

@@ -156,6 +156,14 @@ span.renewCode:hover {
 	border-radius: 0 0 20px 20px;
 }
 
+.form-body-simulator{
+	background-color: rgba(125,125,125,0.5)!important;
+}
+
+.form-body-simulator-able{
+	background-color: rgba(0,0,0,0.7)!important;
+}
+
 #sliderPrincipalLibranza .row .col-lg-4.bg-simulator{
 	border-radius: 0px !important;
 }
