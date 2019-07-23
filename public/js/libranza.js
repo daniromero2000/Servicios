@@ -612,11 +612,42 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 
 	var formData = new FormData();
 	var idLeadURL= $routeParams.idLeadParam;
-	$scope.dataSimutor=[];
 
-	$scope.errors = [];
- 
-    $scope.files = [];
+	$scope.errors = []; 
+	$scope.files = [];
+	$scope.errorsDocument = []; 
+	$scope.filesDocument = [];
+	
+	$scope.successButton=false;
+	$scope.hideButton=true;
+	$scope.successButtonDocument=false;
+	$scope.hideButtonDocument=true;
+	
+	$scope.uploadDocument = function (element) {
+	
+		var request = {
+			method: 'POST',
+			url: '/api/upload/file',
+			data: formData,
+			headers: {
+				'Content-Type': undefined
+			}
+		};
+	
+		$http(request)
+			.then(function success(e) {
+				$scope.filesDocument = e.data.files;
+				$scope.errorsDocument = [];
+				var fileElement = angular.element(element);
+				fileElement.value = '';
+				$scope.successButtonDocument=true;
+				$scope.hideButtonDocument=false;
+				alert("La imagen ha sido cargada exitosamente");
+			}, function error(e) {
+				$scope.errorsDocument = e.data.errors;
+			});
+	};
+
 
 	$scope.uploadFile = function (element) {
 	
@@ -633,21 +664,30 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			.then(function success(e) {
 				$scope.files = e.data.files;
 				$scope.errors = [];
-				// clear uploaded file
 				var fileElement = angular.element(element);
 				fileElement.value = '';
+				$scope.successButton=true;
+				$scope.hideButton=false;
 				alert("La imagen ha sido cargada exitosamente");
 			}, function error(e) {
 				$scope.errors = e.data.errors;
 			});
 	};	
-	$scope.elementName = '';
+
+	$scope.setTheDocuments = function ($files) {
+        angular.forEach($files, function (value, key) {
+			formData.append('document_file', value);
+		});
+		formData.append('id_simulation',$scope.leadResumen.idLiquidator);
+		
+	};	
+
 	$scope.setTheFiles = function ($files) {
         angular.forEach($files, function (value, key) {
 			formData.append('image_file', value);
 		});
 		formData.append('id_simulation',$scope.leadResumen.idLiquidator);
-		$scope.elementName=angular.element(this);
+		
 	};	
 
 	$scope.dialogContent=[

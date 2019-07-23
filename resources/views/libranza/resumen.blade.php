@@ -71,7 +71,8 @@
             <li>
                 <p>Último desprendible de pago de nómina 
                     <input type="file" ng-files="setTheFiles($files)" id="image_file"  class="form-control">
-                    <button ng-click="uploadFile(this)" class="btn btn-primary">Subir archivo</button>
+                    <button ng-click="uploadFile(this)" ng-show="hideButton" class="btn btn-primary">Subir archivo</button>
+                    <span ng-show="successButton" class="success-color"><i class="fas fa-check-circle"></i></span>
                 </p>
                 <ul class="alert alert-danger" ng-if="errors.length > 0">
                     <li ng-repeat="error in errors">
@@ -81,11 +82,12 @@
             </li>
             <li>
                 <p>Copia dédula al 150%   
-                    <input type="file" ng-files="setTheFiles($files)" id="document_file"  class="form-control">
-                    <button ng-click="uploadFile(this)" class="btn btn-primary">Subir archivo</button>
+                    <input type="file" ng-files="setTheDocuments($files)" id="document_file"  class="form-control">
+                    <button ng-click="uploadDocument(this)" ng-show="hideButtonDocument" class="btn btn-primary">Subir archivo</button>
+                    <span ng-show="successButtonDocument" class="success-color"><i class="fas fa-check-circle"></i></span>
                 </p>
-                <ul class="alert alert-danger" ng-if="errors.length > 0">
-                    <li ng-repeat="error in errors">
+                <ul class="alert alert-danger" ng-if="errorsDocument.length > 0">
+                    <li ng-repeat="error in errorsDocument">
                         @{{ error }}
                     </li>
                 </ul>  
