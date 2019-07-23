@@ -95,6 +95,9 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('assessor.logout');
     Route::group(['prefix' => '/forms/'], function(){
         Route::get('ventaContado/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+        Route::get('analisis/', function(){
+            return view('assessors.forms.analisis');
+        })->name('assessorAnalisis');
     });
     Route::group(['prefix' => '/api/'], function(){
         Route::get('ventaContado/getInfoVentaContado', 'Admin\assessorsController@getInfoVentaContado');

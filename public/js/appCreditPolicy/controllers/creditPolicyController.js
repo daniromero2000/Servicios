@@ -1,11 +1,6 @@
 app.controller('creditPolicyController', function($scope, $http, $rootScope, $location, $ngBootbox){
 	$ngBootbox.setLocale('es');
 	$scope.tabs = 1;
-	$scope.infoLead = {};
-	$scope.showResp = false;
-	$scope.lead = {
-		cedula : ''
-	};
 	$scope.credit={
 		timeLimitAdmin : '',
 		timeLimitPublic : ''
@@ -87,6 +82,20 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 		});
 	};
 
+	$scope.volver = function(){
+		window.location = "/Administrator/dashboard";
+	};
+
+	$scope.getCreditPolicy();
+});
+app.controller('simulatePolicySingleCtrl', function($scope, $http){
+	$scope.showMessageNoExistClienteFab = false;
+	$scope.showMessageNoExistConsulta = false;
+	$scope.lead = {
+		cedula : ''
+	};
+	$scope.infoLead = {};
+	$scope.showResp = false;
 	$scope.simulate = function(){
 		showLoader();
 		$http({
@@ -97,9 +106,13 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 			hideLoader();
 			if(response.data == -1){
 				$scope.showMessageNoExistClienteFab = true;
+				$scope.showResp = false;
 			}else if(response.data == -2){
 				$scope.showMessageNoExistConsulta = true;
+				$scope.showResp = false;
 			}else{
+				$scope.showMessageNoExistClienteFab = false;
+				$scope.showMessageNoExistConsulta = false;
 				$scope.showResp = true;
 				$scope.infoLead = response.data[0];
 			}
@@ -107,10 +120,4 @@ app.controller('creditPolicyController', function($scope, $http, $rootScope, $lo
 			console.log(response);
 		});
 	};
-
-	$scope.volver = function(){
-		window.location = "/Administrator/dashboard";
-	};
-
-	$scope.getCreditPolicy();
 });
