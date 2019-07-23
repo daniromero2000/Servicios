@@ -297,7 +297,7 @@ class OportuyaV2Controller extends Controller
 					'PASO' => $paso,
 					'ORIGEN' => $request->get('typeService'),
 					'CLIENTE_WEB' => $clienteWeb,
-					'MIGRADO' => 1
+					'TRAT_DATOS' => "SI"
 				];
 				//verify if a customer exist before save a lead , then save data into CLIENTES_FAB table.
 				$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA'=>$identificationNumber],$dataoportudata)->save();
@@ -332,7 +332,7 @@ class OportuyaV2Controller extends Controller
 					$oportudataLead->PASO = $paso;
 					$oportudataLead->ORIGEN = $request->get('typeService');
 					$oportudataLead->CLIENTE_WEB = $clienteWeb;
-					$oportudataLead->MIGRADO = 1;
+					$oportudataLead->TRAT_DATOS = "SI";
 					$response = $oportudataLead->save();
 				}
 
