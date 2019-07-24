@@ -38,8 +38,8 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
         return view('libranza.template');
     });
 
-    Route::get('/templateDialog', function(){
-        return view('libranza.template');
+    Route::get('/templateDialogLI', function(){
+        return view('libranza.templateLI');
     });
 
     Route::get('/resumen', function(){
@@ -47,8 +47,8 @@ Route::group(['prefix'=>'/libranza-principal/'],function(){
     });
 
        
-    Route::get('/libranza-lines',function(){
-        return view('libranza.libranza');
+    Route::get('/libranza-lines',function(){    
+        return view('libranza.libranza');       
     });
 });
 
