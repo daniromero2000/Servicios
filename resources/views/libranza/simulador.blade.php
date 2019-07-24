@@ -80,11 +80,11 @@
                             <br>
                             <div class="row">
                                 <div class="w-100">
-                                    <p class="color-white">Plazo: <span class="font-weight-bold">@{{plazoSelected.timeLimit}} Meses</span></p>
+                                    <p class="color-white">Plazo: <span class="font-weight-bold">@{{sliderTime.value}} Meses</span></p>
                                 </div>
                                 <br>
                                 <div class="w-100">
-                                    <p class="color-white">Monto: <span class="font-weight-bold">$ @{{plazoSelected.amount|number:0}}</span></p>
+                                    <p class="color-white">Monto: <span class="font-weight-bold">$ @{{sliderAmount.value|number:0}}</span></p>
                                 </div>
                                 <br>
                             </div>
