@@ -129,7 +129,7 @@
                             <div layout="row" layout-xs="column">  
                                 <md-input-container flex-gt-xs="100" flex-gt-md="50" class="m-0">
                                     <label class="text-left w-100">Fecha de nacimiento</label>
-                                    <md-datepicker ng-model="birthday" ng-blur="calculateAge(birthday)" md-current-view="year"></md-datepicker>
+                                    <md-datepicker ng-disabled="inputDisable" ng-model="birthday" ng-blur="calculateAge(birthday)" md-current-view="year"></md-datepicker>
                                     <p class="m-0"><span class="color-white small text-center">(AÑO/MES/DÍA)</span></p>
                                 </md-input-container>
                                 <md-input-container flex-gt-xs="100" flex-gt-sm="50" class="text-left m-0">
