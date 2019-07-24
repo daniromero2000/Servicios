@@ -85,9 +85,6 @@
                                 <p class="color-white">Monto: <span class="font-weight-bold">$ @{{plazoSelected.amount|number:0}}</span></p>
                             </div>
                             <br>
-                            <div class="w-100">
-                                <p class="color-white">Monto: <span class="font-weight-bold">$ @{{libranza.quaotaAvailable|number:0}}</span></p>
-                            </div>
                         </div>
                     </div>
                 </div>
