@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="row contact-resumen text-center">
-        <p class="text-center w-100">Espera nuestra llamada, nos pondremos en contacto para confirmarte la preaprobación</p>
+        <p class="text-center w-100">Espera nuestra llamada, nos pondremos en contacto en un máximo 24 horas hábiles para confirmarte la preaprobación</p>
     </div>
     <br>
     <br>
