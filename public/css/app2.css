@@ -412,6 +412,15 @@ md-slider[md-discrete]:not([disable]).md-active .md-sign{
 	position: relative;
 }
 
+.files-resumen ul li{
+	margin-bottom: 30px;
+}
+
+.files-resumen ul li small{
+	font-size: 14px;
+	color: #888;
+}
+
 .contact-resumen:after{
 	position: absolute;
 	content: '';

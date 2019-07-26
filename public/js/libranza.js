@@ -124,6 +124,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	$scope.interest=1.9;
 	$scope.constraintQuota=false;
 
+	$scope.toolTip = {
+		showTooltip : true,
+		tooltipDirection : ''
+	 };
 
 	$scope.getData=function(){
 		$http({
@@ -236,14 +240,20 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		var basicFeeTop=amount*(loan*Math.pow((1+loan),timeLimit)); 
 		var basicFeeBottom= (Math.pow((1+loan),timeLimit))-1;
 		var gap = 1;
-		if (($scope.libranza.creditLine == 1) && ($scope.libranza.customerType == 2)){
+		/*if (($scope.libranza.creditLine == 1) && ($scope.libranza.customerType == 2)){
 			gap = 1;
-		}else 
-		if($scope.libranza.creditLine == 2){
+		}else if($scope.libranza.creditLine == 2){
 			gap= 2;
 		}else{
 			gap=0;
+		}*/
+
+		if($scope.libranza.creditLine == 2){
+			gap= 2;
+		}else{
+			gap = 1;
 		}
+
 		var gapValue= loan*amount*gap;
 		var gapQuota = $scope.payFunction(loan,timeLimit,gapValue)
 		var basicFee=(basicFeeTop/basicFeeBottom) + ((fee*amount)/$scope.factor) + gapQuota;
@@ -252,8 +262,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.libranza.rate=loan;
 		$scope.libranza.amount=amount;
 		$scope.libranza.timeLimit=timeLimit;
-		//$scope.sliderAmount.value=amount;
-		//$scope.sliderTime.validateInt=timeLimit;
 	};
 
 	$scope.calculateAmounts=function(timeLimitList,rate,quaotaAvailable,gap,loanAssurance,factor,amountList){
@@ -301,8 +309,11 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		minimumFractionDigits: 0
 	  });
 
-	$scope.sliderChanged=0;
+	$scope.sliderAmountChanged=0;
+	$scope.sliderTimeChanged=0;
+	$scope.sliderRateChanged=0;
 	$scope.classForm='form-body-simulator';
+	$scope.disableRange=false;
 
 	$scope.sliderAmount = {
 		value:1000000,
@@ -312,6 +323,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  floor: 1000000,
 		  ceil: $scope.maxAmount,
 		  step:1000000,
+		  disabled: false,
 		  translate: function(value, sliderId, label) {
 			switch (label) {
 			  case 'model':	
@@ -324,9 +336,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  },
 			onChange: function(){
 			  $scope.simular(0);
-			  $scope.sliderChanged=1;
+			  $scope.sliderAmountChanged=1;
 			  $scope.inputDisable=false;
-			  $scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
 		  	},
 		  	showSelectionBar: true,
     		selectionBarGradient: {
@@ -336,13 +347,16 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}
 	  };
 
+	  $scope.valueTime=13;
+
 	  $scope.sliderTime = {
-		value: 12,	
+		value: 13,	
 		options: {	
 		  floor: 12,
 		  ceil: 108,
 		  step:12,
 		  ticksArray: [13, 24, 36, 48, 60,72,84,96,108],
+		  disabled: false,
 		  translate: function(value, sliderId, label) {
 			switch (label) {
 			  case 'model':	
@@ -363,12 +377,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			}
 		  },
 		  onChange: function(){
+			$scope.valueTime=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
 			$scope.simular(2);
-			$scope.sliderChanged=1;
+			$scope.sliderTimeChanged=2;
 			$scope.inputDisable=false;
-			$scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
-
-			//$scope.sliderAmount.value=$scope.plazoSelected;
 			},
 		}
 	  };
@@ -383,11 +395,11 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			{value: 2, legend: 'Bueno'},
 			{value: 3, legend: 'Excelente'}
 		  ],
+		  disabled: false,
 		  onChange: function(){
 			$scope.simular(1);
-			$scope.sliderChanged=1;
+			$scope.sliderRateChanged=4;
 			$scope.inputDisable=false;
-			$scope.classForm=$scope.sliderChanged==1?'form-body-simulator-able':'form-body-simulator';
 			},
 			showSelectionBar: true,
 			getSelectionBarColor: function(value) {
@@ -400,15 +412,20 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}
 	  };
 
+	$scope.clickOnSlider=0;
+	
+	$scope.sumCLicks=function(){
+		$scope.clickOnSlider++;
+		$scope.classForm=$scope.clickOnSlider>=3?'form-body-simulator-able':'form-body-simulator';
+		}
+
+
 	$scope.inputDisable=true;
 
 	$scope.simular = function(flag){
 
 		
 		$scope.sliderTime.value=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
-
-		console.log($scope.sliderAmount.value);
-		console.log($scope.sliderTime.value);
 
 		var rate=0.019;
 		var gap=$scope.params[0].gap;
@@ -420,29 +437,47 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}else if($scope.sliderRate.value == 2){
 			$scope.interest= 2.12;
 			rate=$scope.interest/100;	
-		}else{
+		}else{	
 			rate=$scope.params[0].rate;
 		}
 
+		
 		var interest = rate*100;
 		$scope.interest = interest.toFixed(2);
-		if($scope.libranza.age<=70 && $scope.libranza.age >=18){
+		if($scope.libranza.age<70 && $scope.libranza.age >=18){
 			loanAssurance=$scope.params[0].assurance;
-		}else if($scope.libranza.age>70 && $scope.libranza.age<90){
+		}else if($scope.libranza.age>=70 && $scope.libranza.age<90){
 			loanAssurance=$scope.params[0].assurance2;
 		}else{
 			loanAssurance = 0;
 		}
 
+		console.log($scope.libranza.age);
+		console.log(loanAssurance);
+
 		if($scope.libranza.age == '' || $scope.libranza.creditLine == '' || $scope.libranza.customerType == '' || $scope.libranza.pagaduria == ''){
 			$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 		}else{
 			if($scope.libranza.quaotaAvailable <= 148518 ){
-				return 0;
+				$scope.disableRange=true;
+				$scope.sliderAmount.options.disabled=$scope.disableRange;
+				$scope.sliderTime.options.disabled=$scope.disableRange;
+				$scope.sliderRate.options.disabled=$scope.disableRange;
+				$scope.basicSimulation(0,0,13,1000000);
 			}else{
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
-					return -2;
+					$scope.disableRange=true;
+					$scope.sliderAmount.options.disabled=$scope.disableRange;
+					$scope.sliderTime.options.disabled=$scope.disableRange;
+					$scope.sliderRate.options.disabled=$scope.disableRange;
+					$scope.basicSimulation(0,0,13,1000000);
 				}else{
+
+					$scope.disableRange=false;
+					$scope.sliderAmount.options.disabled=$scope.disableRange;
+					$scope.sliderTime.options.disabled=$scope.disableRange;
+					$scope.sliderRate.options.disabled=$scope.disableRange;
+
 					var plazos= [];
 					var lastPlazo={};
 					if(flag==1){
@@ -552,20 +587,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		window.location = "/LIB_gracias_FRM";		
 	};
 	
-/*	$scope.setPlazo=function(amount,timeLimit,rate){
-		$scope.plazoSelected.amount=amount;
-		$scope.plazoSelected.timeLimit=timeLimit;		
-		$scope.plazoSelected.rate=rate;		
-	}
 
-	$scope.updateCSS=function(plazoSelected){
-		if($scope.plazoSelected.amount == plazoSelected.amount){
-			return 'background-color: #348dc7;color: #FFF;font-weight: 700;';
-		}else{
-			return '';	
-		}
-		
-	}*/
 
 	var idLeadURL= $routeParams.idLeadParam;
 
@@ -611,12 +633,16 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	};
 
 	var formData = new FormData();
+	var formDataDocument = new FormData();
 	var idLeadURL= $routeParams.idLeadParam;
 
 	$scope.errors = []; 
 	$scope.files = [];
 	$scope.errorsDocument = []; 
 	$scope.filesDocument = [];
+
+	$scope.disableFileButton=false;
+	$scope.disableDocumentButton=false;
 	
 	$scope.successButton=false;
 	$scope.hideButton=true;
@@ -624,11 +650,10 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	$scope.hideButtonDocument=true;
 	
 	$scope.uploadDocument = function (element) {
-	
 		var request = {
 			method: 'POST',
 			url: '/api/upload/file',
-			data: formData,
+			data: formDataDocument,
 			headers: {
 				'Content-Type': undefined
 			}
@@ -641,16 +666,19 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				var fileElement = angular.element(element);
 				fileElement.value = '';
 				$scope.successButtonDocument=true;
+				$scope.disableDocumentButton=true;
 				$scope.hideButtonDocument=false;
-				alert("La imagen ha sido cargada exitosamente");
+				//alert("La imagen ha sido cargada exitosamente");
+				//console.log(e);
 			}, function error(e) {
 				$scope.errorsDocument = e.data.errors;
+				console.log(e);
 			});
 	};
 
 
 	$scope.uploadFile = function (element) {
-	
+		formData.delete('document_file');
 		var request = {
 			method: 'POST',
 			url: '/api/upload/file',
@@ -667,19 +695,23 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				var fileElement = angular.element(element);
 				fileElement.value = '';
 				$scope.successButton=true;
+				$scope.disableFileButton=true;
 				$scope.hideButton=false;
-				alert("La imagen ha sido cargada exitosamente");
+				//alert("La imagen ha sido cargada exitosamente");
+				//console.log(e);
 			}, function error(e) {
 				$scope.errors = e.data.errors;
+				console.log(e);
+				console.log(e.data.errors[0]);
 			});
 	};	
 
 	$scope.setTheDocuments = function ($files) {
         angular.forEach($files, function (value, key) {
-			formData.append('document_file', value);
+			formDataDocument.append('document_file', value);
 		});
-		formData.append('id_simulation',$scope.leadResumen.idLiquidator);
-		
+		formDataDocument.append('id_simulation',$scope.leadResumen.idLiquidator);
+		console.log(formData.get('document_file'));
 	};	
 
 	$scope.setTheFiles = function ($files) {
@@ -687,7 +719,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			formData.append('image_file', value);
 		});
 		formData.append('id_simulation',$scope.leadResumen.idLiquidator);
-		
+		console.log(formData.get('id_simulation'));
 	};	
 
 	$scope.dialogContent=[
