@@ -7,64 +7,9 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
     };
 })
 .controller("asessorVentaContadoCtrl", function($scope, $http, $mdDialog) {
-    $scope.lead = {
-        'TIPO_DOC' : '1', 
-        'CEDULA' : '', 
-        'APELLIDOS' : '',
-        'NOMBRES' : '', 
-        'TIPOCLIENTE' : '',
-        'SUBTIPO' : '',
-        'EDAD' : '',
-        'FEC_EXP' : '', 
-        'CIUD_EXP' : '', 
-        'SEXO' : '', 
-        'FEC_NAC' : '', 
-        'ESTADOCIVIL' : '', 
-        'TIPOV' : '', 
-        'PROPIETARIO' : '', 
-        'VRARRIENDO' : '', 
-        'DIRECCION' : '', 
-        'TELFIJO' : '', 
-        'CELULAR' : '',  
-        'TIEMPO_VIV' : '', 
-        'CIUD_UBI' : '', 
-        'EMAIL' : '', 
-        'ACTIVIDAD' : 'EMPLEADO', 
-        'ACT_ECO' : '', 
-        'NIT_EMP' : '', 
-        'RAZON_SOC' : '', 
-        'FEC_ING' : '', 
-        'ANTIG' : '', 
-        'CARGO' : '', 
-        'DIR_EMP' : '', 
-        'TEL_EMP' : '', 
-        'TEL2_EMP' : '', 
-        'TIPO_CONT' : '', 
-        'SUELDO' : '', 
-        'NIT_IND' : '', 
-        'RAZON_IND' : '', 
-        'ACT_IND' : '', 
-        'EDAD_INDP' : '', 
-        'FEC_CONST' : '', 
-        'OTROS_ING' : '', 
-        'ESTRATO' : '', 
-        'SUELDOIND' : '', 
-        'VCON_NOM1' : '', 
-        'VCON_CED1' : '', 
-        'VCON_TEL1' : '', 
-        'VCON_NOM2' : '', 
-        'VCON_CED2' : '', 
-		'VCON_TEL2' : '',
-		'VCON_DIR' : '',
-        'MEDIO_PAGO' : '12', 
-		'TRAT_DATOS' : 'SI', 
-		'BANCOP' : '', 
-		'CAMARAC' : '', 
-		'CEL_VAL' : 0
-    };
-	$scope.code = {
-		'code' : ''
-	};
+	$scope.tipoCliente = "";
+	$scope.lead = {};
+	$scope.code = {};
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -244,10 +189,17 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 			method: 'GET',
 			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
-			$scope.lead = response.data[0];
-			$scope.lead.CEL_VAL = 0;
-			$scope.lead.CELULAR = '';
-			$scope.lead.EMAIL = '';
+			if(response.data == 'false'){
+				var cedula = angular.extend({}, $scope.lead);
+				$scope.resetInfo();
+				$scope.lead.CEDULA = cedula.CEDULA;
+				delete cedula;
+			}else{
+				$scope.lead = response.data[0];
+				$scope.lead.CEL_VAL = 0;
+				$scope.lead.CELULAR = '';
+				$scope.lead.EMAIL = '';
+			}
 		}, function errorCallback(response) {
 			console.log(response);
 		});
@@ -318,14 +270,18 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 	};
 
 	$scope.addVentaContado = function(){
-		//$('#proccess').modal('show');
+		$scope.lead.tipoCliente = 'CONTADO';
+		$('#proccess').modal('show');
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 			}).then(function successCallback(response) {
-				$scope.showConfirm();
-				//$('#proccess').modal('hide');
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+					$scope.showConfirm();
+				}, 1000);				
+				
 			}, function errorCallback(response) {
 				console.log(response);
 			});
@@ -358,60 +314,17 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 		});
 	};
 
+	$scope.resetInfoLead = function(){
+		showLoader();
+		hideLoader();
+	};
+
 	$scope.resetInfo = function(){
 		$scope.lead = {
 			'TIPO_DOC' : '1', 
-			'CEDULA' : '', 
-			'APELLIDOS' : '',
-			'NOMBRES' : '', 
-			'TIPOCLIENTE' : '',
-			'SUBTIPO' : '',
-			'EDAD' : '',
-			'FEC_EXP' : '', 
-			'CIUD_EXP' : '', 
-			'SEXO' : '', 
-			'FEC_NAC' : '', 
-			'ESTADOCIVIL' : '', 
-			'TIPOV' : '', 
-			'PROPIETARIO' : '', 
-			'VRARRIENDO' : '', 
-			'DIRECCION' : '', 
-			'TELFIJO' : '', 
-			'CELULAR' : '',  
-			'TIEMPO_VIV' : '', 
-			'CIUD_UBI' : '', 
-			'EMAIL' : '', 
-			'ACTIVIDAD' : 'EMPLEADO', 
-			'ACT_ECO' : '', 
-			'NIT_EMP' : '', 
-			'RAZON_SOC' : '', 
-			'FEC_ING' : '', 
-			'ANTIG' : '', 
-			'CARGO' : '', 
-			'DIR_EMP' : '', 
-			'TEL_EMP' : '', 
-			'TEL2_EMP' : '', 
-			'TIPO_CONT' : '', 
-			'SUELDO' : '', 
-			'NIT_IND' : '', 
-			'RAZON_IND' : '', 
-			'ACT_IND' : '', 
-			'EDAD_INDP' : '', 
-			'FEC_CONST' : '', 
-			'OTROS_ING' : '', 
-			'ESTRATO' : '', 
-			'SUELDOIND' : '', 
-			'VCON_NOM1' : '', 
-			'VCON_CED1' : '', 
-			'VCON_TEL1' : '', 
-			'VCON_NOM2' : '', 
-			'VCON_CED2' : '', 
-			'VCON_TEL2' : '',
-			'VCON_DIR' : '',
-			'MEDIO_PAGO' : '12', 
-			'TRAT_DATOS' : 'SI', 
-			'BANCOP' : '', 
-			'CAMARAC' : '', 
+			'ACTIVIDAD' : 'EMPLEADO',
+			'MEDIO_PAGO' : '12',
+			'TRAT_DATOS' : 'SI',
 			'CEL_VAL' : 0
 		};
 		$scope.code = {
@@ -419,4 +332,5 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages'])
 		};
 	};
 	$scope.getInfoVentaContado();
+	$scope.resetInfo();
 });

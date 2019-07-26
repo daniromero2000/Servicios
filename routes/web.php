@@ -94,7 +94,7 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
 	Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('assessor.logout');
     Route::group(['prefix' => '/forms/'], function(){
-        Route::get('ventaContado/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+        Route::get('crearCliente/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
         Route::get('analisis/', function(){
             return view('assessors.forms.analisis');
         })->name('assessorAnalisis');

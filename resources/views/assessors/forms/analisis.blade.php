@@ -6,7 +6,7 @@
 <div ng-app="creditPolicyApp" ng-controller="simulatePolicySingleCtrl" class="containerleads container">
     <div class="row">
         <div class="col-12 text-center">
-            <h2 class="headerAdmin ng-scope">Simular política / individual</h2>
+            <h2 class="headerAdmin ng-scope">Aplicar política / individual</h2>
         </div>
         <div class="col-6 offset-3">
             <form name="simular" ng-submit="simulate()">
@@ -18,14 +18,14 @@
                         </md-input-container>
                     </div>
                     <div class="col-12 text-center">
-                        <md-button type="submit" class="md-raised md-primary">Simular</md-button>
+                        <md-button type="submit" class="md-raised md-primary">Aplicar</md-button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="alert alert-danger" role="alert" ng-if="showMessageNoExistClienteFab || showMessageNoExistConsulta">
-        Verifica la cédula ingresada, el cliente no presenta registro en nuestra base de datos
+        Verifica la cédula ingresada, el cliente no presenta registro en nuestra base de datos.
     </div>
     <div ng-show="showResp">
         <div class="row">
@@ -50,7 +50,7 @@
                     <span ng-if="infoLead.TIPO_DOC == 5">Pasaporte</span>
                     <span ng-if="infoLead.TIPO_DOC == 6">Tarjeta seguro social extranjero</span>
                     <span ng-if="infoLead.TIPO_DOC == 7">Sociedad extranjera sin NIT en Colombia</span>
-                    <span ng-if="infoLead.TIPO_DOC == 8">Fidecoismo</span>
+                    <span ng-if="infoLead.TIPO_DOC == 8">Fidecomiso</span>
                 </p>
                 <p>
                     <label for="">Número de documento: </label>@{{ infoLead.CEDULA }}

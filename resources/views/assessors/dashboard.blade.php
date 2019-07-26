@@ -7,19 +7,14 @@
 			</h3>
 		</div>
 		<div class="row">
-		<div class="col-12 col-sm-4	assessorModule text-center">
+			<div class="col-12 col-sm-6	assessorModule text-center">
 				<p>
-					<a href="{{route('step1Oportuya')}}">Solicitar Crédito </a>
+					<a href="{{route('assessorsVentaContado')}}">Crear Cliente</a>
 				</p>
 			</div>
-			<div class="col-12 col-sm-4	assessorModule text-center">
+			<div class="col-12 col-sm-6	assessorModule text-center">
 				<p>
 					<a href="{{route('assessorAnalisis')}}">Realizar Análisis </a>
-				</p>
-			</div>
-			<div class="col-12 col-sm-4 assessorModule text-center">
-				<p>
-					<a href="{{route('assessorsVentaContado')}}">Crear Clientes</a>
 				</p>
 			</div>
 		</div>
