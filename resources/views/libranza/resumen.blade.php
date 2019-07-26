@@ -70,9 +70,11 @@
         <ul>
             <li>
                 <p>Último desprendible de pago de nómina 
-                    <input type="file" ng-files="setTheFiles($files)" id="image_file"  class="form-control">
-                    <button ng-click="uploadFile(this)" ng-show="hideButton" class="btn btn-primary">Subir archivo</button>
+                    <input ng-disabled="disableFileButton" type="file" ng-files="setTheFiles($files)" id="image_file"  class="form-control">
+                    <button  ng-click="uploadFile(this)" ng-show="hideButton" class="btn btn-primary">Subir archivo</button>
                     <span ng-show="successButton" class="success-color"><i class="fas fa-check-circle"></i></span>
+                    <br>
+                    <small class="small">El archivo cargado debe ser  en formato .png o .jpg y su tamaño máximo es de 50 KiloBytes</small>
                 </p>
                 <ul class="alert alert-danger" ng-if="errors.length > 0">
                     <li ng-repeat="error in errors">
@@ -82,9 +84,11 @@
             </li>
             <li>
                 <p>Copia dédula al 150%   
-                    <input type="file" ng-files="setTheDocuments($files)" id="document_file"  class="form-control">
-                    <button ng-click="uploadDocument(this)" ng-show="hideButtonDocument" class="btn btn-primary">Subir archivo</button>
+                    <input ng-disabled="disableDocumentButton" type="file" ng-files="setTheDocuments($files)" id="document_file"  class="form-control">
+                    <button  ng-click="uploadDocument(this)" ng-show="hideButtonDocument" class="btn btn-primary">Subir archivo</button>
                     <span ng-show="successButtonDocument" class="success-color"><i class="fas fa-check-circle"></i></span>
+                    <br>
+                    <small class="small">El archivo cargado debe ser  en formato .png o .jpg y su tamaño máximo es de 50 KiloBytes</small>
                 </p>
                 <ul class="alert alert-danger" ng-if="errorsDocument.length > 0">
                     <li ng-repeat="error in errorsDocument">
@@ -99,4 +103,16 @@
             Los valores resultantes de esta simulación, son informativos, aproximados y podrán variar de acuerdo a las políticas de estudio y aprobación del crédito.
         </p>
     </div>
+    <br>
+   
+    <div class="row">
+        <p class="text-center w-100">
+        <a href="/libranza">
+            <button class="btn btn-primary">
+                Volver a simular
+            </button>
+        </a>
+        </p>
+    </div>
+    <br>
 </div>

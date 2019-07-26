@@ -62,17 +62,17 @@
                                     <label for="amount">¿Cuánto dinero necesitas?</label>   
                                     <br>
                                     <br>
-                                    <rzslider  ng-change="simular(0)" ng-model="sliderAmount.value" rz-slider-model="sliderAmount.value" z-slider-high="maxAmount" rz-slider-options="sliderAmount.options"></rzslider>
+                                    <rzslider  ng-click="sumCLicks()" ng-change="simular(0)" ng-model="sliderAmount.value" rz-slider-model="sliderAmount.value" z-slider-high="maxAmount" rz-slider-options="sliderAmount.options"></rzslider>
                                 </div>
                                 <div class="form-group">
                                     <label for="timeLimit">¿Cuánto tiempo necesitas para pagar?</label>
                                     <br> 
-                                    <rzslider ng-change="simular(2)" ng-model="sliderTime.value" rz-slider-model="sliderTime.value" rz-slider-options="sliderTime.options"></rzslider>
+                                    <rzslider ng-click="sumCLicks()" ng-change="simular(2)" ng-model="sliderTime.value" rz-slider-model="sliderTime.value" rz-slider-options="sliderTime.options"></rzslider>
                                 </div>
                                 <div class="form-group">
                                     <label for="timeLimit">¿Cuál es tu puntaje de crédito?</label>
                                     <br>
-                                    <rzslider ng-model="sliderRate.value" rz-slider-model="sliderRate.value" rz-slider-options="sliderRate.options"></rzslider>
+                                    <rzslider ng-click="sumCLicks()" ng-model="sliderRate.value" rz-slider-model="sliderRate.value" rz-slider-options="sliderRate.options"></rzslider>
                                 </div>
                             </form>
                             <br>
@@ -80,7 +80,7 @@
                             <br>
                             <div class="row">
                                 <div class="w-100">
-                                    <p class="color-white">Plazo: <span class="font-weight-bold">@{{sliderTime.value}} Meses</span></p>
+                                    <p class="color-white">Plazo: <span class="font-weight-bold">@{{valueTime}} Meses</span></p>
                                 </div>
                                 <br>
                                 <div class="w-100">
@@ -115,7 +115,7 @@
                                 <div layout="row">
                                     <md-input-container flex="100" class="text-left">
                                         <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito </label>
-                                        <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.creditLine" required="" ng-blur="ableField()">
+                                        <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.creditLine" required="" ng-change="ableField()">
                                             <md-option ng-value="linea.id" ng-repeat="linea in lines">@{{linea.name}}</md-option>
                                         </md-select>
                                     </md-input-container>
@@ -144,7 +144,7 @@
                                 <div layout="row" layout-xs="column">  
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
                                         <label>Salario básico</label>
-                                        <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="calculateData()">
+                                        <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="simulate()">
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
                                         <label>Descuentos de ley</label>
