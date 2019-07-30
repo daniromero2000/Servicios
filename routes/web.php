@@ -185,7 +185,7 @@ Route::group(['prefix'=>'api/'],function(){
     Route::get('oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
-
+    Route::get('oportuya/execConsultasLead/{identificationNumber}/{tipoDoc}/{tipoCreacion}', 'Admin\OportuyaV2Controller@execConsultasLead');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 
