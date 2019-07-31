@@ -256,10 +256,10 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				if (response.data == "1") {
 					$scope.encryptText();
 				}
-				/*if (response.data == "-3" || response.data == "-4") {
+				if (response.data == "-3" || response.data == "-4") {
 					$scope.showWarningErrorData = true;
 					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
-				}*/
+				}
 				$('#proccess').modal('hide');
 			}, function errorCallback(response) {
 				console.log(response);
