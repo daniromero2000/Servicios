@@ -8,6 +8,8 @@ class DatosCliente extends Model
 {
     protected $table = 'DATOS_CLIENTE';
 
+    public $connection='oportudata';
+
     public $timestamps = false;
 
     protected $fillable = ['CEDULA','SOLICITUD','NOM_REFPER','DIR_REFPER','BAR_REFPER','TEL_REFPER','CIU_REFPER','NOM_REFPE2','DIR_REFPE2','BAR_REFPE2',

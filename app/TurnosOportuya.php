@@ -8,6 +8,8 @@ class TurnosOportuya extends Model
 {
     protected $table = 'TURNOS_OPORTUYA';
     protected $primaryKey = 'NUMERO';
+    public $connection='oportudata';
+
 
     public $timestamps = false;
 
