@@ -467,6 +467,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 		}else{	
 			if($scope.libranza.quaotaAvailable <= 148518 ){
+				$scope.inputDisable=true;
 				$scope.showAlertError=true;
 				$scope.disableRange=true;
 				$scope.sliderAmount.options.disabled=$scope.disableRange;
@@ -475,6 +476,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				$scope.basicSimulation(0,0,13,1000000);
 			}else{
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
+					$scope.inputDisable=true;
 					$scope.showAlertError=true;
 					$scope.disableRange=true;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;
@@ -482,6 +484,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 					$scope.sliderRate.options.disabled=$scope.disableRange;
 					$scope.basicSimulation(0,0,13,1000000);
 				}else{
+					$scope.inputDisable=false;
 					$scope.showAlertError=false;
 					$scope.disableRange=false;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;
