@@ -430,7 +430,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.clickOnSlider++;
 		$scope.classForm=$scope.clickOnSlider>=3?'form-body-simulator-able':'form-body-simulator';
 		$scope.inputDisable=false;
-		$scope.inputDisableButton=true;
+		$scope.inputDisableButton=false;
 		}
 
 
