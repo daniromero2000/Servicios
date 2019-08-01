@@ -83,7 +83,7 @@
                 </ul>                
             </li>
             <li>
-                <p>Copia dédula al 150%   
+                <p>Copia cédula al 150%   
                     <input ng-disabled="disableDocumentButton" type="file" ng-files="setTheDocuments($files)" id="document_file"  class="form-control">
                     <button  ng-click="uploadDocument(this)" ng-show="hideButtonDocument" class="btn btn-primary">Subir archivo</button>
                     <span ng-show="successButtonDocument" class="success-color"><i class="fas fa-check-circle"></i></span>

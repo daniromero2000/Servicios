@@ -1,17 +1,23 @@
 app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$routeParams,$location,$document) {
 	
+	
+	//array donde se guardaran las ciudades traidas en consulta
 	$scope.cities =[];
+	
+	//objeto donde seran capturados el monto, el plazo y la tasa
 	$scope.plazoSelected={
 		amount:1000000,
 		timeLimit:13, 
 		rate:3,
 	};
 
-	
-
 	$scope.idLeadParam=$routeParams.idLeadParam;
+
+	//initial value for datepicker
 	$scope.birthday='1970/01/01';
 
+	
+	//array de tipo de productos
 	$scope.typeProducts = [
 		{
 			label: 'Crédito para electrodomésticos', value: 'Crédito para electrodomésticos'
@@ -29,24 +35,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			label: 'Libre inversión', value:'Libre inversión'
 		}
 	];
-	$scope.tipoCliente = [
-		{
-			label : 'Pensionado',
-			value : 'Pensionado'
-		},
-		{
-			label : 'Docente',
-			value : 'Docente'
-		},
-		{
-			label : 'Militares Activos',
-			value : 'Militares Activos'
-		}
-	];
 
-	
-	$scope.timeLimitsMarks = [13,18,24,36,48,60,72,84,96,108];
 
+	//objeto donde se guarda los datos de la simulación
 	$scope.leadResumen={
 		name:'',
 		lastName:'',
@@ -56,6 +47,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		idLiquidator:''
 	}
 
+	
+	//objeto de datos de libranza
 	$scope.libranza = {
 		creditLine: '',
 		idPagaduria:'',
@@ -68,7 +61,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		lawDesc : '',
 		otherDesc : '',
 		segMargen : '',
-		quotaBuy : '',
+		quotaBuy : 0,
 		rate:'',
 		fee:'',
 		quaotaAvailable : '',
@@ -84,10 +77,34 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		typeProduct: '',
 		termsAndConditions: 0,
 		channel: 1,
-
 	};
 
-	$scope.validateInt = function(){
+	$scope.plazo={
+		amount:0.0,
+		timeLimit:''
+	}
+
+	$scope.maxAmount=60000000; //Valor inicial para el monto máximo
+	$scope.minAmount=1000000;  //valor inicial para el monto mínimo
+	$scope.quotaBuy=false; //Muestra el campo de compra de cartera si es true
+	$scope.params=[]; //array donde se guarda el los parametros del simulador (tasa y seguros)
+	$scope.timeLimits=[]; //array donde se guarda los plazos
+	$scope.plazos=[]; //array donde se guarda montos y plazos según cupo disponible 
+	$scope.lines=[]; //array donde se guarda las lineas de crédito
+	$scope.pagaduriaLibranza=[]; //array que guarda las pagadurías 
+	$scope.libranzaProfiles=[]; //array que guarda los perfiles de libranza
+	
+	$scope.basicFee=0;
+	$scope.factor=1000000;
+	$scope.interest=1.9;
+	$scope.constraintQuota=false;
+
+	$scope.toolTip = {
+		showTooltip : true,
+		tooltipDirection : ''
+	 };
+
+	 $scope.validateInt = function(){
 		if($scope.libranza.salary < 0){
 			$scope.libranza.salary = 0;
 		}
@@ -105,30 +122,13 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}
 	};
 
-	$scope.plazo={
-		amount:0.0,
-		timeLimit:''
-	}
-	$scope.maxAmount=60000000;
-	$scope.minAmount=1000000;
-	$scope.quotaBuy=false;
-	$scope.params=[]
-	$scope.timeLimits=[];
-	$scope.plazos=[];
-	$scope.lines=[];
-	$scope.pagaduriaLibranza=[];
-	$scope.libranzaProfiles=[];
-	
-	$scope.basicFee=0;
-	$scope.factor=1000000;
-	$scope.interest=1.9;
-	$scope.constraintQuota=false;
 
-	$scope.toolTip = {
-		showTooltip : true,
-		tooltipDirection : ''
-	 };
-
+	/*
+	Assign the queries data to defined array above
+	*/
+	/*
+	Asigna los datos de la consulta a los arrays definidos arriba
+	*/
 	$scope.getData=function(){
 		$http({
 			method:'GET',
@@ -162,6 +162,16 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		});
 	}
 
+	
+
+
+	/*	
+	Get pagadurias 
+	*/
+	/*
+	Asigna los datos de la consulta a los arrays definidos arriba
+	*/
+
 	$scope.selectPagaduria = function (){
 		$scope.pagaduriaLibranza=[];
 		$http({
@@ -174,7 +184,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			});
 		},function errorCallback(response){	
 		});		
-	};
+	};	
 
 	$scope.showContentCartera = false;
 	$scope.showContentLibre = false;
@@ -188,17 +198,20 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	}
 	
 	$scope.hoverInLibre = function(){
-		$scope.showContentLibre = true;
+		$scope.showContentLibre = true; 
 	}
 
 	$scope.hoverOutLibre = function(){
 		$scope.showContentLibre = false;
 	}
 
+	/*
+		calcular el monto máximo a prestar según edad
+	*/
 	$scope.calculateData = function(){
 		$scope.libranza.lawDesc = Math.round($scope.libranza.salary * 0.12);
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000 ;
-		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen+$scope.libranza.quotaBuy;
+		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen + parseInt($scope.libranza.quotaBuy);
 		if($scope.libranza.age >= 18 && $scope.libranza.age < 80){
 			$scope.libranza.maxQuota = 60000000;
 		}else if($scope.libranza.age >= 80 && $scope.libranza.age < 86){
@@ -206,14 +219,18 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}else{
 			$scope.libranza.maxQuota = 5000000;
 		}
+
 	};
 
 	$scope.ableField=function(){
 		if($scope.libranza.creditLine==2){
 			$scope.quotaBuy=true;
+			$scope.simulate();
 		}else{
 			$scope.quotaBuy=false;
-		}		
+			$scope.libranza.quotaBuy=0;
+			$scope.simulate();
+		}	
 	}
 
 
@@ -234,20 +251,11 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	}
 
 	$scope.basicSimulation = function(loan,fee,timeLimit,amount){	
-		
-		//var timeLimit=$scope.plazoSelected.timeLimit;
-		//var amount=$scope.plazoSelected.amount;
+			
 		var basicFeeTop=amount*(loan*Math.pow((1+loan),timeLimit)); 
 		var basicFeeBottom= (Math.pow((1+loan),timeLimit))-1;
 		var gap = 1;
-		/*if (($scope.libranza.creditLine == 1) && ($scope.libranza.customerType == 2)){
-			gap = 1;
-		}else if($scope.libranza.creditLine == 2){
-			gap= 2;
-		}else{
-			gap=0;
-		}*/
-
+		
 		if($scope.libranza.creditLine == 2){
 			gap= 2;
 		}else{
@@ -347,7 +355,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}
 	  };
 
-	  $scope.valueTime=13;
+	 // $scope.valueTime=13;
 
 	  $scope.sliderTime = {
 		value: 13,	
@@ -417,10 +425,13 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	$scope.sumCLicks=function(){
 		$scope.clickOnSlider++;
 		$scope.classForm=$scope.clickOnSlider>=3?'form-body-simulator-able':'form-body-simulator';
+		$scope.inputDisable=false;
 		}
 
 
 	$scope.inputDisable=true;
+
+	$scope.showAlertError=false;
 
 	$scope.simular = function(flag){
 
@@ -440,7 +451,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		}else{	
 			rate=$scope.params[0].rate;
 		}
-
 		
 		var interest = rate*100;
 		$scope.interest = interest.toFixed(2);
@@ -452,13 +462,12 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			loanAssurance = 0;
 		}
 
-		console.log($scope.libranza.age);
-		console.log(loanAssurance);
 
 		if($scope.libranza.age == '' || $scope.libranza.creditLine == '' || $scope.libranza.customerType == '' || $scope.libranza.pagaduria == ''){
 			$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
-		}else{
+		}else{	
 			if($scope.libranza.quaotaAvailable <= 148518 ){
+				$scope.showAlertError=true;
 				$scope.disableRange=true;
 				$scope.sliderAmount.options.disabled=$scope.disableRange;
 				$scope.sliderTime.options.disabled=$scope.disableRange;
@@ -466,22 +475,22 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				$scope.basicSimulation(0,0,13,1000000);
 			}else{
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
+					$scope.showAlertError=true;
 					$scope.disableRange=true;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;
 					$scope.sliderTime.options.disabled=$scope.disableRange;
 					$scope.sliderRate.options.disabled=$scope.disableRange;
 					$scope.basicSimulation(0,0,13,1000000);
 				}else{
-
+					$scope.showAlertError=false;
 					$scope.disableRange=false;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;
 					$scope.sliderTime.options.disabled=$scope.disableRange;
 					$scope.sliderRate.options.disabled=$scope.disableRange;
 
 					var plazos= [];
-					var lastPlazo={};
+					var lastPlazo={};	
 					if(flag==1){
-						
 						$scope.plazos = $scope.calculateAmounts($scope.timeLimits,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor,plazos);
 						lastPlazo = $scope.plazos[$scope.plazos.length-1];
 						if($scope.sliderAmount.value>lastPlazo.amount){
@@ -541,19 +550,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.simular(1);
 		console.log($scope.sliderAmount.maxAmount);
 		$('#solicitarModal').modal('show');
-
-		/*if(sim== -1){
-			alert('Debes de llenar todos los datos');
-		}else if(sim== 0){
-			$('#solicitarModal').modal('hide');
-			$('#negacionModal').modal('show');
-		}else if(sim== -2){
-			alert("Para poder simular el Salario Básico no puede ser menor a 0");
-		}else{
-			
-			$('#solicitarModal').modal('hide');
-			$('#simularModal').modal('show');
-		}*/
 		
 	}
 	

@@ -365,38 +365,71 @@ class LibranzaController extends Controller
     }
 
     public function uploadFile(Request $request){
+
+        $idLead=Liquidator::select('idLead')->where('id','=',$request->get('id_simulation'))->get();
+
+        $identificationNumber = Lead::select('identificationNumber')->where('id','=',$idLead[0]->idLead)->get();
         
         $validator = Validator::make($request->file(), [
             'image_file' => 'required|image|max:50',
         ]);
+
+        $validatorDocument = Validator::make($request->file(), [
+            'document_file' => 'required|image|max:50',
+        ]);
  
-        if ($validator->fails()) {
+        if (($validator->fails()) && ($validatorDocument->fails())) {
  
             $errors = [];
+            $errorsDocument = [];
             foreach ($validator->messages()->all() as $error) {
                 array_push($errors, $error);
             }
+
+            foreach ($validatorDocument->messages()->all() as $errorDocument) {
+                array_push($errorsDocument, $errorDocument);
+            }
  
-            return response()->json(['errors' => $errors, 'status' => 400], 400);
+            return response()->json(['errors' => $errors,'errorsDocument' => $errorsDocument, 'status' => 400], 400);
         }
- 
-        $file = FileLibranza::create([
-            'name' => $request->file('image_file')->getClientOriginalName(),
-            'type' => $request->file('image_file')->extension(),
-            'size' => $request->file('image_file')->getClientSize(),
-            //'typeFile' => $request->get('typeFile'),
-            'id_simulation' => (int)$request->get('id_simulation')
-        ]);
- 
-        if(PHP_OS == "Linux"){
-            //delete whit path
-            $request->file('image_file')->move(__DIR__.'/../../../../public/images/',$file->id .'.'.$file->type);
-        }else{
-            $request->file('image_file')->move(__DIR__.'\..\..\..\..\public\images\\',$file->id .'.'.$file->type);
+
+        $hasFile=$request->hasFile('image_file');
+        $hasDocument=$request->hasFile('document_file');
+
+        $fileRequest=$hasFile?$request->file('image_file'):$request->file('document_file');
+        if($hasFile){
+            $file = FileLibranza::create([
+                'name' =>$request->file('image_file')->getClientOriginalName(),
+                'type' =>$request->file('image_file')->extension(),
+                'size' =>$request->file('image_file')->getClientSize(),
+                'id_simulation' => (int)$request->get('id_simulation')
+            ]);
+
+            if(PHP_OS == "Linux"){
+                $request->file('image_file')->move(__DIR__.'/../../../../public/images/libranza_files/'.$identificationNumber[0]->identificationNumber.'/','cedula.'.$file->type);
+             }else{
+                $request->file('image_file')->move(__DIR__.'\..\..\..\..\public\images\libranza_files\\'.$identificationNumber[0]->identificationNumber.'\\','cedula.'.$file->type);
+             }
+             
+        }elseif($hasDocument){
+            $fileDocument = FileLibranza::create([
+                'name' =>$request->file('document_file')->getClientOriginalName(),
+                'type' =>$request->file('document_file')->extension(),
+                'size' =>$request->file('document_file')->getClientSize(),
+                'id_simulation' => (int)$request->get('id_simulation')
+            ]);
+
+            if(PHP_OS == "Linux"){
+                $request->file('document_file')->move(__DIR__.'/../../../../public/images/libranza_files/'.$identificationNumber[0]->identificationNumber.'/','desp_nomina.'.$fileDocument->type);
+             }else{
+                //$request->file('document_file')->store()
+                $request->file('document_file')->move(__DIR__.'\..\..\..\..\public\images\libranza_files\\'.$identificationNumber[0]->identificationNumber.'\\','desp_nomina.'.$fileDocument->type);
+             }
+             
         }
         
  
-        return response()->json(['errors' => [], 'files' => FileLibranza::all(), 'status' => 200,'fileInsert'=>__DIR__.'\..\..\..\..\public\images\\',$file->id .'.'.$file->type], 200);
+        return response()->json(['errors' => [], 'files' => FileLibranza::all(), 'status' => 200,'files'=>$hasFile,'Document'=>$hasDocument], 200);
 
     }
 

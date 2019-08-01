@@ -78,7 +78,7 @@
                             <br>
                             <br>
                             <br>
-                            <div class="row">
+                            <div class="row" ng-show="!showAlertError">
                                 <div class="w-100">
                                     <p class="color-white">Plazo: <span class="font-weight-bold">@{{valueTime}} Meses</span></p>
                                 </div>
@@ -108,7 +108,7 @@
                         <h3 class="font-weight-bold">Calcula tu crédito</h3>
                     </div>
                 </div>
-                <div class="row" id="form-body-simulator" ng-class="classForm" ng-model="classForm">
+                <div class="row" data-toggle="tooltip" id="form-body-simulator" ng-class="classForm" ng-model="classForm">
                     <div class="offset-1 offset-lg-1 col-10 col-lg-10 p-0">
                         <div class="form-simulator">
                             <form ng-submit="showModal()" name="myForm">
@@ -141,7 +141,7 @@
                                         </md-select>
                                     </md-input-container>
                                 </div>
-                                <div layout="row" layout-xs="column">  
+                                <div layout="row" layout-xs="column" uib-tooltip="Some text">  
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
                                         <label>Salario básico</label>
                                         <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="simulate()">
@@ -166,6 +166,11 @@
                                         <label>Valor Cuota Compra</label>
                                         <input ng-disabled="inputDisable" type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simulate()" ng-change="validateInt()">
                                     </md-input-container>
+                                </div>
+                                <div class="row" ng-show="showAlertError">
+                                    <div class="w-100 alert alert-danger" role="alert">
+                                        Por favor verifica la información ingresada
+                                    </div>  
                                 </div>
                                 <div class="row">
                                     <p class="color-white">
@@ -228,17 +233,11 @@
                                         <input type="text" ng-model="libranza.telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true">
                                     </md-input-container>
                                 </div>
-                                <div layout="row" layout-xs="column">
-                                    <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
-                                        <label class="formularioSimulador-labelFormulario">Ciudad </label>
+                                <div layout="row">  
+                                    <md-input-container flex="" class="text-left">
+                                    <label class="formularioSimulador-labelFormulario">Ciudad </label>
                                         <md-select name="city" ng-model="libranza.city" required="">
                                             <md-option ng-value="city.city" ng-repeat="city in cities">@{{city.city}}</md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                    <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left">
-                                        <label class="formularioSimulador-labelFormulario">En que estás interesado </label>
-                                        <md-select name="typeProduct" ng-model="libranza.typeProduct" required="">
-                                            <md-option ng-value="product.value" ng-repeat="product in typeProducts">@{{product.label}}</md-option>
                                         </md-select>
                                     </md-input-container>
                                 </div>
