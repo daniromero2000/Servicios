@@ -346,6 +346,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			  $scope.simular(0);
 			  $scope.sliderAmountChanged=1;
 			  $scope.inputDisable=false;
+			  $scope.inputDisableButton=false;
+			  
 		  	},
 		  	showSelectionBar: true,
     		selectionBarGradient: {
@@ -389,6 +391,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			$scope.simular(2);
 			$scope.sliderTimeChanged=2;
 			$scope.inputDisable=false;
+			$scope.inputDisableButton=false;
 			},
 		}
 	  };
@@ -408,6 +411,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			$scope.simular(1);
 			$scope.sliderRateChanged=4;
 			$scope.inputDisable=false;
+			$scope.inputDisableButton=false;
 			},
 			showSelectionBar: true,
 			getSelectionBarColor: function(value) {
@@ -426,10 +430,12 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.clickOnSlider++;
 		$scope.classForm=$scope.clickOnSlider>=3?'form-body-simulator-able':'form-body-simulator';
 		$scope.inputDisable=false;
+		$scope.inputDisableButton=true;
 		}
 
 
 	$scope.inputDisable=true;
+	$scope.inputDisableButton=true;
 
 	$scope.showAlertError=false;
 
@@ -467,7 +473,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 			$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 		}else{	
 			if($scope.libranza.quaotaAvailable <= 148518 ){
-				$scope.inputDisable=true;
+				$scope.inputDisableButton=true;
 				$scope.showAlertError=true;
 				$scope.disableRange=true;
 				$scope.sliderAmount.options.disabled=$scope.disableRange;
@@ -476,7 +482,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 				$scope.basicSimulation(0,0,13,1000000);
 			}else{
 				if($scope.libranza.salary < 0 || $scope.libranza.salary == ''){
-					$scope.inputDisable=true;
+					$scope.inputDisableButton=true;
 					$scope.showAlertError=true;
 					$scope.disableRange=true;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;
@@ -484,7 +490,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 					$scope.sliderRate.options.disabled=$scope.disableRange;
 					$scope.basicSimulation(0,0,13,1000000);
 				}else{
-					$scope.inputDisable=false;
+					$scope.inputDisableButton=false;
 					$scope.showAlertError=false;
 					$scope.disableRange=false;
 					$scope.sliderAmount.options.disabled=$scope.disableRange;

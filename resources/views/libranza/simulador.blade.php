@@ -178,7 +178,7 @@
                                     </p>
                                 </div>
                                 <div class="formularioSimulador-containInput text-center">
-                                    <button type="submit" ng-disabled="inputDisable" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
+                                    <button type="submit" ng-disabled="inputDisableButton" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
                                 </div>
                             </form>
                         </div>
