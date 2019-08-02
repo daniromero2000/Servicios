@@ -371,11 +371,11 @@ class LibranzaController extends Controller
         $identificationNumber = Lead::select('identificationNumber')->where('id','=',$idLead[0]->idLead)->get();
         
         $validator = Validator::make($request->file(), [
-            'image_file' => 'required|image|max:50',
+            'image_file' => 'mimetypes:image/jpeg,image/png,application/pdf|max:1024',
         ]);
 
         $validatorDocument = Validator::make($request->file(), [
-            'document_file' => 'required|image|max:50',
+            'document_file' => 'mimetypes:image/jpeg,image/png,application/pdf|max:1024',
         ]);
  
         if (($validator->fails()) && ($validatorDocument->fails())) {

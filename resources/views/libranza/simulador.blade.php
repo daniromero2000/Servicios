@@ -169,7 +169,7 @@
                                 </div>
                                 <div class="row" ng-show="showAlertError">
                                     <div class="w-100 alert alert-danger" role="alert">
-                                        Por favor verifica la información ingresada
+                                        Por favor verifica la información ingresada o comunícate con nosotros para asesorarte
                                     </div>  
                                 </div>
                                 <div class="row">
