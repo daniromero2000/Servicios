@@ -90,7 +90,7 @@
                 <td>@{{ lead.lastName }}</td>
                 <td>@{{ lead.telephone }}</td>
                 <td>@{{ lead.city }}</td>
-                <td>@{{ lead.typeProduct }}</td>
+                <td>@{{ lead.creditLineName }}</td>
                 <td>@{{ lead.amount }}</td>
                 <td>@{{ lead.timeLimit }}</td>
                 <td>
