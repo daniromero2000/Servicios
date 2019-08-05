@@ -59,11 +59,12 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		@yield('linkStyleSheets')
 		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-		<link rel="stylesheet" href="{{ asset('css/app2.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/slick-theme.css')}}">
 		<link rel="stylesheet" href="{{ asset('css/slick.css')}}">
 		<link href="{{ asset('editor/contentbuilder/codemirror/lib/codemirror.css')}}" rel="stylesheet" type="text/css" />
+		<link href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/master/angular-material.css">
+		<link rel="stylesheet" href="{{ asset('css/app2.css') }}">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
@@ -359,7 +360,7 @@
 			]
 		});
 
-		$('#sliderPrincipalLibranza').slick({
+		/*$('#sliderPrincipalLibranza').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,
 			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
@@ -372,7 +373,7 @@
 					}
 				}
 			]
-		});
+		});*/
 
 		$('#creditoLibranza-slider').slick({
 			slidesToShow : 3,
@@ -419,7 +420,7 @@
         });
 
 		$(".multiple-items-motos").slick({
-          arrows: false,
+          
 		  infinite: true,
 		  slidesToShow: 3,
 		  slidesToScroll:3,
@@ -427,11 +428,13 @@
 	      verticalSwiping: true,
 	      asNavFor: '.single-item-motos',
 	      centerMode: true,
-	      focusOnSelect: true
+		  focusOnSelect: true,
+		  nextArrow: '<img src="/images/motos/arrow2.png" class="img-fluid not-shadow">',
+          prevArrow: '<img src="/images/motos/arrow.png" class="img-fluid not-shadow">',
         });
         $('.single-item-motos').slick({
 			arrows: false,
-			asNavFor: '.multiple-items-motos'
+			asNavFor: '.multiple-items-motos', 
 		});
 		
 	</script>
