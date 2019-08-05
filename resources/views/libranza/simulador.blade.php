@@ -36,7 +36,7 @@
     <div class="row resetRow">
         <div class="w-100">
             <p class="text-center simulator-text">
-                Crédito de libranza, para lo que necesites,con plazos <br>
+                Crédito de libranza, para lo que necesites,con plazos<br>
                 hasta 108 meses y montos hasta $60,000,000.
             </p>
         </div>
@@ -154,17 +154,17 @@
                                 <div layout="row"  ng-if="!quotaBuy">  
                                     <md-input-container flex="100" class="text-left">
                                         <label>Otros Descuentos</label>
-                                        <input ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" ng-blur="simulate()" ng-change="validateInt()">
                                     </md-input-container>
                                 </div> 
                                 <div layout="row"  ng-if="quotaBuy">  
                                     <md-input-container flex="50" class="text-left">
                                         <label>Otros Descuentos</label>
-                                        <input  ng-disabled="inputDisable" type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input  ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" ng-blur="simulate()" ng-change="validateInt()">
                                     </md-input-container>
                                     <md-input-container flex="50" class="text-left">
                                         <label>Valor Cuota Compra</label>
-                                        <input ng-disabled="inputDisable" type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input ng-disabled="inputDisable" type="text" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-currency fraction="0" ng-blur="simulate()" ng-change="validateInt()">
                                     </md-input-container>
                                 </div>
                                 <div class="row" ng-show="showAlertError">
