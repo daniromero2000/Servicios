@@ -1071,10 +1071,18 @@ class OportuyaV2Controller extends Controller
 		$this->updateLastIntencionLead($identificationNumber, 'TIPO_CLIENTE', $tipoCliente);
 		// 4.3 Edad. - Tomar campo teredad de la tabla cifin_tercero
 		$validateTipoCliente = TRUE;
-
+		$queryEdad = DB::connection('oportudata')->select("SELECT `teredad` FROM `cifin_tercero` WHERE `tercedula` = :identificationNumber ORDER BY `terconsul` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if($queryEdad == false || empty($queryEdad)){
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+		}
+		$edad = $queryEdad[0]->teredad;
+		$edad = explode('-',$edad);
+		$edadMin = $edad[0];
+		$edadMax = $edad[1];
 		if($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO'){
 			$validateTipoCliente = FALSE;
-			if($getDataCliente[0]->EDAD >= 18 && $getDataCliente[0]->EDAD <= 80){
+			if($edadMin >= 18 && $edadMax <= 80){
 				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
 			}else{
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
@@ -1084,7 +1092,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE){
-			if($getDataCliente[0]->EDAD >= 18 && $getDataCliente[0]->EDAD <= 75){
+			if($edadMin >= 18 && $edadMax <= 75){
 				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
 			}else{
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
@@ -1094,7 +1102,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE){
-			if($getDataCliente[0]->EDAD >= 18 && $getDataCliente[0]->EDAD <= 70){
+			if($edadMin >= 18 && $edadMax <= 70){
 				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
 			}else{
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
