@@ -29,7 +29,7 @@
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola!</strong> soy {{ $digitalAnalyst['name'] }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
-				<p class="text-center link-modal-oportuya"><a data-toggle="modal" href="#oportuyaBeneficiosModal"> Obtén más información sobre los beneficios y condiciones de tu tarjeta </a></p>
+				<p class="text-center "><a data-toggle="modal" href="#oportuyaBeneficiosModal"> Obtén más información sobre los beneficios y condiciones de tu tarjeta </a></p>
 				<h3 class="forms-text-analyst text-center">Solo te tomará unos minutos solicitar tu tarjeta Oportuya</h3>
 			</div>
 			<div class="col-12">

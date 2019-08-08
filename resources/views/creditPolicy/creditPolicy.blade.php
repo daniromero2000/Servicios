@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
+    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-controller="simulatePolicySingleCtrl" ng-class="{ 'show active': tabs == 2 }">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="headerAdmin ng-scope">Simular política / individual</h2>

@@ -293,7 +293,7 @@
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tienes un cupo pre-aprobado para avances en efectivo de:
+									Tienes un cupo pre-aprobado de:
 								</p>
 								<p class="text-quotamodal text-center">
 									$@{{ quota | number:0 }}

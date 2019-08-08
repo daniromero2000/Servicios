@@ -174,7 +174,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					$('#confirmNumCel').modal('show');
+					//$('#confirmNumCel').modal('show');
+					$scope.saveStep1();
 				}
 			}, function errorCallback(response) {
 				hideLoader();
@@ -252,14 +253,6 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				console.log(response);
-				if(response.data == "-1"){
-					window.location = "/OPN_gracias_denied"
-				}
-				if(response.data == "-2"){
-					$('#proccess').modal('hide');
-					setTimeout(function(){ $('#cardExist').modal('show');}, 100);
-				}
 				if (response.data == "1") {
 					$scope.encryptText();
 				}

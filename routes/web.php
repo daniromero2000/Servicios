@@ -94,7 +94,10 @@ Route::group(['prefix'=>'/assessor/'],function(){
 	Route::get('/password/reset/{token}','Assessor\ResetPasswordController@showResetForm')->name('assessors.password.reset');
 	Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('assessor.logout');
     Route::group(['prefix' => '/forms/'], function(){
-        Route::get('ventaContado/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+        Route::get('crearCliente/', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+        Route::get('analisis/', function(){
+            return view('assessors.forms.analisis');
+        })->name('assessorAnalisis');
     });
     Route::group(['prefix' => '/api/'], function(){
         Route::get('ventaContado/getInfoVentaContado', 'Admin\assessorsController@getInfoVentaContado');
@@ -182,7 +185,7 @@ Route::group(['prefix'=>'api/'],function(){
     Route::get('oportuya/getContactData/{identificationNumber}', 'Admin\OportuyaV2Controller@getContactData');
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
-
+    Route::get('oportuya/execConsultasLead/{identificationNumber}/{tipoDoc}/{tipoCreacion}', 'Admin\OportuyaV2Controller@execConsultasLead');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 
