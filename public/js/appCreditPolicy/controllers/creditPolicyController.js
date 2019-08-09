@@ -125,6 +125,7 @@ app.controller('simulatePolicyGroupCtrl', function($scope, $http){
 	$scope.showResult = false;
 	$scope.leads = [];
 	$scope.noExistLeads = {};
+	$scope.idResultado;
 	const $archivos = document.querySelector("#archivos");
 	$scope.enviarFormulario = function () {
 		showLoader();
@@ -151,18 +152,25 @@ app.controller('simulatePolicyGroupCtrl', function($scope, $http){
 			$http
 				.post("/api/oportuya/creditPolicy/simulateGroup", formdata, configuracion)
 				.then(function (response) {
+					console.log(response);
 					hideLoader();
 					$scope.showResult = true;
 					angular.forEach(response.data.leads, function(value, key) {
 						$scope.leads.push(value);
 					});
 					$scope.noExistLeads = response.data.noExist;
+					$scope.idResultado = response.data.idResultado;
 				})
 				.catch(function (detallesDelError) {
+					hideLoader();
 					console.warn("Error al enviar archivos:", detallesDelError);
 				})
 		} else {
 			alert("Rellena el formulario y selecciona algunos archivos");
 		}
+	};
+
+	$scope.getResultadoPoliticaExcell = function(){
+		window.location.href="/api/oportuya/creditPolicy/download/resultadoPolitica/" + $scope.idResultado;
 	};
 });

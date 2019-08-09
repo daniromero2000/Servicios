@@ -144,7 +144,8 @@ return [
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,	
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
         // Captcha
@@ -177,7 +178,7 @@ return [
     */
 
     'aliases' => [
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

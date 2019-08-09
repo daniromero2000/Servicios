@@ -165,7 +165,10 @@
             <div class="col-12 text-center">
                 <h2 class="headerAdmin ng-scope">Resultado</h2>
             </div>
-            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+            <div class="col-12 col-md-2">
+                <button class="btn btn-primary" ng-click="getResultadoPoliticaExcell()">Exportar a Excel</button>
+            </div>
+            <div class="col-sm-12 offset-md-6 col-md-4 text-right">
                 <div class="input-group mb-3">
                     <input type="text" ng-model="test" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">

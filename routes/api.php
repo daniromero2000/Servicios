@@ -30,5 +30,6 @@ Route::group(['prefix' => '/oportuya'], function(){
     Route::group(['prefix' => '/creditPolicy'], function(){
         Route::post('/simulateGroup','Admin\OportuyaV2Controller@simulatePolicyGroup');
         Route::get('/simulatePolicy/{cedula}', 'Admin\OportuyaV2Controller@simulatePolicy');
+        Route::get('/download/resultadoPolitica/{id}', 'Admin\OportuyaV2Controller@downloadResultadoPolitica');
     });
 });

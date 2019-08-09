@@ -33,6 +33,7 @@ use App\DatosCliente;
 use App\Intenciones;
 use App\cliCel;
 use App\CreditPolicy;
+use App\ResultadoPolitica;
 use App\LeadInfo;
 use App\OportuyaV2;
 use App\Tarjeta;
@@ -46,6 +47,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\ResultadoPoliticaExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
@@ -818,6 +821,7 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function simulatePolicyGroup(){
+		$resultadoPolitica = new ResultadoPolitica;
 		$archivoName = "";
 		$result = [];
 		$noExists = [];
@@ -841,10 +845,24 @@ class OportuyaV2Controller extends Controller
 				}
 			}
 		}
-
 		fclose($fp);
+		$resultadoPolitica->RESULTADO = json_encode($result);
+		$resultadoPolitica->save();
 		
-		return response()->json(['leads' => $result, 'noExist' => $noExists]);
+		//$this->exportCsv($result, "plantillaLeads.csv");
+		
+		return response()->json(['leads' => $result, 'noExist' => $noExists, 'idResultado' => $resultadoPolitica->ID]);
+	}
+
+	public function downloadResultadoPolitica($id){
+		
+
+		$export = new ResultadoPoliticaExport([
+			[1, 2, 3],
+			[4, 5, 6]
+		]);
+	
+		return Excel::download($export, 'invoices.xlsx');
 	}
 
 	public function simulatePolicy($cedula){
