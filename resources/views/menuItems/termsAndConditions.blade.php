@@ -314,6 +314,37 @@
 					<li type="disc">Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. </li>
 				</ul>
 			</p>
+			<h2 class="menuItem-subtitle">Mecánica del Concurso :</h2>
+			<p class="menuItem-text">
+				Entre los días 9,10 y11 de agosto de 2019, se entregará una boleta a todas las personas mayores de 57 años, que nos visiten en  nuestro stand (LAGOBO  PABELLON 3 LOCAL 402), para participar en la rifa de una SILLA RECLINOMATICA NIHAO DUXTER GRIS, la cual tiene un precio en el mercado de Setecientos Ochenta y Cuatro Mil Pesos ($784.000), que incluye la entrega (*) y una garantía de 3 meses. 
+			</p>
+			<p class="menuItem-text">
+				El sorteo se realizará en el Local 402 del pabellón No 3 de CORFERIAS en la ciudad de Bogotá D.C. , el día 11 de Agosto de 2019 a la hora de las 4 pm.
+			</p>
+			<p class="menuItem-text">
+				El día 11 de Agosto de 2019 siendo las 4 pm, se sacaran de la urna (al azar) tres (03) cupones de participación, tomando como ganador el último cupón seleccionado (Tercer cupón) y se procederá a informar ante los presentes y testigos de manera inmediata y verbal el ganador. El cupón seleccionado deberá estar totalmente diligenciado (Nombre, Apellido, No de Cédula, Ciudad, Dirección, Correo Electrónico y No de Celular), si el cupón seleccionado como ganador no cumple con lo anterior  será  excluido de la rifa y se procederá a reincorporar en la urna los dos cupones restantes para proceder a efectuar nuevamente el sorteo descrito. 
+			</p>
+			<p class="menuItem-text">
+				Una vez efectuado el sorteo y en caso de que el ganador no esté presente, se realizará la llamada al celular o teléfono que se registró en el cupón, para informar al ganador sobre el resultado y así mismo coordinar la entrega del producto (SILLA RECLINOMATICA NIHAO DUXTER GRIS) 
+			</p>
+			<p class="menuItem-text">
+				Registro Fotográfico del ganador: El ganador autoriza libre, irrevocable y expresamente a LAGOBO o a quien represente sus derechos para que directamente o a través de terceros, tome registro fotográfico del Cupón, del premio y de él mismo,  con la finalidad de darlo a conocer por los medios que se establezcan  ( Página Web, Redes Sociales, Carteleras de Almacenes, etc..) 
+			</p>
+			<p class="menuItem-text">
+				(*) La entrega del premio se realizará sin costo en la ciudad registrada en el cupón, siempre que corresponda a los municipios donde se ubican nuestros Almacenes Oportunidades (consultar lista de Almacenes en www.oportunidades.com) o en las ciudades de Bogotá, Medellín, Cali, Barranquilla y Bucaramanga. Si el ganador requiere remisión a una ciudad o municipio diferente de los señalados, se le informará en debida forma sobre el costo que deberá asumir para tal fin. En cualquier caso la entrega del premio se llevara a cabo dentro de los 8 días hábiles siguientes a la fecha del sorteo. 
+			</p>
+			<h2 class="menuItem-subtitle">Autorización Tratamiento de Datos Personales</h2>
+			<p class="menuItem-text">
+				Con la firma de este documento manifiesto que he sido informado por LAGOBO DISTRIBUCIONES S.A.S. L.G.B. S.A.S. sociedad comercial identificada con NIT 800,135,342-6 ( EN ADELANTE "Lagobo" ) de que: Autorizo libre, irrevocable y expresamente a "LAGOBO", o a quien represente sus derechos, para que directamente o a través de terceros, recolecte, almacene, use, consulte, comparta, intercambie, transmita, transfiera, circule, suprima, procese, actualice y/o cruce con información propia o de terceros en cualquier tecnología conocida o por conocer, la información personal entregada, mis datos de contacto e información sobre preferencias de consumo y comportamiento financiero, con la finalidad de : a) Realizar labores de comercialización y distribución de bienes y servicios de sus filiales y/o afiliados comerciales, b) Realizar actividades de publicidad y mercadeo de sus productos y servicios, y de los productos y servicios de sus filiales y/o aliados comerciales, c) Realizar actividades estadísticas, d) Realizar análisis de riesgo crediticio, estudios financieros, seguimiento y control de crédito, e) Realizar reportes a centrales de riesgo, f) Desplegar operaciones de cartera, y procesos de cobranzas, g) Enviar correos electrónicos, publicada digital, mensajes de texto, realizar llamadas y enviar correspondencia al domicilio, h) Desarrollar otra actividad que se relacione con el objeto de LAGOBO, sus filiales o aliados comerciales, o quien represente sus derechos. Asimismo, acepto la venta o cesión de los derechos que adquiere LAGOBO a otra persona.
+			</p>
+			<ul>
+				<li type="disc">LAGOBO actuará como responsable del tratamiento de los datos personales de los que soy titular y que conjunta o separadamente podrán recolectar, usar y tratar mis datos personales conforme a la política de datos personales de LAGOBO.</li>
+				<li type="disc">Es de carácter facultativo responder preguntas que versen sobre datos sensibles o sobre menores de edad.</li>
+				<li type="disc">El tratamiento de mis datos personales estará sujeto a la protección establecida en la Ley 1581 de 2012 y demás normas que lo reglamenten o modifiquen, en cualquier momento podré ejercer los derechos establecidos en estas normas y en especial la de conocer, actualiza, rectificar y revocar la autorización otorgada, para tal efecto utilizaré los canales y medios descritos en la POLITICA DE TRATAMIENTO DE LA INFORMACION Y PROTECCION DE DATOS PERSONALES , aprobada y publicada por LAGOBO, la cual podrá ser consultada en la página web www.oportunidades.com.co .</li>
+				<li type="disc">Para cualquier inquietud o información relacionada con el tratamiento de datos personales puedo contactarme al correo electrónicos servicioalcliente@lagobo.com, o a la línea gratuita nacional 01800011778737.</li>
+				<li type="disc">LAGOBO garantiza la confidencialidad, libertad, seguridad, veracidad, transparencia, acceso y circulación restringida de mis datos y se reserva el derecho de modificar su política de tratamiento de datos personales en cualquier momento. Cualquier cambio será informado y publicado oportunamente para el conocimiento de los titulares de la información.</li>
+				<li type="disc">La información obtenida para el tratamiento de mis datos personales la he suministrado forma voluntaria y es verídica.</li>
+			</ul>
 		</div>
 	</div>
 @endsection
