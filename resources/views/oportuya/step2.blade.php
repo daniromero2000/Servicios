@@ -79,7 +79,7 @@
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="cityExpedition">Ciudad Expedición Documento* </label>
-					    <select class="form-control inputsSteps inputSelect" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.label as city.label for city in cities" required></select>
+					    <select class="form-control inputsSteps inputSelect" id="cityExpedition" ng-model="leadInfo.cityExpedition" ng-options="city.value as city.label for city in cities" required></select>
 					</div>
 				</div>
 				<div class="row resetRow">
