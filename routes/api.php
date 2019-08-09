@@ -25,3 +25,10 @@ Route::get('/admin/getDataLibranza','Admin\LibranzaController@libranzaData');
 Route::put('/addAmount/{idLead}','Admin\LibranzaController@addAmount');
 Route::put('/updateLiquidator/{idLead}','Admin\LibranzaController@updateLiquidator');
 Route::post('/upload/file','Admin\LibranzaController@uploadFile');
+
+Route::group(['prefix' => '/oportuya'], function(){
+    Route::group(['prefix' => '/creditPolicy'], function(){
+        Route::post('/simulateGroup','Admin\OportuyaV2Controller@simulatePolicyGroup');
+        Route::get('/simulatePolicy/{cedula}', 'Admin\OportuyaV2Controller@simulatePolicy');
+    });
+});

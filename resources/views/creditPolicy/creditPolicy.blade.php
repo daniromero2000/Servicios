@@ -148,22 +148,58 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 3 }">
+    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-controller="simulatePolicyGroupCtrl" ng-class="{ 'show active': tabs == 3 }">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="headerAdmin ng-scope">Simular política / Grupos</h2>
             </div>
         </div>
-        <div class="row form-group">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>Filtros de búsqueda</strong>
-                    </div>
-                    <div class="card-body">
-                        
+        <div class="row">
+            <div class="col-12 col-sm-6 offset-sm-2">
+                <h3 class="simulateGroup-title">Cargar Archivo</h3>
+                <input id="archivos" type="file" name="archivo" class="form-control form-group" />
+                <button class="btn btn-primary" ng-click="enviarFormulario()">Enviar</button>
+            </div>
+        </div>
+        <div class="row" ng-if="showResult">
+            <div class="col-12 text-center">
+                <h2 class="headerAdmin ng-scope">Resultado</h2>
+            </div>
+            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="test" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon"><i class="fas fa-search"></i></span>
                     </div>
                 </div>
+            </div>
+            <div class="col-12">
+                    <div class="table table-responsive ng-scope">
+                        <table class="table table-hover table-stripped leadTable">
+                            <thead class="headTableLeads">
+                                <tr>
+                                    <th>Cédula</th>
+                                    <th>Estado</th>
+                                    <th>Descripción</th>
+                                    <th>Tarjeta</th>
+                                    <th>Score</th>
+                                    <th>Sucursal</th>
+                                    <th>Característica</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lead in leads | filter : test">
+                                    <td>@{{ lead.CEDULA }}</td>
+                                    <td>@{{ lead.ESTADO }}</td>
+                                    <td>@{{ lead.DESCRIPCION + " / " + lead.ID_DEF}}</td>
+                                    <td>@{{ lead.TARJETA }}</td>
+                                    <td>@{{ lead.score }}</td>
+                                    <td>@{{ lead.SUC }}</td>
+                                    <td>@{{ lead.CARACTERISTICA }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>
