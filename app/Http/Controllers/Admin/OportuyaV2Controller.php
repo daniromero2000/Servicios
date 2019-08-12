@@ -33,6 +33,7 @@ use App\DatosCliente;
 use App\Intenciones;
 use App\cliCel;
 use App\CreditPolicy;
+use App\ResultadoPolitica;
 use App\LeadInfo;
 use App\OportuyaV2;
 use App\Tarjeta;
@@ -46,6 +47,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\ExportToExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
@@ -817,27 +820,112 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	public function simulatePolicy(Request $request){
+	public function simulatePolicyGroup(){
+		$resultadoPolitica = new ResultadoPolitica;
+		$archivoName = "";
+		$result = [];
+		$noExists = [];
+		foreach ($_FILES as $archivo) {
+			$archivoName = $archivo["tmp_name"];
+		}
+
+		$fp = fopen($archivoName, "r");
+
+		while(!feof($fp)) {
+			$linea = fgets($fp);
+			$buscar=array(chr(13).chr(10), "\r\n", "\n", "\r");
+			$reemplazar=array("", "", "", "");
+			$lineaCed = str_ireplace($buscar,$reemplazar,$linea);
+			if($lineaCed != ''){
+				$resultPolicy = $this->simulatePolicy($lineaCed);
+				if($resultPolicy == "-1" || $resultPolicy == "-2"){
+					$noExists[] = $lineaCed;
+				}else{
+					$result[$lineaCed] = $resultPolicy[0];
+				}
+			}
+		}
+		fclose($fp);
+		$resultadoPolitica->RESULTADO = json_encode($result);
+		$resultadoPolitica->save();
+		
+		return response()->json(['leads' => $result, 'noExist' => $noExists, 'idResultado' => $resultadoPolitica->ID]);
+	}
+
+	public function downloadResultadoPolitica($id){
+		$queryResultado = DB::connection('oportudata')->select("SELECT `RESULTADO` FROM `TB_RESULTADO_POLITICA` WHERE `ID` = :id ", ['id' => $id]);
+		$resultado = json_decode($queryResultado[0]->RESULTADO);
+		$resultado = (array) $resultado;
+		$printExcel = [];
+		$cont = 0;
+		$tipoDoc = "";
+		foreach ($resultado as $key => $value) {
+			$tipoDoc = "";
+			switch ($value->TIPO_DOC) {
+				case '1':
+					$tipoDoc = 'Cédula de ciudadanía';
+					break;
+				
+				case '2':
+					$tipoDoc = "NIT";
+					break;
+
+				case '3':
+					$tipoDoc = "Cédula de extranjería";
+					break;
+				
+				case '4':
+					$tipoDoc = "Tarjeta de identidad";
+					break;
+				
+				case '5':
+					$tipoDoc = "Pasaporte";
+					break;
+
+				case '6':
+					$tipoDoc = "Tarjeta seguro social extranjero";
+					break;
+
+				case '7':
+					$tipoDoc = "Sociedad extranjera sin NIT en Colombia";
+					break;
+
+				case '8':
+					$tipoDoc = "Fidecoismo";
+					break;
+			}
+			$cont ++;
+			if($cont == 1){
+				$printExcel[] = ['Tipo de documento', 'Cédula', 'Tipo de cliente', 'Fecha de Nacimiento', 'Tipo de vivienda', 'Actividad como independiente', 'Tiempo en labor', 'Sueldo', 'Otros ingresos', 'Sucursal', 'Dirección', 'Celular', 'Fecha creación', 'Score', 'Tarjeta', 'Estado', 'Descripción', 'Característica'];
+			}
+			$printExcel[] = [$tipoDoc, $value->CEDULA, $value->TIPO_CLIENTE, $value->FEC_NAC, $value->TIPOV, $value->ACT_IND, $value->TIEMPO_LABOR, $value->SUELDO, $value->OTROS_ING, $value->SUELDOIND, $value->SUC, $value->DIRECCION, $value->CELULAR, $value->CREACION, $value->score, $value->TARJETA, $value->ESTADO, $value->DESCRIPCION." / ".$value->ID_DEF, $value->CARACTERISTICA];
+		}
+		$export = new ExportToExcel($printExcel);
+	
+		return Excel::download($export, 'resultadoPolitica.xlsx');
+	}
+
+	public function simulatePolicy($cedula){
 		$intencion = new Intenciones;
-		$intencion->CEDULA = $request->cedula;
+		$intencion->CEDULA = $cedula;
 		$intencion->save();
 		$queryLeadExist = DB::connection('oportudata')->select('SELECT COUNT(`CEDULA`) as total 
 		FROM `CLIENTE_FAB`
-		WHERE `CEDULA` = :cedula ', ['cedula' => $request->cedula]);
+		WHERE `CEDULA` = :cedula ', ['cedula' => $cedula]);
 
 		if($queryLeadExist[0]->total < 1){
-			return -1;
+			return "-1";
 		}
 
 		$queryLeadExistConsultaWs = DB::connection('oportudata')->select("SELECT COUNT(`cedula`) as total
 		from `consulta_ws`
-		WHERE `cedula` = :cedula ", ['cedula' => $request->cedula]);
+		WHERE `cedula` = :cedula ", ['cedula' => $cedula]);
 
 		if($queryLeadExistConsultaWs < 1){
-			return -2;
+			return "-2";
 		}
 
-		$this->validatePolicyCredit_new($request->cedula);
+		$this->validatePolicyCredit_new($cedula);
 
 		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
 		FROM `CLIENTE_FAB` as cf
@@ -846,7 +934,7 @@ class OportuyaV2Controller extends Controller
 		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
 		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
 		ORDER BY FECHA_INTENCION DESC 
-		LIMIT 1', ['cedula' => $request->cedula, 'cedulaScore' => $request->cedula]);
+		LIMIT 1', ['cedula' => $cedula, 'cedulaScore' => $cedula]);
 
 		return $queryDataLead;
 	}
@@ -2167,50 +2255,5 @@ class OportuyaV2Controller extends Controller
 		$string = str_replace($controls, $replaces, $string); 
 
 		return $string;
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 }

@@ -1,6 +1,6 @@
 app.controller('creditPolicyController', function($scope, $http, $rootScope, $location, $ngBootbox){
 	$ngBootbox.setLocale('es');
-	$scope.tabs = 1;
+	$scope.tabs = 3;
 	$scope.credit={
 		timeLimitAdmin : '',
 		timeLimitPublic : ''
@@ -99,15 +99,14 @@ app.controller('simulatePolicySingleCtrl', function($scope, $http){
 	$scope.simulate = function(){
 		showLoader();
 		$http({
-			method : 'POST',
-			url : '/api/oportuya/simulatePolicy',
-			data : $scope.lead
+			method : 'GET',
+			url : '/api/oportuya/creditPolicy/simulatePolicy/' + $scope.lead.cedula,
 		}).then(function successCallback(response){
 			hideLoader();
-			if(response.data == -1){
+			if(response.data == "-1"){
 				$scope.showMessageNoExistClienteFab = true;
 				$scope.showResp = false;
-			}else if(response.data == -2){
+			}else if(response.data == "-2"){
 				$scope.showMessageNoExistConsulta = true;
 				$scope.showResp = false;
 			}else{
@@ -119,5 +118,59 @@ app.controller('simulatePolicySingleCtrl', function($scope, $http){
 		}, function errorCallback(response){
 			console.log(response);
 		});
+	};
+});
+
+app.controller('simulatePolicyGroupCtrl', function($scope, $http){
+	$scope.showResult = false;
+	$scope.leads = [];
+	$scope.noExistLeads = {};
+	$scope.idResultado;
+	const $archivos = document.querySelector("#archivos");
+	$scope.enviarFormulario = function () {
+		showLoader();
+		let archivos = $archivos.files;
+		if (archivos.length > 0) {
+			let formdata = new FormData();
+			// Agregar cada archivo al formdata
+
+			angular.forEach(archivos, function (archivo) {
+				formdata.append(archivo.name, archivo);
+			});
+
+			// Finalmente agregamos el nombre
+			formdata.append("nombre", "clientes");
+			// Hora de enviarlo
+			// Primero la configuración
+			let configuracion = {
+				headers: {
+					"Content-Type": undefined,
+				},
+				transformRequest: angular.identity,
+			};
+			// Ahora sí
+			$http
+				.post("/api/oportuya/creditPolicy/simulateGroup", formdata, configuracion)
+				.then(function (response) {
+					console.log(response);
+					hideLoader();
+					$scope.showResult = true;
+					angular.forEach(response.data.leads, function(value, key) {
+						$scope.leads.push(value);
+					});
+					$scope.noExistLeads = response.data.noExist;
+					$scope.idResultado = response.data.idResultado;
+				})
+				.catch(function (detallesDelError) {
+					hideLoader();
+					console.warn("Error al enviar archivos:", detallesDelError);
+				})
+		} else {
+			alert("Rellena el formulario y selecciona algunos archivos");
+		}
+	};
+
+	$scope.getResultadoPoliticaExcell = function(){
+		window.location.href="/api/oportuya/creditPolicy/download/resultadoPolitica/" + $scope.idResultado;
 	};
 });

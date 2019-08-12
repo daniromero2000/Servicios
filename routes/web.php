@@ -139,7 +139,6 @@ Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\Opo
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');
 Route::get('api/oportuya/getNumLead/{identificationNumber}', 'Admin\OportuyaV2Controller@getNumLead');
-Route::post('api/oportuya/simulatePolicy', 'Admin\OportuyaV2Controller@simulatePolicy');
 // Pasos solictud cupo
 Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
 Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');
@@ -313,15 +312,6 @@ Route::group(['prefix'=>'/adminUsers/','middleware' => 'auth'],function(){
 // Administrator
 Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
 
-
-    /**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: Libranza leads
-    **Autor: Robert García
-    **Email: desarrollo1@lagobo.com
-    **Fecha: 25/01/2019
-    **/
-
     Route::get("/libranzaLeads",function(){
         if(Auth::guest()){
             return view('auth.login');
@@ -335,14 +325,6 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('libranzaLeads.leads');
         });
     });
-    
-    /**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: Simulador de crédito
-    **Autor: Robert García
-    **Email: desarrollo1@lagobo.com
-    **Fecha: 23/02/2019
-    **/
 
     Route::group(['prefix'=>'/simulador/'],function(){ 
 

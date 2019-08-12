@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+	<link rel="stylesheet" href="{{ asset('css/creditPolicy/creditPolicy.css') }}">
 @endsection
 @section('content')
     <div ng-app="creditPolicyApp" class="containerleads container">
