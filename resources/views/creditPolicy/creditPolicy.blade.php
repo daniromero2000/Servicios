@@ -151,7 +151,7 @@
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-controller="simulatePolicyGroupCtrl" ng-class="{ 'show active': tabs == 3 }">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="headerAdmin ng-scope">Simular política / MAsivo</h2>
+                <h2 class="headerAdmin ng-scope">Simular política / Masivo</h2>
             </div>
         </div>
         <div class="row">
