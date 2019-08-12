@@ -896,7 +896,7 @@ class OportuyaV2Controller extends Controller
 			}
 			$cont ++;
 			if($cont == 1){
-				$printExcel[] = ['Tipo de documento', 'Cédula', 'Tipo de cliente', 'Fecha de Nacimiento', 'Tipo de vivienda', 'Actividad como independiente', 'Tiempo en labor', 'Sueldo', 'Otros ingresos', 'Sucursal', 'Dirección', 'Celular', 'Fecha creación', 'Score', 'Tarjeta', 'Estado', 'Descripción', 'Característica'];
+				$printExcel[] = ['Tipo de documento', 'Cédula', 'Tipo de cliente', 'Fecha de Nacimiento', 'Tipo de vivienda', 'Actividad como independiente', 'Tiempo en labor', 'Sueldo', 'Otros ingresos', 'Sueldo como independiente','Sucursal', 'Dirección', 'Celular', 'Fecha creación', 'Score', 'Tarjeta', 'Estado', 'Descripción', 'Característica'];
 			}
 			$printExcel[] = [$tipoDoc, $value->CEDULA, $value->TIPO_CLIENTE, $value->FEC_NAC, $value->TIPOV, $value->ACT_IND, $value->TIEMPO_LABOR, $value->SUELDO, $value->OTROS_ING, $value->SUELDOIND, $value->SUC, $value->DIRECCION, $value->CELULAR, $value->CREACION, $value->score, $value->TARJETA, $value->ESTADO, $value->DESCRIPCION." / ".$value->ID_DEF, $value->CARACTERISTICA];
 		}
