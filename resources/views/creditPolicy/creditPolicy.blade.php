@@ -2,7 +2,7 @@
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Parametría</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Simular Individual</a>
-        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-general">Simular Grupo</a>
+        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-general">Simular Masivo</a>
     </div>
 </nav>
 
@@ -151,7 +151,7 @@
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab" ng-controller="simulatePolicyGroupCtrl" ng-class="{ 'show active': tabs == 3 }">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="headerAdmin ng-scope">Simular política / Grupos</h2>
+                <h2 class="headerAdmin ng-scope">Simular política / MAsivo</h2>
             </div>
         </div>
         <div class="row">
