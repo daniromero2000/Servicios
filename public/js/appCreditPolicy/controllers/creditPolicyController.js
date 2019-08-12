@@ -1,6 +1,6 @@
 app.controller('creditPolicyController', function($scope, $http, $rootScope, $location, $ngBootbox){
 	$ngBootbox.setLocale('es');
-	$scope.tabs = 3;
+	$scope.tabs = 1;
 	$scope.credit={
 		timeLimitAdmin : '',
 		timeLimitPublic : ''
