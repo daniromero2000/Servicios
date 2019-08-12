@@ -158,7 +158,7 @@
             <div class="col-12 col-sm-6 offset-sm-2">
                 <h3 class="simulateGroup-title">Cargar Archivo</h3>
                 <input id="archivos" type="file" name="archivo" class="form-control form-group" />
-                <button class="btn btn-primary" ng-click="enviarFormulario()">Enviar</button>
+                <button class="btn btn-primary" ng-click="enviarFormulario()">Aplicar política</button>
             </div>
         </div>
         <div class="row" ng-if="showResult">
@@ -177,32 +177,32 @@
                 </div>
             </div>
             <div class="col-12">
-                    <div class="table table-responsive ng-scope">
-                        <table class="table table-hover table-stripped leadTable">
-                            <thead class="headTableLeads">
-                                <tr>
-                                    <th>Cédula</th>
-                                    <th>Estado</th>
-                                    <th>Descripción</th>
-                                    <th>Tarjeta</th>
-                                    <th>Score</th>
-                                    <th>Sucursal</th>
-                                    <th>Característica</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="lead in leads | filter : test">
-                                    <td>@{{ lead.CEDULA }}</td>
-                                    <td>@{{ lead.ESTADO }}</td>
-                                    <td>@{{ lead.DESCRIPCION + " / " + lead.ID_DEF}}</td>
-                                    <td>@{{ lead.TARJETA }}</td>
-                                    <td>@{{ lead.score }}</td>
-                                    <td>@{{ lead.SUC }}</td>
-                                    <td>@{{ lead.CARACTERISTICA }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table table-responsive ng-scope">
+                    <table class="table table-hover table-stripped leadTable">
+                        <thead class="headTableLeads">
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Estado</th>
+                                <th>Descripción</th>
+                                <th>Tarjeta</th>
+                                <th>Score</th>
+                                <th>Sucursal</th>
+                                <th>Característica</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lead in leads | filter : test">
+                                <td>@{{ lead.CEDULA }}</td>
+                                <td>@{{ lead.ESTADO }}</td>
+                                <td>@{{ lead.DESCRIPCION + " / " + lead.ID_DEF}}</td>
+                                <td>@{{ lead.TARJETA }}</td>
+                                <td>@{{ lead.score }}</td>
+                                <td>@{{ lead.SUC }}</td>
+                                <td>@{{ lead.CARACTERISTICA }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
