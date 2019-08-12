@@ -47,7 +47,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Exports\ResultadoPoliticaExport;
+use App\Exports\ExportToExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
@@ -849,20 +849,60 @@ class OportuyaV2Controller extends Controller
 		$resultadoPolitica->RESULTADO = json_encode($result);
 		$resultadoPolitica->save();
 		
-		//$this->exportCsv($result, "plantillaLeads.csv");
-		
 		return response()->json(['leads' => $result, 'noExist' => $noExists, 'idResultado' => $resultadoPolitica->ID]);
 	}
 
 	public function downloadResultadoPolitica($id){
-		
+		$queryResultado = DB::connection('oportudata')->select("SELECT `RESULTADO` FROM `TB_RESULTADO_POLITICA` WHERE `ID` = :id ", ['id' => $id]);
+		$resultado = json_decode($queryResultado[0]->RESULTADO);
+		$resultado = (array) $resultado;
+		$printExcel = [];
+		$cont = 0;
+		$tipoDoc = "";
+		foreach ($resultado as $key => $value) {
+			$tipoDoc = "";
+			switch ($value->TIPO_DOC) {
+				case '1':
+					$tipoDoc = 'Cédula de ciudadanía';
+					break;
+				
+				case '2':
+					$tipoDoc = "NIT";
+					break;
 
-		$export = new ResultadoPoliticaExport([
-			[1, 2, 3],
-			[4, 5, 6]
-		]);
+				case '3':
+					$tipoDoc = "Cédula de extranjería";
+					break;
+				
+				case '4':
+					$tipoDoc = "Tarjeta de identidad";
+					break;
+				
+				case '5':
+					$tipoDoc = "Pasaporte";
+					break;
+
+				case '6':
+					$tipoDoc = "Tarjeta seguro social extranjero";
+					break;
+
+				case '7':
+					$tipoDoc = "Sociedad extranjera sin NIT en Colombia";
+					break;
+
+				case '8':
+					$tipoDoc = "Fidecoismo";
+					break;
+			}
+			$cont ++;
+			if($cont == 1){
+				$printExcel[] = ['Tipo de documento', 'Cédula', 'Tipo de cliente', 'Fecha de Nacimiento', 'Tipo de vivienda', 'Actividad como independiente', 'Tiempo en labor', 'Sueldo', 'Otros ingresos', 'Sucursal', 'Dirección', 'Celular', 'Fecha creación', 'Score', 'Tarjeta', 'Estado', 'Descripción', 'Característica'];
+			}
+			$printExcel[] = [$tipoDoc, $value->CEDULA, $value->TIPO_CLIENTE, $value->FEC_NAC, $value->TIPOV, $value->ACT_IND, $value->TIEMPO_LABOR, $value->SUELDO, $value->OTROS_ING, $value->SUELDOIND, $value->SUC, $value->DIRECCION, $value->CELULAR, $value->CREACION, $value->score, $value->TARJETA, $value->ESTADO, $value->DESCRIPCION." / ".$value->ID_DEF, $value->CARACTERISTICA];
+		}
+		$export = new ExportToExcel($printExcel);
 	
-		return Excel::download($export, 'invoices.xlsx');
+		return Excel::download($export, 'resultadoPolitica.xlsx');
 	}
 
 	public function simulatePolicy($cedula){
