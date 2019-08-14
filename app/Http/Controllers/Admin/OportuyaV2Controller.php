@@ -1157,7 +1157,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->updateLastIntencionLead($identificationNumber, 'TIPO_CLIENTE', $tipoCliente);
-		// 4.3 Edad. - Tomar campo teredad de la tabla cifin_tercero
+		// 4.3 Edad.
 		$validateTipoCliente = TRUE;
 		$queryEdad = DB::connection('oportudata')->select("SELECT `teredad` FROM `cifin_tercero` WHERE `tercedula` = :identificationNumber ORDER BY `terconsul` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if($queryEdad == false || empty($queryEdad)){
@@ -1284,10 +1284,6 @@ class OportuyaV2Controller extends Controller
 		
 		if($aprobado == true){
 			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
-		}else{
-			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', '', '3.8');
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return "false";
 		}
 
 		// 5 Definiciones cliente
