@@ -164,6 +164,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				method: 'GET',
 				url: '/api/oportuya/validationLead/'+$scope.leadInfo.identificationNumber,
 			}).then(function successCallback(response) {
+
 				hideLoader();
 				if(response.data == -1){
 					$('#cardExist').modal('show');
@@ -174,8 +175,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					$('#confirmNumCel').modal('show');
-					//$scope.saveStep1();
+					//$('#confirmNumCel').modal('show');
+					$scope.saveStep1();
 				}
 			}, function errorCallback(response) {
 				hideLoader();

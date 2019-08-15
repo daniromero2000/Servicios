@@ -64,7 +64,7 @@
 					<span class="forms-descStepNum">1</span>
 				</div>
 			</div>
-			<form role=form id="saveLeadOportuya" ng-submit="confirmNumCel()">
+			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
 				<div class="row resetRow">
 					<div class="col-12 col-sm-4 form-group">
 						<label for="typeDocument">Tipo de documento*</label>
