@@ -1295,6 +1295,9 @@ class OportuyaV2Controller extends Controller
 		
 		if($aprobado == true){
 			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
+		}else{
+			$tarjeta = "Crédito Tradicional";
+			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
 		}
 
 		// 5 Definiciones cliente
