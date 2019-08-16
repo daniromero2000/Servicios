@@ -866,6 +866,10 @@ class OportuyaV2Controller extends Controller
 		$tipoDoc = "";
 		foreach ($resultado as $key => $value) {
 			$tipoDoc = "";
+			$motivoRechazo = "";
+			$tiempoLabor = "";
+			$ingresos = "";
+			$triplea = "";
 			switch ($value->TIPO_DOC) {
 				case '1':
 					$tipoDoc = 'Cédula de ciudadanía';
@@ -899,11 +903,21 @@ class OportuyaV2Controller extends Controller
 					$tipoDoc = "Fidecoismo";
 					break;
 			}
+			if($value->ESTADO == 'NEGADO'){
+				$motivoRechazo = $value->DESCRIPCION."/".$value->ID_DEF;
+			}
+			if($value->ACTIVIDAD == 'RENTISTA' || $value->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $value->ACTIVIDAD == 'NO CERTIFICADO'){
+				$tiempoLabor = $value->EDAD_INDP;
+				$ingresos = $value->SUELDOIND;
+			}else{
+				$ingresos = $value->SUELDO;
+				$tiempoLabor = $value->ANTIG;
+			}
 			$cont ++;
 			if($cont == 1){
-				$printExcel[] = ['Tipo de documento', 'Cédula', 'Tipo de cliente', 'Fecha de Nacimiento', 'Tipo de vivienda', 'Actividad como independiente', 'Tiempo en labor', 'Sueldo', 'Otros ingresos', 'Sueldo como independiente','Sucursal', 'Dirección', 'Celular', 'Fecha creación', 'Score', 'Tarjeta', 'Estado', 'Descripción', 'Característica'];
+				$printExcel[] = ['FECHA Y HORA DEL PROCESO', 'TIPO DE DOCUMENTO', 'CEDULA', 'NOMBRE TERCERO', 'RESULTADO', 'MOTIVO RECHAZO', 'FECHA DE EXPEDICIÓN DOCUMENTO', 'SUCURSAL', 'ZONA RIESGO', 'SCORE', 'CALIFICACION', 'FECHA DE NACIMIENTO', 'EDAD', 'ACTIVIDAD ECONOMICA', 'TIEMPO EN LABOR', 'INGRESOS', 'INGRESOS ADICIONALES', 'TIPO DE CLIENTE', 'DEFINICION CLIENTE', 'CLIENTE TIPO AAA', 'CLIENTE TIPO 5 ESPECIAL', 'HISTORIAL DE CREDITO', 'TARJETA APLICABLE', 'VISITA OCULAR', 'DIRECCION', 'CELULAR', 'TIPO DE VIVIENDA'];
 			}
-			$printExcel[] = [$tipoDoc, $value->CEDULA, $value->TIPO_CLIENTE, $value->FEC_NAC, $value->TIPOV, $value->ACT_IND, $value->TIEMPO_LABOR, $value->SUELDO, $value->OTROS_ING, $value->SUELDOIND, $value->SUC, $value->DIRECCION, $value->CELULAR, $value->CREACION, $value->score, $value->TARJETA, $value->ESTADO, $value->DESCRIPCION." / ".$value->ID_DEF, $value->CARACTERISTICA];
+			$printExcel[] = [$value->FECHA_INTENCION, $tipoDoc, $value->CEDULA, $value->NOMBRES, $value->ESTADO, $motivoRechazo, $value->FEC_EXP, $value->SUC, $value->ZONA_RIESGO, $value->score, $value->PERFIL_CREDITICIO, $value->FEC_NAC, $value->EDAD, $value->ACTIVIDAD, $tiempoLabor, $ingresos, $value->OTROS_ING, $value->TIPO_CLIENTE, $value->DESCRIPCION."/".$value->ID_DEF, ($value->TARJETA == 'Tarjeta Black') ? 'Aplica' : 'No Aplica' , ($value->TIPO_5_ESPECIAL == '1') ? 'Aplica' : 'No Aplica', ($value->HISTORIAL_CREDITO == '1') ? 'Aplica' : 'No Aplica', $value->TARJETA, ($value->INSPECCION_OCULAR == '1') ? 'Aplica' : 'No Aplica', $value->DIRECCION, $value->CELULAR, $value->TIPOV];
 		}
 		$export = new ExportToExcel($printExcel);
 	
@@ -932,7 +946,7 @@ class OportuyaV2Controller extends Controller
 
 		$this->validatePolicyCredit_new($cedula);
 
-		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
+		$queryDataLead = DB::connection('oportudata')->select('SELECT inten.`FECHA_INTENCION`, cf.`TIPO_DOC`, cf.`CEDULA`, CONCAT(cf.NOMBRES," " ,cf.APELLIDOS) as NOMBRES, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`, cf.`FEC_EXP`, cf.`SUC`, inten.`ZONA_RIESGO`, cfs.`score`, inten.`PERFIL_CREDITICIO`, cf.`FEC_NAC`, cf.`EDAD`, cf.`ACTIVIDAD`, cf.`EDAD_INDP`, cf.`ANTIG`, cf.`SUELDO`, cf.`SUELDOIND`, cf.`OTROS_ING`, cf.`SUELDOIND`, inten.`TIPO_CLIENTE`, inten.`TARJETA`, inten.`TIPO_5_ESPECIAL`, inten.`HISTORIAL_CREDITO`, inten.`INSPECCION_OCULAR`, cf.`TIPOV`, cf.`DIRECCION`, cf.`CELULAR`
 		FROM `CLIENTE_FAB` as cf
 		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
 		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
@@ -953,7 +967,7 @@ class OportuyaV2Controller extends Controller
 		}else{
 			if($queryScoreClient[0]->score >= 1 && $queryScoreClient[0]->score <= 275){
 				$perfilCrediticio = 'TIPO D';
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.2');
 				return ['resp' => "false"];
 			}
