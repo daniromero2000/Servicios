@@ -1037,14 +1037,17 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if($historialCrediticio == 0){
-			$queryComporFinExt = sprintf("SELECT extcompor, exttermin
+			$queryComporFinExt = sprintf("SELECT extcompor, exttermin, extapert
 			FROM cifin_finext
 			WHERE extcalid = 'PRIN' AND `extconsul` = (SELECT MAX(`extconsul`) FROM `cifin_finext` WHERE `extcedula` = %s ) AND extcedula = %s", $identificationNumber, $identificationNumber);
 			
 			$respQueryComporFinExt = DB::connection('oportudata')->select($queryComporFinExt);
-
+			
 			foreach ($respQueryComporFinExt as $value) {
-				$fechaComporFin = $value->exttermin;
+				if($value->exttermin == '' && $value->extapert == ''){
+					break;
+				}
+				$fechaComporFin = ($value->exttermin != '') ? $value->exttermin : $value->extapert ;
 				$fechaComporFin = explode('/', $fechaComporFin);
 				$fechaComporFin = $fechaComporFin[2]."-".$fechaComporFin[1]."-".$fechaComporFin[0];
 				$dateNow = date('Y-m-d');
@@ -1294,9 +1297,6 @@ class OportuyaV2Controller extends Controller
 		}
 		
 		if($aprobado == true){
-			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
-		}else{
-			$tarjeta = "Crédito Tradicional";
 			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
 		}
 
