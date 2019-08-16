@@ -260,6 +260,7 @@ angular.module('appStep1', ['moment-picker'])
 					$scope.showWarningErrorData = true;
 					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 				}
+				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
 				console.log(response);
 			});

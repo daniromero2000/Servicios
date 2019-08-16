@@ -248,12 +248,13 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 	};
 
 	$scope.saveStep1 = function(){
-		//$('#proccess').modal('show');
+		$('#proccess').modal('show');
 		$http({
 			method: 'POST',
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
+				console.log(response);
 				if (response.data == "1") {
 					$scope.encryptText();
 				}
@@ -261,7 +262,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 					$scope.showWarningErrorData = true;
 					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 				}
-				$('#proccess').modal('hide');
+				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
 				console.log(response);
 			});

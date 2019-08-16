@@ -233,6 +233,11 @@ class OportuyaV2Controller extends Controller
 				$clienteCelular->save();
 			}
 
+			//$consultasFosyga = $this->execConsultaFosygaLead($identificationNumber, $request->get('typeDocument'), $request->get('dateDocumentExpedition'), $request->get('name'), $request->get('lastName'));
+			/*if($consultasFosyga == "-3"){
+				return "-3";
+			}*/
+
 			return "1";
 		}
 		
@@ -1626,7 +1631,8 @@ class OportuyaV2Controller extends Controller
 	}
 
 	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = ""){
-		$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
+		
+		$urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
 		//$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
 		if ($dateExpeditionDocument != '') {
 			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
@@ -1813,34 +1819,41 @@ class OportuyaV2Controller extends Controller
 		return ['resp' => 'true', 'infoLead' => $infoLead];
 	}
 
-	private function execConsultaFosygaLead($identificationNumber){
-		/*
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName){
 			// Fosyga
+			$validateConsultaFosyga = 0;
+			$validateConsultaRegistraduria = 0;
 			$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 			if($dateConsultaFosyga == "true"){
-				$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+				$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $typeDocument, $dateDocument);
 			}else{
 				$consultaFosyga = 1;
 			}
 
 			if ($consultaFosyga > 0) {
-				$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($request->get('name'))), strtolower(trim($request->get('lastName'))), trim($request->get('dateDocumentExpedition')));
+				$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 			}else{
-				$validateConsultaFosyga = 0;
+				$validateConsultaFosyga = 1;
 			}
 			// Registraduria
 			$dateConsultaRegistraduria = $this->validateDateConsultaRegistraduria($identificationNumber);
 			if($dateConsultaRegistraduria == "true"){
-				$consultaRegistraduria = $this->execConsultaRegistraduria($identificationNumber, $request->get('typeDocument'), trim($request->get('dateDocumentExpedition')));
+				$consultaRegistraduria = $this->execConsultaRegistraduria($identificationNumber, $typeDocument, $dateDocument);
 			}else{
 				$consultaRegistraduria = 1;
 			}
 
 			if ($consultaRegistraduria > 0) {
-				$validateConsultaRegistraduria = $this->validateConsultaRegistraduria($identificationNumber, strtolower(trim($request->get('name'))), strtolower(trim($request->get('lastName'))), trim($request->get('dateDocumentExpedition')));
+				$validateConsultaRegistraduria = $this->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 			}else{
-				$validateConsultaRegistraduria = 0;
-			}*/
+				$validateConsultaRegistraduria = 1;
+			}
+
+			if($validateConsultaRegistraduria == 0 || $validateConsultaFosyga == 0){
+				return "-3";
+			}
+
+			return "true";
 	}
 
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc){
