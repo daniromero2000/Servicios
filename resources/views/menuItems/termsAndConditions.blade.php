@@ -4,6 +4,55 @@
 
 @section('content')
 	<div id="termsAndConditions">
+		<h1 class="menuItem-title text-center">CAMPAÑAS VIGENTES</h1>
+		<div class="container">
+			<h2 class="menuItem-subtitle">CAMPAÑA 0% INTERÉS FINANCIACIÓN</h2>
+			<ol>
+				<li style="padding-left:10px; margin-bottom:10px;"> El no cobro de interés de financiación aplicara exclusivamente para los productos con la siguiente referencia: Nevera MABE RMA 23OFJC6 GRAY, computador HP 14CM0026LA 4G 500W10, lavadora MABE LMA9020WGABO 9L/20L, Congelador ECOFRIAL ICC210E.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> El no cobro de interés solo aplica para compras efectuadas en las sucursales de Almacenes Oportunidades, utilizando la tarjeta Oportuya.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> El crédito podrá tomarse máximo a 6 cuotas para que aplique el no cobro de financiación, a los clientes que opten por un plan de pago diferente les aplicará la tasa máxima legal vigente.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> Las condiciones ofrecidas en esta campaña son válidas desde el 05 al 20 de septiembre de 2019 o hasta agotar existencias si esto sucediere primero.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> La campaña 0% de interés de financiación es excluyente frente a la campaña “Llévatelo con 1000 pesitos”, es decir solo se puede adherir una de estas dos ofertas.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> Por la utilización de la tarjeta Oportuya, se generará el cobro de cuota de manejo, adicional a la cuota correspondiente al valor del producto.</li>
+				<li style="padding-left:10px; margin-bottom:10px;"> La cuota inicial mínima para adquirir el producto, es una cuota mensual completa.</li>
+			</ol>
+			<h2 class="menuItem-subtitle">CAMPAÑA $1.000 PESITOS A CRÉDITO :</h2>
+			<p class="menuItem-text">
+				Vigencia: Del 01 al 31 de julio de 2019. La presente campaña aplica para compras con Tarjeta Oportuya según el cupo asignado. El valor de la cuota inicial es por valor de 1.000 pesos incluye IVA, capital, no incluye seguro deudores. 
+				TARJETA OPORTUYA: Sujeta a aprobación, por capacidad de pago, cuota de manejo $14.400 mensuales, siempre y cuando tenga saldo, las cuotas deberán ser pagadas en la caja de almacenes oportunidades a nivel nacional y/o Efecty. Tarjeta Oportuya NO VIGILADA por la Superintendencia Financiera de Colombia. La cuota de referencia es para un plazo de 18 meses. La tasa efectiva anual de financiación de crédito será la máxima autorizada por la Superintendencia Financiera para este periodo; Productos sujetos hasta agotar existencias o hasta que finalice la campaña, lo primero que ocurra. 
+				La presente campaña NO APLICA para compra de SOAT, motos, compras superiores a $3.500.000.oo, televisores superiores a 43” y celulares. Garantía suplementaria, no aplica para muebles (bases, colchones, salas, comedores). Entrega gratis dentro del perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES.
+
+				Condiciones para acceder a la tarjeta OPORTUYA :
+				<ul>
+					<li type="disc">Edad mínima para acceder a la tarjeta es 18 años. </li>
+					<li type="disc">Edad máxima 70 años. </li>
+					<li type="disc">Tener nacionalidad colombiana. </li>
+					<li type="disc">Pertenecer al perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES. </li>
+					<li type="disc">En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social. </li>
+					<li type="disc">Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. </li>
+				</ul>
+			</p>
+			<h2 class="menuItem-subtitle">Mecánica del Concurso :</h2>
+			<p class="menuItem-text">
+				Entre los días 9,10 y11 de agosto de 2019, se entregará una boleta a todas las personas mayores de 57 años, que nos visiten en  nuestro stand (LAGOBO  PABELLON 3 LOCAL 402), para participar en la rifa de una SILLA RECLINOMATICA NIHAO DUXTER GRIS, la cual tiene un precio en el mercado de Setecientos Ochenta y Cuatro Mil Pesos ($784.000), que incluye la entrega (*) y una garantía de 3 meses. 
+			</p>
+			<p class="menuItem-text">
+				El sorteo se realizará en el Local 402 del pabellón No 3 de CORFERIAS en la ciudad de Bogotá D.C. , el día 11 de Agosto de 2019 a la hora de las 4 pm.
+			</p>
+			<p class="menuItem-text">
+				El día 11 de Agosto de 2019 siendo las 4 pm, se sacaran de la urna (al azar) tres (03) cupones de participación, tomando como ganador el último cupón seleccionado (Tercer cupón) y se procederá a informar ante los presentes y testigos de manera inmediata y verbal el ganador. El cupón seleccionado deberá estar totalmente diligenciado (Nombre, Apellido, No de Cédula, Ciudad, Dirección, Correo Electrónico y No de Celular), si el cupón seleccionado como ganador no cumple con lo anterior  será  excluido de la rifa y se procederá a reincorporar en la urna los dos cupones restantes para proceder a efectuar nuevamente el sorteo descrito. 
+			</p>
+			<p class="menuItem-text">
+				Una vez efectuado el sorteo y en caso de que el ganador no esté presente, se realizará la llamada al celular o teléfono que se registró en el cupón, para informar al ganador sobre el resultado y así mismo coordinar la entrega del producto (SILLA RECLINOMATICA NIHAO DUXTER GRIS) 
+			</p>
+			<p class="menuItem-text">
+				Registro Fotográfico del ganador: El ganador autoriza libre, irrevocable y expresamente a LAGOBO o a quien represente sus derechos para que directamente o a través de terceros, tome registro fotográfico del Cupón, del premio y de él mismo,  con la finalidad de darlo a conocer por los medios que se establezcan  ( Página Web, Redes Sociales, Carteleras de Almacenes, etc..) 
+			</p>
+			<p class="menuItem-text">
+				(*) La entrega del premio se realizará sin costo en la ciudad registrada en el cupón, siempre que corresponda a los municipios donde se ubican nuestros Almacenes Oportunidades (consultar lista de Almacenes en www.oportunidades.com) o en las ciudades de Bogotá, Medellín, Cali, Barranquilla y Bucaramanga. Si el ganador requiere remisión a una ciudad o municipio diferente de los señalados, se le informará en debida forma sobre el costo que deberá asumir para tal fin. En cualquier caso la entrega del premio se llevara a cabo dentro de los 8 días hábiles siguientes a la fecha del sorteo. 
+			</p>
+		</div>
+
 		<h1 class="menuItem-title text-center">TÉRMINOS Y CONDICIONES GENERALES</h1>
 		<div class="container">
 			<p class="menuItem-text">
@@ -297,41 +346,6 @@
 			</p>
 			<h2 class="menuItem-subtitle">MANEJO DE USUARIO Y CONTRASEÑA:</h2>
 			<p class="menuItem-text">El usuario se compromete a guardar de forma confidencial y con la máxima diligencia su clave de acceso personal al Sitio Web.
-			</p>
-			<h2 class="menuItem-subtitle">CAMPAÑA $1.000 PESITOS A CRÉDITO :</h2>
-			<p class="menuItem-text">
-				Vigencia: Del 01 al 31 de julio de 2019. La presente campaña aplica para compras con Tarjeta Oportuya según el cupo asignado. El valor de la cuota inicial es por valor de 1.000 pesos incluye IVA, capital, no incluye seguro deudores. 
-				TARJETA OPORTUYA: Sujeta a aprobación, por capacidad de pago, cuota de manejo $14.400 mensuales, siempre y cuando tenga saldo, las cuotas deberán ser pagadas en la caja de almacenes oportunidades a nivel nacional y/o Efecty. Tarjeta Oportuya NO VIGILADA por la Superintendencia Financiera de Colombia. La cuota de referencia es para un plazo de 18 meses. La tasa efectiva anual de financiación de crédito será la máxima autorizada por la Superintendencia Financiera para este periodo; Productos sujetos hasta agotar existencias o hasta que finalice la campaña, lo primero que ocurra. 
-				La presente campaña NO APLICA para compra de SOAT, motos, compras superiores a $3.500.000.oo, televisores superiores a 43” y celulares. Garantía suplementaria, no aplica para muebles (bases, colchones, salas, comedores). Entrega gratis dentro del perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES.
-
-				Condiciones para acceder a la tarjeta OPORTUYA :
-				<ul>
-					<li type="disc">Edad mínima para acceder a la tarjeta es 18 años. </li>
-					<li type="disc">Edad máxima 70 años. </li>
-					<li type="disc">Tener nacionalidad colombiana. </li>
-					<li type="disc">Pertenecer al perímetro urbano de las ciudades donde se encuentran los puntos de venta físicos de ALMACENES OPORTUNIDADES. </li>
-					<li type="disc">En caso de ser empleado, pertenecer al régimen “Activo contributivo Cotizante”, o ser aportante a seguridad social. </li>
-					<li type="disc">Para el caso de los independientes, tener registro en cámara de comercio y renovación el último año. </li>
-				</ul>
-			</p>
-			<h2 class="menuItem-subtitle">Mecánica del Concurso :</h2>
-			<p class="menuItem-text">
-				Entre los días 9,10 y11 de agosto de 2019, se entregará una boleta a todas las personas mayores de 57 años, que nos visiten en  nuestro stand (LAGOBO  PABELLON 3 LOCAL 402), para participar en la rifa de una SILLA RECLINOMATICA NIHAO DUXTER GRIS, la cual tiene un precio en el mercado de Setecientos Ochenta y Cuatro Mil Pesos ($784.000), que incluye la entrega (*) y una garantía de 3 meses. 
-			</p>
-			<p class="menuItem-text">
-				El sorteo se realizará en el Local 402 del pabellón No 3 de CORFERIAS en la ciudad de Bogotá D.C. , el día 11 de Agosto de 2019 a la hora de las 4 pm.
-			</p>
-			<p class="menuItem-text">
-				El día 11 de Agosto de 2019 siendo las 4 pm, se sacaran de la urna (al azar) tres (03) cupones de participación, tomando como ganador el último cupón seleccionado (Tercer cupón) y se procederá a informar ante los presentes y testigos de manera inmediata y verbal el ganador. El cupón seleccionado deberá estar totalmente diligenciado (Nombre, Apellido, No de Cédula, Ciudad, Dirección, Correo Electrónico y No de Celular), si el cupón seleccionado como ganador no cumple con lo anterior  será  excluido de la rifa y se procederá a reincorporar en la urna los dos cupones restantes para proceder a efectuar nuevamente el sorteo descrito. 
-			</p>
-			<p class="menuItem-text">
-				Una vez efectuado el sorteo y en caso de que el ganador no esté presente, se realizará la llamada al celular o teléfono que se registró en el cupón, para informar al ganador sobre el resultado y así mismo coordinar la entrega del producto (SILLA RECLINOMATICA NIHAO DUXTER GRIS) 
-			</p>
-			<p class="menuItem-text">
-				Registro Fotográfico del ganador: El ganador autoriza libre, irrevocable y expresamente a LAGOBO o a quien represente sus derechos para que directamente o a través de terceros, tome registro fotográfico del Cupón, del premio y de él mismo,  con la finalidad de darlo a conocer por los medios que se establezcan  ( Página Web, Redes Sociales, Carteleras de Almacenes, etc..) 
-			</p>
-			<p class="menuItem-text">
-				(*) La entrega del premio se realizará sin costo en la ciudad registrada en el cupón, siempre que corresponda a los municipios donde se ubican nuestros Almacenes Oportunidades (consultar lista de Almacenes en www.oportunidades.com) o en las ciudades de Bogotá, Medellín, Cali, Barranquilla y Bucaramanga. Si el ganador requiere remisión a una ciudad o municipio diferente de los señalados, se le informará en debida forma sobre el costo que deberá asumir para tal fin. En cualquier caso la entrega del premio se llevara a cabo dentro de los 8 días hábiles siguientes a la fecha del sorteo. 
 			</p>
 			<h2 class="menuItem-subtitle">Autorización Tratamiento de Datos Personales</h2>
 			<p class="menuItem-text">

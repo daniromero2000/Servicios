@@ -6,6 +6,8 @@ angular.module('appStep1', ['moment-picker'])
 	$scope.showWarningCode = false;
 	$scope.showInfoCode = false;
 	$scope.showWarningErrorData = false;
+	$scope.totalErrorData = 0;
+	$scope.validateNum = 0;
 	$scope.telephone = '';
 	$scope.code = {
 		'code' : ''
@@ -186,8 +188,16 @@ angular.module('appStep1', ['moment-picker'])
 				}else if(response.data == -4){
 					window.location = "/UsuarioMoroso";
 				}else{
-					$('#confirmNumCel').modal('show');
-					//$scope.saveStep1();
+					if($scope.totalErrorData >= 2){
+						$scope.deniedLeadForFecExp();
+					}else{
+						if($scope.validateNum == 1){
+							$scope.saveStep1();
+						}else{
+							$('#confirmNumCel').modal('show');
+							//$scope.saveStep1();
+						}
+					}
 				}
 			}, function errorCallback(response) {
 				hideLoader();
@@ -197,6 +207,20 @@ angular.module('appStep1', ['moment-picker'])
 			alert('Los correos no coinciden');
 		}
 	}
+
+	$scope.deniedLeadForFecExp = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/deniedLeadForFecExp/'+$scope.leadInfo.identificationNumber,
+		}).then(function successCallback(response) {
+			hideLoader();
+			window.location = "/OPN_gracias_denied";
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
 
 	$scope.cerrar = function(){
 		$('#confirmNumCel').modal('hide');
@@ -231,6 +255,7 @@ angular.module('appStep1', ['moment-picker'])
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
+				$scope.validateNum = 1;
 				$('#confirmCodeVerification').modal('hide');
 				$scope.saveStep1();
 			}else if(response.data == -1){
@@ -257,9 +282,11 @@ angular.module('appStep1', ['moment-picker'])
 					$scope.encryptText();
 				}
 				if (response.data == "-3" || response.data == "-4") {
+					$scope.totalErrorData ++;
 					$scope.showWarningErrorData = true;
 					setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 				}
+				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
 				console.log(response);
 			});

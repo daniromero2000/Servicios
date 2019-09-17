@@ -59,7 +59,7 @@ Route::get('/AD_gracias_FRM',function(){
 Route::get('/OPNTR_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedTr');
 Route::get('/OPNAL_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedAl');
 Route::get('/OPNSH_gracias_denied', 'Admin\OportuyaV2Controller@getPageDeniedSh');
-Route::get('/OPN_gracias_denied', 'Admin\OportuyaV2Controller@getPageDenied');
+Route::get('/OPN_gracias_denied', 'Admin\OportuyaV2Controller@getPageDenied')->name('pageDeniedLead');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -185,6 +185,7 @@ Route::group(['prefix'=>'api/'],function(){
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}/{tipoDoc}/{tipoCreacion}', 'Admin\OportuyaV2Controller@execConsultasLead');
+    Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 

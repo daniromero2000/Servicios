@@ -143,11 +143,13 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 	};
 
 	$scope.saveStep3 = function(){
+		showLoader();
 		$http({
 		  method: 'POST',
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
+			hideLoader();
 			if(response.data == -1){
 				window.location = "/OPNTR_gracias_denied";
 			}
@@ -171,6 +173,7 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				window.location = "/OPN_gracias_denied";
 			}
 		}, function errorCallback(response) {
+			hideLoader();
 		    console.log(response);
 		});
 	};

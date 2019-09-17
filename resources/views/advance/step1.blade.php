@@ -153,7 +153,7 @@
 				<div class="row" ng-show="showWarningErrorData">
 					<div class="col-12">
 						<p class="alert alert-danger">
-							Lo sentimos, los datos no coinciden, por favor verifícalos
+							Verifique la información suministrada
 						</p>
 					</div>
 				</div>
