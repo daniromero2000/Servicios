@@ -11,6 +11,9 @@ yarn-error.log
 app/storage/
 
 # Laravel 5 & Lumen specific
+config/database.php
+config/mail.php
+storage/framework/views
 public/storage/
 public/hot
 storage/*.key
