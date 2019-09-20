@@ -162,11 +162,12 @@ span.renewCode:hover {
 }
 
 .form-body-simulator{
-	background-color: rgba(125,125,125,0.5)!important;
+	background-color:rgba(241, 242, 239, 0.6)!important;
 }
 
 .form-body-simulator-able{
-	background-color: rgba(0,0,0,0.7)!important;
+	background-color: #fff!important;
+	color: #000!important;
 }
 
 .success-color{
@@ -212,7 +213,7 @@ span.renewCode:hover {
 }
 
 #sliderPrincipalLibranza .row .bg-simulator label{	
-	color:#FFF;
+
 	font-size: 12px;
 	text-transform: uppercase;
 }
@@ -350,10 +351,8 @@ md-slider[md-discrete]:not([disable]).md-active .md-sign{
 }
 
 .form-simulator .form-control, .form-simulator md-select.md-default-theme .md-select-value,.form-simulator md-select .md-select-value,.form-simulator md-input-container .md-input{
-	background-color: transparent!important;
-	color: #FFF!important;
-	border: 2px solid #00D3B4!important;
-	border-radius: .5rem!important;
+	border: 2px solid #FFF !important;
+		border-radius: .5rem!important;
 	min-height: 36px!important;
 }
 

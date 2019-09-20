@@ -1,0 +1,134 @@
+.libranza-top{
+    margin-top: -48px;
+}
+.content-buttons{
+    background-color: white;
+    height: 150px;
+}
+.content-button-cart{
+    text-align: right;
+    margin: 5px;
+    padding: 50px 120px 0 0;
+    border-right: 2px dashed #2284C5;
+    height: 100%;
+}
+.button-cart{
+    background-color:#2284C4;
+    color:white;
+    padding: 30px 60px 30px 35px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.img-button-cart{
+    width:62px;
+}
+.content-button-cred{
+    text-align: right;
+    margin: 5px;
+    padding: 50px 120px 0 0;
+    height: 100%;
+}
+.button-cred{
+    background-color:#EB3F33;
+    color:white;
+    padding: 30px 60px 30px 35px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.img-button-cred{
+    width:62px;
+}
+a:hover {color:white;
+text-decoration: none;
+}
+.form-simulator-containernew{
+    padding: 20px;
+    background-image: url('/images/libranza/body.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: repeat;
+}
+.text-formsimulator{
+    text-align: center;
+}
+.tittle-formsimulator{
+    color: #2383C4;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+.description-formsimulator{
+    color: #00004E;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.description2-formsimulator{
+    color: #192876;
+    font-size: 15px;
+    text-align: center;
+    font-weight: initial;
+}
+.title-form1{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    
+}
+.container-titleform1{
+    width: 100%;
+    background-color: #2284C4;
+    margin-left: 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px 10px 0px 0px;
+}
+.radius-form{
+    border-radius: 10px 10px 15px 15px !important;
+}
+.buton-plazo{
+    color: #3E4F9E;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px 40px;
+}
+.content-butonp{
+    display:flex;
+}
+.buton-monto{
+    color: #3E4F9E;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px 40px;
+}
+input{ 
+    background-color: transparent !important;
+    color: #FFF !important;
+    border: 2px solid #FFF !important;
+    border-radius: .5rem !important;
+    min-height: 36px !important;
+}
+.backinput{
+    background-color: white !important;
+    border-radius: 10px;
+}
+.font-title-form{
+    font-size: 16px;
+}
+.color-blue{
+    color: #2284C4;
+}
+.plazo{
+    background-color: white;
+    text-align: center;
+    padding: 10px 30px 15px 50px;
+    border-radius: 15px;
+}
+.monto{
+    background-color: white;
+    text-align: center;
+    padding: 10px 15px 0px 30px;
+    border-radius: 15px;
+}
