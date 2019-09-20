@@ -116,6 +116,7 @@ app.controller('simulatePolicySingleCtrl', function($scope, $http){
 				$scope.infoLead = response.data[0];
 			}
 		}, function errorCallback(response){
+			hideLoader();
 			console.log(response);
 		});
 	};
