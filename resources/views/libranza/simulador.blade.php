@@ -8,7 +8,18 @@
     <div>
         <div class="row">
             <div class="col-12 col-sm-12 libranza-top">
-                 <img src="{{asset('images/libranza/top.jpg')}}" alt="" class="img-fluid">
+                <div class="content-text-slider">
+                    <h1 class="title-btnslider">Negocios Synergy via<br>Robust Strategies</h1>
+                    <span>
+                        Lorem ipsum is simply dymmy text of the<br>
+                        printing and typesetting has been teh industrys<br>
+                        standard dummy text
+                    </span>
+                    <div class="content-buton">
+                        <a class="buton-slider" href="">¡Click aquí!</a>
+                    </div>
+                </div>
+                <img src="{{asset('images/libranza/top.jpg')}}" alt="" class="img-fluid">
             </div>
         </div>
         <div class="row content-buttons">
@@ -50,7 +61,7 @@
                                     <br>
                                     <rzslider  ng-click="sumCLicks()" ng-change="simular(0)" ng-model="sliderAmount.value" rz-slider-model="sliderAmount.value" z-slider-high="maxAmount" rz-slider-options="sliderAmount.options"></rzslider>
                                 </div>
-                                <div class="form-group ">
+                                <div class="form-group font-white">
                                     <label for="timeLimit">¿Cuánto tiempo necesitas para pagar?</label>
                                     <br> 
                                     <rzslider ng-click="sumCLicks()" ng-change="simular(2)" ng-model="sliderTime.value" rz-slider-model="sliderTime.value" rz-slider-options="sliderTime.options"></rzslider>
@@ -65,11 +76,15 @@
                             <br>
                             <br>
                             <div class="row" ng-show="!showAlertError">
-                                <div class="col-6 com-sm-6 content-butonp">
-                                    <p class="plazo">Plazo:<span class="font-weight-bold">@{{valueTime}} Meses</span></p>
+                                <div class="col-12 col-sm-6">
+                                    <div class="buton-plazo-monto">
+                                        <p class="font-weight-bold">Plazo: <span class="font-weight-initial">@{{valueTime}} Meses</span></p>
+                                    </div>
                                 </div>
-                                <div class="col-6 com-sm-6 content-butonp">
-                                    <p class="monto">Monto:<span class="font-weight-bold">$ @{{sliderAmount.value|number:0}}</span></p>
+                                <div class="col-12 col-sm-6">
+                                    <div class="buton-plazo-monto">
+                                        <p class="monto font-weight-bold">Monto: <span class="font-weight-initial">$ @{{sliderAmount.value|number:0}}</span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,11 +92,11 @@
                 </div>
                 <div class="row position-absolute fixed-bottom resetRow color-white info-rate-bottom">
                     <div class="col-7 info-rate-interest">
-                        <p>Tasa de Interés</p>
+                        <p>Tasa de interés</p>
                         <span class="font-weight-bold">@{{interest}} %</span>
                     </div>
-                    <div class="col-5 info-rate-quota resetCol">
-                        <p>CUOTA FIJA MENSUAL</p>
+                    <div class="col-5 info-rate-quota resetCol color-blue">
+                        <p>Cuota fija mensual</p>
                         <span class="font-weight-bold">$ @{{basicFee|number:0}}</span>
                     </div>
                 </div>    
@@ -98,7 +113,7 @@
                             <form ng-submit="showModal()" name="myForm">
                                 <div layout="row">
                                     <md-input-container flex="100" class="text-left backinput">
-                                        <label class="formularioSimulador-labelFormulario " for="creditLine">Linea de Crédito </label>
+                                        <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito </label>
                                         <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.creditLine" required="" ng-change="ableField()">
                                             <md-option ng-value="linea.id" ng-repeat="linea in lines">@{{linea.name}}</md-option>
                                         </md-select>
@@ -116,7 +131,7 @@
                                     <md-input-container flex-gt-xs="100" flex-gt-md="50" class="m-0">
                                         <label class="text-left w-100">Fecha de nacimiento</label>
                                         <md-datepicker class="" ng-disabled="inputDisable" ng-model="birthday" ng-blur="calculateAge(birthday)" md-current-view="year"></md-datepicker>
-                                        <p class="m-0 format-date-label"><span class="color-white small text-center">(AÑO/MES/DÍA)</span></p>
+                                        <p class="m-0 format-date-label"><span class="color-white small text-center">Año/Mes/Día</span></p>
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" flex-gt-sm="50" class="text-left m-0 backinput">
                                         <label for="birthday">Pagaduría</label>

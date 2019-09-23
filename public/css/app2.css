@@ -157,12 +157,12 @@ span.renewCode:hover {
 }
 
 #sliderPrincipalLibranza .row .col-xl-4.bg-simulator,#sliderPrincipalLibranza .row .col-xl-5.bg-simulator > .row{
-	background-color: rgba(0,0,0,0.7);
+	background-color: rgba(58,60,74,0.8);
 	border-radius: 0 0 20px 20px;
 }
 
 .form-body-simulator{
-	background-color:rgba(241, 242, 239, 0.6)!important;
+	background-color: rgba(245, 245, 2242, 0.7) !important;
 }
 
 .form-body-simulator-able{
@@ -200,6 +200,7 @@ span.renewCode:hover {
 .info-rate-bottom p{
 	margin: 0;
 	font-weight: 600;
+	color: white;
 }
 
 .info-rate-quota span{
@@ -214,13 +215,16 @@ span.renewCode:hover {
 
 #sliderPrincipalLibranza .row .bg-simulator label{	
 
-	font-size: 12px;
-	text-transform: uppercase;
+	font-size: 15px;
+	color: white;
+    font-weight: bold;
 }
 
 #sliderPrincipalLibranza .row .bg-simulator md-input-container label:not(.md-container-ignore){
 	bottom: 90%!important;
-    left: 3%!important;
+	left: 3%!important;
+	color: #939395;
+	font-weight: initial;
 }
 
 menu {
@@ -361,7 +365,7 @@ md-slider[md-discrete]:not([disable]).md-active .md-sign{
 }
 
 .form-simulator md-input-container md-icon{
-	color: #00D3B4!important;
+	color: #007BFF !important;
 }
 
 .form-simulator select.form-control option{
@@ -370,7 +374,7 @@ md-slider[md-discrete]:not([disable]).md-active .md-sign{
 }
 
 .form-simulator .formularioSimulador-buttonForm{
-	background-image: linear-gradient(160deg,#3FBDA0 -20%,#1F86B3 99%,#1F86B3 100%);
+	background-color: #2284C4;
 }
 
 .form-simulator .formularioSimulador-buttonForm:hover{
@@ -629,6 +633,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 
 .rzslider .rz-bubble,.rzslider .rz-tick-legend,.rzslider .rz-bubble.rz-limit{
 	color:rgba(255,255,255,1);
+	font-weight: bold;
 }
 
 .rzslider .rz-tick-value{
@@ -3158,7 +3163,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	color: #000;
 }
 .color-white{
-	color:white;
+	color:black;
 }
 .color-gray{
 	color:gray;

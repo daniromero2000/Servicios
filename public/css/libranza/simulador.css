@@ -4,6 +4,8 @@
 .content-buttons{
     background-color: white;
     height: 150px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .content-button-cart{
     text-align: right;
@@ -105,14 +107,16 @@ text-decoration: none;
 }
 input{ 
     background-color: transparent !important;
-    color: #FFF !important;
+    color: #939395 !important;
     border: 2px solid #FFF !important;
     border-radius: .5rem !important;
     min-height: 36px !important;
+    background-color: white !important;
 }
 .backinput{
     background-color: white !important;
     border-radius: 10px;
+    box-shadow: -3px 3px 29px 6px rgba(206,206,208,1);
 }
 .font-title-form{
     font-size: 16px;
@@ -120,15 +124,47 @@ input{
 .color-blue{
     color: #2284C4;
 }
-.plazo{
+.buton-plazo-monto{
     background-color: white;
-    text-align: center;
-    padding: 10px 30px 15px 50px;
-    border-radius: 15px;
+    border-radius: 11px;
+    line-height: 50px;
+    color: #3C509D;
 }
-.monto{
-    background-color: white;
+.font-weight-initial{
+    font-weight: initial;
+}
+.reset-row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.reset-col{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.content-text-slider{
+    position: absolute;
+    color: white;
+    padding: 105px 0px 0px 260px;
+}
+.title-btnslider{
+    font-weight: bold;
+    font-size: 30px;
+}
+.buton-slider{
+    border-radius: 10px;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+}
+.content-buton{
+    background-color: #29AE61;
+    border-radius: 5px;
     text-align: center;
-    padding: 10px 15px 0px 30px;
-    border-radius: 15px;
+    padding: 5px;
+    line-height: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+@media only screen and (min-width: 560px) and (max-width: 815px) and (orientation: landscape) {
+
 }
