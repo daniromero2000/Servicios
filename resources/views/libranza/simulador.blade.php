@@ -8,29 +8,27 @@
     <div>
         <div class="row">
             <div class="col-12 col-sm-12 libranza-top">
-                <div class="content-text-slider">
-                    <h1 class="title-btnslider">Negocios Synergy via<br>Robust Strategies</h1>
-                    <span>
-                        Lorem ipsum is simply dymmy text of the<br>
-                        printing and typesetting has been teh industrys<br>
-                        standard dummy text
-                    </span>
-                    <div class="content-buton">
-                        <a class="buton-slider" href="">¡Click aquí!</a>
-                    </div>
-                </div>
                 <img src="{{asset('images/libranza/top.jpg')}}" alt="" class="img-fluid">
             </div>
+            {{-- <div class="content-text-slider">
+                <h1 class="title-btnslider">Negocios Synergy via<br>Robust Strategies</h1>
+                <span class="text-slider">
+                    Lorem ipsum is simply dymmy text of the<br>
+                    printing and typesetting has been teh industrys<br>
+                    standard dummy text
+                </span>
+                <div class="content-buton">
+                    <a class="buton-slider" href="">¡Click aquí!</a>
+                </div>
+            </div> --}}
         </div>
-        <div class="row content-buttons">
-            <div class="col-12 col-sm-6 content-button-cart">
-                <a class="button-cart" ng-click="showAdvanced($event)" href="" alt="" class="button-cart"><img class="img-button-cart"src="{{asset('images/libranza/icon1.png')}}" alt="" class="img-fluid">Compra de Cartera 
-                <a>
+        <div class="row content-butons">
+            <div class="col-12 col-sm-6 content-buton1 mt-butons">
+                <a class="buton-cart" ng-click="showAdvanced($event)" href="" alt="" class="button-cart"><img class="img-but"src="{{asset('images/libranza/icon1.png')}}" alt="" class="img-fluid">Compra de Cartera</a>
             </div>
-            <div class="col-12 col-sm-5 content-button-cred">
-                <a class="button-cred" ng-click="showAdvancedLI($event)" href="" alt="" class="button-cart"><img class="img-button-cred"src="{{asset('images/libranza/icon2.png')}}" alt="" class="img-fluid">Crédito de Libre Inversión 
-                <a>
-            </div>
+            <div class="col-12 col-sm-5 content-buton1 mt-butons">
+                <a class="buton-cred" ng-click="showAdvancedLI($event)" href="" alt="" class="buton-cart"><img class="img-but"src="{{asset('images/libranza/icon2.png')}}" alt="" class="img-fluid">Crédito de Libre Inversión<a>
+            </div>        
         </div>
     </div>
 </div>

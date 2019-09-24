@@ -1,44 +1,32 @@
 .libranza-top{
     margin-top: -48px;
 }
-.content-buttons{
-    background-color: white;
-    height: 150px;
-    margin-left: 0px;
-    margin-right: 0px;
+.mt-butons{
+    margin-top: 3%;
 }
-.content-button-cart{
+.content-buton1{
+    text-align: center;
+}
+.img-but{
+    width: 7%;
+}
+.buton-cart{
+    background-color: #2284C4;
+    padding: 4% 6% 3% 6%;
+    color: white;
+    border-radius: 9px;
     text-align: right;
-    margin: 5px;
-    padding: 50px 120px 0 0;
-    border-right: 2px dashed #2284C5;
-    height: 100%;
+    font-size: 80%;
+    font-weight: bold;  
 }
-.button-cart{
-    background-color:#2284C4;
-    color:white;
-    padding: 30px 60px 30px 35px;
+.buton-cred{
+    background-color: #EB3F33;
+    padding: 4% 6% 4% 6%;;
+    color: white;
     border-radius: 10px;
-    font-weight: bold;
-}
-.img-button-cart{
-    width:62px;
-}
-.content-button-cred{
-    text-align: right;
-    margin: 5px;
-    padding: 50px 120px 0 0;
-    height: 100%;
-}
-.button-cred{
-    background-color:#EB3F33;
-    color:white;
-    padding: 30px 60px 30px 35px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-.img-button-cred{
-    width:62px;
+    text-align: left;
+    font-size: 80%;
+    font-weight: bold;  
 }
 a:hover {color:white;
 text-decoration: none;
@@ -144,7 +132,7 @@ input{
 .content-text-slider{
     position: absolute;
     color: white;
-    padding: 105px 0px 0px 260px;
+    padding: 2% 0% 0% 15%;
 }
 .title-btnslider{
     font-weight: bold;
@@ -155,8 +143,6 @@ input{
     font-size: 15px;
     text-decoration: none;
     color: white;
-}
-.content-buton{
     background-color: #29AE61;
     border-radius: 5px;
     text-align: center;
@@ -164,7 +150,41 @@ input{
     line-height: 20px;
     font-weight: bold;
     margin-top: 15px;
+    padding: 3% 3%;
 }
-@media only screen and (min-width: 560px) and (max-width: 815px) and (orientation: landscape) {
+.content-buton{
+    margin-top: 10px;
+}
+.text-slider{
+    font-size: 17px;
+}
+/* ************************
+PHONE PORTRAIT VERSION 
+************************** */
+@media only screen and (min-width: 320px) and (max-width: 420px) and (orientation: portrait) {
+    
+}
+ /* ************************
+PHONE LANDSCAPE VERSION
+************************** */
+@media only screen and (min-width: 560px) and (max-width: 815px) and (orientation: landscape) {}
 
+@media (max-width: 1110px){
+    .title-btnslider{
+        font-weight: bold;
+        font-size: 25px;
+    } 
+    .text-slider{
+        font-size: 13px;
+    }
+}
+@media (max-width: 991px){
+    .title-btnslider{
+        font-weight: bold;
+        font-size: 25px;
+    } 
+    .text-slider{
+        font-size: 13px;
+    }
+    
 }
