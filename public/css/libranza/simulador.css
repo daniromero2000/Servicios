@@ -6,9 +6,21 @@
 }
 .content-buton1{
     text-align: center;
+    border-right: dashed 2px #2284C4;
+}
+.content-buton2{
+    text-align: center;
 }
 .img-but{
     width: 7%;
+}
+.line-log{
+    width: 20%;
+    margin-top: -5%;
+}
+.text-report{
+    font-size: 18px;
+    font-weight: initial;
 }
 .buton-cart{
     background-color: #2284C4;
@@ -186,5 +198,10 @@ PHONE LANDSCAPE VERSION
     .text-slider{
         font-size: 13px;
     }
-    
+
+}
+@media (max-width: 734px){
+    .mt-butons{
+        margin-top: 5%;
+    }    
 }
