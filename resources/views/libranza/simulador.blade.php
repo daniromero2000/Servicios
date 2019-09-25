@@ -26,7 +26,7 @@
             <div class="col-12 col-sm-6 content-buton1 mt-butons">
                 <a class="buton-cart" ng-click="showAdvanced($event)" href="" alt="" class="button-cart"><img class="img-but"src="{{asset('images/libranza/icon1.png')}}" alt="" class="img-fluid">Compra de Cartera</a>
             </div>
-            <div class="col-12 col-sm-5 content-buton1 mt-butons">
+            <div class="col-12 col-sm-5 content-buton2 mt-butons">
                 <a class="buton-cred" ng-click="showAdvancedLI($event)" href="" alt="" class="buton-cart"><img class="img-but"src="{{asset('images/libranza/icon2.png')}}" alt="" class="img-fluid">Crédito de Libre Inversión<a>
             </div>        
         </div>
@@ -42,7 +42,8 @@
     <div class="form-simulator-containernew resetRow">
         <div class="tittle-formsimulator">
             <span class="tittle-formsimulator">SIMULADOR DE CRÉDITO</span>
-            <p class="description-formsimulator">Crédito de libranza, para lo que necesites, con plazos<br>hasta 108 meses y montos hasta $60,000,000<br><span class="description2-formsimulator">Flexibilidad en centrales de riesgo y fácil aprobación.</span></p>  
+            <p class="description-formsimulator">Crédito de libranza, para lo que necesites, con plazos<br>hasta 120 meses y montos hasta $80,000,000<br><span class="text-report"><span class=""><span class="color-red">¿</span><span>Estás </span><span class="color-red">reportado</span><span class="color-red">?, </span></span><span>te damos una<br>segunda oportunidad<span class="color-red">!</span></span></p>
+            <img class="line-log"src="{{asset('images/libranza/linelogo.png')}}" alt="" class="img-fluid">
         </div>
         <div class="row h-100  form-simulator-max-width">
             <div class="offset-xl-1 col-xl-4 col-md-8 offset-md-2 offset-lg-0 col-lg-5 bg-simulator text-center position-relative radius-form">
