@@ -1,0 +1,190 @@
+.libranza-top{
+    margin-top: -48px;
+}
+.mt-butons{
+    margin-top: 3%;
+}
+.content-buton1{
+    text-align: center;
+}
+.img-but{
+    width: 7%;
+}
+.buton-cart{
+    background-color: #2284C4;
+    padding: 4% 6% 3% 6%;
+    color: white;
+    border-radius: 9px;
+    text-align: right;
+    font-size: 80%;
+    font-weight: bold;  
+}
+.buton-cred{
+    background-color: #EB3F33;
+    padding: 4% 6% 4% 6%;;
+    color: white;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 80%;
+    font-weight: bold;  
+}
+a:hover {color:white;
+text-decoration: none;
+}
+.form-simulator-containernew{
+    padding: 20px;
+    background-image: url('/images/libranza/body.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: repeat;
+}
+.text-formsimulator{
+    text-align: center;
+}
+.tittle-formsimulator{
+    color: #2383C4;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+.description-formsimulator{
+    color: #00004E;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.description2-formsimulator{
+    color: #192876;
+    font-size: 15px;
+    text-align: center;
+    font-weight: initial;
+}
+.title-form1{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    
+}
+.container-titleform1{
+    width: 100%;
+    background-color: #2284C4;
+    margin-left: 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px 10px 0px 0px;
+}
+.radius-form{
+    border-radius: 10px 10px 15px 15px !important;
+}
+.buton-plazo{
+    color: #3E4F9E;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px 40px;
+}
+.content-butonp{
+    display:flex;
+}
+.buton-monto{
+    color: #3E4F9E;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px 40px;
+}
+input{ 
+    background-color: transparent !important;
+    color: #939395 !important;
+    border: 2px solid #FFF !important;
+    border-radius: .5rem !important;
+    min-height: 36px !important;
+    background-color: white !important;
+}
+.backinput{
+    background-color: white !important;
+    border-radius: 10px;
+    box-shadow: -3px 3px 29px 6px rgba(206,206,208,1);
+}
+.font-title-form{
+    font-size: 16px;
+}
+.color-blue{
+    color: #2284C4;
+}
+.buton-plazo-monto{
+    background-color: white;
+    border-radius: 11px;
+    line-height: 50px;
+    color: #3C509D;
+}
+.font-weight-initial{
+    font-weight: initial;
+}
+.reset-row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.reset-col{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.content-text-slider{
+    position: absolute;
+    color: white;
+    padding: 2% 0% 0% 15%;
+}
+.title-btnslider{
+    font-weight: bold;
+    font-size: 30px;
+}
+.buton-slider{
+    border-radius: 10px;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+    background-color: #29AE61;
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px;
+    line-height: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 3% 3%;
+}
+.content-buton{
+    margin-top: 10px;
+}
+.text-slider{
+    font-size: 17px;
+}
+/* ************************
+PHONE PORTRAIT VERSION 
+************************** */
+@media only screen and (min-width: 320px) and (max-width: 420px) and (orientation: portrait) {
+    
+}
+ /* ************************
+PHONE LANDSCAPE VERSION
+************************** */
+@media only screen and (min-width: 560px) and (max-width: 815px) and (orientation: landscape) {}
+
+@media (max-width: 1110px){
+    .title-btnslider{
+        font-weight: bold;
+        font-size: 25px;
+    } 
+    .text-slider{
+        font-size: 13px;
+    }
+}
+@media (max-width: 991px){
+    .title-btnslider{
+        font-weight: bold;
+        font-size: 25px;
+    } 
+    .text-slider{
+        font-size: 13px;
+    }
+    
+}

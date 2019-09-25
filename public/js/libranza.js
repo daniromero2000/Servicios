@@ -84,7 +84,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		timeLimit:''
 	}
 
-	$scope.maxAmount=60000000; //Valor inicial para el monto máximo
+	$scope.maxAmount=80000000; //Valor inicial para el monto máximo
 	$scope.minAmount=1000000;  //valor inicial para el monto mínimo
 	$scope.quotaBuy=false; //Muestra el campo de compra de cartera si es true
 	$scope.params=[]; //array donde se guarda el los parametros del simulador (tasa y seguros)
@@ -213,7 +213,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000 ;
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen + parseInt($scope.libranza.quotaBuy);
 		if($scope.libranza.age >= 18 && $scope.libranza.age < 80){
-			$scope.libranza.maxQuota = 60000000;
+			$scope.libranza.maxQuota = 80000000;
 		}else if($scope.libranza.age >= 80 && $scope.libranza.age < 86){
 			$scope.libranza.maxQuota = 9000000;
 		}else{
@@ -363,9 +363,9 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		value: 13,	
 		options: {	
 		  floor: 12,
-		  ceil: 108,
+		  ceil: 120,
 		  step:12,
-		  ticksArray: [13, 24, 36, 48, 60,72,84,96,108],
+		  ticksArray: [13, 24, 36, 48, 60,72,84,96,108, 120],
 		  disabled: false,
 		  translate: function(value, sliderId, label) {
 			switch (label) {
@@ -508,7 +508,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 						}
 						$scope.maxAmount=lastPlazo.amount;
 						$scope.sliderAmount.maxValue=lastPlazo.amount;
-						$scope.sliderAmount.options.ceil=lastPlazo.amount>60000000?60000000:lastPlazo.amount;
+						$scope.sliderAmount.options.ceil=lastPlazo.amount>80000000?80000000:lastPlazo.amount;
 						$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 
 					}else if(flag==0){
