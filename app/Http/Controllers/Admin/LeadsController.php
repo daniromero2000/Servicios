@@ -169,15 +169,15 @@ class LeadsController extends Controller
             return $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
         }
 
-        if ($request['qFechaInicialTR'] != '') {
-            $request['qFechaInicialTR']." 00:00:00";
-            return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaInicialTR'] . '%');
-        }
+        // if ($request['qFechaInicialTR'] != '') {
+        //     $request['qFechaInicialTR']." 00:00:00";
+        //     return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaInicialTR'] . '%');
+        // }
 
-        if ($request['qFechaFinalTR'] != '') {
-            $request['qFechaFinalTR']." 23:59:59";
-            return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaFinalTR'] . '%');
-        }
+        // if ($request['qFechaFinalTR'] != '') {
+        //     $request['qFechaFinalTR']." 23:59:59";
+        //     return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaFinalTR'] . '%');
+        // }
 
 
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
