@@ -8,7 +8,10 @@
      -->
      
 @extends('layouts.app')
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
+<script>
+	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Garantía','page_path':'/digitalWarranty'});
+</script>
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @stop
