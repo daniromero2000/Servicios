@@ -1,13 +1,12 @@
 @extends('layouts.steps')
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
+<script>
+	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Oportuya Paso1','page_path':'/step1'});
+</script>
 @section('eventTag')
 	<!-- Event snippet for Generación de Crédito conversion page --> <script> gtag('event', 'conversion', { 'send_to': 'AW-781153823/2Ee7CKT9l5sBEJ_svfQC', 'value': 200.0, 'currency': 'COP' }); </script> 
 @endsection
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
-
-@section('metaTags')
-	<meta name="googlebot" content="noindex">
-	<meta name="robots" content="noindex">
-@endsection()
 
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">

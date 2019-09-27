@@ -1,15 +1,13 @@
 @extends('layouts.steps')
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
+<script>
+	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Oportuya Paso2','page_path':'/step2'});
+</script>
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
-
-@section('metaTags')
-	<meta name="googlebot" content="noindex">
-	<meta name="robots" content="noindex">
-@endsection()
 
 @section('content')
 	<div id="step2" ng-app="appStep2" ng-controller="step2Ctrl" ng-init="leadInfo.identificationNumber = {{$identificactionNumber}}" ng-cloak>

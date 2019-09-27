@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
+<script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Términos y condiciones generales.','page_path':'/Terminos-y-condiciones'});
+</script>
 @section('title', 'Oportunidades Sevicios - Términos y condiciones generales.')
 
 @section('content')
