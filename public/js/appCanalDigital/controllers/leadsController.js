@@ -154,8 +154,8 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 		  method: 'GET',
 		  url: '/leads?q='+$scope.q.q+'&qCM='+$scope.q.qCM+'&qRL='+$scope.q.qRL+'&qGen='+$scope.q.qGen+'&qTR='+$scope.q.qTR+'&qAL='+$scope.q.qAL+'&initFrom='+$scope.q.initFrom+'&initFromCM='+$scope.q.initFromCM+'&initFromRL='+$scope.q.initFromRL+'&initFromGen='+$scope.q.initFromGen+'&initFromTR='+$scope.q.initFromTR+'&initFromAL='+$scope.q.initFromAL+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&channel'+$scope.q.channel,
 		}).then(function successCallback(response) {
-			console.log(response);
-			$scope.codeAsesor = response.data.codeAsesor;
+			console.log(response.data);
+			/*$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
 			$scope.totalLeadsRejected = response.data.totalLeadsRejected;
 			$scope.totalLeadsCM = response.data.totalLeadsCM;
@@ -179,14 +179,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 				$scope.cargandoTR = false;
 			}
 
-			if(response.data.leadsRejected != false){
-				$scope.q.initFromRL += response.data.leadsRejected.length;
-				angular.forEach(response.data.leadsRejected, function(value, key) {
-					$scope.leadsRejected.push(value);
-				});
-				$scope.cargandoRL = false;
-			}
-
+			
 			if(response.data.leadsGen != false){
 				$scope.q.initFromGen += response.data.leadsGen.length;
 				angular.forEach(response.data.leadsGen, function(value, key) {
@@ -209,7 +202,7 @@ app.controller('leadsController', function($scope, $http, $rootScope, $ngBootbox
 					$scope.leadsAL.push(value);
 				});
 				$scope.cargandoAL = false;
-			}
+			}*/
 
 			hideLoader();
 		}, function errorCallback(response) {
