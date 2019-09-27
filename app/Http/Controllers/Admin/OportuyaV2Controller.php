@@ -334,7 +334,8 @@ class OportuyaV2Controller extends Controller
 			// Update/save information in CLIENTE_FAB table
 			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA','=',$identificationNumber)->update($dataLead);
 			$dataDatosCliente = ['NOM_REFPER' => $request->get('NOM_REFPER'), 'TEL_REFPER' => $request->get('TEL_REFPER'), 'NOM_REFFAM' => $request->get('NOM_REFFAM'), 'TEL_REFFAM' => $request->get('TEL_REFFAM')];
-			$consultasLead = $this->execConsultasLead($oportudataLead[0]->CEDULA, $oportudataLead[0]->TIPO_DOC, 'PASOAPASO', $dataDatosCliente);
+			$lastName = explode(" ",$oportudataLead[0]->APELLIDOS);
+			return $consultasLead = $this->execConsultasLead($oportudataLead[0]->CEDULA, $oportudataLead[0]->TIPO_DOC, 'PASOAPASO', $lastName[0],$dataDatosCliente);
 			if($consultasLead['resp'] == 'false'){
 				return -2;
 			}
@@ -373,16 +374,24 @@ class OportuyaV2Controller extends Controller
     **Fecha: 20/12/2018
 	**/
 
-	public function getNumLead($identificationNumber){
+	public function getNumLead($identificationNumber, $typeResp = 'json'){
 		$getNumVal = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `CEL_VAL` = 1 AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(count($getNumVal) > 0){
-			return response()->json(['resp' => $getNumVal]);
+			if($typeResp == 'json'){
+				return response()->json(['resp' => $getNumVal]);
+			}else{
+				return $getNumVal;
+			}
 		}
 
 		$getNum = DB::connection('oportudata')->select("SELECT `NUM`, `CEL_VAL` FROM `CLI_CEL` WHERE `TIPO` = 'CEL' AND `IDENTI` = :identificationNumber ORDER BY `FECHA` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 
 		if(count($getNum) > 0){
-			return response()->json(['resp' => $getNum]);
+			if($typeResp == 'json'){
+				return response()->json(['resp' => $getNum]);
+			}else{
+				return $getNum;
+			}
 		}
 
 		return response()->json(['resp' => -1]);
@@ -659,6 +668,27 @@ class OportuyaV2Controller extends Controller
 			return 'true';
 		}else{
 			$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
+
+			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
+				return 'true';
+			}else{
+				return 'false';
+			}
+		}
+	}
+
+
+	private function validateDateConsultaUbica($identificationNumber){
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime ("- $daysToIncrement day", strtotime ( $dateNow ) );
+		$dateNew = date ( 'Y-m-d' , $dateNew );
+		$dateLastConsultaUbica = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ubica WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		if(empty($dateLastConsultaUbica)){
+			return 'true';
+		}else{
+			$dateLastConsulta = $dateLastConsultaUbica[0]->fecha;
 
 			if(strtotime($dateLastConsulta) < strtotime($dateNew)){
 				return 'true';
@@ -1508,6 +1538,43 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	private function execConsultaComercialLead($identificationNumber, $tipoDoc){
+		$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
+		if($dateConsultaComercial == 'true'){
+			$consultaComercial = $this->execConsultaComercial($identificationNumber, $tipoDoc);
+		}else{
+			$consultaComercial = 1;
+		}
+
+		return $consultaComercial;
+	}
+
+	private function execConsultaUbica($identificationNumber, $typeDocument, $lastName){
+		$obj = new \stdClass();
+		$obj->typeDocument = trim($typeDocument);
+		$obj->identificationNumber = trim($identificationNumber);
+		$obj->lastName = trim($lastName);
+		try {
+			// 2923 Produccion, 2020 Pruebas, 2801 CreditVision Produccion, 2001 CreditVision Pruebas
+			$ws = new \SoapClient("http://10.238.14.181:2040/Service1.svc?singleWsdl",array()); //correcta
+			$result = $ws->ConsultaUbicaPlus($obj);  // correcta
+			return 1;
+		}catch (\Throwable $th){
+			return 0;
+		}
+	}
+
+	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName){
+		$dateConsultaUbica = $this->validateDateConsultaUbica($identificationNumber);
+		if($dateConsultaUbica == 'true'){
+			$consultaUbica = $this->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
+		}else{
+			$consultaUbica = 1;
+		}
+
+		return $consultaUbica;
+	}
+
 	public function execConsultaFosyga($identificationNumber, $typeDocument, $dateExpeditionDocument){
 		$bdua = new Bdua;
 
@@ -1628,6 +1695,44 @@ class OportuyaV2Controller extends Controller
 		$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 		$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
 		return 1;
+	}
+
+	public function validateConsultaUbica($identificationNumber){
+		$consecConsultaUbica = DB::connection('oportudata')->select("SELECT `consec` FROM `consulta_ubica` WHERE `cedula` = :identificationNumber ORDER BY consec DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+		$getDataCliente = DB::connection('oportudata')->select("SELECT `TEL_EMP`, `TEL2_EMP` FROM `CLIENTE_FAB` WHERE  `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
+		$consec = $consecConsultaUbica[0]->consec;
+		$aprobo = 0;
+		// Validacion Celular
+		$numLead = $this->getNumLead($identificationNumber, 'normal');
+		$celLead = $numLead[0]->NUM;
+		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
+		if(!empty($telConsultaUbica)){
+			$fechaTelConsultaUbica = explode("/",$telConsultaUbica[0]->ubiprimerrep);
+			$fechaTelConsultaUbica = "20".$fechaTelConsultaUbica[2]."-".$fechaTelConsultaUbica[1]."-".$fechaTelConsultaUbica[0];
+			$fechaTelConsultaUbica = strtotime($fechaTelConsultaUbica);
+			$dateNow = date('Y-m-d');
+			$dateNew = strtotime ("- 12 month", strtotime ( $dateNow ) );
+			$dateNew = date ( 'Y-m-d' , $dateNew );
+			if($fechaTelConsultaUbica < strtotime($dateNew)){
+				$aprobo = 1;
+			}else{
+				$aprobo = 0;
+			}
+		}
+
+		if($aprobo == 0){
+			// Validacion Telefono empresarial
+			if($getDataCliente[0]->TEL_EMP != '' && $getDataCliente[0]->TEL_EMP != '0'){
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ",['consec' => $consec, 'tel_emp' =>$getDataCliente[0]->TEL_EMP, 'tel2_emp' =>$getDataCliente[0]->TEL2_EMP]);
+				if(!empty($telEmpConsultaUbica)){
+
+				}else{
+					$parobado = 0;
+				}
+				
+			}
+		}
+		return $aprobo;
 	}
 
 	private function compareNamesLastNames($arrayCompare, $arrayCompareTo){
@@ -1836,7 +1941,11 @@ class OportuyaV2Controller extends Controller
 		return $resp[0];
 	}
 
-	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $data = []){
+	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName,$data = []){
+		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+		return $this->validateConsultaUbica($identificationNumber);
+
+
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
 
 		if($consultaComercial == 0){
@@ -1923,17 +2032,6 @@ class OportuyaV2Controller extends Controller
 			}
 
 			return "true";
-	}
-
-	private function execConsultaComercialLead($identificationNumber, $tipoDoc){
-		$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
-		if($dateConsultaComercial == 'true'){
-			$consultaComercial = $this->execConsultaComercial($identificationNumber, $tipoDoc);
-		}else{
-			$consultaComercial = 1;
-		}
-
-		return $consultaComercial;
 	}
 
 	private function addSolicFab($identificationNumber, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0){
