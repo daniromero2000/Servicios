@@ -1,7 +1,7 @@
-	<!--
+<!--
 	**Proyecto: SERVICIOS FINANCIEROS
 	**Caso de Uso: MODULO CATALOGO
-	**Autor: Luis David Giraldo Grajales 
+	**Autor: Luis David Giraldo Grajales
 	**Email: desarrolladorjunior@lagobo.com
 	**Descripción: view for PRODUCTS CRUD
 	**Fecha: 22/12/2018
@@ -20,21 +20,25 @@
 					<div class="row form-group">
 						<div class="col-12 col-sm-4">
 							<label>Ciudad</label>
-							<select class="form-control" ng-model="q.city" ng-options="city.id as city.name+'('+city.departament+')' for city in cities"></select>
+							<select class="form-control" ng-model="q.city"
+								ng-options="city.id as city.name+'('+city.departament+')' for city in cities"></select>
 						</div>
 						<div class="col-12 col-sm-4">
 							<label>Marca</label>
-							<select class="form-control" ng-model="q.brand" ng-options="brand.id as brand.name for brand in brands"></select>
+							<select class="form-control" ng-model="q.brand"
+								ng-options="brand.id as brand.name for brand in brands"></select>
 						</div>
 						<div class="col-12 col-sm-4">
 							<label>Linea</label>
-							<select class="form-control" ng-model="q.line" ng-options="line.id as line.name for line in lines"></select>
+							<select class="form-control" ng-model="q.line"
+								ng-options="line.id as line.name for line in lines"></select>
 						</div>
 					</div>
-				  
+
 					<div class="row">
 						<div class="col-12 text-right">
-							<button type="button" ng-click="resetFilters()" class="btn btn-danger">Resetear Filtros<i class="fas fa-times"></i></button>
+							<button type="button" ng-click="resetFilters()" class="btn btn-danger">Resetear Filtros<i
+									class="fas fa-times"></i></button>
 							<button type="submit" class="btn btn-primary ">Filtrar<i class="fas fa-filter"></i></button>
 						</div>
 					</div>
@@ -48,11 +52,11 @@
 <div class="row resetRow">
 
 	<div class="col-sm-12 col-md-3">
-		 <button class="btn btn-primary" ng-click="addResource()">Agregar Producto</button>
+		<button class="btn btn-primary" ng-click="addResource()">Agregar Producto</button>
 	</div>
 	<div class="col-sm-12 col-md-3">
-	  <input type="checkbox" class="form-check-input"  ng-model="q.delete">
-	  <label class="form-check-label">Mostrar inactivos</label>
+		<input type="checkbox" class="form-check-input" ng-model="q.delete">
+		<label class="form-check-label">Mostrar inactivos</label>
 	</div>
 
 	<div class="col-sm-12 offset-md-2 col-md-4 text-right">
@@ -62,7 +66,8 @@
 				<span class="input-group-text" id="searchIcon" ng-click="search()"><i class="fas fa-search"></i></span>
 			</div>
 			<div class="col-sm-12 col-md-1 resetCol">
-				<button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i class="fas fa-filter"></i></button>
+				<button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
+						class="fas fa-filter"></i></button>
 			</div>
 		</div>
 	</div>
@@ -87,10 +92,10 @@
 				<td>@{{ resource.price }}</td>
 				<td>@{{ resource.brand }}</td>
 				<td>@{{ resource.city }}</td>
-			<td> 
-				<i class="fas fa-edit cursor" title="Actualizar" ng-click="edtResource(resource.id)"></i>
-				<i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(resource)" ng-if='activ'></i> 
-			</td>
+				<td>
+					<i class="fas fa-edit cursor" title="Actualizar" ng-click="edtResource(resource.id)"></i>
+					<i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(resource)" ng-if='activ'></i>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -117,19 +122,22 @@
 						</div>
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Marca</label>
-							<select class="form-control" ng-model="resource.idBrand" ng-options="brand.id as brand.name for brand in brands" required="">
+							<select class="form-control" ng-model="resource.idBrand"
+								ng-options="brand.id as brand.name for brand in brands" required="">
 							</select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Línea</label>
-							<select class="form-control" ng-model="resource.idLine" ng-options="line.id as line.name for line in lines" required>
+							<select class="form-control" ng-model="resource.idLine"
+								ng-options="line.id as line.name for line in lines" required>
 							</select>
 						</div>
 						<div class="form-group col-12 col-sm-12 col-md-6">
 							<label>Ciudad</label>
-							<select class="form-control" ng-model="resource.idCity" ng-options="city.id as city.name for city in cities" required>
+							<select class="form-control" ng-model="resource.idCity"
+								ng-options="city.id as city.name for city in cities" required>
 							</select>
 						</div>
 					</div>
@@ -144,32 +152,31 @@
 </div>
 
 
-		
-			   <!-- Modal DELETE-->
 
-		<div class="modal fade" id="Delete" tabindex="-1" role="dialog">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
+<!-- Modal DELETE-->
+
+<div class="modal fade" id="Delete" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
 				<h5 class="modal-title">¿Desea eliminar este producto?</h5>
 			</div>
-			  <div class="modal-body">
-		
-				  <div class="form-group">
+			<div class="modal-body">
+
+				<div class="form-group">
 					<label>Nombre</label>
 					<input class="form-control textareaReadOnly" name="question" ng-model="resource.name" readonly>
-				  </div>  
-			  </div>
-			  <div class="modal-footer">
-				<form ng-submit = "deleteResource(resource.id)">
-					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<form ng-submit="deleteResource(resource.id)">
+
 					<button class="btn btn-danger">Eliminar</button>
 				</form>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-			  </div>
 			</div>
-		  </div>
 		</div>
-
+	</div>
 </div>
 
+</div>
