@@ -108,7 +108,8 @@
                 <div class="row" data-toggle="tooltip" id="form-body-simulator" ng-class="classForm" ng-model="classForm">
                     <div class="offset-1 offset-lg-1 col-10 col-lg-10 p-0">
                         <div class="form-simulator">
-                            <form ng-submit="showModal()" name="myForm">
+                            <form action="" name="myForm">
+                                @csrf
                                 <div layout="row">
                                     <md-input-container flex="100" class="text-left backinput">
                                         <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito </label>
@@ -175,7 +176,7 @@
                                     </p>
                                 </div>
                                 <div class="formularioSimulador-containInput text-center">
-                                    <button type="submit" ng-disabled="inputDisableButton" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
+                                    <button type="button" ng-click="showModal()" ng-disabled="inputDisableButton" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
                                 </div>
                             </form>
                         </div>
@@ -263,8 +264,8 @@
     </div>
 </div>
 <script>
-    /*document.getElementById("button1").disabled = true;
-    function enableBtn(){
-        document.getElementById("button1").disabled = false;
-    }*/
+    // document.getElementById("button1").disabled = true;
+    // function enableBtn(){
+    //     document.getElementById("button1").disabled = false;
+    // }
 </script>
