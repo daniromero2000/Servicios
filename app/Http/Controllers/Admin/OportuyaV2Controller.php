@@ -937,13 +937,17 @@ class OportuyaV2Controller extends Controller
 		from `consulta_ws`
 		WHERE `cedula` = :cedula ", ['cedula' => $cedula]);
 
-		if($queryLeadExistConsultaWs < 1){
+		$queryLeadExistTercero = DB::connection('oportudata')->select("SELECT COUNT(`tercedula`) as total
+		from `cifin_tercero`
+		WHERE `tercedula` = :cedula ", ['cedula' => $cedula]);
+		
+		if($queryLeadExistConsultaWs[0]->total < 1 || $queryLeadExistTercero[0]->total < 1){
 			return "-2";
 		}
 
 		$this->validatePolicyCredit_new($cedula);
 
-		$queryDataLead = DB::connection('oportudata')->select('SELECT inten.`FECHA_INTENCION`, cf.`TIPO_DOC`, cf.`CEDULA`, CONCAT(cf.NOMBRES," " ,cf.APELLIDOS) as NOMBRES, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`, cf.`FEC_EXP`, cf.`SUC`, inten.`ZONA_RIESGO`, cfs.`score`, inten.`PERFIL_CREDITICIO`, cf.`FEC_NAC`, cf.`EDAD`, cf.`ACTIVIDAD`, cf.`EDAD_INDP`, cf.`ANTIG`, cf.`SUELDO`, cf.`SUELDOIND`, cf.`OTROS_ING`, cf.`SUELDOIND`, inten.`TIPO_CLIENTE`, inten.`TARJETA`, inten.`TIPO_5_ESPECIAL`, inten.`HISTORIAL_CREDITO`, inten.`INSPECCION_OCULAR`, cf.`TIPOV`, cf.`DIRECCION`, cf.`CELULAR`
+		$queryDataLead = DB::connection('oportudata')->select('SELECT inten.`FECHA_INTENCION`, inten.`TIEMPO_LABOR`, cf.`TIPO_DOC`, cf.`CEDULA`, CONCAT(cf.NOMBRES," " ,cf.APELLIDOS) as NOMBRES, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`, cf.`FEC_EXP`, cf.`SUC`, inten.`ZONA_RIESGO`, cfs.`score`, inten.`PERFIL_CREDITICIO`, cf.`FEC_NAC`, cf.`EDAD`, cf.`ACTIVIDAD`, cf.`EDAD_INDP`, cf.`ANTIG`, cf.`SUELDO`, cf.`SUELDOIND`, cf.`OTROS_ING`, cf.`SUELDOIND`, inten.`TIPO_CLIENTE`, inten.`TARJETA`, inten.`TIPO_5_ESPECIAL`, inten.`HISTORIAL_CREDITO`, inten.`INSPECCION_OCULAR`, cf.`TIPOV`, cf.`DIRECCION`, cf.`CELULAR`
 		FROM `CLIENTE_FAB` as cf
 		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
 		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
@@ -957,6 +961,7 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber){
 		$getDataCliente = DB::connection('oportudata')->select("SELECT `EDAD`, `ACTIVIDAD`, `ANTIG`, `EDAD_INDP`, `CIUD_UBI`, `SUC` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
+		
 		// 3.2	Puntaje y 3.4 Calificacion Score
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if(empty($queryScoreClient)){
@@ -968,7 +973,9 @@ class OportuyaV2Controller extends Controller
 				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.2');
 				return ['resp' => "false"];
 			}
-
+			if($queryScoreClient[0]->score >= -7 && $queryScoreClient[0]->score <= 0){
+				$perfilCrediticio = 'TIPO 5';
+			}
 			if($queryScoreClient[0]->score >= 275 && $queryScoreClient[0]->score <= 527){
 				$perfilCrediticio = 'TIPO D';
 			}
@@ -988,6 +995,37 @@ class OportuyaV2Controller extends Controller
 			$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio);
 		}
 
+		// 2. WS Fosyga
+		$getDataFosyga = DB::connection('oportudata')->select("SELECT `estado`, `regimen`, `tipoAfiliado` FROM `fosyga_bdua` WHERE `cedula` =  :identificationNumber ORDER BY `idBdua` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+		if(!empty($getDataFosyga)){
+			if(empty($getDataFosyga[0]->estado) || empty($getDataFosyga[0]->regimen) || empty($getDataFosyga[0]->tipoAfiliado)){
+				return ['resp' => "false"];
+			}else{
+				if($getDataFosyga[0]->estado != 'ACTIVO' || $getDataFosyga[0]->regimen != 'CONTRIBUTIVO' || $getDataFosyga[0]->tipoAfiliado != 'COTIZANTE'){
+					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+					$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '2.1');
+					return ['resp' => "false"];
+				}
+			}
+		}else{
+			return ['resp' => "false"];
+		}
+
+		//3.1 Estado de documento
+		$getDataRegistraduria = DB::connection('oportudata')->select("SELECT  `estado` FROM `fosyga_estadoCedula` WHERE `cedula` =  :identificationNumber ORDER BY `idEstadoCedula` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+		if(!empty($getDataRegistraduria)){
+			if(!empty($getDataRegistraduria[0]->estado)){
+				if($getDataRegistraduria[0]->estado != 'VIGENTE'){
+					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+					$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.1');
+					return ['resp' => "false"];
+				}
+			}else{
+				return ['resp' => "false"];	
+			}
+		}else{
+			return ['resp' => "false"];
+		}
 		// 3.3 Estado de obligaciones		
 		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
 		FROM `cifin_finmora` 
@@ -1243,8 +1281,8 @@ class OportuyaV2Controller extends Controller
 
 		// 4.6 Tipo 5 Especial
 		$tipo5Especial = 0;
-		if($perfilCrediticio == 'TIPO C'){
-			$tipo5Especial = 0;
+		if($perfilCrediticio == 'TIPO 5'){
+			$tipo5Especial = 1;
 		}
 		$this->updateLastIntencionLead($identificationNumber, 'TIPO_5_ESPECiAL', $tipo5Especial);
 		// 4.7 Inspecciones Oculares

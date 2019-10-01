@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
+<script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Politícas de Tratamiento de la Información y Protección de Datos Personales.','page_path':'/Proteccion-de-datos-personales'});
+</script>
 @section('title', 'Oportunidades Sevicios - Politícas de Tratamiento de la Información y Protección de Datos Personales.')
 
 @section('content')
