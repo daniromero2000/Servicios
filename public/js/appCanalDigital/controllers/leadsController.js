@@ -10,6 +10,8 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'qRL': '',
 		'qGen': '',
 		'qTR': '',
+		'qfechaInicialTR': '',
+		'qfechaFinalTR': '',
 		'qAL': '',
 		'initFrom': 0,
 		'initFromCM': 0,
@@ -280,19 +282,15 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		}
 	];
 
-		$scope.cardTypes = [{
-				label: 'Tarjeta Black',
-				value: 0
-			},
-			{
-				label: 'Tarjeta Blue',
-				value: 1
-			},
-			{
-				label: 'Tarjeta Gray',
-				value: 2
-			}
-		];
+	$scope.cardTypes = [{
+			label: 'Tarjeta Black',
+			value: 0
+		},
+		{
+			label: 'Tarjeta Gray',
+			value: 1
+		}
+	];
 
 	$scope.getLeads = function () {
 		showLoader();
@@ -304,7 +302,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.cargandoAL = true;
 		$http({
 			method: 'GET',
-			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qAL=' + $scope.q.qAL + '&initFrom=' + $scope.q.initFrom + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
+			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados + '&qfechaInicialTR=' + $scope.q.qfechaInicialTR + '&qfechaFinalTR=' + $scope.q.qfechaFinalTR + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qAL=' + $scope.q.qAL + '&initFrom=' + $scope.q.initFrom + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
 		}).then(function successCallback(response) {
 			console.log(response.data);
 			$scope.codeAsesor = response.data.codeAsesor;

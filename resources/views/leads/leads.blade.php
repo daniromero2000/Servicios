@@ -48,7 +48,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="qtipoTarjetaAprobados">Tipo Tarjeta</label>
-                                    <select class="form-control" ng-model="q.qtipoTarjetaAprobados" id="qtipoTarjetaAprobados"
+                                    <select class="form-control" ng-model="q.qtipoTarjetaAprobados"
+                                        id="qtipoTarjetaAprobados"
                                         ng-options="cardType.label as cardType.label for cardType in cardTypes"></select>
                                 </div>
 
@@ -168,7 +169,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -227,6 +227,50 @@
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 2 }">
+        <div class="row form-group" ng-if="filtros">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Filtros</strong>
+                    </div>
+                    <div class="card-body">
+                        <form ng-submit="searchLeads()">
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-6">
+                                    <label for="qfechaInicialTR">Fecha Inicial</label>
+                                    <div class="input-group" moment-picker="q.qfechaInicialTR" format="YYYY-MM-DD">
+                                        <input class="form-control inputsSteps inputText" ng-model="q.qfechaInicialTR"
+                                            id="qfechaInicialTR" readonly="" required="" placeholder="Año/Mes/Día">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="qfechaFinalTR">Fecha Final</label>
+                                    <div class="input-group" moment-picker="q.qfechaFinalTR" format="YYYY-MM-DD">
+                                        <input class="form-control inputsSteps inputText" ng-model="q.qfechaFinalTR"
+                                            id="qfechaFinalTR" readonly="" required="" placeholder="Año/Mes/Día">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button type="button" ng-click="resetFilters()" class="btn btn-danger">Resetear
+                                        Filtros<i class="fas fa-times"></i></button>
+                                    <button type="submit" class="btn btn-primary ">Filtrar<i
+                                            class="fas fa-filter"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row resetRow">
             <div class="col-sm-12 col-md-1">
                 <p class="totalLeadsDigital text-center">
@@ -236,14 +280,18 @@
                     Leads
                 </p>
             </div>
-            <div class="col-sm-12 offset-md-8 col-md-3 text-right">
+            <div class="col-sm-12 offset-md-7 col-md-3 text-right">
                 <div class="input-group mb-3">
-                    <input type="text" ng-model="q.qTR" class="form-control" aria-describedby="searchIcon">
+                    <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
                         <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
                                 class="fas fa-search"></i></span>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-12 col-md-1 resetCol">
+                <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
+                        class="fas fa-filter"></i></button>
             </div>
         </div>
         <div class="table table-responsive">

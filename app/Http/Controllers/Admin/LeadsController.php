@@ -29,14 +29,14 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-        return $getLeadsDigital = $this->getLeadsCanalDigital(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom'), 'qtipoTarjetaAprobados' => $request->get('qtipoTarjetaAprobados'), 'qcityAprobados' => $request->get('qcityAprobados'), 'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'), 'qfechaFinalAprobados' => $request->get('qfechaFinalAprobados')]);
-        $leadsDigital = $getLeadsDigital['leadsDigital'];
-        $totalLeadsDigital = $getLeadsDigital['totalLeads'];
 
-        $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR')]);
+        $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
         $leadsTR = $getLeadsTR['leadsTR'];
         $totalLeadsTR = $getLeadsTR['totalLeadsTR'];
 
+        $getLeadsDigital = $this->getLeadsCanalDigital(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom'), 'qtipoTarjetaAprobados' => $request->get('qtipoTarjetaAprobados'), 'qcityAprobados' => $request->get('qcityAprobados'), 'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'), 'qfechaFinalAprobados' => $request->get('qfechaFinalAprobados')]);
+        $leadsDigital = $getLeadsDigital['leadsDigital'];
+        $totalLeadsDigital = $getLeadsDigital['totalLeads'];
 
         $getLeadsCM = $this->getLeadsCM(['qCM' => $request->get('qCM'), 'initFromCM' => $request->get('initFromCM')]);
         $leadsCM = $getLeadsCM['leadsCM'];
@@ -106,23 +106,23 @@ class LeadsController extends Controller
         }
 
         if ($request['qtipoTarjetaAprobados'] != '') {
-            $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", '%' . $request['qtipoTarjetaAprobados'] . '%');
+            $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
         }
 
         if ($request['qfechaInicialAprobados'] != '') {
             $request['qfechaInicialAprobados'] . " 00:00:00";
-            $query .= sprintf(" AND (cf.`CREACION` >= '%s') ", '%' . $request['qfechaInicialAprobados'] . '%');
+            $query .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialAprobados']);
         }
 
         if ($request['qfechaFinalAprobados'] != '') {
             $request['qfechaFinalAprobados'] . " 23:59:59";
-            $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", '%' . $request['qfechaFinalAprobados'] . '%');
+            $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
 
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
-        return $query;
+
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
@@ -186,19 +186,18 @@ class LeadsController extends Controller
             return $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
         }
 
-        // if ($request['qFechaInicialTR'] != '') {
-        //     $request['qFechaInicialTR']." 00:00:00";
-        //     return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaInicialTR'] . '%');
-        // }
+        if ($request['qfechaInicialTR'] != '') {
+            $request['qfechaInicialTR'] . " 00:00:00";
+            $queryTradicional .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialTR']);
+        }
 
-        // if ($request['qFechaFinalTR'] != '') {
-        //     $request['qFechaFinalTR']." 23:59:59";
-        //     return $queryTradicional .= sprintf(" AND(cf.`CREACION` >= '%s') ", '%' . $request['qFechaFinalTR'] . '%');
-        // }
+        if ($request['qfechaFinalTR'] != '') {
+            $request['qfechaFinalTR'] . " 23:59:59";
+            $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
+        }
 
 
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
-
         $resp = DB::connection('oportudata')->select($queryTradicional);
 
         return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];
