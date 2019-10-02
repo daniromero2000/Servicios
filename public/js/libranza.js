@@ -273,6 +273,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	};
 
 	$scope.calculateAmounts=function(timeLimitList,rate,quaotaAvailable,gap,loanAssurance,factor,amountList){
+		$scope.plazo.amount= 0;
 		for(var i =0;i < timeLimitList.length; i++){
 			var aux = {
 				amount : 0.0,
