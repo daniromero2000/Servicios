@@ -27,7 +27,7 @@
                 <a class="buton-cart" ng-click="showAdvanced($event)" href="" alt="" class="button-cart"><img class="img-but"src="{{asset('images/libranza/icon1.png')}}" alt="" class="img-fluid">Compra de Cartera</a>
             </div>
             <div class="col-12 col-sm-5 content-buton2 mt-butons">
-                <a class="buton-cred" ng-click="showAdvancedLI($event)" href="" alt="" class="buton-cart"><img class="img-but"src="{{asset('images/libranza/icon2.png')}}" alt="" class="img-fluid">Crédito de Libre Inversión<a>
+                <a class="buton-cred" ng-click="showAdvancedLI($event)" href="" alt="" class="buton-cart"><img class="img-but"src="{{asset('images/libranza/icon2.png')}}" alt="" class="img-fluid">Crédito de Libre Inversión</a>
             </div>        
         </div>
     </div>
@@ -244,14 +244,14 @@
                                    <!-- {!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}-->
                                 </div>
                                 <div class="form-group">
-                                <input type="checkbox"   ng-model="libranza.termsAndConditions" id="termsAndConditions" ng-true-value="1" ng-false-value="0" required>
-                                <label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-                                    Aceptar <a href="/Terminos-y-condiciones-simulador" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
-                                </label>
-                            </div>
-                            <p class="textCityForm">
-                                *Válido solo para ciudades que se desplieguen en la casilla.
-                            </p>
+                                    <input type="checkbox" ng-model="libranza.termsAndConditions" id="termsAndConditions" ng-true-value="1" ng-false-value="0" required>
+                                    <label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
+                                        Aceptar <a href="/Terminos-y-condiciones-simulador" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
+                                    </label>
+                                </div>
+                                <p class="textCityForm">
+                                    *Válido solo para ciudades que se desplieguen en la casilla.
+                                </p>
                                 <div class="formularioSimulador-containInput text-center">
                                     <button type="submit" id="button1" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Siguiente</button>
                                 </div>
