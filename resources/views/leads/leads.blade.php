@@ -129,7 +129,7 @@
                         <th scope="col">Asesor OP</th>
                         <th scope="col">Nombre / Score</th>
                         <th scope="col">Teléfono</th>
-                        <th scope="col">Canal adquisición</th>
+                        <th scope="col">Tarjeta</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Cupo Producto/Avance</th>
                         <th scope="col" style="width: 10%;">Fecha registro</th>
@@ -145,9 +145,7 @@
                         <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS + " / " + lead.score }}</td>
                         <td>@{{ lead.CELULAR }}</td>
                         <td>
-                            <span ng-if="lead.channel == 1">Página Web</span>
-                            <span ng-if="lead.channel == 2">Facebook</span>
-                            <span ng-if="lead.channel == 3">WhatsApp</span>
+                           @{{ lead.TARJETA }}
                         </td>
                         <td>@{{ lead.CIUD_UBI }}</td>
                         <td>
