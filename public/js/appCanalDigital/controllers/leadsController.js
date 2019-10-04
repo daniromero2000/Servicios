@@ -365,8 +365,10 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.q.initFrom = 0;
 		$scope.q.initFromCM = 0;
 		$scope.q.initFromGen = 0;
+		$scope.q.initFromTR = 0;
 		$scope.leads = [];
 		$scope.leadsCM = [];
+		$scope.leadsTR = [];
 		$scope.leadsGen = [];
 		$scope.leadsRejected = [];
 		$scope.getLeads();
@@ -376,15 +378,29 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.leads = [];
 		$scope.q = {
 			'q': '',
+			'qtipoTarjetaAprobados': '',
+			'qcityAprobados': '',
+			'qfechaInicialAprobados': '',
+			'qfechaFinalAprobados': '',
 			'qCM': '',
 			'qRL': '',
 			'qGen': '',
+			'qTR': '',
+			'qfechaInicialTR': '',
+			'qfechaFinalTR': '',
+			'qAL': '',
 			'initFrom': 0,
+			'initFromCM': 0,
+			'initFromRL': 0,
+			'initFromGen': 0,
+			'initFromTR': 0,
+			'initFromAL': 0,
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',
 			'typeService': '',
-			'state': ''
+			'state': '',
+			'channel': '',
 		};
 		$scope.filtros = false;
 		$scope.getLeads();

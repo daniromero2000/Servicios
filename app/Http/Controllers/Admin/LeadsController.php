@@ -89,10 +89,11 @@ class LeadsController extends Controller
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND sb.`SOLICITUD_WEB` = '1'
-        AND cf.`ESTADO` = 'PREAPROBADO'
+        AND cf.`ESTADO` = 'APROBADO'
         AND sb.ESTADO = 'APROBADO'
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
+        AND sb.STATE = 'A'
         AND ti.CEDULA = cf.CEDULA
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA);
@@ -110,12 +111,12 @@ class LeadsController extends Controller
         }
 
         if ($request['qfechaInicialAprobados'] != '') {
-            $request['qfechaInicialAprobados'] . " 00:00:00";
+            $request['qfechaInicialAprobados'] .= " 00:00:00";
             $query .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialAprobados']);
         }
 
         if ($request['qfechaFinalAprobados'] != '') {
-            $request['qfechaFinalAprobados'] . " 23:59:59";
+            $request['qfechaFinalAprobados'] .= " 23:59:59";
             $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
@@ -187,12 +188,12 @@ class LeadsController extends Controller
         }
 
         if ($request['qfechaInicialTR'] != '') {
-            $request['qfechaInicialTR'] . " 00:00:00";
+            $request['qfechaInicialTR'] .= " 00:00:00";
             $queryTradicional .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialTR']);
         }
 
         if ($request['qfechaFinalTR'] != '') {
-            $request['qfechaFinalTR'] . " 23:59:59";
+            $request['qfechaFinalTR'] .= " 23:59:59";
             $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
