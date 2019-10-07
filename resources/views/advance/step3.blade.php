@@ -7,6 +7,7 @@
 
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+    <link rel="stylesheet" href="{{ asset('css/stepByStep/stepByStep.css') }}">
 @endsection
 
 @section('content')
@@ -277,6 +278,30 @@
 				</div>
 			</form>
 		</div>
+
+		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confronta" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modalConfronta">
+				<div class="modal-content modalStepsContent">
+					<div class="modal-body" style="padding: 0 30px">
+						<h2 class="text-center confronta-title">Preguntas de Seguridad</h2>
+						<form ng-submit="sendConfronta()">
+							<div class="col-12 form-group" ng-repeat="pregunta in formConfronta">
+								<p>@{{ pregunta.pregunta }}</p>
+								<div ng-repeat="opcion in pregunta.opciones">
+									<input type="radio" name="@{{ pregunta.secuencia }}" ng-model="pregunta.opcion" class="form-group" id="@{{ opcion.secuencia_resp }}" ng-value="opcion.secuencia_resp" required><label class="confronta-label" for="@{{ opcion.secuencia_resp }}">@{{ opcion.opcion }}</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 text-center">
+									<button type="submit" class="btn btn-primary">Enviar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content modalStepsContent">
@@ -287,7 +312,23 @@
 							</div>
 						</div>
 						<div class="row resetRow">
-							<div class="col-12" ng-show="textPreaprobado">
+							<div class="col-12" ng-if="estadoCliente == 'APROBADO'">
+								<p class="textModal text-center">
+									<strong>Felicitaciones!!</strong>
+									<br>
+									Tienes un cupo Aprobado
+								</p>
+								<p class="text-center" style="margin-bottom: 0">
+									<span class="text-quotamodal">$@{{ quota | number:0 }}</span> para compras
+								</p>
+								<p class="text-center">
+									<span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> para avances en efectivo
+								</p>
+								<p class="textModalNumSolic text-center">
+									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+								</p>
+							</div>
+							<div class="col-12" ng-if="estadoCliente == 'PREAPROBADO'">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
@@ -300,7 +341,7 @@
 									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
 								</p>
 							</div>
-							<div class="col-12" ng-hide="textPreaprobado">
+							<div class="col-12" ng-if="estadoCliente == 'SIN COMERCIAL'">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>

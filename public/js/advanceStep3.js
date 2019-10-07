@@ -1,8 +1,10 @@
 angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 .controller("advanceStep3Ctrl", function($scope, $http) {
 	$scope.quota = 0;
+	$scope.quotaAdvance = 0;
 	$scope.numSolic = 0;
-	$scope.textPreaprobado = 0;
+	$scope.estadoCliente = "APROBADO";
+	$scope.formConfronta = {};
 	$scope.leadInfo = {
 		step: 3,
 		identificationNumber: '',
@@ -141,17 +143,20 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 			console.log(response);
 		});
 	};
-
 	$scope.saveStep3 = function(){
-		//showLoader();
+		showLoader();
 		$http({
 		  method: 'POST',
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
-			console.log(response.data);
+			console.log(response);
 			hideLoader();
-			/*if(response.data == -1){
+			if(response.data.resp == 'confronta'){
+				$scope.formConfronta = response.data.form;
+				$('#confronta').modal('show');
+			}
+			if(response.data == -1){
 				window.location = "/OPNTR_gracias_denied";
 			}
 
@@ -165,17 +170,48 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
+				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
 				$scope.numSolic = response.data.numSolic;
-				$scope.textPreaprobado = response.data.textPreaprobado;
-				$('#congratulations').modal('show');
+				$scope.estadoCliente = response.data.estado;
+				setTimeout(() => {
+					$('#confronta').modal('hide');
+				}, 800);
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
 			}
 			
 			if(response.data.data == false){
 				window.location = "/OPN_gracias_denied";
-			}*/
+			}
 		}, function errorCallback(response) {
 			hideLoader();
 		    console.log(response);
+		});
+	};
+	$scope.sendConfronta = function(){
+		$scope.infoConfronta = {
+			'confronta' : $scope.formConfronta,
+			'leadInfo' : $scope.leadInfo
+		};
+		$http({
+			method: 'POST',
+			url: '/api/oportuya/validateFormConfronta',
+			data: $scope.infoConfronta,
+		}).then(function successCallback(response) {
+			console.log(response);
+			if (response.data.data == true) {
+				$scope.quota = response.data.quota;
+				$scope.quotaAdvance = response.data.quotaAdvance;
+				$scope.numSolic = response.data.numSolic;
+				$scope.estadoCliente = response.data.estado;
+				setTimeout(() => {
+					$('#confronta').modal('hide');
+				}, 800);
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
 		});
 	};
 
