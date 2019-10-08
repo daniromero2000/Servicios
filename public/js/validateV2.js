@@ -66,7 +66,7 @@ $( document ).ready(function() {
 	}
 
 	function validateTelephoneAndCelphone(input){
-		var patt = "(\\+57)?\\s?3((\\d{6})|(\\d{9}))";
+		var patt = "(\\+57)?\\s?((\\d{7})|(\\d{10}))";
 		setAttributePatternInput(input, patt);
 	}
 
