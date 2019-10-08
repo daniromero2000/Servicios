@@ -1377,12 +1377,6 @@ class OportuyaV2Controller extends Controller
 			}
 		}
 
-		if($aprobado == false && $historialCrediticio == 0){
-			$tarjeta = "Crédito Tradicional";
-			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-2');
-			return ['resp' => "-2"];
-		}
-
 		// 3.7 Tarjeta Gray
 		if($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false){
 			if($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO' || $getDataCliente[0]->ACTIVIDAD == 'EMPLEADO'){
@@ -1395,6 +1389,12 @@ class OportuyaV2Controller extends Controller
 		
 		if($aprobado == true){
 			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
+		}
+
+		if($aprobado == false && $historialCrediticio == 0){
+			$tarjeta = "Crédito Tradicional";
+			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-2');
+			return ['resp' => "-2"];
 		}
 
 		// 5 Definiciones cliente
