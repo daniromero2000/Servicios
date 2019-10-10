@@ -8,6 +8,7 @@
         margin: auto;
     }
 </style>
+
 <div class="row form-group" ng-if="filtros">
     <div class="col-12">
         <div class="card">
@@ -67,7 +68,7 @@
 <div class="row resetRow">
     <div class="col-sm-12 col-md-1">
         <p class="totalLeadsDigital text-center">
-            @{{ $totalLeads }}
+            @{{ totalLeads }}
         </p>
         <p class="text-center">
             Leads
@@ -98,7 +99,6 @@
                 <th scope="col" style="width: 10%;">Fecha registro</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Tarjeta</th>
-                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -111,13 +111,6 @@
                 <td>@{{ lead.ESTADO }}</td>
                 <td>
                     @{{ lead.TARJETA }}
-                </td>
-
-                <td>
-                    <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor"
-                        ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id);$parent.$parent.lead=lead"></i>
-                    <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-check cursor"
-                        ng-click="assignAssesorDigitalToLead(lead.SOLICITUD)"></i>
                 </td>
             </tr>
         </tbody>

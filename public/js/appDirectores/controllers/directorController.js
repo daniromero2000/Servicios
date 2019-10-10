@@ -74,7 +74,7 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 		}).then(function successCallback(response) {
 			console.log(response.data);
 			$scope.codeAsesor = response.data.codeAsesor;
-			$scope.totalLeads = response.data.totalLeadsDirector;
+			$scope.totalLeads = response.data.totalLeads;
 
 			if (response.data.leads != false) {
 				$scope.q.initFrom += response.data.leads.length;
