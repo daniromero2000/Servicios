@@ -16,6 +16,7 @@
 @endsection()
 
 @section('linkStyleSheets')
+	<link rel="stylesheet" href="{{ asset('css/libranza/simulador.css') }}">
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 
