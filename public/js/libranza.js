@@ -216,13 +216,12 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000;
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc) / 2) - $scope.libranza.otherDesc - $scope.libranza.segMargen + parseInt($scope.libranza.quotaBuy);
 		if ($scope.libranza.age >= 18 && $scope.libranza.age < 80) {
-			$scope.libranza.maxQuota = 60000000;
+			$scope.libranza.maxQuota = 80000000;
 		} else if ($scope.libranza.age >= 80 && $scope.libranza.age < 86) {
 			$scope.libranza.maxQuota = 9000000;
 		} else {
 			$scope.libranza.maxQuota = 5000000;
 		}
-
 	};
 
 	$scope.ableField = function () {

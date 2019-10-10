@@ -176,7 +176,7 @@ class LeadsController extends Controller
         where
         `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional' AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
         AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
-        AND cf.`ESTADO` = 'PREAPROBADO'
+
         AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         ";
 
