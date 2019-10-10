@@ -25,16 +25,15 @@ class DirectorController extends Controller
     FROM CLIENTE_FAB as cf, TB_INTENCIONES as ti
     where ti.CEDULA = cf.CEDULA
     and cf.SUC = 125
-       and cf.CLIENTE_WEB = 1
-        AND ti.FECHA_INTENCION = (
+    and cf.CLIENTE_WEB = 1
+    and ti.FECHA_INTENCION = (
       SELECT MAX(`FECHA_INTENCION`)
       FROM `TB_INTENCIONES`
-      WHERE `CEDULA` = `cf`.`CEDULA`)
-    ");
+      WHERE `CEDULA` = `cf`.`CEDULA`)");
 
 
     if ($request['q'] != '') {
-      $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+      $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`APELLIDOS` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
     }
 
     if ($request['qtipoTarjeta'] != '') {
