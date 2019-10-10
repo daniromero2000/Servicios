@@ -273,6 +273,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 	};
 
 	$scope.calculateAmounts=function(timeLimitList,rate,quaotaAvailable,gap,loanAssurance,factor,amountList){
+		$scope.plazo.amount= 0;
 		for(var i =0;i < timeLimitList.length; i++){
 			var aux = {
 				amount : 0.0,
@@ -365,7 +366,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		  floor: 12,
 		  ceil: 120,
 		  step:12,
-		  ticksArray: [13, 24, 36, 48, 60,72,84,96,108, 120],
+		  ticksArray: [13, 24, 36, 48, 60, 72, 84, 96, 108, 120],
 		  disabled: false,
 		  translate: function(value, sliderId, label) {
 			switch (label) {
@@ -498,7 +499,8 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 					$scope.sliderRate.options.disabled=$scope.disableRange;
 
 					var plazos= [];
-					var lastPlazo={};	
+					var lastPlazo={};
+					console.log(flag);
 					if(flag==1){
 						$scope.plazos = $scope.calculateAmounts($scope.timeLimits,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor,plazos);
 						lastPlazo = $scope.plazos[$scope.plazos.length-1];
@@ -557,9 +559,7 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 
 	$scope.showModal=function(){
 		$scope.simular(1);
-		console.log($scope.sliderAmount.maxAmount);
-		$('#solicitarModal').modal('show');
-		
+		$('#solicitarModal').modal('show');		
 	}
 	
 	$scope.idLead='';
