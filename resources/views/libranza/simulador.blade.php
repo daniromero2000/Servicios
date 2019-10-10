@@ -108,13 +108,13 @@
                 <div class="row" data-toggle="tooltip" id="form-body-simulator" ng-class="classForm" ng-model="classForm">
                     <div class="offset-1 offset-lg-1 col-10 col-lg-10 p-0">
                         <div class="form-simulator">
-                            <form action="" name="myForm">
+                            <form ng-submit="showModal()" name="myForm">
                                 @csrf
                                 <div layout="row">
                                     <md-input-container flex="100" class="text-left backinput">
                                         <label class="formularioSimulador-labelFormulario" for="creditLine">Linea de Crédito </label>
                                         <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.creditLine" required="" ng-change="ableField()">
-                                            <md-option ng-value="linea.id" ng-repeat="linea in lines">@{{linea.name}}</md-option>
+                                            <md-option ng-value="linea.id" ng-repeat="linea in lines">@{{linea.name}}</md-option required>
                                         </md-select>
                                     </md-input-container>
                                 </div>
@@ -122,7 +122,7 @@
                                     <md-input-container flex="100" class="text-left backinput">
                                         <label class="formularioSimulador-labelFormulario mt-4" for="crecustomerTypeditLine">Tipo de cliente </label>
                                         <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.customerType" required="" ng-change="selectPagaduria()">
-                                            <md-option ng-value="tipo.id" ng-repeat="tipo in libranzaProfiles">@{{tipo.name}}</md-option>
+                                            <md-option ng-value="tipo.id" ng-repeat="tipo in libranzaProfiles">@{{tipo.name}}</md-option required>
                                         </md-select>
                                     </md-input-container>
                                 </div>
@@ -134,35 +134,35 @@
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" flex-gt-sm="50" class="text-left m-0 backinput">
                                         <label for="birthday">Pagaduría</label>
-                                        <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.pagaduria" required="">
-                                            <md-option ng-value="pagaduriaItem.idPagaduria" ng-repeat="pagaduriaItem in pagaduriaLibranza">@{{pagaduriaItem.name}}</md-option>
+                                        <md-select ng-disabled="inputDisable" name="type" ng-model="libranza.pagaduria" required="true">
+                                            <md-option ng-value="pagaduriaItem.idPagaduria" ng-repeat="pagaduriaItem in pagaduriaLibranza">@{{pagaduriaItem.name}}</md-option required>
                                         </md-select>
                                     </md-input-container>
                                 </div>
                                 <div layout="row" layout-xs="column" uib-tooltip="Some text">  
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left backinput">
                                         <label>Salario básico</label>
-                                        <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="simulate()">
+                                        <input type="text" ng-disabled="inputDisable" id="salary" class="form-control" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.salary" ng-blur="simulate()" required>
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left ">
                                         <label>Descuentos de ley</label>
-                                        <input  type="text" id="lawDesc" class="form-control backinput" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.lawDesc" ng-disabled="true">
+                                        <input  type="text" id="lawDesc" class="form-control backinput" ng-currency fraction="0" min="0" validation-pattern="number" ng-model="libranza.lawDesc" ng-disabled="true" required>
                                     </md-input-container>
                                 </div> 
                                 <div layout="row"  ng-if="!quotaBuy">  
                                     <md-input-container flex="100" class="text-left">
                                         <label>Otros Descuentos</label>
-                                        <input ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control backinput" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input ng-disabled="inputDisable" type="text" id="otherDesc" class="form-control backinput" ng-model="libranza.otherDesc" ng-currency fraction="0" min="0" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()" required>
                                     </md-input-container>
                                 </div> 
                                 <div layout="row"  ng-if="quotaBuy">  
                                     <md-input-container flex="50" class="text-left backinput">
                                         <label>Otros Descuentos</label>
-                                        <input  ng-disabled="inputDisable" type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input  ng-disabled="inputDisable" type="number" id="otherDesc" class="form-control" ng-model="libranza.otherDesc" validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()" required>
                                     </md-input-container>
                                     <md-input-container flex="50" class="text-left">
                                         <label>Valor Cuota Compra</label>
-                                        <input ng-disabled="inputDisable" type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simulate()" ng-change="validateInt()">
+                                        <input ng-disabled="inputDisable" type="text" validation-pattern="number" id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy" ng-blur="simulate()" ng-change="validateInt()" required>
                                     </md-input-container>
                                 </div>
                                 <div class="row" ng-show="showAlertError">
@@ -176,7 +176,7 @@
                                     </p>
                                 </div>
                                 <div class="formularioSimulador-containInput text-center">
-                                    <button type="button" ng-click="showModal()" ng-disabled="inputDisableButton" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
+                                        <button type="submit" ng-disabled="inputDisableButton" class="btn buttonSend formularioSimulador-buttonForm" style="margin-top: 15px;">Cotiza tu crédito</button>
                                 </div>
                             </form>
                         </div>
