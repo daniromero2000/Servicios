@@ -353,8 +353,7 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 		var ageDifMs = Date.now() - birthday_date.getTime();
 		var ageDate = new Date(ageDifMs);
 		$scope.libranza.age = Math.abs(ageDate.getUTCFullYear() - 1970);
-		alert($scope.libranza.age);
-		$scope.simulate();
+			$scope.simulate();
 	}
 
 	$scope.payFunction = function (rate, timeLimit, amount) {
