@@ -34,6 +34,11 @@
                 </md-input-container>
             </div>
             <div class="col-12">
+                <div class="row">
+                    <div class="col-12 content-top">
+                        <img class="img-top"src="{{asset('images/asessors/top.jpg')}}" alt="" class="img-fluid">
+                    </div>
+                </div>
                 <form name="clienteCredito" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CREDITO'">
                     <div class="row container-form">
                         <div class="col-12 col-sm-12 col-md-12 type-client">
@@ -136,7 +141,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
                                 <div class="col-12 col-sm-4">
                                     <label class="labels" for="">Estrato*</label>
                                     <input class="inputs" type="number" placeholder="Estrato*"></input>
@@ -267,6 +271,118 @@
                             <div class="col-12 text-center">
                                 <md-button type="submit" class="md-raised md-primary px-3 py-2">Continuar</md-button>
                             </div>
+                        </div>
+                    </div>
+                </form>
+                <form name="clienteContado" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CONTADO'">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 type-client">
+                            <div class="forms-descStep forms-descStep-avances">
+                                <strong>Información básica</strong><br>
+                                <span class="forms-descText">Ingresa tus datos personales</span>
+                                    <img src="http://192.168.200.60:8081/images/datosPersonales.png" class="img-fluid forms-descImg">
+                                <span class="forms-descStepNum">1</span>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <label class="labels" for="tipodoc">Tipo de documento*</label>
+                            <md-select class="inputs" name="TIPO_DOC" ng-model="lead.TIPO_DOC" placeholder="Seleccione" required>
+                                <md-option ng-repeat="type in typesDocuments" value="@{{type.value}}">@{{ type.label }}</md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                                <label class="labels" for="">Número de Documento*</label>
+                            <input class="inputs" type="text" name="" id="" placeholder="Número de documento*">  
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="labels" for="">Fecha Expedición Documento*</label>
+                            <input class="inputs" type="date" placeholder="Año/Mes/Día"></input> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <label class="labels" for="">Nombres*</label>
+                            <input class="inputs" type="text" placeholder="Nombres*"></input>        
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label class="labels" for="">Apellidos*</label>
+                            <input class="inputs" type="text" placeholder="Apellidos*"></input>        
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <label class="labels" for="">Correo Electrónico*</label>
+                            <input class="inputs" type="mail" placeholder="Correo Electrónico*"></input>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label class="labels" for="">Confirmación Correo Electrónico*</label>
+                            <input class="inputs" type="mail" placeholder="Confirmar Correo Electrónico*"></input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Celular*</label>
+                            <input class="inputs" type="text" placeholder="Celular*"></input>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Ciudad</label>
+                            <input class="inputs" type="text" placeholder="Ciudad*"></input>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Teléfono Fijo*</label>
+                            <input class="inputs" type="text" placeholder="Teléfono Fijo*"></input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Género</label>
+                            <md-select class="inputs" name="SEXO" ng-model="lead.SEXO" required>
+                            <md-option ng-repeat="gender in genders" value="@{{gender.value}}">@{{ gender.label }}</md-option>
+                            </md-select>  
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Dirección de Residencia*</label>
+                            <input class="inputs" type="text" placeholder="Dirección de Residencia*"></input>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Ciudad de Ubicación*</label>
+                            <input class="inputs" type="text" placeholder="Ciudad de Ubicación*"></input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <label class="ventaContado-label labels">Tratamiento de datos</label>
+                            <md-select class="inputs" name="TRAT_DATOS" ng-model="lead.TRAT_DATOS">
+                                <md-option value="SI">Si</md-option>
+                                <md-option value="NO">No</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Nombre de autorizado 1</label>
+                            <input class="inputs" type="text" name="VCON_NOM1" required ng-model="lead.VCON_NOM1">                                      
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Cédula de autorizado 1</label>
+                            <input class="inputs" type="text" name="VCON_CED1" required ng-model="lead.VCON_CED1">
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label class="ventaContado-label labels">Teléfono de autorizado 1</label>
+                            <input class="inputs" type="text" name="VCON_TEL1" required ng-model="lead.VCON_TEL1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <label class="ventaContado-label labels">Dirección de entrega</label>
+                            <input class="inputs" type="text" name="VCON_DIR" required ng-model="lead.VCON_DIR">
+                        </div>
+                    </div>
+                    <div class="row  text-center">
+                        <div class="col-12">
+                            <md-button type="submit" class="md-raised md-primary px-3 py-2">Continuar</md-button>
                         </div>
                     </div>
                 </form>

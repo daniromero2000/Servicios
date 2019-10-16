@@ -62,3 +62,29 @@ input{
     width: 35px;
     text-align: center;
 }
+.content-top{
+    text-align: center;
+}
+.img-top{
+    width: 50%;
+    border-radius:15px;
+}
+@media (max-width: 750px){
+    .content-top{
+    text-align: center;
+}
+.img-top{
+    width: 100%;
+    border-radius:15px;
+}
+}
+@media (min-width: 500px){
+    .content-top{
+    text-align: center;
+    display: none;
+}
+.img-top{
+    width: 100%;
+    border-radius:15px;
+}
+}                                                    
