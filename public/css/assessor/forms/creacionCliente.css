@@ -1,0 +1,90 @@
+.container-form{
+    /*border: solid 1px #2284C4;*/
+    width: 100%;
+    height:auto;
+    border-radius: 10px;;
+}
+.type-client{
+   /* border: solid 1px #2284C4;*/
+    border-radius: 10px;
+}
+input{
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    border-radius: 8px;
+    border: solid 1px gray;
+    padding: 5px;
+}
+.labels{
+    color: black;
+}
+.labels-blue{
+    color: #0E4E9C;
+}
+.inputs{
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    border-radius: 8px;
+    border: solid 1px #BFBFBF;
+    padding: 5px;
+}
+::placeholder{
+    font-size: 15px;
+    color:black;
+}
+.forms-descStep {
+    background: #167efa;
+    border-radius: 10px;
+    color: white;
+    line-height: 1;
+    padding: 10px 100px 15px 50px;
+    position: relative;
+    margin: 40px 0;
+}
+.forms-descStep > strong {
+    font-size: 100%;
+    font-weight: 600;
+}
+.forms-descText {
+    font-size: 80%;
+}
+.forms-descStepNum {
+    background: #cccccc;
+    border: 3px solid white;
+    border-radius: 50%;
+    font-weight: 700;
+    height: 35px;
+    left: -5px;
+    padding: 7px 0 0 0;
+    position: absolute;
+    text-align: -webkit-center;
+    top: -7px;
+    width: 35px;
+    text-align: center;
+}
+.content-top{
+    text-align: center;
+}
+.img-top{
+    width: 50%;
+    border-radius:15px;
+}
+@media (max-width: 750px){
+    .content-top{
+    text-align: center;
+}
+.img-top{
+    width: 100%;
+    border-radius:15px;
+}
+}
+@media (min-width: 500px){
+    .content-top{
+    text-align: center;
+    display: none;
+}
+.img-top{
+    width: 100%;
+    border-radius:15px;
+}
+}                                                    

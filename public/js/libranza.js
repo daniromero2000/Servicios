@@ -214,10 +214,14 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc)/2)-$scope.libranza.otherDesc-$scope.libranza.segMargen + parseInt($scope.libranza.quotaBuy);
 		if($scope.libranza.age >= 18 && $scope.libranza.age < 80){
 			$scope.libranza.maxQuota = 80000000;
+			$scope.lastPlazo.timeLimit.timeLimit = 120;
+
 		}else if($scope.libranza.age >= 80 && $scope.libranza.age < 86){
 			$scope.libranza.maxQuota = 9000000;
+			$scope.lastPlazo.timeLimit.timeLimit = 60;
 		}else{
 			$scope.libranza.maxQuota = 5000000;
+			$scope.lastPlazo.timeLimit.timeLimit = 48;
 		}
 
 	};
