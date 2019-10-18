@@ -164,23 +164,24 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
   	};
 	
 	$scope.getCodeVerification = function(renew = false){
+		$scope.addCliente('CREDITO');
 		showLoader();
-		$http({
-			method: 'GET',
-			url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
-		}).then(function successCallback(response) {
-			hideLoader();
-			if(response.data == true){
-				if(renew == true){
-					alert('Código generado exitosamente');
-				}else{
-					$('#confirmCodeVerification').modal('show');
-				}
-			}
-		}, function errorCallback(response) {
-			hideLoader();
-			console.log(response);
-		});
+		// $http({
+		// 	method: 'GET',
+		// 	url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+		// }).then(function successCallback(response) {
+		// 	hideLoader();
+		// 	if(response.data == true){
+		// 		if(renew == true){
+		// 			alert('Código generado exitosamente');
+		// 		}else{
+		// 			$('#confirmCodeVerification').modal('show');
+		// 		}
+		// 	}
+		// }, function errorCallback(response) {
+		// 	hideLoader();
+		// 	console.log(response);
+		// });
 	};
 	
 	$scope.getInfoLead = function(){
@@ -257,7 +258,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 
 	$scope.addCliente = function(tipoCreacion){
 		$scope.lead.tipoCliente = tipoCreacion;
-		//$('#proccess').modal('show');
+		showLoader();
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
@@ -270,14 +271,16 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 					}, 1000);
 				}
 				if(tipoCreacion == 'CREDITO'){
-					$scope.execConsultasLead($scope.lead.CEDULA, $scope.lead.TIPO_DOC, tipoCreacion);
+					$scope.execConsultasLead(response.identificationNumber, repsonse.tipoDoc, response.tipoCreacion, response.lastName, repsonse.dateExpIdentification);
 				}
+				hideLoader();
 			}, function errorCallback(response) {
+				hideLoader();
 				console.log(response);
 			});
 	};
 	
-	$scope.execConsultasLead = function(identificationNumber, tipoDoc,tipoCreacion){
+	$scope.execConsultasLead = function(identificationNumber, tipoDoc, tipoCreacion, lastName, dateExpIdentification){
 		$http({
 				method: 'GET',
 				url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
