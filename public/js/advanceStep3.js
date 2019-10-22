@@ -150,7 +150,6 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 		  url: '/oportuyaV2',
 		  data: $scope.leadInfo,
 		}).then(function successCallback(response) {
-			console.log(response);
 			hideLoader();
 			if(response.data.resp == 'confronta'){
 				$scope.formConfronta = response.data.form;
@@ -199,7 +198,6 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 			url: '/api/oportuya/validateFormConfronta',
 			data: $scope.infoConfronta,
 		}).then(function successCallback(response) {
-			console.log(response);
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
 				$scope.quotaAdvance = response.data.quotaAdvance;

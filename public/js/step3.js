@@ -200,7 +200,6 @@ angular.module('appStep3', ['moment-picker', 'ng-currency'])
 			url: '/api/oportuya/validateFormConfronta',
 			data: $scope.infoConfronta,
 		}).then(function successCallback(response) {
-			console.log(response);
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
 				$scope.quotaAdvance = response.data.quotaAdvance;

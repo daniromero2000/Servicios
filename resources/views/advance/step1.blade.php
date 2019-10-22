@@ -99,11 +99,11 @@
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="email" class="control-label">Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
+						<input type="text" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="email" class="control-label">Confirmar Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
+						<input type="text" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
 					</div>
 					<div ng-show="emailValidate" class="col-12">
 						<p class="alert alert-danger">

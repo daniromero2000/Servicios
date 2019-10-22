@@ -66,7 +66,7 @@
 					<div class="row resetRow">
 						<div class="col-12 form-group">
 							<label for="nit">Nit (sin número de verificación)</label>
-							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="number" ng-model="leadInfo.nit" />
+							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="nit" ng-model="leadInfo.nit" />
 						</div>
 					</div>
 					<div class="row resetRow">
@@ -142,7 +142,7 @@
 						</div>
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="nitInd">Nit (sin número de verificación)</label>
-							<input type="text" id="nitInd" ng-model="leadInfo.nitInd" validation-pattern="number" class="form-control inputsSteps inputText" />
+							<input type="text" id="nitInd" ng-model="leadInfo.nitInd" validation-pattern="nit" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row resetRow">

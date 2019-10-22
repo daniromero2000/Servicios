@@ -1101,6 +1101,10 @@ class OportuyaV2Controller extends Controller
 		
 		$respQueryComporFin = DB::connection('oportudata')->select($queryComporFin);
 		foreach ($respQueryComporFin as $value) {
+			$totalVector = 0;
+			if($value->fdapert == ''){
+				break;
+			}
 			$fechaComporFin = $value->fdapert;
 			$fechaComporFin = explode('/', $fechaComporFin);
 			$fechaComporFin = $fechaComporFin[2]."-".$fechaComporFin[1]."-".$fechaComporFin[0];
@@ -1112,7 +1116,7 @@ class OportuyaV2Controller extends Controller
 				$popArray = array_pop($paymentArray);
 				$paymentArray = array_reverse($paymentArray);
 				foreach($paymentArray as $habit){
-					if($totalVector >= 6){ // POner parametrizable
+					if($totalVector >= 6){ // Poner parametrizable
 						$historialCrediticio = 1;
 						break;
 					}
@@ -1751,6 +1755,10 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition){
+		$search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
+		$replace = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
+		$lastName = str_replace($search, $replace, $lastName);
+		$names = str_replace($search, $replace, $names);
 		// Fosyga
 		$queryBdua = sprintf("SELECT LOWER(`primerNombre`) as primerNombre, LOWER(`primerApellido`) as primerApellido, `regimen`, `tipoAfiliado` 
 		FROM `fosyga_bdua` 
@@ -1759,14 +1767,13 @@ class OportuyaV2Controller extends Controller
 
 		$daleteTemp = DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua[0]->tipoAfiliado]);
 
-		$nameDataLead = explode(" ",$names);
-		$nameBdua = explode(" ",$respBdua[0]->primerNombre);
+		$nameDataLead = explode(" ",strtolower($names));
+		$nameBdua = explode(" ",strtolower($respBdua[0]->primerNombre));
 		$coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
-		
-		$lastNameDataLead = explode(" ",$lastName);
-		$lastNameBdua = explode(" ",$respBdua[0]->primerApellido);
+
+		$lastNameDataLead = explode(" ",strtolower($lastName));
+		$lastNameBdua = explode(" ",strtolower($respBdua[0]->primerApellido));
 		$coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
-		
 		if($coincideNames == 0 || $coincideLastNames == 0){
 			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
 			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "FOSYGA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
@@ -2169,7 +2176,7 @@ class OportuyaV2Controller extends Controller
 			}else{
 				$consultaFosyga = 1;
 			}
-
+			
 			if ($consultaFosyga > 0) {
 				$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 			}else{
