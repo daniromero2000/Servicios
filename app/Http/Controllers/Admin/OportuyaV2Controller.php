@@ -1,29 +1,4 @@
 <?php
-
-/**
-    **Proyecto: SERVICIOS FINANCIEROS
-    **Modulo: MODULO Oportuya
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Descripción: Controlador de solicitud de credito oportuya, 
-    **				donde mediante los datos ingresados
-    **				en un formulario divido en tres pasos se puede pre-aprobar
-    **				o negar una solicitud de tarjeta oportuya.
-    **Fecha: 15/11/2018
-**/
-
-
-/**
-    **Project: SERVICIOS FINANCIEROS
-    **Module: Oportuya Module
-    **Author: Sebastian Ormaza
-    **Email: desarrollo@lagobo.com
-    **Author: Robert García
-    **Email: desarrollo1@lagobo.com
-    **Description:Oportuya credit request controller, where people by a form can know if a oportuya credit is pre-approve 
-    **Date: 15/11/2018
-**/
-
 namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
@@ -1755,8 +1730,8 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition){
-		$search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
-		$replace = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
+		$search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
+		$replace = ['ñ', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u'];
 		$lastName = str_replace($search, $replace, $lastName);
 		$names = str_replace($search, $replace, $names);
 		// Fosyga
@@ -1769,11 +1744,14 @@ class OportuyaV2Controller extends Controller
 
 		$nameDataLead = explode(" ",strtolower($names));
 		$nameBdua = explode(" ",strtolower($respBdua[0]->primerNombre));
+		$nameBdua = str_replace($search, $replace, $nameBdua);
 		$coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 
 		$lastNameDataLead = explode(" ",strtolower($lastName));
 		$lastNameBdua = explode(" ",strtolower($respBdua[0]->primerApellido));
+		$lastNameBdua = str_replace($search, $replace, $lastNameBdua);
 		$coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
+		
 		if($coincideNames == 0 || $coincideLastNames == 0){
 			$updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
 			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "FOSYGA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);

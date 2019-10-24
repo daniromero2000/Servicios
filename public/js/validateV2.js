@@ -70,7 +70,7 @@ $( document ).ready(function() {
 		}
 
 		function validateText(input){
-			var patt ="((\\w*([\\.]?)(#?)(-?))\\s{0,1})+";
+			var patt ="((\\w*([\\.]?)(#?)(-?)([\\(]?)([\\)]?)([\\']?)([\\,]?))\\s{0,1})+";
 			setAttributePatternInput(input, patt);
 		}
 
