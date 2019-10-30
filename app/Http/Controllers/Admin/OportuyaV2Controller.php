@@ -913,7 +913,7 @@ class OportuyaV2Controller extends Controller
 					break;
 
 				case '8':
-					$tipoDoc = "Fidecoismo";
+					$tipoDoc = "Fidecomiso";
 					break;
 			}
 			if($value->ESTADO == 'NEGADO'){
@@ -1829,7 +1829,7 @@ class OportuyaV2Controller extends Controller
 			if($getDataCliente[0]->EMAIL != ''){
 				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $getDataCliente[0]->EMAIL]);
 				if(!empty($emailConsultaUbica)){
-					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubica_mail);
+					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
 				}
 			}else{
 				$aprobo = 0;
