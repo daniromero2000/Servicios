@@ -31,10 +31,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.codeAsesor = "";
 	$scope.tabs = 1;
 	$scope.totalLeads = 0;
+	$scope.totalLeadsAnt = 0;
 	$scope.totalLeadsRejected = 0;
 	$scope.totalLeadsCM = 0;
 	$scope.totalLeadsGen = 0;
 	$scope.totalLeadsTR = 0;
+	$scope.totalLeadsTRAnt = 0;
 	$scope.cargando = true;
 	$scope.cargandoCM = true;
 	$scope.cargandoRL = true;
@@ -52,10 +54,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	};
 	$scope.comments = [];
 	$scope.leads = [];
+	$scope.leadsAnt = [];
 	$scope.leadsCM = [];
 	$scope.leadsGen = [];
 	$scope.leadsRejected = [];
 	$scope.leadsTR = [];
+	$scope.leadsTRAnt = [];
 	$scope.leadsAL = [];
 	$scope.cities = [{
 			label: 'ARMENIA',
@@ -307,10 +311,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			console.log(response.data);
 			$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
+			$scope.totalLeadsAnt = response.data.totalLeadsAnt;
 			$scope.totalLeadsRejected = response.data.totalLeadsRejected;
 			$scope.totalLeadsCM = response.data.totalLeadsCM;
 			$scope.totalLeadsGen = response.data.totalLeadsGen;
 			$scope.totalLeadsTR = response.data.totalLeadsTR;
+			$scope.totalLeadsTRAnt = response.data.totalLeadsTRAnt;
 			$scope.totalLeadsAL = response.data.totalLeadsAL;
 
 			if (response.data.leadsDigital != false) {
@@ -322,13 +328,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			}
 
 
-	if (response.data.leadsDigitalAnt != false) {
-		$scope.q.initFrom += response.data.leadsDigitalAnt.length;
-		angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
-			$scope.leads.push(value);
-		});
-		$scope.cargando = false;
-	}
+			if (response.data.leadsDigitalAnt != false) {
+				$scope.q.initFrom += response.data.leadsDigitalAnt.length;
+				angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
+					$scope.leadsAnt.push(value);
+				});
+				$scope.cargando = false;
+			}
 
 
 			if (response.data.leadsTR != false) {
@@ -339,13 +345,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				$scope.cargandoTR = false;
 			}
 
-				if (response.data.leadsTRAnt != false) {
-					$scope.q.initFromTR += response.data.leadsTRAnt.length;
-					angular.forEach(response.data.leadsTRAnt, function (value, key) {
-						$scope.leadsTR.push(value);
-					});
-					$scope.cargandoTR = false;
-				}
+			if (response.data.leadsTRAnt != false) {
+				$scope.q.initFromTR += response.data.leadsTRAnt.length;
+				angular.forEach(response.data.leadsTRAnt, function (value, key) {
+					$scope.leadsTRAnt.push(value);
+				});
+				$scope.cargandoTR = false;
+			}
 
 
 			if (response.data.leadsGen != false) {
@@ -382,11 +388,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
 		$scope.q.initFromCM = 0;
-		$scope.q.initFromGen = 0;
+		$scope.q.initFromGen = 0;1
 		$scope.q.initFromTR = 0;
 		$scope.leads = [];
+			$scope.leadsAnt = [];
 		$scope.leadsCM = [];
 		$scope.leadsTR = [];
+				$scope.leadsTRAnt = [];
 		$scope.leadsGen = [];
 		$scope.leadsRejected = [];
 		$scope.getLeads();

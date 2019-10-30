@@ -31,12 +31,12 @@ class LeadsController extends Controller
     {
 
         $getLeadsDigitalAnt = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
-        $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigital'];
-        $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeads'];
+        $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigitalAnt'];
+        $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
 
         $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR')]);
-        $leadsTRAnt = $getLeadsTRAnt['leadsTR'];
-        $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTR'];
+        $leadsTRAnt = $getLeadsTRAnt['leadsTRAnt'];
+        $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTRAnt'];
 
 
         $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
@@ -162,7 +162,7 @@ class LeadsController extends Controller
         $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAsessor);
         $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA, ti.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score, TB_INTENCIONES as ti
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
@@ -200,7 +200,7 @@ class LeadsController extends Controller
             $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
-        $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
+        $query .= " ORDER BY sb.`ASESOR_DIG`, ti.`FECHA_INTENCION` DESC";
 
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
