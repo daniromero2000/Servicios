@@ -101,8 +101,8 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
 		<script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 		@yield('scriptsJs')
+		<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
 	</body>
 </html>

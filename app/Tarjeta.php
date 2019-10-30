@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tarjeta extends Model
 {
     protected $table = 'TARJETA';
-    protected $primaryKey = 'NUMERO';
+    public $connection='oportudata';
 
     public $timestamps = false;
 
