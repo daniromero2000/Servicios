@@ -30,6 +30,15 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
 
+        $getLeadsDigitalAnt = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
+        $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigital'];
+        $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeads'];
+
+        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR')]);
+        $leadsTRAnt = $getLeadsTRAnt['leadsTR'];
+        $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTR'];
+
+
         $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
         $leadsTR = $getLeadsTR['leadsTR'];
         $totalLeadsTR = $getLeadsTR['totalLeadsTR'];
@@ -51,8 +60,79 @@ class LeadsController extends Controller
         $totalLeadsAL = $getLeadsAL['totalLeadsAL'];
 
         $codeAsessor = Auth::user()->codeOportudata;
-        return response()->json(['leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsCM' => $totalLeadsCM, 'codeAsesor' => $codeAsessor, 'leadsGen' => $leadsGen, 'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'totalLeadsTR' => $totalLeadsTR, 'leadsAL' => $leadsAL, 'totalLeadsAL' => $totalLeadsAL]);
+        return response()->json(['leadsDigitalAnt' => $leadsDigitalAnt, 'leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsAnt' => $totalLeadsDigitalAnt, 'totalLeadsCM' => $totalLeadsCM, 'codeAsesor' => $codeAsessor, 'leadsGen' => $leadsGen, 'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'leadsTRAnt' => $leadsTRAnt, 'totalLeadsTR' => $totalLeadsTR, 'totalLeadsTRAnt' => $totalLeadsTRAnt, 'leadsAL' => $leadsAL, 'totalLeadsAL' => $totalLeadsAL]);
     }
+
+    private function getLeadsCanalDigitalAnt($request)
+    {
+        $leadsDigital = [];
+        $totalLeadsDigital = 0;
+        $codeAsessor = Auth::user()->codeOportudata;
+        $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAsessor);
+        $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
+
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
+        WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
+        AND sb.`SOLICITUD_WEB` = '1' AND cf.`ESTADO` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA);
+
+        $respTotalLeads = DB::connection('oportudata')->select($query);
+
+        $totalLeadsDigital = count($respTotalLeads);
+
+        if ($request['q'] != '') {
+            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+        }
+
+        $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
+
+        $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
+
+        $resp = DB::connection('oportudata')->select($query);
+
+        foreach ($resp as $key => $lead) {
+            $queryChannel = sprintf("SELECT `channel`, `id`, `state`
+            FROM `leads`
+            WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
+            $respChannel = DB::select($queryChannel);
+            if ($lead->ASESOR_DIG != '') {
+                $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
+                $respAsesorDigital = DB::select($queryAsesorDigital);
+                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
+            }
+            $resp[$key]->channel = $respChannel[0]->channel;
+            $resp[$key]->id = $respChannel[0]->id;
+            $resp[$key]->state = $respChannel[0]->state;
+            $leadsDigital[] = $resp[$key];
+        }
+
+        return ['leadsDigitalAnt' => $leadsDigital, 'totalLeadsAnt' => $totalLeadsDigital];
+    }
+
+
+    private function getLeadsTradicionalAnt($request)
+    {
+        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
+        FROM `CLIENTE_FAB` as cf, `cifin_score` as score
+        WHERE `ESTADO` = 'TRADICIONAL'
+                AND score.`scocedula` = cf.`CEDULA`
+                AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+
+        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
+        $totalLeadsTradicional = count($respTotalLeadsTradicional);
+        if ($request['qTR'] != '') {
+            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+        }
+
+        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
+
+        $resp = DB::connection('oportudata')->select($queryTradicional);
+
+        return ['leadsTRAnt' => $resp, 'totalLeadsTRAnt' => $totalLeadsTradicional];
+    }
+
+
+
 
     private function getGenLeads($request)
     {
@@ -158,8 +238,6 @@ class LeadsController extends Controller
         if ($request['qCM'] != '') {
             $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
         }
-
-
 
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);

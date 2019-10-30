@@ -16,8 +16,15 @@
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1"
             data-toggle="tab" role="tab" aria-controls="nav-general">Aprobados</a>
+            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 7"
+    data-toggle="tab" role="tab" aria-controls="nav-general">Aprobados Ant</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2"
             data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional</a>
+
+
+<a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 8"
+    data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional Ant</a>
+
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3"
             data-toggle="tab" role="tab" aria-controls="nav-general">Almacen</a>
         <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
@@ -223,6 +230,24 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 2 }">
         <div class="row form-group" ng-if="filtros">

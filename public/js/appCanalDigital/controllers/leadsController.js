@@ -321,6 +321,16 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				$scope.cargando = false;
 			}
 
+
+	if (response.data.leadsDigitalAnt != false) {
+		$scope.q.initFrom += response.data.leadsDigitalAnt.length;
+		angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
+			$scope.leads.push(value);
+		});
+		$scope.cargando = false;
+	}
+
+
 			if (response.data.leadsTR != false) {
 				$scope.q.initFromTR += response.data.leadsTR.length;
 				angular.forEach(response.data.leadsTR, function (value, key) {
@@ -328,6 +338,14 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				});
 				$scope.cargandoTR = false;
 			}
+
+				if (response.data.leadsTRAnt != false) {
+					$scope.q.initFromTR += response.data.leadsTRAnt.length;
+					angular.forEach(response.data.leadsTRAnt, function (value, key) {
+						$scope.leadsTR.push(value);
+					});
+					$scope.cargandoTR = false;
+				}
 
 
 			if (response.data.leadsGen != false) {
