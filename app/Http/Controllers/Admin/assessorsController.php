@@ -214,7 +214,6 @@ class assessorsController extends Controller
         LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
         LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
         WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
-
         $resp = DB::connection('oportudata')->select($query);
 
         if(empty($resp)){
