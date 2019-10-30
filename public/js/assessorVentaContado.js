@@ -1,17 +1,5 @@
-angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-currency'])
-.config(function($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    $mdDateLocaleProvider.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    $mdDateLocaleProvider.formatDate = function(date) {
-       return moment(date).format('YYYY-MM-DD');
-	};
-	
-	$mdDateLocaleProvider.parseDate = function(dateString) {
-		var m = moment(dateString, 'YYYY-MM-DD', true);
-		return m.isValid() ? m.toDate() : new Date(NaN);
-	};
-})
-.controller("asessorVentaContadoCtrl", function($scope, $http, $mdDialog) {
+angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
+.controller("asessorVentaContadoCtrl", function($scope, $http) {
 	$scope.tipoCliente = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
@@ -82,7 +70,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 		},
 		{
 			'value'	: 'RENTISTA',
-			'label' : 'Administrador de bienes propios'
+			'label' : 'Rentista'
 		},
 		{
 			'value'	: 'PENSIONADO',
@@ -167,7 +155,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 		showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+			url   : '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
@@ -257,7 +245,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 
 	$scope.addCliente = function(tipoCreacion){
 		$scope.lead.tipoCliente = tipoCreacion;
-		//$('#proccess').modal('show');
+		showLoader();
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
@@ -270,14 +258,16 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 					}, 1000);
 				}
 				if(tipoCreacion == 'CREDITO'){
-					$scope.execConsultasLead($scope.lead.CEDULA, $scope.lead.TIPO_DOC, tipoCreacion);
+					$scope.execConsultasLead(response.identificationNumber, repsonse.tipoDoc, response.tipoCreacion, response.lastName, repsonse.dateExpIdentification);
 				}
+				hideLoader();
 			}, function errorCallback(response) {
+				hideLoader();
 				console.log(response);
 			});
 	};
 	
-	$scope.execConsultasLead = function(identificationNumber, tipoDoc,tipoCreacion){
+	$scope.execConsultasLead = function(identificationNumber, tipoDoc, tipoCreacion, lastName, dateExpIdentification){
 		$http({
 				method: 'GET',
 				url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
@@ -296,7 +286,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 
 	$scope.showConfirm = function(ev) {
 		// Appending dialog to document.body to cover sidenav in docs app
-		var confirm = $mdDialog.confirm()
+		/*var confirm = $mdDialog.confirm()
 				.title('Usuario registrado')
 				.textContent('Usuario registrado satisfactoriamente')
 				.ariaLabel('Lucky day')
@@ -318,7 +308,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 		}, function() {
 			$scope.resetInfo();
 			window.location = '/assessor/dashboard';
-		});
+		});*/
 	};
 
 	$scope.resetInfoLead = function(){

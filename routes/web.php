@@ -139,6 +139,7 @@ Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\Opo
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
 Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');
 Route::get('api/oportuya/getNumLead/{identificationNumber}', 'Admin\OportuyaV2Controller@getNumLead');
+Route::post('api/oportuya/validateFormConfronta', 'Admin\OportuyaV2Controller@validateFormConfronta');
 // Pasos solictud cupo
 Route::get('/avance/step1', 'Admin\OportuyaV2Controller@advanceStep1')->name('step1Avance');
 Route::get('/avance/step2/{numIdentification}', 'Admin\OportuyaV2Controller@advanceStep2')->name('step2Avance');
@@ -185,7 +186,7 @@ Route::group(['prefix'=>'api/'],function(){
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}/{tipoDoc}/{tipoCreacion}', 'Admin\OportuyaV2Controller@execConsultasLead');
-    Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
+    Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
 

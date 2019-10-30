@@ -1,0 +1,15 @@
+.modalConfronta{
+    max-width: 700px;
+}
+
+.confronta-title{
+    color: #167efa;
+    margin: 20px 0;
+}
+
+.confronta-label{
+    color: black;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 10px;
+}

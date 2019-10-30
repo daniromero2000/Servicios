@@ -189,7 +189,7 @@ angular.module('appStep1', ['moment-picker'])
 					window.location = "/UsuarioMoroso";
 				}else{
 					if($scope.totalErrorData >= 2){
-						$scope.deniedLeadForFecExp();
+						$scope.deniedLeadForFecExp("1.1");
 					}else{
 						if($scope.validateNum == 1){
 							$scope.saveStep1();
@@ -208,11 +208,11 @@ angular.module('appStep1', ['moment-picker'])
 		}
 	}
 
-	$scope.deniedLeadForFecExp = function(){
+	$scope.deniedLeadForFecExp = function(typeDenied){
 		showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/deniedLeadForFecExp/'+$scope.leadInfo.identificationNumber,
+			url: '/api/oportuya/deniedLeadForFecExp/'+$scope.leadInfo.identificationNumber+'/'+typeDenied,
 		}).then(function successCallback(response) {
 			hideLoader();
 			window.location = "/OPN_gracias_denied";
@@ -281,6 +281,9 @@ angular.module('appStep1', ['moment-picker'])
 				if (response.data == "1") {
 					$scope.encryptText();
 				}
+				if(response.data == "-1"){
+					$scope.deniedLeadForFecExp("1.2");
+				}
 				if (response.data == "-3" || response.data == "-4") {
 					$scope.totalErrorData ++;
 					$scope.showWarningErrorData = true;
@@ -288,7 +291,7 @@ angular.module('appStep1', ['moment-picker'])
 				}
 				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
-				console.log(response);
+				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			});
 	};
 
