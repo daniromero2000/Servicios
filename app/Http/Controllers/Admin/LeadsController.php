@@ -34,7 +34,7 @@ class LeadsController extends Controller
         $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigitalAnt'];
         $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
 
-        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR')]);
+        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTRAnt' => $request->get('qTRAnt'), 'initFromTR' => $request->get('initFromTR')]);
         $leadsTRAnt = $getLeadsTRAnt['leadsTRAnt'];
         $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTRAnt'];
 
@@ -120,8 +120,8 @@ class LeadsController extends Controller
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
-        if ($request['qTR'] != '') {
-            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+        if ($request['qTRAnt'] != '') {
+            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
         }
 
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
@@ -130,8 +130,6 @@ class LeadsController extends Controller
 
         return ['leadsTRAnt' => $resp, 'totalLeadsTRAnt' => $totalLeadsTradicional];
     }
-
-
 
 
     private function getGenLeads($request)
@@ -236,7 +234,7 @@ class LeadsController extends Controller
         $respTotalLeadsCM = DB::select($queryCM);
         $totalLeadsCM = count($respTotalLeadsCM);
         if ($request['qCM'] != '') {
-            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
+            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
         }
 
         $queryCM .= "ORDER BY `created_at` DESC ";
