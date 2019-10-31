@@ -276,6 +276,7 @@ class LeadsController extends Controller
         }
 
 
+        $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
         $resp = DB::connection('oportudata')->select($queryTradicional);
 
