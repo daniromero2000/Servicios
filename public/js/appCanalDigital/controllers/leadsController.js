@@ -12,6 +12,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'qTR': '',
 		'qfechaInicialTR': '',
 		'qfechaFinalTR': '',
+		'qTRAnt': '',
 		'qAL': '',
 		'initFrom': 0,
 		'initFromCM': 0,
@@ -306,7 +307,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.cargandoAL = true;
 		$http({
 			method: 'GET',
-			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados + '&qfechaInicialTR=' + $scope.q.qfechaInicialTR + '&qfechaFinalTR=' + $scope.q.qfechaFinalTR + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qAL=' + $scope.q.qAL + '&initFrom=' + $scope.q.initFrom + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
+			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados + '&qfechaInicialTR=' + $scope.q.qfechaInicialTR + '&qfechaFinalTR=' + $scope.q.qfechaFinalTR + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qTRAnt=' + $scope.q.qTRAnt + '&qAL=' + $scope.q.qAL + '&initFrom=' + $scope.q.initFrom + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
 		}).then(function successCallback(response) {
 			console.log(response.data);
 			$scope.codeAsesor = response.data.codeAsesor;
@@ -388,13 +389,14 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
 		$scope.q.initFromCM = 0;
-		$scope.q.initFromGen = 0;1
+		$scope.q.initFromGen = 0;
+		1
 		$scope.q.initFromTR = 0;
 		$scope.leads = [];
-			$scope.leadsAnt = [];
+		$scope.leadsAnt = [];
 		$scope.leadsCM = [];
 		$scope.leadsTR = [];
-				$scope.leadsTRAnt = [];
+		$scope.leadsTRAnt = [];
 		$scope.leadsGen = [];
 		$scope.leadsRejected = [];
 		$scope.getLeads();
@@ -414,6 +416,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'qTR': '',
 			'qfechaInicialTR': '',
 			'qfechaFinalTR': '',
+			'qTRAnt': '',
 			'qAL': '',
 			'initFrom': 0,
 			'initFromCM': 0,

@@ -29,15 +29,13 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-
         $getLeadsDigitalAnt = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
         $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigitalAnt'];
         $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
 
-        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR')]);
+        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTRAnt' => $request->get('qTRAnt'), 'initFromTR' => $request->get('initFromTR')]);
         $leadsTRAnt = $getLeadsTRAnt['leadsTRAnt'];
         $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTRAnt'];
-
 
         $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
         $leadsTR = $getLeadsTR['leadsTR'];
@@ -120,8 +118,8 @@ class LeadsController extends Controller
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
-        if ($request['qTR'] != '') {
-            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+        if ($request['qTRAnt'] != '') {
+            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
         }
 
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
@@ -130,8 +128,6 @@ class LeadsController extends Controller
 
         return ['leadsTRAnt' => $resp, 'totalLeadsTRAnt' => $totalLeadsTradicional];
     }
-
-
 
 
     private function getGenLeads($request)
@@ -236,7 +232,7 @@ class LeadsController extends Controller
         $respTotalLeadsCM = DB::select($queryCM);
         $totalLeadsCM = count($respTotalLeadsCM);
         if ($request['qCM'] != '') {
-            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
+            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
         }
 
         $queryCM .= "ORDER BY `created_at` DESC ";
@@ -248,7 +244,7 @@ class LeadsController extends Controller
 
     private function getLeadsTradicional($request)
     {
-        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`, TB_DEFINICIONES.`DESCRIPCION`
+        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score, `TB_INTENCIONES`
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.ID_DEF
         where
@@ -262,7 +258,7 @@ class LeadsController extends Controller
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
 
         if ($request['qTR'] != '') {
-            return $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+            $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
         }
 
         if ($request['qfechaInicialTR'] != '') {
@@ -275,8 +271,9 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
-
+        $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
+
         $resp = DB::connection('oportudata')->select($queryTradicional);
 
         return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];

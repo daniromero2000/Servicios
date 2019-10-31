@@ -378,7 +378,7 @@
             </div>
             <div class="col-sm-12 offset-md-8 col-md-3 text-right">
                 <div class="input-group mb-3">
-                    <input type="text" ng-model="q.qTR" class="form-control" aria-describedby="searchIcon">
+                    <input type="text" ng-model="q.qTRAnt" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
                         <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
                                 class="fas fa-search"></i></span>
@@ -481,7 +481,7 @@
             </div>
             <div class="col-sm-12 offset-md-7 col-md-3 text-right">
                 <div class="input-group mb-3">
-                    <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
+                    <input type="text" ng-model="q.qTR" class="form-control" aria-describedby="searchIcon">
                     <div class="input-group-append">
                         <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
                                 class="fas fa-search"></i></span>
@@ -503,6 +503,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Definición</th>
+                        <th scope="col">Fecha Intención</th>
                         <th scope="col">Score</th>
                     </tr>
                 </thead>
@@ -514,6 +515,7 @@
                         <td>@{{ lead.EMAIL }}</td>
                         <td>@{{ lead.CIUD_UBI }}</td>
                         <td>@{{ lead.DESCRIPCION }}</td>
+                        <td>@{{ lead.FECHA_INTENCION }}</td>
                         <td>@{{ lead.score }}</td>
                     </tr>
                 </tbody>
