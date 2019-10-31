@@ -6,7 +6,6 @@ use App\Lead;
 use App\Liquidator;
 use App\Comments;
 use App\Campaigns;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -29,8 +28,8 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-        $getLeadsDigitalAnt = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
-        $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigitalAnt'];
+        $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
+        $leadsDigitalAnt      = $getLeadsDigitalAnt['leadsDigitalAnt'];
         $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
 
         $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTRAnt' => $request->get('qTRAnt'), 'initFromTR' => $request->get('initFromTR')]);
@@ -53,12 +52,9 @@ class LeadsController extends Controller
         $leadsGen = $getLeadsGen['leadsGen'];
         $totalLeadsGen = $getLeadsGen['totalLeadsGen'];
 
-        $getLeadsAL = $this->getLeadsAlmacen(['qAL' => $request->get('qAL'), 'initFromAL' => $request->get('initFromAL')]);
-        $leadsAL = $getLeadsAL['leadsAL'];
-        $totalLeadsAL = $getLeadsAL['totalLeadsAL'];
 
         $codeAsessor = Auth::user()->codeOportudata;
-        return response()->json(['leadsDigitalAnt' => $leadsDigitalAnt, 'leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsAnt' => $totalLeadsDigitalAnt, 'totalLeadsCM' => $totalLeadsCM, 'codeAsesor' => $codeAsessor, 'leadsGen' => $leadsGen, 'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'leadsTRAnt' => $leadsTRAnt, 'totalLeadsTR' => $totalLeadsTR, 'totalLeadsTRAnt' => $totalLeadsTRAnt, 'leadsAL' => $leadsAL, 'totalLeadsAL' => $totalLeadsAL]);
+        return response()->json(['leadsDigitalAnt' => $leadsDigitalAnt, 'leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsAnt' => $totalLeadsDigitalAnt, 'totalLeadsCM' => $totalLeadsCM, 'codeAsesor' => $codeAsessor, 'leadsGen' => $leadsGen, 'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'leadsTRAnt' => $leadsTRAnt, 'totalLeadsTR' => $totalLeadsTR, 'totalLeadsTRAnt' => $totalLeadsTRAnt]);
     }
 
     private function getLeadsCanalDigitalAnt($request)
@@ -277,28 +273,6 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($queryTradicional);
 
         return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];
-    }
-
-    private function getLeadsAlmacen($request)
-    {
-        $queryAlmacen = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
-        FROM `CLIENTE_FAB` as cf, `cifin_score` as score
-        WHERE `ESTADO` = 'ALMACEN'
-                AND score.`scocedula` = cf.`CEDULA`
-                AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
-
-        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryAlmacen);
-        $totalLeadsTradicional = count($respTotalLeadsTradicional);
-
-        if ($request['qAL'] != '') {
-            $queryAlmacen .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qAL'] . '%', '%' . $request['qAL'] . '%');
-        }
-
-        $queryAlmacen .= sprintf(" LIMIT %s,30", $request['initFromAL']);
-
-        $resp = DB::connection('oportudata')->select($queryAlmacen);
-
-        return ['leadsAL' => $resp, 'totalLeadsAL' => $totalLeadsTradicional];
     }
 
     public function assignAssesorDigitalToLead($solicitud)
