@@ -12,7 +12,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'qTR': '',
 		'qfechaInicialTR': '',
 		'qfechaFinalTR': '',
-			'qTRAnt': '',
+		'qTRAnt': '',
 		'qAL': '',
 		'initFrom': 0,
 		'initFromCM': 0,
@@ -389,13 +389,14 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
 		$scope.q.initFromCM = 0;
-		$scope.q.initFromGen = 0;1
+		$scope.q.initFromGen = 0;
+		1
 		$scope.q.initFromTR = 0;
 		$scope.leads = [];
-			$scope.leadsAnt = [];
+		$scope.leadsAnt = [];
 		$scope.leadsCM = [];
 		$scope.leadsTR = [];
-				$scope.leadsTRAnt = [];
+		$scope.leadsTRAnt = [];
 		$scope.leadsGen = [];
 		$scope.leadsRejected = [];
 		$scope.getLeads();
@@ -415,7 +416,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'qTR': '',
 			'qfechaInicialTR': '',
 			'qfechaFinalTR': '',
-					'qTRAnt': '',
+			'qTRAnt': '',
 			'qAL': '',
 			'initFrom': 0,
 			'initFromCM': 0,

@@ -29,7 +29,6 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-
         $getLeadsDigitalAnt = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
         $leadsDigitalAnt = $getLeadsDigitalAnt['leadsDigitalAnt'];
         $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
@@ -37,7 +36,6 @@ class LeadsController extends Controller
         $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTRAnt' => $request->get('qTRAnt'), 'initFromTR' => $request->get('initFromTR')]);
         $leadsTRAnt = $getLeadsTRAnt['leadsTRAnt'];
         $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTRAnt'];
-
 
         $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
         $leadsTR = $getLeadsTR['leadsTR'];
@@ -260,7 +258,7 @@ class LeadsController extends Controller
         $totalLeadsTradicional = count($respTotalLeadsTradicional);
 
         if ($request['qTR'] != '') {
-            return $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+            $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
         }
 
         if ($request['qfechaInicialTR'] != '') {
@@ -273,9 +271,9 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
-
         $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
+
         $resp = DB::connection('oportudata')->select($queryTradicional);
 
         return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];
