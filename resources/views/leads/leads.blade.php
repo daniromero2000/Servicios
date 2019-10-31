@@ -503,6 +503,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Definición</th>
+                        <th scope="col">Fecha Intención</th>
                         <th scope="col">Score</th>
                     </tr>
                 </thead>
@@ -514,6 +515,7 @@
                         <td>@{{ lead.EMAIL }}</td>
                         <td>@{{ lead.CIUD_UBI }}</td>
                         <td>@{{ lead.DESCRIPCION }}</td>
+                        <td>@{{ lead.FECHA_INTENCION }}</td>
                         <td>@{{ lead.score }}</td>
                     </tr>
                 </tbody>
