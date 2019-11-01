@@ -232,6 +232,7 @@
 								</div>
 								<div class="col-12 text-center form-group">
 									<button type="submit" class="btn btn-primary">Confirmar Código</button>
+									<button type="button" ng-show="reNewToken" class="btn btn-warning" ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
 								</div>
 								<div class="col-12 text-center" ng-show="showAlertCode">
 									<div class="alert alert-danger" role="alert">
