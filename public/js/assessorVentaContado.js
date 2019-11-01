@@ -250,38 +250,38 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
-			}).then(function successCallback(response) {
-				if(tipoCreacion == 'CONTADO'){
-					setTimeout(() => {
-						$('#proccess').modal('hide');
-						$scope.showConfirm();
-					}, 1000);
-				}
-				if(tipoCreacion == 'CREDITO'){
-					$scope.execConsultasLead(response.identificationNumber, repsonse.tipoDoc, response.tipoCreacion, response.lastName, repsonse.dateExpIdentification);
-				}
-				hideLoader();
-			}, function errorCallback(response) {
-				hideLoader();
-				console.log(response);
-			});
+		}).then(function successCallback(response) {
+			if(tipoCreacion == 'CONTADO'){
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+					$scope.showConfirm();
+				}, 1000);
+			}
+			if(tipoCreacion == 'CREDITO'){
+				$scope.execConsultasLead(response.identificationNumber, repsonse.tipoDoc, response.tipoCreacion, response.lastName, repsonse.dateExpIdentification);
+			}
+			hideLoader();
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
 	};
 	
 	$scope.execConsultasLead = function(identificationNumber, tipoDoc, tipoCreacion, lastName, dateExpIdentification){
 		$http({
-				method: 'GET',
-				url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
-			}).then(function successCallback(response) {
-				if(response.data.resp == 'true'){
-					$scope.infoLead = response.data.infoLead;
-					setTimeout(() => {
-						$('#proccess').modal('hide');
-						$('#showResp').modal('show')
-					}, 100);
-				}
-			}, function errorCallback(response) {
-				console.log(response);
-			});
+			method: 'GET',
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
+		}).then(function successCallback(response) {
+			if(response.data.resp == 'true'){
+				$scope.infoLead = response.data.infoLead;
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+					$('#showResp').modal('show')
+				}, 100);
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
 	};
 
 	$scope.showConfirm = function(ev) {

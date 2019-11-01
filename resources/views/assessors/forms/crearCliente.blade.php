@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h3 class="ventaContado-nameAssessor">
-                    {{Auth::guard('assessor')->user()->NOMBRE}}
+                    {{ Auth::guard('assessor')->user()->NOMBRE }}
                 </h3>
                 <p class="ventaContado-text">
                     <i>* Recuerde que el correcto diligenciamiento de este formulario agilizará el proceso de facturación de la cajera con Apoteosys.</i>
