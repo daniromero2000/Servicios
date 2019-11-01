@@ -1,6 +1,7 @@
 angular.module('appAdvanceStep1', ['moment-picker'])
-.controller("advanceStep1Ctrl", function($scope, $http) {
+.controller("advanceStep1Ctrl", function($scope, $http, $timeout) {
 	$scope.myModel = "";
+	$scope.reNewToken = false;
 	$scope.emailValidate = false;
 	$scope.showAlertCode = false;
 	$scope.showWarningCode = false;
@@ -227,6 +228,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 	};
 
 	$scope.getCodeVerification = function(renew = false){
+		$scope.reNewToken = false;
 		$('#confirmNumCel').modal('hide');
 		showLoader();
 		$http({
@@ -237,7 +239,13 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			if(response.data == true){
 				if(renew == true){
 					alert('Código generado exitosamente');
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 				}else{
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 					$('#confirmCodeVerification').modal('show');
 				}
 			}
