@@ -1,5 +1,5 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
-.controller("asessorVentaContadoCtrl", function($scope, $http) {
+.controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$scope.tipoCliente = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
@@ -152,7 +152,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
   	};
 	
 	$scope.getCodeVerification = function(renew = false){
-		showLoader();
+		$scope.addCliente('CREDITO');
+		$scope.reNewToken = true;
+		/*showLoader();
 		$http({
 			method: 'GET',
 			url   : '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
@@ -161,14 +163,20 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 			if(response.data == true){
 				if(renew == true){
 					alert('Código generado exitosamente');
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 				}else{
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 					$('#confirmCodeVerification').modal('show');
 				}
 			}
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
-		});
+		});*/
 	};
 	
 	$scope.getInfoLead = function(){
@@ -258,7 +266,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 				}, 1000);
 			}
 			if(tipoCreacion == 'CREDITO'){
-				$scope.execConsultasLead(response.identificationNumber, repsonse.tipoDoc, response.tipoCreacion, response.lastName, repsonse.dateExpIdentification);
+				$scope.execConsultasLead(response.data.identificationNumber);
 			}
 			hideLoader();
 		}, function errorCallback(response) {
@@ -267,11 +275,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 		});
 	};
 	
-	$scope.execConsultasLead = function(identificationNumber, tipoDoc, tipoCreacion, lastName, dateExpIdentification){
+	$scope.execConsultasLead = function(identificationNumber){
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data.resp == 'true'){
 				$scope.infoLead = response.data.infoLead;
 				setTimeout(() => {
@@ -280,6 +289,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 				}, 100);
 			}
 		}, function errorCallback(response) {
+			hideLoader();
 			console.log(response);
 		});
 	};

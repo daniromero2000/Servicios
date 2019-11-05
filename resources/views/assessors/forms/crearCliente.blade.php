@@ -315,21 +315,21 @@
                         <div class="row">
                             <div class="col-12 col-sm-6">
                                 <label class="labels-blue" for="refPersonalNombre">Referencia Personal:</label>
-                                <input class="inputs" id="refPersonalNombre" validation-pattern="name" type="text" required placeholder="Nombre*" />
+                                <input class="inputs" id="refPersonalNombre" ng-model="lead.NOM_REFPER" validation-pattern="name" type="text" required placeholder="Nombre*" />
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label class="labels" for="refPersonalCelular"></label>
-                                <input class="inputs" id="refPersonalCelular" validation-pattern="telephone" type="text" required placeholder="Celular*" />
+                                <input class="inputs" id="refPersonalCelular" ng-model="lead.TEL_REFPER" validation-pattern="telephone" type="text" required placeholder="Celular*" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-6">
                                 <label class="labels-blue" for="refFamiliarNombre">Referencia Familiar:</label>
-                                <input class="inputs" type="text" id="refFamiliarNombre" validation-pattern="name" required placeholder="Nombre*" />
+                                <input class="inputs" type="text" id="refFamiliarNombre" ng-model="lead.NOM_REFFAM" validation-pattern="name" required placeholder="Nombre*" />
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label class="labels" for="refFamiliarCelular"></label>
-                                <input class="inputs" type="text" id="refFamiliarCelular" validation-pattern="telephone" required placeholder="Celular*" />
+                                <input class="inputs" type="text" id="refFamiliarCelular" ng-model="lead.TEL_REFFAM" validation-pattern="telephone" required placeholder="Celular*" />
                             </div>
                         </div>
                         <div class="row">
