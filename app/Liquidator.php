@@ -9,6 +9,14 @@ class Liquidator extends Model
     protected $table = 'liquidator';
 
     public $timestamps = false;
-    
-    protected $fillable = ['creditLine', 'pagaduria', 'age', 'customerType', 'salary','amount','timeLimit'];
+
+    protected $fillable = [
+        'creditLine',
+        'pagaduria',
+        'age',
+        'customerType',
+        'salary',
+        'amount',
+        'timeLimit'
+    ];
 }

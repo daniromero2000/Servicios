@@ -10,5 +10,9 @@ class MotosLiquidator extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['idMoto','initialFee','timeLimit'];
+    protected $fillable = [
+        'idMoto',
+        'initialFee',
+        'timeLimit'
+    ];
 }
