@@ -109,6 +109,7 @@ class LeadsController extends Controller
         $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score
         WHERE `ESTADO` = 'TRADICIONAL'
+        AND cf.`CIUD_UBI` != 'BOGOTÁ'
                 AND score.`scocedula` = cf.`CEDULA`
                 AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
