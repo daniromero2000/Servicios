@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Lead;
-use App\Liquidator;
 use App\Comments;
 use App\Campaigns;
 use Illuminate\Http\Request;
@@ -13,54 +12,69 @@ use Illuminate\Support\Facades\Auth;
 
 class LeadsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except('logout');
     }
 
-    /**
-     **Author: Luis David Giraldo Grajales
-     **Email: desarrolladorjunior@lagobo.com
-     **Description: return a filter leads list
-     **Date: 20/02/2019
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
-        $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom')]);
-        $leadsDigitalAnt      = $getLeadsDigitalAnt['leadsDigitalAnt'];
-        $totalLeadsDigitalAnt = $getLeadsDigitalAnt['totalLeadsAnt'];
+        $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
+            'q'        => $request->get('q'),
+            'initFrom' => $request->get('initFrom')
+        ]);
 
-        $getLeadsTRAnt = $this->getLeadsTradicionalAnt(['qTRAnt' => $request->get('qTRAnt'), 'initFromTR' => $request->get('initFromTR')]);
-        $leadsTRAnt = $getLeadsTRAnt['leadsTRAnt'];
-        $totalLeadsTRAnt = $getLeadsTRAnt['totalLeadsTRAnt'];
+        $getLeadsTRAnt = $this->getLeadsTradicionalAnt([
+            'qTRAnt'     => $request->get('qTRAnt'),
+            'initFromTR' => $request->get('initFromTR')
+        ]);
 
-        $getLeadsTR = $this->getLeadsTradicional(['qTR' => $request->get('qTR'), 'initFromTR' => $request->get('initFromTR'), 'qfechaInicialTR' => $request->get('qfechaInicialTR'), 'qfechaFinalTR' => $request->get('qfechaFinalTR')]);
-        $leadsTR = $getLeadsTR['leadsTR'];
-        $totalLeadsTR = $getLeadsTR['totalLeadsTR'];
+        $getLeadsTR = $this->getLeadsTradicional([
+            'qTR'             => $request->get('qTR'),
+            'initFromTR'      => $request->get('initFromTR'),
+            'qfechaInicialTR' => $request->get('qfechaInicialTR'),
+            'qfechaFinalTR'   => $request->get('qfechaFinalTR')
+        ]);
 
-        $getLeadsDigital = $this->getLeadsCanalDigital(['q' => $request->get('q'), 'initFrom' => $request->get('initFrom'), 'qtipoTarjetaAprobados' => $request->get('qtipoTarjetaAprobados'), 'qcityAprobados' => $request->get('qcityAprobados'), 'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'), 'qfechaFinalAprobados' => $request->get('qfechaFinalAprobados')]);
-        $leadsDigital = $getLeadsDigital['leadsDigital'];
-        $totalLeadsDigital = $getLeadsDigital['totalLeads'];
+        $getLeadsDigital = $this->getLeadsCanalDigital([
+            'q'                      => $request->get('q'),
+            'initFrom'               => $request->get('initFrom'),
+            'qtipoTarjetaAprobados'  => $request->get('qtipoTarjetaAprobados'),
+            'qcityAprobados'         => $request->get('qcityAprobados'),
+            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
+            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
+        ]);
 
-        $getLeadsCM = $this->getLeadsCM(['qCM' => $request->get('qCM'), 'initFromCM' => $request->get('initFromCM')]);
-        $leadsCM = $getLeadsCM['leadsCM'];
-        $totalLeadsCM = $getLeadsCM['totalLeadsCM'];
+        $getLeadsCM = $this->getLeadsCM([
+            'qCM'        => $request->get('qCM'),
+            'initFromCM' => $request->get('initFromCM')
+        ]);
 
-        $getLeadsGen = $this->getGenLeads(['qGen' => $request->get('qGen'), 'initFromGen' => $request->get('initFromGen')]);
-        $leadsGen = $getLeadsGen['leadsGen'];
-        $totalLeadsGen = $getLeadsGen['totalLeadsGen'];
+        $getLeadsGen = $this->getGenLeads([
+            'qGen'        => $request->get('qGen'),
+            'initFromGen' => $request->get('initFromGen')
+        ]);
 
-
-        $codeAsessor = Auth::user()->codeOportudata;
-        return response()->json(['leadsDigitalAnt' => $leadsDigitalAnt, 'leadsDigital' => $leadsDigital, 'leadsCM' => $leadsCM, 'totalLeads' => $totalLeadsDigital, 'totalLeadsAnt' => $totalLeadsDigitalAnt, 'totalLeadsCM' => $totalLeadsCM, 'codeAsesor' => $codeAsessor, 'leadsGen' => $leadsGen, 'totalLeadsGen' => $totalLeadsGen, 'leadsTR' => $leadsTR, 'leadsTRAnt' => $leadsTRAnt, 'totalLeadsTR' => $totalLeadsTR, 'totalLeadsTRAnt' => $totalLeadsTRAnt]);
+        return response()->json([
+            'leadsDigitalAnt' => $getLeadsDigitalAnt['leadsDigitalAnt'],
+            'leadsDigital'    => $getLeadsDigital['leadsDigital'],
+            'leadsCM'         => $getLeadsCM['leadsCM'],
+            'totalLeads'      => $getLeadsDigital['totalLeads'],
+            'totalLeadsAnt'   => $getLeadsDigitalAnt['totalLeadsAnt'],
+            'totalLeadsCM'    => $getLeadsCM['totalLeadsCM'],
+            'codeAsesor'      => Auth::user()->codeOportudata,
+            'leadsGen'        => $getLeadsGen['leadsGen'],
+            'totalLeadsGen'   => $getLeadsGen['totalLeadsGen'],
+            'leadsTR'         => $getLeadsTR['leadsTR'],
+            'leadsTRAnt'      => $getLeadsTRAnt['leadsTRAnt'],
+            'totalLeadsTR'    => $getLeadsTR['totalLeadsTR'],
+            'totalLeadsTRAnt' => $getLeadsTRAnt['totalLeadsTRAnt']
+        ]);
     }
 
     private function getLeadsCanalDigitalAnt($request)
     {
-        $leadsDigital = [];
-        $totalLeadsDigital = 0;
+        $leadsDigital      = [];
         $codeAsessor = Auth::user()->codeOportudata;
         $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAsessor);
         $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
@@ -72,14 +86,11 @@ class LeadsController extends Controller
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
-        $totalLeadsDigital = count($respTotalLeads);
-
         if ($request['q'] != '') {
             $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
-
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp = DB::connection('oportudata')->select($query);
@@ -100,9 +111,11 @@ class LeadsController extends Controller
             $leadsDigital[] = $resp[$key];
         }
 
-        return ['leadsDigitalAnt' => $leadsDigital, 'totalLeadsAnt' => $totalLeadsDigital];
+        return [
+            'leadsDigitalAnt' => $leadsDigital,
+            'totalLeadsAnt'   => count($respTotalLeads)
+        ];
     }
-
 
     private function getLeadsTradicionalAnt($request)
     {
@@ -114,43 +127,44 @@ class LeadsController extends Controller
                 AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
-        $totalLeadsTradicional = count($respTotalLeadsTradicional);
+
         if ($request['qTRAnt'] != '') {
             $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
         }
 
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
 
-        $resp = DB::connection('oportudata')->select($queryTradicional);
-
-        return ['leadsTRAnt' => $resp, 'totalLeadsTRAnt' => $totalLeadsTradicional];
+        return [
+            'leadsTRAnt'      => DB::connection('oportudata')->select($queryTradicional),
+            'totalLeadsTRAnt' => count($respTotalLeadsTradicional)
+        ];
     }
 
 
     private function getGenLeads($request)
     {
-        $totalLeadsCM = 0;
-
         $queryGenLeads = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`
         FROM `leads` as lead
         WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza') AND lead.`state` !=  3 ";
+
         $respTotalLeadsGen = DB::select($queryGenLeads);
-        $totalLeadsGen = count($respTotalLeadsGen);
+
         if ($request['qGen'] != '') {
             $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%s' ) ", '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%');
         }
 
         $queryGenLeads .= "ORDER BY `created_at` DESC ";
         $queryGenLeads .= sprintf(" LIMIT %s,30", $request['initFromGen']);
-        $respGen = DB::select($queryGenLeads);
 
-        return ['leadsGen' => $respGen, 'totalLeadsGen' => $totalLeadsGen];
+        return [
+            'leadsGen'      => DB::select($queryGenLeads),
+            'totalLeadsGen' => count($respTotalLeadsGen)
+        ];
     }
 
     private function getLeadsCanalDigital($request)
     {
         $leadsDigital = [];
-        $totalLeadsDigital = 0;
         $codeAsessor = Auth::user()->codeOportudata;
         $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $codeAsessor);
         $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
@@ -173,8 +187,6 @@ class LeadsController extends Controller
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
-        $totalLeadsDigital = count($respTotalLeads);
-
         if ($request['q'] != '') {
             $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
         }
@@ -194,7 +206,6 @@ class LeadsController extends Controller
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, ti.`FECHA_INTENCION` DESC";
-
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp = DB::connection('oportudata')->select($query);
@@ -215,28 +226,32 @@ class LeadsController extends Controller
             $leadsDigital[] = $resp[$key];
         }
 
-        return ['leadsDigital' => $leadsDigital, 'totalLeads' => $totalLeadsDigital];
+        return [
+            'leadsDigital' => $leadsDigital,
+            'totalLeads'   => count($respTotalLeads)
+        ];
     }
 
     private function getLeadsCM($request)
     {
-        $totalLeadsCM = 0;
-
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3)";
+
         $respTotalLeadsCM = DB::select($queryCM);
-        $totalLeadsCM = count($respTotalLeadsCM);
+
         if ($request['qCM'] != '') {
             $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
         }
 
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
-        $respCM = DB::select($queryCM);
 
-        return ['leadsCM' => $respCM, 'totalLeadsCM' => $totalLeadsCM];
+        return [
+            'leadsCM' => DB::select($queryCM),
+            'totalLeadsCM' => count($respTotalLeadsCM)
+        ];
     }
 
     private function getLeadsTradicional($request)
@@ -253,7 +268,6 @@ class LeadsController extends Controller
         ";
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
-        $totalLeadsTradicional = count($respTotalLeadsTradicional);
 
         if ($request['qTR'] != '') {
             $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
@@ -272,57 +286,35 @@ class LeadsController extends Controller
         $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
 
-        $resp = DB::connection('oportudata')->select($queryTradicional);
 
-        return ['leadsTR' => $resp, 'totalLeadsTR' => $totalLeadsTradicional];
+        return [
+            'leadsTR' => DB::connection('oportudata')->select($queryTradicional),
+            'totalLeadsTR' => count($respTotalLeadsTradicional)
+        ];
     }
 
     public function assignAssesorDigitalToLead($solicitud)
     {
         $idAsesor = Auth::user()->id;
-
         $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
-        $resp = DB::connection('oportudata')->select($query);
 
-        return $resp;
+        return DB::connection('oportudata')->select($query);
     }
 
     public function checkLeadProcess($idLead)
     {
         if ($idLead == '') return -1;
-
         $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
 
-        $resp = DB::select($query);
-
-        return $resp;
+        return  DB::select($query);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
-    {
-        //
-    }
+    { }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     { }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $leads = Lead::find($id);
@@ -331,55 +323,30 @@ class LeadsController extends Controller
             ->where('leads.id', '=', $leads->id)
             ->orderBy('leads.id')->get();
 
-
-        return view('leads.show', compact('leads', 'leadsQuery'));
+        return view('leads.show', [
+            'leads'      => $leads,
+            'leadsQuery' => $leadsQuery
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
-    {
-        //
-    }
+    { }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
-    {
-        //
-    }
+    { }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
-    {
-        //
-    }
+    { }
 
     public function addCommunityLeads(Request $request)
     {
         $idCampaign = NULL;
-
         $nameCampaign = (string) $request->get('campaign');
         $idCampaign = Campaigns::selectRaw('`id`,`name`')->where('name', '=', $nameCampaign)->get();
         //return $idCampaign;
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
 
         $lead = new Lead;
-
         $lead->name = $request->get('name');
         $lead->lastName = $request->get('lastName');
         $lead->email = $request->get('email');
@@ -400,25 +367,19 @@ class LeadsController extends Controller
 
     public function viewCommunityLeads($id)
     {
-
-        $lead = Lead::findOrfail($id);
-
-        return response()->json($lead);
+        return response()->json(Lead::findOrfail($id));
     }
 
     public function deleteCommunityLeads($id)
     {
-
         $lead = Lead::findOrfail($id);
         $lead->delete();
 
         return response()->json([true]);
     }
 
-
     public function updateCommunityLeads(Request $request)
     {
-
         $nameCampaign = (string) $request->get('campaignName');
         $lead = lead::findOrfail($request->get('id'));
 
@@ -430,8 +391,6 @@ class LeadsController extends Controller
             $lead->campaign = $request->get('campaign');
         }
 
-
-
         $lead->name = $request->get('name');
         $lead->lastName = $request->get('lastName');
         $lead->email = $request->get('email');
@@ -441,28 +400,22 @@ class LeadsController extends Controller
         $lead->typeService = $request->get('typeService');
         $lead->channel = $request->get('channel');
         $lead->nearbyCity = $request->get('nearbyCity');
-
-
         $lead->save();
 
         return response()->json([true]);
     }
 
-
     public function addComent($lead, $comment)
     {
         $commentNew = new Comments;
-
         $currentUser = \Auth::user();
         $commentNew->idLogin = $currentUser->id;
         $commentNew->idLead = $lead;
         $commentNew->comment = $comment;
-
         $commentNew->save();
 
         return response()->json([true]);
     }
-
 
     public function getComentsLeads($idLead)
     {
@@ -470,9 +423,8 @@ class LeadsController extends Controller
                 LEFT JOIN `users` ON comments.`idLogin` = users.`id`
                 WHERE `idLead` = %s
                 ORDER BY comments.`id` DESC", $idLead);
-        $resp = DB::select($query);
 
-        return $resp;
+        return DB::select($query);
     }
 
     public function deniedRequest($idLead, $comment)
@@ -480,7 +432,6 @@ class LeadsController extends Controller
         $employee = Lead::find($idLead);
         $employee->state = 4;
         $employee->save();
-
         $this->addComent($idLead, $comment);
 
         return response()->json([true]);

@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class DirectorController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
+
   public function __construct()
   {
     $this->middleware('auth')->except('logout');
@@ -20,7 +16,6 @@ class DirectorController extends Controller
 
   public function index(Request $request)
   {
-
     $query = sprintf("SELECT cf. CEDULA, cf.NOMBRES, cf.APELLIDOS, cf.CELULAR, cf.EMAIl, cf.CREACION, cf.ESTADO, ti.TARJETA
     FROM CLIENTE_FAB as cf, TB_INTENCIONES as ti
     where ti.CEDULA = cf.CEDULA
@@ -31,7 +26,6 @@ class DirectorController extends Controller
       FROM `TB_INTENCIONES`
       WHERE `CEDULA` = `cf`.`CEDULA`)");
 
-
     if ($request['q'] != '') {
       $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`APELLIDOS` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
     }
@@ -39,7 +33,6 @@ class DirectorController extends Controller
     if ($request['qtipoTarjeta'] != '') {
       $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjeta']);
     }
-
 
     if ($request['qtypeStatus'] != '') {
       $query .= sprintf(" AND (cf.`ESTADO` = '%s') ", $request['qtypeStatus']);
@@ -56,9 +49,10 @@ class DirectorController extends Controller
     }
 
     $respTotalLeads = DB::connection('oportudata')->select($query);
-    $totalLeadsDirector = count($respTotalLeads);
 
-
-    return response()->json(['leads' => $respTotalLeads, 'totalLeads' => $totalLeadsDirector]);
+    return response()->json([
+      'leads' => $respTotalLeads,
+      'totalLeads' => count($respTotalLeads)
+    ]);
   }
 }
