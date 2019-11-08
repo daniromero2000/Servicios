@@ -6,9 +6,17 @@ use App\Imagenes;
 use App\Lead;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 
 class SegurosController extends Controller
 {
+    private $leadInterface;
+
+    public function __construct(LeadRepositoryInterface $leadRepositoryInterface)
+    {
+        $this->leadInterface = $leadRepositoryInterface;
+    }
+
     public function index()
     {
         $cities = [
@@ -61,35 +69,10 @@ class SegurosController extends Controller
         return view('seguros.index', ['images' => $images, 'cities' => $cities]);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
-        $lead = new Lead;
-        $lead->name = $request->get('name');
-        $lead->lastName = $request->get('lastName');
-        $lead->email = $request->get('email');
-        $lead->telephone = $request->get('telephone');
-        $lead->city = $request->get('city');
-        $lead->typeService = $request->get('typeService');
-        $lead->typeProduct = $request->get('typeProduct');
-        $lead->channel = intval($request->get('channel'));
-        $lead->termsAndConditions = $request->get('termsAndConditions');
-        $lead->save();
+        $this->leadInterface->createLead($request->input());
 
         return redirect()->route('thankYouPageSeguros');
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
 }
