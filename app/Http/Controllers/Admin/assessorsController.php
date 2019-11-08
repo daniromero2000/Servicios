@@ -109,6 +109,13 @@ class assessorsController extends Controller
             $getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
             $getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
             $getIdcityExp = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+            $antig = $request->get('ANTIG');
+            $indp = $request->get('EDAD_INDP');
+            if(trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS'){
+                $antig = $this->calculateTimeCompany(trim($request->get('FEC_ING'))."-01");
+            }else{
+                $indp = $this->calculateTimeCompany(trim($request->get('FEC_CONST'))."-01");
+            }
             $dataOportudata = [
                 'TIPO_DOC' => trim($request->get('TIPO_DOC')),
                 'CEDULA' => trim($request->get('CEDULA')),
@@ -142,7 +149,7 @@ class assessorsController extends Controller
                 'ACT_ECO' => trim($request->get('ACT_ECO')),
                 'CARGO' => trim($request->get('CARGO')),
                 'FEC_ING' => trim($request->get('FEC_ING'))."-01",
-                'ANTIG' => trim($request->get('ANTIG')),
+                'ANTIG' => $antig,
                 'SUELDO' => trim($request->get('SUELDO')),
                 'TIPO_CONT' => trim($request->get('TIPO_CONT')),
                 'OTROS_ING' => trim($request->get('OTROS_ING')),
@@ -151,7 +158,7 @@ class assessorsController extends Controller
                 'RAZON_IND' => trim($request->get('RAZON_IND')),
                 'ACT_IND' => trim($request->get('ACT_IND')),
                 'FEC_CONST' => trim($request->get('FEC_CONST'))."-01",
-                'EDAD_INDP' => trim($request->get('EDAD_INDP')),
+                'EDAD_INDP' => $indp,
                 'SUELDOIND' => trim($request->get('SUELDOIND')),
                 'BANCOP' => trim($request->get('BANCOP')),
                 'SUC' => trim($request->get('CIUD_UBI')),
@@ -262,6 +269,12 @@ class assessorsController extends Controller
 		$age = floor($age);
 
 		return $age;
-	}
+    }
+    
+    private function calculateTimeCompany($fechaIngreso){
+        $fechaActual = date("Y-m-d");
+        $dateDiff = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60*60*24*30));
+        return $dateDiff;
+    }
 
 }

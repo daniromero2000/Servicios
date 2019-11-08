@@ -2137,8 +2137,13 @@ class OportuyaV2Controller extends Controller
 		
 		$data = ['NOM_REFPER' => $nomRefPer, 'TEL_REFPER' =>  $telRefPer, 'NOM_REFFAM' => $nomRefFam, 'TEL_REFFAM' => $telRefFam];
 
-		//return $this->execConsultaFosygaLead($identificationNumber, $oportudataLead[0]->TIPO_DOC, $oportudataLead[0]->FEC_EXP, $oportudataLead[0]->NOMBRES, $oportudataLead[0]->APELLIDOS);
-
+		$consultasFosyga = $this->execConsultaFosygaLead($identificationNumber, $oportudataLead[0]->TIPO_DOC, $oportudataLead[0]->FEC_EXP, $oportudataLead[0]->NOMBRES, $oportudataLead[0]->APELLIDOS);
+		if ($consultasFosyga == "-1") {
+			return "-1";
+		}
+		if ($consultasFosyga == "-3") {
+			return "-3";
+		}
 		$consultasLead = $this->execConsultasLead($oportudataLead[0]->CEDULA, $oportudataLead[0]->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $data);
 
 		return $consultasLead;
@@ -2146,6 +2151,7 @@ class OportuyaV2Controller extends Controller
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
+		$policyCredit = ['quotaApprovedProduct' => 0, 'quotaApprovedAdvance' => 0];
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
 		$estadoSolic = 'ANALISIS';
 		if ($consultaComercial == 0) {
@@ -2245,7 +2251,6 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$consultaFosyga = 1;
 		}
-
 		if ($consultaFosyga > 0) {
 			$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 		} else {

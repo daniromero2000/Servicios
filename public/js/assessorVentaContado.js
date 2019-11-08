@@ -1,9 +1,14 @@
-angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
+angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$scope.tipoCliente = "";
+	$scope.messageValidationLead = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
 	$scope.code = {};
+	$scope.formConfronta = {};
+	$scope.showWarningErrorData = false;
+	$scope.totalErrorData = 0;
+	$scope.validateNum = 0;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -152,31 +157,34 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
   	};
 	
 	$scope.getCodeVerification = function(renew = false){
-		$scope.addCliente('CREDITO');
-		$scope.reNewToken = true;
-		/*showLoader();
-		$http({
-			method: 'GET',
-			url   : '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
-		}).then(function successCallback(response) {
-			hideLoader();
-			if(response.data == true){
-				if(renew == true){
-					alert('Código generado exitosamente');
-					$timeout(function() {
-						$scope.reNewToken = true;
-					}, 15000);
-				}else{
-					$timeout(function() {
-						$scope.reNewToken = true;
-					}, 15000);
-					$('#confirmCodeVerification').modal('show');
+		if($scope.validateNum > 0){
+			$scope.addCliente('CREDITO');
+		}else{
+			$scope.reNewToken = true;
+			showLoader();
+			$http({
+				method: 'GET',
+				url   : '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+			}).then(function successCallback(response) {
+				hideLoader();
+				if(response.data == true){
+					if(renew == true){
+						alert('Código generado exitosamente');
+						$timeout(function() {
+							$scope.reNewToken = true;
+						}, 15000);
+					}else{
+						$timeout(function() {
+							$scope.reNewToken = true;
+						}, 15000);
+						$('#confirmCodeVerification').modal('show');
+					}
 				}
-			}
-		}, function errorCallback(response) {
-			hideLoader();
-			console.log(response);
-		});*/
+			}, function errorCallback(response) {
+				hideLoader();
+				console.log(response);
+			});
+		}
 	};
 	
 	$scope.getInfoLead = function(){
@@ -207,6 +215,35 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 		});
 	};
 
+	$scope.getValidationLead = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/validationLead/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == -1){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
+			}else if(response.data == -2){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
+			}else if(response.data == -3){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
+			}else if(response.data == -4){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
+			}else{
+				$scope.getInfoLead();
+				console.log("Validado !!");
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	}
+
 	$scope.getNumCel = function(){
 		$scope.lead.CEL_VAL = 0;
 		$scope.lead.CELULAR = '';
@@ -236,6 +273,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
+				$scope.validateNum = 1;
 				$('#confirmCodeVerification').modal('hide');
 				$scope.addCliente('CREDITO');
 			}else if(response.data == -1){
@@ -254,11 +292,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 	$scope.addCliente = function(tipoCreacion){
 		$scope.lead.tipoCliente = tipoCreacion;
 		showLoader();
-		$http({
+		$http({ 
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
 					$('#proccess').modal('hide');
@@ -276,21 +315,62 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 	};
 	
 	$scope.execConsultasLead = function(identificationNumber){
+		showLoader();
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
 			console.log(response);
+			if (response.data == "-3" || response.data == "-4") {
+				$scope.totalErrorData ++;
+				$scope.showWarningErrorData = true;
+				if($scope.totalErrorData >= 2){
+					$scope.deniedLeadForFecExp('1.1');
+				}
+			}
+
+			if(response.data.resp == 'confronta'){
+				$scope.formConfronta = response.data.form;
+				$('#confronta').modal('show');
+			}
+
 			if(response.data.resp == 'true'){
+				$scope.showWarningErrorData = false;
 				$scope.infoLead = response.data.infoLead;
 				setTimeout(() => {
 					$('#proccess').modal('hide');
 					$('#showResp').modal('show')
 				}, 100);
 			}
+			hideLoader();
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+		});
+	};
+
+	$scope.sendConfronta = function(){
+		$scope.infoConfronta = {
+			'confronta' : $scope.formConfronta,
+			'leadInfo' : $scope.lead
+		};
+		$http({
+			method: 'POST',
+			url: '/api/oportuya/validateFormConfronta',
+			data: $scope.infoConfronta,
+		}).then(function successCallback(response) {
+			if (response.data.data == true) {
+				$scope.quota = response.data.quota;
+				$scope.quotaAdvance = response.data.quotaAdvance;
+				$scope.numSolic = response.data.numSolic;
+				$scope.estadoCliente = response.data.estado;
+				setTimeout(() => {
+					$('#confronta').modal('hide');
+				}, 800);
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
 		});
 	};
 
@@ -338,6 +418,22 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
 			'code' : ''
 		};
 	};
+
+	$scope.deniedLeadForFecExp = function(typeDenied){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/deniedLeadForFecExp/'+$scope.lead.CEDULA+'/'+typeDenied,
+		}).then(function successCallback(response) {
+			hideLoader();
+			$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Lo sentimos, en este momento por políticas de crédito,<br />tu solicitud no ha sido aprobada";
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+
 	$scope.getInfoVentaContado();
 	$scope.resetInfo();
 });
