@@ -8,5 +8,12 @@ class CiudadesSoc extends Model
 {
     protected $table = 'ciudades_soc';
 
-    protected $fillable = ['office', 'address', 'city', 'state', 'responsable', 'phone'];
+    protected $fillable = [
+        'office',
+        'address',
+        'city',
+        'state',
+        'responsable',
+        'phone'
+    ];
 }

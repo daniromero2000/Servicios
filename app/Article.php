@@ -6,13 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    
-    public $table='ARTICULOS';
+    public $table = 'ARTICULOS';
 
-    public $connection='oportudata';
+    public $connection = 'oportudata';
 
-    protected $primaryKey= 'CODIGO';
+    protected $primaryKey = 'CODIGO';
 
-    protected $fillable=['CODIGO','NOMBRE','MARCA','REFERENCIA','STATE'];
+    protected $fillable = [
+        'CODIGO',
+        'NOMBRE',
+        'MARCA',
+        'REFERENCIA',
+        'STATE'
+    ];
+
     public $timestamps = false;
 }
