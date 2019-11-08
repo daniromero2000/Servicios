@@ -1,13 +1,14 @@
 <?php
 
-//libranza routes
-
-Route::resource('libranzaV2', 'Admin\LibranzaV2Controller');
-Route::resource('newsletter', 'Admin\newsletterController');
+/**
+ * Admin routes
+ */
 Route::resource('director', 'Admin\DirectorController');
 
-Route::group(['prefix' => '/creditoLibranza/'], function () {
+//libranza routes
+Route::resource('libranzaV2', 'Admin\LibranzaV2Controller');
 
+Route::group(['prefix' => '/creditoLibranza/'], function () {
     Route::get('/step1', 'Admin\LibranzaV2Controller@step1')->name('step1Libranza');
     Route::get('/getDataStep1', 'Admin\LibranzaV2Controller@getDataStep1');
     Route::get('/getDataStep2/{numIdentification}', 'Admin\LibranzaV2Controller@getDataStep2');
@@ -21,10 +22,6 @@ Route::group(['prefix' => '/creditoLibranza/'], function () {
     Route::get('/encryptText/{string}', 'Admin\LibranzaV2Controller@encrypt');
     Route::get('/cities', 'Admin\LibranzaV2Controller@cities')->name('step1Cities');
 });
-Route::resource('avance', 'Admin\AdvanceController');
-//Route::get('libranza-lines','Admin\LibranzaController@index');
-
-//Route::get('/getDataLibranza','Admin\LibranzaController@getData');
 
 Route::group(['prefix' => '/libranza-principal/'], function () {
     Route::get('/', function () {
@@ -45,7 +42,6 @@ Route::group(['prefix' => '/libranza-principal/'], function () {
     Route::get('/resumen', function () {
         return view('libranza.resumen');
     });
-
 
     Route::get('/libranza-lines', function () {
         return view('libranza.libranza');
@@ -72,6 +68,7 @@ Route::group(['prefix' => '/motos/solicitud/'], function () {
     Route::get('/step1', function () {
         return view('motos.step1');
     });
+
     Route::get('/thankYouPage', function () {
         return view('motos.thankYouPage');
     });
@@ -95,7 +92,6 @@ Route::group(['prefix' => '/motos/simulador/'], function () {
 
 Route::resource('adminMotos', 'Admin\MotosAdminController');
 
-
 Route::group(['prefix' => '/admin/motos/'], function () {
     Route::get('/', function () {
         return view('motos.adminMotos.index');
@@ -107,11 +103,8 @@ Route::group(['prefix' => '/admin/motos/'], function () {
     Route::put('addImage/{idMoto}', 'Admin\MotosAdminController@storeImageMoto');
 });
 
-
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
-
-
     // Gestion de Leads
     Route::group(['prefix' => '/director/', 'middleware' => 'auth'], function () {
         Route::get('/', function () {
@@ -123,5 +116,19 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
         Route::get('/leads', function () {
             return view('director.leads');
         });
+    });
+});
+
+
+/**
+ * Frontend routes
+ */
+Route::namespace('Front')->group(function () {
+    Route::namespace('Advances')->group(function () {
+        Route::resource('avance', 'AdvanceController');
+    });
+
+    Route::namespace('Newsletters')->group(function () {
+        Route::resource('newsletter', 'newsletterController');
     });
 });
