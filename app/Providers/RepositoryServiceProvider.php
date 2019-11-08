@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\leads\Repositories\leadRepository;
+use App\Entities\Subsidiaries\Repositories\SubsidiaryRepository;
+use App\Entities\Leads\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             LeadRepositoryInterface::class,
             leadRepository::class
+        );
+
+        $this->app->bind(
+            SubsidiaryRepositoryInterface::class,
+            SubsidiaryRepository::class
         );
     }
 }
