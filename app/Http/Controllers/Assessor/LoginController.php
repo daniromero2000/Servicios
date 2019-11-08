@@ -36,15 +36,10 @@ class LoginController extends Controller
 
     */
 
- 
+
 
     use AuthenticatesUsers;
-
- 
-
     protected $guard = 'assessor';
-
- 
 
     /**
 
@@ -58,53 +53,49 @@ class LoginController extends Controller
 
     protected $redirectTo = '/home';
 
- 
+
 
     /**
-
      * Create a new controller instance.
-
      *
-
      * @return void
-
      */
-
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('guest:assessor')->except('logout');
     }
 
-    public function showLoginForm(){    
+    public function showLoginForm()
+    {
         return view('assessors.login');
     }
 
-    public function login(Request $request){
-        $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO','=',$request->codigo)->where('NUM_DOC','=',$request->num_doc)->first();
-        $codeAssessor=ProfilesAssessor::selectRaw('code,profile')->where('code','=',$request->codigo)->first();
+    public function login(Request $request)
+    {
+        $assessor = DB::connection('oportudata')->table('ASESORES')->where('CODIGO', '=', $request->codigo)->where('NUM_DOC', '=', $request->num_doc)->first();
+        $codeAssessor = ProfilesAssessor::selectRaw('code,profile')->where('code', '=', $request->codigo)->first();
         // $request->session()->put('idProfile',$codeAssessor->profile);}
-        if($codeAssessor){
-            $codeAssessor->code =trim($codeAssessor->code);
-        }else{
+        if ($codeAssessor) {
+            $codeAssessor->code = trim($codeAssessor->code);
+        } else {
             return back()->withErrors(['codigo' => 'codigo o contraseña incorrecta.']);
         }
-        $assessor->CODIGO =trim($assessor->CODIGO);
-        $assessor->NUM_DOC=trim($assessor->NUM_DOC);
+        $assessor->CODIGO = trim($assessor->CODIGO);
+        $assessor->NUM_DOC = trim($assessor->NUM_DOC);
 
-        if((($assessor) && ($assessor->CODIGO == $codeAssessor->code))&& ($codeAssessor)){  
+        if ((($assessor) && ($assessor->CODIGO == $codeAssessor->code)) && ($codeAssessor)) {
             Auth::guard('assessor')->loginUsingId($assessor->CODIGO);
-            if($codeAssessor->profile == 9){
-               return redirect()->route('laPipa');
+            if ($codeAssessor->profile == 9) {
+                return redirect()->route('laPipa');
             }
-            return view('assessors.dashboard'); 
+            return view('assessors.dashboard');
         }
 
         return back()->withErrors(['codigo' => 'codigo or password are wrong.']);
-
     }
 
-
-
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         return view('assessors.login');
     }
@@ -119,5 +110,4 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
 }
