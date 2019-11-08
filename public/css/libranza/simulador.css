@@ -205,3 +205,6 @@ PHONE LANDSCAPE VERSION
         margin-top: 5%;
     }    
 }
+input:invalid{
+    border: 1px solid red;
+}

@@ -35,16 +35,23 @@ class assessorsController extends Controller
     }
 
     public function store(Request $request){
+        $authAssessor= (Auth::guard('assessor')->check())?Auth::guard('assessor')->user()->CODIGO:NULL;
+        if(Auth::user()){
+            $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+        }
+        $assessorCode=($authAssessor !== NULL)?$authAssessor:998877;
         $leadOportudata = new OportuyaV2;
+        $usuarioCreacion = $assessorCode;
         $clienteCelular = new CliCel;
         $clienteWeb = 1;
+        $getExistLead = OportuyaV2::find($request->CEDULA);
         if(!empty($getExistLead)){
             $clienteWeb = $getExistLead->CLIENTE_WEB;
+            $usuarioCreacion = $getExistLead->USUARIO_CREACION;
         }
         if($request->tipoCliente == 'CONTADO'){
             $cityName = $this->getCity(trim($request->get('CIUD_UBI')));
             $getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
-            $getExistLead = OportuyaV2::find($request->CEDULA);
             $dataOportudata = [
                 'TIPO_DOC' => trim($request->get('TIPO_DOC')),
                 'CEDULA' => trim($request->get('CEDULA')),
@@ -129,12 +136,12 @@ class assessorsController extends Controller
                 'ESTADOCIVIL' => trim($request->get('ESTADOCIVIL')),
                 'NIT_EMP' => trim($request->get('NIT_EMP')),
                 'RAZON_SOC' => trim($request->get('RAZON_SOC')),
-                'DIR_EMP' => trim($request->get('DIR_EMP')),//
+                'DIR_EMP' => trim($request->get('DIR_EMP')),
                 'TEL_EMP' => trim($request->get('TEL_EMP')),
                 'TEL2_EMP' => trim($request->get('TEL2_EMP')),
                 'ACT_ECO' => trim($request->get('ACT_ECO')),
                 'CARGO' => trim($request->get('CARGO')),
-                'FEC_ING' => trim($request->get('FEC_ING')),
+                'FEC_ING' => trim($request->get('FEC_ING'))."-01",
                 'ANTIG' => trim($request->get('ANTIG')),
                 'SUELDO' => trim($request->get('SUELDO')),
                 'TIPO_CONT' => trim($request->get('TIPO_CONT')),
@@ -143,7 +150,7 @@ class assessorsController extends Controller
                 'NIT_IND' => trim($request->get('NIT_IND')),
                 'RAZON_IND' => trim($request->get('RAZON_IND')),
                 'ACT_IND' => trim($request->get('ACT_IND')),
-                'FEC_CONST' => trim($request->get('FEC_CONST')),
+                'FEC_CONST' => trim($request->get('FEC_CONST'))."-01",
                 'EDAD_INDP' => trim($request->get('EDAD_INDP')),
                 'SUELDOIND' => trim($request->get('SUELDOIND')),
                 'BANCOP' => trim($request->get('BANCOP')),
@@ -153,6 +160,8 @@ class assessorsController extends Controller
                 'MEDIO_PAGO' => trim($request->get('MEDIO_PAGO')),
                 'TRAT_DATOS' => trim($request->get('TRAT_DATOS')),
                 'ORIGEN' => 'ASESORES-CREDITO',
+                'USUARIO_CREACION' => $usuarioCreacion,
+                'USUARIO_ACTUALIZACION' => $assessorCode,
                 'CLIENTE_WEB' => $clienteWeb
             ];
             $createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA'=>trim($request->get('CEDULA'))],$dataOportudata)->save();
@@ -176,11 +185,14 @@ class assessorsController extends Controller
                 $clienteCelular->FECHA = date("Y-m-d H:i:s");
                 $clienteCelular->save();
             }
-            return $request;
+            $lastName = explode(" ",trim($request->get('APELLIDOS')));
+            $fechaExpIdentification = strtotime(trim($request->get('FEC_EXP')));
+            $fechaExpIdentification = date("d/m/Y", $fechaExpIdentification);
+            return ['identificationNumber' => trim($request->get('CEDULA')), 'tipoDoc' => trim($request->get('TIPO_DOC')), 'tipoCreacion' => $request->tipoCliente, 'lastName' => $lastName[0], 'dateExpIdentification' => $fechaExpIdentification];
         }
     }
 
-    public function getInfoVentaContado(){
+    public function getInfoVentaContado(){  
         // Ciudad de ubicación
         $query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC";
         $resp = DB::connection('oportudata')->select($query);
@@ -202,7 +214,6 @@ class assessorsController extends Controller
         LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
         LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
         WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
-
         $resp = DB::connection('oportudata')->select($query);
 
         if(empty($resp)){

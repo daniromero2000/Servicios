@@ -9,6 +9,15 @@
 	<div id="termsAndConditions">
 		<h1 class="menuItem-title text-center">CAMPAÑAS VIGENTES</h1>
 		<div class="container">
+			<h2 class="menuItem-subtitle">GRAN SORTEO MABE</h2>
+			<ul>
+				<li type="disc">Vigencia: del  19 al  31 de octubre</li>
+				<li type="disc">Este sorteo  se efectuará entre los clientes que realicen sus compras en productos mabe en alguno de nuestros puntos de venta ubicados en la ciudad de Pereira.</li>
+				<li type="disc">Las compras deben ser superiores a $700.000.</li>
+				<li type="disc">Se obsequiaran 5 hornos  con la referencia: 78003170  HORNO GENERAL JES70G  GRIS.</li>
+				<li type="disc">Se obsequiará 1 horno por cada ganador. </li>
+				<li type="disc">Los ganadores serán los clientes que en nuestro sistema registren que son la compra numero : 1-15-30-45 y 60. </li>
+			</ul>
 			<h2 class="menuItem-subtitle">CAMPAÑA 0% INTERÉS FINANCIACIÓN</h2>
 			<ol>
 				<li style="padding-left:10px; margin-bottom:10px;"> El no cobro de interés de financiación aplicara exclusivamente para los productos con la siguiente referencia: Nevera MABE RMA 23OFJC6 GRAY, computador HP 14CM0026LA 4G 500W10, lavadora MABE LMA9020WGABO 9L/20L, Congelador ECOFRIAL ICC210E.</li>

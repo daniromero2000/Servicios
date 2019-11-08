@@ -103,11 +103,11 @@
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="email" class="control-label">Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
+						<input type="text" ng-model="leadInfo.email" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="email" required="true"  />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="emailConfirm" class="control-label">Confirmar Correo electrónico*</label>
-						<input type="email" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="emailConfirm" required="true"  />
+						<input type="text" ng-model="leadInfo.emailConfirm" ng-blur="validateEmail()" validation-pattern="email" class="form-control inputsSteps inputText" id="emailConfirm" required="true"  />
 					</div>
 					<div ng-show="emailValidate" class="col-12">
 						<p class="alert alert-danger">
@@ -232,6 +232,7 @@
 								</div>
 								<div class="col-12 text-center form-group">
 									<button type="submit" class="btn btn-primary">Confirmar Código</button>
+									<button type="button" ng-show="reNewToken" class="btn btn-warning" ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
 								</div>
 								<div class="col-12 text-center" ng-show="showAlertCode">
 									<div class="alert alert-danger" role="alert">

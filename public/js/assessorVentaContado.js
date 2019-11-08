@@ -1,17 +1,5 @@
-angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-currency'])
-.config(function($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    $mdDateLocaleProvider.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    $mdDateLocaleProvider.formatDate = function(date) {
-       return moment(date).format('YYYY-MM-DD');
-	};
-	
-	$mdDateLocaleProvider.parseDate = function(dateString) {
-		var m = moment(dateString, 'YYYY-MM-DD', true);
-		return m.isValid() ? m.toDate() : new Date(NaN);
-	};
-})
-.controller("asessorVentaContadoCtrl", function($scope, $http, $mdDialog) {
+angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency'])
+.controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$scope.tipoCliente = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
@@ -82,7 +70,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 		},
 		{
 			'value'	: 'RENTISTA',
-			'label' : 'Administrador de bienes propios'
+			'label' : 'Rentista'
 		},
 		{
 			'value'	: 'PENSIONADO',
@@ -164,23 +152,31 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
   	};
 	
 	$scope.getCodeVerification = function(renew = false){
-		showLoader();
+		$scope.addCliente('CREDITO');
+		$scope.reNewToken = true;
+		/*showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
+			url   : '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD',
 		}).then(function successCallback(response) {
 			hideLoader();
 			if(response.data == true){
 				if(renew == true){
 					alert('Código generado exitosamente');
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 				}else{
+					$timeout(function() {
+						$scope.reNewToken = true;
+					}, 15000);
 					$('#confirmCodeVerification').modal('show');
 				}
 			}
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
-		});
+		});*/
 	};
 	
 	$scope.getInfoLead = function(){
@@ -257,46 +253,50 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 
 	$scope.addCliente = function(tipoCreacion){
 		$scope.lead.tipoCliente = tipoCreacion;
-		//$('#proccess').modal('show');
+		showLoader();
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
-			}).then(function successCallback(response) {
-				if(tipoCreacion == 'CONTADO'){
-					setTimeout(() => {
-						$('#proccess').modal('hide');
-						$scope.showConfirm();
-					}, 1000);
-				}
-				if(tipoCreacion == 'CREDITO'){
-					$scope.execConsultasLead($scope.lead.CEDULA, $scope.lead.TIPO_DOC, tipoCreacion);
-				}
-			}, function errorCallback(response) {
-				console.log(response);
-			});
+		}).then(function successCallback(response) {
+			if(tipoCreacion == 'CONTADO'){
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+					$scope.showConfirm();
+				}, 1000);
+			}
+			if(tipoCreacion == 'CREDITO'){
+				$scope.execConsultasLead(response.data.identificationNumber);
+			}
+			hideLoader();
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
 	};
 	
-	$scope.execConsultasLead = function(identificationNumber, tipoDoc,tipoCreacion){
+	$scope.execConsultasLead = function(identificationNumber){
 		$http({
-				method: 'GET',
-				url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+tipoDoc+'/'+tipoCreacion,
-			}).then(function successCallback(response) {
-				if(response.data.resp == 'true'){
-					$scope.infoLead = response.data.infoLead;
-					setTimeout(() => {
-						$('#proccess').modal('hide');
-						$('#showResp').modal('show')
-					}, 100);
-				}
-			}, function errorCallback(response) {
-				console.log(response);
-			});
+			method: 'GET',
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
+		}).then(function successCallback(response) {
+			console.log(response);
+			if(response.data.resp == 'true'){
+				$scope.infoLead = response.data.infoLead;
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+					$('#showResp').modal('show')
+				}, 100);
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
 	};
 
 	$scope.showConfirm = function(ev) {
 		// Appending dialog to document.body to cover sidenav in docs app
-		var confirm = $mdDialog.confirm()
+		/*var confirm = $mdDialog.confirm()
 				.title('Usuario registrado')
 				.textContent('Usuario registrado satisfactoriamente')
 				.ariaLabel('Lucky day')
@@ -318,7 +318,7 @@ angular.module('asessorVentaContadoApp', ['ngMaterial', 'ngMessages', 'ng-curren
 		}, function() {
 			$scope.resetInfo();
 			window.location = '/assessor/dashboard';
-		});
+		});*/
 	};
 
 	$scope.resetInfoLead = function(){
