@@ -462,13 +462,6 @@ app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$route
 
 						return value;
 				}
-				return value;
-			case 'floor' :
-				return floor = 13;
-			  default:
-
-				return value;
-			}
 		  },
 		  onChange: function(){
 			$scope.valueTime=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
