@@ -174,8 +174,7 @@
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left backinput">
                                         <label>Salario básico</label>
                                         <input type="text" ng-disabled="inputDisable" id="salary" class="form-control"
-                                            ng-currency fraction="0" min="0" validation-pattern="number"
-                                            ng-model="libranza.salary" ng-blur="simulate()" required>
+                                            ng-currency fraction="0" min="0" ng-model="libranza.salary" ng-blur="simulate()" required>
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left ">
                                         <label>Descuentos de ley</label>
