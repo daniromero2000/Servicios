@@ -8,5 +8,9 @@ class Comments extends Model
 {
     protected $table = 'comments';
 
-    protected $fillable = ['idLogin', 'idLead', 'comment'];
+    protected $fillable = [
+        'idLogin',
+        'idLead',
+        'comment'
+    ];
 }

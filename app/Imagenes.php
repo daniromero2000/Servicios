@@ -8,5 +8,12 @@ class Imagenes extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['img', 'title', 'description', 'textButton', 'category', 'isSlide'];
+    protected $fillable = [
+        'img',
+        'title',
+        'description',
+        'textButton',
+        'category',
+        'isSlide'
+    ];
 }
