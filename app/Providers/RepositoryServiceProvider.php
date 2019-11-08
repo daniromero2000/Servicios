@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\leads\Repositories\leadRepository;
 use App\Entities\Subsidiaries\Repositories\SubsidiaryRepository;
-use App\Entities\Leads\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Leads\Repositories\Interfaces;
+namespace App\Entities\Subsidiaries\Repositories\Interfaces;
 
 interface SubsidiaryRepositoryInterface
 {

@@ -6,7 +6,7 @@ use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
-use App\Entities\Leads\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 
 class SegurosController extends Controller
 {
