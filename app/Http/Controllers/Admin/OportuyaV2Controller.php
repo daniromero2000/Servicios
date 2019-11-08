@@ -175,6 +175,7 @@ class OportuyaV2Controller extends Controller
 				$usuarioCreacion = $getExistLead->USUARIO_CREACION;
 				$usuarioActualizacion = (string) $assessorCode;
 			}
+
 			$dataOportudata = [
 				'TIPO_DOC' => $request->get('typeDocument'),
 				'CEDULA' => $identificationNumber,
@@ -1396,7 +1397,7 @@ class OportuyaV2Controller extends Controller
 					return ['resp' => "false"];
 				}
 			}
-		}else{
+		} else {
 			$estadoCliente = "PREAPROBADO";
 		}
 
@@ -1412,7 +1413,7 @@ class OportuyaV2Controller extends Controller
 			} else {
 				return ['resp' => "false"];
 			}
-		}else{
+		} else {
 			$estadoCliente = "PREAPROBADO";
 		}
 
@@ -2125,8 +2126,9 @@ class OportuyaV2Controller extends Controller
 		return $resp[0];
 	}
 
-	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam){
-		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP` 
+	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
+	{
+		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
 		FROM `CLIENTE_FAB`
 		WHERE `CEDULA` = :cedula", ['cedula' => $identificationNumber]);
 
@@ -2134,7 +2136,7 @@ class OportuyaV2Controller extends Controller
 
 		$fechaExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		
+
 		$data = ['NOM_REFPER' => $nomRefPer, 'TEL_REFPER' =>  $telRefPer, 'NOM_REFFAM' => $nomRefFam, 'TEL_REFFAM' => $telRefFam];
 
 		//return $this->execConsultaFosygaLead($identificationNumber, $oportudataLead[0]->TIPO_DOC, $oportudataLead[0]->FEC_EXP, $oportudataLead[0]->NOMBRES, $oportudataLead[0]->APELLIDOS);
@@ -2192,7 +2194,7 @@ class OportuyaV2Controller extends Controller
 				$estadoSolic = 'APROBADO';
 			}
 
-			if($policyCredit['estadoCliente'] == 'PREAPROBADO'){
+			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
 				$estadoSolic = 'ANALISIS';
 			}
 		}
@@ -2484,9 +2486,9 @@ class OportuyaV2Controller extends Controller
 	private function addTarjeta($numSolic, $identificationNumber, $cupoCompra, $cupoAvance, $sucursal, $tipoTarjetaAprobada)
 	{
 		$tipoTarjeta = "";
-		if($tipoTarjetaAprobada == 'Tarjeta Black'){
+		if ($tipoTarjetaAprobada == 'Tarjeta Black') {
 			$tipoTarjeta = 'Black';
-		}elseif($tipoTarjetaAprobada == 'Tarjeta Gray'){
+		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
 			$tipoTarjeta = 'Gray';
 		}
 		$tarjeta = new Tarjeta;
