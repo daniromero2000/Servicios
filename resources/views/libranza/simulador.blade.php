@@ -174,13 +174,12 @@
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left backinput">
                                         <label>Salario básico</label>
                                         <input type="text" ng-disabled="inputDisable" id="salary" class="form-control"
-                                            ng-currency fraction="0" min="0" validation-pattern="number"
-                                            ng-model="libranza.salary" ng-blur="simulate()" required>
+                                            ng-currency fraction="0" min="0" ng-model="libranza.salary" ng-blur="simulate()" required>
                                     </md-input-container>
                                     <md-input-container flex-gt-xs="100" layout-gt-sm="50" class="text-left ">
                                         <label>Descuentos de ley</label>
                                         <input type="text" id="lawDesc" class="form-control backinput" ng-currency
-                                            fraction="0" min="0" validation-pattern="number" ng-model="libranza.lawDesc"
+                                            fraction="0" min="0" ng-model="libranza.lawDesc"
                                             ng-disabled="true" required>
                                     </md-input-container>
                                 </div>
@@ -189,7 +188,7 @@
                                         <label>Otros Descuentos</label>
                                         <input ng-disabled="inputDisable" type="text" id="otherDesc"
                                             class="form-control backinput" ng-model="libranza.otherDesc" ng-currency
-                                            fraction="0" min="0" validation-pattern="number" ng-blur="simulate()"
+                                            fraction="0" min="0" ng-blur="simulate()"
                                             ng-change="validateInt()" required>
                                     </md-input-container>
                                 </div>
@@ -198,12 +197,12 @@
                                         <label>Otros Descuentos</label>
                                         <input ng-disabled="inputDisable" type="number" id="otherDesc"
                                             class="form-control" ng-model="libranza.otherDesc"
-                                            validation-pattern="number" ng-blur="simulate()" ng-change="validateInt()"
+                                            ng-blur="simulate()" ng-change="validateInt()"
                                             required>
                                     </md-input-container>
                                     <md-input-container flex="50" class="text-left">
                                         <label>Valor Cuota Compra</label>
-                                        <input ng-disabled="inputDisable" type="text" validation-pattern="number"
+                                        <input ng-disabled="inputDisable" type="text" 
                                             id="quotaBuy" class="form-control" ng-model="libranza.quotaBuy"
                                             ng-blur="simulate()" ng-change="validateInt()" required>
                                     </md-input-container>
