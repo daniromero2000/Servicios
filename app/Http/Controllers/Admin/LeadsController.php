@@ -19,8 +19,8 @@ class LeadsController extends Controller
         AssessorRepositoryInterface $assessorRepositoryInterface
     ) {
         $this->assessorInterface = $assessorRepositoryInterface;
-        $this->IdEmpresa         = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
         $this->codeAsessor       = Auth::user()->codeOportudata;
+        $this->IdEmpresa         = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
         $this->middleware('auth')->except('logout');
     }
 
@@ -102,9 +102,7 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
-            $queryChannel = sprintf("SELECT `channel`, `id`, `state`
-            FROM `leads`
-            WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
+            $queryChannel = sprintf("SELECT `channel`, `id`, `state` FROM `leads` WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
             $respChannel = DB::select($queryChannel);
             if ($lead->ASESOR_DIG != '') {
                 $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
