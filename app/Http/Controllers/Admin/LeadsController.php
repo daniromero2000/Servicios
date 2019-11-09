@@ -13,12 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LeadsController extends Controller
 {
-    private $codeAsessor, $assessorInterface;
+    private $codeAsessor, $assessorInterface, $IdEmpresa;
 
     public function __construct(
         AssessorRepositoryInterface $assessorRepositoryInterface
     ) {
         $this->assessorInterface = $assessorRepositoryInterface;
+        $this->IdEmpresa         = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
         $this->codeAsessor       = Auth::user()->codeOportudata;
         $this->middleware('auth')->except('logout');
     }
@@ -83,8 +84,6 @@ class LeadsController extends Controller
         $leadsDigital      = [];
         $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $this->codeAsessor);
         $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
-
-        $IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
@@ -174,8 +173,6 @@ class LeadsController extends Controller
         $leadsDigital = [];
         $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $this->codeAsessor);
         $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
-
-        $IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA, ti.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score, TB_INTENCIONES as ti
