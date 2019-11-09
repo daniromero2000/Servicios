@@ -1704,14 +1704,12 @@ class OportuyaV2Controller extends Controller
 			$estadoSolic = "ANALISIS";
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'] ;
 		$policyCredit = $this->validatePolicyCredit_new($leadInfo['identificationNumber']);
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
 		$estado = ($estadoSolic == "APROBADO") ? "APROBADO" : "PREAPROBADO";
-		if ($solicCredit['estadoCliente'] == 'PREAPROBADO') {
-			$estado = "PREAPROBADO";
-		}
 		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
 		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -2234,10 +2232,8 @@ class OportuyaV2Controller extends Controller
 		$infoLead = [];
 		$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		$infoLead->numSolic = $numSolic->SOLICITUD;
-		if ($tipoCreacion == 'PASOAPASO') {
-			return ['resp' => $policyCredit['resp'], 'infoLead' => $infoLead, 'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'], 'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']];
-		}
-		return ['resp' => 'true', 'infoLead' => $infoLead];
+		
+		return ['estadoCliente' => $estadoResult,'resp' => $policyCredit['resp'], 'infoLead' => $infoLead, 'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'], 'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']];
 	}
 
 	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)

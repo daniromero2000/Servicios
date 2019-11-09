@@ -564,8 +564,8 @@
         
         <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
-				<div class="modal-content modalStepsContent">
-					<div class="modal-body modalStepsBody" style="padding: 0">
+				<div class="modal-content">
+					<div class="modal-body " style="padding: 0">
 						<div class="row resetRow">
 							<div class="col-12 text-center containerLogoModalStep">
 								<img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
@@ -576,61 +576,58 @@
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tienes un cupo Aprobado
+									La solicitud fue aprobada
 								</p>
 								<p class="text-center" style="margin-bottom: 0">
-									<span class="text-quotamodal">$@{{ quota | number:0 }}</span> para compras
+                                    <span class="text-quotamodal">$@{{ quota | number:0 }}</span> <br />
+                                    <b>Para compras</b>
 								</p>
 								<p class="text-center">
-									<span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> para avances en efectivo
-								</p>
+                                    <span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> <br>
+                                    <b>Para avances en efectivo</b>
+                                </p>
+                                <p class="textModalNumSolic text-center">
+                                    ** Ya puede proceder a realizar el negocio en el Aplicativo de Oportudata</b>
+                                </p>
 								<p class="textModalNumSolic text-center">
-									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
 								</p>
 							</div>
 							<div class="col-12" ng-if="estadoCliente == 'PREAPROBADO'">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tienes un cupo pre-aprobado de:
+									La solicitud fue pre-aprobada
 								</p>
 								<p class="text-quotamodal text-center">
 									$@{{ quota | number:0 }}
-								</p>
+                                </p>
+                                <p class="textModalNumSolic text-center">
+                                    ** Alguna información no concuerda, se debe esperar previa aprobacion <br /> de la solicitud por parte de <b>Fábrica de Créditos</b>
+                                </p>
 								<p class="textModalNumSolic text-center">
-									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
 								</p>
 							</div>
 							<div class="col-12" ng-if="estadoCliente == 'SIN COMERCIAL'">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>
 									<br>
-									Tu solictud fue creada exitosamente.
-								</p>
+									Tu solicitud fue creada exitosamente.
+                                </p>
+                                <p class="textModalNumSolic text-center">
+                                    ** Alguna información no concuerda, se debe esperar previa aprobacion <br /> de la solicitud por parte de <b>Fábrica de Créditos</b>
+                                </p>
 								<p class="textModalNumSolic text-center">
-									Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
 								</p>
-							</div>
-						</div>
-						<div class="row resetRow containerFormModal">
-							<div class="col-sm-7 offset-sm-5">
-								<form ng-submit="sendComment()">
-									<div class="form-group">
-										<label for="">A que hora te podemos llamar*</label>
-										<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact" class="form-control" required="">
-										</select>
-									</div>
-									<div class="form-group">
-										<textarea ng-model="comment.comment" class="form-control" rows="10" placeholder="Algún comentario adicional"></textarea>
-									</div>
-									<div class="row">
-										<div class="col-12 text-center">
-											<button type="submit" class="btn btn-primary btnStep">Enviar</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12 text-center">
+                                <a class="btn btn-danger buttonBackCardExist" href="/assessor/forms/crearCliente">Nuevo Registro</a>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>

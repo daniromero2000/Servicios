@@ -271,7 +271,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
-			hideLoader();
 			if(response.data == true){
 				$scope.validateNum = 1;
 				$('#confirmCodeVerification').modal('hide');
@@ -283,6 +282,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				// en caso de que el codigo ya expiro
 				$scope.showWarningCode = true;
 			}
+			hideLoader();
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -297,17 +297,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			console.log(response);
+			hideLoader();
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
-					$('#proccess').modal('hide');
 					$scope.showConfirm();
 				}, 1000);
 			}
 			if(tipoCreacion == 'CREDITO'){
 				$scope.execConsultasLead(response.data.identificationNumber);
 			}
-			hideLoader();
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -320,7 +318,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
-			console.log(response);
+			hideLoader();
 			if (response.data == "-3" || response.data == "-4") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
@@ -338,11 +336,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.showWarningErrorData = false;
 				$scope.infoLead = response.data.infoLead;
 				setTimeout(() => {
-					$('#proccess').modal('hide');
 					$('#showResp').modal('show')
 				}, 100);
 			}
-			hideLoader();
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
