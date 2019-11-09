@@ -25,9 +25,6 @@ class CommunityController extends Controller
         return DB::select($queryCM);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $lead = new Lead;
@@ -45,16 +42,4 @@ class CommunityController extends Controller
 
         return response()->json([true]);
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
 }

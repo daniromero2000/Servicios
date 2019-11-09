@@ -112,12 +112,6 @@ class UserController extends Controller
         return  response()->json([true]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = User::findOrfail($id);

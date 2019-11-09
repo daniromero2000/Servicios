@@ -38,9 +38,6 @@ class LinesController extends Controller
         return response()->json($lines);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         try {
@@ -57,13 +54,6 @@ class LinesController extends Controller
             }
         }
     }
-
-    public function show($id)
-    { }
-
-
-    public function edit($id)
-    { }
 
     public function update(Request $request, $id)
     {

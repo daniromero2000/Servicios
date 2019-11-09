@@ -42,9 +42,6 @@ class ViajesController extends Controller
         ]);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $this->leadInterface->createLead($request->input());

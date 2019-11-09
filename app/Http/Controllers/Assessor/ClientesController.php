@@ -57,12 +57,6 @@ class ClientesController extends Controller
         return false;
     }
 
-    public function create()
-    { }
-
-    public function store(Request $request)
-    { }
-
     public function show($id)
     {
         $customer = DB::connection('oportudata')
@@ -70,13 +64,4 @@ class ClientesController extends Controller
 
         return response()->json($customer);
     }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
 }

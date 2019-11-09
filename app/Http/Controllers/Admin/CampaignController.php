@@ -43,9 +43,6 @@ class CampaignController extends Controller
         return DB::select($query);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $campaign = new Campaigns;
@@ -81,9 +78,6 @@ class CampaignController extends Controller
 
         return response()->json($campaign);
     }
-
-    public function edit($id)
-    { }
 
     public function update(Request $request)
     {

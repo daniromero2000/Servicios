@@ -18,33 +18,11 @@ class SimulatorController extends Controller
         $this->middleware('auth')->except('logout');
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('simulator.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
@@ -62,35 +40,6 @@ class SimulatorController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         try {
@@ -112,32 +61,16 @@ class SimulatorController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //query
         $timeLimit = TimeLimits::findOrFail($id);
         $timeLimit->delete();
-        // json respons
+
         return response()->json([true]);
     }
 
-    /**
-     * get data to simulator administrator
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
     public function getData()
     {
-
-
         $params = Simulator::select('rate', 'gap', 'assurance', 'assurance2')->get();
         $timeLimits = TimeLimits::select('id', 'timeLimit')->get();
         $pagadurias = Pagaduria::select('id', 'name', 'office', 'address', 'city', 'departament', 'category', 'active', 'phoneNumber')->orderBy('id', 'DESC')->get();
@@ -146,7 +79,6 @@ class SimulatorController extends Controller
 
         $i = 0;
         $dataPagaduria = [];
-
 
         for ($i; $i < count($pagadurias); $i++) {
 
@@ -170,9 +102,7 @@ class SimulatorController extends Controller
 
     public function addPagaduria(Request $request)
     {
-
         try {
-            //create Pagaduria Model Instance and assign values
             $pagaduria = new Pagaduria;
             $pagaduria->name = $request->name;
             $pagaduria->office = $request->office;
@@ -206,9 +136,7 @@ class SimulatorController extends Controller
 
     public function deletePagaduria($id)
     {
-
         $pagaduriasProfile = PagaduriaProfile::where('idPagaduria', $id)->delete();
-
         $pagaduria = Pagaduria::findOrFail($id);
         $pagaduria->delete();
 
@@ -217,7 +145,6 @@ class SimulatorController extends Controller
 
     public function updatePagaduria(Request $request, $id)
     {
-
         try {
             $pagaduria = Pagaduria::findOrFail($id);
             $pagaduria->name = $request->get('name');
@@ -230,7 +157,6 @@ class SimulatorController extends Controller
 
             $pagaduriasProfile = PagaduriaProfile::where('idPagaduria', $id)->delete();
 
-
             $i = 0;
             for ($i; $i < count($request->profiles); $i++) {
                 $profPag = new PagaduriaProfile;
@@ -240,10 +166,7 @@ class SimulatorController extends Controller
             }
 
             return response()->json(true);
-        }
-
-        // if resource already exist return error
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             if ($e->getCode() == "23000") {
                 return response()->json($e->getCode());
             } else {
@@ -255,7 +178,6 @@ class SimulatorController extends Controller
     public function addProfile(Request $request)
     {
         try {
-            //create Pagaduria Model Instance and assign values
             $profile = new LibranzaProfile;
             $profile->name = $request->name;
             $profile->save();
@@ -273,7 +195,6 @@ class SimulatorController extends Controller
     public function deleteProfile($id)
     {
         $pagaduriasProfile = PagaduriaProfile::where('idProfile', $id)->delete();
-
         $profile = LibranzaProfile::findOrFail($id);
         $profile->delete();
 

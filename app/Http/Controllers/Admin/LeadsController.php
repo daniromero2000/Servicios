@@ -309,12 +309,6 @@ class LeadsController extends Controller
         return  DB::select($query);
     }
 
-    public function create()
-    { }
-
-    public function store(Request $request)
-    { }
-
     public function show($id)
     {
         $leads = Lead::find($id);
@@ -328,15 +322,6 @@ class LeadsController extends Controller
             'leadsQuery' => $leadsQuery
         ]);
     }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
 
     public function addCommunityLeads(Request $request)
     {

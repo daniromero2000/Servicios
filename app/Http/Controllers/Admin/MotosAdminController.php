@@ -11,7 +11,6 @@ use App\MotosBrands;
 
 class MotosAdminController extends Controller
 {
-
     public function index()
     {
         $motos = Moto::select(
@@ -72,9 +71,6 @@ class MotosAdminController extends Controller
 
         return response()->json($data);
     }
-
-    public function create()
-    { }
 
     public function store(Request $request)
     {
@@ -148,9 +144,6 @@ class MotosAdminController extends Controller
     {
         return response()->json(MotosImage::select('image')->where('id_moto', '=', $id)->get());
     }
-
-    public function edit($id)
-    { }
 
     public function update(Request $request, $id)
     {
