@@ -6,26 +6,30 @@ use App\Lead;
 use App\Comments;
 use App\Campaigns;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class LeadsController extends Controller
 {
-    private $codeAsessor, $assessorInterface, $IdEmpresa;
+    private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
 
     public function __construct(
-        AssessorRepositoryInterface $assessorRepositoryInterface
+        AssessorRepositoryInterface $assessorRepositoryInterface,
+        LeadRepositoryInterface $leadRepositoryInterface
     ) {
+        $this->leadInterface     = $leadRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
-        $this->codeAsessor       = Auth::user()->codeOportudata;
-        $this->IdEmpresa         = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
         $this->middleware('auth')->except('logout');
     }
 
     public function index(Request $request)
     {
+        $this->codeAsessor = auth()->user()->codeOportudata;
+
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
             'initFrom' => $request->get('initFrom')
@@ -81,14 +85,13 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigitalAnt($request)
     {
-        $leadsDigital      = [];
-        $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $this->codeAsessor);
-        $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
+        $leadsDigital    = [];
+        $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
         WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
-        AND sb.`SOLICITUD_WEB` = '1' AND cf.`ESTADO` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA);
+        AND sb.`SOLICITUD_WEB` = '1' AND cf.`ESTADO` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
@@ -169,8 +172,6 @@ class LeadsController extends Controller
     private function getLeadsCanalDigital($request)
     {
         $leadsDigital = [];
-        $queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $this->codeAsessor);
-        $IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA, ti.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score, TB_INTENCIONES as ti
@@ -186,7 +187,7 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND ti.CEDULA = cf.CEDULA
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
-        AND sb.`ID_EMPRESA` = %s ", $IdEmpresa[0]->ID_EMPRESA);
+        AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
@@ -214,10 +215,9 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
-            $queryChannel = sprintf("SELECT `channel`, `id`, `state`
-            FROM `leads`
-            WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
-            $respChannel = DB::select($queryChannel);
+
+            $respChannel =  $this->leadInterface->getLeadChannel($lead->CEDULA);
+
             if ($lead->ASESOR_DIG != '') {
                 $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
                 $respAsesorDigital = DB::select($queryAsesorDigital);

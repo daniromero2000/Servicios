@@ -22,4 +22,14 @@ class leadRepository implements leadRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+
+    public function getLeadChannel($cedula)
+    {
+        try {
+            return $this->model->where('identificationNumber', $cedula)->get(['channel', 'id', 'state']);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }
