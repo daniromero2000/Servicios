@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\Leads\Repositories;
+namespace App\Entities\Campaigns\Repositories;
 
-use App\Entities\Leads\Lead;
-use App\Entities\Leads\Repositories\Interfaces\leadRepositoryInterface;
+use App\Entities\Campaigns\Campaign;
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class leadRepository implements leadRepositoryInterface
+class CampaignRepository implements CampaignRepositoryInterface
 {
     public function __construct(
-        lead $lead
+        Campaign $Campaign
     ) {
-        $this->model = $lead;
+        $this->model = $Campaign;
     }
 
-    public function createLead(array $data)
+    public function createCampaign(array $data)
     {
         try {
             return $this->model->create($data);
@@ -23,16 +23,7 @@ class leadRepository implements leadRepositoryInterface
         }
     }
 
-    public function getLeadChannel($cedula)
-    {
-        try {
-            return $this->model->where('identificationNumber', $cedula)->get(['channel', 'id', 'state']);
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function findLeadById(int $id): Lead
+    public function findCampaignById(int $id): Campaign
     {
         try {
             return $this->model->findOrFail($id);
@@ -41,7 +32,16 @@ class leadRepository implements leadRepositoryInterface
         }
     }
 
-    public function updateLead(array $params): bool
+    public function findCampaignByName($name): Campaign
+    {
+        try {
+            return $this->model->findOrFail($name);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function updateCampaign(array $params): bool
     {
         try {
             return $this->model->update($params);

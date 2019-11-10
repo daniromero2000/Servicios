@@ -11,6 +11,10 @@ use App\Entities\Assessors\Repositories\AssessorRepository;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Users\Repositories\UserRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\Campaigns\Repositories\CampaignRepository;
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
+use App\Entities\Comments\Repositories\CommentRepository;
+use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,6 +38,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
+        );
+
+        $this->app->bind(
+            CampaignRepositoryInterface::class,
+            CampaignRepository::class
+        );
+
+        $this->app->bind(
+            CommentRepositoryInterface::class,
+            CommentRepository::class
         );
     }
 }

@@ -9,17 +9,15 @@ use Illuminate\Database\QueryException;
 class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
-        User $User
+        User $user
     ) {
-        $this->model = $User;
+        $this->model = $user;
     }
 
-    public function getAllUserCityNames()
+    public function getUserName($assessor)
     {
         try {
-            return $this->model->where('PRINCIPAL', 1)->orderBy('CIUDAD', 'asc')->get(['CIUDAD']);
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
+            $this->model->where('identificationNumber', $assessor)->get('name');
+        } catch (QueryException $e) { }
     }
 }
