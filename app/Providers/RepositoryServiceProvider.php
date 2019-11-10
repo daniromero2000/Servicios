@@ -9,6 +9,8 @@ use App\Entities\Subsidiaries\Repositories\SubsidiaryRepository;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Assessors\Repositories\AssessorRepository;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\Users\Repositories\UserRepository;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             AssessorRepositoryInterface::class,
             AssessorRepository::class
+        );
+
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
     }
 }

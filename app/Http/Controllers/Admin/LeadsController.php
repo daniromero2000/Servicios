@@ -219,8 +219,12 @@ class LeadsController extends Controller
             $respChannel =  $this->leadInterface->getLeadChannel($lead->CEDULA);
 
             if ($lead->ASESOR_DIG != '') {
+
                 $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
                 $respAsesorDigital = DB::select($queryAsesorDigital);
+
+                return $respAsesorDigital = auth()->user()->where('id', $lead->ASESOR_DIG)->get('name');
+
                 $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
             }
             $resp[$key]->channel = $respChannel[0]->channel;
