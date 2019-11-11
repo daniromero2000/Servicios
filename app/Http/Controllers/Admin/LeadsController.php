@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Lead;
-use App\Comments;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
@@ -27,7 +26,7 @@ class LeadsController extends Controller
         CampaignRepositoryInterface $campaignRepositoryInterface,
         CommentRepositoryInterface $commentRepositoryInterface
     ) {
-        $this->commentInterface = $commentRepositoryInterface;
+        $this->commentInterface  = $commentRepositoryInterface;
         $this->campaignInterface = $campaignRepositoryInterface;
         $this->userInterface     = $userRepositoryInterface;
         $this->leadInterface     = $leadRepositoryInterface;
@@ -235,15 +234,15 @@ class LeadsController extends Controller
                 // $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
                 // $respAsesorDigital = DB::select($queryAsesorDigital);
 
-                $respAsesorDigital = $this->userInterface->getUserName($lead->ASESOR_DIG);
+                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
                 $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
             }
 
-            $respChannel =  $this->leadInterface->getLeadChannel($lead->CEDULA);
+            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id = $respChannel[0]->id;
-            $resp[$key]->state = $respChannel[0]->state;
-            $leadsDigital[] = $resp[$key];
+            $resp[$key]->id      = $respChannel[0]->id;
+            $resp[$key]->state   = $respChannel[0]->state;
+            $leadsDigital[]      = $resp[$key];
         }
 
         return [
