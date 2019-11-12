@@ -572,6 +572,13 @@
 							</div>
 						</div>
 						<div class="row resetRow">
+                            <div class="col-12" ng-if="estadoCliente == 'TRADICIONAL'">
+                                <p class="textModal text-center">
+									<strong>Felicitaciones!!</strong>
+									<br>
+									El cliente no cumple para ninguna tarjeta
+								</p>
+                            </div>
 							<div class="col-12" ng-if="estadoCliente == 'APROBADO'">
 								<p class="textModal text-center">
 									<strong>Felicitaciones!!</strong>

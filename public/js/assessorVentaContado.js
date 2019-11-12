@@ -319,6 +319,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
 			hideLoader();
+			if(response.data == -2){
+				$scope.estadoCliente = "TRADICIONAL";
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
+
 			if (response.data == "-3" || response.data == "-4") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
@@ -333,11 +340,16 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 
 			if(response.data.resp == 'true'){
-				$scope.showWarningErrorData = false;
-				$scope.infoLead = response.data.infoLead;
+				$scope.quota = response.data.quota;
+				$scope.quotaAdvance = response.data.quotaAdvance;
+				$scope.numSolic = response.data.numSolic;
+				$scope.estadoCliente = response.data.estado;
 				setTimeout(() => {
-					$('#showResp').modal('show')
-				}, 100);
+					$('#confronta').modal('hide');
+				}, 800);
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
 			}
 		}, function errorCallback(response) {
 			hideLoader();
