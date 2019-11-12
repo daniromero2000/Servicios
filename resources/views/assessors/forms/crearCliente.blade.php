@@ -574,10 +574,13 @@
 						<div class="row resetRow">
                             <div class="col-12" ng-if="estadoCliente == 'TRADICIONAL'">
                                 <p class="textModal text-center">
-									<strong>Felicitaciones!!</strong>
+									<strong>Solicitud Enviada!!</strong>
 									<br>
 									El cliente no cumple para ninguna tarjeta
-								</p>
+                                </p>
+                                <p class="textModalNumSolic text-center">
+                                    ** Según políticas internas, el cliente no cumple para ninguna tarjeta <br> pero es posible que aplique para crédito tradicional</b>
+                                </p>
                             </div>
 							<div class="col-12" ng-if="estadoCliente == 'APROBADO'">
 								<p class="textModal text-center">

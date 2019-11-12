@@ -313,20 +313,25 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 	
 	$scope.execConsultasLead = function(identificationNumber){
-		showLoader();
+		setTimeout(() => {
+			showLoader();
+		}, 1000);
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
-			hideLoader();
-			if(response.data == -2){
+			console.log(response);
+			setTimeout(() => {
+				hideLoader();
+			}, 2000);
+			if(response.data.resp.resp == "-2"){
 				$scope.estadoCliente = "TRADICIONAL";
 				setTimeout(() => {
 					$('#congratulations').modal('show');
 				}, 1800);
 			}
 
-			if (response.data == "-3" || response.data == "-4") {
+			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
@@ -340,10 +345,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 
 			if(response.data.resp == 'true'){
-				$scope.quota = response.data.quota;
-				$scope.quotaAdvance = response.data.quotaAdvance;
-				$scope.numSolic = response.data.numSolic;
-				$scope.estadoCliente = response.data.estado;
+				$scope.quota = response.data.quotaApprovedProduct;
+				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
+				$scope.numSolic = response.data.infoLead.numSolic;
+				$scope.estadoCliente = response.data.estadoCliente;
 				setTimeout(() => {
 					$('#confronta').modal('hide');
 				}, 800);
