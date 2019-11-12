@@ -42,6 +42,7 @@ class LeadsController extends Controller
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
             'initFrom' => $request->get('initFrom')
+            'initFromAnt' => $request->get('initFromAnt')
         ]);
 
         $getLeadsTRAnt = $this->getLeadsTradicionalAnt([
@@ -52,6 +53,7 @@ class LeadsController extends Controller
         $getLeadsTR = $this->getLeadsTradicional([
             'qTR'             => $request->get('qTR'),
             'initFromTR'      => $request->get('initFromTR'),
+            'initFromTRAnt'      => $request->get('initFromTRAnt'),
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
             'qfechaFinalTR'   => $request->get('qfechaFinalTR')
         ]);
