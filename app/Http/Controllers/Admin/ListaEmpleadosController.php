@@ -28,10 +28,6 @@ class ListaEmpleadosController extends Controller
         ]);
     }
 
-
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $existEmployeNew = $this->existEmploye($request->num_documento);
@@ -55,15 +51,6 @@ class ListaEmpleadosController extends Controller
             return 0;
         }
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
 
     public function destroy($id)
     {

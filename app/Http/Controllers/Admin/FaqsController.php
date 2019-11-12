@@ -37,9 +37,6 @@ class faqsController extends Controller
         ]);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $faqs = new Faq;
@@ -50,12 +47,6 @@ class faqsController extends Controller
         $faqs->save();
         return response()->json([true]);
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
 
     public function update(Request $request, $id)
     {

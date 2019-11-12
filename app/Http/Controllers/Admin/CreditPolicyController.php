@@ -20,18 +20,6 @@ class CreditPolicyController extends Controller
         return $creditPolicy->get();
     }
 
-    public function create()
-    { }
-
-    public function store(Request $request)
-    { }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
     public function update(Request $request, $id)
     {
         $creditPolicy = [
@@ -45,9 +33,6 @@ class CreditPolicyController extends Controller
 
         return response()->json([true]);
     }
-
-    public function destroy($id)
-    { }
 
     public function simulateCreditPolicy(Request $request)
     {

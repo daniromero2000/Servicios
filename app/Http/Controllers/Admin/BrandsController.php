@@ -41,9 +41,6 @@ class BrandsController extends Controller
         return response()->json($brands);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         try {
@@ -60,12 +57,6 @@ class BrandsController extends Controller
             }
         }
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
 
     public function update(Request $request, $id)
     {

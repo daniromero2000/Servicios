@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class LibranzaV2Controller extends Controller
 {
-
 	public function index()
 	{
 		$query = "SELECT leads.`id`, leads.`name`, leads.`lastName`, leads.`email`, leads.`telephone`, leads.`city`, leads.`typeService`, leads.`typeProduct`, leads.`created_at`, leads.`state`,leads.`channel`,liquidator.`creditLine`, liquidator.`pagaduria`, liquidator.`age`, liquidator.`customerType`, liquidator.`salary`
@@ -22,9 +21,6 @@ class LibranzaV2Controller extends Controller
 
 		return response()->json([DB::select($query)]);
 	}
-
-	public function create()
-	{ }
 
 	public function store(Request $request)
 	{
@@ -359,19 +355,6 @@ class LibranzaV2Controller extends Controller
 			}
 		}
 	}
-
-
-	public function show($id)
-	{ }
-
-	public function edit($id)
-	{ }
-
-	public function update(Request $request, $id)
-	{ }
-
-	public function destroy($id)
-	{ }
 
 	private function validateDateConsultaComercial($identificationNumber)
 	{

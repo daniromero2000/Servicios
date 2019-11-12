@@ -39,11 +39,6 @@ class ProfilesController extends Controller
         return response()->json($profiles);
     }
 
-
-    public function create()
-    { }
-
-
     public function store(Request $request)
     {
         try {
@@ -61,12 +56,6 @@ class ProfilesController extends Controller
             }
         }
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
 
     public function update(Request $request, $id)
     {

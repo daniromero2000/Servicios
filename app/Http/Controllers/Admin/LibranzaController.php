@@ -29,9 +29,6 @@ class LibranzaController extends Controller
         ]);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
         $lead = new Lead;
@@ -107,18 +104,6 @@ class LibranzaController extends Controller
         $ws = new \SoapClient("http://10.238.14.181:2020/Service1.svc?singleWsdl", array()); //correcta
         $result = $ws->ConsultarInformacionComercial($obj);  // correcta
     }
-
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
 
     public function liquidator($maxAmount, $quota)
     {

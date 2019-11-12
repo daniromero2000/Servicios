@@ -257,19 +257,6 @@ class WarrantyController extends Controller
         });
     }
 
-    public function show($id)
-    { }
-
-    public function edit($id)
-    { }
-
-    public function update(Request $request, $id)
-    { }
-
-    public function destroy($id)
-    { }
-
-
     //------------------------------- Token verification  ------------------------------------------------------
 
     public function getCodeVerificationOportudata($identificationNumber, $celNumber)

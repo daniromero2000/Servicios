@@ -73,9 +73,6 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function create()
-    { }
-
     public function store(Request $request)
     {
 
@@ -91,9 +88,6 @@ class ProductsController extends Controller
             return false;
         }
     }
-
-    public function show($id)
-    { }
 
     public function edit($id)
     {
