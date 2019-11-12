@@ -339,7 +339,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
 					$scope.leadsAnt.push(value);
 				});
-				$scope.cargando = false;
+				$scope.cargandoAnt = false;
 			}
 
 
@@ -356,7 +356,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				angular.forEach(response.data.leadsTRAnt, function (value, key) {
 					$scope.leadsTRAnt.push(value);
 				});
-				$scope.cargandoTR = false;
+				$scope.cargandoTRAnt = false;
 			}
 
 
