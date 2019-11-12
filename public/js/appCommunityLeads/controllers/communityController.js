@@ -156,16 +156,16 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		  method: 'GET',
 		  url: '/campaign?q='+$scope.q.q,
 		}).then(function successCallback(response) {
-			
+
 			if(response.data != false){
 				angular.forEach(response.data, function(value, key) {
 					$scope.campaigns.push(value);
 				});
 				$scope.cargando = false;
-				
+
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 
@@ -201,12 +201,14 @@ app.controller('communityController', function($scope, $http, $rootScope){
 			url:'/communityLeads/addCommunityLeads',
 			data:$scope.lead
 		}).then(function successCallback(response){
+			console.log(response);
 				if(response.data != false){
 					$scope.searchLeads();
 					$('#addCommunityLead').modal('hide');
 					$scope.lead = {};
 				}
 			},function errorCallback(response){
+					console.log(response);
 			});
 		};
 
@@ -215,37 +217,38 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$http({
 		  method: 'GET',
 		  url: '/communityLeads/viewCommunityLeads/'+idLead
-		}).then(function successCallback(response){				
+		}).then(function successCallback(response){
 			if (response.data != false) {
-				$scope.lead=response.data;						
+				$scope.lead=response.data;
 			}
-			
+
 		},
 		function errorCallback(response){
-			
+
 		});
 	};
 
 	$scope.showUpdateDialog=function(idLead){
-		$scope.idLead=idLead;		
+		$scope.idLead=idLead;
 		$scope.viewCommunityLeads($scope.idLead);
 		$('#updateCommunityModal').modal('show');
 	};
-	
+
 	$scope.updateCommunityLeads = function(){
 		$http({
 			method: 'POST',
 		 	url: '/communityLeads/updateCommunityLeads',
 		 	data: $scope.lead
 		}).then(function successCallback(response){
-			
+	console.log(response);
 			if(response.data != false){
 				$scope.searchLeads();
 				$('#updateCommunityModal').modal('hide');
 			}
-			
+
 		},function errorCallback(response){
-			
+					console.log(response);
+
 		});
 	}
 
@@ -255,12 +258,12 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.idLead=idLead;
 
 		$('#deleteCommunityModal').modal( "show");
-		
+
 	}
 
 
 	$scope.confirmDelete = function(){
-		
+
 		$scope.deleteCommunityLeads($scope.idLead);
 
 	}
@@ -275,13 +278,13 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$http({
 			method:'POST',
 			url:'/communityLeads/deleteCommunityLeads/'+idLead
-		}).then(function successCallback(response){	
+		}).then(function successCallback(response){
 			if(response.data != false){
 				$scope.searchLeads();
 				$('#deleteCommunityModal').modal('hide');
 			}
 		},function errorCallback(response){
-				
+
 		});
 	}
 
@@ -310,7 +313,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 			}
 			$("#viewComments").modal("show");
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 
@@ -319,7 +322,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 		$scope.viewAddComent = !$scope.viewAddComent;
 	};
 
-	
+
 
 	$scope.addComment = function(){
 		$scope.comment.idLead = $scope.idLead;
@@ -333,7 +336,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.viewAddComent = false;
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 
@@ -365,7 +368,7 @@ app.controller('communityController', function($scope, $http, $rootScope){
 				$scope.state = state;
 			}
 		}, function errorCallback(response) {
-			
+
 		});
 	};
 
@@ -377,10 +380,10 @@ app.controller('communityController', function($scope, $http, $rootScope){
 			if(response.data != false){
 				$scope.comment.comment = "";
 				$scope.searchLeads();
-				$("#changeStateLead").modal("hide");			
+				$("#changeStateLead").modal("hide");
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 

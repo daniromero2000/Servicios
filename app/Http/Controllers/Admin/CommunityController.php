@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 
 class CommunityController extends Controller
 {
+
+    private $leadInterface;
+
+    public function __construct(
+        LeadRepositoryInterface $leadRepositoryInterface
+    ) {
+        $this->leadInterface = $leadRepositoryInterface;
+    }
+
+
     public function index(Request $request)
     {
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`, lead.`campaign`, cam.`name` as campaignName
@@ -27,18 +38,20 @@ class CommunityController extends Controller
 
     public function store(Request $request)
     {
-        $lead = new Lead;
-        $lead->name = $request->get('name');
-        $lead->lastName = $request->get('lastName');
-        $lead->email = $request->get('email');
-        $lead->telephone = $request->get('telephone');
-        $lead->city = $request->get('city');
-        $lead->typeService = $request->get('typeService');
-        $lead->typeProduct = $request->get('typeProduct');
-        $lead->channel = intval($request->get('channel'));
-        $lead->termsAndConditions = $request->get('termsAndConditions');
-        $lead->campaign = $request->get('campaign');
-        $lead->save();
+        // $lead = new Lead;
+        // $lead->name = $request->get('name');
+        // $lead->lastName = $request->get('lastName');
+        // $lead->email = $request->get('email');
+        // $lead->telephone = $request->get('telephone');
+        // $lead->city = $request->get('city');
+        // $lead->typeService = $request->get('typeService');
+        // $lead->typeProduct = $request->get('typeProduct');
+        // $lead->channel = intval($request->get('channel'));
+        // $lead->termsAndConditions = $request->get('termsAndConditions');
+        // $lead->campaign = $request->get('campaign');
+        // $lead->save();
+
+        $this->leadInterface->createLead($request->input());
 
         return response()->json([true]);
     }

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class DirectorController extends Controller
 {
-
   public function __construct()
   {
     $this->middleware('auth')->except('logout');
@@ -16,11 +15,14 @@ class DirectorController extends Controller
 
   public function index(Request $request)
   {
+    $user = auth()->user()->codeOportudata;
+
     $query = sprintf("SELECT cf. CEDULA, cf.NOMBRES, cf.APELLIDOS, cf.CELULAR, cf.EMAIl, cf.CREACION, cf.ESTADO, ti.TARJETA
     FROM CLIENTE_FAB as cf, TB_INTENCIONES as ti
     where ti.CEDULA = cf.CEDULA
-    and cf.SUC = 125
+    and cf.SUC =  $user
     and cf.CLIENTE_WEB = 1
+        and cf.ORIGEN = 'ASESORES-CREDITO'
     and ti.FECHA_INTENCION = (
       SELECT MAX(`FECHA_INTENCION`)
       FROM `TB_INTENCIONES`

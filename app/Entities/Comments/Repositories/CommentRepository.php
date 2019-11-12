@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\Leads\Repositories;
+namespace App\Entities\Comments\Repositories;
 
-use App\Entities\Leads\Lead;
-use App\Entities\Leads\Repositories\Interfaces\leadRepositoryInterface;
+use App\Entities\Comments\Comment;
+use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class leadRepository implements leadRepositoryInterface
+class CommentRepository implements CommentRepositoryInterface
 {
     public function __construct(
-        lead $lead
+        Comment $Comment
     ) {
-        $this->model = $lead;
+        $this->model = $Comment;
     }
 
-    public function createLead(array $data)
+    public function createComment(array $data)
     {
         try {
             return $this->model->create($data);
@@ -23,16 +23,7 @@ class leadRepository implements leadRepositoryInterface
         }
     }
 
-    public function getLeadChannel($cedula)
-    {
-        try {
-            return $this->model->where('identificationNumber', $cedula)->get(['channel', 'id', 'state']);
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function findLeadById(int $id): Lead
+    public function findCommentById(int $id): Comment
     {
         try {
             return $this->model->findOrFail($id);
@@ -41,7 +32,16 @@ class leadRepository implements leadRepositoryInterface
         }
     }
 
-    public function updateLead(array $params): bool
+    public function findCommentByName($name): Comment
+    {
+        try {
+            return $this->model->findOrFail($name);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function updateComment(array $params): bool
     {
         try {
             return $this->model->update($params);

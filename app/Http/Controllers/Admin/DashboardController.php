@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
     public function getModulesDashboard()
     {
-        $userInfo = \Auth::user();
+        $userInfo = auth()->user();
         $query = DB::select("SELECT modu.name, modu.icon, modu.route
         FROM permissions_profile_module as ppm
         LEFT JOIN modules as modu ON ppm.id_module = modu.id

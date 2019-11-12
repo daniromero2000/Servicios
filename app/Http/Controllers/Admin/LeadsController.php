@@ -3,24 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Lead;
-use App\Comments;
-use App\Campaigns;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
+use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Leads\Repositories\leadRepository;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
 class LeadsController extends Controller
 {
     private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
+    private $userInterface, $user, $campaignInterface, $commentInterface;
 
     public function __construct(
         AssessorRepositoryInterface $assessorRepositoryInterface,
-        LeadRepositoryInterface $leadRepositoryInterface
+        LeadRepositoryInterface $leadRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface,
+        CampaignRepositoryInterface $campaignRepositoryInterface,
+        CommentRepositoryInterface $commentRepositoryInterface
     ) {
+        $this->commentInterface  = $commentRepositoryInterface;
+        $this->campaignInterface = $campaignRepositoryInterface;
+        $this->userInterface     = $userRepositoryInterface;
         $this->leadInterface     = $leadRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
         $this->middleware('auth')->except('logout');
@@ -28,7 +36,8 @@ class LeadsController extends Controller
 
     public function index(Request $request)
     {
-        $this->codeAsessor = auth()->user()->codeOportudata;
+        $this->user = auth()->user();
+        $this->codeAsessor = $this->user->codeOportudata;
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
@@ -103,15 +112,15 @@ class LeadsController extends Controller
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp = DB::connection('oportudata')->select($query);
-
+        $error = [];
         foreach ($resp as $key => $lead) {
-            $queryChannel = sprintf("SELECT `channel`, `id`, `state` FROM `leads` WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
-            $respChannel = DB::select($queryChannel);
+
             if ($lead->ASESOR_DIG != '') {
-                $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
-                $respAsesorDigital = DB::select($queryAsesorDigital);
-                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
+                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
+                $resp[$key]->nameAsesor = $respAsesorDigital->name;
             }
+
+            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
             $resp[$key]->id = $respChannel[0]->id;
             $resp[$key]->state = $respChannel[0]->state;
@@ -216,17 +225,16 @@ class LeadsController extends Controller
 
         foreach ($resp as $key => $lead) {
 
-            $respChannel =  $this->leadInterface->getLeadChannel($lead->CEDULA);
-
             if ($lead->ASESOR_DIG != '') {
-                $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
-                $respAsesorDigital = DB::select($queryAsesorDigital);
-                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
+                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
+                $resp[$key]->nameAsesor = $respAsesorDigital->name;
             }
+
+            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id = $respChannel[0]->id;
-            $resp[$key]->state = $respChannel[0]->state;
-            $leadsDigital[] = $resp[$key];
+            $resp[$key]->id      = $respChannel[0]->id;
+            $resp[$key]->state   = $respChannel[0]->state;
+            $leadsDigital[]      = $resp[$key];
         }
 
         return [
@@ -298,7 +306,7 @@ class LeadsController extends Controller
 
     public function assignAssesorDigitalToLead($solicitud)
     {
-        $idAsesor = Auth::user()->id;
+        $idAsesor = auth()->user()->id;
         $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
 
         return DB::connection('oportudata')->select($query);
@@ -314,7 +322,7 @@ class LeadsController extends Controller
 
     public function show($id)
     {
-        $leads = Lead::find($id);
+        $leads = $this->leadInterface->findLeadById($id);
         $leadsQuery = Lead::selectRaw('leads.*,liquidator.*')
             ->leftjoin('liquidator', 'leads.id', '=', 'liquidator.idLead')
             ->where('leads.id', '=', $leads->id)
@@ -328,39 +336,22 @@ class LeadsController extends Controller
 
     public function addCommunityLeads(Request $request)
     {
-        $idCampaign = NULL;
-        $nameCampaign = (string) $request->get('campaign');
-        $idCampaign = Campaigns::selectRaw('`id`,`name`')->where('name', '=', $nameCampaign)->get();
-        //return $idCampaign;
+        $idCampaign =  $this->campaignInterface->findCampaignByName($request->get('campaign'));
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
-
-        $lead = new Lead;
-        $lead->name = $request->get('name');
-        $lead->lastName = $request->get('lastName');
-        $lead->email = $request->get('email');
-        $lead->telephone = $request->get('telephone');
-        $lead->identificationNumber = $request->get('identificationNumber');
-        $lead->city = $request->get('city');
-        $lead->typeProduct = $request->get('typeProduct');
-        $lead->typeService = $request->get('typeService');
-        $lead->channel = $request->get('channel');
-        $lead->termsAndConditions = 2;
-        $lead->campaign = $idCampaign;
-        $lead->channel = $request->get('channel');
-        $lead->nearbyCity = $request->get('nearbyCity');
-        $lead->save();
-
+        $request['termsAndConditions'] = 2;
+        $request['campaign'] = $idCampaign;
+        $lead = $this->leadInterface->createLead($request->input());
         return response()->json($lead);
     }
 
     public function viewCommunityLeads($id)
     {
-        return response()->json(Lead::findOrfail($id));
+        return response()->json($this->leadInterface->findLeadById($id));
     }
 
     public function deleteCommunityLeads($id)
     {
-        $lead = Lead::findOrfail($id);
+        $lead = $this->leadInterface->findLeadById($id);
         $lead->delete();
 
         return response()->json([true]);
@@ -369,38 +360,25 @@ class LeadsController extends Controller
     public function updateCommunityLeads(Request $request)
     {
         $nameCampaign = (string) $request->get('campaignName');
-        $lead = lead::findOrfail($request->get('id'));
+        $lead = $this->leadInterface->findLeadById($request->get('id'));
+        $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
-            $idCampaign = Campaigns::selectRaw('`id`,`name`')->where('name', '=', $nameCampaign)->first();
+            $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);
             $idCampaign = $idCampaign->id;
-            $lead->campaign = $idCampaign;
-        } else {
-            $lead->campaign = $request->get('campaign');
+            $request['campaign'] = $idCampaign;
         }
-
-        $lead->name = $request->get('name');
-        $lead->lastName = $request->get('lastName');
-        $lead->email = $request->get('email');
-        $lead->telephone = $request->get('telephone');
-        $lead->city = $request->get('city');
-        $lead->typeProduct = $request->get('typeProduct');
-        $lead->typeService = $request->get('typeService');
-        $lead->channel = $request->get('channel');
-        $lead->nearbyCity = $request->get('nearbyCity');
-        $lead->save();
+        $leadRerpo->updateLead($request->input());
 
         return response()->json([true]);
     }
 
     public function addComent($lead, $comment)
     {
-        $commentNew = new Comments;
-        $currentUser = \Auth::user();
-        $commentNew->idLogin = $currentUser->id;
-        $commentNew->idLead = $lead;
-        $commentNew->comment = $comment;
-        $commentNew->save();
+        $request['idLogin'] = auth()->user()->id;
+        $request['idLead']  = $lead;
+        $request['comment'] = $comment;
+        $this->commentInterface->createComment($request);
 
         return response()->json([true]);
     }
@@ -417,9 +395,10 @@ class LeadsController extends Controller
 
     public function deniedRequest($idLead, $comment)
     {
-        $employee = Lead::find($idLead);
-        $employee->state = 4;
-        $employee->save();
+        $lead =  $this->leadInterface->findLeadById($idLead);
+        $lead->state = 4;
+        $lead->save();
+
         $this->addComent($idLead, $comment);
 
         return response()->json([true]);

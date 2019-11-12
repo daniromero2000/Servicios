@@ -4,12 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Campaigns;
+use App\Entities\Campaigns\Campaign;
 use Illuminate\Support\Facades\DB;
 use App\CampaignImages;
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
+use App\Entities\Campaigns\Repositories\CampaignRepository;
 
 class CampaignController extends Controller
 {
+    private $campaignInterface;
+
+    public function __construct(
+        CampaignRepositoryInterface $campaignRepositoryInterface
+    ) {
+        $this->campaignInterface = $campaignRepositoryInterface;
+    }
+
+
     public function index(Request $request)
     {
         $query = "SELECT `campaign_images`.`name` AS imageName,`campaigns`.`id`, `campaigns`.`name`, `campaigns`.`description`, `campaigns`.`socialNetwork`, `campaigns`.`beginDate`, `campaigns`.`endingDate`, `campaigns`.`budget`, `campaigns`.`usedBudget`,`campaigns`.`remove`
@@ -45,15 +56,17 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
-        $campaign = new Campaigns;
-        $campaign->name = $request->get('name') ? $request->get('name') : '';
-        $campaign->socialNetwork = $request->get('socialNetwork') ? $request->get('socialNetwork') : '';
-        $campaign->description = $request->get('description') ? $request->get('description') : '';
-        $campaign->beginDate = $request->get('beginDate');
-        $campaign->endingDate = $request->get('endingDate');
-        $campaign->budget = $request->get('budget') ? intval($request->get('budget')) : 0;
-        $campaign->usedBudget = $request->get('usedBudget') ? intval($request->get('usedBudget')) : 0;
-        $campaign->save();
+        // $campaign = new Campaigns;
+        // $campaign->name = $request->get('name') ? $request->get('name') : '';
+        // $campaign->socialNetwork = $request->get('socialNetwork') ? $request->get('socialNetwork') : '';
+        // $campaign->description = $request->get('description') ? $request->get('description') : '';
+        // $campaign->beginDate = $request->get('beginDate');
+        // $campaign->endingDate = $request->get('endingDate');
+        // $campaign->budget = $request->get('budget') ? intval($request->get('budget')) : 0;
+        // $campaign->usedBudget = $request->get('usedBudget') ? intval($request->get('usedBudget')) : 0;
+        // $campaign->save();
+
+        $campaign =  $this->campaignInterface->createCampaign($request->input());
 
         return response()->json($campaign->id);
     }
@@ -71,7 +84,7 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = Campaigns::selectRaw('campaign_images.name AS imageName,campaigns.id, campaigns.name, campaigns.description, campaigns.socialNetwork, campaigns.beginDate, campaigns.endingDate, campaigns.budget, campaigns.usedBudget,campaigns.remove')
+        $campaign = Campaign::selectRaw('campaign_images.name AS imageName,campaigns.id, campaigns.name, campaigns.description, campaigns.socialNetwork, campaigns.beginDate, campaigns.endingDate, campaigns.budget, campaigns.usedBudget,campaigns.remove')
             ->leftjoin('campaign_images', 'campaigns.id', '=', 'campaign_images.campaign')
             ->where('campaigns.id', '=', $id)
             ->orderBy('campaigns.id')->first();
@@ -81,22 +94,27 @@ class CampaignController extends Controller
 
     public function update(Request $request)
     {
-        $campaign = Campaigns::findOrfail($request->get('id'));
-        $campaign->name = $request->get('name');
-        $campaign->socialNetwork = $request->get('socialNetwork');
-        $campaign->description = $request->get('description');
-        $campaign->beginDate = $request->get('beginDate');
-        $campaign->endingDate = $request->get('endingDate');
-        $campaign->budget = intval($request->get('budget'));
-        $campaign->usedBudget = intval($request->get('usedBudget'));
-        $campaign->save();
+        // $campaign = Campaigns::findOrfail($request->get('id'));
+        // $campaign->name = $request->get('name');
+        // $campaign->socialNetwork = $request->get('socialNetwork');
+        // $campaign->description = $request->get('description');
+        // $campaign->beginDate = $request->get('beginDate');
+        // $campaign->endingDate = $request->get('endingDate');
+        // $campaign->budget = intval($request->get('budget'));
+        // $campaign->usedBudget = intval($request->get('usedBudget'));
+        // $campaign->save();
+
+        $campaign     = $this->campaignInterface->findCampaignById($request->get('id'));
+        $campaignRepo = new CampaignRepository($campaign);
+        $campaignRepo->updateCampaign($request->except('_token', '_method'));
 
         return response()->json([true]);
     }
 
     public function deleteCampaign(Request $request)
     {
-        $campaign = Campaigns::findOrfail($request->get('id'));
+        // $campaign = Campaigns::findOrfail($request->get('id'));
+        $campaign = $this->campaignInterface->findCampaignById($request->get('id'));
         $campaign->remove = 1;
         $campaign->save();
 
@@ -105,7 +123,8 @@ class CampaignController extends Controller
 
     public function destroy($id)
     {
-        $Campaign = Campaigns::findOrfail($id);
+        // $Campaign = Campaigns::findOrfail($id);
+        $Campaign = $this->campaignInterface->findCampaignById($id);
         $Campaign->delete();
 
         return response()->json([true]);
