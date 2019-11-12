@@ -16,7 +16,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'qfechaFinalTR': '',
 		'qTRAnt': '',
 		'initFrom': 0,
-			'initFromAnt': 0,
+		'initFromAnt': 0,
 		'initFromCM': 0,
 		'initFromRL': 0,
 		'initFromGen': 0,
@@ -42,10 +42,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.totalLeadsTR = 0;
 	$scope.totalLeadsTRAnt = 0;
 	$scope.cargando = true;
+	$scope.cargandoAnt = true;
 	$scope.cargandoCM = true;
 	$scope.cargandoRL = true;
 	$scope.cargandoGen = true;
 	$scope.cargandoTR = true;
+	$scope.cargandoTRAnt = true;
 	$scope.filtros = false;
 	$scope.viewAddComent = false;
 	$scope.lead = {};
@@ -304,10 +306,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.getLeads = function () {
 		showLoader();
 		$scope.cargando = true;
+		$scope.cargandoAnt = true;
 		$scope.cargandoCM = true;
 		$scope.cargandoRL = true;
 		$scope.cargandoGen = true;
 		$scope.cargandoTR = true;
+		$scope.cargandoTRAnt = true;
 
 		$http({
 			method: 'GET',
@@ -385,7 +389,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
-				$scope.q.initFromAnt = 0;
+		$scope.q.initFromAnt = 0;
 		$scope.q.initFromCM = 0;
 		$scope.q.initFromGen = 0;
 		1
@@ -417,7 +421,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'qfechaFinalTR': '',
 			'qTRAnt': '',
 			'initFrom': 0,
-				'initFromAnt': 0,
+			'initFromAnt': 0,
 			'initFromCM': 0,
 			'initFromRL': 0,
 			'initFromGen': 0,
