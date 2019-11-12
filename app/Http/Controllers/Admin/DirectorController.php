@@ -22,6 +22,7 @@ class DirectorController extends Controller
     where ti.CEDULA = cf.CEDULA
     and cf.SUC =  $user
     and cf.CLIENTE_WEB = 1
+        and cf.ORIGEN = 'ASESORES-CREDITO'
     and ti.FECHA_INTENCION = (
       SELECT MAX(`FECHA_INTENCION`)
       FROM `TB_INTENCIONES`
