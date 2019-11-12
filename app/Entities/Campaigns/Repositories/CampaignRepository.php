@@ -32,10 +32,10 @@ class CampaignRepository implements CampaignRepositoryInterface
         }
     }
 
-    public function findCampaignByName($name): Campaign
+    public function findCampaignByName($name)
     {
         try {
-            return $this->model->findOrFail($name);
+            return $this->model->where('name', $name)->get();
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
         }

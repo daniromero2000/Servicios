@@ -112,19 +112,15 @@ class LeadsController extends Controller
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp = DB::connection('oportudata')->select($query);
-
+        $error = [];
         foreach ($resp as $key => $lead) {
-            $queryChannel = sprintf("SELECT `channel`, `id`, `state` FROM `leads` WHERE `identificationNumber` = %s ", trim($lead->CEDULA));
-            $respChannel = DB::select($queryChannel);
+
             if ($lead->ASESOR_DIG != '') {
-
-                // $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
-                // $respAsesorDigital = DB::select($queryAsesorDigital);
-
-                $respAsesorDigital = $this->userInterface->getUserName($lead->ASESOR_DIG);
-
-                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
+                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
+                $resp[$key]->nameAsesor = $respAsesorDigital->name;
             }
+
+            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
             $resp[$key]->id = $respChannel[0]->id;
             $resp[$key]->state = $respChannel[0]->state;
@@ -230,12 +226,8 @@ class LeadsController extends Controller
         foreach ($resp as $key => $lead) {
 
             if ($lead->ASESOR_DIG != '') {
-
-                // $queryAsesorDigital = sprintf("SELECT `name` FROM `users` WHERE `id` = %s ", trim($lead->ASESOR_DIG));
-                // $respAsesorDigital = DB::select($queryAsesorDigital);
-
                 $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
-                $resp[$key]->nameAsesor = (count($respAsesorDigital) > 0) ? $respAsesorDigital[0]->name : '';
+                $resp[$key]->nameAsesor = $respAsesorDigital->name;
             }
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
@@ -314,7 +306,7 @@ class LeadsController extends Controller
 
     public function assignAssesorDigitalToLead($solicitud)
     {
-        $idAsesor = $this->user->id;
+        $idAsesor = auth()->user()->id;
         $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
 
         return DB::connection('oportudata')->select($query);
@@ -323,20 +315,14 @@ class LeadsController extends Controller
     public function checkLeadProcess($idLead)
     {
         if ($idLead == '') return -1;
-        $lead = $this->leadInterface->findLeadById($idLead);
-        $leadRepo = new LeadRepository($lead);
-        $leadRepo->state = 2;
-        $leadRepo = $leadRepo->toArray();
-        $leadRepo->updateLead($leadRepo);
+        $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
 
-        // $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
-
-        // return  DB::select($query);
+        return  DB::select($query);
     }
 
     public function show($id)
     {
-        $leads = Lead::find($id);
+        $leads = $this->leadInterface->findLeadById($id);
         $leadsQuery = Lead::selectRaw('leads.*,liquidator.*')
             ->leftjoin('liquidator', 'leads.id', '=', 'liquidator.idLead')
             ->where('leads.id', '=', $leads->id)
@@ -350,27 +336,6 @@ class LeadsController extends Controller
 
     public function addCommunityLeads(Request $request)
     {
-        // $idCampaign = NULL;
-        // $nameCampaign = (string) $request->get('campaign');
-        // $idCampaign = Campaigns::selectRaw('`id`,`name`')->where('name', '=', $nameCampaign)->get();
-        // //return $idCampaign;
-        // $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
-        // $lead = new Lead;
-        // $lead->name = $request->get('name');
-        // $lead->lastName = $request->get('lastName');
-        // $lead->email = $request->get('email');
-        // $lead->telephone = $request->get('telephone');
-        // $lead->identificationNumber = $request->get('identificationNumber');
-        // $lead->city = $request->get('city');
-        // $lead->typeProduct = $request->get('typeProduct');
-        // $lead->typeService = $request->get('typeService');
-        // $lead->channel = $request->get('channel');
-        // $lead->termsAndConditions = 2;
-        // $lead->campaign = $idCampaign;
-        // $lead->channel = $request->get('channel');
-        // $lead->nearbyCity = $request->get('nearbyCity');
-        // $lead->save();
-
         $idCampaign =  $this->campaignInterface->findCampaignByName($request->get('campaign'));
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
         $request['termsAndConditions'] = 2;
@@ -396,47 +361,27 @@ class LeadsController extends Controller
     {
         $nameCampaign = (string) $request->get('campaignName');
         $lead = $this->leadInterface->findLeadById($request->get('id'));
+        $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
             $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);
             $idCampaign = $idCampaign->id;
-            // $lead->campaign = $idCampaign;
+            $request['campaign'] = $idCampaign;
         }
-        // } else {
-        //     $lead->campaign = $request->get('campaign');
-        // }
-
-        // $lead->name = $request->get('name');
-        // $lead->lastName = $request->get('lastName');
-        // $lead->email = $request->get('email');
-        // $lead->telephone = $request->get('telephone');
-        // $lead->city = $request->get('city');
-        // $lead->typeProduct = $request->get('typeProduct');
-        // $lead->typeService = $request->get('typeService');
-        // $lead->channel = $request->get('channel');
-        // $lead->nearbyCity = $request->get('nearbyCity');
-        // $lead->save();
-        $request['campaign'] = $idCampaign;
-        $this->leadInterface->createLead($request->input());
+        $leadRerpo->updateLead($request->input());
 
         return response()->json([true]);
     }
 
-    // public function addComent($lead, $comment)
-    // {
-    //     // $commentNew = new Comments;
-    //     // $currentUser = \Auth::user();
-    //     // $commentNew->idLogin = $currentUser->id;
-    //     // $commentNew->idLead = $lead;
-    //     // $commentNew->comment = $comment;
-    //     // $commentNew->save();
-    //     $request['idLogin'] = $this->user->id;
-    //     $request['idLead']  = $lead;
-    //     $request['comment'] = $comment;
-    //     $this->commentInterface->createComment($request);
+    public function addComent($lead, $comment)
+    {
+        $request['idLogin'] = auth()->user()->id;
+        $request['idLead']  = $lead;
+        $request['comment'] = $comment;
+        $this->commentInterface->createComment($request);
 
-    //     return response()->json([true]);
-    // }
+        return response()->json([true]);
+    }
 
     public function getComentsLeads($idLead)
     {
@@ -454,11 +399,7 @@ class LeadsController extends Controller
         $lead->state = 4;
         $lead->save();
 
-        $request['idLogin'] = $this->user->id;
-        $request['idLead']  = $idLead;
-        $request['comment'] = $comment;
-
-        $this->commentInterface->createComment($request);
+        $this->addComent($idLead, $comment);
 
         return response()->json([true]);
     }

@@ -12,5 +12,5 @@ interface CampaignRepositoryInterface
 
     public function findCampaignById(int $id): Campaign;
 
-    public function findCampaignByName($name): Campaign;
+    public function findCampaignByName($name);
 }

@@ -2,7 +2,7 @@
 
 namespace App\Entities\Users\Repositories;
 
-use App\Entities\Users\User;
+use App\User;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\QueryException;
 
@@ -17,7 +17,7 @@ class UserRepository implements UserRepositoryInterface
     public function getUserName($assessor)
     {
         try {
-            $this->model->where('identificationNumber', $assessor)->get('name');
+            return $this->model->where('id', $assessor)->first(['name']);
         } catch (QueryException $e) { }
     }
 }

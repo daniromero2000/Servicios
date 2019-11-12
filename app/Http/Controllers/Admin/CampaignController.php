@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Campaigns;
+use App\Entities\Campaigns\Campaign;
 use Illuminate\Support\Facades\DB;
 use App\CampaignImages;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
@@ -84,7 +84,7 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = Campaigns::selectRaw('campaign_images.name AS imageName,campaigns.id, campaigns.name, campaigns.description, campaigns.socialNetwork, campaigns.beginDate, campaigns.endingDate, campaigns.budget, campaigns.usedBudget,campaigns.remove')
+        $campaign = Campaign::selectRaw('campaign_images.name AS imageName,campaigns.id, campaigns.name, campaigns.description, campaigns.socialNetwork, campaigns.beginDate, campaigns.endingDate, campaigns.budget, campaigns.usedBudget,campaigns.remove')
             ->leftjoin('campaign_images', 'campaigns.id', '=', 'campaign_images.campaign')
             ->where('campaigns.id', '=', $id)
             ->orderBy('campaigns.id')->first();

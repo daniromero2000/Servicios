@@ -442,9 +442,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 					method: 'GET',
 					url: '/api/canalDigital/assignAssesorDigitalToLead/' + solicitud,
 				}).then(function successCallback(response) {
+					console.log(response);
 					$scope.searchLeads();
 					hideLoader();
-				}, function errorCallback(response) {});
+				}, function errorCallback(response) {
+					hideLoader();
+					console.log(response);
+				});
 			});
 	};
 
@@ -517,18 +521,20 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	};
 
 	$scope.addComment = function () {
+
 		$scope.comment.idLead = $scope.idLead;
 		$http({
 			method: 'GET',
 			url: '/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
 		}).then(function successCallback(response) {
+			console.log(response);
 			if (response.data != false) {
 				$scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.state, $scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}
 		}, function errorCallback(response) {
-
+			console.log(response);
 		});
 	};
 

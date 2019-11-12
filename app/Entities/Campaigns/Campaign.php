@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Campaigns;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Campaigns extends Model
+class Campaign extends Model
 {
     protected $table = 'campaigns';
 
