@@ -10,5 +10,9 @@ class CampaignImages extends Model
 
     protected $table = 'campaign_images';
 
-    protected $fillable = ['id','name','campaign'];
+    protected $fillable = [
+        'id',
+        'name',
+        'campaign'
+    ];
 }

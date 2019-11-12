@@ -8,5 +8,13 @@ class Campaigns extends Model
 {
     protected $table = 'campaigns';
 
-    protected $fillable = ['name', 'description', 'socialNetwork', 'beginDate', 'endingDate', 'budget', 'usedBudget'];
+    protected $fillable = [
+        'name',
+        'description',
+        'socialNetwork',
+        'beginDate',
+        'endingDate',
+        'budget',
+        'usedBudget'
+    ];
 }

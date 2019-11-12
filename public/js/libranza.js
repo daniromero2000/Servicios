@@ -1,64 +1,60 @@
-app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $routeParams, $location, $document) {
+app.controller("libranzaLiquidadorCtrl", function($scope, $http,$mdDialog,$routeParams,$location,$document) {
 
 
 	//array donde se guardaran las ciudades traidas en consulta
-	$scope.cities = [];
+	$scope.cities =[];
 
 	//objeto donde seran capturados el monto, el plazo y la tasa
-	$scope.plazoSelected = {
-		amount: 1000000,
-		timeLimit: 13,
-		rate: 3,
+	$scope.plazoSelected={
+		amount:1000000,
+		timeLimit:13,
+		rate:3,
 	};
 
-	$scope.idLeadParam = $routeParams.idLeadParam;
+	$scope.idLeadParam=$routeParams.idLeadParam;
 
 	//initial value for datepicker
-	$scope.birthday = '1970/01/01';
+	$scope.birthday='1970/01/01';
 
 
 	//array de tipo de productos
-	$scope.typeProducts = [{
-			label: 'Crédito para electrodomésticos',
-			value: 'Crédito para electrodomésticos'
+	$scope.typeProducts = [
+		{
+			label: 'Crédito para electrodomésticos', value: 'Crédito para electrodomésticos'
 		},
 		{
-			label: 'Crédito para motos',
-			value: 'Crédito para motos'
+			label: 'Crédito para motos', value:'Crédito para motos'
 		},
 		{
-			label: 'Credito para viajes',
-			value: 'Credito para viajes'
+			label: 'Credito para viajes', value: 'Credito para viajes'
 		},
 		{
-			label: 'Compra de cartera',
-			value: 'Compra de cartera'
+			label: 'Compra de cartera', value: 'Compra de cartera'
 		},
 		{
-			label: 'Libre inversión',
-			value: 'Libre inversión'
+			label: 'Libre inversión', value:'Libre inversión'
 		}
 	];
 
 
 	//objeto donde se guarda los datos de la simulación
-	$scope.leadResumen = {
-		name: '',
-		lastName: '',
-		amount: 0,
-		timeLimit: 13,
-		fee: 0,
-		idLiquidator: ''
+	$scope.leadResumen={
+		name:'',
+		lastName:'',
+		amount:0,
+		timeLimit:13,
+		fee:0,
+		idLiquidator:''
 	}
 
 
 	//objeto de datos de libranza
 	$scope.libranza = {
 		creditLine: '',
-		idPagaduria: '',
-		amount: '',
-		timeLimit: '',
-		pagaduria: '',
+		idPagaduria:'',
+		amount:'',
+		timeLimit:'',
+		pagaduria : '',
 		customerType: '',
 		age: 50,
 		salary: '',
@@ -84,9 +80,9 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 		channel: 1,
 	};
 
-	$scope.plazo = {
-		amount: 0.0,
-		timeLimit: ''
+	$scope.plazo={
+		amount:0.0,
+		timeLimit:''
 	}
 
 	$scope.maxAmount = 80000000; //Valor inicial para el monto máximo
@@ -105,24 +101,24 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 	$scope.constraintQuota = false;
 
 	$scope.toolTip = {
-		showTooltip: true,
-		tooltipDirection: ''
-	};
+		showTooltip : true,
+		tooltipDirection : ''
+	 };
 
-	$scope.validateInt = function () {
-		if ($scope.libranza.salary < 0) {
+	 $scope.validateInt = function(){
+		if($scope.libranza.salary < 0){
 			$scope.libranza.salary = 0;
 		}
 
-		if ($scope.libranza.otherDesc < 0) {
+		if($scope.libranza.otherDesc < 0){
 			$scope.libranza.otherDesc = 0;
 		}
 
-		if ($scope.libranza.age < 0) {
+		if($scope.libranza.age < 0){
 			$scope.libranza.age = 0;
 		}
 
-		if ($scope.libranza.quotaBuy < 0) {
+		if($scope.libranza.quotaBuy < 0){
 			$scope.libranza.quotaBuy = 0;
 		}
 	};
@@ -134,35 +130,35 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 	/*
 	Asigna los datos de la consulta a los arrays definidos arriba
 	*/
-	$scope.getData = function () {
+	$scope.getData=function(){
 		$http({
-			method: 'GET',
-			url: '/api/getDataLibranza'
-		}).then(function successCallback(response) {
-			if (response.data != false) {
+			method:'GET',
+			url:'/api/getDataLibranza'
+		}).then(function successCallback(response){
+			if(response.data != false){
 
-				angular.forEach(response.data.lines, function (value, key) {
+				angular.forEach(response.data.lines, function(value, key) {
 					$scope.lines.push(value);
 				});
 
-				angular.forEach(response.data.profiles, function (value, key) {
+				angular.forEach(response.data.profiles, function(value, key) {
 					$scope.libranzaProfiles.push(value);
 				});
 
-				angular.forEach(response.data.timeLimits, function (value, key) {
+				angular.forEach(response.data.timeLimits, function(value, key) {
 					$scope.timeLimits.push(value);
 				});
 
-				angular.forEach(response.data.params, function (value, key) {
+				angular.forEach(response.data.params, function(value, key) {
 					$scope.params.push(value);
 				});
 
-				angular.forEach(response.data.cities, function (value, key) {
+				angular.forEach(response.data.cities, function(value, key) {
 					$scope.cities.push(value);
 				});
 
 			}
-		}, function errorCallback(response) {
+		},function errorCallback(response){
 
 		});
 	}
@@ -177,42 +173,43 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 	Asigna los datos de la consulta a los arrays definidos arriba
 	*/
 
-	$scope.selectPagaduria = function () {
-		$scope.pagaduriaLibranza = [];
+	$scope.selectPagaduria = function (){
+		$scope.pagaduriaLibranza=[];
 		$http({
-			method: 'GET',
-			url: '/api/getPagadurias/' + $scope.libranza.customerType
-		}).then(function successCallback(response) {
+			method:'GET',
+			url:'/api/getPagadurias/'+$scope.libranza.customerType
+		}).then(function successCallback(response){
 
-			angular.forEach(response.data, function (value, key) {
+			angular.forEach(response.data, function(value, key) {
 				$scope.pagaduriaLibranza.push(value);
 			});
-		}, function errorCallback(response) {});
+		},function errorCallback(response){
+		});
 	};
 
 	$scope.showContentCartera = false;
 	$scope.showContentLibre = false;
 
-	$scope.hoverInCartera = function () {
+	$scope.hoverInCartera = function(){
 		$scope.showContentCartera = true;
 	}
 
-	$scope.hoverOutCartera = function () {
+	$scope.hoverOutCartera = function(){
 		$scope.showContentCartera = false;
 	}
 
-	$scope.hoverInLibre = function () {
+	$scope.hoverInLibre = function(){
 		$scope.showContentLibre = true;
 	}
 
-	$scope.hoverOutLibre = function () {
+	$scope.hoverOutLibre = function(){
 		$scope.showContentLibre = false;
 	}
 
 	/*
 		calcular el monto máximo a prestar según edad
 	*/
-	$scope.calculateData = function () {
+	$scope.calculateData = function(){
 		$scope.libranza.lawDesc = Math.round($scope.libranza.salary * 0.12);
 		$scope.libranza.segMargen = ($scope.libranza.salary > 828116) ? 5300 : 2000;
 		$scope.libranza.quaotaAvailable = (($scope.libranza.salary - $scope.libranza.lawDesc) / 2) - $scope.libranza.otherDesc - $scope.libranza.segMargen + parseInt($scope.libranza.quotaBuy);
@@ -333,22 +330,23 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 				}
 			};
 		}
+
 	};
 
-	$scope.ableField = function () {
-		if ($scope.libranza.creditLine == 2) {
-			$scope.quotaBuy = true;
+	$scope.ableField=function(){
+		if($scope.libranza.creditLine==2){
+			$scope.quotaBuy=true;
 			$scope.simulate();
-		} else {
-			$scope.quotaBuy = false;
-			$scope.libranza.quotaBuy = 0;
+		}else{
+			$scope.quotaBuy=false;
+			$scope.libranza.quotaBuy=0;
 			$scope.simulate();
 		}
 	}
 
 
-	$scope.calculateAge = function (birthday) {
-		birthday = String(birthday);
+	$scope.calculateAge = function(birthday) {
+		birthday=String(birthday);
 		var birthday_date = new Date(birthday);
 		var ageDifMs = Date.now() - birthday_date.getTime();
 		var ageDate = new Date(ageDifMs);
@@ -356,42 +354,42 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 			$scope.simulate();
 	}
 
-	$scope.payFunction = function (rate, timeLimit, amount) {
-		var quota = 0;
-		var basicFeeTop = amount * (rate * Math.pow((1 + rate), timeLimit));
-		var basicFeeBottom = (Math.pow((1 + rate), timeLimit)) - 1;
-		quota = basicFeeTop / basicFeeBottom;
+	$scope.payFunction = function(rate,timeLimit,amount){
+		var quota=0;
+		var basicFeeTop=amount*(rate*Math.pow((1+rate),timeLimit));
+		var basicFeeBottom= (Math.pow((1+rate),timeLimit))-1;
+		quota=basicFeeTop/basicFeeBottom;
 		return quota;
 	}
 
-	$scope.basicSimulation = function (loan, fee, timeLimit, amount) {
+	$scope.basicSimulation = function(loan,fee,timeLimit,amount){
 
-		var basicFeeTop = amount * (loan * Math.pow((1 + loan), timeLimit));
-		var basicFeeBottom = (Math.pow((1 + loan), timeLimit)) - 1;
+		var basicFeeTop=amount*(loan*Math.pow((1+loan),timeLimit));
+		var basicFeeBottom= (Math.pow((1+loan),timeLimit))-1;
 		var gap = 1;
 
-		if ($scope.libranza.creditLine == 2) {
-			gap = 2;
-		} else {
+		if($scope.libranza.creditLine == 2){
+			gap= 2;
+		}else{
 			gap = 1;
 		}
 
-		var gapValue = loan * amount * gap;
-		var gapQuota = $scope.payFunction(loan, timeLimit, gapValue)
-		var basicFee = (basicFeeTop / basicFeeBottom) + ((fee * amount) / $scope.factor) + gapQuota;
-		$scope.basicFee = (Math.floor((basicFee) / 100)) * 100;
-		$scope.libranza.fee = $scope.basicFee;
-		$scope.libranza.rate = loan;
-		$scope.libranza.amount = amount;
-		$scope.libranza.timeLimit = timeLimit;
+		var gapValue= loan*amount*gap;
+		var gapQuota = $scope.payFunction(loan,timeLimit,gapValue)
+		var basicFee=(basicFeeTop/basicFeeBottom) + ((fee*amount)/$scope.factor) + gapQuota;
+		$scope.basicFee=(Math.floor((basicFee)/100))*100;
+		$scope.libranza.fee= $scope.basicFee;
+		$scope.libranza.rate=loan;
+		$scope.libranza.amount=amount;
+		$scope.libranza.timeLimit=timeLimit;
 	};
 
 	$scope.calculateAmounts = function (timeLimitList, rate, quaotaAvailable, gap, loanAssurance, factor, amountList) {
 		$scope.plazo.amount = 0;
 		for (var i = 0; i < timeLimitList.length; i++) {
 			var aux = {
-				amount: 0.0,
-				timeLimit: ''
+				amount : 0.0,
+				timeLimit : ''
 			};
 			var fee = Math.pow((1 + rate), timeLimitList[i].timeLimit);
 
@@ -408,18 +406,18 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 		return amountList;
 	}
 
-	$scope.calculateAmount = function (timeLimit, rate, quaotaAvailable, gap, loanAssurance, factor) {
+	$scope.calculateAmount=function(timeLimit,rate,quaotaAvailable,gap,loanAssurance,factor){
 
-		var fee = Math.pow((1 + rate), timeLimit);
-		var gapBottom = 0;
-		var gapTop = 0;
-		var result = 0;
-		var amount = 0;
+		var fee=Math.pow((1+rate),timeLimit);
+		var gapBottom= 0;
+		var gapTop= 0;
+		var result=0;
+		var amount=0;
 
-		gapTop = quaotaAvailable * (fee - 1);
-		gapBottom = ((1 + (rate * gap)) * (rate * fee)) + ((loanAssurance / factor) * (fee - 1));
-		result = gapTop / gapBottom;
-		amount = (Math.floor((result) / 1000000)) * 1000000;
+		gapTop=quaotaAvailable*(fee-1);
+		gapBottom=((1+(rate*gap))*(rate*fee))+((loanAssurance/factor)*(fee-1));
+		result=gapTop/gapBottom;
+		amount=(Math.floor((result)/1000000))*1000000;
 
 		return amount;
 
@@ -429,13 +427,13 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 		style: 'currency',
 		currency: 'USD',
 		minimumFractionDigits: 0
-	});
+	  });
 
-	$scope.sliderAmountChanged = 0;
-	$scope.sliderTimeChanged = 0;
-	$scope.sliderRateChanged = 0;
-	$scope.classForm = 'form-body-simulator';
-	$scope.disableRange = false;
+	$scope.sliderAmountChanged=0;
+	$scope.sliderTimeChanged=0;
+	$scope.sliderRateChanged=0;
+	$scope.classForm='form-body-simulator';
+	$scope.disableRange=false;
 
 
 	$scope.sliderTime = {
@@ -464,16 +462,16 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 
 						return value;
 				}
-			},
-			onChange: function () {
-				$scope.valueTime = $scope.sliderTime.value == 12 ? 13 : $scope.sliderTime.value;
-				$scope.simular(2);
-				$scope.sliderTimeChanged = 2;
-				$scope.inputDisable = false;
-				$scope.inputDisableButton = false;
+		  },
+		  onChange: function(){
+			$scope.valueTime=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
+			$scope.simular(2);
+			$scope.sliderTimeChanged=2;
+			$scope.inputDisable=false;
+			$scope.inputDisableButton=false;
 			},
 		}
-	};
+	  };
 
 	$scope.sliderAmount = {
 		value: 1000000,
@@ -510,32 +508,24 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 	};
 
 
-	$scope.sliderRate = {
+	  $scope.sliderRate = {
 		value: 1,
 		options: {
-			showTicksValues: true,
-			stepsArray: [{
-					value: 1,
-					legend: 'Justo'
-				},
-				{
-					value: 2,
-					legend: 'Bueno'
-				},
-				{
-					value: 3,
-					legend: 'Excelente'
-				}
-			],
-			disabled: false,
-			onChange: function () {
-				$scope.simular(1);
-				$scope.sliderRateChanged = 4;
-				$scope.inputDisable = false;
-				$scope.inputDisableButton = false;
+		  showTicksValues: true,
+		  stepsArray: [
+			{value: 1, legend: 'Justo'},
+			{value: 2, legend: 'Bueno'},
+			{value: 3, legend: 'Excelente'}
+		  ],
+		  disabled: false,
+		  onChange: function(){
+			$scope.simular(1);
+			$scope.sliderRateChanged=4;
+			$scope.inputDisable=false;
+			$scope.inputDisableButton=false;
 			},
 			showSelectionBar: true,
-			getSelectionBarColor: function (value) {
+			getSelectionBarColor: function(value) {
 				if (value <= 2)
 					return 'orange';
 				if (value <= 3)
@@ -543,49 +533,49 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 				return '#2AE02A';
 			}
 		}
-	};
+	  };
 
-	$scope.clickOnSlider = 0;
+	$scope.clickOnSlider=0;
 
-	$scope.sumCLicks = function () {
+	$scope.sumCLicks=function(){
 		$scope.clickOnSlider++;
-		$scope.classForm = $scope.clickOnSlider >= 3 ? 'form-body-simulator-able' : 'form-body-simulator';
-		$scope.inputDisable = false;
-		$scope.inputDisableButton = false;
-	}
-
-
-	$scope.inputDisable = true;
-	$scope.inputDisableButton = true;
-
-	$scope.showAlertError = false;
-
-	$scope.simular = function (flag) {
-
-
-		$scope.sliderTime.value = $scope.sliderTime.value == 12 ? 13 : $scope.sliderTime.value;
-
-		var rate = 0.019;
-		var gap = $scope.params[0].gap;
-		var loanAssurance = 0;
-
-		if ($scope.sliderRate.value == 3) {
-			$scope.interest = 1.9;
-			rate = $scope.interest / 100;
-		} else if ($scope.sliderRate.value == 2) {
-			$scope.interest = 2.12;
-			rate = $scope.interest / 100;
-		} else {
-			rate = $scope.params[0].rate;
+		$scope.classForm=$scope.clickOnSlider>=3?'form-body-simulator-able':'form-body-simulator';
+		$scope.inputDisable=false;
+		$scope.inputDisableButton=false;
 		}
 
-		var interest = rate * 100;
+
+	$scope.inputDisable=true;
+	$scope.inputDisableButton=true;
+
+	$scope.showAlertError=false;
+
+	$scope.simular = function(flag){
+
+
+		$scope.sliderTime.value=$scope.sliderTime.value==12?13:$scope.sliderTime.value;
+
+		var rate=0.019;
+		var gap=$scope.params[0].gap;
+		var loanAssurance=0;
+
+		if ($scope.sliderRate.value == 3){
+			$scope.interest= 1.9;
+			rate=$scope.interest/100;
+		}else if($scope.sliderRate.value == 2){
+			$scope.interest= 2.12;
+			rate=$scope.interest/100;
+		}else{
+			rate=$scope.params[0].rate;
+		}
+
+		var interest = rate*100;
 		$scope.interest = interest.toFixed(2);
-		if ($scope.libranza.age < 70 && $scope.libranza.age >= 18) {
-			loanAssurance = $scope.params[0].assurance;
-		} else if ($scope.libranza.age >= 70 && $scope.libranza.age < 90) {
-			loanAssurance = $scope.params[0].assurance2;
-		} else {
+		if($scope.libranza.age<70 && $scope.libranza.age >=18){
+			loanAssurance=$scope.params[0].assurance;
+		}else if($scope.libranza.age>=70 && $scope.libranza.age<90){
+			loanAssurance=$scope.params[0].assurance2;
+		}else{
 			loanAssurance = 0;
 		}
 
@@ -652,24 +642,24 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 									$scope.sliderTime.value = $scope.plazos[i].timeLimit.timeLimit;
 									flagAmount = 1;
 								}
-								$scope.basicSimulation(rate, loanAssurance, $scope.sliderTime.value, $scope.sliderAmount.value);
+								$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 							}
 						}
 
-					} else if (flag == 2) {
+					}else if(flag==2){
 
-						$scope.basicSimulation(rate, loanAssurance, $scope.sliderTime.value, $scope.sliderAmount.value);
+						$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 
-						if ($scope.basicFee > $scope.libranza.quaotaAvailable) {
-							$scope.sliderAmount.value = $scope.calculateAmount($scope.sliderTime.value, rate, $scope.libranza.quaotaAvailable, gap, loanAssurance, $scope.factor);
-							for (var j = 0; j < $scope.plazos.length; j++) {
-								if (($scope.sliderTime.value == $scope.plazos[j].timeLimit.timeLimit)) {
-									$scope.sliderAmount.value = $scope.plazos[j].amount;
+						if($scope.basicFee>$scope.libranza.quaotaAvailable){
+							$scope.sliderAmount.value = $scope.calculateAmount($scope.sliderTime.value,rate,$scope.libranza.quaotaAvailable,gap,loanAssurance,$scope.factor);
+							for(var j=0;j <$scope.plazos.length; j++){
+								if(($scope.sliderTime.value == $scope.plazos[j].timeLimit.timeLimit)){
+									$scope.sliderAmount.value=$scope.plazos[j].amount;
 								}
 							}
-							$scope.basicSimulation(rate, loanAssurance, $scope.sliderTime.value, $scope.sliderAmount.value);
+							$scope.basicSimulation(rate,loanAssurance,$scope.sliderTime.value,$scope.sliderAmount.value);
 						}
-					} else {
+					}else{
 
 					}
 
@@ -679,102 +669,107 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 
 	};
 
-	$scope.simulate = function () {
+	$scope.simulate= function(){
 		$scope.calculateData();
 		$scope.simular(1);
 	}
 
-	$scope.showModal = function () {
+	$scope.showModal=function(){
 		$scope.simular(1);
 		$('#solicitarModal').modal('show');
 	}
 
-	$scope.idLead = '';
+	$scope.idLead='';
 
-	$scope.updateLiquidator = function () {
+	$scope.updateLiquidator=function(){
 		$http({
-			method: 'PUT',
-			url: '/api/updateLiquidator/' + $scope.idLead,
-			data: $scope.libranza
-		}).then(function successCallback(response) {
-			if (response.data != false) {}
-		}, function errorCallback(response) {});
+			method:'PUT',
+			url:'/api/updateLiquidator/'+$scope.idLead,
+			data:$scope.libranza
+		}).then(function successCallback(response){
+			if(response.data != false){
+			}
+		},function errorCallback(response){
+		});
 	}
 
 
-	$scope.solicitar = function () {
-		$scope.plazoSelected.amount = $scope.sliderAmount.value;
-		$scope.plazoSelected.timeLimit = $scope.sliderTime.value;
+	$scope.solicitar = function(){
+		$scope.plazoSelected.amount=$scope.sliderAmount.value;
+		$scope.plazoSelected.timeLimit=$scope.sliderTime.value;
 		$http({
-			method: 'PUT',
-			url: 'api/addAmount/' + $scope.idLead,
-			data: $scope.plazoSelected
-		}).then(function successCallback(response) {
-			if (response.data != false) {}
-		}, function errorCallback(response) {});
+			method:'PUT',
+			url:'api/addAmount/'+$scope.idLead,
+			data:$scope.plazoSelected
+		}).then(function successCallback(response){
+			if(response.data != false){
+			}
+		},function errorCallback(response){
+		});
 		window.location = "/LIB_gracias_FRM";
 	};
 
 
 
-	var idLeadURL = $routeParams.idLeadParam;
+	var idLeadURL= $routeParams.idLeadParam;
 
-	$scope.getLeadInfo = function () {
+	$scope.getLeadInfo=function(){
 		$http({
-			method: 'GET',
-			url: 'api/getResumen/' + idLeadURL
-		}).then(function successCallback(response) {
-			if (response.data != false) {
-				$scope.leadResumen.name = response.data.name;
-				$scope.leadResumen.lastName = response.data.lastName;
-				$scope.leadResumen.amount = response.data.amount;
-				$scope.leadResumen.fee = response.data.fee;
-				$scope.leadResumen.timeLimit = response.data.timeLimit;
-				$scope.leadResumen.idLiquidator = response.data.idLiquidator;
+			method:'GET',
+			url:'api/getResumen/'+idLeadURL
+		}).then(function successCallback(response){
+			if(response.data != false){
+				$scope.leadResumen.name=response.data.name;
+				$scope.leadResumen.lastName=response.data.lastName;
+				$scope.leadResumen.amount=response.data.amount;
+				$scope.leadResumen.fee=response.data.fee;
+				$scope.leadResumen.timeLimit=response.data.timeLimit;
+				$scope.leadResumen.idLiquidator=response.data.idLiquidator;
 			}
-		}, function errorCallback(response) {
+		},function errorCallback(response){
 
 		});
 	}
 
-	$scope.addLead = function () {
+	$scope.addLead = function(){
 		$('#solicitarModal').modal('hide');
-		if ($scope.libranza.termsAndConditions == false) {
+		if($scope.libranza.termsAndConditions == false){
 			alert("Debes aceptar términos y condiciones y política de tratamiento de datos");
-		} else if ($scope.libranza.city == '') {
+		}else if($scope.libranza.city == ''){
 			alert("Debes Ingresar una ciudad");
 			document.getElementById("city").focus();
-		} else if ($scope.libranza.termsAndConditions != 1) {
+		}else if($scope.libranza.termsAndConditions != 1){
 			getElAng.setCustomValidity("Please indicate that you accept the Terms and Conditions");
-		} else {
+		}else{
 			$http({
-				method: 'POST',
-				url: '/libranza',
-				data: $scope.libranza
+			  method: 'POST',
+			  url: '/libranza',
+			  data: $scope.libranza
 			}).then(function successCallback(response) {
-				$scope.idLead = response.data;
-				$location.url("solicitud/" + $scope.idLead);
+				$scope.idLead=response.data;
+				$location.url("solicitud/"+$scope.idLead);
 
-			}, function errorCallback(response) {});
+			}, function errorCallback(response) {
+			});
 		}
 	};
 
 	var formData = new FormData();
 	var formDataDocument = new FormData();
-	var idLeadURL = $routeParams.idLeadParam;
+	var idLeadURL= $routeParams.idLeadParam;
 
 	$scope.errors = [];
 	$scope.files = [];
 	$scope.errorsDocument = [];
 	$scope.filesDocument = [];
 
-	$scope.disableFileButton = false;
-	$scope.disableDocumentButton = false;
+	$scope.disableFileButton=false;
+	$scope.disableDocumentButton=false;
 
-	$scope.successButton = false;
-	$scope.hideButton = true;
-	$scope.successButtonDocument = false;
-	$scope.hideButtonDocument = true;
+	$scope.successButton=false;
+	$scope.hideButton=true;
+	$scope.successButtonDocument=false;
+	$scope.hideButtonDocument=true;
 
 	$scope.uploadDocument = function (element) {
 		var request = {
@@ -792,9 +787,9 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 				$scope.errorsDocument = [];
 				var fileElement = angular.element(element);
 				fileElement.value = '';
-				$scope.successButtonDocument = true;
-				$scope.disableDocumentButton = true;
-				$scope.hideButtonDocument = false;
+				$scope.successButtonDocument=true;
+				$scope.disableDocumentButton=true;
+				$scope.hideButtonDocument=false;
 				//alert("La imagen ha sido cargada exitosamente");
 				//console.log(e);
 			}, function error(e) {
@@ -821,9 +816,9 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 				$scope.errors = [];
 				var fileElement = angular.element(element);
 				fileElement.value = '';
-				$scope.successButton = true;
-				$scope.disableFileButton = true;
-				$scope.hideButton = false;
+				$scope.successButton=true;
+				$scope.disableFileButton=true;
+				$scope.hideButton=false;
 				//alert("La imagen ha sido cargada exitosamente");
 				//console.log(e);
 			}, function error(e) {
@@ -834,40 +829,39 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 	};
 
 	$scope.setTheDocuments = function ($files) {
-		angular.forEach($files, function (value, key) {
+        angular.forEach($files, function (value, key) {
 			formDataDocument.append('document_file', value);
 		});
-		formDataDocument.append('id_simulation', $scope.leadResumen.idLiquidator);
+		formDataDocument.append('id_simulation',$scope.leadResumen.idLiquidator);
 		console.log(formData.get('document_file'));
 	};
 
 	$scope.setTheFiles = function ($files) {
-		angular.forEach($files, function (value, key) {
+        angular.forEach($files, function (value, key) {
 			formData.append('image_file', value);
 		});
-		formData.append('id_simulation', $scope.leadResumen.idLiquidator);
+		formData.append('id_simulation',$scope.leadResumen.idLiquidator);
 		console.log(formData.get('id_simulation'));
 	};
 
-	$scope.dialogContent = [{
-			title: 'Compra de Cartera',
-			content: 'Con el crédito de Libre inversión puedes financiar lo que quieres, viajes, electrodomésticos, motocicletas, o simplemente ir de compras, simula tu crédito de libranza,conoce el plazo y monto que más se ajuste a tus necesidades y adquiere todo lo que has soñado. <br><strong>¡Pide tu crédito ahora!</strong>'
+	$scope.dialogContent=[
+		{
+			title:'Compra de Cartera',content:'Con el crédito de Libre inversión puedes financiar lo que quieres, viajes, electrodomésticos, motocicletas, o simplemente ir de compras, simula tu crédito de libranza,conoce el plazo y monto que más se ajuste a tus necesidades y adquiere todo lo que has soñado. <br><strong>¡Pide tu crédito ahora!</strong>'
 		},
 		{
-			title: 'Crédito de libre Inversión',
-			content: 'Si lo que necesitas es mejorar tu flujo de caja, con tu crédito de libranza podrás unificar todas tus deudas con una cuota fija mensual y amplios plazos que se ajustan a tu necesidad. <br><strong>¡Alivia tus finanzas ya!</strong>'
+			title:'Crédito de libre Inversión',content:'Si lo que necesitas es mejorar tu flujo de caja, con tu crédito de libranza podrás unificar todas tus deudas con una cuota fija mensual y amplios plazos que se ajustan a tu necesidad. <br><strong>¡Alivia tus finanzas ya!</strong>'
 		}
 	];
 
 	$scope.status = '  ';
 	$scope.customFullscreen = false;
 
-	$scope.showAlert = function (ev, title, content) {
+	$scope.showAlert = function(ev,title,content) {
 		// Appending dialog to document.body to cover sidenav in docs app
 		// Modal dialogs should fully cover application
 		// to prevent interaction outside of dialog
 		$mdDialog.show(
-			$mdDialog.alert()
+		  $mdDialog.alert()
 			.parent(angular.element(document.querySelector('#popupContainer')))
 			.clickOutsideToClose(true)
 			.title(title)
@@ -877,80 +871,78 @@ app.controller("libranzaLiquidadorCtrl", function ($scope, $http, $mdDialog, $ro
 			.openFrom('#left')
 			.targetEvent(ev)
 		);
-	};
+	  };
 
 
 
-	$scope.showAdvanced = function (ev) {
+	  $scope.showAdvanced = function(ev) {
 		$mdDialog.show({
-				controller: DialogController,
-				templateUrl: '/libranza-principal/templateDialog',
-				parent: angular.element(document.body),
-				targetEvent: ev,
-				clickOutsideToClose: true,
-				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-			})
-			.then(function (answer) {
-				$scope.status = 'You said the information was "' + answer + '".';
-			}, function () {
-				$scope.status = 'You cancelled the dialog.';
-			});
-	};
+		  controller: DialogController,
+		  templateUrl: '/libranza-principal/templateDialog',
+		  parent: angular.element(document.body),
+		  targetEvent: ev,
+		  clickOutsideToClose:true,
+		  fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		})
+		.then(function(answer) {
+		  $scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+		  $scope.status = 'You cancelled the dialog.';
+		});
+	  };
 
-	$scope.showAdvancedLI = function (ev, flag) {
+	  $scope.showAdvancedLI = function(ev,flag) {
 
 		$mdDialog.show({
-				controller: DialogController,
-				templateUrl: '/libranza-principal/templateDialogLI',
-				parent: angular.element(document.body),
-				targetEvent: ev,
-				clickOutsideToClose: true,
-				fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-			})
-			.then(function (answer) {
-				$scope.status = 'You said the information was "' + answer + '".';
-			}, function () {
-				$scope.status = 'You cancelled the dialog.';
-			});
-	};
+		  controller: DialogController,
+		  templateUrl: '/libranza-principal/templateDialogLI',
+		  parent: angular.element(document.body),
+		  targetEvent: ev,
+		  clickOutsideToClose:true,
+		  fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		})
+		.then(function(answer) {
+		  $scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+		  $scope.status = 'You cancelled the dialog.';
+		});
+	  };
 
 
-	function DialogController($scope, $mdDialog) {
-		$scope.hide = function () {
-			$mdDialog.hide();
+	  function DialogController($scope, $mdDialog) {
+		$scope.hide = function() {
+		  $mdDialog.hide();
 		};
 
-		$scope.lineTemplate = false;
+		$scope.lineTemplate=false;
 
-		$scope.cancel = function () {
-			$mdDialog.cancel();
+		$scope.cancel = function() {
+		  $mdDialog.cancel();
 		};
 
-		$scope.answer = function (answer) {
-			$mdDialog.hide(answer);
+		$scope.answer = function(answer) {
+		  $mdDialog.hide(answer);
 		};
-	}
+	  }
 
-	if (idLeadURL == undefined) {
-		$scope.getData();
-	} else {
-		$scope.getLeadInfo();
-	}
+		if(idLeadURL==undefined){
+			$scope.getData();
+		}else{
+			$scope.getLeadInfo();
+		}
 
 });
 
 
 app.directive('ngFiles', ['$parse', function ($parse) {
 
-	function file_links(scope, element, attrs) {
-		var onChange = $parse(attrs.ngFiles);
-		element.on('change', function (event) {
-			onChange(scope, {
-				$files: event.target.files
-			});
-		});
-	}
-	return {
-		link: file_links
-	}
+    function file_links(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, {$files: event.target.files});
+        });
+    }
+    return {
+        link: file_links
+    }
 }]);

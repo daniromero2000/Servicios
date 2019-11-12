@@ -10,5 +10,12 @@ class MotosImage extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['image1', 'image2', 'image3','image4','image5','id_moto'];
+    protected $fillable = [
+        'image1',
+        'image2',
+        'image3',
+        'image4',
+        'image5',
+        'id_moto'
+    ];
 }

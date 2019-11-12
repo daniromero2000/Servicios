@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConsultaFR extends Model
 {
-    public $table='fosyga_consulta_fr';
+    public $table = 'fosyga_consulta_fr';
 
-    public $connection='oportudata';
+    public $connection = 'oportudata';
 
-    protected $primaryKey= 'idConsulta';
+    protected $primaryKey = 'idConsulta';
 
-    protected $fillable=['idConsulta', 'cedula'];
+    protected $fillable = [
+        'idConsulta',
+        'cedula'
+    ];
+
     public $timestamps = false;
-
 }

@@ -10,6 +10,9 @@ class PagaduriaProfile extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['id','idPagaduria','idProfile'];
-
+    protected $fillable = [
+        'id',
+        'idPagaduria',
+        'idProfile'
+    ];
 }

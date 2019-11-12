@@ -48,7 +48,7 @@
 							<label for="city class="control-label">Ciudad</label>
 							<select name="city" id="city" class="form-control" >
 								@foreach($cities as $city)
-									<option value="{{ $city['value'] }}">{{ $city['label'] }}</option>
+									<option value="{{ $city['CIUDAD'] }}">{{ $city['CIUDAD'] }}</option>
 								@endforeach
 							</select>
 						</div>

@@ -6,7 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    
-    public $table='paises';
-    
+    public $table = 'paises';
 }

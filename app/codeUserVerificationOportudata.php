@@ -8,11 +8,15 @@ class codeUserVerificationOportudata extends Model
 {
     protected $table = 'code_user_verification';
 
-    public $connection='oportudata';
+    public $connection = 'oportudata';
 
-    protected $primaryKey= 'identificador';
+    protected $primaryKey = 'identificador';
 
     public $timestamps = false;
 
-    protected $fillable = ['token', 'identification', 'created_at'];
+    protected $fillable = [
+        'token',
+        'identification',
+        'created_at'
+    ];
 }

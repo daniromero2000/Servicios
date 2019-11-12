@@ -6,13 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstadoCedula extends Model
 {
-    public $table='fosyga_estadoCedula';
+    public $table = 'fosyga_estadoCedula';
 
-    public $connection='oportudata';
+    public $connection = 'oportudata';
 
-    protected $primaryKey= 'idEstadoCedula';
+    protected $primaryKey = 'idEstadoCedula';
 
-    protected $fillable=['idEstadoCedula', 'idConsulta', 'cedula', 'tipoDocumento', 'pais', 'primerNombre', 'tipoNombre', 'fechaExpedicion', 'lugarExpedicion', 'estado', 'resolucion', 'fechaResolucion', 'fechaConsulta', 'fuenteFallo'];
+    protected $fillable = [
+        'idEstadoCedula',
+        'idConsulta',
+        'cedula',
+        'tipoDocumento',
+        'pais',
+        'primerNombre',
+        'tipoNombre',
+        'fechaExpedicion',
+        'lugarExpedicion',
+        'estado',
+        'resolucion',
+        'fechaResolucion',
+        'fechaConsulta',
+        'fuenteFallo'
+    ];
+
     public $timestamps = false;
-
 }

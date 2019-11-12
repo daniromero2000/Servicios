@@ -10,5 +10,9 @@ class Modules extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'icon', 'route'];
+    protected $fillable = [
+        'name',
+        'icon',
+        'route'
+    ];
 }

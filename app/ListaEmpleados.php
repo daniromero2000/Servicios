@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ListaEmpleados extends Model
 {
-    public $table='LISTA_EMPLEADOS';
+    public $table = 'LISTA_EMPLEADOS';
 
-    public $connection='oportudata';
+    public $connection = 'oportudata';
 
-    protected $primaryKey= 'identificador';
+    protected $primaryKey = 'identificador';
 
     public $timestamps = false;
 
-    protected $fillable=['identificador','num_documento', 'nombre', 'estado'];
+    protected $fillable = [
+        'identificador',
+        'num_documento',
+        'nombre',
+        'estado'
+    ];
 }

@@ -8,5 +8,11 @@ class LiquidatorV2 extends Model
 {
     protected $table = 'liquidator';
 
-    protected $fillable = ['creditLine', 'pagaduria', 'age', 'customerType', 'salary'];
+    protected $fillable = [
+        'creditLine',
+        'pagaduria',
+        'age',
+        'customerType',
+        'salary'
+    ];
 }

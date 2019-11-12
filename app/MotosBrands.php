@@ -10,5 +10,8 @@ class MotosBrands extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['id','brand'];
+    protected $fillable = [
+        'id',
+        'brand'
+    ];
 }

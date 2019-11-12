@@ -217,7 +217,7 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     **Email: desarrollo1@lagobo.com
     **Fecha: 6/12/2018
 **/
-    
+
     /*Community Leads Resource*/
 
     Route::resource('communityleads','Admin\CommunityController');
@@ -265,14 +265,14 @@ Route::group(['prefix'=>'/fabricaLeads/','middleware' => 'auth'],function(){
     });
 
     Route::resource('customers','Assessor\ClientesController');
-    
+
     Route::get('/solicitudesAsessores',function(){
         return view('assessors.customers.index');
     })->name('solicitudes.clientes');
 
     Route::group(['prefix'=>'/solicitudesAsessores/'],function(){
         //Route::get('/dataCustomer','Assessor\ClientesController@index');
-      
+
         Route::get('/clientes',function(){
             return view('assessors.customers.customers');
         });
@@ -328,17 +328,17 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         });
     });
 
-    Route::group(['prefix'=>'/simulador/'],function(){ 
+    Route::group(['prefix'=>'/simulador/'],function(){
 
-        Route::get('/','Admin\SimulatorController@index'); 
-    
+        Route::get('/','Admin\SimulatorController@index');
+
         Route::get('/pagaduria',function(){
             return view('simulator.pagaduria.pagaduria');
         });
         Route::get('/parametros', function(){
             return view('simulator.parameters.parameters');
         });
-       
+
     });
 
 
@@ -384,7 +384,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
             return view('leads.leads');
         });
     });
-    
+
 
     // Administrador de politicas de credito
     Route::group(['prefix' => '/AdminCreditPolicy'], function(){
@@ -427,7 +427,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get("/",function(){
             return view('faqs.indexAngular');
         })->name("preguntasFrecuentes");
-    
+
         Route::get('/admin', function(){
             return view('faqs.admin');
         });
@@ -439,7 +439,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         Route::get("/",function(){
             return view('profilesAdmin.index');
         });
-    
+
         Route::get('/admin', function(){
             return view('profilesAdmin.admin');
         });
@@ -484,6 +484,7 @@ Route::group(['prefix'=>'/Administrator', 'middleware' => 'auth'], function(){
         });
     });
 });
+
 Route::resource('listaEmpleados', 'Admin\ListaEmpleadosController');
 
 Route::resource('libranzaV2','Admin\LibranzaV2Controller');
@@ -500,7 +501,7 @@ Route::group(['prefix'=>'/campaigns'],function(){
     Route::get('/experiencia-auteco', function(){
         return view('campaignsMarketing.campaignAuteco1');
     });
-    
+
     Route::get('/renovacion-auteco', function(){
         return view('campaignsMarketing.campaignAuteco2');
     });
