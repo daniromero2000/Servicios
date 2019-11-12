@@ -7,7 +7,7 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
-use App\Entities\Leads\Repositories\leadRepository;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
