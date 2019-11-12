@@ -41,7 +41,7 @@ class LeadsController extends Controller
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
-            'initFrom' => $request->get('initFrom')
+            'initFrom' => $request->get('initFrom'),
             'initFromAnt' => $request->get('initFromAnt')
         ]);
 
