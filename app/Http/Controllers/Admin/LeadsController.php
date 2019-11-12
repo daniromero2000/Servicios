@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-
 class LeadsController extends Controller
 {
     private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
@@ -112,7 +111,7 @@ class LeadsController extends Controller
         $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
         $resp = DB::connection('oportudata')->select($query);
-        $error = [];
+
         foreach ($resp as $key => $lead) {
 
             if ($lead->ASESOR_DIG != '') {
@@ -122,9 +121,9 @@ class LeadsController extends Controller
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id = $respChannel[0]->id;
-            $resp[$key]->state = $respChannel[0]->state;
-            $leadsDigital[] = $resp[$key];
+            $resp[$key]->id      = $respChannel[0]->id;
+            $resp[$key]->state   = $respChannel[0]->state;
+            $leadsDigital[]      = $resp[$key];
         }
 
         return [
@@ -224,7 +223,6 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
-
             if ($lead->ASESOR_DIG != '') {
                 $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
                 $resp[$key]->nameAsesor = $respAsesorDigital->name;
