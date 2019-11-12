@@ -109,7 +109,7 @@ class LeadsController extends Controller
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
-        $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
+        $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
         $resp = DB::connection('oportudata')->select($query);
         $error = [];
@@ -148,7 +148,7 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
         }
 
-        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
+        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTRAnt']);
 
         return [
             'leadsTRAnt'      => DB::connection('oportudata')->select($queryTradicional),
