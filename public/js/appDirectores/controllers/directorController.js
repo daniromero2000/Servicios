@@ -24,10 +24,10 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 			label: 'Pendiente',
 			value: 'PENDIENTE'
 		},
-			{
-				label: 'Rechazado',
-				value: 'RECHAZADO'
-			},
+		{
+			label: 'Rechazado',
+			value: 'RECHAZADO'
+		},
 		{
 			label: 'En Estudio',
 			value: 'EN ESTUDIO'
@@ -72,10 +72,8 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 				$scope.q.channel,
 
 		}).then(function successCallback(response) {
-			console.log(response.data);
 			$scope.codeAsesor = response.data.codeAsesor;
 			$scope.totalLeads = response.data.totalLeads;
-
 			if (response.data.leads != false) {
 				$scope.q.initFrom += response.data.leads.length;
 				angular.forEach(response.data.leads, function (value, key) {
@@ -83,13 +81,8 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 				});
 				$scope.cargando = false;
 			}
-
-
 			hideLoader();
-		}, function errorCallback(response) {
-
-			console.log(response);
-		});
+		}, function errorCallback(response) {});
 	};
 
 	$scope.searchLeads = function () {
@@ -106,11 +99,6 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 			'qfechaInicial': '',
 			'qfechaFinal': '',
 			'initFrom': 0,
-			'initFromCM': 0,
-			'initFromRL': 0,
-			'initFromGen': 0,
-			'initFromTR': 0,
-			'initFromAL': 0,
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',
