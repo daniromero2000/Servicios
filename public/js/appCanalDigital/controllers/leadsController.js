@@ -16,10 +16,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'qfechaFinalTR': '',
 		'qTRAnt': '',
 		'initFrom': 0,
+		'initFromAnt': 0,
 		'initFromCM': 0,
 		'initFromRL': 0,
 		'initFromGen': 0,
 		'initFromTR': 0,
+		'initFromTRAnt': 0,
 		'initFromAL': 0,
 		'city': '',
 		'fecha_ini': '',
@@ -30,24 +32,26 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	};
 
 
-	$scope.codeAsesor         = "";
-	$scope.tabs               = 1;
-	$scope.totalLeads         = 0;
-	$scope.totalLeadsAnt      = 0;
+	$scope.codeAsesor = "";
+	$scope.tabs = 1;
+	$scope.totalLeads = 0;
+	$scope.totalLeadsAnt = 0;
 	$scope.totalLeadsRejected = 0;
-	$scope.totalLeadsCM       = 0;
-	$scope.totalLeadsGen      = 0;
-	$scope.totalLeadsTR       = 0;
-	$scope.totalLeadsTRAnt    = 0;
-	$scope.cargando           = true;
-	$scope.cargandoCM         = true;
-	$scope.cargandoRL         = true;
-	$scope.cargandoGen        = true;
-	$scope.cargandoTR         = true;
-	$scope.filtros             = false;
-	$scope.viewAddComent      = false;
-	$scope.lead               = {};
-	$scope.idLead             = '';
+	$scope.totalLeadsCM = 0;
+	$scope.totalLeadsGen = 0;
+	$scope.totalLeadsTR = 0;
+	$scope.totalLeadsTRAnt = 0;
+	$scope.cargando = true;
+	$scope.cargandoAnt = true;
+	$scope.cargandoCM = true;
+	$scope.cargandoRL = true;
+	$scope.cargandoGen = true;
+	$scope.cargandoTR = true;
+	$scope.cargandoTRAnt = true;
+	$scope.filtros = false;
+	$scope.viewAddComent = false;
+	$scope.lead = {};
+	$scope.idLead = '';
 
 	$scope.comment = {
 		comment: '',
@@ -55,14 +59,14 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		state: 0
 	};
 
-	$scope.comments      = [];
-	$scope.leads         = [];
-	$scope.leadsAnt      = [];
-	$scope.leadsCM       = [];
-	$scope.leadsGen      = [];
+	$scope.comments = [];
+	$scope.leads = [];
+	$scope.leadsAnt = [];
+	$scope.leadsCM = [];
+	$scope.leadsGen = [];
 	$scope.leadsRejected = [];
-	$scope.leadsTR       = [];
-	$scope.leadsTRAnt    = [];
+	$scope.leadsTR = [];
+	$scope.leadsTRAnt = [];
 
 	$scope.cities = [{
 			label: 'ARMENIA',
@@ -301,26 +305,28 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 	$scope.getLeads = function () {
 		showLoader();
-		$scope.cargando    = true;
-		$scope.cargandoCM  = true;
-		$scope.cargandoRL  = true;
+		$scope.cargando = true;
+		$scope.cargandoAnt = true;
+		$scope.cargandoCM = true;
+		$scope.cargandoRL = true;
 		$scope.cargandoGen = true;
-		$scope.cargandoTR  = true;
+		$scope.cargandoTR = true;
+		$scope.cargandoTRAnt = true;
 
 		$http({
 			method: 'GET',
-			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados + '&qfechaInicialTR=' + $scope.q.qfechaInicialTR + '&qfechaFinalTR=' + $scope.q.qfechaFinalTR + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qTRAnt=' + $scope.q.qTRAnt + '&initFrom=' + $scope.q.initFrom + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
+			url: '/leads?q=' + $scope.q.q + '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados + '&qcityAprobados=' + $scope.q.qcityAprobados + '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados + '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados + '&qfechaInicialTR=' + $scope.q.qfechaInicialTR + '&qfechaFinalTR=' + $scope.q.qfechaFinalTR + '&qCM=' + $scope.q.qCM + '&qRL=' + $scope.q.qRL + '&qGen=' + $scope.q.qGen + '&qTR=' + $scope.q.qTR + '&qTRAnt=' + $scope.q.qTRAnt + '&initFrom=' + $scope.q.initFrom + '&initFromAnt=' + $scope.q.initFromAnt + '&initFromCM=' + $scope.q.initFromCM + '&initFromRL=' + $scope.q.initFromRL + '&initFromGen=' + $scope.q.initFromGen + '&initFromTR=' + $scope.q.initFromTR + '&initFromTRAnt=' + $scope.q.initFromTRAnt + '&initFromAL=' + $scope.q.initFromAL + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&channel' + $scope.q.channel,
 		}).then(function successCallback(response) {
 			console.log(response.data);
 
-			$scope.codeAsesor         = response.data.codeAsesor;
-			$scope.totalLeads         = response.data.totalLeads;
-			$scope.totalLeadsAnt      = response.data.totalLeadsAnt;
+			$scope.codeAsesor = response.data.codeAsesor;
+			$scope.totalLeads = response.data.totalLeads;
+			$scope.totalLeadsAnt = response.data.totalLeadsAnt;
 			$scope.totalLeadsRejected = response.data.totalLeadsRejected;
-			$scope.totalLeadsCM       = response.data.totalLeadsCM;
-			$scope.totalLeadsGen      = response.data.totalLeadsGen;
-			$scope.totalLeadsTR       = response.data.totalLeadsTR;
-			$scope.totalLeadsTRAnt    = response.data.totalLeadsTRAnt;
+			$scope.totalLeadsCM = response.data.totalLeadsCM;
+			$scope.totalLeadsGen = response.data.totalLeadsGen;
+			$scope.totalLeadsTR = response.data.totalLeadsTR;
+			$scope.totalLeadsTRAnt = response.data.totalLeadsTRAnt;
 
 
 			if (response.data.leadsDigital != false) {
@@ -333,11 +339,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 
 			if (response.data.leadsDigitalAnt != false) {
-				$scope.q.initFrom += response.data.leadsDigitalAnt.length;
+				$scope.q.initFromAnt += response.data.leadsDigitalAnt.length;
 				angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
 					$scope.leadsAnt.push(value);
 				});
-				$scope.cargando = false;
+				$scope.cargandoAnt = false;
 			}
 
 
@@ -350,11 +356,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			}
 
 			if (response.data.leadsTRAnt != false) {
-				$scope.q.initFromTR += response.data.leadsTRAnt.length;
+				$scope.q.initFromTRAnt += response.data.leadsTRAnt.length;
 				angular.forEach(response.data.leadsTRAnt, function (value, key) {
 					$scope.leadsTRAnt.push(value);
 				});
-				$scope.cargandoTR = false;
+				$scope.cargandoTRAnt = false;
 			}
 
 
@@ -382,17 +388,19 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	};
 
 	$scope.searchLeads = function () {
-		$scope.q.initFrom    = 0;
-		$scope.q.initFromCM  = 0;
+		$scope.q.initFrom = 0;
+		$scope.q.initFromAnt = 0;
+		$scope.q.initFromCM = 0;
 		$scope.q.initFromGen = 0;
 		1
-		$scope.q.initFromTR  = 0;
-		$scope.leads         = [];
-		$scope.leadsAnt      = [];
-		$scope.leadsCM       = [];
-		$scope.leadsTR       = [];
-		$scope.leadsTRAnt    = [];
-		$scope.leadsGen      = [];
+		$scope.q.initFromTR = 0;
+		$scope.q.initFromTRAnt = 0;
+		$scope.leads = [];
+		$scope.leadsAnt = [];
+		$scope.leadsCM = [];
+		$scope.leadsTR = [];
+		$scope.leadsTRAnt = [];
+		$scope.leadsGen = [];
 		$scope.leadsRejected = [];
 		$scope.getLeads();
 	};
@@ -413,10 +421,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'qfechaFinalTR': '',
 			'qTRAnt': '',
 			'initFrom': 0,
+			'initFromAnt': 0,
 			'initFromCM': 0,
 			'initFromRL': 0,
 			'initFromGen': 0,
 			'initFromTR': 0,
+			'initFromTRAnt': 0,
 			'initFromAL': 0,
 			'city': '',
 			'fecha_ini': '',

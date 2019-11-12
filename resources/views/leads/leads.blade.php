@@ -299,7 +299,7 @@
             </table>
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar Más</button>
+                    <button class="btn btn-secondary" ng-disabled="cargandoAnt" ng-click="getLeads()">Cargar Más</button>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@
             </table>
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-secondary" ng-disabled="cargandoTR" ng-click="getLeads()">Cargar Más</button>
+                    <button class="btn btn-secondary" ng-disabled="cargandoTRAnt" ng-click="getLeads()">Cargar Más</button>
                 </div>
             </div>
         </div>

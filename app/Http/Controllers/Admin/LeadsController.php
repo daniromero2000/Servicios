@@ -7,12 +7,11 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
-use App\Entities\Leads\Repositories\leadRepository;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-
 
 class LeadsController extends Controller
 {
@@ -41,12 +40,12 @@ class LeadsController extends Controller
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
-            'initFrom' => $request->get('initFrom')
+            'initFromAnt' => $request->get('initFromAnt')
         ]);
 
         $getLeadsTRAnt = $this->getLeadsTradicionalAnt([
             'qTRAnt'     => $request->get('qTRAnt'),
-            'initFromTR' => $request->get('initFromTR')
+            'initFromTRAnt'      => $request->get('initFromTRAnt'),
         ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
@@ -109,10 +108,10 @@ class LeadsController extends Controller
         }
 
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
-        $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
+        $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
         $resp = DB::connection('oportudata')->select($query);
-        $error = [];
+
         foreach ($resp as $key => $lead) {
 
             if ($lead->ASESOR_DIG != '') {
@@ -122,9 +121,9 @@ class LeadsController extends Controller
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
             $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id = $respChannel[0]->id;
-            $resp[$key]->state = $respChannel[0]->state;
-            $leadsDigital[] = $resp[$key];
+            $resp[$key]->id      = $respChannel[0]->id;
+            $resp[$key]->state   = $respChannel[0]->state;
+            $leadsDigital[]      = $resp[$key];
         }
 
         return [
@@ -148,7 +147,7 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
         }
 
-        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
+        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTRAnt']);
 
         return [
             'leadsTRAnt'      => DB::connection('oportudata')->select($queryTradicional),
@@ -224,7 +223,6 @@ class LeadsController extends Controller
         $resp = DB::connection('oportudata')->select($query);
 
         foreach ($resp as $key => $lead) {
-
             if ($lead->ASESOR_DIG != '') {
                 $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
                 $resp[$key]->nameAsesor = $respAsesorDigital->name;
