@@ -560,6 +560,7 @@
                         <th scope="col">Celular</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Servicio</th>
+                        <th scope="col">Producto</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -578,6 +579,7 @@
                         <td ng-if="leadCM.nearbyCity == null">@{{ leadCM.city }}</td>
                         <td ng-if="leadCM.nearbyCity != null">@{{ leadCM.city + " / " + leadCM.nearbyCity}}</td>
                         <td>@{{ leadCM.typeService }}</td>
+                        <td>@{{ leadCM.typeProduct }}</td>
                         <td>@{{ leadCM.created_at }}</td>
                         <td>
                             <i class="fas fa-comment cursor"
