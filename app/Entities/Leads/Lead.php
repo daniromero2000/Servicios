@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
-    protected $table = 'leads';
-
     protected $fillable = [
         'name',
         'lastName',
@@ -39,6 +37,6 @@ class Lead extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'idLead');
     }
 }

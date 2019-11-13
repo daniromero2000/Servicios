@@ -339,6 +339,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 				$scope.state        = state;
 			}
 		}, function errorCallback(response) {
+			console.log(response);
 
 		});
 	};

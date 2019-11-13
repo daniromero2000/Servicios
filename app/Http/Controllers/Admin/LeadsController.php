@@ -384,15 +384,7 @@ class LeadsController extends Controller
 
     public function getComentsLeads($idLead)
     {
-        $query = sprintf("SELECT comments.`comment`, comments.`created_at`, users.`name` FROM `comments`
-                LEFT JOIN `users` ON comments.`idLogin` = users.`id`
-                WHERE `idLead` = %s
-                ORDER BY comments.`id` DESC", $idLead);
-
-        $lead = $this->leadInterface->findLeadById($idLead);
-        $lead->comments;
-
-        return DB::select($query);
+        return  $this->leadInterface->findLeadById($idLead)->comments;
     }
 
     public function deniedRequest($idLead, $comment)

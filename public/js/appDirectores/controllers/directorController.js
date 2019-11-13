@@ -16,9 +16,9 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 
 	$scope.codeAsesor = "";
 	$scope.totalLeads = 0;
-	$scope.cargando = true;
-	$scope.filtros = false;
-	$scope.leads = [];
+	$scope.cargando   = true;
+	$scope.filtros    = false;
+	$scope.leads      = [];
 
 	$scope.typeStatuses = [{
 			label: 'Pendiente',
@@ -87,7 +87,7 @@ app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBoo
 
 	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
-		$scope.leads = [];
+		$scope.leads      = [];
 		$scope.getLeads();
 	};
 
