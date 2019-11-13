@@ -366,6 +366,7 @@ class LeadsController extends Controller
             $idCampaign = $idCampaign->id;
             $request['campaign'] = $idCampaign;
         }
+
         $leadRerpo->updateLead($request->input());
 
         return response()->json([true]);
@@ -387,6 +388,9 @@ class LeadsController extends Controller
                 LEFT JOIN `users` ON comments.`idLogin` = users.`id`
                 WHERE `idLead` = %s
                 ORDER BY comments.`id` DESC", $idLead);
+
+        $lead = $this->leadInterface->findLeadById($idLead);
+        $lead->comments;
 
         return DB::select($query);
     }

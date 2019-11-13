@@ -2,6 +2,7 @@
 
 namespace App\Entities\Leads;
 
+use App\Entities\Comments\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
@@ -35,4 +36,9 @@ class Lead extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
