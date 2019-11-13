@@ -21,8 +21,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		'initFromRL': 0,
 		'initFromGen': 0,
 		'initFromTR': 0,
-		'initFromTRAnt': 0,
-		'initFromAL': 0,
+			'initFromAL': 0,
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
@@ -47,7 +46,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.cargandoRL         = true;
 	$scope.cargandoGen        = true;
 	$scope.cargandoTR         = true;
-	$scope.cargandoTRAnt      = true;
 	$scope.filtros             = false;
 	$scope.viewAddComent      = false;
 	$scope.lead               = {};
@@ -66,7 +64,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 	$scope.leadsGen      = [];
 	$scope.leadsRejected = [];
 	$scope.leadsTR       = [];
-	$scope.leadsTRAnt    = [];
+
 
 	$scope.typeServices = [{
 			label: 'Oportuya',
@@ -130,7 +128,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.cargandoRL    = true;
 		$scope.cargandoGen   = true;
 		$scope.cargandoTR    = true;
-		$scope.cargandoTRAnt = true;
+
 
 		$http({
 			method: 'GET',
@@ -145,15 +143,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'&qRL=' + $scope.q.qRL +
 			'&qGen=' + $scope.q.qGen +
 			'&qTR=' + $scope.q.qTR +
-			'&qTRAnt=' + $scope.q.qTRAnt +
-			'&initFrom=' + $scope.q.initFrom +
+						'&initFrom=' + $scope.q.initFrom +
 			'&initFromAnt=' + $scope.q.initFromAnt +
 			'&initFromCM=' + $scope.q.initFromCM +
 			'&initFromRL=' + $scope.q.initFromRL +
 			'&initFromGen=' + $scope.q.initFromGen +
 			'&initFromTR=' + $scope.q.initFromTR +
-			'&initFromTRAnt=' + $scope.q.initFromTRAnt +
-			'&initFromAL=' + $scope.q.initFromAL +
+				'&initFromAL=' + $scope.q.initFromAL +
 			'&city=' + $scope.q.city +
 			'&fecha_ini=' + $scope.q.fecha_ini +
 			'&fecha_fin=' + $scope.q.fecha_fin +
@@ -171,7 +167,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			$scope.totalLeadsCM       = response.data.totalLeadsCM;
 			$scope.totalLeadsGen      = response.data.totalLeadsGen;
 			$scope.totalLeadsTR       = response.data.totalLeadsTR;
-			$scope.totalLeadsTRAnt    = response.data.totalLeadsTRAnt;
 
 
 			if (response.data.leadsDigital != false) {
@@ -196,14 +191,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 					$scope.leadsTR.push(value);
 				});
 				$scope.cargandoTR = false;
-			}
-
-			if (response.data.leadsTRAnt != false) {
-				$scope.q.initFromTRAnt += response.data.leadsTRAnt.length;
-				angular.forEach(response.data.leadsTRAnt, function (value, key) {
-					$scope.leadsTRAnt.push(value);
-				});
-				$scope.cargandoTRAnt = false;
 			}
 
 			if (response.data.leadsGen != false) {
@@ -240,7 +227,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 		$scope.leadsAnt        = [];
 		$scope.leadsCM         = [];
 		$scope.leadsTR         = [];
-		$scope.leadsTRAnt      = [];
 		$scope.leadsGen        = [];
 		$scope.leadsRejected   = [];
 		$scope.getLeads();
@@ -267,8 +253,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 			'initFromRL': 0,
 			'initFromGen': 0,
 			'initFromTR': 0,
-			'initFromTRAnt': 0,
-			'initFromAL': 0,
+					'initFromAL': 0,
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',

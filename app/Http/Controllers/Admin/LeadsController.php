@@ -43,10 +43,10 @@ class LeadsController extends Controller
             'initFromAnt' => $request->get('initFromAnt')
         ]);
 
-        $getLeadsTRAnt = $this->getLeadsTradicionalAnt([
-            'qTRAnt'     => $request->get('qTRAnt'),
-            'initFromTRAnt'      => $request->get('initFromTRAnt'),
-        ]);
+        // $getLeadsTRAnt = $this->getLeadsTradicionalAnt([
+        //     'qTRAnt'     => $request->get('qTRAnt'),
+        //     'initFromTRAnt'      => $request->get('initFromTRAnt'),
+        // ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
             'qTR'             => $request->get('qTR'),
@@ -85,9 +85,9 @@ class LeadsController extends Controller
             'leadsGen'        => $getLeadsGen['leadsGen'],
             'totalLeadsGen'   => $getLeadsGen['totalLeadsGen'],
             'leadsTR'         => $getLeadsTR['leadsTR'],
-            'leadsTRAnt'      => $getLeadsTRAnt['leadsTRAnt'],
+            // 'leadsTRAnt'      => $getLeadsTRAnt['leadsTRAnt'],
             'totalLeadsTR'    => $getLeadsTR['totalLeadsTR'],
-            'totalLeadsTRAnt' => $getLeadsTRAnt['totalLeadsTRAnt']
+            // 'totalLeadsTRAnt' => $getLeadsTRAnt['totalLeadsTRAnt']
         ]);
     }
 
@@ -132,28 +132,28 @@ class LeadsController extends Controller
         ];
     }
 
-    private function getLeadsTradicionalAnt($request)
-    {
-        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
-        FROM `CLIENTE_FAB` as cf, `cifin_score` as score
-        WHERE `ESTADO` = 'TRADICIONAL'
-        AND cf.`CIUD_UBI` != 'BOGOTÁ'
-                AND score.`scocedula` = cf.`CEDULA`
-                AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
+    // private function getLeadsTradicionalAnt($request)
+    // {
+    //     $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`
+    //     FROM `CLIENTE_FAB` as cf, `cifin_score` as score
+    //     WHERE `ESTADO` = 'TRADICIONAL'
+    //     AND cf.`CIUD_UBI` != 'BOGOTÁ'
+    //             AND score.`scocedula` = cf.`CEDULA`
+    //             AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )";
 
-        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
+    //     $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
 
-        if ($request['qTRAnt'] != '') {
-            $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
-        }
+    //     if ($request['qTRAnt'] != '') {
+    //         $queryTradicional .= sprintf(" AND(`NOMBRES` LIKE '%s' OR `CEDULA` LIKE '%s') ", '%' . $request['qTRAnt'] . '%', '%' . $request['qTRAnt'] . '%');
+    //     }
 
-        $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTRAnt']);
+    //     $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTRAnt']);
 
-        return [
-            'leadsTRAnt'      => DB::connection('oportudata')->select($queryTradicional),
-            'totalLeadsTRAnt' => count($respTotalLeadsTradicional)
-        ];
-    }
+    //     return [
+    //         'leadsTRAnt'      => DB::connection('oportudata')->select($queryTradicional),
+    //         'totalLeadsTRAnt' => count($respTotalLeadsTradicional)
+    //     ];
+    // }
 
 
     private function getGenLeads($request)
