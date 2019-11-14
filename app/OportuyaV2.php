@@ -104,6 +104,7 @@ class OportuyaV2 extends Model
         'MEDIO_PAGO',
         'TRAT_DATOS',
         'BANCOP',
+        'ACT_ECO',
         'CAMARAC',
         'ID_CIUD_EXP',
         'ID_CIUD_NAC',
