@@ -16,9 +16,6 @@ class SubsidiaryController extends Controller
     $this->middleware('auth:admin');
   }
 
-  public function index()
-  { }
-
   public function getSubsidiariesCity()
   {
     return $this->subsidiaryinterface->getSubsidiariesCity();
