@@ -125,18 +125,28 @@ class Customer extends Model
         return $this->hasMany(CifinScore::class, 'scocedula');
     }
 
-    public function creditCards()
+    public function creditCard()
     {
-        return $this->hasMany(CreditCard::class, 'CLIENTE');
+        return $this->hasOne(CreditCard::class, 'CLIENTE');
     }
 
-    public function factoryRequest()
+    public function factoryRequests()
     {
-        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
+        return $this->hasMany(FactoryRequest::class, 'SOLICITUD');
     }
 
     public function intentions()
     {
         return $this->hasMany(Intention::class, 'CEDULA');
+    }
+
+    public function cifinScoresDC()
+    {
+        return $this->hasMany(CifinScore::class, 'scocedula')->latest('scoconsul');
+    }
+
+    public function factoryRequestsDC()
+    {
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE')->whereEstado('APROBADO')->whereSolicitudWeb(true);
     }
 }

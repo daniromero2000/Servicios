@@ -8,7 +8,6 @@ Route::namespace('Admin')->group(function () {
     Route::resource('director', 'DirectorController');
 
     Route::namespace('Subsidiaries')->group(function () {
-        Route::resource('subsidiaries', 'SubsidiaryController');
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
 });

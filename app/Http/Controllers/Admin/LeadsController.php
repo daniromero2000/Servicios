@@ -98,7 +98,7 @@ class LeadsController extends Controller
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
-        AND sb.`SOLICITUD_WEB` = '1'
+        AND sb.`SOLICITUD_WEB` = 1
         AND cf.`ESTADO` = 'PREAPROBADO'
         AND sb.ESTADO = 'APROBADO'
         AND sb.`GRAN_TOTAL` = 0
@@ -164,12 +164,11 @@ class LeadsController extends Controller
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
-        AND sb.`SOLICITUD_WEB` = '1'
-        AND cf.`ESTADO` = 'APROBADO'
         AND sb.ESTADO = 'APROBADO'
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
         AND sb.STATE = 'A'
+        AND cf.`ESTADO` = 'APROBADO'
         AND ti.CEDULA = cf.CEDULA
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);

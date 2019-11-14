@@ -11,6 +11,8 @@ class CreditCard extends Model
 
     public $connection = 'oportudata';
 
+    protected $primaryKey =  'CLIENTE';
+
     protected $fillable = [
         'NUMERO',
         'SOLICITUD',

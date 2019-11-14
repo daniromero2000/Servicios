@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Subsidiary;
+namespace App\Http\Controllers\Admin\Subsidiaries;
 
 use App\Http\Controllers\Controller;
-use Modules\Companies\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 
 class SubsidiaryController extends Controller
 {
@@ -13,11 +13,11 @@ class SubsidiaryController extends Controller
     SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
   ) {
     $this->subsidiaryinterface = $subsidiaryRepositoryInterface;
-    $this->middleware('auth:admin');
+    $this->middleware('auth');
   }
 
   public function getSubsidiariesCity()
   {
-    return response()->json($this->subsidiaryinterface->getSubsidiariesCity());
+    return response()->json($this->subsidiaryinterface->getAllSubsidiaryCityNames());
   }
 }
