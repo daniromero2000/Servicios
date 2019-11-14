@@ -95,12 +95,10 @@ class LeadsController extends Controller
     {
         $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
-        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
-        AND score.`scocedula` = cf.`CEDULA`
-        AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND sb.`SOLICITUD_WEB` = 1
         AND cf.`ESTADO` = 'PREAPROBADO'
         AND sb.ESTADO = 'APROBADO'
@@ -161,12 +159,10 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA, ti.FECHA_INTENCION
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, ti.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
-        -- AND score.`scocedula` = cf.`CEDULA`
-        -- AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND sb.ESTADO = 'APROBADO'
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
