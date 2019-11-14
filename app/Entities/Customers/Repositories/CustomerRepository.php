@@ -16,18 +16,20 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function listCustomers()
     {
         return $this->model->with([
-            'cifinScores',
+            'latestCifinScore',
             'factoryRequests',
             'creditCard',
-            'intentions'
+            'latestIntention'
         ])->limit(30)->get();
     }
 
     public function listCustomersDigitalChannel()
     {
-        return $this->model->with('cifinScoresDC')
-            ->has('factoryRequestsDC')
-            ->limit(100)->get();
+        return $this->model->with([
+            'latestCifinScore',
+            'creditCard',
+            'latestIntention',
+        ])->where('ESTADO', 'APROBADO')->has('latestIntention')->has('creditCard')->has('latestCifinScore')->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
     }
 }
 

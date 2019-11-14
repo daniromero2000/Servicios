@@ -12,7 +12,7 @@ class FactoryRequest extends Model
 
     public $connection = 'oportudata';
 
-    protected $primaryKey =  'SOLICITUD';
+    protected $primaryKey = 'SOLICITUD';
 
     public function customer()
     {

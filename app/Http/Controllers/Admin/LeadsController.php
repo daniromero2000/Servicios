@@ -42,6 +42,9 @@ class LeadsController extends Controller
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
 
+        // return $this->customerInterface->listCustomersDigitalChannel();
+
+
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
             'initFromAnt' => $request->get('initFromAnt')
@@ -201,7 +204,7 @@ class LeadsController extends Controller
 
         foreach ($resp as $key => $lead) {
             if ($lead->ASESOR_DIG != '') {
-                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG);
+                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);

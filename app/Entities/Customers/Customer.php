@@ -120,9 +120,9 @@ class Customer extends Model
         'FECHA_ACTUALIZACION'
     ];
 
-    public function cifinScores()
+    public function latestCifinScore()
     {
-        return $this->hasMany(CifinScore::class, 'scocedula');
+        return $this->hasOne(CifinScore::class, 'scocedula')->latest('scoconsul');
     }
 
     public function creditCard()
@@ -132,21 +132,11 @@ class Customer extends Model
 
     public function factoryRequests()
     {
-        return $this->hasMany(FactoryRequest::class, 'SOLICITUD');
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
     }
 
-    public function intentions()
+    public function latestIntention()
     {
-        return $this->hasMany(Intention::class, 'CEDULA');
-    }
-
-    public function cifinScoresDC()
-    {
-        return $this->hasMany(CifinScore::class, 'scocedula')->latest('scoconsul');
-    }
-
-    public function factoryRequestsDC()
-    {
-        return $this->hasMany(FactoryRequest::class, 'CLIENTE')->whereEstado('APROBADO')->whereSolicitudWeb(true);
+        return $this->hasOne(Intention::class, 'CEDULA')->latest('FECHA_INTENCION');
     }
 }
