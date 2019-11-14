@@ -90,7 +90,6 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigitalAnt($request)
     {
-        $leadsDigital    = [];
         $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
@@ -114,10 +113,10 @@ class LeadsController extends Controller
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
-        $resp = DB::connection('oportudata')->select($query);
+        $resp         = DB::connection('oportudata')->select($query);
+        $leadsDigital = [];
 
         foreach ($resp as $key => $lead) {
-
             if ($lead->ASESOR_DIG != '') {
                 $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
@@ -159,8 +158,6 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $leadsDigital = [];
-
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`, ti.TARJETA, ti.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score, TB_INTENCIONES as ti
         WHERE sb.`CLIENTE` = cf.`CEDULA`
@@ -200,7 +197,8 @@ class LeadsController extends Controller
         $query .= " ORDER BY sb.`ASESOR_DIG`, ti.`FECHA_INTENCION` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
-        $resp = DB::connection('oportudata')->select($query);
+        $resp         = DB::connection('oportudata')->select($query);
+        $leadsDigital = [];
 
         foreach ($resp as $key => $lead) {
             if ($lead->ASESOR_DIG != '') {
@@ -316,8 +314,8 @@ class LeadsController extends Controller
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
         $request['termsAndConditions'] = 2;
         $request['campaign'] = $idCampaign;
-        $lead = $this->leadInterface->createLead($request->input());
-        return response()->json($lead);
+
+        return response()->json($this->leadInterface->createLead($request->input()));
     }
 
     public function viewCommunityLeads($id)
@@ -336,8 +334,7 @@ class LeadsController extends Controller
     public function updateCommunityLeads(Request $request)
     {
         $nameCampaign = (string) $request->get('campaignName');
-        $lead = $this->leadInterface->findLeadById($request->get('id'));
-        $leadRerpo = new leadRepository($lead);
+        $leadRerpo = new leadRepository($this->leadInterface->findLeadById($request->get('id')));
 
         if ($nameCampaign) {
             $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);

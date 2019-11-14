@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Brand;
 
-
 class BrandsController extends Controller
 {
     public function __construct()
