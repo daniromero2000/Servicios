@@ -17,9 +17,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     {
         return $this->model->with([
             'cifinScores',
-            'creditCards',
-            'factoryRequest',
-            'intentions'
-        ])->where('CEDULA', '10003648')->get();
+        ])->limit(30)->get();
     }
 }
