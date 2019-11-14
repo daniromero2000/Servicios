@@ -22,8 +22,8 @@
             data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional</a>
 
 
-        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 8 }" ng-click="tabs = 8"
-            data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional Ant</a>
+        {{-- <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 8 }" ng-click="tabs = 8"
+            data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional Ant</a> --}}
 
 
         <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
@@ -364,7 +364,7 @@
 
 
 
-    <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
+    {{-- <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 8 }">
         <div class="row resetRow">
             <div class="col-sm-12 col-md-1">
@@ -416,7 +416,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
 
@@ -560,6 +560,7 @@
                         <th scope="col">Celular</th>
                         <th scope="col">Ciudad</th>
                         <th scope="col">Servicio</th>
+                        <th scope="col">Producto</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -578,6 +579,7 @@
                         <td ng-if="leadCM.nearbyCity == null">@{{ leadCM.city }}</td>
                         <td ng-if="leadCM.nearbyCity != null">@{{ leadCM.city + " / " + leadCM.nearbyCity}}</td>
                         <td>@{{ leadCM.typeService }}</td>
+                        <td>@{{ leadCM.typeProduct }}</td>
                         <td>@{{ leadCM.created_at }}</td>
                         <td>
                             <i class="fas fa-comment cursor"

@@ -9,7 +9,6 @@ use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 
 class CommunityController extends Controller
 {
-
     private $leadInterface;
 
     public function __construct(
@@ -38,19 +37,6 @@ class CommunityController extends Controller
 
     public function store(Request $request)
     {
-        // $lead = new Lead;
-        // $lead->name = $request->get('name');
-        // $lead->lastName = $request->get('lastName');
-        // $lead->email = $request->get('email');
-        // $lead->telephone = $request->get('telephone');
-        // $lead->city = $request->get('city');
-        // $lead->typeService = $request->get('typeService');
-        // $lead->typeProduct = $request->get('typeProduct');
-        // $lead->channel = intval($request->get('channel'));
-        // $lead->termsAndConditions = $request->get('termsAndConditions');
-        // $lead->campaign = $request->get('campaign');
-        // $lead->save();
-
         $this->leadInterface->createLead($request->input());
 
         return response()->json([true]);

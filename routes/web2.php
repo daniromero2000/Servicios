@@ -3,7 +3,14 @@
 /**
  * Admin routes
  */
-Route::resource('director', 'Admin\DirectorController');
+Route::namespace('Admin')->group(function () {
+
+    Route::resource('director', 'DirectorController');
+
+    Route::namespace('Subsidiaries')->group(function () {
+        Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
+    });
+});
 
 //libranza routes
 Route::resource('libranzaV2', 'Admin\LibranzaV2Controller');

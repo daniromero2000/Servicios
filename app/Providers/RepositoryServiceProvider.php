@@ -15,6 +15,16 @@ use App\Entities\Campaigns\Repositories\CampaignRepository;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\CommentRepository;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
+use App\Entities\CifinScores\Repositories\CifinScoreRepository;
+use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
+use App\Entities\CreditCards\Repositories\CreditCardRepository;
+use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\FactoryRequestRepository;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\Intentions\Repositories\IntentionRepository;
+use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
+use App\Entities\Customers\Repositories\CustomerRepository;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -48,6 +58,31 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CommentRepositoryInterface::class,
             CommentRepository::class
+        );
+
+        $this->app->bind(
+            CifinScoreRepositoryInterface::class,
+            CifinScoreRepository::class
+        );
+
+        $this->app->bind(
+            CreditCardRepositoryInterface::class,
+            CreditCardRepository::class
+        );
+
+        $this->app->bind(
+            FactoryRequestRepositoryInterface::class,
+            FactoryRequestRepository::class
+        );
+
+        $this->app->bind(
+            IntentionRepositoryInterface::class,
+            IntentionRepository::class
+        );
+
+        $this->app->bind(
+            CustomerRepositoryInterface::class,
+            CustomerRepository::class
         );
     }
 }

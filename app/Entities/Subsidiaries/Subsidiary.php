@@ -2,6 +2,7 @@
 
 namespace App\Entities\Subsidiaries;
 
+use App\Entities\FactoryRequests\FactoryRequest;
 use Illuminate\Database\Eloquent\Model;
 
 class Subsidiary extends Model
@@ -31,4 +32,9 @@ class Subsidiary extends Model
   protected $guarded = [
     'CODIGO',
   ];
+
+  public function factoryRequests()
+  {
+    return $this->hasMany(FactoryRequest::class);
+  }
 }
