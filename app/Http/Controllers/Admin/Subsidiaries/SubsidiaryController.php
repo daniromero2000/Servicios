@@ -18,6 +18,6 @@ class SubsidiaryController extends Controller
 
   public function getSubsidiariesCity()
   {
-    return $this->subsidiaryinterface->getSubsidiariesCity();
+    return response()->json($this->subsidiaryinterface->getSubsidiariesCity());
   }
 }
