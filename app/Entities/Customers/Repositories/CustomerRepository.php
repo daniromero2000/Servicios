@@ -26,7 +26,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function listCustomersDigitalChannel()
     {
         return $this->model->with([
-            'latestCifinScore',
             'creditCard',
             'latestIntention',
         ])->where('ESTADO', 'APROBADO')->has('latestIntention')->has('creditCard')->has('latestCifinScore')->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
