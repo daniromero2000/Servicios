@@ -258,7 +258,7 @@
                         <th scope="col">Cedula</th>
                         <th scope="col">Sucursal / N° solicitud</th>
                         <th scope="col">Asesor</th>
-                        <th scope="col">Nombre / Score</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Canal adquisición</th>
                         <th scope="col">Ciudad</th>
