@@ -133,7 +133,7 @@
                         <th scope="col">Sucursal / N° solicitud</th>
                         <th scope="col">Asesor</th>
                         <th scope="col">Asesor OP</th>
-                        <th scope="col">Nombre / Score</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Tarjeta</th>
                         <th scope="col">Ciudad</th>
@@ -148,7 +148,7 @@
                         <td>@{{ lead.SUCURSAL }} - @{{ lead.SOLICITUD }}</td>
                         <td>@{{ lead.nameAsesor }}</td>
                         <td>@{{ lead.CODASESOR }}</td>
-                        <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS + " / " + lead.score }}</td>
+                        <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                         <td>@{{ lead.CELULAR }}</td>
                         <td>
                             @{{ lead.TARJETA }}
