@@ -42,8 +42,6 @@ class LeadsController extends Controller
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
 
-        return  $this->customerInterface->listCustomers();
-
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
             'initFromAnt' => $request->get('initFromAnt')
@@ -97,8 +95,15 @@ class LeadsController extends Controller
 
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, score.`score`,cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, sb.`CODASESOR`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar, `cifin_score` as score
-        WHERE sb.`CLIENTE` = cf.`CEDULA` AND tar.`CLIENTE` = cf.`CEDULA` AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
-        AND sb.`SOLICITUD_WEB` = '1' AND cf.`ESTADO` = 'PREAPROBADO' AND sb.ESTADO = 'APROBADO' AND sb.`GRAN_TOTAL` = 0 AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
+        WHERE sb.`CLIENTE` = cf.`CEDULA`
+        AND tar.`CLIENTE` = cf.`CEDULA`
+        AND score.`scocedula` = cf.`CEDULA`
+        AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
+        AND sb.`SOLICITUD_WEB` = '1'
+        AND cf.`ESTADO` = 'PREAPROBADO'
+        AND sb.ESTADO = 'APROBADO'
+        AND sb.`GRAN_TOTAL` = 0
+        AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
 
@@ -114,8 +119,7 @@ class LeadsController extends Controller
         foreach ($resp as $key => $lead) {
 
             if ($lead->ASESOR_DIG != '') {
-                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
-                $resp[$key]->nameAsesor = $respAsesorDigital->name;
+                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
@@ -135,7 +139,8 @@ class LeadsController extends Controller
     {
         $queryGenLeads = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`
         FROM `leads` as lead
-        WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza') AND lead.`state` !=  3 ";
+        WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza')
+        AND lead.`state` !=  3 ";
 
         $respTotalLeadsGen = DB::select($queryGenLeads);
 
@@ -199,8 +204,7 @@ class LeadsController extends Controller
 
         foreach ($resp as $key => $lead) {
             if ($lead->ASESOR_DIG != '') {
-                $respAsesorDigital      = $this->userInterface->getUserName($lead->ASESOR_DIG);
-                $resp[$key]->nameAsesor = $respAsesorDigital->name;
+                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG);
             }
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
@@ -243,13 +247,12 @@ class LeadsController extends Controller
         $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score, `TB_INTENCIONES`
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.ID_DEF
-        where
-        `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional' AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
-        AND score.`scocedula` = cf.`CEDULA` AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
+        where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
+        AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
+        AND score.`scocedula` = cf.`CEDULA`
+        AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
-
-        AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
-        ";
+        AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
 
@@ -269,7 +272,6 @@ class LeadsController extends Controller
 
         $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
-
 
         return [
             'leadsTR' => DB::connection('oportudata')->select($queryTradicional),
@@ -299,7 +301,8 @@ class LeadsController extends Controller
         $leadsQuery = Lead::selectRaw('leads.*,liquidator.*')
             ->leftjoin('liquidator', 'leads.id', '=', 'liquidator.idLead')
             ->where('leads.id', '=', $leads->id)
-            ->orderBy('leads.id')->get();
+            ->orderBy('leads.id')
+            ->get();
 
         return view('leads.show', [
             'leads'      => $leads,
