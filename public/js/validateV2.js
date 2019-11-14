@@ -10,7 +10,7 @@ $( document ).ready(function() {
 					case 'number':
 						validateNumber(inputs[i]);
 						break;
-						
+
 					case 'IdentificationNumber':
 						validateIdentificationNumber(inputs[i]);
 						break;
@@ -97,7 +97,7 @@ $( document ).ready(function() {
 		};
 		/* Identification Number */
 		function validateIdentificationNumber(input){
-			
+
 			var patt = "[0-9]{5,10}";
 			setAttributePatternInput(input, patt);
 		};
