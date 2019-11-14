@@ -23,6 +23,8 @@ use App\Entities\FactoryRequests\Repositories\FactoryRequestRepository;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
+use App\Entities\Customers\Repositories\CustomerRepository;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -76,6 +78,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             IntentionRepositoryInterface::class,
             IntentionRepository::class
+        );
+
+        $this->app->bind(
+            CustomerRepositoryInterface::class,
+            CustomerRepository::class
         );
     }
 }

@@ -10,28 +10,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    public $table = 'CLIENTE_FAB';
+    protected $table = 'CLIENTE_FAB';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
+    protected $primaryKey = 'CEDULA';
+
+    public $timestamps = false;
 
     public function cifinScores()
     {
-        return $this->hasMany(CifinScore::class);
+        return $this->hasMany(CifinScore::class, 'scocedula');
     }
 
     public function creditCards()
     {
-        return $this->hasMany(CreditCard::class);
+        return $this->hasMany(CreditCard::class, 'CLIENTE');
     }
 
     public function factoryRequest()
     {
-        return $this->hasMany(FactoryRequest::class);
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
     }
 
     public function intentions()
     {
-        return $this->hasMany(Intention::class);
+        return $this->hasMany(Intention::class, 'CEDULA');
     }
 }

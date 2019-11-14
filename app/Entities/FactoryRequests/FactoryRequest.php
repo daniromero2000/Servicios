@@ -12,6 +12,9 @@ class FactoryRequest extends Model
 
     public $connection = 'oportudata';
 
+
+    protected $primaryKey =  'CLIENTE';
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);

@@ -6,6 +6,7 @@ use App\Lead;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -17,19 +18,22 @@ class LeadsController extends Controller
 {
     private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
     private $userInterface, $user, $campaignInterface, $commentInterface;
+    private $customerInterface;
 
     public function __construct(
         AssessorRepositoryInterface $assessorRepositoryInterface,
         LeadRepositoryInterface $leadRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
-        CommentRepositoryInterface $commentRepositoryInterface
+        CommentRepositoryInterface $commentRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->commentInterface  = $commentRepositoryInterface;
         $this->campaignInterface = $campaignRepositoryInterface;
         $this->userInterface     = $userRepositoryInterface;
         $this->leadInterface     = $leadRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
         $this->middleware('auth')->except('logout');
     }
 
@@ -37,6 +41,8 @@ class LeadsController extends Controller
     {
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
+
+        return  $this->customerInterface->listCustomers();
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),

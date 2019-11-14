@@ -11,6 +11,7 @@ class CifinScore extends Model
 
     public $connection = 'oportudata';
 
+    public $timestamps = false;
 
     public function customer()
     {
