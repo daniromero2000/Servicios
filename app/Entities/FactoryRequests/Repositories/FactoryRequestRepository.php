@@ -23,6 +23,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->where('GRAN_TOTAL', 0)
             ->where('SOLICITUD_WEB', 1)
             ->latest('SOLICITUD')
-            ->get(['SOLICITUD', 'ASESOR_DIG']);
+            ->get(['SOLICITUD', 'ASESOR_DIG', 'FECHASOL']);
     }
 }
