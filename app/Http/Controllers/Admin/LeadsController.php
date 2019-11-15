@@ -74,6 +74,8 @@ class LeadsController extends Controller
             'q'        => $request->get('q'),
             'initFromCM' => $request->get('initFromCM'),
             'qcityAprobados'         => $request->get('qcityAprobados'),
+            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
+            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
         ]);
 
         $getLeadsGen = $this->getGenLeads([
@@ -268,6 +270,17 @@ class LeadsController extends Controller
         if ($request['qcityAprobados'] != '') {
             $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
         }
+
+        if ($request['qfechaInicialAprobados'] != '') {
+            $request['qfechaInicialAprobados'] .= " 00:00:00";
+            $queryCM .= sprintf(" AND (lead.`created_at` >= '%s') ", $request['qfechaInicialAprobados']);
+        }
+
+        if ($request['qfechaFinalAprobados'] != '') {
+            $request['qfechaFinalAprobados'] .= " 23:59:59";
+            $queryCM .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['qfechaFinalAprobados']);
+        }
+
 
         $respTotalLeadsCM = DB::select($queryCM);
         $queryCM .= "ORDER BY `created_at` DESC ";
