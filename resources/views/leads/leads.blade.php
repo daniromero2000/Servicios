@@ -218,13 +218,6 @@
                                     <select class="form-control" ng-model="q.qcityAprobados"
                                         ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="qtipoTarjetaAprobados">Tipo Tarjeta</label>
-                                    <select class="form-control" ng-model="q.qtipoTarjetaAprobados"
-                                        id="qtipoTarjetaAprobados"
-                                        ng-options="cardType.label as cardType.label for cardType in cardTypes"></select>
-                                </div>
-
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-sm-6">
@@ -307,7 +300,7 @@
                         <td>
                             $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
                         </td>
-                        <td>@{{ lead.CREACION }}</td>
+                        <td>@{{ lead.FECHASOL }}</td>
                         <td>
                             <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor"
                                 ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id);$parent.$parent.lead=lead"></i>

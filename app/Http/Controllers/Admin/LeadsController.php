@@ -96,7 +96,7 @@ class LeadsController extends Controller
     {
         $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`,  sb.FECHASOL, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
@@ -121,7 +121,7 @@ class LeadsController extends Controller
         }
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
-        $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
+        $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
         $resp         = DB::connection('oportudata')->select($query);
