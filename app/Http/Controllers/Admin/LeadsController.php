@@ -71,8 +71,9 @@ class LeadsController extends Controller
         ]);
 
         $getLeadsCM = $this->getLeadsCM([
-            'qCM'        => $request->get('qCM'),
-            'initFromCM' => $request->get('initFromCM')
+            'q'        => $request->get('q'),
+            'initFromCM' => $request->get('initFromCM'),
+            'qcityAprobados'         => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsGen = $this->getGenLeads([
@@ -254,8 +255,18 @@ class LeadsController extends Controller
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3)";
 
-        if ($request['qCM'] != '') {
-            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
+        if ($request['q'] != '') {
+            $queryCM .= sprintf(
+                " AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
+        }
+
+        if ($request['qcityAprobados'] != '') {
+            $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
         }
 
         $respTotalLeadsCM = DB::select($queryCM);
