@@ -1,7 +1,7 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$scope.tipoCliente = "";
-	$scope.estadoCliente = "TRADICIONAL";
+	$scope.estadoCliente = "";
 	$scope.messageValidationLead = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
@@ -275,7 +275,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			if(response.data == true){
 				$scope.validateNum = 1;
 				$('#confirmCodeVerification').modal('hide');
-				$scope.addCliente('CREDITO');
+				$scope.addCliente($scope.tipoCliente);
 			}else if(response.data == -1){
 				// En caso de que el codigo sea erroneo
 				$scope.showAlertCode = true;
@@ -357,12 +357,22 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$('#congratulations').modal('show');
 				}, 1800);
 			}
+
+			if(response.data.resp == 'false'){
+				$scope.estadoCliente = "NEGADO";
+				setTimeout(() => {
+					$('#confronta').modal('hide');
+				}, 800);
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
 		});
 	};
-	$('#congratulations').modal('show');
+	
 	$scope.sendConfronta = function(){
 		$scope.infoConfronta = {
 			'confronta' : $scope.formConfronta,
@@ -387,32 +397,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		});
 	};
-
+	
 	$scope.showConfirm = function(ev) {
-		// Appending dialog to document.body to cover sidenav in docs app
-		/*var confirm = $mdDialog.confirm()
-				.title('Usuario registrado')
-				.textContent('Usuario registrado satisfactoriamente')
-				.ariaLabel('Lucky day')
-				.targetEvent(ev)
-				.ok('Nuevo Registro')
-				.cancel('Menú')
-				.openFrom({
-					top: -50,
-					width: 30,
-					height: 80
-				})
-				.closeTo({
-					left: 500
-				});
-
-		$mdDialog.show(confirm).then(function() {
-			$scope.resetInfo();
-			location.reload();
-		}, function() {
-			$scope.resetInfo();
-			window.location = '/assessor/dashboard';
-		});*/
+		$scope.estadoCliente = "CONTADO";
+		$timeout(function() {
+			$('#congratulations').modal('show');
+		}, 1500);
 	};
 
 	$scope.resetInfoLead = function(){

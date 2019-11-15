@@ -17,6 +17,11 @@
 
 .textTnakYouModal{
     color: #0255FC;
+    font-size: 18px;
+}
+
+.containTextThankYouModal{
+    margin-top: 25px;
 }
 
 .headThankYuoModal > img{

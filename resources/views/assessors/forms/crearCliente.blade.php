@@ -375,7 +375,7 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label class="labels" for="identificationNumberContado">Número de documento*</label>
-                            <input class="inputs" type="text" validation-pattern="identificationNumber" id="identificationNumberContado" />  
+                            <input class="inputs" ng-model="lead.CEDULA" ng-blur="getValidationLead()" type="text" validation-pattern="identificationNumber" id="identificationNumberContado" />  
                         </div>
                     </div>
                     <div class="row">
@@ -452,7 +452,7 @@
                     </div>
                     <div class="row  text-center form-group">
                         <div class="col-12">
-                            <md-button type="submit" class="btn btn-primary">Continuar</md-button>
+                            <button type="submit" class="btn btn-primary">Continuar</button>
                         </div>
                     </div>
                 </form>
@@ -572,62 +572,54 @@
 							</div>
 						</div>
 						<div class="row resetRow">
-                            <div class="col-12 text-center" ng-if="estadoCliente == 'TRADICIONAL'">
+                            <div class="col-12 text-center" ng-if="estadoCliente == 'CONTADO'">
+                                <p class="textTnakYouModal" style="font-size: 22px; margin-top:25px">
+                                    Cliente creado exitosamente.
+                                </p>
+                            </div>
+                            <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                                 <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                                 <p class="textTnakYouModal">
                                     En este momento <b>no tienes acceso a nuestra tarjeta,</b> <br>
                                     pero <b>SI</b> estás <b>pre-aprobado</b> para crédito tradicional.
                                 </p>
                             </div>
-							<div class="col-12" ng-if="estadoCliente == 'APROBADO'">
-								<p class="textModal text-center">
-									<strong>Felicitaciones!!</strong>
-									<br>
-									La solicitud fue aprobada
-								</p>
-								<p class="text-center" style="margin-bottom: 0">
-                                    <span class="text-quotamodal">$@{{ quota | number:0 }}</span> <br />
-                                    <b>Para compras</b>
-								</p>
-								<p class="text-center">
-                                    <span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> <br>
-                                    <b>Para avances en efectivo</b>
-                                </p>
-                                <p class="textModalNumSolic text-center">
-                                    ** Ya puede proceder a realizar el negocio en el Aplicativo de Oportudata</b>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
+                                <img src="{{ asset('images/asessors/openIcon.jpg') }}" class="iconThankYouModal" />
+                                <p class="textTnakYouModal">
+                                    <b>¡FELICIDADES!</b> <br>
+                                    <b>Aprobado</b> para cliente Oportunidaes
                                 </p>
 								<p class="textModalNumSolic text-center">
-									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
 								</p>
 							</div>
-							<div class="col-12" ng-if="estadoCliente == 'PREAPROBADO'">
-								<p class="textModal text-center">
-									<strong>Felicitaciones!!</strong>
-									<br>
-									La solicitud fue pre-aprobada
-								</p>
-								<p class="text-quotamodal text-center">
-									$@{{ quota | number:0 }}
-                                </p>
-                                <p class="textModalNumSolic text-center">
-                                    ** Alguna información no concuerda, se debe esperar previa aprobacion <br /> de la solicitud por parte de <b>Fábrica de Créditos</b>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO'">
+                                <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Estamos revisando tu crédito,</b> esta <br>
+                                    operación puede tardar unos minutos.
                                 </p>
 								<p class="textModalNumSolic text-center">
-									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
 								</p>
 							</div>
-							<div class="col-12" ng-if="estadoCliente == 'SIN COMERCIAL'">
-								<p class="textModal text-center">
-									<strong>Felicitaciones!!</strong>
-									<br>
-									Tu solicitud fue creada exitosamente.
-                                </p>
-                                <p class="textModalNumSolic text-center">
-                                    ** Alguna información no concuerda, se debe esperar previa aprobacion <br /> de la solicitud por parte de <b>Fábrica de Créditos</b>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'SIN COMERCIAL'">
+								<img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Estamos revisando tu crédito,</b> esta <br>
+                                    operación puede tardar unos minutos.
                                 </p>
 								<p class="textModalNumSolic text-center">
-									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para cualquier consulta posterior
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
 								</p>
+                            </div>
+                            <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">
+								<img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Lo sentimos,</b> en esta ocasión <br>
+                                    no tenemos una aprobación para ti.
+                                </p>
                             </div>
                         </div>
                         <div class="row form-group">
