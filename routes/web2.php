@@ -14,6 +14,10 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('FactoryRequests')->group(function () {
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
     });
+
+    Route::namespace('Comments')->group(function () {
+        Route::get('api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
+    });
 });
 
 //libranza routes

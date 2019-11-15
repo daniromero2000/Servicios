@@ -376,7 +376,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.comment.idLead = $scope.idLead;
         $http({
             method: 'GET',
-            url: '/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
+            url: '/api/leads/addLeadComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
         }).then(function successCallback(response) {
             console.log(response);
             if (response.data != false) {
