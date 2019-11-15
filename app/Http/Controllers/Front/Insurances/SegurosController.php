@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Front\Insurances;
 
 use App\Imagenes;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 
-class MotosController extends Controller
+class SegurosController extends Controller
 {
     private $leadInterface, $subsidiaryInterface;
 
@@ -16,14 +16,14 @@ class MotosController extends Controller
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
     ) {
-        $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->leadInterface       = $leadRepositoryInterface;
     }
 
     public function index()
     {
-        return view('motos.index', [
-            'images' => Imagenes::all(),
+        return view('seguros.index', [
+            'images' =>  Imagenes::all(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
         ]);
     }
@@ -32,6 +32,6 @@ class MotosController extends Controller
     {
         $this->leadInterface->createLead($request->input());
 
-        return redirect()->route('thankYouPageMotos');
+        return redirect()->route('thankYouPageSeguros');
     }
 }

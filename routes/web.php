@@ -116,9 +116,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
 Route::resource('libranza', 'Admin\LibranzaController');
-Route::resource('motos', 'Admin\MotosController');
+
 Route::resource('leads', 'Admin\LeadsController');
-Route::resource('seguros', 'Admin\SegurosController');
+
 Route::resource('viajes', 'Admin\ViajesController');
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
