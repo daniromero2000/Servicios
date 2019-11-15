@@ -1,0 +1,360 @@
+         /* landing */
+         .reset-baner{
+            margin-bottom: -5px;
+          
+         }
+         /* //1300 */
+         .row-reset {
+             margin-right: 0px;
+             margin-left: 0px;
+         }
+         .img-reset{
+            margin-right: -2px;
+            margin-left: -1px;
+         }
+         
+         .col-reset {
+             padding-right: 0px;
+             padding-left: 0px;
+         }
+         .title-inicial2 {
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            font-size: 54px;
+        }
+        .title-inicial3{
+           font-size: 43px;
+           color:#FFF;
+           font-weight: bold;
+       }
+       .reset-nav{
+           padding: 0px !important;
+       }
+         
+         .politicas:hover {
+             color: #1cbaf8 !important;
+             
+         }
+         
+         .boton-form2 {
+             width: 86%;
+             margin-left: auto;
+             margin-right: auto;
+             border-radius: 34px !important;
+         }
+         
+         .title-inicial {
+             color: #2388AA;
+             font-weight: bold;
+             font-size: 1.4rem;
+         }
+         
+         .link {
+             color: #B1B1B1;
+             margin-right: 9px;
+         }
+         
+         .text-input {
+             font-size: 15px;
+             color: #545D60;
+             font-weight: bold;
+         }
+         
+         .text-input2 {
+             font-size: 13px;
+             color: #545D60;
+             font-weight: normal;
+         }
+         
+         .title-form {
+             margin: 0px;
+             margin-top: 0px;
+             color: #545D60;
+             font-weight: bold;
+             font-size: 25px;
+         }
+         
+         .title-form2 {
+             color: #00A0E0;
+             font-weight: bold;
+             font-size: 20px;
+         }
+         
+         .title-form3 {
+             margin-top: 15px;
+             color: #545D60;
+             font-size: 13px;
+             font-weight: normal;
+             margin-bottom: 19px
+         }
+        
+         
+         .imgFon {
+             position: absolute;
+             top: 24%;
+             right: 2%;
+         }
+
+         .boton-submit{
+            font-size: 19px;
+
+            font-weight: bold;
+            background-color:#00ABEB;
+            border-color:#00ABEB;
+         }
+         
+         .shadow-lg {
+
+            box-shadow: 0 0.5rem 2rem rgb(0, 0, 0) !important;
+         }
+         a:hover {
+             text-decoration: none;
+         }
+         
+         .contenedor {
+             margin-left: auto;
+             margin-right: auto;
+             position: relative;
+
+
+         }
+
+         @media (min-width:2401px) {
+            .imgFon {
+                right: 0%;
+                top: 30%;
+            }
+            .title-inicial2 {
+                font-size: 92px;
+            }
+            .title-inicial3{
+               font-size: 80px;
+           }
+           
+        }
+         @media (min-width:2101px) and (max-width:2400px) {
+            .imgFon {
+                right: 1%;
+                top: 35%;
+            }
+            .title-inicial2 {
+                font-size: 82px;
+            }
+            .title-inicial3{
+               font-size: 70px;
+           }
+           
+        }
+         @media (min-width:1901px) and (max-width:2100px) {
+            .imgFon {
+                right: 1%;
+                top: 35%;
+            }
+            .title-inicial2 {
+                font-size: 82px;
+            }
+            .title-inicial3{
+               font-size: 70px;
+           }
+           
+        }
+
+         @media (min-width:1701px) and (max-width:1900px) {
+            .imgFon {
+                right: 1%;
+                top: 30%;
+            }
+            .title-inicial2 {
+                font-size: 65px;
+            }
+            .title-inicial3{
+               font-size: 53px;
+           }
+           
+        }
+         
+         @media (min-width:1500px) and (max-width:1700px) {
+            .imgFon {
+                right: 1%;
+                top: 30%;
+            }
+            .title-inicial2 {
+                font-size: 60px;
+            }
+            .title-inicial3{
+               font-size: 50px;
+           }
+           
+        }
+
+         @media (max-width:1229px) {
+           
+            .title-inicial2 {
+                color: rgb(255, 255, 255);
+                font-weight: bold;
+                font-size: 48px;
+            }
+            .title-inicial3{
+               font-size: 34px;
+               color:#FFF;
+               font-weight: bold;
+           }
+        }
+
+        @media (max-width:1110px) {
+           
+            .title-inicial2 {
+                color: rgb(255, 255, 255);
+                font-weight: bold;
+                font-size: 42px;
+            }
+            .title-inicial3{
+               font-size: 33px;
+               color:#FFF;
+               font-weight: bold;
+           }
+        }
+        @media (max-width:1010px) {
+        
+            .imgFon {
+                position: static !important;
+                top: 85px;
+                right: 23px;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px;
+                margin-top:20px;
+            }
+            .title-inicial2 {
+                color:rgb(58, 57, 57);
+                font-weight: bold;
+                font-size: 42px;
+            }
+            .title-inicial3{
+               font-size: 33px;
+               color:rgb(58, 57, 57);
+               font-weight: bold;
+           }
+           }
+/*          
+         @media (min-width:2101px) {
+             .imgFon {
+                 right: 5%;
+                 margin-left: auto;
+                 margin-right: auto;
+                 top: 20%;
+                 border: 1px;
+             }
+         }
+         
+         @media (min-width:1901px) and (max-width:2100px) {
+             .imgFon {
+                 right: 7%;
+                 margin-left: auto;
+                 margin-right: auto;
+                 top: 17%;
+                 border: 1px;
+             }
+         }
+         
+ 	
+
+         @media (min-width:1701px) and (max-width:1900px) {
+             .imgFon {
+                 right: 4%;
+                 margin-left: auto;
+                 margin-right: auto;
+                 top: 14%;
+                 border: 1px;
+		         max-width: 600px;
+             }
+         }
+         
+        
+         
+         @media (max-width:1307px) {
+             .contenedor {
+                 height: auto;
+                 max-width: 104%;
+             }
+         
+
+
+         
+         
+
+         
+         @media (max-width:1315px) {
+            
+             .title-inicial {
+                 color: #2388AA;
+                 font-weight: bold;
+                 font-size: 1.2rem;
+             }
+            
+         }
+         
+         @media (max-width:1258px) {
+          
+             .imgFon {
+                 right: 23px;
+                 margin-left: auto;
+                 margin-right: auto;
+                 top: 10px;
+                 border: 1px;
+             }
+            
+                .title-inicial {
+                    color: #2388AA;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+              
+            }
+            
+         
+         @media (max-width:1222px) {
+             .imgFon {
+                 right: 23px;
+                 margin-left: auto;
+                 margin-right: auto;
+                 top: 10px;
+                 border: 1px;
+             }
+         }
+         
+         @media (max-width:1199px) {
+             .title-form {
+                 margin: 0px;
+                 margin-top: 0px;
+                 color: #545D60;
+                 font-weight: bold;
+                 font-size: 25px;
+             }
+             .title-form2 {
+                 color: #00A0E0;
+                 font-weight: bold;
+                 font-size: 21px;
+             }
+             .title-form3 {
+                 margin-top: 15px;
+                 color: #545D60;
+                 font-size: 13px;
+                 font-weight: normal;
+                 margin-bottom: 19px
+             }
+         }
+         
+         @media (max-width:1172px) {
+             
+             .imgFon {
+                 right: 23px;
+                 margin-left: auto;
+                 margin-right: auto;
+                 border: 1px;
+             }
+            
+         }
+      
+         
+        */
