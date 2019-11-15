@@ -141,7 +141,7 @@
 					<div class="footer-containerNewsletter">
 						<h5 class="footer-titleNewsLetter">QUIERES RECIBIR LAS MEJORES OFERTAS</h5>
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Ingresa tu e-mail">
+							<input type="text" class="form-control" placeholder="Ingresa tu e-mail" style="width: auto ;">
 							<div class="input-group-prepend">
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>

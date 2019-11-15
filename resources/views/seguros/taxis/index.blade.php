@@ -20,7 +20,7 @@
 
             <div style="margin-left: auto;margin-right: auto;"
                 class="col-12 col-sm-4 col-md-3 col-lg-2 col-xl-5 col-reset">
-                <a style=" margin-top: 5px; width:180px;" class="nav-link centrado"> <img
+                <a class="nav-link logo-baner"> <img
                         src="{{ asset('images/assets/logo.png') }}" class=" img-fluid" alt=""> <span
                         class="sr-only">(current)</span></a>
             </div>
@@ -32,7 +32,7 @@
 
         </div>
         <div class="row w-100 d-flex align-items-center text-center row-reset">
-            <img src="{{ asset('images/assets/baner.png') }}" class="img-fluid" alt="">
+            <img src="{{ asset('images/assets/baner.png') }}" class="img-fluid img-baner" alt="">
         </div>
     </nav>
 
