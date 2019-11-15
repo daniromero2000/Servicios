@@ -7,7 +7,6 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
@@ -45,10 +44,6 @@ class LeadsController extends Controller
     {
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
-
-        // return $this->customerInterface->listCustomersDigitalChannel();
-        // return $this->factoryRequestInterface->listFactoryRequestDigitalChannel();
-
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
             'q'        => $request->get('q'),
@@ -110,12 +105,11 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
-        $respTotalLeads = DB::connection('oportudata')->select($query);
-
         if ($request['q'] != '') {
             $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
         }
 
+        $respTotalLeads = DB::connection('oportudata')->select($query);
         $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
@@ -147,12 +141,11 @@ class LeadsController extends Controller
         WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza')
         AND lead.`state` !=  3 ";
 
-        $respTotalLeadsGen = DB::select($queryGenLeads);
-
         if ($request['qGen'] != '') {
             $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%s' ) ", '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%');
         }
 
+        $respTotalLeadsGen = DB::select($queryGenLeads);
         $queryGenLeads .= "ORDER BY `created_at` DESC ";
         $queryGenLeads .= sprintf(" LIMIT %s,30", $request['initFromGen']);
 
@@ -177,8 +170,6 @@ class LeadsController extends Controller
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
-        $respTotalLeads = DB::connection('oportudata')->select($query);
-
         if ($request['q'] != '') {
             $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
         }
@@ -197,6 +188,7 @@ class LeadsController extends Controller
             $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
+        $respTotalLeads = DB::connection('oportudata')->select($query);
         $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
@@ -228,12 +220,11 @@ class LeadsController extends Controller
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3)";
 
-        $respTotalLeadsCM = DB::select($queryCM);
-
         if ($request['qCM'] != '') {
             $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
         }
 
+        $respTotalLeadsCM = DB::select($queryCM);
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
 
@@ -255,8 +246,6 @@ class LeadsController extends Controller
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
         AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
-        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
-
         if ($request['qTR'] != '') {
             $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
         }
@@ -271,6 +260,7 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
+        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
         $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
 
@@ -280,26 +270,12 @@ class LeadsController extends Controller
         ];
     }
 
-    public function assignAssesorDigitalToLead($solicitud)
-    {
-        $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
-        $factoryRequest->ASESOR_DIG = auth()->user()->id;
-        return $factoryRequest->save();
-
-        // $idAsesor = auth()->user()->id;
-        // $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
-        // return DB::connection('oportudata')->select($query);
-    }
-
     public function checkLeadProcess($idLead)
     {
         if ($idLead == '') return -1;
         $lead = $this->leadInterface->findLeadById($idLead);
         $lead->state = 2;
-        return $lead->save();
-
-        // $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
-        // return  DB::select($query);
+        return response()->json($lead->save());
     }
 
     public function show($id)

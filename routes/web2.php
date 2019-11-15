@@ -10,6 +10,10 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
+
+    Route::namespace('FactoryRequests')->group(function () {
+        Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
+    });
 });
 
 //libranza routes
