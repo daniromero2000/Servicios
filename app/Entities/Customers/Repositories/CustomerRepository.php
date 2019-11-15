@@ -16,8 +16,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function listCustomers()
     {
         return $this->model->with([
-            'latestCifinScore',
-            'factoryRequests',
             'creditCard',
             'latestIntention'
         ])->limit(30)->get();
@@ -27,15 +25,9 @@ class CustomerRepository implements CustomerRepositoryInterface
     {
         return $this->model->with([
             'creditCard',
-            'latestIntention',
-        ])->where('ESTADO', 'APROBADO')->has('latestIntention')->has('creditCard')->has('latestCifinScore')->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
+            'factoryRequests'
+        ])->where('ESTADO', 'APROBADO')
+            ->has('hasFactoryRequests')
+            ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
     }
 }
-
-
-// ->with(['cifinScores' => function ($query) {
-//                 $query->latest('scoconsul')->first();
-//             }])
-//             ->with(['intentions' => function ($query) {
-//                 $query->latest('FECHA_INTENCION')->first();
-//             }])

@@ -130,9 +130,14 @@ class Customer extends Model
         return $this->hasOne(CreditCard::class, 'CLIENTE');
     }
 
+    public function hasFactoryRequests()
+    {
+        return $this->hasOne(FactoryRequest::class, 'CLIENTE');
+    }
+
     public function factoryRequests()
     {
-        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
+        return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
     }
 
     public function latestIntention()

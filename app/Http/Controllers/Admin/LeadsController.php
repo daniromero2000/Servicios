@@ -7,6 +7,7 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -18,7 +19,7 @@ class LeadsController extends Controller
 {
     private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
     private $userInterface, $user, $campaignInterface, $commentInterface;
-    private $customerInterface;
+    private $customerInterface, $factoryRequestInterface;
 
     public function __construct(
         AssessorRepositoryInterface $assessorRepositoryInterface,
@@ -26,7 +27,8 @@ class LeadsController extends Controller
         UserRepositoryInterface $userRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
         CommentRepositoryInterface $commentRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        FactoryRequestRepositoryInterface $FactoryRequestRepositoryInterface
     ) {
         $this->commentInterface  = $commentRepositoryInterface;
         $this->campaignInterface = $campaignRepositoryInterface;
@@ -34,6 +36,7 @@ class LeadsController extends Controller
         $this->leadInterface     = $leadRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
+        $this->factoryRequestInterface = $FactoryRequestRepositoryInterface;
         $this->middleware('auth')->except('logout');
     }
 
@@ -43,6 +46,7 @@ class LeadsController extends Controller
         $this->codeAsessor = $this->user->codeOportudata;
 
         // return $this->customerInterface->listCustomersDigitalChannel();
+        return $this->factoryRequestInterface->listFactoryRequestDigitalChannel();
 
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
@@ -159,7 +163,7 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, ti.FECHA_INTENCION
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, tar.TIPO_TAR, sb.FECHASOL
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
@@ -169,7 +173,6 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND cf.`ESTADO` = 'APROBADO'
         AND ti.CEDULA = cf.CEDULA
-        AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
@@ -192,7 +195,7 @@ class LeadsController extends Controller
             $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
-        $query .= " ORDER BY sb.`ASESOR_DIG`, ti.`FECHA_INTENCION` DESC";
+        $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
         $resp         = DB::connection('oportudata')->select($query);

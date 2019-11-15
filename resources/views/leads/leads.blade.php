@@ -149,13 +149,13 @@
                         <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                         <td>@{{ lead.CELULAR }}</td>
                         <td>
-                            @{{ lead.TARJETA }}
+                            @{{ lead.TIPO_TAR }}
                         </td>
                         <td>@{{ lead.CIUD_UBI }}</td>
                         <td>
                             $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
                         </td>
-                        <td>@{{ lead.FECHA_INTENCION }}</td>
+                        <td>@{{ lead.FECHASOL }}</td>
                         <td>
                             <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor"
                                 ng-click="viewComments(lead.NOMBRES, lead.APELLIDOS, lead.state, lead.id);$parent.$parent.lead=lead"></i>
