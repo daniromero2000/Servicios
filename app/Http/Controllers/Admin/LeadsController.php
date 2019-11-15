@@ -46,8 +46,9 @@ class LeadsController extends Controller
         $this->codeAsessor = $this->user->codeOportudata;
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
-            'q'        => $request->get('q'),
-            'initFromAnt' => $request->get('initFromAnt')
+            'q'              => $request->get('q'),
+            'initFromAnt'    => $request->get('initFromAnt'),
+            'qcityAprobados' => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
@@ -106,7 +107,17 @@ class LeadsController extends Controller
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         if ($request['q'] != '') {
-            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+            $query .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
+        }
+
+        if ($request['qcityAprobados'] != '') {
+            $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
         }
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
@@ -171,7 +182,13 @@ class LeadsController extends Controller
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         if ($request['q'] != '') {
-            $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+            $query .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
         }
 
         if ($request['qtipoTarjetaAprobados'] != '') {
