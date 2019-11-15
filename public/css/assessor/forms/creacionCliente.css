@@ -2,6 +2,32 @@
     max-width: 700px;
 }
 
+.modalThankYouPage-asessors > .modal-dialog{
+    max-width: 1000px;
+}
+
+.headThankYuoModal{
+    background: url(../../../images/asessors/barratop.jpg) center center no-repeat;
+    background-size: 100%;
+}
+
+.iconThankYouModal{
+    width: 90px;
+}
+
+.textTnakYouModal{
+    color: #0255FC;
+    font-size: 18px;
+}
+
+.containTextThankYouModal{
+    margin-top: 25px;
+}
+
+.headThankYuoModal > img{
+    max-width: 260px;
+}
+
 .confronta-title{
     color: #167efa;
     margin: 20px 0;
