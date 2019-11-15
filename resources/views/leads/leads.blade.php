@@ -384,7 +384,15 @@
                     </div>
                     <div class="card-body">
                         <form ng-submit="searchLeads()">
-                            <div class="row form-group">
+
+                               <div class="row form-group">
+                                    <div class="col-12 col-sm-6">
+                                        <label>Ciudad</label>
+                                        <select class="form-control" ng-model="q.qcityAprobados"
+                                            ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
                                 <div class="col-12 col-sm-6">
                                     <label for="qfechaInicialTR">Fecha Inicial</label>
                                     <div class="input-group" moment-picker="q.qfechaInicialTR" format="YYYY-MM-DD">
@@ -404,9 +412,9 @@
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
                                     </div>
+
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-12 text-right">
                                     <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear

@@ -245,6 +245,10 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.resetFiltros = function () {
         $scope.leads = [];
+        $scope.leadsAnt = [];
+        $scope.leadsCM = [];
+        $scope.leadsTR = [];
+        $scope.leadsGen = [];
         $scope.q = {
             'q': '',
             'qtipoTarjetaAprobados': '',

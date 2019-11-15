@@ -57,7 +57,8 @@ class LeadsController extends Controller
             'q'              => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
-            'qfechaFinalTR'   => $request->get('qfechaFinalTR')
+            'qfechaFinalTR'   => $request->get('qfechaFinalTR'),
+            'qcityAprobados' => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsDigital = $this->getLeadsCanalDigital([
@@ -286,6 +287,9 @@ class LeadsController extends Controller
                 '%' . $request['q'] . '%',
                 '%' . $request['q'] . '%'
             );
+        }
+        if ($request['qcityAprobados'] != '') {
+            $queryTradicional .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
         }
 
         if ($request['qfechaInicialTR'] != '') {
