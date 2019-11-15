@@ -119,7 +119,7 @@ Route::resource('libranza', 'Admin\LibranzaController');
 
 Route::resource('leads', 'Admin\LeadsController');
 
-Route::resource('viajes', 'Admin\ViajesController');
+
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
 Route::resource('faqs', 'Admin\FaqsController');
