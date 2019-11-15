@@ -26,8 +26,6 @@ class CommunityController extends Controller
 
         if ($request->get('q') != '') {
 
-            if ($request->get('q') = 1) { } else { }
-
             $queryCM .= sprintf(
                 " AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s')",
                 '%' . $request->get('q') . '%',
@@ -37,6 +35,29 @@ class CommunityController extends Controller
                 '%' . $request->get('q') . '%'
             );
         }
+
+        if ($request['city'] != '') {
+            $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['city']);
+        }
+
+        if ($request['typeService'] != '') {
+            $queryCM .= sprintf(" AND (lead.`typeService` = '%s') ", $request['typeService']);
+        }
+
+        if ($request['state'] != '') {
+            $queryCM .= sprintf(" AND (lead.`state` = '%s') ", $request['state']);
+        }
+
+        if ($request['fecha_ini'] != '') {
+            $request['fecha_ini'] .= " 00:00:00";
+            $queryCM .= sprintf(" AND (lead.`created_at` >= '%s') ", $request['fecha_ini']);
+        }
+
+        if ($request['fecha_fin'] != '') {
+            $request['fecha_fin'] .= " 23:59:59";
+            $queryCM .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['fecha_fin']);
+        }
+
 
         $respTotalLeads = DB::select($queryCM);
 

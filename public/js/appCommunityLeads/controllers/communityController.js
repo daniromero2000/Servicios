@@ -90,10 +90,15 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
         $http({
             method: 'GET',
             url: '/communityleads?q=' + $scope.q.q +
-                '&initFromCM=' + $scope.q.initFromCM,
+                '&initFromCM=' + $scope.q.initFromCM +
+                '&typeService=' + $scope.q.typeService +
+                '&state=' + $scope.q.state +
+                '&fecha_ini=' + $scope.q.fecha_ini +
+                '&fecha_fin=' + $scope.q.fecha_fin +
+                '&city=' + $scope.q.city,
 
         }).then(function successCallback(response) {
-                 $scope.totalLeads = response.data.totalLeads;
+            $scope.totalLeads = response.data.totalLeads;
             if (response.data.leadsCommunity != false) {
                 $scope.q.initFromCM += response.data.leadsCommunity.length;
                 angular.forEach(response.data.leadsCommunity, function (value, key) {
