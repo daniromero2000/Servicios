@@ -11,7 +11,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qCM': '',
         'qRL': '',
         'qGen': '',
-        'qTR': '',
         'qfechaInicialTR': '',
         'qfechaFinalTR': '',
         'qTRAnt': '',
@@ -63,6 +62,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.leadsGen = [];
     $scope.leadsRejected = [];
     $scope.leadsTR = [];
+    $scope.cities = [];
 
     $scope.typeServices = [{
             label: 'Oportuya',
@@ -118,6 +118,20 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         }
     ];
 
+    $scope.getCities = function () {
+        $http({
+            method: 'GET',
+            url: '/subsidiaries/cities'
+        }).then(function successCallback(response) {
+            console.log(response.data);
+            if (response.data != false) {
+                $scope.cities = response.data;
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
     $scope.getLeads = function () {
         showLoader();
         $scope.cargando = true;
@@ -140,7 +154,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&qCM=' + $scope.q.qCM +
                 '&qRL=' + $scope.q.qRL +
                 '&qGen=' + $scope.q.qGen +
-                '&qTR=' + $scope.q.qTR +
                 '&initFrom=' + $scope.q.initFrom +
                 '&initFromAnt=' + $scope.q.initFromAnt +
                 '&initFromCM=' + $scope.q.initFromCM +
@@ -232,6 +245,10 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.resetFiltros = function () {
         $scope.leads = [];
+        $scope.leadsAnt = [];
+        $scope.leadsCM = [];
+        $scope.leadsTR = [];
+        $scope.leadsGen = [];
         $scope.q = {
             'q': '',
             'qtipoTarjetaAprobados': '',
@@ -241,7 +258,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qCM': '',
             'qRL': '',
             'qGen': '',
-            'qTR': '',
             'qfechaInicialTR': '',
             'qfechaFinalTR': '',
             'qTRAnt': '',
@@ -389,4 +405,5 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     };
 
     $scope.getLeads();
+    $scope.getCities();
 })

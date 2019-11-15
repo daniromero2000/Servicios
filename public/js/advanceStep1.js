@@ -299,6 +299,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}
 				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
+				console.log(response);
 				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			});
 	};
