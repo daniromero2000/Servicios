@@ -50,7 +50,7 @@
                                 <div class="col-12 col-sm-6">
                                     <label>Ciudad</label>
                                     <select class="form-control" ng-model="q.qcityAprobados"
-                                        ng-options="city.id as city.name+'('+city.departament+')' for city in cities"></select>
+                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="qtipoTarjetaAprobados">Tipo Tarjeta</label>

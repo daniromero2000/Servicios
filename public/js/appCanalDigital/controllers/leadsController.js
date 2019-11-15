@@ -63,6 +63,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.leadsGen = [];
     $scope.leadsRejected = [];
     $scope.leadsTR = [];
+    $scope.cities = [];
 
     $scope.typeServices = [{
             label: 'Oportuya',
@@ -117,6 +118,20 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             value: 1
         }
     ];
+
+    $scope.getCities = function () {
+        $http({
+            method: 'GET',
+            url: '/subsidiaries/cities'
+        }).then(function successCallback(response) {
+            console.log(response.data);
+            if (response.data != false) {
+                $scope.cities = response.data;
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
 
     $scope.getLeads = function () {
         showLoader();
@@ -389,4 +404,5 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     };
 
     $scope.getLeads();
+    $scope.getCities();
 })

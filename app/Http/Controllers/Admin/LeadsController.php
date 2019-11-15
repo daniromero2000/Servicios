@@ -171,21 +171,25 @@ class LeadsController extends Controller
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         if ($request['q'] != '') {
-            $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+            $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
         }
 
         if ($request['qtipoTarjetaAprobados'] != '') {
             $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
         }
 
+        if ($request['qcityAprobados'] != '') {
+            $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
+        }
+
         if ($request['qfechaInicialAprobados'] != '') {
             $request['qfechaInicialAprobados'] .= " 00:00:00";
-            $query .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialAprobados']);
+            $query .= sprintf(" AND (sb.`FECHASOL` >= '%s') ", $request['qfechaInicialAprobados']);
         }
 
         if ($request['qfechaFinalAprobados'] != '') {
             $request['qfechaFinalAprobados'] .= " 23:59:59";
-            $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
+            $query .= sprintf(" AND (sb.`FECHASOL` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
