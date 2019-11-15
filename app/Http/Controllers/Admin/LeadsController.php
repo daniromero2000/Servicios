@@ -368,7 +368,6 @@ class LeadsController extends Controller
         $lead =  $this->leadInterface->findLeadById($idLead);
         $lead->state = 4;
         $lead->save();
-
         $this->addComent($idLead, $comment);
 
         return response()->json([true]);
