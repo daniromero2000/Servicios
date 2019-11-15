@@ -7,7 +7,6 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
@@ -46,20 +45,20 @@ class LeadsController extends Controller
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
 
-        // return $this->customerInterface->listCustomersDigitalChannel();
-        // return $this->factoryRequestInterface->listFactoryRequestDigitalChannel();
-
-
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
-            'q'        => $request->get('q'),
-            'initFromAnt' => $request->get('initFromAnt')
+            'q'              => $request->get('q'),
+            'initFromAnt'    => $request->get('initFromAnt'),
+            'qcityAprobados' => $request->get('qcityAprobados'),
+            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
+            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
         ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
-            'qTR'             => $request->get('qTR'),
+            'q'              => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
-            'qfechaFinalTR'   => $request->get('qfechaFinalTR')
+            'qfechaFinalTR'   => $request->get('qfechaFinalTR'),
+            'qcityAprobados' => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsDigital = $this->getLeadsCanalDigital([
@@ -72,8 +71,9 @@ class LeadsController extends Controller
         ]);
 
         $getLeadsCM = $this->getLeadsCM([
-            'qCM'        => $request->get('qCM'),
-            'initFromCM' => $request->get('initFromCM')
+            'q'        => $request->get('q'),
+            'initFromCM' => $request->get('initFromCM'),
+            'qcityAprobados'         => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsGen = $this->getGenLeads([
@@ -100,7 +100,7 @@ class LeadsController extends Controller
     {
         $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`,  sb.FECHASOL, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
@@ -110,13 +110,32 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
-        $respTotalLeads = DB::connection('oportudata')->select($query);
-
         if ($request['q'] != '') {
-            $query .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+            $query .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
         }
 
-        $query .= " ORDER BY sb.`ASESOR_DIG`, cf.`CREACION` DESC";
+        if ($request['qcityAprobados'] != '') {
+            $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
+        }
+
+        if ($request['qfechaInicialAprobados'] != '') {
+            $request['qfechaInicialAprobados'] .= " 00:00:00";
+            $query .= sprintf(" AND (sb.`FECHASOL` >= '%s') ", $request['qfechaInicialAprobados']);
+        }
+
+        if ($request['qfechaFinalAprobados'] != '') {
+            $request['qfechaFinalAprobados'] .= " 23:59:59";
+            $query .= sprintf(" AND (sb.`FECHASOL` <= '%s') ", $request['qfechaFinalAprobados']);
+        }
+
+        $respTotalLeads = DB::connection('oportudata')->select($query);
+        $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
 
         $resp         = DB::connection('oportudata')->select($query);
@@ -147,12 +166,11 @@ class LeadsController extends Controller
         WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza')
         AND lead.`state` !=  3 ";
 
-        $respTotalLeadsGen = DB::select($queryGenLeads);
-
         if ($request['qGen'] != '') {
             $queryGenLeads .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`typeService` LIKE '%s' ) ", '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%', '%' . $request['qGen'] . '%');
         }
 
+        $respTotalLeadsGen = DB::select($queryGenLeads);
         $queryGenLeads .= "ORDER BY `created_at` DESC ";
         $queryGenLeads .= sprintf(" LIMIT %s,30", $request['initFromGen']);
 
@@ -177,26 +195,35 @@ class LeadsController extends Controller
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
-        $respTotalLeads = DB::connection('oportudata')->select($query);
-
         if ($request['q'] != '') {
-            $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' ) ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');
+            $query .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
         }
 
         if ($request['qtipoTarjetaAprobados'] != '') {
             $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
         }
 
+        if ($request['qcityAprobados'] != '') {
+            $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
+        }
+
         if ($request['qfechaInicialAprobados'] != '') {
             $request['qfechaInicialAprobados'] .= " 00:00:00";
-            $query .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialAprobados']);
+            $query .= sprintf(" AND (sb.`FECHASOL` >= '%s') ", $request['qfechaInicialAprobados']);
         }
 
         if ($request['qfechaFinalAprobados'] != '') {
             $request['qfechaFinalAprobados'] .= " 23:59:59";
-            $query .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalAprobados']);
+            $query .= sprintf(" AND (sb.`FECHASOL` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
+        $respTotalLeads = DB::connection('oportudata')->select($query);
         $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
         $query .= sprintf(" LIMIT %s,30", $request['initFrom']);
 
@@ -228,12 +255,21 @@ class LeadsController extends Controller
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3)";
 
-        $respTotalLeadsCM = DB::select($queryCM);
-
-        if ($request['qCM'] != '') {
-            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%', '%' . $request['qCM'] . '%');
+        if ($request['q'] != '') {
+            $queryCM .= sprintf(
+                " AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
         }
 
+        if ($request['qcityAprobados'] != '') {
+            $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
+        }
+
+        $respTotalLeadsCM = DB::select($queryCM);
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
 
@@ -255,22 +291,29 @@ class LeadsController extends Controller
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
         AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
-        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
-
-        if ($request['qTR'] != '') {
-            $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+        if ($request['q'] != '') {
+            $queryTradicional .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
+        }
+        if ($request['qcityAprobados'] != '') {
+            $queryTradicional .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
         }
 
         if ($request['qfechaInicialTR'] != '') {
             $request['qfechaInicialTR'] .= " 00:00:00";
-            $queryTradicional .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` >= '%s') ", $request['qfechaInicialTR']);
         }
 
         if ($request['qfechaFinalTR'] != '') {
             $request['qfechaFinalTR'] .= " 23:59:59";
-            $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
+        $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
         $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
 
@@ -280,26 +323,12 @@ class LeadsController extends Controller
         ];
     }
 
-    public function assignAssesorDigitalToLead($solicitud)
-    {
-        $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
-        $factoryRequest->ASESOR_DIG = auth()->user()->id;
-        return $factoryRequest->save();
-
-        // $idAsesor = auth()->user()->id;
-        // $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
-        // return DB::connection('oportudata')->select($query);
-    }
-
     public function checkLeadProcess($idLead)
     {
         if ($idLead == '') return -1;
         $lead = $this->leadInterface->findLeadById($idLead);
         $lead->state = 2;
-        return $lead->save();
-
-        // $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
-        // return  DB::select($query);
+        return response()->json($lead->save());
     }
 
     public function show($id)
