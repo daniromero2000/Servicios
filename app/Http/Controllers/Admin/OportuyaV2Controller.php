@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
 use App\Application;
-use App\Lead;
+use App\Entities\Leads\Lead;
 use App\DatosCliente;
 use App\Intenciones;
 use App\cliCel;
