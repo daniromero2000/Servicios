@@ -15,10 +15,17 @@ class FactoryRequest extends Model
 
     protected $primaryKey = 'SOLICITUD';
 
-    public function customer()
+    public $timestamps = false;
+
+    public function hasCustomer()
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')
             ->where('ESTADO', 'APROBADO');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'CLIENTE');
     }
 
     public function subsidiary()

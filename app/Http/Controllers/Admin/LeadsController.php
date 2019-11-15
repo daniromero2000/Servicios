@@ -47,7 +47,7 @@ class LeadsController extends Controller
         $this->codeAsessor = $this->user->codeOportudata;
 
         // return $this->customerInterface->listCustomersDigitalChannel();
-        return $this->factoryRequestInterface->listFactoryRequestDigitalChannel();
+        // return $this->factoryRequestInterface->listFactoryRequestDigitalChannel();
 
 
         $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
@@ -174,6 +174,7 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND cf.`ESTADO` = 'APROBADO'
         AND ti.CEDULA = cf.CEDULA
+        AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
         $respTotalLeads = DB::connection('oportudata')->select($query);

@@ -26,7 +26,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         return $this->model->with([
             'customer',
-        ])->has('customer')
+            'creditCard'
+        ])->has('hasCustomer')
             ->has('creditCard')
             ->where('ESTADO', 'APROBADO')
             ->where('GRAN_TOTAL', 0)
