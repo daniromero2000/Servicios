@@ -10,7 +10,7 @@
                         <div class="col-12 col-sm-4">
                             <label for="city">Ciudad</label>
                             <select id="city" class="form-control" ng-model="q.city"
-                                ng-options="city.value as city.label for city in cities"></select>
+                                ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                         </div>
                         <div class="col-12 col-sm-4">
                             <label for="typeService">Tipo de Servicio</label>
@@ -56,12 +56,20 @@
     </div>
 </div>
 <div class="row resetRow">
-    <div class="col-sm-12 col-md-4">
+    <div class="col-sm-12 col-md-2">
         <button class="btn btn-primary">
             <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
         </button>
     </div>
-    <div class="col-sm-12 offset-md-3 col-md-4 text-right">
+    <div class="col-sm-12 col-md-2">
+        <p class="totalLeadsDigital text-center">
+            @{{ totalLeads }}
+        </p>
+        <p class="text-center">
+            Leads
+        </p>
+    </div>
+    <div class="col-sm-12 offset-md-4 col-md-3 text-right">
         <div class="input-group mb-3">
             <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
             <div class="input-group-append">
@@ -71,7 +79,7 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-1 resetCol">
-        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i
+        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
                 class="fas fa-filter"></i></button>
     </div>
 </div>
@@ -285,7 +293,8 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 form-group">
                                     <label for="city">Ciudad</label>
-                                    <select id="city" class="form-control" ng-model="lead.city" ng-options="city.CIUDAD as city.CIUDAD for city in cities">
+                                    <select id="city" class="form-control" ng-model="lead.city"
+                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities">
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-6 form-group no-padding-right">

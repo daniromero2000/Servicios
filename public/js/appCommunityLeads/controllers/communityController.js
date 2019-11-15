@@ -9,7 +9,7 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
         'state': '',
         'channel': ''
     };
-
+    $scope.totalLeads = 0;
     $scope.campaign = {};
     $scope.campaigns = [];
     $scope.idCampaign = '';
@@ -89,11 +89,14 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
         $scope.cargando = true;
         $http({
             method: 'GET',
-            url: '/communityleads?q=' + $scope.q.q + '&initFromCM=' + $scope.q.initFromCM,
+            url: '/communityleads?q=' + $scope.q.q +
+                '&initFromCM=' + $scope.q.initFromCM,
+
         }).then(function successCallback(response) {
-            if (response.data != false) {
-                $scope.q.initFromCM += response.data.length;
-                angular.forEach(response.data, function (value, key) {
+                 $scope.totalLeads = response.data.totalLeads;
+            if (response.data.leadsCommunity != false) {
+                $scope.q.initFromCM += response.data.leadsCommunity.length;
+                angular.forEach(response.data.leadsCommunity, function (value, key) {
                     if ((value.channel != 1) && (value.channel != 0)) {
                         if (value.campaignName == null) {
                             value.campaignName = 'N/A';
@@ -103,7 +106,9 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
                 });
                 $scope.cargando = false;
             }
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) {
+            console.log(response);
+        });
     };
 
     $scope.getCities = function () {

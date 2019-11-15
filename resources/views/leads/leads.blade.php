@@ -645,8 +645,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 6 }">
