@@ -13,13 +13,16 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $this->model = $factoryRequest;
     }
 
-
-
     public function listFactoryRequestDigitalChannel()
     {
         return $this->model->with([
             'customer',
-        ])->has('customer')->has('creditCard')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('SOLICITUD')
-            ->get();
+        ])->has('customer')
+            ->has('creditCard')
+            ->where('ESTADO', 'APROBADO')
+            ->where('GRAN_TOTAL', 0)
+            ->where('SOLICITUD_WEB', 1)
+            ->latest('SOLICITUD')
+            ->get(['SOLICITUD', 'ASESOR_DIG']);
     }
 }
