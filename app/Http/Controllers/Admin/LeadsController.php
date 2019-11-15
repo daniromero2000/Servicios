@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Entities\Leads\Lead;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
-use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class LeadsController extends Controller
 {
     private $codeAsessor, $assessorInterface, $IdEmpresa, $leadInterface;
-    private $userInterface, $user, $campaignInterface, $commentInterface;
+    private $userInterface, $user, $campaignInterface;
     private $customerInterface, $factoryRequestInterface;
 
     public function __construct(
@@ -26,11 +25,9 @@ class LeadsController extends Controller
         LeadRepositoryInterface $leadRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
-        CommentRepositoryInterface $commentRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface,
         FactoryRequestRepositoryInterface $FactoryRequestRepositoryInterface
     ) {
-        $this->commentInterface  = $commentRepositoryInterface;
         $this->campaignInterface = $campaignRepositoryInterface;
         $this->userInterface     = $userRepositoryInterface;
         $this->leadInterface     = $leadRepositoryInterface;
@@ -417,16 +414,6 @@ class LeadsController extends Controller
         }
 
         $leadRerpo->updateLead($request->input());
-
-        return response()->json([true]);
-    }
-
-    public function addComent($lead, $comment)
-    {
-        $request['idLogin'] = auth()->user()->id;
-        $request['idLead']  = $lead;
-        $request['comment'] = $comment;
-        $this->commentInterface->createComment($request);
 
         return response()->json([true]);
     }
