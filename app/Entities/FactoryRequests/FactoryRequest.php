@@ -17,7 +17,8 @@ class FactoryRequest extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'CLIENTE')->where('ESTADO', 'APROBADO');
+        return $this->belongsTo(Customer::class, 'CLIENTE')
+            ->where('ESTADO', 'APROBADO');
     }
 
     public function subsidiary()
