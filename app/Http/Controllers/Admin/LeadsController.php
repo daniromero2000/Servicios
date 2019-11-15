@@ -290,12 +290,12 @@ class LeadsController extends Controller
 
         if ($request['qfechaInicialTR'] != '') {
             $request['qfechaInicialTR'] .= " 00:00:00";
-            $queryTradicional .= sprintf(" AND (cf.`CREACION` >= '%s') ", $request['qfechaInicialTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` >= '%s') ", $request['qfechaInicialTR']);
         }
 
         if ($request['qfechaFinalTR'] != '') {
             $request['qfechaFinalTR'] .= " 23:59:59";
-            $queryTradicional .= sprintf(" AND (cf.`CREACION` <= '%s') ", $request['qfechaFinalTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
