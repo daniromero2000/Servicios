@@ -163,7 +163,7 @@ class LeadsController extends Controller
     {
         $queryGenLeads = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`
         FROM `leads` as lead
-        WHERE `typeService` IN  ('Credito libranza','Motos','Seguros','Libranza')
+        WHERE `typeService` IN  ('Motos','Seguros')
         AND lead.`state` !=  3 ";
 
         if ($request['qGen'] != '') {
