@@ -11,7 +11,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qCM': '',
         'qRL': '',
         'qGen': '',
-        'qTR': '',
         'qfechaInicialTR': '',
         'qfechaFinalTR': '',
         'qTRAnt': '',
@@ -155,7 +154,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&qCM=' + $scope.q.qCM +
                 '&qRL=' + $scope.q.qRL +
                 '&qGen=' + $scope.q.qGen +
-                '&qTR=' + $scope.q.qTR +
                 '&initFrom=' + $scope.q.initFrom +
                 '&initFromAnt=' + $scope.q.initFromAnt +
                 '&initFromCM=' + $scope.q.initFromCM +
@@ -256,7 +254,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qCM': '',
             'qRL': '',
             'qGen': '',
-            'qTR': '',
             'qfechaInicialTR': '',
             'qfechaFinalTR': '',
             'qTRAnt': '',

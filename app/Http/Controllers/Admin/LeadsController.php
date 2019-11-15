@@ -49,10 +49,12 @@ class LeadsController extends Controller
             'q'              => $request->get('q'),
             'initFromAnt'    => $request->get('initFromAnt'),
             'qcityAprobados' => $request->get('qcityAprobados'),
+            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
+            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
         ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
-            'qTR'             => $request->get('qTR'),
+            'q'              => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
             'qfechaFinalTR'   => $request->get('qfechaFinalTR')
@@ -118,6 +120,16 @@ class LeadsController extends Controller
 
         if ($request['qcityAprobados'] != '') {
             $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
+        }
+
+        if ($request['qfechaInicialAprobados'] != '') {
+            $request['qfechaInicialAprobados'] .= " 00:00:00";
+            $query .= sprintf(" AND (sb.`FECHASOL` >= '%s') ", $request['qfechaInicialAprobados']);
+        }
+
+        if ($request['qfechaFinalAprobados'] != '') {
+            $request['qfechaFinalAprobados'] .= " 23:59:59";
+            $query .= sprintf(" AND (sb.`FECHASOL` <= '%s') ", $request['qfechaFinalAprobados']);
         }
 
         $respTotalLeads = DB::connection('oportudata')->select($query);
@@ -267,8 +279,13 @@ class LeadsController extends Controller
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
         AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
-        if ($request['qTR'] != '') {
-            $queryTradicional .= sprintf(" AND(cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['qTR'] . '%', '%' . $request['qTR'] . '%');
+        if ($request['q'] != '') {
+            $queryTradicional .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
         }
 
         if ($request['qfechaInicialTR'] != '') {
