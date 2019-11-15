@@ -562,24 +562,21 @@
 			</div>
         </div>
         
-        <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade modalThankYouPage-asessors hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-body " style="padding: 0">
 						<div class="row resetRow">
-							<div class="col-12 text-center containerLogoModalStep">
-								<img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
+							<div class="col-12 text-center resetCol headThankYuoModal">
+                                <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
 							</div>
 						</div>
 						<div class="row resetRow">
-                            <div class="col-12" ng-if="estadoCliente == 'TRADICIONAL'">
-                                <p class="textModal text-center">
-									<strong>Solicitud Enviada!!</strong>
-									<br>
-									El cliente no cumple para ninguna tarjeta
-                                </p>
-                                <p class="textModalNumSolic text-center">
-                                    ** Según políticas internas, el cliente no cumple para ninguna tarjeta <br> pero es posible que aplique para crédito tradicional</b>
+                            <div class="col-12 text-center" ng-if="estadoCliente == 'TRADICIONAL'">
+                                <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
+                                <p class="textTnakYouModal">
+                                    En este momento <b>no tienes acceso a nuestra tarjeta,</b> <br>
+                                    pero <b>SI</b> estás <b>pre-aprobado</b> para crédito tradicional.
                                 </p>
                             </div>
 							<div class="col-12" ng-if="estadoCliente == 'APROBADO'">

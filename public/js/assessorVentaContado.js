@@ -1,6 +1,7 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$scope.tipoCliente = "";
+	$scope.estadoCliente = "TRADICIONAL";
 	$scope.messageValidationLead = "";
 	$scope.lead = {};
 	$scope.infoLead = {};
@@ -361,7 +362,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
-
+	$('#congratulations').modal('show');
 	$scope.sendConfronta = function(){
 		$scope.infoConfronta = {
 			'confronta' : $scope.formConfronta,
