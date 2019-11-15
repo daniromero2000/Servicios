@@ -13,6 +13,15 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $this->model = $factoryRequest;
     }
 
+    public function findFactoryRequestById(int $id): FactoryRequest
+    {
+        try {
+            return $this->model->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function listFactoryRequestDigitalChannel()
     {
         return $this->model->with([

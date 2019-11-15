@@ -7,6 +7,7 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
@@ -280,18 +281,24 @@ class LeadsController extends Controller
 
     public function assignAssesorDigitalToLead($solicitud)
     {
-        $idAsesor = auth()->user()->id;
-        $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
+        $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
+        $factoryRequest->ASESOR_DIG = auth()->user()->id;
+        return $factoryRequest->save();
 
-        return DB::connection('oportudata')->select($query);
+        // $idAsesor = auth()->user()->id;
+        // $query = sprintf("UPDATE `SOLIC_FAB` SET `ASESOR_DIG` = %s WHERE `SOLICITUD` = %s ", $idAsesor, $solicitud);
+        // return DB::connection('oportudata')->select($query);
     }
 
     public function checkLeadProcess($idLead)
     {
         if ($idLead == '') return -1;
-        $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
+        $lead = $this->leadInterface->findLeadById($idLead);
+        $lead->state = 2;
+        return $lead->save();
 
-        return  DB::select($query);
+        // $query = sprintf("UPDATE `leads` SET `state` = 2 WHERE `id` = %s ", $idLead);
+        // return  DB::select($query);
     }
 
     public function show($id)
