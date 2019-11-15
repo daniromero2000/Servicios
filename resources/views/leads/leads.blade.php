@@ -650,6 +650,56 @@
     </div>
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 6 }">
+        <div class="row form-group" ng-if="filtros">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Filtros</strong>
+                    </div>
+                    <div class="card-body">
+                        <form ng-submit="searchLeads()">
+
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-6">
+                                    <label>Ciudad</label>
+                                    <select class="form-control" ng-model="q.qcityAprobados"
+                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-6">
+                                    <label for="fechaInicialAprobados">Fecha Inicial</label>
+                                    <div class="input-group" moment-picker="q.qfechaInicialAprobados" format="YYYY-MM-DD">
+                                        <input class="form-control inputsSteps inputText" ng-model="q.qfechaInicialAprobados"
+                                            id="fechaInicialAprobados" readonly="" required="" placeholder="Año/Mes/Día">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="qfechaFinalAprobados">Fecha Final</label>
+                                    <div class="input-group" moment-picker="q.qfechaFinalAprobados" format="YYYY-MM-DD">
+                                        <input class="form-control inputsSteps inputText" ng-model="q.qfechaFinalAprobados"
+                                            id="qfechaFinalAprobados" readonly="" required="" placeholder="Año/Mes/Día">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear
+                                        Filtros<i class="fas fa-times"></i></button>
+                                    <button type="submit" class="btn btn-primary ">Filtrar<i class="fas fa-filter"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row resetRow">
             <div class="col-sm-12 col-md-1">
                 <p class="totalLeadsDigital text-center">
