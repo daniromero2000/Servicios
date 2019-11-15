@@ -164,7 +164,7 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, tar.TIPO_TAR, sb.FECHASOL
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`

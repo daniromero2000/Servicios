@@ -149,7 +149,7 @@
                         <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                         <td>@{{ lead.CELULAR }}</td>
                         <td>
-                            @{{ lead.TIPO_TAR }}
+                            @{{ lead.TARJETA }}
                         </td>
                         <td>@{{ lead.CIUD_UBI }}</td>
                         <td>
