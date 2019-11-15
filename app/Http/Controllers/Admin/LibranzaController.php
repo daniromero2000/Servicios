@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
 use App\Fee;
-use App\Lead;
+use App\Entities\Leads\Lead;
 use App\Liquidator;
 use App\Pagaduria;
 use App\LibranzaLines;
