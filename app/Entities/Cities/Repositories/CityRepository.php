@@ -13,19 +13,10 @@ class CityRepository implements CityRepositoryInterface
         $this->model = $city;
     }
 
-    public function getCityIdDianByName($name)
+    public function getCityByName($name)
     {
         try {
-            return $this->model->where('NOMBRE', $name)->get(['ID_DIAN'])->first();
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function getCityDepartment($City)
-    {
-        try {
-            return $this->model->where('NOMBRE', $City)->get(['DEPARTAMENTO'])->first();
+            return $this->model->where('NOMBRE', $name)->get(['ID_DIAN', 'DEPARTAMENTO'])->first();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

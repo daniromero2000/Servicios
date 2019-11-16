@@ -126,8 +126,6 @@ class OportuyaV2Controller extends Controller
 	{
 		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
-			$lead = new Lead;
-			$oportudataLead = new OportuyaV2;
 			$estado = "";
 			$paso = "";
 			switch ($request->get('typeService')) {
@@ -144,7 +142,11 @@ class OportuyaV2Controller extends Controller
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
 
-			$cityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
+			$cityDepartment     = $city->DEPARTAMENTO;
+			$cityDianId         = $city->ID_DIAN;
+
 			$identificationNumber = trim($request->get('identificationNumber'));
 
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
@@ -159,10 +161,12 @@ class OportuyaV2Controller extends Controller
 				'telephone' => trim($request->get('telephone')),
 				'occupation' =>  trim($request->get('occupation')),
 				'termsAndConditions' => trim($request->get('termsAndConditions')),
-				'city' =>  trim($cityName),
+				'city' =>  trim($subsidiaryCityName),
 				'typeProduct' =>  '',
 				'typeService' =>  trim($request->get('typeService'))
 			];
+
+			$lead = new Lead;
 			$createLead = $lead->updateOrCreate(['identificationNumber' => $identificationNumber], $dataLead)->save();
 
 			$getExistLead = OportuyaV2::find($identificationNumber);
@@ -184,8 +188,8 @@ class OportuyaV2Controller extends Controller
 				'CELULAR' => trim($request->get('telephone')),
 				'PROFESION' => 'NO APLICA',
 				'ACTIVIDAD' => strtoupper($request->get('occupation')),
-				'CIUD_UBI' => trim($cityName),
-				'DEPTO' =>  trim($this->cityInterface->getCityDepartment($cityName)->DEPARTAMENTO),
+				'CIUD_UBI' => trim($subsidiaryCityName),
+				'DEPTO' =>  trim($cityDepartment),
 				'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
 				'TIPOCLIENTE' => 'OPORTUYA',
 				'SUBTIPO' => 'WEB',
@@ -199,10 +203,11 @@ class OportuyaV2Controller extends Controller
 				'USUARIO_CREACION' => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
 				'FECHA_ACTUALIZACION' => date('Y-m-d H:i:s'),
-				'ID_CIUD_UBI' => trim($this->cityInterface->getCityIdDianByName($cityName)->ID_DIAN),
+				'ID_CIUD_UBI' => trim($cityDianId),
 				'MEDIO_PAGO' => 12,
 			];
 
+			$oportudataLead = new OportuyaV2;
 			$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
 
 			$getExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :identi AND `NUM` = :num ", ['identi' => $identificationNumber, 'num' => trim($request->get('telephone'))]);
@@ -827,7 +832,7 @@ class OportuyaV2Controller extends Controller
 		return 1300000;
 	}
 
-	private function validatePolicyCredit($identificationNumber, $cityName)
+	private function validatePolicyCredit($identificationNumber, $subsidiaryCityName)
 	{
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 
@@ -839,7 +844,7 @@ class OportuyaV2Controller extends Controller
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
 			$scoreMin = 528;
-			if ($cityName == 'MEDELLÍN' || $cityName == 'BOGOTÁ') {
+			if ($subsidiaryCityName == 'MEDELLÍN' || $subsidiaryCityName == 'BOGOTÁ') {
 				$scoreMin = 726;
 			}
 

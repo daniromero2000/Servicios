@@ -25,11 +25,12 @@ class AdvanceController extends Controller
     public function index()
     {
 
-        $getIdcityUbi = $this->cityInterface->getCityIdDianByName('ABEJORRAL')->ID_DIAN;
-        $departament = trim($this->cityInterface->getCityDepartment('ABEJORRAL')->DEPARTAMENTO);
+        $getIdcityUbi = $this->cityInterface->getCityByName('ABEJORRAL');
+
+        $departament =   $getIdcityUbi->ID_DIAN;
 
 
-        dd($getIdcityUbi);
+        dd($departament);
 
         // $cityName = $this->getCity($request->get('city'));
 
