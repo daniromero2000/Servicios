@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CLIENTE extends Model
 {
-    public $table = 'CLIENTE';
+    protected $table = 'CLIENTE';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'CEDULA';
 

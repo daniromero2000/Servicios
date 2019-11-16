@@ -9,7 +9,7 @@ class CreditPolicy extends \Eloquent implements AuthenticatableContract
 {
     use Authenticatable;
 
-    public $table = 'VIG_CONSULTA';
+    protected $table = 'VIG_CONSULTA';
 
     protected $fillable = [
         'fab_vigencia',

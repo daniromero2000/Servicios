@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    public $table = 'ARTICULOS';
+    protected $table = 'ARTICULOS';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'CODIGO';
 

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subsidiary extends Model
 {
-  public $table = 'SUCURSALES';
+  protected $table = 'SUCURSALES';
 
-  public $connection = 'oportudata';
+  protected $connection = 'oportudata';
 
   protected $primaryKey = 'CODIGO';
 

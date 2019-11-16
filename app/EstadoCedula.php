@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstadoCedula extends Model
 {
-    public $table = 'fosyga_estadoCedula';
+    protected $table = 'fosyga_estadoCedula';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'idEstadoCedula';
 

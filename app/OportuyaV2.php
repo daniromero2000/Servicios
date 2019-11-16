@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OportuyaV2 extends Model
 {
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $table = 'CLIENTE_FAB';
 

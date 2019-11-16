@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pagaduria extends Model
 {
-    public $table = 'pagaduria';
+    protected $table = 'pagaduria';
 
     public $timestamps = false;
 
