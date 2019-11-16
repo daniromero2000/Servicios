@@ -214,9 +214,6 @@ class OportuyaV2Controller extends Controller
 				'MEDIO_PAGO' => 12,
 			];
 
-			// $oportudataLead = new Customer;
-			// $createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
-
 			$this->customerInterface->createCustomer($dataOportudata);
 
 			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
