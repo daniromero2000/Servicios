@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConfirmationMessage extends Model
 {
-    protected $table = 'campaigns';
+    protected $table = 'TB_MSJ_CONFIRMACION';
 
     protected $connection = 'oportudata';
 
