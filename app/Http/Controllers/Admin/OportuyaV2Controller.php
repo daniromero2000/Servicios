@@ -17,6 +17,7 @@ use App\Bdua;
 use App\EstadoCedula;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
+use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -26,11 +27,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+	private $confirmationMessageInterface;
+
+	public function __construct(
+		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface
+	) {
+		$this->confirmationMessageInterface = $confirmationMessageRepositoryInterface;
+	}
+
+
 	public function index()
 	{
 		$images = Imagenes::selectRaw('*')
@@ -43,30 +48,30 @@ class OportuyaV2Controller extends Controller
 
 	public function getPageDeniedTr()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 2 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedTr();
 
-		return view('advance.pageDeniedTradicional', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedTradicional', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDeniedAl()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 3 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedAl();
 
-		return view('advance.pageDeniedAlmacen', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedAlmacen', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDeniedSH()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 5 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedSH();
 
-		return view('advance.pageDeniedSinHistorial', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedSinHistorial', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDenied()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 4 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDenied();
 
-		return view('advance.pageDeniedAdvance', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedAdvance', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function validateEmail()

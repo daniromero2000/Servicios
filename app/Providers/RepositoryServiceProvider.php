@@ -25,6 +25,8 @@ use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Customers\Repositories\CustomerRepository;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\ConfirmationMessages\Repositories\ConfirmationMessageRepository;
+use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -83,6 +85,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CustomerRepositoryInterface::class,
             CustomerRepository::class
+        );
+
+        $this->app->bind(
+            ConfirmationMessageRepositoryInterface::class,
+            ConfirmationMessageRepository::class
         );
     }
 }
