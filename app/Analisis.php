@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Analisis extends Model
 {
-    public $table = 'ANALISIS';
+    protected $table = 'ANALISIS';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'solicitud';
 

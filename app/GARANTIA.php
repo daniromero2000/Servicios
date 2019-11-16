@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class GARANTIA extends Model
 {
-    public $table = 'GARANTIAS';
+    protected $table = 'GARANTIAS';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'NUMERO';
 

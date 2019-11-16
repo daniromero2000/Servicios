@@ -9,9 +9,9 @@ class Application extends Model
 {
     use Authenticatable;
 
-    public $table = 'SOLIC_FAB';
+    protected $table = 'SOLIC_FAB';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'CLIENTE';
 

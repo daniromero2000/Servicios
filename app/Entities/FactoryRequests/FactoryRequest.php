@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class FactoryRequest extends Model
 {
-    public $table = 'SOLIC_FAB';
+    protected $table = 'SOLIC_FAB';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'SOLICITUD';
 

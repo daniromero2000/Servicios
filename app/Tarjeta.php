@@ -8,7 +8,7 @@ class Tarjeta extends Model
 {
     protected $table = 'TARJETA';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     public $timestamps = false;
 

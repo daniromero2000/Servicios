@@ -22,4 +22,24 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getSubsidiaryCityByCode($code)
+    {
+        try {
+            return $this->model->where('CODIGO', $code)->get(['CIUDAD'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
+
+    private function getNameCiudadExp($city)
+    {
+        $queryCity = sprintf("SELECT `NOMBRE` FROM `CIUDADES` WHERE `CODIGO` = %s ", $city);
+
+        $resp = DB::connection('oportudata')->select($queryCity);
+
+        return $resp;
+    }
 }

@@ -116,10 +116,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
 Route::resource('libranza', 'Admin\LibranzaController');
-Route::resource('motos', 'Admin\MotosController');
+
 Route::resource('leads', 'Admin\LeadsController');
-Route::resource('seguros', 'Admin\SegurosController');
-Route::resource('viajes', 'Admin\ViajesController');
+
+
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
 Route::resource('faqs', 'Admin\FaqsController');
@@ -175,7 +175,6 @@ Route::get('/googledd6db54bffdd55e4.html', function () {
 })->name('termsAndConditions');
 
 /* Admin Leads */
-Route::get('api/leads/addComent/{idLead}/{comment}', 'Admin\LeadsController@addComent');
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
 
 /* Apis */

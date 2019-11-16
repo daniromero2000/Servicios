@@ -8,17 +8,19 @@ use App\Entities\Leads\Lead;
 use App\DatosCliente;
 use App\Intenciones;
 use App\cliCel;
-use App\CreditPolicy;
 use App\ResultadoPolitica;
-use App\LeadInfo;
-use App\OportuyaV2;
-use App\Tarjeta;
+use App\Entities\Customers\Customer;
+use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\Bdua;
 use App\EstadoCedula;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +30,21 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
+	private $customerInterface;
+
+	public function __construct(
+		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
+		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+		CityRepositoryInterface $cityRepositoryInterface,
+		CustomerRepositoryInterface $customerRepositoryInterface
+	) {
+		$this->confirmationMessageInterface = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
+		$this->cityInterface                = $cityRepositoryInterface;
+		$this->customerInterface = $customerRepositoryInterface;
+	}
+
 	public function index()
 	{
 		$images = Imagenes::selectRaw('*')
@@ -45,30 +57,30 @@ class OportuyaV2Controller extends Controller
 
 	public function getPageDeniedTr()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 2 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedTr();
 
-		return view('advance.pageDeniedTradicional', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedTradicional', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDeniedAl()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 3 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedAl();
 
-		return view('advance.pageDeniedAlmacen', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedAlmacen', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDeniedSH()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 5 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDeniedSH();
 
-		return view('advance.pageDeniedSinHistorial', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedSinHistorial', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function getPageDenied()
 	{
-		$mensaje = DB::connection('oportudata')->select('SELECT `MSJ` FROM `TB_MSJ_CONFIRMACION` WHERE `ID` = 4 ');
+		$mensaje = $this->confirmationMessageInterface->getPageDenied();
 
-		return view('advance.pageDeniedAdvance', ['mensaje' => $mensaje[0]->MSJ]);
+		return view('advance.pageDeniedAdvance', ['mensaje' => $mensaje->MSJ]);
 	}
 
 	public function validateEmail()
@@ -93,15 +105,6 @@ class OportuyaV2Controller extends Controller
 		return $emailsValidos;
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		//
-	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -125,14 +128,8 @@ class OportuyaV2Controller extends Controller
 
 	public function store(Request $request)
 	{
-		//get step one request from data sended by form
+		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
-			$lead = new Lead;
-			$oportudataLead = new OportuyaV2;
-			$identificationNumber = trim($request->get('identificationNumber'));
-			$cityName = $this->getCity($request->get('city'));
-			$getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
-			$departament = $this->getCodeAndDepartmentCity(trim($cityName[0]->CIUDAD));
 			$estado = "";
 			$paso = "";
 			switch ($request->get('typeService')) {
@@ -144,10 +141,19 @@ class OportuyaV2Controller extends Controller
 					$paso = "O-PASO1";
 					break;
 			}
+
 			$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 			if (Auth::user()) {
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
+
+			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
+			$cityDepartment     = $city->DEPARTAMENTO;
+			$cityDianId         = $city->ID_DIAN;
+
+			$identificationNumber = trim($request->get('identificationNumber'));
+
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$dataLead = [
 				'typeDocument' => $request->get('typeDocument'),
@@ -160,19 +166,23 @@ class OportuyaV2Controller extends Controller
 				'telephone' => trim($request->get('telephone')),
 				'occupation' =>  trim($request->get('occupation')),
 				'termsAndConditions' => trim($request->get('termsAndConditions')),
-				'city' =>  trim($cityName[0]->CIUDAD),
+				'city' =>  trim($subsidiaryCityName),
 				'typeProduct' =>  '',
 				'typeService' =>  trim($request->get('typeService'))
 			];
+
+			$lead = new Lead;
 			$createLead = $lead->updateOrCreate(['identificationNumber' => $identificationNumber], $dataLead)->save();
 
-			$getExistLead = OportuyaV2::find($identificationNumber);
 			$clienteWeb = 1;
 			$usuarioCreacion = (string) $assessorCode;
 			$usuarioActualizacion = "";
-			if (!empty($getExistLead)) {
-				$clienteWeb = $getExistLead->CLIENTE_WEB;
-				$usuarioCreacion = $getExistLead->USUARIO_CREACION;
+
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+
+			if (!empty($customer)) {
+				$clienteWeb = $customer->CLIENTE_WEB;
+				$usuarioCreacion = $customer->USUARIO_CREACION;
 				$usuarioActualizacion = (string) $assessorCode;
 			}
 
@@ -185,8 +195,8 @@ class OportuyaV2Controller extends Controller
 				'CELULAR' => trim($request->get('telephone')),
 				'PROFESION' => 'NO APLICA',
 				'ACTIVIDAD' => strtoupper($request->get('occupation')),
-				'CIUD_UBI' => trim($cityName[0]->CIUDAD),
-				'DEPTO' => trim($departament->departament),
+				'CIUD_UBI' => trim($subsidiaryCityName),
+				'DEPTO' =>  trim($cityDepartment),
 				'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
 				'TIPOCLIENTE' => 'OPORTUYA',
 				'SUBTIPO' => 'WEB',
@@ -200,10 +210,11 @@ class OportuyaV2Controller extends Controller
 				'USUARIO_CREACION' => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
 				'FECHA_ACTUALIZACION' => date('Y-m-d H:i:s'),
-				'ID_CIUD_UBI' => trim($getIdcityUbi[0]->ID_DIAN),
+				'ID_CIUD_UBI' => trim($cityDianId),
 				'MEDIO_PAGO' => 12,
 			];
 
+			$oportudataLead = new Customer;
 			$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
 
 			$getExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :identi AND `NUM` = :num ", ['identi' => $identificationNumber, 'num' => trim($request->get('telephone'))]);
@@ -358,15 +369,6 @@ class OportuyaV2Controller extends Controller
 			return response()->json([true]);
 		}
 	}
-
-
-	/**
-	 **Proyecto: SERVICIOS FINANCIEROS
-	 **Caso de Uso: Administrador de Usuarios
-	 **Autor: Robert García
-	 **Email: desarrollo1@lagobo.com
-	 **Fecha: 20/12/2018
-	 **/
 
 	public function getNumLead($identificationNumber, $typeResp = 'json')
 	{
@@ -584,7 +586,6 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-
 	private function setCodesState($identificationNumber)
 	{
 		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);
@@ -686,7 +687,6 @@ class OportuyaV2Controller extends Controller
 			}
 		}
 	}
-
 
 	private function validateDateConsultaUbica($identificationNumber)
 	{
@@ -839,7 +839,7 @@ class OportuyaV2Controller extends Controller
 		return 1300000;
 	}
 
-	private function validatePolicyCredit($identificationNumber, $cityName)
+	private function validatePolicyCredit($identificationNumber, $subsidiaryCityName)
 	{
 		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 
@@ -851,7 +851,7 @@ class OportuyaV2Controller extends Controller
 			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
 			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
 			$scoreMin = 528;
-			if ($cityName == 'MEDELLÍN' || $cityName == 'BOGOTÁ') {
+			if ($subsidiaryCityName == 'MEDELLÍN' || $subsidiaryCityName == 'BOGOTÁ') {
 				$scoreMin = 726;
 			}
 
@@ -1711,7 +1711,7 @@ class OportuyaV2Controller extends Controller
 			$estadoSolic = "ANALISIS";
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
-		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'] ;
+		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$policyCredit = $this->validatePolicyCredit_new($leadInfo['identificationNumber']);
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
@@ -2083,15 +2083,6 @@ class OportuyaV2Controller extends Controller
 		return response()->json(['numSolic' => $numSolic]);
 	}
 
-	private function getCity($code)
-	{
-		$queryCity = sprintf("SELECT `CIUDAD` FROM `SUCURSALES` WHERE `CODIGO` = %s ", $code);
-
-		$resp = DB::connection('oportudata')->select($queryCity);
-
-		return $resp;
-	}
-
 	private function getIdcityUbi($city)
 	{
 		$queryCity = sprintf('SELECT `ID_DIAN` FROM `CIUDADES` WHERE `NOMBRE` = "%s" ', $city);
@@ -2110,26 +2101,6 @@ class OportuyaV2Controller extends Controller
 		return $resp;
 	}
 
-	/**
-	 * Get departament code through city name
-	 *
-	 *
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string $nameCity
-	 * @return string
-	 */
-
-	private function getCodeAndDepartmentCity($nameCity)
-	{
-		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
-		$resp = DB::select($query);
-
-		return $resp[0];
-	}
-
 	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
 	{
 		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
@@ -2142,9 +2113,9 @@ class OportuyaV2Controller extends Controller
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
 
 		$data = [
-			'NOM_REFPER' => $nomRefPer, 
-			'TEL_REFPER' => $telRefPer, 
-			'NOM_REFFAM' => $nomRefFam, 
+			'NOM_REFPER' => $nomRefPer,
+			'TEL_REFPER' => $telRefPer,
+			'NOM_REFFAM' => $nomRefFam,
 			'TEL_REFFAM' => $telRefFam
 		];
 
@@ -2163,7 +2134,7 @@ class OportuyaV2Controller extends Controller
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
 		$policyCredit = [
-			'quotaApprovedProduct' => 0, 
+			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0
 		];
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
@@ -2186,7 +2157,7 @@ class OportuyaV2Controller extends Controller
 			if ($tipoCreacion == 'PASOAPASO') {
 				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
 					return [
-						'resp'     => $policyCredit, 
+						'resp'     => $policyCredit,
 						'infoLead' => $infoLead
 					];
 				}
@@ -2194,7 +2165,7 @@ class OportuyaV2Controller extends Controller
 			if ($tipoCreacion == 'CREDITO') {
 				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
 					return [
-						'resp'     => $policyCredit, 
+						'resp'     => $policyCredit,
 						'infoLead' => $infoLead
 					];
 				}
@@ -2210,7 +2181,7 @@ class OportuyaV2Controller extends Controller
 						$estadoSolic = "ANALISIS";
 					} else {
 						return [
-							'form' => $form, 
+							'form' => $form,
 							'resp' => 'confronta'
 						];
 					}
@@ -2233,20 +2204,20 @@ class OportuyaV2Controller extends Controller
 		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$dataDatosCliente = [
-				'identificationNumber' => $identificationNumber, 
-				'numSolic'             => $numSolic, 
-				'NOM_REFPER'           => $data['NOM_REFPER'], 
-				'TEL_REFPER'           => $data['TEL_REFPER'], 
-				'NOM_REFFAM'           => $data['NOM_REFFAM'], 
+				'identificationNumber' => $identificationNumber,
+				'numSolic'             => $numSolic,
+				'NOM_REFPER'           => $data['NOM_REFPER'],
+				'TEL_REFPER'           => $data['TEL_REFPER'],
+				'NOM_REFFAM'           => $data['NOM_REFFAM'],
 				'TEL_REFFAM'           => $data['TEL_REFFAM']
 			];
 		} else {
 			$dataDatosCliente = [
-				'identificationNumber' => $identificationNumber, 
-				'numSolic'             => $numSolic, 
-				'NOM_REFPER'           => 'NA', 
-				'TEL_REFPER'           => 'NA', 
-				'NOM_REFFAM'           => 'NA', 
+				'identificationNumber' => $identificationNumber,
+				'numSolic'             => $numSolic,
+				'NOM_REFPER'           => 'NA',
+				'TEL_REFPER'           => 'NA',
+				'NOM_REFFAM'           => 'NA',
 				'TEL_REFFAM'           => 'NA'
 			];
 		}
@@ -2271,12 +2242,12 @@ class OportuyaV2Controller extends Controller
 		$infoLead = [];
 		$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		$infoLead->numSolic = $numSolic->SOLICITUD;
-		
+
 		return [
 			'estadoCliente'        => $estadoResult,
-			'resp'                 => $policyCredit['resp'], 
-			'infoLead'             => $infoLead, 
-			'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'], 
+			'resp'                 => $policyCredit['resp'],
+			'infoLead'             => $infoLead,
+			'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'],
 			'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']
 		];
 	}
@@ -2535,7 +2506,7 @@ class OportuyaV2Controller extends Controller
 		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
 			$tipoTarjeta = 'Gray';
 		}
-		$tarjeta = new Tarjeta;
+		$tarjeta = new CreditCard;
 		$tarjeta->NUMERO = "8712769999999";
 		$tarjeta->SOLICITUD = $numSolic;
 		$tarjeta->CLIENTE = $identificationNumber;

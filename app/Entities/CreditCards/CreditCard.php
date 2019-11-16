@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreditCard extends Model
 {
-    public $table = 'TARJETA';
+    protected $table = 'TARJETA';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey =  'CLIENTE';
 

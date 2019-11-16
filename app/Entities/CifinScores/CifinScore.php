@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CifinScore extends Model
 {
-    public $table = 'cifin_score';
+    protected $table = 'cifin_score';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     public $timestamps = false;
 

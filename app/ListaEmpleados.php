@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ListaEmpleados extends Model
 {
-    public $table = 'LISTA_EMPLEADOS';
+    protected $table = 'LISTA_EMPLEADOS';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'identificador';
 

@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResultadoPolitica extends Model
 {
-    public $table = 'TB_RESULTADO_POLITICA';
+    protected $table = 'TB_RESULTADO_POLITICA';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'ID';
 

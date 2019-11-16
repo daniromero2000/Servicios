@@ -4,6 +4,7 @@ namespace App\Entities\Customers\Repositories;
 
 use App\Entities\Customers\Customer;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use Illuminate\Database\QueryException;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -29,5 +30,14 @@ class CustomerRepository implements CustomerRepositoryInterface
         ])->where('ESTADO', 'APROBADO')
             ->has('hasFactoryRequests')
             ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
+    }
+
+    public function findCustomerById($identificationNumber): Customer
+    {
+        try {
+            return $this->model->findOrFail($identificationNumber);
+        } catch (QueryException $e) {
+            //throw $th;
+        }
     }
 }

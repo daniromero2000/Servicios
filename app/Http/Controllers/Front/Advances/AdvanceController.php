@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,14 +15,30 @@ class AdvanceController extends Controller
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
-        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface
+
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
     }
 
     public function index()
     {
+
+
+
+        $getExistLead = $this->customerInterface->findCustomerById(1000000417);
+        dd($getExistLead->USUARIO_CREACION);
+
+        if (!empty($getExistLead)) {
+            $clienteWeb = $getExistLead->CLIENTE_WEB;
+            $usuarioCreacion = $getExistLead->USUARIO_CREACION;
+        }
+
+
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bdua extends Model
 {
-    public $table = 'fosyga_bdua';
+    protected $table = 'fosyga_bdua';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'idBdua';
 

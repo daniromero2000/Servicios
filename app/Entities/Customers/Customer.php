@@ -19,7 +19,9 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'NOMBRES', 'APELLIDOS', 'EMAIL',
+        'NOMBRES',
+        'APELLIDOS',
+        'EMAIL',
         'CELULAR',
         'termsAndConditions',
         'TIPO_DOC',
@@ -106,6 +108,7 @@ class Customer extends Model
         'MEDIO_PAGO',
         'TRAT_DATOS',
         'BANCOP',
+        'ACT_ECO',
         'CAMARAC',
         'ID_CIUD_EXP',
         'ID_CIUD_NAC',
