@@ -325,12 +325,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			setTimeout(() => {
 				hideLoader();
 			}, 2000);
-			if(response.data.resp.resp == "-2"){
-				$scope.estadoCliente = "TRADICIONAL";
-				setTimeout(() => {
-					$('#congratulations').modal('show');
-				}, 1800);
-			}
 
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
@@ -358,11 +352,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 			}
 
-			if(response.data.resp == 'false'){
+			if(response.data.resp.resp == 'false'){
 				$scope.estadoCliente = "NEGADO";
 				setTimeout(() => {
-					$('#confronta').modal('hide');
-				}, 800);
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
+
+			if(response.data.resp.resp == "-2"){
+				$scope.estadoCliente = "TRADICIONAL";
 				setTimeout(() => {
 					$('#congratulations').modal('show');
 				}, 1800);
