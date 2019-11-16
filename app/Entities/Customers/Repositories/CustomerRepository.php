@@ -22,6 +22,16 @@ class CustomerRepository implements CustomerRepositoryInterface
         ])->limit(30)->get();
     }
 
+
+    public function createCustomer($data): Customer
+    {
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function listCustomersDigitalChannel()
     {
         return $this->model->with([
@@ -37,7 +47,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         try {
             return $this->model->findOrFail($identificationNumber);
         } catch (QueryException $e) {
-            //throw $th;
+            abort(503, $e->getMessage());
         }
     }
 
@@ -46,7 +56,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         try {
             return $this->model->where('CEDULA', $identificationNumber)->get(['CLIENTE_WEB', 'USUARIO_CREACION'])->first();
         } catch (QueryException $e) {
-            //throw $th;
+            abort(503, $e->getMessage());
         }
     }
 }

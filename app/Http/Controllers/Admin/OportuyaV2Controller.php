@@ -154,24 +154,23 @@ class OportuyaV2Controller extends Controller
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
 
-			$dataLead = [
-				'typeDocument' => $request->get('typeDocument'),
-				'identificationNumber' => $identificationNumber,
-				'assessor' => $assessorCode,
-				'name' => trim($request->get('name')),
-				'lastName' => trim($request->get('lastName')),
-				'email' => trim($request->get('email')),
-				'channel' =>  1,
-				'telephone' => trim($request->get('telephone')),
-				'occupation' =>  trim($request->get('occupation')),
-				'termsAndConditions' => trim($request->get('termsAndConditions')),
-				'city' =>  trim($subsidiaryCityName),
-				'typeProduct' =>  '',
-				'typeService' =>  trim($request->get('typeService'))
-			];
-
-			$lead = new Lead;
-			$createLead = $lead->updateOrCreate(['identificationNumber' => $identificationNumber], $dataLead)->save();
+			// $dataLead = [
+			// 	'typeDocument' => $request->get('typeDocument'),
+			// 	'identificationNumber' => $identificationNumber,
+			// 	'assessor' => $assessorCode,
+			// 	'name' => trim($request->get('name')),
+			// 	'lastName' => trim($request->get('lastName')),
+			// 	'email' => trim($request->get('email')),
+			// 	'channel' =>  1,
+			// 	'telephone' => trim($request->get('telephone')),
+			// 	'occupation' =>  trim($request->get('occupation')),
+			// 	'termsAndConditions' => trim($request->get('termsAndConditions')),
+			// 	'city' =>  trim($subsidiaryCityName),
+			// 	'typeProduct' =>  '',
+			// 	'typeService' =>  trim($request->get('typeService'))
+			// ];
+			// $lead = new Lead;
+			// $createLead = $lead->updateOrCreate(['identificationNumber' => $identificationNumber], $dataLead)->save();
 
 			$clienteWeb = 1;
 			$usuarioCreacion = (string) $assessorCode;
@@ -215,8 +214,10 @@ class OportuyaV2Controller extends Controller
 				'MEDIO_PAGO' => 12,
 			];
 
-			$oportudataLead = new Customer;
-			$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
+			// $oportudataLead = new Customer;
+			// $createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
+
+			$this->customerInterface->createCustomer($dataOportudata);
 
 			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
 				$clienteCelular = new CliCel;
