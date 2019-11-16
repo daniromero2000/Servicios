@@ -12,4 +12,6 @@ interface CustomerRepositoryInterface
   public function listCustomersDigitalChannel();
 
   public function findCustomerById($identificationNumber): Customer;
+
+  public function checkIfExists($identificationNumber);
 }

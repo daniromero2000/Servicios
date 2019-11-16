@@ -19,6 +19,7 @@ use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneCellPhoneRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Http\Request;
@@ -31,18 +32,20 @@ use Maatwebsite\Excel\Facades\Excel;
 class OportuyaV2Controller extends Controller
 {
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
-	private $customerInterface;
+	private $customerInterface, $customerCellPhoneInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
 		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
 		CityRepositoryInterface $cityRepositoryInterface,
-		CustomerRepositoryInterface $customerRepositoryInterface
+		CustomerRepositoryInterface $customerRepositoryInterface,
+		CustomerCellPhoneCellPhoneRepositoryInterface $customerCellPhoneCellPhoneRepositoryInterface
 	) {
 		$this->confirmationMessageInterface = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
 		$this->cityInterface                = $cityRepositoryInterface;
 		$this->customerInterface = $customerRepositoryInterface;
+		$this->customerCellPhoneInterface = $customerCellPhoneCellPhoneRepositoryInterface;
 	}
 
 	public function index()
@@ -147,14 +150,10 @@ class OportuyaV2Controller extends Controller
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
 
-			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
-			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
-			$cityDepartment     = $city->DEPARTAMENTO;
-			$cityDianId         = $city->ID_DIAN;
-
 			$identificationNumber = trim($request->get('identificationNumber'));
-
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+
 			$dataLead = [
 				'typeDocument' => $request->get('typeDocument'),
 				'identificationNumber' => $identificationNumber,
@@ -178,13 +177,15 @@ class OportuyaV2Controller extends Controller
 			$usuarioCreacion = (string) $assessorCode;
 			$usuarioActualizacion = "";
 
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer = $this->customerInterface->checkIfExists($identificationNumber);
 
 			if (!empty($customer)) {
 				$clienteWeb = $customer->CLIENTE_WEB;
 				$usuarioCreacion = $customer->USUARIO_CREACION;
 				$usuarioActualizacion = (string) $assessorCode;
 			}
+
+			$city = $this->cityInterface->getCityByName($subsidiaryCityName);
 
 			$dataOportudata = [
 				'TIPO_DOC' => $request->get('typeDocument'),
@@ -196,7 +197,7 @@ class OportuyaV2Controller extends Controller
 				'PROFESION' => 'NO APLICA',
 				'ACTIVIDAD' => strtoupper($request->get('occupation')),
 				'CIUD_UBI' => trim($subsidiaryCityName),
-				'DEPTO' =>  trim($cityDepartment),
+				'DEPTO' =>  trim($city->DEPARTAMENTO),
 				'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
 				'TIPOCLIENTE' => 'OPORTUYA',
 				'SUBTIPO' => 'WEB',
@@ -210,15 +211,14 @@ class OportuyaV2Controller extends Controller
 				'USUARIO_CREACION' => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
 				'FECHA_ACTUALIZACION' => date('Y-m-d H:i:s'),
-				'ID_CIUD_UBI' => trim($cityDianId),
+				'ID_CIUD_UBI' => trim($city->ID_DIAN),
 				'MEDIO_PAGO' => 12,
 			];
 
 			$oportudataLead = new Customer;
 			$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
 
-			$getExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :identi AND `NUM` = :num ", ['identi' => $identificationNumber, 'num' => trim($request->get('telephone'))]);
-			if ($request->get('CEL_VAL') == 0 && $getExistCel[0]->total < 1) {
+			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
 				$clienteCelular = new CliCel;
 				$clienteCelular->IDENTI = $identificationNumber;
 				$clienteCelular->NUM = trim($request->get('telephone'));

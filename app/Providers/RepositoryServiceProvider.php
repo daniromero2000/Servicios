@@ -29,6 +29,8 @@ use App\Entities\ConfirmationMessages\Repositories\ConfirmationMessageRepository
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use App\Entities\Cities\Repositories\CityRepository;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -97,6 +99,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CityRepositoryInterface::class,
             CityRepository::class
+        );
+
+        $this->app->bind(
+            CustomerCellPhoneRepositoryInterface::class,
+            CustomerCellPhoneRepository::class
         );
     }
 }

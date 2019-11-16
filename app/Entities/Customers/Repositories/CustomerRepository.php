@@ -40,4 +40,13 @@ class CustomerRepository implements CustomerRepositoryInterface
             //throw $th;
         }
     }
+
+    public function checkIfExists($identificationNumber)
+    {
+        try {
+            return $this->model->where('CEDULA', $identificationNumber)->get(['CLIENTE_WEB', 'USUARIO_CREACION'])->first();
+        } catch (QueryException $e) {
+            //throw $th;
+        }
+    }
 }
