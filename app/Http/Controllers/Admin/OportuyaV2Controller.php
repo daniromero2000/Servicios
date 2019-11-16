@@ -17,7 +17,9 @@ use App\Bdua;
 use App\EstadoCedula;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -27,14 +29,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
-	private $confirmationMessageInterface;
+	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 
 	public function __construct(
-		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface
+		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
+		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+		CityRepositoryInterface $cityRepositoryInterface
 	) {
 		$this->confirmationMessageInterface = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
+		$this->cityInterface                = $cityRepositoryInterface;
 	}
-
 
 	public function index()
 	{
@@ -119,14 +124,10 @@ class OportuyaV2Controller extends Controller
 
 	public function store(Request $request)
 	{
-		//get step one request from data sended by form
+		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
 			$lead = new Lead;
 			$oportudataLead = new OportuyaV2;
-			$identificationNumber = trim($request->get('identificationNumber'));
-			$cityName = $this->getCity($request->get('city'));
-			$getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
-			$departament = $this->getCodeAndDepartmentCity(trim($cityName[0]->CIUDAD));
 			$estado = "";
 			$paso = "";
 			switch ($request->get('typeService')) {
@@ -142,6 +143,10 @@ class OportuyaV2Controller extends Controller
 			if (Auth::user()) {
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 			}
+
+			$cityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
+			$identificationNumber = trim($request->get('identificationNumber'));
+
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$dataLead = [
 				'typeDocument' => $request->get('typeDocument'),
@@ -154,7 +159,7 @@ class OportuyaV2Controller extends Controller
 				'telephone' => trim($request->get('telephone')),
 				'occupation' =>  trim($request->get('occupation')),
 				'termsAndConditions' => trim($request->get('termsAndConditions')),
-				'city' =>  trim($cityName[0]->CIUDAD),
+				'city' =>  trim($cityName),
 				'typeProduct' =>  '',
 				'typeService' =>  trim($request->get('typeService'))
 			];
@@ -179,8 +184,8 @@ class OportuyaV2Controller extends Controller
 				'CELULAR' => trim($request->get('telephone')),
 				'PROFESION' => 'NO APLICA',
 				'ACTIVIDAD' => strtoupper($request->get('occupation')),
-				'CIUD_UBI' => trim($cityName[0]->CIUDAD),
-				'DEPTO' => trim($departament->departament),
+				'CIUD_UBI' => trim($cityName),
+				'DEPTO' =>  trim($this->cityInterface->getCityDepartment($cityName)->DEPARTAMENTO),
 				'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
 				'TIPOCLIENTE' => 'OPORTUYA',
 				'SUBTIPO' => 'WEB',
@@ -194,7 +199,7 @@ class OportuyaV2Controller extends Controller
 				'USUARIO_CREACION' => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
 				'FECHA_ACTUALIZACION' => date('Y-m-d H:i:s'),
-				'ID_CIUD_UBI' => trim($getIdcityUbi[0]->ID_DIAN),
+				'ID_CIUD_UBI' => trim($this->cityInterface->getCityIdDianByName($cityName)->ID_DIAN),
 				'MEDIO_PAGO' => 12,
 			];
 
@@ -2066,15 +2071,6 @@ class OportuyaV2Controller extends Controller
 		return response()->json(['numSolic' => $numSolic]);
 	}
 
-	private function getCity($code)
-	{
-		$queryCity = sprintf("SELECT `CIUDAD` FROM `SUCURSALES` WHERE `CODIGO` = %s ", $code);
-
-		$resp = DB::connection('oportudata')->select($queryCity);
-
-		return $resp;
-	}
-
 	private function getIdcityUbi($city)
 	{
 		$queryCity = sprintf('SELECT `ID_DIAN` FROM `CIUDADES` WHERE `NOMBRE` = "%s" ', $city);
@@ -2091,26 +2087,6 @@ class OportuyaV2Controller extends Controller
 		$resp = DB::connection('oportudata')->select($queryCity);
 
 		return $resp;
-	}
-
-	/**
-	 * Get departament code through city name
-	 *
-	 *
-	 * @author Sebastian Ormaza
-	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string $nameCity
-	 * @return string
-	 */
-
-	private function getCodeAndDepartmentCity($nameCity)
-	{
-		$query = sprintf('SELECT `departament` FROM `ciudades` WHERE `name` = "%s" LIMIT 1 ', $nameCity);
-		$resp = DB::select($query);
-
-		return $resp[0];
 	}
 
 	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
