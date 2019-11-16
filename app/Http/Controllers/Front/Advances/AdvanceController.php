@@ -2,37 +2,41 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
-use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $cityInterface;
+    private $leadInterface, $subsidiaryInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
-        CityRepositoryInterface $cityRepositoryInterface
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface
+
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
-        $this->cityInterface = $cityRepositoryInterface;
+        $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
     }
 
     public function index()
     {
 
-        $getIdcityUbi = $this->cityInterface->getCityByName('ABEJORRAL');
-
-        $departament =   $getIdcityUbi->ID_DIAN;
 
 
-        dd($departament);
+        $getExistLead = $this->customerInterface->findCustomerById(1000000417);
+        dd($getExistLead->USUARIO_CREACION);
 
-        // $cityName = $this->getCity($request->get('city'));
+        if (!empty($getExistLead)) {
+            $clienteWeb = $getExistLead->CLIENTE_WEB;
+            $usuarioCreacion = $getExistLead->USUARIO_CREACION;
+        }
+
 
 
         return view('advance.index', [
@@ -40,16 +44,6 @@ class AdvanceController extends Controller
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
         ]);
     }
-
-    private function getCity($code)
-    {
-        $queryCity = sprintf("SELECT `CIUDAD` FROM `SUCURSALES` WHERE `CODIGO` = %s ", $code);
-
-        $resp = DB::connection('oportudata')->select($queryCity);
-
-        return $resp;
-    }
-
 
     public function store(Request $request)
     {

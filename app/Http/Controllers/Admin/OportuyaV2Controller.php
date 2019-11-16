@@ -9,7 +9,7 @@ use App\DatosCliente;
 use App\Intenciones;
 use App\cliCel;
 use App\ResultadoPolitica;
-use App\OportuyaV2;
+use App\Entities\Customers\Customer;
 use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
@@ -19,6 +19,7 @@ use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,15 +31,18 @@ use Maatwebsite\Excel\Facades\Excel;
 class OportuyaV2Controller extends Controller
 {
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
+	private $customerInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
 		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-		CityRepositoryInterface $cityRepositoryInterface
+		CityRepositoryInterface $cityRepositoryInterface,
+		CustomerRepositoryInterface $customerRepositoryInterface
 	) {
 		$this->confirmationMessageInterface = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
 		$this->cityInterface                = $cityRepositoryInterface;
+		$this->customerInterface = $customerRepositoryInterface;
 	}
 
 	public function index()
@@ -137,6 +141,7 @@ class OportuyaV2Controller extends Controller
 					$paso = "O-PASO1";
 					break;
 			}
+
 			$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 			if (Auth::user()) {
 				$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
@@ -169,13 +174,15 @@ class OportuyaV2Controller extends Controller
 			$lead = new Lead;
 			$createLead = $lead->updateOrCreate(['identificationNumber' => $identificationNumber], $dataLead)->save();
 
-			$getExistLead = OportuyaV2::find($identificationNumber);
 			$clienteWeb = 1;
 			$usuarioCreacion = (string) $assessorCode;
 			$usuarioActualizacion = "";
-			if (!empty($getExistLead)) {
-				$clienteWeb = $getExistLead->CLIENTE_WEB;
-				$usuarioCreacion = $getExistLead->USUARIO_CREACION;
+
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+
+			if (!empty($customer)) {
+				$clienteWeb = $customer->CLIENTE_WEB;
+				$usuarioCreacion = $customer->USUARIO_CREACION;
 				$usuarioActualizacion = (string) $assessorCode;
 			}
 
@@ -207,7 +214,7 @@ class OportuyaV2Controller extends Controller
 				'MEDIO_PAGO' => 12,
 			];
 
-			$oportudataLead = new OportuyaV2;
+			$oportudataLead = new Customer;
 			$createOportudaLead = $oportudataLead->updateOrCreate(['CEDULA' => $identificationNumber], $dataOportudata)->save();
 
 			$getExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :identi AND `NUM` = :num ", ['identi' => $identificationNumber, 'num' => trim($request->get('telephone'))]);
