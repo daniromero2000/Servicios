@@ -81,45 +81,90 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
 
     public function validateConsultaRegistraduria($identificationNumber, $names, $lastName, $dateExpedition)
     {
-        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
-        $replace = ['ñ', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u'];
-        $lastName = str_replace($search, $replace, $lastName);
-        $names = str_replace($search, $replace, $names);
+        // Registraduria
+        $respEstadoCedula =  $this->getLastRegistraduriaConsultation($identificationNumber);
+        if ($respEstadoCedula->fechaExpedicion != '') {
+            $dateExpEstadoCedula = $respEstadoCedula->fechaExpedicion;
+            $dateExpEstadoCedula = str_replace(" DE ", "/", $dateExpEstadoCedula);
+            $dateExpEstadoCedula;
+            $dateExplode = explode("/", $dateExpEstadoCedula);
+            $numMonth = $this->getNumMonthOfText(strtolower($dateExplode[1]));
+            $dateExpEstadoCedula = str_replace($dateExplode[1], $numMonth, $dateExpEstadoCedula);
+            $dateExplode = explode("/", $dateExpEstadoCedula);
+            $dateExpEstadoCedula = $dateExplode[2] . "/" . $dateExplode[1] . "/" . $dateExplode[0];
 
-        $respBdua = $this->getLastRegistraduriaConsultation($identificationNumber);
 
-        $nameDataLead = explode(" ", strtolower($names));
-        $nameBdua = explode(" ", strtolower($respBdua->primerNombre));
-        $nameBdua = str_replace($search, $replace, $nameBdua);
-        $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
-
-        $lastNameDataLead = explode(" ", strtolower($lastName));
-        $lastNameBdua = explode(" ", strtolower($respBdua->primerApellido));
-        $lastNameBdua = str_replace($search, $replace, $lastNameBdua);
-        $coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
-
-        DB::connection('oportudata')->select('INSERT INTO `temp_consultaRegistraduria` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua->tipoAfiliado]);
-
-        if ($coincideNames == 0 || $coincideLastNames == 0) {
-            DB::connection('oportudata')->select('UPDATE `temp_consultaRegistraduria` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
-            return -3; // Nombres y/o apellidos no coinciden
-        }
-
-        return 1;
-    }
-
-    private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
-    {
-        $coincide = 0;
-        foreach ($arrayCompare as $value) {
-            if (in_array($value, $arrayCompareTo)) {
-                $coincide = 1;
-            } else {
-                $coincide = 0;
-                break;
+            if (strtotime($dateExpedition) != strtotime($dateExpEstadoCedula)) {
+                $updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+                $updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "REGISTRADURIA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+                return -4; // Fecha de expedicion no coincide
             }
         }
 
-        return $coincide;
+        if ($respEstadoCedula->estado != 'VIGENTE') {
+            $updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "REGISTRADURIA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+            return -1; // Cedula no vigente
+        }
+
+        $updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+        $updateTemp = DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+        return 1;
+    }
+
+
+    private function getNumMonthOfText($monthText)
+    {
+        $numMonth = "";
+        switch ($monthText) {
+            case 'enero':
+                $numMonth = "01";
+                break;
+
+            case 'febrero':
+                $numMonth = "02";
+                break;
+
+            case 'marzo':
+                $numMonth = "03";
+                break;
+
+            case 'abril':
+                $numMonth = "04";
+                break;
+
+            case 'mayo':
+                $numMonth = "05";
+                break;
+
+            case 'junio':
+                $numMonth = "06";
+                break;
+
+            case 'julio':
+                $numMonth = "07";
+                break;
+
+            case 'agosto':
+                $numMonth = "08";
+                break;
+
+            case 'septiembre':
+                $numMonth = "09";
+                break;
+
+            case 'octubre':
+                $numMonth = "10";
+                break;
+
+            case 'noviembre':
+                $numMonth = "11";
+                break;
+
+            case 'diciembre':
+                $numMonth = "12";
+                break;
+        }
+
+        return $numMonth;
     }
 }
