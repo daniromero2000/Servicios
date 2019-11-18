@@ -18,23 +18,15 @@ class AdvanceController extends Controller
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface,
-        FosygaRepositoryInterface $fosygaRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
-        $this->fosygaInterface = $fosygaRepositoryInterface;
     }
 
     public function index()
     {
-
-
-        $respBdua = $this->fosygaInterface->getLastFosygaConsultation('1088019814');
-        $lastNameBdua = explode(" ", strtolower($respBdua->primerApellido));
-        dd($lastNameBdua);
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
