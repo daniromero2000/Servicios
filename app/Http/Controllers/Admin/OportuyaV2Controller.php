@@ -2197,19 +2197,23 @@ class OportuyaV2Controller extends Controller
 	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
 	{
 		// Fosyga
-		$validateConsultaFosyga = 0;
 		$validateConsultaRegistraduria = 0;
+
 		$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
+
 		if ($dateConsultaFosyga == "true") {
 			return $consultaFosyga = $this->execConsultaFosyga($identificationNumber, $typeDocument, $dateDocument);
 		} else {
 			$consultaFosyga = 1;
 		}
+
+		$validateConsultaFosyga = 0;
 		if ($consultaFosyga > 0) {
 			$validateConsultaFosyga = $this->validateConsultaFosyga($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 		} else {
 			$validateConsultaFosyga = 1;
 		}
+
 		// Registraduria8
 		$dateConsultaRegistraduria = $this->validateDateConsultaRegistraduria($identificationNumber);
 		if ($dateConsultaRegistraduria == "true") {
