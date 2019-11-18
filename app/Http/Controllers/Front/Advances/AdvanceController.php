@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
+use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;

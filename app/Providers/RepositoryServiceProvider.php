@@ -31,6 +31,8 @@ use App\Entities\Cities\Repositories\CityRepository;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
+use App\Entities\ConsultationValidities\Repositories\ConsultationValidityRepository;
+use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -104,6 +106,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CustomerCellPhoneRepositoryInterface::class,
             CustomerCellPhoneRepository::class
+        );
+
+        $this->app->bind(
+            ConsultationValidityRepositoryInterface::class,
+            ConsultationValidityRepository::class
         );
     }
 }
