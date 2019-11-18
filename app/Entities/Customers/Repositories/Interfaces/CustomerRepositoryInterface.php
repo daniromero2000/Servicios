@@ -15,5 +15,5 @@ interface CustomerRepositoryInterface
 
   public function checkIfExists($identificationNumber);
 
-  public function createCustomer($data): Customer;
+  public function updateOrCreateCustomer($data);
 }

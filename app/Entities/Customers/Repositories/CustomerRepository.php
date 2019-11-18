@@ -22,14 +22,11 @@ class CustomerRepository implements CustomerRepositoryInterface
         ])->limit(30)->get();
     }
 
-
-    public function createCustomer($data): Customer
+    public function updateOrCreateCustomer($data)
     {
         try {
-            return $this->model->create($data);
-        } catch (QueryException $e) {
-            dd($e);
-        }
+            return $this->model->updateOrCreate($data);
+        } catch (QueryException $e) { }
     }
 
     public function listCustomersDigitalChannel()

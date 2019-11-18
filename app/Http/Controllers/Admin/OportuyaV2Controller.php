@@ -189,7 +189,7 @@ class OportuyaV2Controller extends Controller
 				'MEDIO_PAGO' => 12,
 			];
 
-			$this->customerInterface->createCustomer($dataOportudata);
+			$this->customerInterface->updateOrCreateCustomer($dataOportudata);
 
 			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
 				$clienteCelular = new CliCel;
@@ -208,7 +208,7 @@ class OportuyaV2Controller extends Controller
 			// $thisdaysToIncrement = $daysToIncrement[0]->pub_vigencia;
 
 
-			$consultasFosyga = $this->execConsultaFosygaLead(
+			return $consultasFosyga = $this->execConsultaFosygaLead(
 				$identificationNumber,
 				$request->get('typeDocument'),
 				$request->get('dateDocumentExpedition'),
@@ -656,11 +656,11 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateConsultaComercial($identificationNumber)
 	{
-		// $daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		// $daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
+		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
 		$dateLastConsultaComercial = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if (empty($dateLastConsultaComercial)) {
@@ -678,13 +678,13 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateConsultaRegistraduria($identificationNumber)
 	{
-		// $daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		// $daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 
 
 
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
+		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
 		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fechaConsulta, fuenteFallo FROM fosyga_estadoCedula WHERE cedula = :identificationNumber ORDER BY idEstadoCedula DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if (empty($dateLastConsultaFosyga)) {
@@ -706,12 +706,12 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateExperto($identificationNumber)
 	{
-		// $daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		// $daysToIncrement = $daysToIncrement[0]->pub_vigencia;
+		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
+		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 
 
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
+		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
 		$dateLastExperto = DB::connection('oportudata')->select("SELECT fecha FROM consulta_exp WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if (empty($dateLastExperto)) {
@@ -1672,7 +1672,6 @@ class OportuyaV2Controller extends Controller
 	public function execConsultaFosyga($identificationNumber, $typeDocument, $dateExpeditionDocument)
 	{
 		$bdua = new Bdua;
-
 		// Consulta bdua - Base de datos unificada
 		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
 		$infoBdua = (array) $infoBdua;
@@ -1942,6 +1941,7 @@ class OportuyaV2Controller extends Controller
 		if ($dateExpeditionDocument != '') {
 			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
 		}
+
 		$curl_handle = curl_init();
 		curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);
 		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
@@ -2206,7 +2206,7 @@ class OportuyaV2Controller extends Controller
 		$validateConsultaRegistraduria = 0;
 		$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 		if ($dateConsultaFosyga == "true") {
-			$consultaFosyga = $this->execConsultaFosyga($identificationNumber, $typeDocument, $dateDocument);
+			return $consultaFosyga = $this->execConsultaFosyga($identificationNumber, $typeDocument, $dateDocument);
 		} else {
 			$consultaFosyga = 1;
 		}
@@ -2245,9 +2245,6 @@ class OportuyaV2Controller extends Controller
 	{
 		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
 		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
-
-
-
 		$dateNow = date('Y-m-d');
 		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
