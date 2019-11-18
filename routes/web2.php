@@ -156,7 +156,13 @@ Route::namespace('Front')->group(function () {
     });
 
     Route::namespace('Insurances')->group(function () {
-        Route::resource('seguros', 'SegurosController');
+        Route::resource('seguros', 'SegurosController',[
+            'except' => ['show']
+        ]);
+
+        Route::get('seguros/credito', function () {
+            return view('seguros.credito.index');
+        });
     });
 
     Route::namespace('Motos')->group(function () {
