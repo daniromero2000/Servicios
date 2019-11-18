@@ -286,8 +286,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				console.log(response);
-				if (response.data == "1") {
+							if (response.data == "1") {
 					$scope.encryptText();
 				}
 				if(response.data == "-1"){
