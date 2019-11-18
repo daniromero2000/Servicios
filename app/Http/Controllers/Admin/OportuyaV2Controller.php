@@ -2168,7 +2168,7 @@ class OportuyaV2Controller extends Controller
 			$infoBdua = $this->wsFosygaRegistraduriaInterface->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
 			$infoBdua = (array) $infoBdua;
 
-			return  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
+			return 	$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
 		} else {
 			$consultaFosyga = 1;
 		}

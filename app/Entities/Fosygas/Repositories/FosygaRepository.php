@@ -27,7 +27,6 @@ class FosygaRepository implements FosygaRepositoryInterface
     public function createConsultaFosyga($infoBdua, $identificationNumber)
     {
         $bdua = new Fosyga();
-        $infoBdua = (array) $infoBdua;
         $infoBdua = $infoBdua['original'];
 
         if ($infoBdua['fuenteFallo'] == "SI") {
