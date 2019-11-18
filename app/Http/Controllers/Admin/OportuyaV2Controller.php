@@ -203,12 +203,7 @@ class OportuyaV2Controller extends Controller
 
 			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 
-
-			// $this->daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-			// $thisdaysToIncrement = $daysToIncrement[0]->pub_vigencia;
-
-
-			return $consultasFosyga = $this->execConsultaFosygaLead(
+			$consultasFosyga = $this->execConsultaFosygaLead(
 				$identificationNumber,
 				$request->get('typeDocument'),
 				$request->get('dateDocumentExpedition'),
@@ -2243,10 +2238,8 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateConsultaFosyga($identificationNumber)
 	{
-		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
+		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
 		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fechaConsulta, fuenteFallo FROM fosyga_bdua WHERE cedula = :identificationNumber ORDER BY idBdua DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if (empty($dateLastConsultaFosyga)) {
@@ -2268,10 +2261,8 @@ class OportuyaV2Controller extends Controller
 
 	private function validateDateConsultaUbica($identificationNumber)
 	{
-		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
 		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
+		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
 		$dateLastConsultaUbica = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ubica WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
 		if (empty($dateLastConsultaUbica)) {
