@@ -48,14 +48,14 @@
                     <h2 class="title-inicial3 mb-5"> con cómodas cuotas</h2>
                 </div>
 
-                <div class="col-11 text-center" style="margin: auto;">
+                <div class="col-12 col-sm-9 col-md-11 col-lg-11 col-xl-11 text-center" style="margin: auto;">
                     <a href="#" class="btn boton-submit btn-primary py-3 shadow-lg w-75 px-3" data-toggle="modal"
                         data-target="#modalAppointment" style="border-radius: 40px;">Quiero mi soat a crédito</a>
                 </div>
 
-                <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 text-center mt-5 " style="margin: auto;">
+                <div class="col-8 col-sm-6 col-md-7 col-lg-7 col-xl-7 text-center mt-5  " style="margin: auto;">
                     <a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de libranza"
-                        target="_blank"><img class="img-fluid" src="{{ asset('images/assets/botonWP.png') }}" alt="">
+                        target="_blank"><img class="img-fluid boton-wp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
                     </a>
                 </div>
             </div>
