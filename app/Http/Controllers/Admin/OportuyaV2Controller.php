@@ -11,7 +11,6 @@ use App\ResultadoPolitica;
 use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
-use App\Bdua;
 use App\EstadoCedula;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
@@ -26,13 +25,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\ExportToExcel;
+use App\Entities\Fosygas\Fosyga;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WsFosygaRegistraduriaRepositoryInterface;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
 {
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
-	private $daysToIncrement;
+	private $daysToIncrement, $fosygaInterface, $wsFosygaRegistraduriaInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -40,14 +42,18 @@ class OportuyaV2Controller extends Controller
 		CityRepositoryInterface $cityRepositoryInterface,
 		CustomerRepositoryInterface $customerRepositoryInterface,
 		CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface,
-		ConsultationValidityRepositoryInterface $consultationValidityRepositoryInterface
+		ConsultationValidityRepositoryInterface $consultationValidityRepositoryInterface,
+		FosygaRepositoryInterface $fosygaRepositoryInterface,
+		WsFosygaRegistraduriaRepositoryInterface $wsFosygaRegistraduriaRepositoryInterface
 	) {
-		$this->confirmationMessageInterface  = $confirmationMessageRepositoryInterface;
-		$this->subsidiaryInterface           = $subsidiaryRepositoryInterface;
-		$this->cityInterface                 = $cityRepositoryInterface;
-		$this->customerInterface             = $customerRepositoryInterface;
-		$this->customerCellPhoneInterface    = $customerCellPhoneRepositoryInterface;
-		$this->consultationValidityInterface = $consultationValidityRepositoryInterface;
+		$this->confirmationMessageInterface   = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
+		$this->cityInterface                  = $cityRepositoryInterface;
+		$this->customerInterface              = $customerRepositoryInterface;
+		$this->customerCellPhoneInterface     = $customerCellPhoneRepositoryInterface;
+		$this->consultationValidityInterface  = $consultationValidityRepositoryInterface;
+		$this->fosygaInterface                = $fosygaRepositoryInterface;
+		$this->wsFosygaRegistraduriaInterface = $wsFosygaRegistraduriaRepositoryInterface;
 	}
 
 	public function index()
@@ -1664,39 +1670,7 @@ class OportuyaV2Controller extends Controller
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
 	}
 
-	public function execConsultaFosyga($identificationNumber, $typeDocument, $dateExpeditionDocument)
-	{
-		$bdua = new Bdua;
-		// Consulta bdua - Base de datos unificada
-		$infoBdua = $this->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
-		$infoBdua = (array) $infoBdua;
-		$infoBdua = $infoBdua['original'];
-		if ($infoBdua['fuenteFallo'] == "SI") {
-			$bdua->cedula = $identificationNumber;
-			$bdua->fuenteFallo = "SI";
-			$bdua->save();
-			return -1;
-		}
-		$bdua->cedula = $infoBdua['personaVO']['numeroDocumento'];
-		$bdua->tipoDocumento = $infoBdua['personaVO']['tipoDocumento'];
-		$bdua->pais = $infoBdua['personaVO']['pais'];
-		$bdua->primerNombre = $infoBdua['personaVO']['nombres']['BDUA']['primerNombre'];
-		$bdua->primerApellido = $infoBdua['personaVO']['nombres']['BDUA']['primerApellido'];
-		$bdua->tipoNombre = $infoBdua['personaVO']['nombres']['BDUA']['tipoNombre'];
-		$bdua->estado = $infoBdua['estado'];
-		$bdua->entidad = $infoBdua['entidad'];
-		$bdua->regimen = $infoBdua['regimen'];
-		$bdua->fechaAfiliacion = $infoBdua['fechaAfiliacion'];
-		$bdua->fechaFinalAfiliacion = $infoBdua['fechaFinalAfiliacion'];
-		$bdua->departamento = $infoBdua['departamento'];
-		$bdua->ciudad = $infoBdua['ciudad'];
-		$bdua->tipoAfiliado = $infoBdua['tipoAfiliado'];
-		$bdua->fechaConsulta = $infoBdua['fechaConsulta'];
-		$bdua->fuenteFallo = $infoBdua['fuenteFallo'];
-		$bdua->save();
 
-		return 1;
-	}
 
 	public function execConsultaRegistraduria($identificationNumber, $typeDocument, $dateExpeditionDocument)
 	{
@@ -1928,25 +1902,7 @@ class OportuyaV2Controller extends Controller
 		return $numMonth;
 	}
 
-	private function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "")
-	{
 
-		$urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
-		//$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
-		if ($dateExpeditionDocument != '') {
-			$urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
-		}
-
-		$curl_handle = curl_init();
-		curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);
-		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
-		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
-		$persona = json_decode($buffer, true);
-
-		return response()->json($persona);
-	}
 
 	private function execConsultaExperto($identificationNumber)
 	{
@@ -2061,7 +2017,16 @@ class OportuyaV2Controller extends Controller
 			'TEL_REFFAM' => $telRefFam
 		];
 
-		$consultasFosyga = $this->execConsultaFosygaLead($identificationNumber, $oportudataLead[0]->TIPO_DOC, $oportudataLead[0]->FEC_EXP, $oportudataLead[0]->NOMBRES, $oportudataLead[0]->APELLIDOS);
+		$consultasFosyga = $this->execConsultaFosygaLead(
+			$identificationNumber,
+			$oportudataLead[0]->TIPO_DOC,
+			$oportudataLead[0]->FEC_EXP,
+			$oportudataLead[0]->NOMBRES,
+			$oportudataLead[0]->APELLIDOS
+		);
+
+
+
 		if ($consultasFosyga == "-1") {
 			return "-1";
 		}
@@ -2197,12 +2162,13 @@ class OportuyaV2Controller extends Controller
 	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
 	{
 		// Fosyga
-		$validateConsultaRegistraduria = 0;
-
 		$dateConsultaFosyga = $this->validateDateConsultaFosyga($identificationNumber);
 
 		if ($dateConsultaFosyga == "true") {
-			return $consultaFosyga = $this->execConsultaFosyga($identificationNumber, $typeDocument, $dateDocument);
+			$infoBdua = $this->wsFosygaRegistraduriaInterface->execWebServiceFosyga($identificationNumber, '23948865', $typeDocument, "");
+			$infoBdua = (array) $infoBdua;
+
+			return  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
 		} else {
 			$consultaFosyga = 1;
 		}
@@ -2222,6 +2188,7 @@ class OportuyaV2Controller extends Controller
 			$consultaRegistraduria = 1;
 		}
 
+		$validateConsultaRegistraduria = 0;
 		if ($consultaRegistraduria > 0) {
 			$validateConsultaRegistraduria = $this->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
 		} else {
@@ -2239,13 +2206,14 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-
 	private function validateDateConsultaFosyga($identificationNumber)
 	{
 		$dateNow = date('Y-m-d');
 		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
 		$dateNew = date('Y-m-d', $dateNew);
-		$dateLastConsultaFosyga = DB::connection('oportudata')->select("SELECT fechaConsulta, fuenteFallo FROM fosyga_bdua WHERE cedula = :identificationNumber ORDER BY idBdua DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+
+		$dateLastConsultaFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
+
 		if (empty($dateLastConsultaFosyga)) {
 			return 'true';
 		} else {

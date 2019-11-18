@@ -33,6 +33,11 @@ use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\ConsultationValidityRepository;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use App\Entities\Fosygas\Repositories\FosygaRepository;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\WebServices\Repositories\WsFosygaRegistraduriaRepository;
+use App\Entities\WebServices\Repositories\Interfaces\WsFosygaRegistraduriaRepositoryInterface;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -111,6 +116,17 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ConsultationValidityRepositoryInterface::class,
             ConsultationValidityRepository::class
+        );
+
+        $this->app->bind(
+            FosygaRepositoryInterface::class,
+            FosygaRepository::class
+        );
+
+
+        $this->app->bind(
+            WsFosygaRegistraduriaRepositoryInterface::class,
+            WsFosygaRegistraduriaRepository::class
         );
     }
 }
