@@ -13,6 +13,8 @@ class CreditCard extends Model
 
     protected $primaryKey =  'CLIENTE';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'NUMERO',
         'SOLICITUD',
