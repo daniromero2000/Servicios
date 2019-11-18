@@ -2,11 +2,11 @@
 
 namespace App\Entities\WebServices\Repositories;
 
-use App\Entities\WebServices\Repositories\Interfaces\WsFosygaRegistraduriaRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 
-class WsFosygaRegistraduriaRepository implements WsFosygaRegistraduriaRepositoryInterface
+class WebServiceRepository implements WebServiceRepositoryInterface
 {
-    public function execWebServiceFosyga($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "")
+    public function execWebServiceFosygaRegistraduria($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "")
     {
         $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
         //$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);

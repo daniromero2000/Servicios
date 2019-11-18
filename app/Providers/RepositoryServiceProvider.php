@@ -35,8 +35,10 @@ use App\Entities\ConsultationValidities\Repositories\ConsultationValidityReposit
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 use App\Entities\Fosygas\Repositories\FosygaRepository;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
-use App\Entities\WebServices\Repositories\WsFosygaRegistraduriaRepository;
-use App\Entities\WebServices\Repositories\Interfaces\WsFosygaRegistraduriaRepositoryInterface;
+use App\Entities\WebServices\Repositories\WebServiceRepository;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Entities\Registradurias\Repositories\RegistraduriaRepository;
+use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -123,10 +125,14 @@ class RepositoryServiceProvider extends ServiceProvider
             FosygaRepository::class
         );
 
+        $this->app->bind(
+            WebServiceRepositoryInterface::class,
+            WebServiceRepository::class
+        );
 
         $this->app->bind(
-            WsFosygaRegistraduriaRepositoryInterface::class,
-            WsFosygaRegistraduriaRepository::class
+            RegistraduriaRepositoryInterface::class,
+            RegistraduriaRepository::class
         );
     }
 }

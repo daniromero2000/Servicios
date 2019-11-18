@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front\Advances;
 
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,15 +18,23 @@ class AdvanceController extends Controller
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        FosygaRepositoryInterface $fosygaRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
+        $this->fosygaInterface = $fosygaRepositoryInterface;
     }
 
     public function index()
     {
+
+
+        $respBdua = $this->fosygaInterface->getLastFosygaConsultation('1088019814');
+        $lastNameBdua = explode(" ", strtolower($respBdua->primerApellido));
+        dd($lastNameBdua);
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
