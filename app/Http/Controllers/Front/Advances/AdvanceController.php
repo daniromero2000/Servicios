@@ -19,19 +19,15 @@ class AdvanceController extends Controller
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface,
-        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
-        $this->factoryRequestInterface = $factoryRequestRepositoryInterface;
     }
 
     public function index()
     {
-
-        dd($this->factoryRequestInterface->getExistSolicFab(1087994442, 30));
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
