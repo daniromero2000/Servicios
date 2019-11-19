@@ -32,4 +32,13 @@ class ConsultationValidityRepository implements ConsultationValidityRepositoryIn
             abort(503, $e->getMessage());
         }
     }
+
+    public function getRejectedValidity()
+    {
+        try {
+            return $this->model->get(['rechazado_vigencia'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

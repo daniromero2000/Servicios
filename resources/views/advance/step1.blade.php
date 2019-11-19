@@ -133,7 +133,7 @@
 						<div class="form-group">
 							<label for="city" class="control-label">Ciudad**</label>
 							<select ng-model="leadInfo.city" id="city" class="form-control inputsSteps inputSelect" required="" ng-options="city.value as city.label for city in cities"  >
-								
+
 							</select>
 						</div>
 					</div>
@@ -172,7 +172,9 @@
 						<div class="text-center" style="padding: 50px;">
 							<img src="{{ asset('images/gif-load.gif') }}" alt="">
 							<p class="text-procces">
-								Procesando Solicitud...
+								Procesando Solicitud...<br>
+								<span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se están realizando las consultas necesarias, esto
+									puede tomar un tiempo de aproximadamente 2 minutos</span>
 							</p>
 						</div>
 					</div>
@@ -207,7 +209,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmCodeVerification" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modalCode">
 				<div class="modal-content">
@@ -275,7 +277,7 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
-								
+
 							</div>
 						</div>
 					</div>

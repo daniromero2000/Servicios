@@ -4,7 +4,7 @@
 	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Oportuya Paso1','page_path':'/step1'});
 </script>
 @section('eventTag')
-	<!-- Event snippet for Generación de Crédito conversion page --> <script> gtag('event', 'conversion', { 'send_to': 'AW-781153823/2Ee7CKT9l5sBEJ_svfQC', 'value': 200.0, 'currency': 'COP' }); </script> 
+	<!-- Event snippet for Generación de Crédito conversion page --> <script> gtag('event', 'conversion', { 'send_to': 'AW-781153823/2Ee7CKT9l5sBEJ_svfQC', 'value': 200.0, 'currency': 'COP' }); </script>
 @endsection
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 
@@ -143,7 +143,7 @@
 				</div>
 				@if(!(Auth::guard('assessor')->check()))
 				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
-				@endif				
+				@endif
 				<div class="form-group">
 					<input type="checkbox" ng-model="leadInfo.termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
@@ -165,12 +165,12 @@
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
 					</button>
-					@else	
+					@else
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 						Siguiente
 					</button>
-					@endif	
-					
+					@endif
+
 					<a href="/oportuya" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
 						Volver
 					</a>
@@ -184,7 +184,8 @@
 						<div class="text-center" style="padding: 50px;">
 							<img src="{{ asset('images/gif-load.gif') }}" alt="">
 							<p class="text-procces">
-								Procesando Solicitud...
+								Procesando Solicitud...<br>
+								<span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se están realizando las consultas necesarias, esto puede tomar un tiempo de aproximadamente 2 minutos</span>
 							</p>
 						</div>
 					</div>
@@ -271,7 +272,7 @@
 									<div class="offset-5 col-7">
 									<p>
 										Actualmente ya cuentas <br>
-										con una tarjeta <strong> Oportuya.</strong> 
+										con una tarjeta <strong> Oportuya.</strong>
 										<br>
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
@@ -287,7 +288,7 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
-								
+
 							</div>
 						</div>
 					</div>
@@ -347,7 +348,7 @@
 									<div class="col-10">
 										Descuentos en SOAT y otros seguros para que estés protegido siempre.
 									</div>
-								</div>	
+								</div>
 							</div>
 						</div>
 						<br>
@@ -368,8 +369,8 @@
 							<div class="col-12 border-bottom pasos-oportuya">
 								<div class="row">
 									<div class="col-2 col-md-1 text-center paso-oportuya-numero"> <span>2</span></div>
-									<div class="col-10 col-md-8"> <p>Deja tus datos completos según la solicitud de crédito 
-														que estés diligenciando.De la calidad de la información 
+									<div class="col-10 col-md-8"> <p>Deja tus datos completos según la solicitud de crédito
+														que estés diligenciando.De la calidad de la información
 														dependerá la velocidad en el resultado.
 														Además recuerda que todos los datos son verificados.</p>
 									</div>
@@ -381,9 +382,9 @@
 							<div class="col-12 border-bottom pasos-oportuya">
 								<div class="row">
 									<div class="col-md-1 col-2 text-center paso-oportuya-numero"> <span>3</span></div>
-									<div class="col-md-8 col-10"> <p>En el intermedio del proceso recibirás un token de 
-														confirmación para verificar la existencia de tu número 
-														telefónico;no lo elimines, el proceso te lo exigirá para 
+									<div class="col-md-8 col-10"> <p>En el intermedio del proceso recibirás un token de
+														confirmación para verificar la existencia de tu número
+														telefónico;no lo elimines, el proceso te lo exigirá para
 														continuar con tu solicitud.</p>
 									</div>
 									<div class="col-md-3 col-12	 text-center">
@@ -412,7 +413,7 @@
 								<p>Avances  aplica para las tres tarjetas <br>
 								Black, Blue y Gray: <br>
 								<span>Blue y Black:</span>hasta $500.000<br>
-								<span>Gray:</span>hasta $200.000	
+								<span>Gray:</span>hasta $200.000
 								</p>
 							</div>
 						</div>

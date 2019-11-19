@@ -33,6 +33,15 @@ use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\ConsultationValidityRepository;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use App\Entities\Fosygas\Repositories\FosygaRepository;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\WebServices\Repositories\WebServiceRepository;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Entities\Registradurias\Repositories\RegistraduriaRepository;
+use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\CommercialConsultations\Repositories\CommercialConsultationRepository;
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -111,6 +120,26 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ConsultationValidityRepositoryInterface::class,
             ConsultationValidityRepository::class
+        );
+
+        $this->app->bind(
+            FosygaRepositoryInterface::class,
+            FosygaRepository::class
+        );
+
+        $this->app->bind(
+            WebServiceRepositoryInterface::class,
+            WebServiceRepository::class
+        );
+
+        $this->app->bind(
+            RegistraduriaRepositoryInterface::class,
+            RegistraduriaRepository::class
+        );
+
+        $this->app->bind(
+            CommercialConsultationRepositoryInterface::class,
+            CommercialConsultationRepository::class
         );
     }
 }
