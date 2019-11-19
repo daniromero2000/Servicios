@@ -291,14 +291,13 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
-
 			$existSolicFab = $this->factoryRequestInterface->getExistSolicFab($identificationNumber, $this->timeRejectedVigency);
 
 			if ($existSolicFab == true) {
 				return -3; // Tiene solicitud
 			}
 
-			if (trim($oportudataLead[0]->ACTIVIDAD) == 'SOLDADO-MILITAR-POLICÍA' || trim($oportudataLead[0]->ACTIVIDAD) == 6) return -2;
+			if (trim($oportudataLead->ACTIVIDAD) == 'SOLDADO-MILITAR-POLICÍA' || trim($oportudataLead->ACTIVIDAD) == 6) return -2;
 
 			$dataLead = [
 				'NIT_EMP' => ($request->get('nit') != '') ? trim($request->get('nit')) : 0,
@@ -325,12 +324,15 @@ class OportuyaV2Controller extends Controller
 			];
 
 			// Update/save information in CLIENTE_FAB table
-			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->update($dataLead);
-			$dataDatosCliente = ['NOM_REFPER' => $request->get('NOM_REFPER'), 'TEL_REFPER' => $request->get('TEL_REFPER'), 'NOM_REFFAM' => $request->get('NOM_REFFAM'), 'TEL_REFFAM' => $request->get('TEL_REFFAM')];
-			$lastName = explode(" ", $oportudataLead[0]->APELLIDOS);
-			$fechaExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
+			$oportudataLead->update($dataLead);
+
+			$lastName = explode(" ", $oportudataLead->APELLIDOS);
+			$fechaExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-			$consultasLead = $this->execConsultasLead($oportudataLead[0]->CEDULA, $oportudataLead[0]->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $dataDatosCliente);
+			$dataDatosCliente = ['NOM_REFPER' => $request->get('NOM_REFPER'), 'TEL_REFPER' => $request->get('TEL_REFPER'), 'NOM_REFFAM' => $request->get('NOM_REFFAM'), 'TEL_REFFAM' => $request->get('TEL_REFFAM')];
+
+			$consultasLead = $this->execConsultasLead($oportudataLead->CEDULA, $oportudataLead->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $dataDatosCliente);
+
 			if ($consultasLead['resp'] == 'confronta') {
 				return $consultasLead;
 			}

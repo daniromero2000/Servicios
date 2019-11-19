@@ -11,4 +11,6 @@ interface FactoryRequestRepositoryInterface
   public function listFactoryRequestDigitalChannel();
 
   public function getExistSolicFab($identificationNumber, $timeRejectedVigency);
+
+  public function getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
 }
