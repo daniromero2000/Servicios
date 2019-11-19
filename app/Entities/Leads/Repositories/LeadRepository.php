@@ -6,7 +6,7 @@ use App\Entities\Leads\Lead;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class LeadRepository implements leadRepositoryInterface
+class LeadRepository implements LeadRepositoryInterface
 {
     public function __construct(
         lead $lead
