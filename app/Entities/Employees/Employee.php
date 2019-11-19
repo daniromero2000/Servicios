@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities\Employees;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ListaEmpleados extends Model
+class Employee extends Model
 {
     protected $table = 'LISTA_EMPLEADOS';
 

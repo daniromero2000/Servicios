@@ -16,8 +16,10 @@ use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\Employee\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -27,6 +29,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\ExportToExcel;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,6 +40,7 @@ class OportuyaV2Controller extends Controller
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
+	private $creditCardInterface, $employeeInterface, $punishmentInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -49,7 +53,10 @@ class OportuyaV2Controller extends Controller
 		WebServiceRepositoryInterface $WebServiceRepositoryInterface,
 		RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
 		FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
-		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface
+		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface,
+		CreditCardRepositoryInterface $creditCardRepositoryInterface,
+		EmployeeRepositoryInterface $employeeRepositoryInterface,
+		PunishmentRepositoryInterface $punishmentRepositoryInterface
 	) {
 		$this->confirmationMessageInterface    = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface             = $subsidiaryRepositoryInterface;
@@ -62,6 +69,9 @@ class OportuyaV2Controller extends Controller
 		$this->registraduriaInterface          = $registraduriaRepositoryInterface;
 		$this->factoryRequestInterface         = $factoryRequestRepositoryInterface;
 		$this->commercialConsultationInterface = $commercialConsultationRepositoryInterface;
+		$this->creditCardInterface             = $creditCardRepositoryInterface;
+		$this->employeeInterface               = $employeeRepositoryInterface;
+		$this->punishmentInterface             = $punishmentRepositoryInterface;
 	}
 
 	public function index()
@@ -402,26 +412,29 @@ class OportuyaV2Controller extends Controller
 
 	public function validationLead($identificationNumber)
 	{
-		$existCard = $this->getExistCard($identificationNumber);
+		$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 		if ($existCard == true) {
 			return -1; // Tiene tarjeta
 		}
 
-		$empleado = $this->getExistEmployed($identificationNumber);
+		$empleado = $this->employeeInterface->checkCustomerIsEmployee($identificationNumber);
 		if ($empleado == true) {
 			return -2; // Es empleado
 		}
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest(
+			$identificationNumber,
+			$this->timeRejectedVigency
+		);
 
-		$existSolicFab = $this->factoryRequestInterface->getExistSolicFab($identificationNumber, $this->timeRejectedVigency);
 		if ($existSolicFab == true) {
 			return -3; // Es empleado
 		}
 
-		$existDefault = $this->getExistLeadDefault($identificationNumber);
+		$existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
 		if ($existDefault == true) {
-			return -4;
+			return -4; // Esta Castigado
 		}
 
 		return response()->json(true);
@@ -617,32 +630,6 @@ class OportuyaV2Controller extends Controller
 		$resp = DB::connection('oportudata')->select($query);
 
 		return $resp[0];
-	}
-
-	private function getExistCard($identificationNumber)
-	{
-		$queryExistCard = sprintf("SELECT COUNT(`NUMERO`) as numTarjeta FROM `TARJETA` WHERE `CLIENTE` = %s ", $identificationNumber);
-
-		$resp = DB::connection('oportudata')->select($queryExistCard);
-
-		if ($resp[0]->numTarjeta > 0) {
-			return true; // Tiene tarjeta
-		} else {
-			return false; // No tiene tarjeta
-		}
-	}
-
-	private function getExistEmployed($identificationNumber)
-	{
-		$queryExistEmployed = sprintf("SELECT COUNT(`identificador`) as totalEmployes FROM `LISTA_EMPLEADOS` WHERE `num_documento` = %s AND `estado` = 1 ", $identificationNumber);
-
-		$resp = DB::connection('oportudata')->select($queryExistEmployed);
-
-		if ($resp[0]->totalEmployes > 0) {
-			return true; // Es empleado
-		} else {
-			return false; // No es empelado
-		}
 	}
 
 	private function getExistLeadDefault($identificationNumber)

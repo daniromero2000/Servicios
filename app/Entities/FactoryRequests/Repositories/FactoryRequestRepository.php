@@ -41,7 +41,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function getExistSolicFab($identificationNumber, $timeRejectedVigency)
+    public function checkCustomerHasFactoryRequest($identificationNumber, $timeRejectedVigency)
     {
         $queryExistSolicFab = $this->getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
 

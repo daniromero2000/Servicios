@@ -41,6 +41,10 @@ use App\Entities\Registradurias\Repositories\RegistraduriaRepository;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\CommercialConsultationRepository;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
+use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Entities\Employees\Repositories\EmployeeRepository;
+use App\Entities\Punishments\Repositories\PunishmentRepository;
+use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -140,6 +144,16 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CommercialConsultationRepositoryInterface::class,
             CommercialConsultationRepository::class
+        );
+
+        $this->app->bind(
+            EmployeeRepositoryInterface::class,
+            EmployeeRepository::class
+        );
+
+        $this->app->bind(
+            PunishmentRepositoryInterface::class,
+            PunishmentRepository::class
         );
     }
 }
