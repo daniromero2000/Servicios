@@ -428,7 +428,7 @@
                                             class="fas fa-filter"></i></button>
                                 </div>
                             </div>
-                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -659,7 +659,6 @@
         </div>
     </div>
 
-</div>
 
 <div class="tab-pane fade card  mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
     ng-class="{ 'show active': tabs == 6 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
