@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 @endsection
 @section('content')
-    <div ng-app="communityLeadsApp" class="containerleads container">
+    <div ng-app="communityLeadsApp" class="containerleads ">
         <br>
         @if (Session::get('success'))
             <div class="alert alert-success">
