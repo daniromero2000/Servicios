@@ -221,7 +221,7 @@
 			@yield('content')
 		</div>
 
-		<div id="footer">
+		<div id="footer" >
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-3 resetCol footer-containMenu">
 					<div class="footer-contianerLogo">
