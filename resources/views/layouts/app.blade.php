@@ -269,7 +269,7 @@
 						<form action="{{route('newsletter.store')}}" method="POST">
 						{{ csrf_field() }}
 						<div class="input-group mb-3">	
-							<input type="email" name="email" class="form-control" placeholder="Ingresa tu e-mail">
+							<input type="email" name="email" class="form-control input-footer-max" placeholder="Ingresa tu e-mail" >
 							<div class="input-group-prepend">
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>

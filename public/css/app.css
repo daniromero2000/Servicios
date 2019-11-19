@@ -1409,6 +1409,12 @@ a:hover, a:active, a:focus, a:visited{
 	margin-bottom: 40px;
 	position: relative;
 }
+@media(min-width: 2187px){
+	.input-footer-max{
+		width: auto !important ;
+}
+}
+
 
 .convenios-title:after {
     background: #348dc7;
@@ -1545,7 +1551,7 @@ a:hover, a:active, a:focus, a:visited{
 }
 
 .footer-containerNewsletter{
-    top: 40%;
+    top: 20%;
 	padding: 0 10%;
 	position: absolute;
     width: 100%;
