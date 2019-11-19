@@ -45,7 +45,8 @@ use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\Employees\Repositories\EmployeeRepository;
 use App\Entities\Punishments\Repositories\PunishmentRepository;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
-
+use App\Entities\CustomerVerificationCodes\Repositories\CustomerVerificationCodeRepository;
+use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -154,6 +155,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PunishmentRepositoryInterface::class,
             PunishmentRepository::class
+        );
+
+        $this->app->bind(
+            CustomerVerificationCodeRepository::class,
+            CustomerVerificationCodeRepositoryInterface::class
         );
     }
 }

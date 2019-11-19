@@ -14,7 +14,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         $this->model = $employee;
     }
 
-    public function checkCustomerHasCreditCard($identificationNumber)
+    public function checkCustomerIsEmployee($identificationNumber)
     {
         try {
             $queryExistEmployed = $this->model

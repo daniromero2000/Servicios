@@ -11,7 +11,6 @@ use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
-use App\codeUserVerificationOportudata;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
@@ -19,7 +18,8 @@ use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationVali
 use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\Employee\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
+use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -40,7 +40,7 @@ class OportuyaV2Controller extends Controller
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
-	private $creditCardInterface, $employeeInterface, $punishmentInterface;
+	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -56,22 +56,24 @@ class OportuyaV2Controller extends Controller
 		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface,
 		CreditCardRepositoryInterface $creditCardRepositoryInterface,
 		EmployeeRepositoryInterface $employeeRepositoryInterface,
-		PunishmentRepositoryInterface $punishmentRepositoryInterface
+		PunishmentRepositoryInterface $punishmentRepositoryInterface,
+		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface
 	) {
-		$this->confirmationMessageInterface    = $confirmationMessageRepositoryInterface;
-		$this->subsidiaryInterface             = $subsidiaryRepositoryInterface;
-		$this->cityInterface                   = $cityRepositoryInterface;
-		$this->customerInterface               = $customerRepositoryInterface;
-		$this->customerCellPhoneInterface      = $customerCellPhoneRepositoryInterface;
-		$this->consultationValidityInterface   = $consultationValidityRepositoryInterface;
-		$this->fosygaInterface                 = $fosygaRepositoryInterface;
-		$this->webServiceInterface             = $WebServiceRepositoryInterface;
-		$this->registraduriaInterface          = $registraduriaRepositoryInterface;
-		$this->factoryRequestInterface         = $factoryRequestRepositoryInterface;
-		$this->commercialConsultationInterface = $commercialConsultationRepositoryInterface;
-		$this->creditCardInterface             = $creditCardRepositoryInterface;
-		$this->employeeInterface               = $employeeRepositoryInterface;
-		$this->punishmentInterface             = $punishmentRepositoryInterface;
+		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
+		$this->cityInterface                     = $cityRepositoryInterface;
+		$this->customerInterface                 = $customerRepositoryInterface;
+		$this->customerCellPhoneInterface        = $customerCellPhoneRepositoryInterface;
+		$this->consultationValidityInterface     = $consultationValidityRepositoryInterface;
+		$this->fosygaInterface                   = $fosygaRepositoryInterface;
+		$this->webServiceInterface               = $WebServiceRepositoryInterface;
+		$this->registraduriaInterface            = $registraduriaRepositoryInterface;
+		$this->factoryRequestInterface           = $factoryRequestRepositoryInterface;
+		$this->commercialConsultationInterface   = $commercialConsultationRepositoryInterface;
+		$this->creditCardInterface               = $creditCardRepositoryInterface;
+		$this->employeeInterface                 = $employeeRepositoryInterface;
+		$this->punishmentInterface               = $punishmentRepositoryInterface;
+		$this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
 	}
 
 	public function index()
@@ -479,15 +481,19 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
-		$this->setCodesStateOportudata($identificationNumber);
-		$codeUserVerificationOportudata = new codeUserVerificationOportudata;
+		if ($customerCode = 	$this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber)) {
+			$customerCode->state = 1;
+			$customerCode->update();
+		}
+
 		$options = [
 			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
 			['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
 		];
+
 		$code = '';
 		$codeExist = 1;
-		while ($codeExist >= 1) {
+		while ($codeExist) {
 			for ($i = 0; $i < 6; $i++) {
 				$randomOption = rand(0, 1);
 				if ($randomOption == 0) {
@@ -497,31 +503,22 @@ class OportuyaV2Controller extends Controller
 				}
 				$code = $code . $options[$randomOption][$randomNumChar];
 			}
-
-			$codeExist = DB::connection('oportudata')->select('SELECT COUNT(`identificador`) as `totalCodes` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
-			$codeExist = $codeExist[0]->totalCodes;
+			$codeExist = $this->CustomerVerificationCodeInterface->checkIfCodeExists($code);
 		}
 
+		$codeUserVerificationOportudata = [];
 		$codeUserVerificationOportudata->token = $code;
 		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
 		$codeUserVerificationOportudata->telephone = $celNumber;
 		$codeUserVerificationOportudata->type = $type;
 		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
 
-		$codeUserVerificationOportudata->save();
+		$code = $this->CustomerVerificationCodeInterface->createCustomerVerificationCode(codeUserVerificationOportudata);
+		$date = $code->created_at;
 
-		$date = DB::connection('oportudata')->select('SELECT `created_at` FROM `code_user_verification` WHERE `token` = :code ', ['code' => $code]);
-
-		$dateTwo = gettype($date[0]->created_at);
-		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
+		$dateTwo = gettype($date);
+		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
-	}
-
-	private function setCodesStateOportudata($identificationNumber)
-	{
-		$query = sprintf("UPDATE `code_user_verification` SET `state` = 1 WHERE `identificationNumber` = %s ", $identificationNumber);
-
-		$resp = DB::connection('oportudata')->select($query);
 	}
 
 	public function enviarMensaje()
