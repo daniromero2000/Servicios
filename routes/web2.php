@@ -115,11 +115,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
 });
 
 
-
-
-
-
-
 /**
  * Admin routes
  */
