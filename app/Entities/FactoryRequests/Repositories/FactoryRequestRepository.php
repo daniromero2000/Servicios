@@ -46,7 +46,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $queryExistSolicFab = $this->getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
 
         if (!empty($queryExistSolicFab)) {
-
             return true; // Tiene Solictud
         } else {
             return false; // No tiene solicitud
@@ -61,13 +60,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         try {
             return  $this->model->where('CLIENTE', $identificationNumber)
-                ->orWhere(function ($query) {
+                ->where(function ($query) {
                     $query->orWhere('ESTADO', 'ANALISIS')
                         ->orWhere('ESTADO', 'NEGADO')
                         ->orWhere('ESTADO', 'DESISTIDO');
                 })->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
         } catch (QueryException $e) {
-            dd($e);
+            $e;
         }
     }
 }

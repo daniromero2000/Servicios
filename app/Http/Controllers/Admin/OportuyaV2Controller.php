@@ -212,8 +212,6 @@ class OportuyaV2Controller extends Controller
 				$clienteCelular->save();
 			}
 
-			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-
 			$consultasFosyga = $this->execConsultaFosygaLead(
 				$identificationNumber,
 				$request->get('typeDocument'),
@@ -283,7 +281,7 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = (string) $identificationNumber;
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			$paso = "";
-			switch ($oportudataLead[0]->ORIGEN) {
+			switch ($oportudataLead->ORIGEN) {
 				case 'Avance':
 					$paso = "A-PASO3";
 					break;
@@ -413,6 +411,8 @@ class OportuyaV2Controller extends Controller
 		if ($empleado == true) {
 			return -2; // Es empleado
 		}
+
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 
 		$existSolicFab = $this->factoryRequestInterface->getExistSolicFab($identificationNumber, $this->timeRejectedVigency);
 		if ($existSolicFab == true) {
@@ -1976,7 +1976,7 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
-
+		$validateConsultaRegistraduria = 1;
 		if ($validateConsultaRegistraduria == -1) {
 			return -1;
 		}
