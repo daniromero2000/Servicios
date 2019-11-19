@@ -39,6 +39,8 @@ use App\Entities\WebServices\Repositories\WebServiceRepository;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Registradurias\Repositories\RegistraduriaRepository;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\CommercialConsultations\Repositories\CommercialConsultationRepository;
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -133,6 +135,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             RegistraduriaRepositoryInterface::class,
             RegistraduriaRepository::class
+        );
+
+        $this->app->bind(
+            CommercialConsultationRepositoryInterface::class,
+            CommercialConsultationRepository::class
         );
     }
 }

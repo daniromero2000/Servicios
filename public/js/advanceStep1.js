@@ -183,8 +183,8 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 						if($scope.validateNum == 1){
 							$scope.saveStep1();
 						}else{
-						//	$('#confirmNumCel').modal('show');
-							$scope.saveStep1();
+							$('#confirmNumCel').modal('show');
+						//	$scope.saveStep1();
 						}
 					}
 				}

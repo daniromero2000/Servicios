@@ -71,7 +71,3 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 }
-
-
-// $queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes
-// FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' AND `STATE` = 'A' ", $identificationNumber, $dateNow);

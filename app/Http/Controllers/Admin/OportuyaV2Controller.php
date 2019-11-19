@@ -13,6 +13,7 @@ use App\Analisis;
 use App\CodeUserVerification;
 use App\codeUserVerificationOportudata;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
@@ -35,7 +36,7 @@ class OportuyaV2Controller extends Controller
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
-	private $timeRejectedVigency, $factoryRequestInterface;
+	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -47,18 +48,20 @@ class OportuyaV2Controller extends Controller
 		FosygaRepositoryInterface $fosygaRepositoryInterface,
 		WebServiceRepositoryInterface $WebServiceRepositoryInterface,
 		RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
-		FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface
+		FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
+		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface
 	) {
-		$this->confirmationMessageInterface  = $confirmationMessageRepositoryInterface;
-		$this->subsidiaryInterface           = $subsidiaryRepositoryInterface;
-		$this->cityInterface                 = $cityRepositoryInterface;
-		$this->customerInterface             = $customerRepositoryInterface;
-		$this->customerCellPhoneInterface    = $customerCellPhoneRepositoryInterface;
-		$this->consultationValidityInterface = $consultationValidityRepositoryInterface;
-		$this->fosygaInterface               = $fosygaRepositoryInterface;
-		$this->webServiceInterface           = $WebServiceRepositoryInterface;
-		$this->registraduriaInterface        = $registraduriaRepositoryInterface;
-		$this->factoryRequestInterface = $factoryRequestRepositoryInterface;
+		$this->confirmationMessageInterface    = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface             = $subsidiaryRepositoryInterface;
+		$this->cityInterface                   = $cityRepositoryInterface;
+		$this->customerInterface               = $customerRepositoryInterface;
+		$this->customerCellPhoneInterface      = $customerCellPhoneRepositoryInterface;
+		$this->consultationValidityInterface   = $consultationValidityRepositoryInterface;
+		$this->fosygaInterface                 = $fosygaRepositoryInterface;
+		$this->webServiceInterface             = $WebServiceRepositoryInterface;
+		$this->registraduriaInterface          = $registraduriaRepositoryInterface;
+		$this->factoryRequestInterface         = $factoryRequestRepositoryInterface;
+		$this->commercialConsultationInterface = $commercialConsultationRepositoryInterface;
 	}
 
 	public function index()
@@ -329,21 +332,29 @@ class OportuyaV2Controller extends Controller
 			$lastName = explode(" ", $oportudataLead->APELLIDOS);
 			$fechaExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-			$dataDatosCliente = ['NOM_REFPER' => $request->get('NOM_REFPER'), 'TEL_REFPER' => $request->get('TEL_REFPER'), 'NOM_REFFAM' => $request->get('NOM_REFFAM'), 'TEL_REFFAM' => $request->get('TEL_REFFAM')];
+			$dataDatosCliente = [
+				'NOM_REFPER' => $request->get('NOM_REFPER'),
+				'TEL_REFPER' => $request->get('TEL_REFPER'),
+				'NOM_REFFAM' => $request->get('NOM_REFFAM'),
+				'TEL_REFFAM' => $request->get('TEL_REFFAM')
+			];
 
 			$consultasLead = $this->execConsultasLead($oportudataLead->CEDULA, $oportudataLead->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $dataDatosCliente);
 
 			if ($consultasLead['resp'] == 'confronta') {
 				return $consultasLead;
 			}
+
 			if (isset($consultasLead['resp']['resp'])) {
 				if ($consultasLead['resp']['resp'] == 'false') {
 					return -2;
 				}
+
 				if ($consultasLead['resp']['resp'] == '-2') {
 					return -1;
 				}
 			}
+
 			$estado = $consultasLead['infoLead']->ESTADO;
 			if ($estado == 'PREAPROBADO' || $estado == 'SIN COMERCIAL' || $estado == 'APROBADO') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
@@ -634,7 +645,6 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-
 	private function getExistLeadDefault($identificationNumber)
 	{
 		$queryExistDefault = sprintf("SELECT COUNT(`cedula`) as `totalDefault` FROM `TB_CASTIGO` WHERE `cedula` = %s ", $identificationNumber);
@@ -647,29 +657,6 @@ class OportuyaV2Controller extends Controller
 			return false; // No esta en mora
 		}
 	}
-
-	private function validateDateConsultaComercial($identificationNumber)
-	{
-		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
-
-		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
-		$dateNew = date('Y-m-d', $dateNew);
-		$dateLastConsultaComercial = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ws WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		if (empty($dateLastConsultaComercial)) {
-			return 'true';
-		} else {
-			$dateLastConsulta = $dateLastConsultaComercial[0]->fecha;
-
-			if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
-				return 'true';
-			} else {
-				return 'false';
-			}
-		}
-	}
-
 
 	private function validateDateExperto($identificationNumber)
 	{
@@ -1485,6 +1472,18 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
+	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
+	{
+		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaComercial == 'true') {
+			return $consultaComercial = $this->execConsultaComercial($identificationNumber, $tipoDoc);
+		} else {
+			$consultaComercial = 1;
+		}
+
+		return $consultaComercial;
+	}
+
 	private function execConsultaComercial($identificationNumber, $typeDocument)
 	{
 		$obj = new \stdClass();
@@ -1499,18 +1498,6 @@ class OportuyaV2Controller extends Controller
 		} catch (\Throwable $th) {
 			return 0;
 		}
-	}
-
-	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
-	{
-		$dateConsultaComercial = $this->validateDateConsultaComercial($identificationNumber);
-		if ($dateConsultaComercial == 'true') {
-			return $consultaComercial = $this->execConsultaComercial($identificationNumber, $tipoDoc);
-		} else {
-			$consultaComercial = 1;
-		}
-
-		return $consultaComercial;
 	}
 
 	private function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
@@ -1817,8 +1804,6 @@ class OportuyaV2Controller extends Controller
 			$oportudataLead[0]->APELLIDOS
 		);
 
-
-
 		if ($consultasFosyga == "-1") {
 			return "-1";
 		}
@@ -1832,12 +1817,8 @@ class OportuyaV2Controller extends Controller
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
-		$policyCredit = [
-			'quotaApprovedProduct' => 0,
-			'quotaApprovedAdvance' => 0
-		];
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
-		$estadoSolic       = 'ANALISIS';
+
 		if ($consultaComercial == 0) {
 			$dataLead = [
 				'ESTADO' => "SIN COMERCIAL"
@@ -1848,6 +1829,12 @@ class OportuyaV2Controller extends Controller
 			$intencion         = new Intenciones;
 			$intencion->CEDULA = $identificationNumber;
 			$intencion->save();
+
+
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0
+			];
 
 			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
@@ -1870,6 +1857,7 @@ class OportuyaV2Controller extends Controller
 				}
 			}
 
+			$estadoSolic       = 'ANALISIS';
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
