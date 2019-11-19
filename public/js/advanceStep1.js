@@ -138,7 +138,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			$scope.emailValidate = true;
 		}
 	};
-	
+
 	$scope.getNumCel = function(){
 		$scope.leadInfo.CEL_VAL = 0;
 		$scope.leadInfo.telephone = '';
@@ -147,7 +147,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			url: '/api/oportuya/getNumLead/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			if(typeof response.data.resp == 'number'){
-				
+
 			}else{
 				var num = response.data.resp[0].NUM.substring(0,6);
 				var telephone = response.data.resp[0].NUM.replace(num, "******");
@@ -184,7 +184,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 							$scope.saveStep1();
 						}else{
 							$('#confirmNumCel').modal('show');
-							//$scope.saveStep1();
+						//	$scope.saveStep1();
 						}
 					}
 				}
@@ -286,7 +286,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			url: '/oportuyaV2',
 			data: $scope.leadInfo,
 			}).then(function successCallback(response) {
-				if (response.data == "1") {
+							if (response.data == "1") {
 					$scope.encryptText();
 				}
 				if(response.data == "-1"){
@@ -299,6 +299,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				}
 				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			}, function errorCallback(response) {
+				console.log(response);
 				setTimeout(function(){ $('#proccess').modal('hide');}, 800);
 			});
 	};
@@ -312,7 +313,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 				window.location = "/avance/step2/"+response.data;
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Assessor;
 
-use App\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;

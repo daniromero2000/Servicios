@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Assessor;
-use App\OportuyaV2;
 use App\cliCel;
+use App\Entities\Customers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 
 class assessorsController extends Controller
@@ -41,149 +37,156 @@ class assessorsController extends Controller
             $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
         }
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-        $leadOportudata = new OportuyaV2;
+        $leadOportudata  = new Customer;
         $usuarioCreacion = $assessorCode;
-        $clienteCelular = new CliCel;
+        $clienteCelular  = new CliCel;
         $clienteWeb = 1;
-        $getExistLead = OportuyaV2::find($request->CEDULA);
+        $getExistLead = Customer::find($request->CEDULA);
         if (!empty($getExistLead)) {
-            $clienteWeb = $getExistLead->CLIENTE_WEB;
+            $clienteWeb      = $getExistLead->CLIENTE_WEB;
             $usuarioCreacion = $getExistLead->USUARIO_CREACION;
         }
         if ($request->tipoCliente == 'CONTADO') {
-            $cityName = $this->getCity(trim($request->get('CIUD_UBI')));
+            $cityName     = $this->getCity(trim($request->get('CIUD_UBI')));
             $getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
             $dataOportudata = [
-                'TIPO_DOC' => trim($request->get('TIPO_DOC')),
-                'CEDULA' => trim($request->get('CEDULA')),
-                'NOMBRES' => trim($request->get('NOMBRES')),
-                'APELLIDOS' => trim($request->get('APELLIDOS')),
-                'EMAIL' => trim($request->get('EMAIL')),
-                'TELFIJO' => ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO')) : '0',
-                'CELULAR' => trim($request->get('CELULAR')),
-                'SEXO' => trim($request->get('SEXO')),
-                'DIRECCION' => trim($request->get('DIRECCION')),
-                'VCON_NOM1' => trim($request->get('VCON_NOM1')),
-                'VCON_CED1' => trim($request->get('VCON_CED1')),
-                'VCON_TEL1' => trim($request->get('VCON_TEL1')),
-                'VCON_NOM2' => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')) : 'NA',
-                'VCON_CED2' => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
-                'VCON_TEL2' => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
-                'VCON_DIR' => trim($request->get('VCON_DIR')),
-                'TRAT_DATOS' => trim($request->get('TRAT_DATOS')),
+                'TIPO_DOC'    => trim($request->get('TIPO_DOC')),
+                'CEDULA'      => trim($request->get('CEDULA')),
+                'NOMBRES'     => trim($request->get('NOMBRES')),
+                'APELLIDOS'   => trim($request->get('APELLIDOS')),
+                'EMAIL'       => trim($request->get('EMAIL')),
+                'TELFIJO'     => ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO'))  : '0',
+                'CELULAR'     => trim($request->get('CELULAR')),
+                'SEXO'        => trim($request->get('SEXO')),
+                'DIRECCION'   => trim($request->get('DIRECCION')),
+                'VCON_NOM1'   => trim($request->get('VCON_NOM1')),
+                'VCON_CED1'   => trim($request->get('VCON_CED1')),
+                'VCON_TEL1'   => trim($request->get('VCON_TEL1')),
+                'VCON_NOM2'   => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')) : 'NA',
+                'VCON_CED2'   => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
+                'VCON_TEL2'   => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
+                'VCON_DIR'    => trim($request->get('VCON_DIR')),
+                'TRAT_DATOS'  => trim($request->get('TRAT_DATOS')),
                 'TIPOCLIENTE' => 'NUEVO',
-                'SUBTIPO' => 'NUEVO',
-                'EDAD' => $this->calculateAge($request->get('FEC_NAC')),
-                'CIUD_UBI' => trim($cityName[0]->CIUDAD),
-                'DEPTO' => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+                'SUBTIPO'     => 'NUEVO',
+                'EDAD'        => $this->calculateAge($request->get('FEC_NAC')),
+                'CIUD_UBI'    => trim($cityName[0]->CIUDAD),
+                'DEPTO'       => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
                 'ID_CIUD_UBI' => trim($getIdcityUbi[0]->ID_DIAN),
-                'MEDIO_PAGO' => 1,
-                'ORIGEN' => 'ASESORES-CONTADO',
+                'MEDIO_PAGO'  => 1,
+                'ORIGEN'      => 'ASESORES-CONTADO',
                 'CLIENTE_WEB' => $clienteWeb,
-                'PASO' => '',
+                'PASO'        => '',
             ];
             unset($dataOportudata['tipoCliente']);
             $createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
             $queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
             if ($queryExistCel[0]->total == 0) {
-                $clienteCelular = new CliCel;
-                $clienteCelular->IDENTI = trim($request->get('CEDULA'));
-                $clienteCelular->NUM = trim($request->get('CELULAR'));
-                $clienteCelular->TIPO = 'CEL';
+                $clienteCelular          = new CliCel;
+                $clienteCelular->IDENTI  = trim($request->get('CEDULA'));
+                $clienteCelular->NUM     = trim($request->get('CELULAR'));
+                $clienteCelular->TIPO    = 'CEL';
                 $clienteCelular->CEL_VAL = 0;
-                $clienteCelular->FECHA = date("Y-m-d H:i:s");
+                $clienteCelular->FECHA   = date("Y-m-d H: i: s");
                 $clienteCelular->save();
             }
             $queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
             if ($queryExistTelFijo[0]->total == 0) {
-                $clienteCelular = new CliCel;
-                $clienteCelular->IDENTI = trim($request->get('CEDULA'));
-                $clienteCelular->NUM = trim($request->get('TELFIJO'));
-                $clienteCelular->TIPO = 'FIJO';
+                $clienteCelular          = new CliCel;
+                $clienteCelular->IDENTI  = trim($request->get('CEDULA'));
+                $clienteCelular->NUM     = trim($request->get('TELFIJO'));
+                $clienteCelular->TIPO    = 'FIJO';
                 $clienteCelular->CEL_VAL = 0;
-                $clienteCelular->FECHA = date("Y-m-d H:i:s");
+                $clienteCelular->FECHA   = date("Y-m-d H: i: s");
                 $clienteCelular->save();
             }
             return $dataOportudata;
         } elseif ($request->tipoCliente == 'CREDITO') {
-            $cityName = $this->getCity(trim($request->get('CIUD_UBI')));
-            $getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
+            $cityName         = $this->getCity(trim($request->get('CIUD_UBI')));
+            $getIdcityUbi     = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
             $getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
-            $getIdcityExp = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+            $getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+            $antig            = $request->get('ANTIG');
+            $indp             = $request->get('EDAD_INDP');
+            if (trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS') {
+                $antig = $this->calculateTimeCompany(trim($request->get('FEC_ING')) . "-01");
+            } else {
+                $indp = $this->calculateTimeCompany(trim($request->get('FEC_CONST')) . "-01");
+            }
             $dataOportudata = [
-                'TIPO_DOC' => trim($request->get('TIPO_DOC')),
-                'CEDULA' => trim($request->get('CEDULA')),
-                'FEC_EXP' => trim($request->get('FEC_EXP')),
-                'NOMBRES' => trim($request->get('NOMBRES')),
-                'APELLIDOS' => trim($request->get('APELLIDOS')),
-                'EMAIL' => trim($request->get('EMAIL')),
-                'CELULAR' => trim($request->get('CELULAR')),
-                'ACTIVIDAD' => trim($request->get('ACTIVIDAD')),
-                'FEC_NAC' => trim($request->get('FEC_NAC')),
-                'EDAD' => $this->calculateAge($request->get('FEC_NAC')),
-                'CIUD_UBI' => trim($cityName[0]->CIUDAD),
-                'ID_CIUD_UBI' => trim($getIdcityUbi[0]->ID_DIAN),
-                'DEPTO' => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
-                'CIUD_EXP' => trim($getNameCiudadExp[0]->NOMBRE),
-                'ID_CIUD_EXP' => trim($getIdcityExp[0]->ID_DIAN),
-                'TIPOV' => trim($request->get('TIPOV')),
-                'TIEMPO_VIV' => trim($request->get('TIEMPO_VIV')),
-                'PROPIETARIO' => trim($request->get('PROPIETARIO')),
-                'DIRECCION' => trim($request->get('DIRECCION')),
-                'VRARRIENDO' => trim($request->get('VRARRIENDO')),
-                'TELFIJO' => trim($request->get('TELFIJO')),
-                'ESTRATO' => trim($request->get('ESTRATO')),
-                'SEXO' => trim($request->get('SEXO')),
-                'ESTADOCIVIL' => trim($request->get('ESTADOCIVIL')),
-                'NIT_EMP' => trim($request->get('NIT_EMP')),
-                'RAZON_SOC' => trim($request->get('RAZON_SOC')),
-                'DIR_EMP' => trim($request->get('DIR_EMP')),
-                'TEL_EMP' => trim($request->get('TEL_EMP')),
-                'TEL2_EMP' => trim($request->get('TEL2_EMP')),
-                'ACT_ECO' => trim($request->get('ACT_ECO')),
-                'CARGO' => trim($request->get('CARGO')),
-                'FEC_ING' => trim($request->get('FEC_ING')) . "-01",
-                'ANTIG' => trim($request->get('ANTIG')),
-                'SUELDO' => trim($request->get('SUELDO')),
-                'TIPO_CONT' => trim($request->get('TIPO_CONT')),
-                'OTROS_ING' => trim($request->get('OTROS_ING')),
-                'CAMARAC' => trim($request->get('CAMARAC')),
-                'NIT_IND' => trim($request->get('NIT_IND')),
-                'RAZON_IND' => trim($request->get('RAZON_IND')),
-                'ACT_IND' => trim($request->get('ACT_IND')),
-                'FEC_CONST' => trim($request->get('FEC_CONST')) . "-01",
-                'EDAD_INDP' => trim($request->get('EDAD_INDP')),
-                'SUELDOIND' => trim($request->get('SUELDOIND')),
-                'BANCOP' => trim($request->get('BANCOP')),
-                'SUC' => trim($request->get('CIUD_UBI')),
-                'TIPOCLIENTE' => 'NUEVO',
-                'SUBTIPO' => 'WEB',
-                'MEDIO_PAGO' => trim($request->get('MEDIO_PAGO')),
-                'TRAT_DATOS' => trim($request->get('TRAT_DATOS')),
-                'ORIGEN' => 'ASESORES-CREDITO',
-                'USUARIO_CREACION' => $usuarioCreacion,
+                'TIPO_DOC'              => trim($request->get('TIPO_DOC')),
+                'CEDULA'                => trim($request->get('CEDULA')),
+                'FEC_EXP'               => trim($request->get('FEC_EXP')),
+                'NOMBRES'               => trim($request->get('NOMBRES')),
+                'APELLIDOS'             => trim($request->get('APELLIDOS')),
+                'EMAIL'                 => trim($request->get('EMAIL')),
+                'CELULAR'               => trim($request->get('CELULAR')),
+                'ACTIVIDAD'             => trim($request->get('ACTIVIDAD')),
+                'FEC_NAC'               => trim($request->get('FEC_NAC')),
+                'EDAD'                  => $this->calculateAge($request->get('FEC_NAC')),
+                'CIUD_UBI'              => trim($cityName[0]->CIUDAD),
+                'ID_CIUD_UBI'           => trim($getIdcityUbi[0]->ID_DIAN),
+                'DEPTO'                 => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+                'CIUD_EXP'              => trim($getNameCiudadExp[0]->NOMBRE),
+                'ID_CIUD_EXP'           => trim($getIdcityExp[0]->ID_DIAN),
+                'TIPOV'                 => trim($request->get('TIPOV')),
+                'TIEMPO_VIV'            => trim($request->get('TIEMPO_VIV')),
+                'PROPIETARIO'           => trim($request->get('PROPIETARIO')),
+                'DIRECCION'             => trim($request->get('DIRECCION')),
+                'VRARRIENDO'            => trim($request->get('VRARRIENDO')),
+                'TELFIJO'               => trim($request->get('TELFIJO')),
+                'ESTRATO'               => trim($request->get('ESTRATO')),
+                'SEXO'                  => trim($request->get('SEXO')),
+                'ESTADOCIVIL'           => trim($request->get('ESTADOCIVIL')),
+                'NIT_EMP'               => trim($request->get('NIT_EMP')),
+                'RAZON_SOC'             => trim($request->get('RAZON_SOC')),
+                'DIR_EMP'               => trim($request->get('DIR_EMP')),
+                'TEL_EMP'               => trim($request->get('TEL_EMP')),
+                'TEL2_EMP'              => trim($request->get('TEL2_EMP')),
+                'ACT_ECO'               => trim($request->get('ACT_ECO')),
+                'CARGO'                 => trim($request->get('CARGO')),
+                'FEC_ING'               => trim($request->get('FEC_ING')) . "-01",
+                'ANTIG'                 => $antig,
+                'SUELDO'                => trim($request->get('SUELDO')),
+                'TIPO_CONT'             => trim($request->get('TIPO_CONT')),
+                'OTROS_ING'             => trim($request->get('OTROS_ING')),
+                'CAMARAC'               => trim($request->get('CAMARAC')),
+                'NIT_IND'               => trim($request->get('NIT_IND')),
+                'RAZON_IND'             => trim($request->get('RAZON_IND')),
+                'ACT_IND'               => trim($request->get('ACT_IND')),
+                'FEC_CONST'             => trim($request->get('FEC_CONST')) . "-01",
+                'EDAD_INDP'             => $indp,
+                'SUELDOIND'             => trim($request->get('SUELDOIND')),
+                'BANCOP'                => trim($request->get('BANCOP')),
+                'SUC'                   => trim($request->get('CIUD_UBI')),
+                'TIPOCLIENTE'           => 'NUEVO',
+                'SUBTIPO'               => 'WEB',
+                'MEDIO_PAGO'            => trim($request->get('MEDIO_PAGO')),
+                'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
+                'ORIGEN'                => 'ASESORES-CREDITO',
+                'USUARIO_CREACION'      => $usuarioCreacion,
                 'USUARIO_ACTUALIZACION' => $assessorCode,
-                'CLIENTE_WEB' => $clienteWeb
+                'CLIENTE_WEB'           => $clienteWeb
             ];
             $createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
             $queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
             if ($request->get('CEL_VAL') == 0 && $queryExistCel[0]->total == 0) {
-                $clienteCelular = new CliCel;
-                $clienteCelular->IDENTI = trim($request->get('CEDULA'));
-                $clienteCelular->NUM = trim($request->get('CELULAR'));
-                $clienteCelular->TIPO = 'CEL';
+                $clienteCelular          = new CliCel;
+                $clienteCelular->IDENTI  = trim($request->get('CEDULA'));
+                $clienteCelular->NUM     = trim($request->get('CELULAR'));
+                $clienteCelular->TIPO    = 'CEL';
                 $clienteCelular->CEL_VAL = 1;
-                $clienteCelular->FECHA = date("Y-m-d H:i:s");
+                $clienteCelular->FECHA   = date("Y-m-d H: i: s");
                 $clienteCelular->save();
             }
             $queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
             if ($queryExistTelFijo[0]->total == 0) {
-                $clienteCelular = new CliCel;
-                $clienteCelular->IDENTI = trim($request->get('CEDULA'));
-                $clienteCelular->NUM = trim($request->get('TELFIJO'));
-                $clienteCelular->TIPO = 'FIJO';
+                $clienteCelular          = new CliCel;
+                $clienteCelular->IDENTI  = trim($request->get('CEDULA'));
+                $clienteCelular->NUM     = trim($request->get('TELFIJO'));
+                $clienteCelular->TIPO    = 'FIJO';
                 $clienteCelular->CEL_VAL = 0;
-                $clienteCelular->FECHA = date("Y-m-d H:i:s");
+                $clienteCelular->FECHA   = date("Y-m-d H: i: s");
                 $clienteCelular->save();
             }
             $lastName = explode(" ", trim($request->get('APELLIDOS')));
@@ -265,10 +268,17 @@ class assessorsController extends Controller
     private function calculateAge($fecha)
     {
         $time = strtotime($fecha);
-        $now = time();
-        $age = ($now - $time) / (60 * 60 * 24 * 365.25);
-        $age = floor($age);
+        $now  = time();
+        $age  = ($now - $time) / (60 * 60 * 24 * 365.25);
+        $age  = floor($age);
 
         return $age;
+    }
+
+    private function calculateTimeCompany($fechaIngreso)
+    {
+        $fechaActual = date("Y-m-d");
+        $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
+        return $dateDiff;
     }
 }

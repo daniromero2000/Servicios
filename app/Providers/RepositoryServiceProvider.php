@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
-use App\Entities\Leads\Repositories\leadRepository;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Subsidiaries\Repositories\SubsidiaryRepository;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Assessors\Repositories\AssessorRepository;
@@ -25,6 +25,23 @@ use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Customers\Repositories\CustomerRepository;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\ConfirmationMessages\Repositories\ConfirmationMessageRepository;
+use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\Cities\Repositories\CityRepository;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\CustomerCellPhoneRepository;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
+use App\Entities\ConsultationValidities\Repositories\ConsultationValidityRepository;
+use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use App\Entities\Fosygas\Repositories\FosygaRepository;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\WebServices\Repositories\WebServiceRepository;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Entities\Registradurias\Repositories\RegistraduriaRepository;
+use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\CommercialConsultations\Repositories\CommercialConsultationRepository;
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -32,7 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             LeadRepositoryInterface::class,
-            leadRepository::class
+            LeadRepository::class
         );
 
         $this->app->bind(
@@ -83,6 +100,46 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CustomerRepositoryInterface::class,
             CustomerRepository::class
+        );
+
+        $this->app->bind(
+            ConfirmationMessageRepositoryInterface::class,
+            ConfirmationMessageRepository::class
+        );
+
+        $this->app->bind(
+            CityRepositoryInterface::class,
+            CityRepository::class
+        );
+
+        $this->app->bind(
+            CustomerCellPhoneRepositoryInterface::class,
+            CustomerCellPhoneRepository::class
+        );
+
+        $this->app->bind(
+            ConsultationValidityRepositoryInterface::class,
+            ConsultationValidityRepository::class
+        );
+
+        $this->app->bind(
+            FosygaRepositoryInterface::class,
+            FosygaRepository::class
+        );
+
+        $this->app->bind(
+            WebServiceRepositoryInterface::class,
+            WebServiceRepository::class
+        );
+
+        $this->app->bind(
+            RegistraduriaRepositoryInterface::class,
+            RegistraduriaRepository::class
+        );
+
+        $this->app->bind(
+            CommercialConsultationRepositoryInterface::class,
+            CommercialConsultationRepository::class
         );
     }
 }

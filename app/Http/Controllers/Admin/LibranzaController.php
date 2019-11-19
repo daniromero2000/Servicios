@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
 use App\Fee;
-use App\Lead;
+use App\Entities\Leads\Lead;
 use App\Liquidator;
 use App\Pagaduria;
 use App\LibranzaLines;
@@ -18,10 +18,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 
 
 class LibranzaController extends Controller
 {
+    private $leadInterface;
+
+    public function __construct(
+        LeadRepositoryInterface $leadRepositoryInterface
+    ) {
+        $this->leadInterface = $leadRepositoryInterface;
+    }
+
     public function index()
     {
         return view('libranza.index', [
@@ -31,21 +40,9 @@ class LibranzaController extends Controller
 
     public function store(Request $request)
     {
-        $lead = new Lead;
-        $liquidator = new Liquidator;
-        $lead->name = $request->get('name');
-        $lead->lastName = $request->get('lastName');
-        $lead->email = $request->get('email');
-        $lead->telephone = $request->get('telephone');
-        $lead->city = $request->get('city');
-        $lead->typeService = $request->get('typeService');
-        $lead->typeDocument = $request->get('typeDocument');
-        $lead->identificationNumber = $request->get('identificationNumber');
-        $lead->typeProduct = $request->get('typeProduct');
-        $lead->channel = intval($request->get('channel'));
-        $lead->termsAndConditions = $request->get('termsAndConditions');
-        $lead->save();
+        $lead = $this->leadInterface->createLead($request->input());
 
+        $liquidator = new Liquidator;
         $liquidator->idCreditLine = $request->get('creditLine');
         $liquidator->idPagaduria = $request->get('pagaduria');
         $liquidator->age = $request->get('age');

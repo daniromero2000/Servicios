@@ -8,7 +8,7 @@ class codeUserVerificationOportudata extends Model
 {
     protected $table = 'code_user_verification';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'identificador';
 

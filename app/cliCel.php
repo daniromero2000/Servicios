@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class cliCel extends Model
 {
-    public $table = 'CLI_CEL';
+    protected $table = 'CLI_CEL';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'IDENTI, NUM';
 

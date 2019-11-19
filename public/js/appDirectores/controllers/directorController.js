@@ -1,5 +1,4 @@
-app.controller('DirectorController', function ($scope, $http, $rootScope, $ngBootbox) {
-	$ngBootbox.setLocale('es');
+app.controller('directorController', function ($scope, $http) {
 	$scope.q = {
 		'q': '',
 		'qtipoTarjeta': '',

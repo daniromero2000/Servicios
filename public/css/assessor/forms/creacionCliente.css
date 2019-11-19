@@ -1,3 +1,45 @@
+.modalConfronta{
+    max-width: 700px;
+}
+
+.modalThankYouPage-asessors > .modal-dialog{
+    max-width: 1000px;
+}
+
+.headThankYuoModal{
+    background: url(../../../images/asessors/barratop.jpg) center center no-repeat;
+    background-size: 100%;
+}
+
+.iconThankYouModal{
+    width: 90px;
+}
+
+.textTnakYouModal{
+    color: #0255FC;
+    font-size: 18px;
+}
+
+.containTextThankYouModal{
+    margin-top: 25px;
+}
+
+.headThankYuoModal > img{
+    max-width: 260px;
+}
+
+.confronta-title{
+    color: #167efa;
+    margin: 20px 0;
+}
+
+.confronta-label{
+    color: black;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 10px;
+}
+
 .container-form{
     /*border: solid 1px #2284C4;*/
     width: 100%;
@@ -9,7 +51,6 @@
     border-radius: 10px;
 }
 input{
-    width: 100%;
     margin: 0px 0px 10px 0px;
     border-radius: 8px;
     border: solid 1px gray;
@@ -71,20 +112,20 @@ input{
 }
 @media (max-width: 750px){
     .content-top{
-    text-align: center;
-}
-.img-top{
-    width: 100%;
-    border-radius:15px;
-}
+        text-align: center;
+    }
+    .img-top{
+        width: 100%;
+        border-radius:15px;
+    }
 }
 @media (min-width: 500px){
     .content-top{
-    text-align: center;
-    display: none;
+        text-align: center;
+        display: none;
+    }
+    .img-top{
+        width: 100%;
+        border-radius:15px;
+    }
 }
-.img-top{
-    width: 100%;
-    border-radius:15px;
-}
-}                                                    

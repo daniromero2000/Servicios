@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
+use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,10 +19,12 @@ class AdvanceController extends Controller
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
-        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
     }
 
     public function index()

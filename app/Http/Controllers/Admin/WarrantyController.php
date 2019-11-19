@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\codeUserVerificationOportudata;
 use App\GARANTIA;
-use App\OportuyaV2;
 use App\cliCel;
+use App\Entities\Customers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -165,13 +165,13 @@ class WarrantyController extends Controller
         }
 
 
-        if (OportuyaV2::find($request->identificationNumber)) {
+        if (Customer::find($request->identificationNumber)) {
 
-            $warrantyClient = OportuyaV2::find($request->identificationNumber);
+            $warrantyClient = Customer::find($request->identificationNumber);
             $warrantyClient->EMAIL = $request->email;
             $warrantyClient->save();
         } else {
-            $warrantyClient = new  OportuyaV2;
+            $warrantyClient = new  Customer;
             $warrantyClient->TIPO_DOC = $request->idType;
             $warrantyClient->CEDULA = $request->identificationNumber;
             $warrantyClient->APELLIDOS = $request->lastNames;

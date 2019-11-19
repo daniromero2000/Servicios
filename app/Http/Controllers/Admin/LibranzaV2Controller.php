@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lead;
+use App\Entities\Leads\Lead;
 use App\LeadInfo;
 use Illuminate\Support\Facades\DB;
 

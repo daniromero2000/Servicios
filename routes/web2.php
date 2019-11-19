@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Admin routes
- */
-Route::resource('director', 'Admin\DirectorController');
-
 //libranza routes
 Route::resource('libranzaV2', 'Admin\LibranzaV2Controller');
 
@@ -120,6 +115,34 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
 });
 
 
+
+
+
+
+
+/**
+ * Admin routes
+ */
+Route::namespace('Admin')->group(function () {
+
+    Route::namespace('Directors')->group(function () {
+        Route::resource('director', 'DirectorController');
+    });
+
+    Route::namespace('Subsidiaries')->group(function () {
+        Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
+    });
+
+    Route::namespace('FactoryRequests')->group(function () {
+        Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
+    });
+
+    Route::namespace('Comments')->group(function () {
+        Route::get('api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
+    });
+});
+
+
 /**
  * Frontend routes
  */
@@ -131,4 +154,20 @@ Route::namespace('Front')->group(function () {
     Route::namespace('Newsletters')->group(function () {
         Route::resource('newsletter', 'newsletterController');
     });
+
+    Route::namespace('Insurances')->group(function () {
+        Route::resource('seguros', 'SegurosController');
+    });
+
+    Route::namespace('Motos')->group(function () {
+        Route::resource('motos', 'MotosController');
+    });
+
+    Route::namespace('Travels')->group(function () {
+        Route::resource('viajes', 'ViajesController');
+    });
+
+
+
+    Route::resource('viajes', 'Admin\ViajesController');
 });

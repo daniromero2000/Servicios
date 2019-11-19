@@ -9,7 +9,7 @@ class ProfilesAssessor extends \Eloquent implements AuthenticatableContract
 {
     use Authenticatable;
 
-    public $table = "profiles_assessor";
+    protected $table = "profiles_assessor";
 
     protected $fillable = [
         'code',

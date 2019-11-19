@@ -10,7 +10,7 @@ class TurnosOportuya extends Model
 
     protected $primaryKey = 'NUMERO';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     public $timestamps = false;
 

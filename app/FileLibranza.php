@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FileLibranza extends Model
 {
-    public $table='files_libranza';
+    protected $table='files_libranza';
 
     protected $fillable = [
         'name',

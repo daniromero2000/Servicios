@@ -1,168 +1,56 @@
-
-
-<div class="row ">
-    <div class="col-12 ">
-        <div class="content-wrapper  " style="margin: auto;">
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-12">
-                            <div class="row form-group" ng-if="filtros">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body ">
-                                            <form ng-submit="searchLeads()">
-                                                <div class="row form-group">
-                                                    <div class="col-12 col-sm-4">
-                                                        <label for="city">Ciudad</label>
-                                                        <select id="city" class="form-control" ng-model="q.city"
-                                                            ng-options="city.value as city.label for city in cities"></select>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <label for="typeService">Tipo de Servicio</label>
-                                                        <select id="typeService" class="form-control"
-                                                            ng-model="q.typeService"
-                                                            ng-options="service.value as service.label for service in typeServices"></select>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4">
-                                                        <label for="state">Estado</label>
-                                                        <select id="state" class="form-control" ng-model="q.state"
-                                                            ng-options="state.value as state.label for state in typeStates"></select>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-group">
-                                                    <div class="col-12 col-sm-6">
-                                                        <label for="fecha_ini">Fecha Inicial</label>
-                                                        <div class="input-group" moment-picker="q.fecha_ini"
-                                                            format="YYYY-MM-DD">
-                                                            <input class="form-control" ng-model="q.fecha_ini"
-                                                                id="fecha_ini">
-                                                            <span class="input-group-addon">
-                                                                <i class="octicon octicon-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-6">
-                                                        <label for="fecha_fin">Fecha Final</label>
-                                                        <div class="input-group" moment-picker="q.fecha_fin"
-                                                            format="YYYY-MM-DD">
-                                                            <input class="form-control" ng-model="q.fecha_fin">
-                                                            <span class="input-group-addon">
-                                                                <i class="octicon octicon-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12 text-right">
-                                                        <button type="button" ng-click="resetFiltros()"
-                                                            class="btn btn-danger">Resetear Filtros <i
-                                                                class="fas fa-times"></i></button>
-                                                        <button type="submit" class="btn btn-primary">Filtrar <i
-                                                                class="fas fa-filter"></i></button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+<div class="row form-group" ng-if="filtros">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Filtros</strong>
+            </div>
+            <div class="card-body">
+                <form ng-submit="searchLeads()">
+                    <div class="row form-group">
+                        <div class="col-12 col-sm-4">
+                            <label for="city">Ciudad</label>
+                            <select id="city" class="form-control" ng-model="q.city"
+                                ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for="typeService">Tipo de Servicio</label>
+                            <select id="typeService" class="form-control" ng-model="q.typeService"
+                                ng-options="service.value as service.label for service in typeServices"></select>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for="state">Estado</label>
+                            <select id="state" class="form-control" ng-model="q.state"
+                                ng-options="state.value as state.label for state in typeStates"></select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-sm-6">
+                            <label for="fecha_ini">Fecha Inicial</label>
+                            <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
+                                <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
+                                <span class="input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="fecha_fin">Fecha Final</label>
+                            <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
+                                <input class="form-control" ng-model="q.fecha_fin">
+                                <span class="input-group-addon">
+                                    <i class="octicon octicon-calendar"></i>
+                                </span>
                             </div>
 
                            
                         </div>
 
                     </div>
-                </div>
-            </section>
-
-            <section class="content">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card  shadow-lg ">
-                           
-                                <div class="card-header bg-white">
-                                        <div class="row resetRow">
-                                                <div class="col-sm-12 col-md-4">
-                                                    <button class="btn btn-primary">
-                                                        <a ng-click="addCommunityForm()">Agregar Lead <i
-                                                                class="far fa-plus-square"></i></a>
-                                                    </button>
-                                                </div>
-                                                <div class="col-sm-12 offset-md-3 col-md-4 text-right">
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" ng-model="q.q" class="form-control"
-                                                            aria-describedby="searchIcon">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
-                                                                    class="fas fa-search"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-1 resetCol">
-                                                    <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i
-                                                            class="fas fa-filter"></i></button>
-                                                </div>
-                                            </div>
-                                </div>
-                               
-                            <!-- /.card-header -->
-                            <div class="card-body ">
-                                <table id="example2"
-                                    class="table table-responsive table-stripped leadTable  table-hover">
-                                    <thead class=" text-center">
-                                        <tr>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Teléfono</th>
-                                            <th scope="col">Canal</th>
-                                            <th scope="col">Ciudad</th>
-                                            <th scope="col">Fecha de registro</th>
-                                            <th scope="col">Campaña</th>
-                                            <th scope="col">Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="lead in leads">
-                                            <td>@{{ lead.nameLast }}</td>
-                                            <td>@{{ lead.telephone }}</td>
-                                            <td>
-                                                <span ng-if="lead.channel == 1">Página Web</span>
-                                                <span ng-if="lead.channel == 2">Facebook</span>
-                                                <span ng-if="lead.channel == 3">WhatsApp</span>
-                                            </td>
-                                            <td ng-if="lead.nearbyCity == null">@{{ lead.city }} </td>
-                                            <td ng-if="lead.nearbyCity != null">@{{ lead.city+" / "+lead.nearbyCity }}
-                                            </td>
-                                            <td>@{{ lead.created_at }}</td>
-                                            <td>@{{ lead.campaignName }}</td>
-                                            <td>
-                                                <i class="fas fa-edit cursor" title="Actualizar Lead"
-                                                    ng-click="showUpdateDialog(lead.id)"></i>
-                                                <i class="fas fa-times cursor" title="eliminar Lead"
-                                                    ng-click="showDialogDelete(lead.id)"></i>
-                                                <i class="fas fa-comment cursor"
-                                                    ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="row">
-                                    <div class="col-12 text-center">
-                                        <button class="btn btn-secondary" ng-disabled="cargando"
-                                            ng-click="getLeads()">Cargar Más</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                        <div class="col-6 text-right">
-                                            <a href="/Administrator/dashboard"><i class="fas fa-arrow-left"></i> Dashboard</a>
-                                        </div>
-                                        <div class="col-6 text-left">
-                                            <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
-                                        </div>
-                                    </div>
-                            </div>
-
-                            <!-- /.card-body -->
-                           
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i
+                                    class="fas fa-times"></i></button>
+                            <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
                         </div>
 
                         <!-- /.card -->
@@ -170,10 +58,87 @@
 
                         <!-- /.card -->
                     </div>
-                    <!-- /.col -->
-                </div>
-            </section>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
+<div class="row resetRow">
+    <div class="col-sm-12 col-md-2">
+        <button class="btn btn-primary">
+            <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
+        </button>
+    </div>
+    <div class="col-sm-12 col-md-2">
+        <p class="totalLeadsDigital text-center">
+            @{{ totalLeads }}
+        </p>
+        <p class="text-center">
+            Leads
+        </p>
+    </div>
+    <div class="col-sm-12 offset-md-4 col-md-3 text-right">
+        <div class="input-group mb-3">
+            <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
+            <div class="input-group-append">
+                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
+                        class="fas fa-search"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-1 resetCol">
+        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
+                class="fas fa-filter"></i></button>
+    </div>
+</div>
+<div class="table table-responsive">
+    <table class="table table-hover table-stripped leadTable">
+        <thead class="headTableLeads">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Canal Adquisición</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Fecha de registro</th>
+                <th scope="col">Campaña</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="lead in leads">
+                <td>@{{ lead.nameLast }}</td>
+                <td>@{{ lead.telephone }}</td>
+                <td>
+                    <span ng-if="lead.channel == 1">Página Web</span>
+                    <span ng-if="lead.channel == 2">Facebook</span>
+                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                </td>
+                <td ng-if="lead.nearbyCity == null">@{{ lead.city }} </td>
+                <td ng-if="lead.nearbyCity != null">@{{ lead.city+" / "+lead.nearbyCity }} </td>
+                <td>@{{ lead.created_at }}</td>
+                <td>@{{ lead.campaignName }}</td>
+                <td>
+                    <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(lead.id)"></i>
+                    <i class="fas fa-times cursor" title="eliminar Lead" ng-click="showDialogDelete(lead.id)"></i>
+                    <i class="fas fa-comment cursor"
+                        ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar Más</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6 text-right">
+        <a href="/Administrator/dashboard"><i class="fas fa-arrow-left"></i> Dashboard</a>
+    </div>
+    <div class="col-6 text-left">
+        <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
     </div>
 </div>
 
@@ -336,10 +301,8 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6 form-group">
                                     <label for="city">Ciudad</label>
-                                    <select id="city" class="form-control" ng-model="lead.city">
-                                        <option ng-repeat="city in cities" value="@{{city.value}}">
-                                            @{{city.value}}
-                                        </option>
+                                    <select id="city" class="form-control" ng-model="lead.city"
+                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities">
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-6 form-group no-padding-right">

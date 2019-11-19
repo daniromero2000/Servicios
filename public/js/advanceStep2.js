@@ -133,7 +133,7 @@ angular.module('appAdvanceStep2', ['moment-picker', 'ng-currency'])
 				window.location = "/avance/step3/"+response.data;
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 

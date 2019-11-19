@@ -3,7 +3,7 @@
 namespace App\Entities\Leads\Repositories;
 
 use App\Entities\Leads\Lead;
-use App\Entities\Leads\Repositories\Interfaces\leadRepositoryInterface;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\QueryException;
 
 class LeadRepository implements leadRepositoryInterface

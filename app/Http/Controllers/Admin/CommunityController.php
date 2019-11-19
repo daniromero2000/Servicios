@@ -9,7 +9,6 @@ use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 
 class CommunityController extends Controller
 {
-
     private $leadInterface;
 
     public function __construct(
@@ -17,7 +16,6 @@ class CommunityController extends Controller
     ) {
         $this->leadInterface = $leadRepositoryInterface;
     }
-
 
     public function index(Request $request)
     {
@@ -27,30 +25,53 @@ class CommunityController extends Controller
         WHERE (`channel` = 2 OR `channel` = 3)";
 
         if ($request->get('q') != '') {
-            $queryCM .= sprintf(" AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )", '%' . $request->get('q') . '%', '%' . $request->get('q') . '%', '%' . $request->get('q') . '%', '%' . $request->get('q') . '%');
+
+            $queryCM .= sprintf(
+                " AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s')",
+                '%' . $request->get('q') . '%',
+                '%' . $request->get('q') . '%',
+                '%' . $request->get('q') . '%',
+                '%' . $request->get('q') . '%',
+                '%' . $request->get('q') . '%'
+            );
         }
+
+        if ($request['city'] != '') {
+            $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['city']);
+        }
+
+        if ($request['typeService'] != '') {
+            $queryCM .= sprintf(" AND (lead.`typeService` = '%s') ", $request['typeService']);
+        }
+
+        if ($request['state'] != '') {
+            $queryCM .= sprintf(" AND (lead.`state` = '%s') ", $request['state']);
+        }
+
+        if ($request['fecha_ini'] != '') {
+            $request['fecha_ini'] .= " 00:00:00";
+            $queryCM .= sprintf(" AND (lead.`created_at` >= '%s') ", $request['fecha_ini']);
+        }
+
+        if ($request['fecha_fin'] != '') {
+            $request['fecha_fin'] .= " 23:59:59";
+            $queryCM .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['fecha_fin']);
+        }
+
+
+        $respTotalLeads = DB::select($queryCM);
 
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
 
-        return DB::select($queryCM);
+        return [
+            'leadsCommunity' => DB::select($queryCM),
+            'totalLeads'   => count($respTotalLeads)
+        ];
     }
 
     public function store(Request $request)
     {
-        // $lead = new Lead;
-        // $lead->name = $request->get('name');
-        // $lead->lastName = $request->get('lastName');
-        // $lead->email = $request->get('email');
-        // $lead->telephone = $request->get('telephone');
-        // $lead->city = $request->get('city');
-        // $lead->typeService = $request->get('typeService');
-        // $lead->typeProduct = $request->get('typeProduct');
-        // $lead->channel = intval($request->get('channel'));
-        // $lead->termsAndConditions = $request->get('termsAndConditions');
-        // $lead->campaign = $request->get('campaign');
-        // $lead->save();
-
         $this->leadInterface->createLead($request->input());
 
         return response()->json([true]);

@@ -9,9 +9,9 @@ class Assessor extends \Eloquent implements AuthenticatableContract
 {
     use Authenticatable;
 
-    public $table = 'ASESORES';
+    protected $table = 'ASESORES';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
 
     protected $primaryKey = 'CODIGO';
 

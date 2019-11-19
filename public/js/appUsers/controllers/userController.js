@@ -28,53 +28,150 @@ app.controller('userController', function($scope, $http, $rootScope){
 	};
 	$scope.comments = [];
 	$scope.users = [];
-	$scope.cities = [
-		{ label : 'ARMENIA',value: 'ARMENIA' },
-		{ label : 'MANIZALES',value: 'MANIZALES' },
-		{ label : 'SINCELEJO',value: 'SINCELEJO' },
-		{ label : 'YOPAL',value: 'YOPAL' },
-		{ label : 'CERETÉ',value: 'CERETÉ' },
-		{ label : 'TULUÁ',value: 'TULUÁ' },
-		{ label : 'ACACÍAS',value: 'ACACÍAS' },
-		{ label : 'ESPINAL',value: 'ESPINAL' },
-		{ label : 'MARIQUITA',value: 'MARIQUITA' },
-		{ label : 'CARTAGENA',value: 'CARTAGENA' },
-		{ label : 'LA DORADA',value: 'LA DORADA' },
-		{ label : 'IBAGUÉ',value: 'IBAGUÉ' },
-		{ label : 'BOGOTÁ',value: 'BOGOTÁ' },
-		{ label : 'MONTERÍA',value: 'MONTERÍA' },
-		{ label : 'MAGANGUÉ',value: 'MAGANGUÉ' },
-		{ label : 'PEREIRA',value: 'PEREIRA' },
-		{ label : 'CALI',value: 'CALI' },
-		{ label : 'MONTELIBANO',value: 'MONTELIBANO' },
-		{ label : 'SAHAGÚN',value: 'SAHAGÚN' },
-		{ label : 'PLANETA RICA',value: 'PLANETA RICA' },
-		{ label : 'COROZAL',value: 'COROZAL' },
-		{ label : 'CIÉNAGA',value: 'CIÉNAGA' },
-		{ label : 'MONTELÍ',value: 'MONTELÍ' },
-		{ label : 'PLATO',value: 'PLATO' },
-		{ label : 'SABANALARGA',value: 'SABANALARGA' },
-		{ label : 'GRANADA',value: 'GRANADA' },
-		{ label : 'PUERTO BERRÍ',value: 'PUERTO BERRÍ' },
-		{ label : 'VILLAVICENCIO',value: 'VILLAVICENCIO' },
-		{ label : 'TAURAMENA',value: 'TAURAMENA' },
-		{ label : 'PUERTO GAITÁN',value: 'PUERTO GAITÁN' },
-		{ label : 'PUERTO BOYACÁ',value: 'PUERTO BOYACÁ' },
-		{ label : 'PUERTO LÓPEZ',value: 'PUERTO LÓPEZ' },
-		{ label : 'SEVILLA',value: 'SEVILLA' },
-		{ label : 'CHINCHINÁ',value: 'CHINCHINÁ' },
-		{ label : 'AGUACHICA',value: 'AGUACHICA' },
-		{ label : 'BARRANCABERMEJA',value: 'BARRANCABERMEJA' },
-		{ label : 'LA VIRGINIA',value: 'LA VIRGINIA' },
-		{ label : 'SANTA ROSA DE CABAL',value: 'SANTA ROSA DE CABAL' },
-		{ label : 'GIRARDOT',value: 'GIRARDOT' },
-		{ label : 'VILLANUEVA',value: 'VILLANUEVA' },
-		{ label : 'PITALITO',value: 'PITALITO' },
-		{ label : 'GARZÓN',value: 'GARZÓN' },
-		{ label : 'NEIVA',value: 'NEIVA' },
-		{ label : 'LORICA',value: 'LORICA' },
-		{ label : 'AGUAZUL', value: 'AGUAZUL' }
-	];
+	$scope.cities = [];
+
+
+
+
+
+
+	// {
+	// 	label: 'ARMENIA',
+	// 	value: 'ARMENIA'
+	// }, {
+	// 	label: 'MANIZALES',
+	// 	value: 'MANIZALES'
+	// }, {
+	// 	label: 'SINCELEJO',
+	// 	value: 'SINCELEJO'
+	// }, {
+	// 	label: 'YOPAL',
+	// 	value: 'YOPAL'
+	// }, {
+	// 	label: 'CERETÉ',
+	// 	value: 'CERETÉ'
+	// }, {
+	// 	label: 'TULUÁ',
+	// 	value: 'TULUÁ'
+	// }, {
+	// 	label: 'ACACÍAS',
+	// 	value: 'ACACÍAS'
+	// }, {
+	// 	label: 'ESPINAL',
+	// 	value: 'ESPINAL'
+	// }, {
+	// 	label: 'MARIQUITA',
+	// 	value: 'MARIQUITA'
+	// }, {
+	// 	label: 'CARTAGENA',
+	// 	value: 'CARTAGENA'
+	// }, {
+	// 	label: 'LA DORADA',
+	// 	value: 'LA DORADA'
+	// }, {
+	// 	label: 'IBAGUÉ',
+	// 	value: 'IBAGUÉ'
+	// }, {
+	// 	label: 'BOGOTÁ',
+	// 	value: 'BOGOTÁ'
+	// }, {
+	// 	label: 'MONTERÍA',
+	// 	value: 'MONTERÍA'
+	// }, {
+	// 	label: 'MAGANGUÉ',
+	// 	value: 'MAGANGUÉ'
+	// }, {
+	// 	label: 'PEREIRA',
+	// 	value: 'PEREIRA'
+	// }, {
+	// 	label: 'CALI',
+	// 	value: 'CALI'
+	// }, {
+	// 	label: 'MONTELIBANO',
+	// 	value: 'MONTELIBANO'
+	// }, {
+	// 	label: 'SAHAGÚN',
+	// 	value: 'SAHAGÚN'
+	// }, {
+	// 	label: 'PLANETA RICA',
+	// 	value: 'PLANETA RICA'
+	// }, {
+	// 	label: 'COROZAL',
+	// 	value: 'COROZAL'
+	// }, {
+	// 	label: 'CIÉNAGA',
+	// 	value: 'CIÉNAGA'
+	// }, {
+	// 	label: 'MONTELÍ',
+	// 	value: 'MONTELÍ'
+	// }, {
+	// 	label: 'PLATO',
+	// 	value: 'PLATO'
+	// }, {
+	// 	label: 'SABANALARGA',
+	// 	value: 'SABANALARGA'
+	// }, {
+	// 	label: 'GRANADA',
+	// 	value: 'GRANADA'
+	// }, {
+	// 	label: 'PUERTO BERRÍ',
+	// 	value: 'PUERTO BERRÍ'
+	// }, {
+	// 	label: 'VILLAVICENCIO',
+	// 	value: 'VILLAVICENCIO'
+	// }, {
+	// 	label: 'TAURAMENA',
+	// 	value: 'TAURAMENA'
+	// }, {
+	// 	label: 'PUERTO GAITÁN',
+	// 	value: 'PUERTO GAITÁN'
+	// }, {
+	// 	label: 'PUERTO BOYACÁ',
+	// 	value: 'PUERTO BOYACÁ'
+	// }, {
+	// 	label: 'PUERTO LÓPEZ',
+	// 	value: 'PUERTO LÓPEZ'
+	// }, {
+	// 	label: 'SEVILLA',
+	// 	value: 'SEVILLA'
+	// }, {
+	// 	label: 'CHINCHINÁ',
+	// 	value: 'CHINCHINÁ'
+	// }, {
+	// 	label: 'AGUACHICA',
+	// 	value: 'AGUACHICA'
+	// }, {
+	// 	label: 'BARRANCABERMEJA',
+	// 	value: 'BARRANCABERMEJA'
+	// }, {
+	// 	label: 'LA VIRGINIA',
+	// 	value: 'LA VIRGINIA'
+	// }, {
+	// 	label: 'SANTA ROSA DE CABAL',
+	// 	value: 'SANTA ROSA DE CABAL'
+	// }, {
+	// 	label: 'GIRARDOT',
+	// 	value: 'GIRARDOT'
+	// }, {
+	// 	label: 'VILLANUEVA',
+	// 	value: 'VILLANUEVA'
+	// }, {
+	// 	label: 'PITALITO',
+	// 	value: 'PITALITO'
+	// }, {
+	// 	label: 'GARZÓN',
+	// 	value: 'GARZÓN'
+	// }, {
+	// 	label: 'NEIVA',
+	// 	value: 'NEIVA'
+	// }, {
+	// 	label: 'LORICA',
+	// 	value: 'LORICA'
+	// }, {
+	// 	label: 'AGUAZUL',
+	// 	value: 'AGUAZUL'
+	// }
+
 	$scope.typeServices = [
 		{
 			label: 'Oportuya',
@@ -129,6 +226,21 @@ app.controller('userController', function($scope, $http, $rootScope){
 		$scope.userUpd.codeOportudata=assessorObject.originalObject.CODIGO;
 	};
 
+$scope.getCities = function () {
+	$http({
+		method: 'GET',
+		url: '/subsidiaries/cities'
+	}).then(function successCallback(response) {
+		console.log(response.data);
+		if (response.data != false) {
+			$scope.cities = response.data;
+		}
+	}, function errorCallback(response) {
+		console.log(response);
+	});
+};
+
+
 	$scope.getUsers = function(){
 		$scope.viewCodeAsesorOportudataUpd = false;
 		$scope.cargando = true;
@@ -138,25 +250,25 @@ app.controller('userController', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data['users'] != false){
 				$scope.q.initFrom += response.data['users'].length;
-				angular.forEach(response.data['users'], function(value, key) {					
+				angular.forEach(response.data['users'], function(value, key) {
 					$scope.users.push(value);
 				});
 				$scope.cargando = false;
 			}
 
 			if(response.data['profiles'] != false){
-				angular.forEach(response.data['profiles'], function(value, key) {					
+				angular.forEach(response.data['profiles'], function(value, key) {
 					$scope.profiles.push(value);
-				});	
+				});
 			}
 
 			if(response.data['assesors'] != false){
-				angular.forEach(response.data['assesors'], function(value, key) {					
+				angular.forEach(response.data['assesors'], function(value, key) {
 					$scope.assessors.push(value);
-				});	
-			}	
+				});
+			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 
@@ -193,7 +305,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 				$("#addUser").modal("hide");
 			}
 		}, function errorCallback(response) {
-		   
+
 		});
 	};
 
@@ -223,7 +335,7 @@ app.controller('userController', function($scope, $http, $rootScope){
 					$scope.successFlag=1;
 					$scope.error='Perfil asignado correctamente';
 				}
-				$("#assessorAddProfile").modal("hide");		
+				$("#assessorAddProfile").modal("hide");
 			}
 
 			console.log($scope.response);
@@ -263,22 +375,23 @@ app.controller('userController', function($scope, $http, $rootScope){
 	$scope.deleteUserDialog= function(idUser){
 		$scope.idUser=idUser;
 		$("#deleteModal").modal("show");
-		
+
 	}
-	
+
 	$scope.deleteUser=function(){
 		$http({
 		  method: 'DELETE',
 		  url: 'users/'+$scope.idUser,
-		}).then(function successCallback(response){	
+		}).then(function successCallback(response){
 			if(response.data != false){
 				$scope.searchUsers();
 				$("#deleteModal").modal("hide");
 			}
 		},function errorCallback(response){
-				
+
 		});
 	}
 
 	$scope.getUsers();
+	$scope.getCities();
 })

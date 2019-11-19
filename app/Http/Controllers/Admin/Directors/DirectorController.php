@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Directors;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,11 +22,8 @@ class DirectorController extends Controller
     where ti.CEDULA = cf.CEDULA
     and cf.SUC =  $user
     and cf.CLIENTE_WEB = 1
-        and cf.ORIGEN = 'ASESORES-CREDITO'
-    and ti.FECHA_INTENCION = (
-      SELECT MAX(`FECHA_INTENCION`)
-      FROM `TB_INTENCIONES`
-      WHERE `CEDULA` = `cf`.`CEDULA`)");
+    and cf.ORIGEN = 'ASESORES-CREDITO'
+    and ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)");
 
     if ($request['q'] != '') {
       $query .= sprintf(" AND (cf.`NOMBRES` LIKE '%s' OR cf.`APELLIDOS` LIKE '%s' OR cf.`CEDULA` LIKE '%s') ", '%' . $request['q'] . '%', '%' . $request['q'] . '%', '%' . $request['q'] . '%');

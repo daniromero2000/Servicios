@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Intention extends Model
 {
-    public $table = 'TB_INTENCIONES';
+    protected $table = 'TB_INTENCIONES';
 
-    public $connection = 'oportudata';
+    protected $connection = 'oportudata';
+
+    protected $primaryKey =  'CEDULA';
 
     protected $fillable = [
         'CEDULA',

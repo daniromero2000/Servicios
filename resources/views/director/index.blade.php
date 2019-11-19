@@ -19,7 +19,7 @@
 <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
 <script src="{{ asset('js/appDirectores/app.js') }}"></script>
 <script src="{{ asset('js/appDirectores/services/myService.js') }}"></script>
-<script src="{{ asset('js/appDirectores/controllers/DirectorController.js') }}"></script>
+<script src="{{ asset('js/appDirectores/controllers/directorController.js') }}"></script>
 @stop
 @section('scriptsJs')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>

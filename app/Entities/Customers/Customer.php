@@ -18,23 +18,133 @@ class Customer extends Model
 
     public $timestamps = false;
 
-    public function cifinScores()
+    protected $fillable = [
+        'NOMBRES',
+        'APELLIDOS',
+        'EMAIL',
+        'CELULAR',
+        'termsAndConditions',
+        'TIPO_DOC',
+        'CEDULA',
+        'PROFESION',
+        'TIPOCLIENTE',
+        'SUBTIPO',
+        'SEXO',
+        'FEC_EXP',
+        'CIUD_EXP',
+        'CIUD_UBI',
+        'DEPTO',
+        'TIPOV',
+        'TIEMPO_VIV',
+        'PROPIETARIO',
+        'DIRECCION',
+        'VRARRIENDO',
+        'TELFIJO',
+        'ESTRATO',
+        'FEC_NAC',
+        'EDAD',
+        'ESTADOCIVIL',
+        'NOMBRE_CONYU',
+        'CEDULA_C',
+        'CELULAR_CONYU',
+        'TRABAJO_CONYU',
+        'PROFESION_CONYU',
+        'CARGO_CONYU',
+        'SALARIO_CONYU',
+        'EPS_CONYU',
+        'ESTUDIOS',
+        'POSEEVEH',
+        'PLACA',
+        'STATE',
+        'SUC',
+        'CREACION',
+        'ACTIVIDAD',
+        'PERSONAS',
+        'TEL_PROP',
+        'VARRIENDO',
+        'N_EMPLEA',
+        'VENTASMES',
+        'COSTOSMES',
+        'GASTOS',
+        'DEUDAMES',
+        'TEL3',
+        'TEL4',
+        'TEL5',
+        'TEL6',
+        'TEL7',
+        'DIRECCION2',
+        'DIRECCION3',
+        'DIRECCION4',
+        'CIUD_NAC',
+        'NOTA1',
+        'NOTA2',
+        'CON3',
+        'ORIGEN',
+        'ESTADO',
+        'PASO',
+        'NIT_EMP',
+        'RAZON_SOC',
+        'FEC_ING',
+        'ANTIG',
+        'CARGO',
+        'DIR_EMP',
+        'TEL_EMP',
+        'TEL2_EMP',
+        'TIPO_CONT',
+        'SUELDO',
+        'NIT_IND',
+        'RAZON_IND',
+        'ACT_IND',
+        'EDAD_INDP',
+        'FEC_CONST',
+        'OTROS_ING',
+        'SUELDOIND',
+        'VCON_NOM1',
+        'VCON_CED1',
+        'VCON_TEL1',
+        'VCON_NOM2',
+        'VCON_CED2',
+        'VCON_TEL2',
+        'MEDIO_PAGO',
+        'TRAT_DATOS',
+        'BANCOP',
+        'ACT_ECO',
+        'CAMARAC',
+        'ID_CIUD_EXP',
+        'ID_CIUD_NAC',
+        'ID_CIUD_UBI',
+        'VCON_DIR',
+        'MIGRADO',
+        'CLIENTE_WEB',
+        'MIGRADO',
+        'TRAT_DATOS',
+        'USUARIO_ACTUALIZACION',
+        'USUARIO_CREACION',
+        'FECHA_ACTUALIZACION'
+    ];
+
+    public function latestCifinScore()
     {
-        return $this->hasMany(CifinScore::class, 'scocedula');
+        return $this->hasOne(CifinScore::class, 'scocedula')->latest('scoconsul');
     }
 
-    public function creditCards()
+    public function creditCard()
     {
-        return $this->hasMany(CreditCard::class, 'CLIENTE');
+        return $this->hasOne(CreditCard::class, 'CLIENTE');
     }
 
-    public function factoryRequest()
+    public function hasFactoryRequests()
     {
-        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
+        return $this->hasOne(FactoryRequest::class, 'CLIENTE');
     }
 
-    public function intentions()
+    public function factoryRequests()
     {
-        return $this->hasMany(Intention::class, 'CEDULA');
+        return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
+    }
+
+    public function latestIntention()
+    {
+        return $this->hasOne(Intention::class, 'CEDULA')->latest('FECHA_INTENCION');
     }
 }
