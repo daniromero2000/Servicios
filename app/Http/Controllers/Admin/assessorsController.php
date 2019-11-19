@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Assessor;
-use App\OportuyaV2;
 use App\cliCel;
+use App\Entities\Customers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 
 class assessorsController extends Controller
@@ -41,11 +37,11 @@ class assessorsController extends Controller
             $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
         }
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-        $leadOportudata  = new OportuyaV2;
+        $leadOportudata  = new Customer;
         $usuarioCreacion = $assessorCode;
         $clienteCelular  = new CliCel;
         $clienteWeb = 1;
-        $getExistLead = OportuyaV2::find($request->CEDULA);
+        $getExistLead = Customer::find($request->CEDULA);
         if (!empty($getExistLead)) {
             $clienteWeb      = $getExistLead->CLIENTE_WEB;
             $usuarioCreacion = $getExistLead->USUARIO_CREACION;
@@ -66,9 +62,9 @@ class assessorsController extends Controller
                 'VCON_NOM1'   => trim($request->get('VCON_NOM1')),
                 'VCON_CED1'   => trim($request->get('VCON_CED1')),
                 'VCON_TEL1'   => trim($request->get('VCON_TEL1')),
-                'VCON_NOM2'   => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')): 'NA',
-                'VCON_CED2'   => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')): 'NA',
-                'VCON_TEL2'   => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')): 'NA',
+                'VCON_NOM2'   => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')) : 'NA',
+                'VCON_CED2'   => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
+                'VCON_TEL2'   => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
                 'VCON_DIR'    => trim($request->get('VCON_DIR')),
                 'TRAT_DATOS'  => trim($request->get('TRAT_DATOS')),
                 'TIPOCLIENTE' => 'NUEVO',
@@ -112,10 +108,10 @@ class assessorsController extends Controller
             $getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
             $antig            = $request->get('ANTIG');
             $indp             = $request->get('EDAD_INDP');
-            if(trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS'){
-                $antig = $this->calculateTimeCompany(trim($request->get('FEC_ING'))."-01");
-            }else{
-                $indp = $this->calculateTimeCompany(trim($request->get('FEC_CONST'))."-01");
+            if (trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS') {
+                $antig = $this->calculateTimeCompany(trim($request->get('FEC_ING')) . "-01");
+            } else {
+                $indp = $this->calculateTimeCompany(trim($request->get('FEC_CONST')) . "-01");
             }
             $dataOportudata = [
                 'TIPO_DOC'              => trim($request->get('TIPO_DOC')),
@@ -149,7 +145,7 @@ class assessorsController extends Controller
                 'TEL2_EMP'              => trim($request->get('TEL2_EMP')),
                 'ACT_ECO'               => trim($request->get('ACT_ECO')),
                 'CARGO'                 => trim($request->get('CARGO')),
-                'FEC_ING'               => trim($request->get('FEC_ING'))."-01",
+                'FEC_ING'               => trim($request->get('FEC_ING')) . "-01",
                 'ANTIG'                 => $antig,
                 'SUELDO'                => trim($request->get('SUELDO')),
                 'TIPO_CONT'             => trim($request->get('TIPO_CONT')),
@@ -158,7 +154,7 @@ class assessorsController extends Controller
                 'NIT_IND'               => trim($request->get('NIT_IND')),
                 'RAZON_IND'             => trim($request->get('RAZON_IND')),
                 'ACT_IND'               => trim($request->get('ACT_IND')),
-                'FEC_CONST'             => trim($request->get('FEC_CONST'))."-01",
+                'FEC_CONST'             => trim($request->get('FEC_CONST')) . "-01",
                 'EDAD_INDP'             => $indp,
                 'SUELDOIND'             => trim($request->get('SUELDOIND')),
                 'BANCOP'                => trim($request->get('BANCOP')),
@@ -269,18 +265,20 @@ class assessorsController extends Controller
         return $resp;
     }
 
-    private function calculateAge($fecha){
-		$time = strtotime($fecha);
-		$now  = time();
-		$age  = ($now-$time)/(60*60*24*365.25);
-		$age  = floor($age);
+    private function calculateAge($fecha)
+    {
+        $time = strtotime($fecha);
+        $now  = time();
+        $age  = ($now - $time) / (60 * 60 * 24 * 365.25);
+        $age  = floor($age);
 
-		return $age;
+        return $age;
     }
-    
-    private function calculateTimeCompany($fechaIngreso){
+
+    private function calculateTimeCompany($fechaIngreso)
+    {
         $fechaActual = date("Y-m-d");
-        $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60*60*24*30));
+        $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
         return $dateDiff;
     }
 }
