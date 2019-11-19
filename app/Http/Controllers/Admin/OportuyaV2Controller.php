@@ -136,7 +136,6 @@ class OportuyaV2Controller extends Controller
 		return $emailsValidos;
 	}
 
-
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -446,10 +445,12 @@ class OportuyaV2Controller extends Controller
 	{
 		$this->setCodesState($identificationNumber);
 		$codeUserVerification = new CodeUserVerification;
+
 		$options = [
 			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
 			['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
 		];
+
 		$code = '';
 		$codeExist = 1;
 		while ($codeExist >= 1) {
@@ -469,11 +470,9 @@ class OportuyaV2Controller extends Controller
 
 		$codeUserVerification->code = $code;
 		$codeUserVerification->identificationNumber = $identificationNumber;
-
 		$codeUserVerification->save();
 
 		$date = DB::select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
-
 		$dateTwo = gettype($date[0]->created_at);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
 		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
@@ -481,7 +480,7 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
-		if ($customerCode = 	$this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber)) {
+		if ($customerCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber)) {
 			$customerCode->state = 1;
 			$customerCode->update();
 		}
