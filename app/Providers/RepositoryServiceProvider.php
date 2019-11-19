@@ -48,10 +48,16 @@ use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterfa
 use App\Entities\CustomerVerificationCodes\Repositories\CustomerVerificationCodeRepository;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            CustomerVerificationCodeRepositoryInterface::class,
+            CustomerVerificationCodeRepository::class
+        );
+
         $this->app->bind(
             LeadRepositoryInterface::class,
             LeadRepository::class
@@ -155,11 +161,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PunishmentRepositoryInterface::class,
             PunishmentRepository::class
-        );
-
-        $this->app->bind(
-            CustomerVerificationCodeRepository::class,
-            CustomerVerificationCodeRepositoryInterface::class
         );
     }
 }

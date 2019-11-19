@@ -11,6 +11,8 @@ use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
+use App\Exports\ExportToExcel;
+use App\Http\Controllers\Controller;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
@@ -23,15 +25,13 @@ use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Exports\ExportToExcel;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OportuyaV2Controller extends Controller
@@ -304,7 +304,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
-			$existSolicFab = $this->factoryRequestInterface->getExistSolicFab($identificationNumber, $this->timeRejectedVigency);
+			$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency);
 
 			if ($existSolicFab == true) {
 				return -3; // Tiene solicitud
@@ -503,22 +503,22 @@ class OportuyaV2Controller extends Controller
 				}
 				$code = $code . $options[$randomOption][$randomNumChar];
 			}
-			$codeExist = $this->CustomerVerificationCodeInterface->checkIfCodeExists($code);
+			$codeExist = $this->customerVerificationCodeInterface->checkIfCodeExists($code);
 		}
 
 		$codeUserVerificationOportudata = [];
-		$codeUserVerificationOportudata->token = $code;
-		$codeUserVerificationOportudata->identificationNumber = $identificationNumber;
-		$codeUserVerificationOportudata->telephone = $celNumber;
-		$codeUserVerificationOportudata->type = $type;
-		$codeUserVerificationOportudata->created_at = date('Y-m-d H:i:s');
+		$codeUserVerificationOportudata['token'] = $code;
+		$codeUserVerificationOportudata['identificationNumber'] = $identificationNumber;
+		$codeUserVerificationOportudata['telephone'] = $celNumber;
+		$codeUserVerificationOportudata['type'] = $type;
+		$codeUserVerificationOportudata['created_at'] = date('Y-m-d H:i:s');
 
-		$code = $this->CustomerVerificationCodeInterface->createCustomerVerificationCode(codeUserVerificationOportudata);
+		$code = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
 		$date = $code->created_at;
 
 		$dateTwo = gettype($date);
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
-		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+		return $this->sendMessageSms($code->token, $identificationNumber, $dateNew, $celNumber);
 	}
 
 	public function enviarMensaje()

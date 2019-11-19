@@ -16,7 +16,10 @@ class CustomerVerificationCode extends Model
 
     protected $fillable = [
         'token',
-        'identification',
-        'created_at'
+        'identificationNumber',
+        'telephone',
+        'created_at',
+        'state',
+        'type'
     ];
 }
