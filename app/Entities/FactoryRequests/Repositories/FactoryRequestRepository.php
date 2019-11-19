@@ -35,4 +35,31 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->latest('SOLICITUD')
             ->get(['SOLICITUD', 'ASESOR_DIG', 'FECHASOL']);
     }
+
+    public function getExistSolicFab($identificationNumber, $timeRejectedVigency)
+    {
+
+        $queryExistSolicFab =
+
+        $queryExistSolicFab = sprintf("SELECT COUNT(`SOLICITUD`) as totalSolicitudes FROM `SOLIC_FAB` WHERE (`ESTADO` = 'ANALISIS' OR `ESTADO` = 'NEGADO' OR `ESTADO` = 'DESISTIDO' ) AND `CLIENTE` = '%s' AND `FECHASOL` > '%s' AND `STATE` = 'A' ", $identificationNumber, $dateNow);
+        $resp = DB::connection('oportudata')->select($queryExistSolicFab);
+
+        if ($resp[0]->totalSolicitudes > 0) {
+            return true; // Tiene Solictud
+        } else {
+            return false; // No tiene solicitud
+        }
+    }
+
+    public function getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency){
+        $dateNow = date('Y-m-d');
+        $dateNow = strtotime("- $timeRejectedVigency day", strtotime($dateNow));
+        $dateNow = date('Y-m-d', $dateNow);
+
+        try {
+           return $this->model->where('CLIENTE', $identificationNumber)->where('$FECHASOL', $dateNow )
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

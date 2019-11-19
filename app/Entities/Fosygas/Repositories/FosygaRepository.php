@@ -18,10 +18,8 @@ class FosygaRepository implements FosygaRepositoryInterface
     public function getLastFosygaConsultation($identificationNumber)
     {
         try {
-
             return $this->model->where('cedula', $identificationNumber)
-                ->orderBy('idBdua', 'desc')->get()
-                ->first();
+                ->orderBy('idBdua', 'desc')->get()->first();
         } catch (QueryException $e) {
             dd($e);
         }

@@ -7,4 +7,6 @@ use App\Entities\ConsultationValidities\ConsultationValidity;
 interface ConsultationValidityRepositoryInterface
 {
     public function getConsultationValidity();
+
+    public function getRejectedValidity();
 }

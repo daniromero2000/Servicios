@@ -26,7 +26,9 @@ class CustomerRepository implements CustomerRepositoryInterface
     {
         try {
             return $this->model->updateOrCreate($data);
-        } catch (QueryException $e) { }
+        } catch (QueryException $e) {
+            return $e;
+        }
     }
 
     public function listCustomersDigitalChannel()
