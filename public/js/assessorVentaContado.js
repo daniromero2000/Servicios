@@ -1,12 +1,14 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
+	$scope.lead = {};
+	$scope.code = {};
+	$scope.formConfronta = {};
+	$scope.citiesUbi = {};
+	$scope.cities = {};
+	$scope.banks = {};
 	$scope.tipoCliente = "";
 	$scope.estadoCliente = "";
 	$scope.messageValidationLead = "";
-	$scope.lead = {};
-	$scope.infoLead = {};
-	$scope.code = {};
-	$scope.formConfronta = {};
 	$scope.showWarningErrorData = false;
 	$scope.totalErrorData = 0;
 	$scope.validateNum = 0;
@@ -99,47 +101,44 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 	];
   
-  $scope.genders = [
-		{ label : 'Masculino',value: 'M' },
-		{ label : 'Femenino',value: 'F' }
-  ];
+	$scope.genders = [
+			{ label : 'Masculino',value: 'M' },
+			{ label : 'Femenino',value: 'F' }
+	];
   
 	$scope.civilTypes = [
-	{
-		label: 'Soltero',
-		value: 'SOLTERO'
-	},
-	{
-		label: 'Casado',
-		value: 'CASADO'
-	},
-	{
-		label: 'Unión Libre',
-		value: 'UNION LIBRE'
-	},
-	{
-		label: 'Viudo',
-		value: 'VIUDO'
-	},
+		{
+			label: 'Soltero',
+			value: 'SOLTERO'
+		},
+		{
+			label: 'Casado',
+			value: 'CASADO'
+		},
+		{
+			label: 'Unión Libre',
+			value: 'UNION LIBRE'
+		},
+		{
+			label: 'Viudo',
+			value: 'VIUDO'
+		},
 	];
 
 	$scope.typesContracts = [
-	{
-		value: 'FIJO',
-		label: 'Fijo'
-	},
-	{
-		value: 'INDEFINIDO',
-		label: 'Indefinido'
-	},
-	{
-		value: 'SERVICIOS',
-		label: 'Servicios'
-	}
+		{
+			value: 'FIJO',
+			label: 'Fijo'
+		},
+		{
+			value: 'INDEFINIDO',
+			label: 'Indefinido'
+		},
+		{
+			value: 'SERVICIOS',
+			label: 'Servicios'
+		}
 	];
-	$scope.citiesUbi = {};
-	$scope.cities = {};
-	$scope.banks = {};
 
 	$scope.getInfoVentaContado = function(){
 		showLoader();
