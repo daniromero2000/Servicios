@@ -93,7 +93,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeads }}
                         </p>
@@ -274,7 +274,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsAnt }}
                         </p>
@@ -455,7 +455,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsTR }}
                         </p>
@@ -564,7 +564,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsCM }}
                         </p>
@@ -693,7 +693,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsGen }}
                         </p>
@@ -701,7 +701,7 @@
                             Leads
                         </p>
                     </div>
-                    <div class="col-sm-8 offset-md-4 col-md-6 text-right">
+                    <div class="col-sm-12 col-md-3 offset-md-7 text-center col-md-3">
                         
                         <div class="input-group mb-3">
                             <input type="text" ng-model="q.qGen" class="form-control" aria-describedby="searchIcon">

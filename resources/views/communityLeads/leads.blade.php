@@ -69,12 +69,12 @@
     <div class="card border-0">
         <div class="card-header bg-white border-bottom-0">
             <div class="row resetRow">
-                <div class="col-sm-12 col-md-12 mb-4">
+                <div class="col-sm-12 col-md-2  ">
                     <button class="btn btn-primary">
                         <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
                     </button>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-3">
                     <p class="totalLeadsDigital text-center">
                         @{{ totalLeads }}
                     </p>
@@ -82,7 +82,7 @@
                         Leads
                     </p>
                 </div>
-                <div class="col-sm-12 col-md-6 text-right">
+                <div class="col-sm-12 col-md-1 offset-md-3 text-center col-md-3">
                     <div class="input-group mb-3">
                         <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                         <div class="input-group-append">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-2 text-center resetCol">
+                <div class="col-sm-12 col-md-1 text-center resetCol">
                     <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
                             class="fas fa-filter"></i></button>
                 </div>
@@ -468,11 +468,8 @@
                                 <div class="form-group row">
                                     <div class="col-12 col-sm-6">
                                         <label for="city">Ciudad</label>
-                                        <select id="city" class="form-control" ng-model="lead.city">
-                                            <option ng-repeat="city in cities" value="@{{city.value}}"
-                                                label="@{{city.label}}">
-
-                                            </option>
+                                        <select id="city" class="form-control" ng-model="lead.city"
+                                            ng-options="city.CIUDAD as city.CIUDAD for city in cities">
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
@@ -499,6 +496,10 @@
                                     <label for="socialNetwork">Campaña</label>
                                     <select id="socialNetwork" class="form-control" ng-model="lead.campaign"
                                         ng-options="campaign.id as campaign.name for campaign in campaigns">
+                                        <option ng-repeat="campaign in campaigns" value="@{{ campaigns.value}}"
+                                                label="@{{ campaigns.label}}">
+                                                @{{campaigns.value}}
+                                            </option>
                                     </select>
                                 </div>
                                 <div class="form-group row">
