@@ -702,7 +702,7 @@
                         </p>
                     </div>
                     <div class="col-sm-12 col-md-3 offset-md-7 text-center col-md-3">
-                        
+
                         <div class="input-group mb-3">
                             <input type="text" ng-model="q.qGen" class="form-control" aria-describedby="searchIcon">
                             <div class="input-group-append">

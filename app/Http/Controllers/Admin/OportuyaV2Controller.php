@@ -2155,7 +2155,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string $identificationNumber
 	 * @return array
 	 */
-
 	public function getDataStep3($identificationNumber)
 	{
 		$data = [];
@@ -2186,8 +2185,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string $fecha
 	 * @return string age
 	 */
-
-
 	private function calculateAge($fecha)
 	{
 		$time = strtotime($fecha);
@@ -2209,7 +2206,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  none
 	 * @return view
 	 */
-
 	public function step1()
 	{
 		$digitalAnalyst = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
@@ -2228,8 +2224,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return view
 	 */
-
-
 	public function step2($string)
 	{
 		$identificactionNumber = $this->decrypt($string);
