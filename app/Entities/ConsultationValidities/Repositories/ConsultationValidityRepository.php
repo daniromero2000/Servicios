@@ -41,4 +41,13 @@ class ConsultationValidityRepository implements ConsultationValidityRepositoryIn
             abort(503, $e->getMessage());
         }
     }
+
+    public function getSmsValidity()
+    {
+        try {
+            return $this->model->get(['sms_vigencia'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

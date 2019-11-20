@@ -9,4 +9,6 @@ interface CustomerVerificationCodeRepositoryInterface
   public function checkIfCodeExists($code);
 
   public function createCustomerVerificationCode($data);
+
+  public function generateVerificationCode($identificationNumber);
 }

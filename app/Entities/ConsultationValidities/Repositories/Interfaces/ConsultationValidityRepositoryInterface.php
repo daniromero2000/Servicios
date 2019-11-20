@@ -9,4 +9,6 @@ interface ConsultationValidityRepositoryInterface
     public function getConsultationValidity();
 
     public function getRejectedValidity();
+
+    public function getSmsValidity();
 }

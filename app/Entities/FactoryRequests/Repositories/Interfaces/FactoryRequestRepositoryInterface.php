@@ -8,6 +8,8 @@ interface FactoryRequestRepositoryInterface
 {
   public function findFactoryRequestById(int $id): FactoryRequest;
 
+  public function getCustomerFactoryRequest($identificationNumber): FactoryRequest;
+
   public function listFactoryRequestDigitalChannel();
 
   public function checkCustomerHasFactoryRequest($identificationNumber, $timeRejectedVigency);

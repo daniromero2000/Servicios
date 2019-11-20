@@ -7,9 +7,13 @@ use App\Entities\CustomerCellPhones\CustomerCellPhone;
 
 interface CustomerCellPhoneRepositoryInterface
 {
-  public function listCustomerCellPhones();
+  public function createCustomerCellPhone($data);
 
   public function findCustomerCellPhoneById($identificationNumber): CustomerCellPhone;
 
   public function checkIfExists($identificationNumber, $num);
+
+  public function getCustomerCellPhoneVal($identificationNumber);
+
+  public function getCustomerCellPhone($identificationNumber);
 }
