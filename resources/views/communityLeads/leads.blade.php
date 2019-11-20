@@ -74,7 +74,7 @@
                         <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
                     </button>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-1">
                     <p class="totalLeadsDigital text-center">
                         @{{ totalLeads }}
                     </p>
@@ -82,7 +82,7 @@
                         Leads
                     </p>
                 </div>
-                <div class="col-sm-12 col-md-1 offset-md-3 text-center col-md-3">
+                <div class="col-sm-12 col-md-1 offset-md-5 text-center col-md-3">
                     <div class="input-group mb-3">
                         <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                         <div class="input-group-append">
