@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
-use Carbon\Carbon;
+use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class AdvanceController extends Controller
 {
@@ -18,12 +19,16 @@ class AdvanceController extends Controller
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
+        $this->uptodateInterface = $upToDateCifinRepositoryInterface;
     }
+
+
 
     public function index()
     {

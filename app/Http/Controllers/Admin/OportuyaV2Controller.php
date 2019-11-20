@@ -584,7 +584,6 @@ class OportuyaV2Controller extends Controller
 			$aprobado = false;
 			$paymentArray = explode('|', $payment->fdcompor);
 			$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-			$popArray = array_pop($paymentArray);
 			$paymentArray = array_reverse($paymentArray);
 			$paymentArray = array_splice($paymentArray, 0, 12);
 			$elementsPaymentExt = array_keys($paymentArray, 'N');

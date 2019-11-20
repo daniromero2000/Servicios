@@ -47,12 +47,19 @@ use App\Entities\Punishments\Repositories\PunishmentRepository;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\CustomerVerificationCodes\Repositories\CustomerVerificationCodeRepository;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
+use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\UpToDateCifins\Repositories\UpToDateCifinRepository;
 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            UpToDateCifinRepositoryInterface::class,
+            UpToDateCifinRepository::class
+        );
+
         $this->app->bind(
             CustomerVerificationCodeRepositoryInterface::class,
             CustomerVerificationCodeRepository::class
