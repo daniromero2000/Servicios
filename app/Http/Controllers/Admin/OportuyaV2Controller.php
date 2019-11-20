@@ -775,15 +775,18 @@ class OportuyaV2Controller extends Controller
 				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.9');
 				return ['resp' => "false"];
 			}
+
 			if ($queryScoreClient[0]->score >= 1 && $queryScoreClient[0]->score <= 275) {
 				$perfilCrediticio = 'TIPO D';
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.2');
 				return ['resp' => "false"];
 			}
+
 			if ($queryScoreClient[0]->score >= -7 && $queryScoreClient[0]->score <= 0) {
 				$perfilCrediticio = 'TIPO 5';
 			}
+
 			if ($queryScoreClient[0]->score >= 275 && $queryScoreClient[0]->score <= 527) {
 				$perfilCrediticio = 'TIPO D';
 			}
