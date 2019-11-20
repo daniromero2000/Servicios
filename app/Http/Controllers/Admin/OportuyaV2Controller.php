@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Imagenes;
 use App\DatosCliente;
 use App\Intenciones;
-use App\cliCel;
 use App\ResultadoPolitica;
 use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
@@ -33,6 +32,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
 
 class OportuyaV2Controller extends Controller
 {
@@ -311,16 +311,16 @@ class OportuyaV2Controller extends Controller
 
 			if (trim($oportudataLead->ACTIVIDAD) == 'SOLDADO-MILITAR-POLICÍA' || trim($oportudataLead->ACTIVIDAD) == 6) return -2;
 
+			$customerJobStart = new Carbon($request->get('admissionDate'));
+
 			$dataLead = [
-				'NIT_EMP' => ($request->get('nit') != '') ? trim($request->get('nit')) : 0,
 				'RAZON_SOC' => ($request->get('companyName') != '') ? trim(strtoupper($request->get('companyName'))) : 'NA',
 				'DIR_EMP' => ($request->get('companyAddres') != '') ? trim(strtoupper($request->get('companyAddres'))) : 'NA',
 				'TEL_EMP' => ($request->get('companyTelephone') != '') ? trim($request->get('companyTelephone')) : 0,
-				'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? trim($request->get('companyTelephone2')) : 0,
 				'ACT_ECO' => ($request->get('eps') != '') ? trim(strtoupper($request->get('eps'))) : '-',
 				'CARGO' => ($request->get('companyPosition') != '') ? trim(strtoupper($request->get('companyPosition'))) : 'NA',
 				'FEC_ING' => ($request->get('admissionDate') != '') ? trim($request->get('admissionDate')) : '0000/1/1',
-				'ANTIG' => ($request->get('antiquity') != '') ? trim($request->get('antiquity')) : 1,
+				'ANTIG' =>  $customerJobStart->diffInMonths(Carbon::now()),
 				'SUELDO' => ($request->get('salary') != '') ? trim($request->get('salary')) : 0,
 				'TIPO_CONT' => ($request->get('typeContract') != '') ? trim(strtoupper($request->get('typeContract'))) : 'NA',
 				'OTROS_ING' => ($request->get('otherRevenue') != '') ? trim($request->get('otherRevenue')) : 0,
