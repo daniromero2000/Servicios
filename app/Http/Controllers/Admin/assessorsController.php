@@ -18,7 +18,7 @@ class assessorsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:assessor']);
+        //$this->middleware(['auth:assessor']);
     }
     /**
      * Show the application dashboard.
