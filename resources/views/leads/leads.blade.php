@@ -19,7 +19,7 @@
             data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional</a>
         <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
             ng-class="{ 'active': tabs == 5 }" ng-click="tabs = 5" data-toggle="tab" role="tab"
-            aria-controls="nav-img">Facebook</a>
+            aria-controls="nav-img">Intenciones</a>
         <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
             ng-class="{ 'active': tabs == 6 }" ng-click="tabs = 6" data-toggle="tab" role="tab"
             aria-controls="nav-img">Leads Seguros y Motos</a>
@@ -93,7 +93,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeads }}
                         </p>
@@ -274,7 +274,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsAnt }}
                         </p>
@@ -455,7 +455,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsTR }}
                         </p>
@@ -522,6 +522,11 @@
                                     <select class="form-control" ng-model="q.qcityAprobados"
                                         ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
+                                <div class="col-12 col-sm-6">
+                                    <label>Canal</label>
+                                    <select class="form-control" ng-model="q.qleadChannel"
+                                        ng-options="leadsChannel.value as leadsChannel.label for leadsChannel in leadsChannels"></select>
+                                </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-sm-6">
@@ -564,7 +569,12 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
+                        <div class="col-sm-12 col-md-2  ">
+                            <button class="btn btn-primary">
+                                <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
+                            </button>
+                        </div>
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsCM }}
                         </p>
@@ -581,6 +591,7 @@
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Lead</th>
                                 <th scope="col">Cedula</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Correo</th>
@@ -600,6 +611,10 @@
                                     <i style="color: green" ng-if="leadCM.state == 2" class="fas fa-check-double"
                                         title="Cliente procesado"></i>
                                 </td>
+                                <td>
+                                    <span ng-if="leadCM.channel == 2">Facebook</span>
+                                    <span ng-if="leadCM.channel == 3">WhatsApp</span>
+                                </td>
                                 <td>@{{ leadCM.identificationNumber }}</td>
                                 <td>@{{ leadCM.name + " " + leadCM.lastName }}</td>
                                 <td>@{{ leadCM.email }}</td>
@@ -607,10 +622,12 @@
                                 <td ng-if="leadCM.nearbyCity == null">@{{ leadCM.city }}</td>
                                 <td ng-if="leadCM.nearbyCity != null">@{{ leadCM.city + " / " + leadCM.nearbyCity}}
                                 </td>
+
                                 <td>@{{ leadCM.typeService }}</td>
                                 <td>@{{ leadCM.typeProduct }}</td>
                                 <td>@{{ leadCM.created_at }}</td>
                                 <td>
+                                    <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(leadCM.id)"></i>
                                     <i class="fas fa-comment cursor"
                                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                                     <i ng-if="leadCM.state == 1" class="fas fa-check cursor"
@@ -693,7 +710,7 @@
         <div class="card border-0">
             <div class="card-header bg-white border-bottom-0">
                 <div class="row resetRow">
-                    <div class="col-sm-2 col-md-2">
+                    <div class="col-sm-12 col-md-1">
                         <p class="totalLeadsDigital text-center">
                             @{{ totalLeadsGen }}
                         </p>
@@ -701,8 +718,8 @@
                             Leads
                         </p>
                     </div>
-                    <div class="col-sm-8 offset-md-4 col-md-6 text-right">
-                        
+                    <div class="col-sm-12 col-md-3 offset-md-7 text-center col-md-3">
+
                         <div class="input-group mb-3">
                             <input type="text" ng-model="q.qGen" class="form-control" aria-describedby="searchIcon">
                             <div class="input-group-append">
@@ -820,6 +837,225 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+
+    <!--Update modal-->
+    <div class="modal fade" id="updateCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Actualizar Lead</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row resetRow ">
+                            <div class="col-12 form-group">
+                                <form ng-submit="updateCommunityLeads()">
+                                    {{ csrf_field() }}
+
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="name">Nombre</label>
+                                            <input type="text" ng-model="lead.name" id="name" cols="10" class="form-control"
+                                                value="@{{ lead.name }}" required>
+                                        </div>
+                                        <div class="col-12 col-sm-6 no-padding-right">
+                                            <label for="lastName">Apellido</label>
+                                            <input type="text" ng-model="lead.lastName" id="lastName" cols="10"
+                                                class="form-control" value="@{{lead.lastName}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="email">email</label>
+                                            <input type="text" ng-model="lead.email" id="email" cols="10"
+                                                class="form-control" value="@{{lead.email}}">
+                                        </div>
+                                        <div class="col-12 col-sm-6 no-padding-right">
+                                            <label for="telephone">telefono</label>
+                                            <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
+                                                class="form-control" value="@{{lead.telephone}}" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="city">Ciudad</label>
+                                            <select id="city" class="form-control" ng-model="lead.city"
+                                                ng-options="city.CIUDAD as city.CIUDAD for city in cities">
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-6 no-padding-right">
+                                            <label for="socialNetwork">Canal de adquisición</label>
+                                            <select id="socialNetwork" class="form-control" ng-model="lead.channel"
+                                                ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks">
+                                                <option>
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 form-group">
+                                            <label for="name">Ciudad aledaña</label>
+                                            <input type="text" ng-model="lead.nearbyCity" id="nearbyCity" cols="10"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="socialNetwork">Campaña</label>
+                                        <select id="socialNetwork" class="form-control" ng-model="lead.campaign"
+                                            ng-options="campaign.id as campaign.name for campaign in campaigns">
+                                            <option ng-repeat="campaign in campaigns" value="@{{ campaigns.value}}"
+                                                label="@{{ campaigns.label}}">
+                                                @{{campaigns.value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="service">Servicio</label>
+                                            <select id="service" class="form-control" ng-model="lead.typeService">
+                                                <option ng-repeat="service in typeServices" value="@{{service.value}}"
+                                                    label="@{{service.label}}">
+                                                    @{{service.value}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-6 no-padding-right">
+                                            <label for="product">Producto</label>
+                                            <input type="text" ng-model="lead.typeProduct" id="product" cols="10"
+                                                class="form-control" value="@{{lead.typeProduct}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group text-left">
+                                        <button class="btn btn-primary">Actualizar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--AddCommunityLead modal-->
+
+    <div class="modal fade" id="addCommunityLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Agregar Lead</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row resetRow ">
+                            <form ng-submit="addCommunityLeads()" id="addCommunityForm">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="identificationNumber">Cédula</label>
+                                        <input type="text" class="form-control" id="identificationNumber"
+                                            ng-model="lead.identificationNumber" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="name">Nombre</label>
+                                        <input type="text" ng-model="lead.name" id="name" cols="10" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="col-12 col-sm-6 form-group no-padding-right">
+                                        <label for="lastName">Apellido</label>
+                                        <input type="text" ng-model="lead.lastName" id="lastName" cols="10"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-sm-6 form-group no-padding-right">
+                                        <label for="telephone">Teléfono</label>
+                                        <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="city">Ciudad</label>
+                                        <select id="city" class="form-control" ng-model="lead.city"
+                                            ng-options="city.CIUDAD as city.CIUDAD for city in cities">
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-6 form-group no-padding-right">
+                                        <label for="socialNetwork">Canal de Adquisición</label>
+                                        <select id="socialNetwork" class="form-control" ng-model="lead.channel">
+                                            <option ng-repeat="socialNetwork in socialNetworks"
+                                                value="@{{socialNetwork.value}}">
+                                                @{{socialNetwork.label}}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="name">Ciudad aledaña</label>
+                                        <input type="text" ng-model="lead.nearbyCity" id="nearbyCity" cols="10"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-group">
+                                        <label for="socialNetwork">Campaña</label>
+                                        <select id="socialNetwork" class="form-control" ng-model="lead.campaign">
+                                            <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}">
+                                                @{{campaign.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 form-group">
+                                        <label for="service">Servicio</label>
+                                        <select id="service" class="form-control" ng-model="lead.typeService">
+                                            <option ng-repeat="service in typeServices" value="@{{service.value}}">
+                                                @{{service.value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-6 form-group no-padding-right">
+                                        <label for="product">Producto</label>
+                                        <input type="text" ng-model="lead.typeProduct" id="product" cols="10"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group text-left">
+                                    <button class="btn btn-primary">Agregar</button>
+                                    <button class=" btn btn-danger" data-dismiss="modal"
+                                        aria-label="Close">Cancelar</button>
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
