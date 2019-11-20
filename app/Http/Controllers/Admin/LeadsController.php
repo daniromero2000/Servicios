@@ -71,6 +71,7 @@ class LeadsController extends Controller
             'q'        => $request->get('q'),
             'initFromCM' => $request->get('initFromCM'),
             'qcityAprobados'         => $request->get('qcityAprobados'),
+            'qleadChannel'         => $request->get('qleadChannel'),
             'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
             'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
         ]);
@@ -249,6 +250,10 @@ class LeadsController extends Controller
 
         if ($request['qcityAprobados'] != '') {
             $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
+        }
+
+        if ($request['qleadChannel'] != '') {
+            $queryCM .= sprintf(" AND (lead.`channel` = '%s') ", $request['qleadChannel']);
         }
 
         if ($request['qfechaInicialAprobados'] != '') {

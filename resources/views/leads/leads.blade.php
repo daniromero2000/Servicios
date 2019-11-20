@@ -522,6 +522,11 @@
                                     <select class="form-control" ng-model="q.qcityAprobados"
                                         ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
+                                <div class="col-12 col-sm-6">
+                                    <label>Canal</label>
+                                    <select class="form-control" ng-model="q.qleadChannel"
+                                        ng-options="leadsChannel.value as leadsChannel.label for leadsChannel in leadsChannels"></select>
+                                </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-sm-6">

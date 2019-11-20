@@ -6,6 +6,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'q': '',
         'qtipoTarjetaAprobados': '',
         'qcityAprobados': '',
+         'qleadChannel': '',
         'qfechaInicialAprobados': '',
         'qfechaFinalAprobados': '',
         'qCM': '',
@@ -55,6 +56,18 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             value: 3
         }
     ];
+
+
+$scope.leadsChannels = [{
+        label: 'FACEBOOK',
+        value: 2
+    },
+    {
+        label: 'WHATSAPP',
+        value: 3
+    }
+];
+
     $scope.comment = {
         comment: '',
         idLead: 0,
@@ -153,6 +166,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             url: '/leads?q=' + $scope.q.q +
                 '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados +
                 '&qcityAprobados=' + $scope.q.qcityAprobados +
+                 '&qleadChannel=' + $scope.q.qleadChannel +
                 '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados +
                 '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados +
                 '&qfechaInicialTR=' + $scope.q.qfechaInicialTR +
@@ -259,6 +273,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'q': '',
             'qtipoTarjetaAprobados': '',
             'qcityAprobados': '',
+              'qleadChannel': '',
             'qfechaInicialAprobados': '',
             'qfechaFinalAprobados': '',
             'qCM': '',
