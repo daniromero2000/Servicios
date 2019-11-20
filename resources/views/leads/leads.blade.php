@@ -581,6 +581,7 @@
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Lead</th>
                                 <th scope="col">Cedula</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Correo</th>
@@ -600,6 +601,10 @@
                                     <i style="color: green" ng-if="leadCM.state == 2" class="fas fa-check-double"
                                         title="Cliente procesado"></i>
                                 </td>
+                                <td>
+                                    <span ng-if="leadCM.channel == 2">Facebook</span>
+                                    <span ng-if="leadCM.channel == 3">WhatsApp</span>
+                                </td>
                                 <td>@{{ leadCM.identificationNumber }}</td>
                                 <td>@{{ leadCM.name + " " + leadCM.lastName }}</td>
                                 <td>@{{ leadCM.email }}</td>
@@ -607,6 +612,7 @@
                                 <td ng-if="leadCM.nearbyCity == null">@{{ leadCM.city }}</td>
                                 <td ng-if="leadCM.nearbyCity != null">@{{ leadCM.city + " / " + leadCM.nearbyCity}}
                                 </td>
+
                                 <td>@{{ leadCM.typeService }}</td>
                                 <td>@{{ leadCM.typeProduct }}</td>
                                 <td>@{{ leadCM.created_at }}</td>

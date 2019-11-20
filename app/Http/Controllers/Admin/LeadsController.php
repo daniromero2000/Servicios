@@ -235,7 +235,7 @@ class LeadsController extends Controller
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`typeProduct`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
-        WHERE (`channel` = 2 OR `channel` = 3)";
+        WHERE (`channel` = 2 OR `channel` = 3 )";
 
         if ($request['q'] != '') {
             $queryCM .= sprintf(
