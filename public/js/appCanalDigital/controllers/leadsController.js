@@ -49,10 +49,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.lead = {};
     $scope.idLead = '';
 
-    $scope.socialNetworks = [{
-            label: 'FACEBOOK',
-            value: 2
-        },
+    $scope.socialNetworks = [
         {
             label: 'WHATSAPP',
             value: 3
