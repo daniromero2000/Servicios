@@ -453,7 +453,7 @@ class OportuyaV2Controller extends Controller
 
 		$code = '';
 		$codeExist = 1;
-		while ($codeExist >= 1) {
+		while ($codeExist) {
 			for ($i = 0; $i < 6; $i++) {
 				$randomOption = rand(0, 1);
 				if ($randomOption == 0) {
@@ -463,19 +463,17 @@ class OportuyaV2Controller extends Controller
 				}
 				$code = $code . $options[$randomOption][$randomNumChar];
 			}
-
-			$codeExist = DB::select('SELECT COUNT(`id`) as `totalCodes` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
-			$codeExist = $codeExist[0]->totalCodes;
+			$codeExist = $this->customerVerificationCodeInterface->checkIfCodeExists($code);
 		}
 
 		$codeUserVerification->code = $code;
 		$codeUserVerification->identificationNumber = $identificationNumber;
 		$codeUserVerification->save();
 
-		$date = DB::select('SELECT `created_at` FROM `code_user_verification` WHERE `code` = :code ', ['code' => $code]);
-		$dateTwo = gettype($date[0]->created_at);
+		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date[0]->created_at));
-		return $this->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
+
+		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
@@ -512,12 +510,10 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata['type'] = $type;
 		$codeUserVerificationOportudata['created_at'] = date('Y-m-d H:i:s');
 
-		$code = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
-		$date = $code->created_at;
-
-		$dateTwo = gettype($date);
+		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
-		return $this->sendMessageSms($code->token, $identificationNumber, $dateNew, $celNumber);
+
+		return $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
 	}
 
 	public function enviarMensaje()
@@ -550,37 +546,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		return response()->json([$mensaje, $result]);
-	}
-
-	public function sendMessageSms($code, $identificationNumber, $date, $celNumber)
-	{
-		$url = 'https://api.hablame.co/sms/envio/';
-		$data = array(
-			'cliente' => 10013280, //Numero de cliente
-			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
-			'numero' => '57' . $celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, //Mensaje de texto a enviar
-			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
-			'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
-		);
-
-		$options = array(
-			'http' => array(
-				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				'method'  => 'POST',
-				'content' => http_build_query($data)
-			)
-		);
-		$context  = stream_context_create($options);
-		$result = json_decode((file_get_contents($url, false, $context)), true);
-
-		if ($result["resultado"] === 0) {
-			$mensaje = 'Se ha enviado el SMS exitosamente';
-		} else {
-			$mensaje = 'ha ocurrido un error!!';
-		}
-
-		return response()->json(true);
 	}
 
 	public function verificationCode($code, $identificationNumber)

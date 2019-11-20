@@ -24,4 +24,35 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         return response()->json($persona);
     }
+
+    public function sendMessageSms($code, $date, $celNumber)
+    {
+        $url = 'https://api.hablame.co/sms/envio/';
+        $data = array(
+            'cliente' => 10013280, //Numero de cliente
+            'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
+            'numero' => '57' . $celNumber, //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
+            'sms' => 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 10 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date, //Mensaje de texto a enviar
+            'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
+            'referencia' => 'Verificación', //(campo opcional) Numero de referencio ó nombre de campaña
+        );
+
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = json_decode((file_get_contents($url, false, $context)), true);
+
+        if ($result["resultado"] === 0) {
+            $mensaje = 'Se ha enviado el SMS exitosamente';
+        } else {
+            $mensaje = 'ha ocurrido un error!!';
+        }
+
+        return response()->json(true);
+    }
 }
