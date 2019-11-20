@@ -587,7 +587,7 @@
             </div>
             <div class="card-body">
                 <div class="table">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
