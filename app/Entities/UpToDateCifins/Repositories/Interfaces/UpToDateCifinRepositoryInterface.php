@@ -6,5 +6,5 @@ interface UpToDateCifinRepositoryInterface
 {
   public function checkCustomerHasUpToDateCifin($identificationNumber);
 
-  public function checkVector($identificationNumber);
+  public function check12MonthsPaymentVector($identificationNumber);
 }

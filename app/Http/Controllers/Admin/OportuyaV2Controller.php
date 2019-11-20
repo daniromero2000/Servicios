@@ -27,6 +27,7 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ class OportuyaV2Controller extends Controller
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
+	private $upToDateCifinInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -57,7 +59,8 @@ class OportuyaV2Controller extends Controller
 		CreditCardRepositoryInterface $creditCardRepositoryInterface,
 		EmployeeRepositoryInterface $employeeRepositoryInterface,
 		PunishmentRepositoryInterface $punishmentRepositoryInterface,
-		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface
+		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
+		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -74,6 +77,7 @@ class OportuyaV2Controller extends Controller
 		$this->employeeInterface                 = $employeeRepositoryInterface;
 		$this->punishmentInterface               = $punishmentRepositoryInterface;
 		$this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
+		$this->upToDateCifinInterface = $upToDateCifinRepositoryInterface;
 	}
 
 	public function index()
@@ -576,23 +580,7 @@ class OportuyaV2Controller extends Controller
 
 	public function execCreditPolicy($identificationNumber)
 	{
-		// Negacion, condicion 1, vectores comportamiento
-		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-		$respVectores = DB::connection('oportudata')->select($queryVectores);
-		$aprobado = false;
-		foreach ($respVectores as $key => $payment) {
-			$aprobado = false;
-			$paymentArray = explode('|', $payment->fdcompor);
-			$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-			$paymentArray = array_reverse($paymentArray);
-			$paymentArray = array_splice($paymentArray, 0, 12);
-			$elementsPaymentExt = array_keys($paymentArray, 'N');
-			$paymentsExtNumber = count($elementsPaymentExt);
-			if ($paymentsExtNumber == 12) {
-				$aprobado = true;
-				break;
-			}
-		}
+		$aprobado =  $this->upToDateCifinInterface->checkVector($identificationNumber);
 
 		if ($aprobado == false) {
 			return -1; // Credito negado

@@ -26,9 +26,10 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         }
     }
 
-    public function checkVector($identificationNumber)
+    public function check12MonthsPaymentVector($identificationNumber)
     {
-        $respVectores = $this->model->checkCustomerHasUpToDateCifin($identificationNumber);
+        // Negacion, condicion 1, vectores comportamiento
+        $respVectores = $this->checkCustomerHasUpToDateCifin($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $aprobado = false;
