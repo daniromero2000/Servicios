@@ -67,22 +67,22 @@ Route::group(['prefix' => '/motos/solicitud/'], function () {
     Route::get('/thankYouPage', function () {
         return view('motos.thankYouPage');
     });
-    Route::get('/step2/{numIdentification}', 'Admin\MotosController@step2')->name('step2Motos');
-    Route::get('/step3/{numIdentification}', 'Admin\MotosController@step3')->name('step3Motos');
-    Route::get('getDataMotoStep1', 'Admin\MotosController@getDataStep1');
-    Route::get('getDataMotoStep2/{identificationNumber}', 'Admin\MotosController@getDataStep2');
-    Route::get('getDataMotoStep3/{identificationNumber}', 'Admin\MotosController@getDataStep3');
-    Route::get('getNumLead/{identificationNumber}', 'Admin\MotosController@getNumLead');
-    Route::get('validationLead/{identificationNumber}', 'Admin\MotosController@validationLead');
-    Route::get('getCodeVerification/{identificationNumber}/{celNumber}/{type}', 'Admin\MotosController@getCodeVerificationOportudata');
-    Route::get('verificationCode/{code}/{identificationNumber}', 'Admin\MotosController@verificationCode');
-    Route::post('saveMotoLead', 'Admin\MotosController@storeData');
-    Route::get('encryptText/{string}', 'Admin\MotosController@encrypt');
+    Route::get('/step2/{numIdentification}', 'Front\Motos\MotosController@step2')->name('step2Motos');
+    Route::get('/step3/{numIdentification}', 'Front\Motos\MotosController@step3')->name('step3Motos');
+    Route::get('getDataMotoStep1', 'Front\Motos\MotosController@getDataStep1');
+    Route::get('getDataMotoStep2/{identificationNumber}', 'Front\Motos\MotosController@getDataStep2');
+    Route::get('getDataMotoStep3/{identificationNumber}', 'Front\Motos\MotosController@getDataStep3');
+    Route::get('getNumLead/{identificationNumber}', 'Front\Motos\MotosController@getNumLead');
+    Route::get('validationLead/{identificationNumber}', 'Front\Motos\MotosController@validationLead');
+    Route::get('getCodeVerification/{identificationNumber}/{celNumber}/{type}', 'Front\Motos\MotosController@getCodeVerificationOportudata');
+    Route::get('verificationCode/{code}/{identificationNumber}', 'Front\Motos\MotosController@verificationCode');
+    Route::post('saveMotoLead', 'Front\Motos\MotosController@storeData');
+    Route::get('encryptText/{string}', 'Front\Motos\MotosController@encrypt');
 });
 
 Route::group(['prefix' => '/motos/simulador/'], function () {
 
-    Route::get('getData/{idMoto}', 'Admin\MotosController@getDataLiquidator');
+    Route::get('getData/{idMoto}', 'Front\Motos\MotosController@getDataLiquidator');
 });
 
 Route::resource('adminMotos', 'Admin\MotosAdminController');
@@ -115,11 +115,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
 });
 
 
-
-
-
-
-
 /**
  * Admin routes
  */
@@ -138,7 +133,7 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('Comments')->group(function () {
-        Route::get('api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
+        Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });
 });
 
@@ -172,8 +167,4 @@ Route::namespace('Front')->group(function () {
     Route::namespace('Travels')->group(function () {
         Route::resource('viajes', 'ViajesController');
     });
-
-
-
-    Route::resource('viajes', 'Admin\ViajesController');
 });

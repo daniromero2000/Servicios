@@ -102,7 +102,7 @@
 			@yield('content')
 		</div>
 
-		<div id="footer">
+		<div id="footer" >
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-3 resetCol footer-containMenu">
 					<div class="footer-contianerLogo">
@@ -141,7 +141,7 @@
 					<div class="footer-containerNewsletter">
 						<h5 class="footer-titleNewsLetter">QUIERES RECIBIR LAS MEJORES OFERTAS</h5>
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Ingresa tu e-mail">
+							<input type="text" class="form-control" placeholder="Ingresa tu e-mail" style="width: auto ;">
 							<div class="input-group-prepend">
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>

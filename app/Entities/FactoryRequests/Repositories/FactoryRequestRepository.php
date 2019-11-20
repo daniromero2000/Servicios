@@ -23,6 +23,16 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function getCustomerFactoryRequest($identificationNumber): FactoryRequest
+    {
+        try {
+            return $this->model->where('Cliente', $identificationNumber)
+                ->orderBy('SOLICITUD', 'desc')->get(['SOLICITUD'])->first();
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function listFactoryRequestDigitalChannel()
     {
         try {
@@ -41,7 +51,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function getExistSolicFab($identificationNumber, $timeRejectedVigency)
+    public function checkCustomerHasFactoryRequest($identificationNumber, $timeRejectedVigency)
     {
         $queryExistSolicFab = $this->getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
 

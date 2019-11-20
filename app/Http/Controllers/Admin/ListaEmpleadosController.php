@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ListaEmpleados;
+use App\Entities\Employees\Employee;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class ListaEmpleadosController extends Controller
         if ($existEmployeNew == 1) {
             return -1;
         }
-        $listaEmpleado = new ListaEmpleados;
+        $listaEmpleado = new Employee;
 
         $listaEmpleado->nombre = $request->nombre;
         $listaEmpleado->num_documento = $request->num_documento;
@@ -54,7 +54,7 @@ class ListaEmpleadosController extends Controller
 
     public function destroy($id)
     {
-        $listaEmpleado = ListaEmpleados::Find($id);
+        $listaEmpleado = Employee::Find($id);
         $listaEmpleado->estado = 0;
         return response()->json($listaEmpleado->save());
     }

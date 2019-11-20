@@ -221,7 +221,7 @@
 			@yield('content')
 		</div>
 
-		<div id="footer">
+		<div id="footer" >
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-3 resetCol footer-containMenu">
 					<div class="footer-contianerLogo">
@@ -269,7 +269,7 @@
 						<form action="{{route('newsletter.store')}}" method="POST">
 						{{ csrf_field() }}
 						<div class="input-group mb-3">	
-							<input type="email" name="email" class="form-control" placeholder="Ingresa tu e-mail">
+							<input type="email" name="email" class="form-control input-footer-max" placeholder="Ingresa tu e-mail" >
 							<div class="input-group-prepend">
 								<button class="btn btn-primary">Suscribirse</button>
 							</div>

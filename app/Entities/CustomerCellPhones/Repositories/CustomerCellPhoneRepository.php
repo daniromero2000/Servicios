@@ -14,12 +14,13 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
         $this->model = $customerCellPhone;
     }
 
-    public function listCustomerCellPhones()
+    public function createCustomerCellPhone($data)
     {
-        return $this->model->with([
-            'creditCard',
-            'latestIntention'
-        ])->limit(30)->get();
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            //throw $th;
+        }
     }
 
     public function findCustomerCellPhoneById($identificationNumber): CustomerCellPhone
@@ -34,8 +35,33 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
     public function checkIfExists($identificationNumber, $num)
     {
         try {
-            return $this->model->where('IDENTI', $identificationNumber)->where('NUM', $num)->get()->first();
+            return $this->model->where('IDENTI', $identificationNumber)
+                ->where('NUM', $num)->get()->first();
         } catch (QueryException $e) {
+            //throw $th;
+        }
+    }
+
+    public function getCustomerCellPhoneVal($identificationNumber)
+    {
+        try {
+            return $this->model->where('TIPO', 'CEL')
+                ->where('IDENTI', $identificationNumber)->where('CEL_VAL', 1)
+                ->orderBy('FECHA', 'desc')
+                ->get()->first();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function getCustomerCellPhone($identificationNumber)
+    {
+        try {
+            return $this->model->where('TIPO', 'CEL')
+                ->where('IDENTI', $identificationNumber)
+                ->orderBy('FECHA', 'desc')
+                ->get()->first();
+        } catch (\Throwable $th) {
             //throw $th;
         }
     }
