@@ -1485,7 +1485,7 @@ class OportuyaV2Controller extends Controller
 		$aprobo = 0;
 		// Validacion Celular
 		$numLead = $this->getNumLead($identificationNumber, 'normal');
-		$celLead = $numLead[0]->NUM;
+		$celLead = $numLead->NUM;
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
 			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
