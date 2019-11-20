@@ -368,7 +368,26 @@ $scope.leadsChannels = [{
                 showLoader();
                 $http({
                     method: 'GET',
-                    url: '/api/canalDigital/assignAssesorDigitalToLead/' + solicitud,
+                    url: '/api/canalDigital/assignAssesorDigitalToLead/' + idLead,
+                }).then(function successCallback(response) {
+                    console.log(response);
+                    $scope.searchLeads();
+                    hideLoader();
+                }, function errorCallback(response) {
+                    hideLoader();
+                    console.log(response);
+                });
+            });
+    };
+
+
+    $scope.assignAssesorDigitalToLeadCM = function (solicitud) {
+        $ngBootbox.confirm('Desea hacer la gestión de este lead ?')
+            .then(function () {
+                showLoader();
+                $http({
+                    method: 'GET',
+                    url: '/api/canalDigital/assignAssesorDigitalToLeadCM/' + solicitud,
                 }).then(function successCallback(response) {
                     console.log(response);
                     $scope.searchLeads();

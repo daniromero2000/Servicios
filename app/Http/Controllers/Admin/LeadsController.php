@@ -233,7 +233,7 @@ class LeadsController extends Controller
 
     private function getLeadsCM($request)
     {
-        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`typeProduct`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
+        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`assessor_id`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`typeProduct`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3 )";
@@ -269,9 +269,23 @@ class LeadsController extends Controller
         $respTotalLeadsCM = DB::select($queryCM);
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
+        $resp = DB::select($queryCM);
+
+
+        $leadsCM = [];
+
+        foreach ($resp as $key => $lead) {
+            if ($lead->assessor_id != '') {
+                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
+            }
+            $leadsCM[]      = $resp[$key];
+        }
+
+
+
 
         return [
-            'leadsCM' => DB::select($queryCM),
+            'leadsCM' =>  $leadsCM,
             'totalLeadsCM' => count($respTotalLeadsCM)
         ];
     }
@@ -436,5 +450,12 @@ class LeadsController extends Controller
         $this->addComent($idLead, $comment);
 
         return response()->json([true]);
+    }
+
+    public function assignAssesorDigitalToLeadCM($id)
+    {
+        $lead = $this->leadInterface->findLeadById($id);
+        $lead->assessor_id = auth()->user()->id;
+        return response()->json($lead->save());
     }
 }

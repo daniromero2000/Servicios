@@ -592,6 +592,7 @@
                             <tr>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Lead</th>
+                                <th scope="col">Asesor</th>
                                 <th scope="col">Cedula</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Correo</th>
@@ -615,6 +616,7 @@
                                     <span ng-if="leadCM.channel == 2">Facebook</span>
                                     <span ng-if="leadCM.channel == 3">WhatsApp</span>
                                 </td>
+                                <td>@{{ leadCM.nameAsesor }}</td>
                                 <td>@{{ leadCM.identificationNumber }}</td>
                                 <td>@{{ leadCM.name + " " + leadCM.lastName }}</td>
                                 <td>@{{ leadCM.email }}</td>
@@ -627,12 +629,16 @@
                                 <td>@{{ leadCM.typeProduct }}</td>
                                 <td>@{{ leadCM.created_at }}</td>
                                 <td>
-                                    <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(leadCM.id)"></i>
+                                    <i class="fas fa-edit cursor" title="Actualizar Lead"
+                                        ng-click="showUpdateDialog(leadCM.id)"></i>
                                     <i class="fas fa-comment cursor"
                                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                                     <i ng-if="leadCM.state == 1" class="fas fa-check cursor"
                                         title="Marcar cliente como procesado"
                                         ng-click="checkLeadProcess(leadCM.id)"></i>
+                                    <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-user cursor"
+                                    title="Asignar cliente a asesor"
+                                        ng-click="assignAssesorDigitalToLeadCM(leadCM.id)"></i>
                                 </td>
                             </tr>
                         </tbody>
@@ -861,8 +867,8 @@
                                     <div class="form-group row">
                                         <div class="col-12 col-sm-6">
                                             <label for="name">Nombre</label>
-                                            <input type="text" ng-model="lead.name" id="name" cols="10" class="form-control"
-                                                value="@{{ lead.name }}" required>
+                                            <input type="text" ng-model="lead.name" id="name" cols="10"
+                                                class="form-control" value="@{{ lead.name }}" required>
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="lastName">Apellido</label>
@@ -988,7 +994,8 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-6 form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" ng-model="lead.email" id="email" cols="10" class="form-control">
+                                        <input type="text" ng-model="lead.email" id="email" cols="10"
+                                            class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="telephone">Teléfono</label>
