@@ -43,10 +43,7 @@
                                         <i class="octicon octicon-calendar"></i>
                                     </span>
                                 </div>
-
-
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
@@ -55,11 +52,6 @@
                                 <button type="submit" class="btn btn-primary">Filtrar <i
                                         class="fas fa-filter"></i></button>
                             </div>
-
-                            <!-- /.card -->
-
-
-                            <!-- /.card -->
                         </div>
                     </form>
                 </div>

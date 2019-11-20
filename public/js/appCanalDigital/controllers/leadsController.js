@@ -49,6 +49,15 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.lead = {};
     $scope.idLead = '';
 
+    $scope.socialNetworks = [{
+            label: 'FACEBOOK',
+            value: 2
+        },
+        {
+            label: 'WHATSAPP',
+            value: 3
+        }
+    ];
     $scope.comment = {
         comment: '',
         idLead: 0,
@@ -283,6 +292,63 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.lead = lead;
         $("#viewLead").modal("show");
     };
+
+    $scope.showUpdateDialog = function (idLead) {
+        $scope.idLead = idLead;
+        $scope.viewCommunityLeads($scope.idLead);
+        $('#updateCommunityModal').modal('show');
+    };
+
+    $scope.viewCommunityLeads = function (idLead) {
+        $http({
+            method: 'GET',
+            url: '/communityLeads/viewCommunityLeads/' + idLead
+        }).then(function successCallback(response) {
+                if (response.data != false) {
+                    $scope.lead = response.data;
+                }
+            },
+            function errorCallback(response) {});
+    };
+
+    $scope.updateCommunityLeads = function () {
+        $http({
+            method: 'POST',
+            url: '/communityLeads/updateCommunityLeads',
+            data: $scope.lead
+        }).then(function successCallback(response) {
+            console.log(response);
+            if (response.data != false) {
+                $scope.searchLeads();
+                $('#updateCommunityModal').modal('hide');
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    }
+
+    $scope.addCommunityForm = function () {
+        $scope.lead = {};
+        $("#addCommunityLead").modal("show");
+    };
+
+    $scope.addCommunityLeads = function () {
+        $http({
+            method: 'POST',
+            url: '/communityLeads/addCommunityLeads',
+            data: $scope.lead
+        }).then(function successCallback(response) {
+            console.log(response);
+            if (response.data != false) {
+                $scope.searchLeads();
+                $('#addCommunityLead').modal('hide');
+                $scope.lead = {};
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
 
     $scope.assignAssesorDigitalToLead = function (solicitud) {
         $ngBootbox.confirm('Desea hacer la gestión de este lead ?')
