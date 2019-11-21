@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\CifinArrears\Repositories;
+namespace App\Entities\CifinRealArrears\Repositories;
 
-use App\Entities\CifinArrears\CifinArrear;
-use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinRealArrears\CifinRealArrear;
+use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class CifinArrearRepository implements CifinArrearRepositoryInterface
+class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
 {
     public function __construct(
-        CifinArrear $cifinArrear
+        CifinRealArrear $cifinRealArrear
     ) {
-        $this->model = $cifinArrear;
+        $this->model = $cifinRealArrear;
     }
 
-    public function checkCustomerHasCifinArrear($identificationNumber)
+    public function checkCustomerHasCifinRealArrear($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
@@ -32,7 +32,7 @@ class CifinArrearRepository implements CifinArrearRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasCifinArrear($identificationNumber);
+        $respVectores = $this->checkCustomerHasCifinRealArrear($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
@@ -55,18 +55,3 @@ class CifinArrearRepository implements CifinArrearRepositoryInterface
         return $charTrim;
     }
 }
-
-
-// foreach ($respVectores as $key => $payment) {
-//     $paymentArray = explode('|', $payment->fdcompor);
-//     $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-//     $popArray = array_pop($paymentArray);
-//     $paymentArray = array_reverse($paymentArray);
-//     $paymentArray = array_splice($paymentArray, 0, 12);
-//     $elementsPaymentExt = array_keys($paymentArray, 'N');
-//     $paymentsExtNumber = count($elementsPaymentExt);
-//     if ($paymentsExtNumber == 12) {
-//         $aprobadoVectores = true;
-//         break;
-//     }
-// }

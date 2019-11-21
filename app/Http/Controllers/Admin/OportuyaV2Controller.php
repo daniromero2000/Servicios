@@ -10,6 +10,8 @@ use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
+use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Exports\ExportToExcel;
 use App\Http\Controllers\Controller;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
@@ -42,7 +44,7 @@ class OportuyaV2Controller extends Controller
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
-	private $upToDateCifinInterface;
+	private $upToDateCifinInterface, $cifinArrearsInterface, $cifinRealArrearsInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -60,7 +62,9 @@ class OportuyaV2Controller extends Controller
 		EmployeeRepositoryInterface $employeeRepositoryInterface,
 		PunishmentRepositoryInterface $punishmentRepositoryInterface,
 		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
-		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface
+		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface,
+		CifinArrearRepositoryInterface $cifinArrearRepositoryInterface,
+		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -77,7 +81,9 @@ class OportuyaV2Controller extends Controller
 		$this->employeeInterface                 = $employeeRepositoryInterface;
 		$this->punishmentInterface               = $punishmentRepositoryInterface;
 		$this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
-		$this->upToDateCifinInterface = $upToDateCifinRepositoryInterface;
+		$this->upToDateCifinInterface            = $upToDateCifinRepositoryInterface;
+		$this->cifinArrearsInterface             = $cifinArrearRepositoryInterface;
+		$this->cifinRealArrearsInterface         = $cifinRealArrearRepositoryInterface;
 	}
 
 	public function index()
@@ -587,21 +593,25 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// Negacion, codicion 2, saldo en mora
-		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
-		FROM `cifin_finmora`
-		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
-		AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+		$TotalCustomerCifinArrears = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
 
-		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
+		// $queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
+		// FROM `cifin_finmora`
+		// WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
+		// AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+		// $respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
 
-		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
-		FROM `cifin_realmora`
-		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
-		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
 
-		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
+		$totalCustomerCifinRealArrears = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
 
-		$totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
+		// $queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
+		// FROM `cifin_realmora`
+		// WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
+		// AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+		// $respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
+		// $totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
+
+		$totalValorMora = $TotalCustomerCifinArrears + $totalCustomerCifinRealArrears;
 
 		if ($totalValorMora > 100) {
 			return -2; // Credito negado
@@ -1274,32 +1284,6 @@ class OportuyaV2Controller extends Controller
 		return $resp;
 	}
 
-	private function decisionCredit($identificationNumber)
-	{
-		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-
-		$respScoreClient = $queryScoreClient[0]->score;
-
-		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "SIN HISTORIAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -4; // Sin Historial Crediticio
-		}
-
-		if ($respScoreClient >= 528 && $respScoreClient <= 624) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "ALMACEN" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -1; // En almacen
-		}
-
-		if ($respScoreClient >= 625 && $respScoreClient <= 675) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "TRADICIONAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -2; // Tradicional
-		}
-
-		if ($respScoreClient > 676) {
-			return 1;
-		}
-	}
-
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
 	{
 		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
@@ -1512,101 +1496,6 @@ class OportuyaV2Controller extends Controller
 		return $aprobo;
 	}
 
-	private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
-	{
-		$coincide = 0;
-		foreach ($arrayCompare as $value) {
-			if (in_array($value, $arrayCompareTo)) {
-				$coincide = 1;
-			} else {
-				$coincide = 0;
-				break;
-			}
-		}
-
-		return $coincide;
-	}
-
-
-
-	private function execConsultaExperto($identificationNumber)
-	{
-		$solic_fab = new FactoryRequest;
-		if ($identificationNumber == '') return -1;
-		$query = sprintf("SELECT `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, CONCAT(`APELLIDOS`, ' ', `NOMBRES`) as name, `DIRECCION` as address, `FEC_NAC` as birthdate, expTi.`id` as housingTime, expTipo.`id` as housingType, `SUELDO` as salary, `ANTIG` as antiquity, expActi.`id` as occupation
-						FROM `CLIENTE_FAB` as cf
-						LEFT JOIN `exp_tiempoviv` as expTi ON cf.`TIEMPO_VIV` = expTi.`consec`
-						LEFT JOIN `exp_tipoviv` as expTipo ON cf.`TIPOV` = expTipo.`consec`
-						LEFT JOIN `exp_actividad` as expActi ON cf.`ACTIVIDAD` = expActi.`consec`
-						WHERE `CEDULA` = %s ", $identificationNumber);
-
-		/*$respLead = DB::connection('oportudata')->select($query);
-		$obj = new \stdClass();
-		$lead = $respLead[0];
-		$obj->typeDocument = $lead->typeDocument; // Tipo de documento
-		$obj->identificationNumber = $lead->identificationNumber; // Numero de identificacion
-		$obj->name = $lead->name; // NOMBRE
-		$obj->address = $lead->address; // DIRECCION ACTUAL
-		$obj->birthdate = $lead->birthdate; // FECHA DE NACIMIENTO
-		$obj->housingTime = $lead->housingTime; // TIEMPO DE VIVIENDA ARRENDADA
-		$obj->housingType = $lead->housingType; // TIPO_DE_VIVIENDA
-		$obj->salary = $lead->salary; // INGRESOS
-		$obj->antiquity = $lead->antiquity; // TIEMPO LABOR MESES
-		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
-		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
-		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
-		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
-		$obj->term = "0"; // PLAZO_
-		$obj->suc = "9999"; // SUCURSAL, FIJO
-		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
-		$obj->rateInterest = "1"; // Tasa de interes , FIJO
-		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
-		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA */
-
-		$obj = new \stdClass();
-
-		$obj->typeDocument = 1; // Tipo de documento
-		$obj->identificationNumber = "43185409"; // Numero de identificacion
-		$obj->name = "CRUZ QUIMBAYO YINA ROCIO"; // NOMBRE
-		$obj->address = "Centro"; // DIRECCION ACTUAL
-		$obj->birthdate = "1990-02-20"; // FECHA DE NACIMIENTO
-		$obj->housingTime = "13573"; // TIEMPO DE VIVIENDA ARRENDADA
-		$obj->housingType = "13575"; // TIPO_DE_VIVIENDA
-		$obj->salary = "2000000"; // INGRESOS
-		$obj->antiquity = "3"; // TIEMPO LABOR MESES
-		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
-		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
-		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
-		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
-		$obj->term = "0"; // PLAZO_
-		$obj->suc = "9999"; // SUCURSAL, FIJO
-		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
-		$obj->rateInterest = "1"; // Tasa de interes , FIJO
-		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
-		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA
-
-		$ws = new \SoapClient("http://10.238.14.181:3000/Experto.svc?singleWsdl", array()); //correcta
-		$result = $ws->ConsultarExperto($obj);  // correcta
-		return response() - json($result);
-		$solic_fab->setConnection('oportudata');
-		$solic_fab->CLIENTE = $identificationNumber;
-		$solic_fab->CODASESOR = "998877";
-		$solic_fab->FECHASOL = date("Y-m-d H:i:s");
-		$solic_fab->SUCURSAL = "9999";
-		$solic_fab->ESTADO = "ANALISIS";
-		$solic_fab->FTP = 0;
-		$solic_fab->STATE = "A";
-		$solic_fab->GRAN_TOTAL = 0;
-		$solic_fab->SOLICITUD_WEB = 1;
-		$solic_fab->save();
-
-		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($identificationNumber);
-
-		return response()->json(['numSolic' => $numSolic]);
-	}
-
 	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
 	{
 		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
@@ -1739,7 +1628,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
-
 		$addAnalisis = $this->addAnalisis($numSolic, $identificationNumber);
 		$infoLead = [];
 		$infoLead = $this->getInfoLeadCreate($identificationNumber);
@@ -1767,8 +1655,6 @@ class OportuyaV2Controller extends Controller
 			'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']
 		];
 	}
-
-
 
 	private function validateDateConsultaUbica($identificationNumber)
 	{
@@ -2217,7 +2103,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return view
 	 */
-
 	public function step3($string)
 	{
 		$identificactionNumber = $this->decrypt($string);
@@ -2236,7 +2121,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return string
 	 */
-
 	public function encrypt($string)
 	{
 		$string = utf8_encode($string);
@@ -2259,7 +2143,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return string
 	 */
-
 	public function decrypt($string)
 	{
 		$string = $string;
@@ -2325,5 +2208,125 @@ class OportuyaV2Controller extends Controller
 	{
 		$charTrim = trim($charItem);
 		return $charTrim;
+	}
+
+
+	private function execConsultaExperto($identificationNumber)
+	{
+		$solic_fab = new FactoryRequest;
+		if ($identificationNumber == '') return -1;
+		$query = sprintf("SELECT `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, CONCAT(`APELLIDOS`, ' ', `NOMBRES`) as name, `DIRECCION` as address, `FEC_NAC` as birthdate, expTi.`id` as housingTime, expTipo.`id` as housingType, `SUELDO` as salary, `ANTIG` as antiquity, expActi.`id` as occupation
+						FROM `CLIENTE_FAB` as cf
+						LEFT JOIN `exp_tiempoviv` as expTi ON cf.`TIEMPO_VIV` = expTi.`consec`
+						LEFT JOIN `exp_tipoviv` as expTipo ON cf.`TIPOV` = expTipo.`consec`
+						LEFT JOIN `exp_actividad` as expActi ON cf.`ACTIVIDAD` = expActi.`consec`
+						WHERE `CEDULA` = %s ", $identificationNumber);
+
+		/*$respLead = DB::connection('oportudata')->select($query);
+		$obj = new \stdClass();
+		$lead = $respLead[0];
+		$obj->typeDocument = $lead->typeDocument; // Tipo de documento
+		$obj->identificationNumber = $lead->identificationNumber; // Numero de identificacion
+		$obj->name = $lead->name; // NOMBRE
+		$obj->address = $lead->address; // DIRECCION ACTUAL
+		$obj->birthdate = $lead->birthdate; // FECHA DE NACIMIENTO
+		$obj->housingTime = $lead->housingTime; // TIEMPO DE VIVIENDA ARRENDADA
+		$obj->housingType = $lead->housingType; // TIPO_DE_VIVIENDA
+		$obj->salary = $lead->salary; // INGRESOS
+		$obj->antiquity = $lead->antiquity; // TIEMPO LABOR MESES
+		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
+		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
+		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
+		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
+		$obj->term = "0"; // PLAZO_
+		$obj->suc = "9999"; // SUCURSAL, FIJO
+		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
+		$obj->rateInterest = "1"; // Tasa de interes , FIJO
+		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
+		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
+		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA */
+
+		$obj = new \stdClass();
+
+		$obj->typeDocument = 1; // Tipo de documento
+		$obj->identificationNumber = "43185409"; // Numero de identificacion
+		$obj->name = "CRUZ QUIMBAYO YINA ROCIO"; // NOMBRE
+		$obj->address = "Centro"; // DIRECCION ACTUAL
+		$obj->birthdate = "1990-02-20"; // FECHA DE NACIMIENTO
+		$obj->housingTime = "13573"; // TIEMPO DE VIVIENDA ARRENDADA
+		$obj->housingType = "13575"; // TIPO_DE_VIVIENDA
+		$obj->salary = "2000000"; // INGRESOS
+		$obj->antiquity = "3"; // TIEMPO LABOR MESES
+		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
+		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
+		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
+		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
+		$obj->term = "0"; // PLAZO_
+		$obj->suc = "9999"; // SUCURSAL, FIJO
+		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
+		$obj->rateInterest = "1"; // Tasa de interes , FIJO
+		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
+		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
+		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA
+
+		$ws = new \SoapClient("http://10.238.14.181:3000/Experto.svc?singleWsdl", array()); //correcta
+		$result = $ws->ConsultarExperto($obj);  // correcta
+		return response() - json($result);
+		$solic_fab->setConnection('oportudata');
+		$solic_fab->CLIENTE = $identificationNumber;
+		$solic_fab->CODASESOR = "998877";
+		$solic_fab->FECHASOL = date("Y-m-d H:i:s");
+		$solic_fab->SUCURSAL = "9999";
+		$solic_fab->ESTADO = "ANALISIS";
+		$solic_fab->FTP = 0;
+		$solic_fab->STATE = "A";
+		$solic_fab->GRAN_TOTAL = 0;
+		$solic_fab->SOLICITUD_WEB = 1;
+		$solic_fab->save();
+
+		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($identificationNumber);
+
+		return response()->json(['numSolic' => $numSolic]);
+	}
+
+	private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
+	{
+		$coincide = 0;
+		foreach ($arrayCompare as $value) {
+			if (in_array($value, $arrayCompareTo)) {
+				$coincide = 1;
+			} else {
+				$coincide = 0;
+				break;
+			}
+		}
+
+		return $coincide;
+	}
+
+	private function decisionCredit($identificationNumber)
+	{
+		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+
+		$respScoreClient = $queryScoreClient[0]->score;
+
+		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "SIN HISTORIAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			return -4; // Sin Historial Crediticio
+		}
+
+		if ($respScoreClient >= 528 && $respScoreClient <= 624) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "ALMACEN" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			return -1; // En almacen
+		}
+
+		if ($respScoreClient >= 625 && $respScoreClient <= 675) {
+			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "TRADICIONAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+			return -2; // Tradicional
+		}
+
+		if ($respScoreClient > 676) {
+			return 1;
+		}
 	}
 }
