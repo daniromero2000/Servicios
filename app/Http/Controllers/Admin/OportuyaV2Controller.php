@@ -580,7 +580,7 @@ class OportuyaV2Controller extends Controller
 
 	public function execCreditPolicy($identificationNumber)
 	{
-		$aprobado =  $this->upToDateCifinInterface->checkVector($identificationNumber);
+		$aprobado =  $this->upToDateCifinInterface->check12MonthsPaymentVector($identificationNumber);
 
 		if ($aprobado == false) {
 			return -1; // Credito negado
@@ -1078,21 +1078,8 @@ class OportuyaV2Controller extends Controller
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
-			$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-			$respVectores = DB::connection('oportudata')->select($queryVectores);
-			foreach ($respVectores as $key => $payment) {
-				$paymentArray = explode('|', $payment->fdcompor);
-				$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-				$popArray = array_pop($paymentArray);
-				$paymentArray = array_reverse($paymentArray);
-				$paymentArray = array_splice($paymentArray, 0, 12);
-				$elementsPaymentExt = array_keys($paymentArray, 'N');
-				$paymentsExtNumber = count($elementsPaymentExt);
-				if ($paymentsExtNumber == 12) {
-					$aprobadoVectores = true;
-					break;
-				}
-			}
+			$aprobado =  $this->upToDateCifinInterface->check12MonthsPaymentVector($identificationNumber);
+
 			if ($getDataCliente[0]->CIUD_UBI == 'BOGOTÁ' || $getDataCliente[0]->CIUD_UBI == 'MEDELLÍN') {
 				if ($queryScoreClient[0]->score >= 725) {
 					if ($aprobadoVectores == true) {

@@ -49,12 +49,20 @@ use App\Entities\CustomerVerificationCodes\Repositories\CustomerVerificationCode
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
 use App\Entities\UpToDateCifins\Repositories\UpToDateCifinRepository;
+use App\Entities\CifinArrears\Repositories\CifinArrearRepository;
+use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            CifinArrearRepositoryInterface::class,
+            CifinArrearRepository::class
+        );
+
+
         $this->app->bind(
             UpToDateCifinRepositoryInterface::class,
             UpToDateCifinRepository::class

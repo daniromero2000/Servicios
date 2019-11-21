@@ -40,6 +40,8 @@ class AdvanceController extends Controller
         // $queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", 1088019814, 1088019814);
         // $respVectores = DB::connection('oportudata')->select($queryVectores);
 
+
+
         // $aprobado = false;
         // foreach ($respVectores as $key => $payment) {
         //     $aprobado = false;

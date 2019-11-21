@@ -1,25 +1,28 @@
 <?php
 
-namespace App\Entities\UpToDateCifins\Repositories;
+namespace App\Entities\CifinArrears\Repositories;
 
-use App\Entities\UpToDateCifins\UpToDateCifin;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\CifinArrears\CifinArrear;
+use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
+class CifinArrearRepository implements CifinArrearRepositoryInterface
 {
     public function __construct(
-        UpToDateCifin $upToDateCifin
+        CifinArrear $cifinArrear
     ) {
-        $this->model = $upToDateCifin;
+        $this->model = $cifinArrear;
     }
 
-    public function checkCustomerHasUpToDateCifin($identificationNumber)
+    public function checkCustomerHasCifinArrear($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
                 ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
-                ->where('fdtipocon', '!=', 'SRV')->orderBy('fdapert', 'desc')->get(['fdcompor', 'fdconsul']);
+                ->where('fincalid', '!=', 'CODE')
+                ->where('fdtipocon', '!=', 'SRV')
+                ->orderBy('fdapert', 'desc')
+                ->get(['fdcompor', 'fdconsul']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -29,7 +32,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasUpToDateCifin($identificationNumber);
+        $respVectores = $this->checkCustomerHasCifinArrear($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
