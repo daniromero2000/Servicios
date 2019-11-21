@@ -63,12 +63,7 @@
 			</div>
 			<form ng-submit="saveStep3()" id="formEmpleado" >
 				<div ng-if="leadInfo.occupation == 'EMPLEADO' || leadInfo.occupation == 'SOLDADO-MILITAR-POLICÍA' || leadInfo.occupation == 'PRESTACIÓN DE SERVICIOS'">
-					<div class="row resetRow">
-						<div class="col-12 form-group">
-							<label for="nit">Nit (sin número de verificación)</label>
-							<input type="text" class="form-control inputsSteps inputText" id="nit" validation-pattern="nit" ng-model="leadInfo.nit" />
-						</div>
-					</div>
+
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyName">Nombre de la Empresa*</label>
@@ -83,10 +78,6 @@
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="companyTelephone">Teléfono de la Empresa*</label>
 							<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone" class="form-control inputsSteps inputText" required="" />
-						</div>
-						<div class="col-sm-12 col-md-6 form-group">
-							<label for="companyTelephone2">Teléfono 2 de la Empresa</label>
-							<input type="text" id="companyTelephone2" ng-model="leadInfo.companyTelephone2" validation-pattern="telephone" class="form-control inputsSteps inputText" />
 						</div>
 					</div>
 					<div class="row resetRow">
@@ -112,10 +103,7 @@
 						</div>
 					</div>
 					<div class="row resetRow">
-						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquity">Antigüedad (Meses)</label>
-							<input type="number" id="antiquity" ng-model="leadInfo.antiquity" validation-pattern="number" class="form-control inputsSteps inputText" placeholder="" />
-						</div>
+
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salary">Salario</label>
 							<input type="text" id="salary" ng-model="leadInfo.salary" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />
@@ -140,10 +128,7 @@
 							<select id="camaraComercio" ng-model="leadInfo.camaraComercio" class="form-control inputsSteps inputSelect" ng-options="type.value as type.label for type in typesCamaraComercio">
 							</select>
 						</div>
-						<div class="col-sm-12 col-md-6 form-group">
-							<label for="nitInd">Nit (sin número de verificación)</label>
-							<input type="text" id="nitInd" ng-model="leadInfo.nitInd" validation-pattern="nit" class="form-control inputsSteps inputText" />
-						</div>
+
 					</div>
 					<div class="row resetRow">
 						<div class="col-sm-12 col-md-6 form-group">
@@ -186,10 +171,7 @@
 						</div>
 					</div>
 					<div class="row resetRow">
-						<div class="col-sm-12 col-md-6 form-group">
-							<label for="antiquityInd">Atigüedad (Meses)*</label>
-							<input type="number" id="antiquityInd" ng-model="leadInfo.antiquityInd" validation-pattern="number" class="form-control inputsSteps inputText" required="" />
-						</div>
+
 						<div class="col-sm-12 col-md-6 form-group">
 							<label for="salaryInd">Salario</label>
 							<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0" class="form-control inputsSteps inputText" />

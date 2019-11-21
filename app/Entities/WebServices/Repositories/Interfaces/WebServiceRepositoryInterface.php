@@ -8,4 +8,6 @@ interface WebServiceRepositoryInterface
   public function execWebServiceFosygaRegistraduria($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "");
 
   public function sendMessageSms($code, $date, $celNumber);
+
+  public function execConsultaComercial($identificationNumber, $typeDocument);
 }

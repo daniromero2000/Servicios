@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Imagenes;
 use App\DatosCliente;
 use App\Intenciones;
-use App\cliCel;
 use App\ResultadoPolitica;
 use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
+use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Exports\ExportToExcel;
 use App\Http\Controllers\Controller;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
@@ -26,13 +28,16 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
 
 class OportuyaV2Controller extends Controller
 {
@@ -41,6 +46,8 @@ class OportuyaV2Controller extends Controller
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
+	private $upToDateCifinInterface, $cifinArrearsInterface, $cifinRealArrearsInterface;
+	private $cifinScoreInterface, $intentionsInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -57,7 +64,12 @@ class OportuyaV2Controller extends Controller
 		CreditCardRepositoryInterface $creditCardRepositoryInterface,
 		EmployeeRepositoryInterface $employeeRepositoryInterface,
 		PunishmentRepositoryInterface $punishmentRepositoryInterface,
-		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface
+		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
+		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface,
+		CifinArrearRepositoryInterface $cifinArrearRepositoryInterface,
+		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
+		CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
+		IntentionRepositoryInterface $intentionRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -74,6 +86,11 @@ class OportuyaV2Controller extends Controller
 		$this->employeeInterface                 = $employeeRepositoryInterface;
 		$this->punishmentInterface               = $punishmentRepositoryInterface;
 		$this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
+		$this->upToDateCifinInterface            = $upToDateCifinRepositoryInterface;
+		$this->cifinArrearsInterface             = $cifinArrearRepositoryInterface;
+		$this->cifinRealArrearsInterface         = $cifinRealArrearRepositoryInterface;
+		$this->cifinScoreInterface               = $cifinScoreRepositoryInterface;
+		$this->intentionsInterface               = $intentionRepositoryInterface;
 	}
 
 	public function index()
@@ -311,16 +328,17 @@ class OportuyaV2Controller extends Controller
 
 			if (trim($oportudataLead->ACTIVIDAD) == 'SOLDADO-MILITAR-POLICÍA' || trim($oportudataLead->ACTIVIDAD) == 6) return -2;
 
+			$customerJobStart = new Carbon($request->get('admissionDate'));
+			$customerIndependentStart = new Carbon($request->get('dateCreationCompany'));
+
 			$dataLead = [
-				'NIT_EMP' => ($request->get('nit') != '') ? trim($request->get('nit')) : 0,
 				'RAZON_SOC' => ($request->get('companyName') != '') ? trim(strtoupper($request->get('companyName'))) : 'NA',
 				'DIR_EMP' => ($request->get('companyAddres') != '') ? trim(strtoupper($request->get('companyAddres'))) : 'NA',
 				'TEL_EMP' => ($request->get('companyTelephone') != '') ? trim($request->get('companyTelephone')) : 0,
-				'TEL2_EMP'	=> ($request->get('companyTelephone2') != '') ? trim($request->get('companyTelephone2')) : 0,
 				'ACT_ECO' => ($request->get('eps') != '') ? trim(strtoupper($request->get('eps'))) : '-',
 				'CARGO' => ($request->get('companyPosition') != '') ? trim(strtoupper($request->get('companyPosition'))) : 'NA',
 				'FEC_ING' => ($request->get('admissionDate') != '') ? trim($request->get('admissionDate')) : '0000/1/1',
-				'ANTIG' => ($request->get('antiquity') != '') ? trim($request->get('antiquity')) : 1,
+				'ANTIG' =>  $customerJobStart->diffInMonths(Carbon::now()),
 				'SUELDO' => ($request->get('salary') != '') ? trim($request->get('salary')) : 0,
 				'TIPO_CONT' => ($request->get('typeContract') != '') ? trim(strtoupper($request->get('typeContract'))) : 'NA',
 				'OTROS_ING' => ($request->get('otherRevenue') != '') ? trim($request->get('otherRevenue')) : 0,
@@ -329,7 +347,7 @@ class OportuyaV2Controller extends Controller
 				'RAZON_IND' => ($request->get('companyNameInd') != '') ? trim($request->get('companyNameInd')) : 'NA',
 				'ACT_IND' => ($request->get('whatSell') != '') ? trim($request->get('whatSell')) : 'NA',
 				'FEC_CONST' => ($request->get('dateCreationCompany') != '') ? trim($request->get('dateCreationCompany')) : '0000/1/1',
-				'EDAD_INDP' => ($request->get('antiquityInd') != '') ? trim($request->get('antiquityInd')) : 1,
+				'EDAD_INDP' =>  $customerIndependentStart->diffInMonths(Carbon::now()),
 				'SUELDOIND' => ($request->get('salaryInd') != '') ? trim($request->get('salaryInd')) : 0,
 				'BANCOP' => ($request->get('bankSavingsAccount') != '') ? trim($request->get('bankSavingsAccount')) : 'NA',
 				'PASO' => $paso
@@ -532,39 +550,6 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	public function enviarMensaje()
-	{
-		return true;
-		$url = 'https://api.hablame.co/sms/envio/';
-		$data = array(
-			'cliente' => 10013280, //Numero de cliente
-			'api' => 'D5jpJ67LPns7keU7MjqXoZojaZIUI6', //Clave API suministrada
-			'numero' => '573136392833', //numero o numeros telefonicos a enviar el SMS (separados por una coma ,)
-			'sms' => 'Probando mensaje 1.2.3', //Mensaje de texto a enviar
-			'fecha' => '', //(campo opcional) Fecha de envio, si se envia vacio se envia inmediatamente (Ejemplo: 2017-12-31 23:59:59)
-			'referencia' => 'Referenca Envio Hablame', //(campo opcional) Numero de referencio ó nombre de campaña
-		);
-
-		$options = array(
-			'http' => array(
-				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				'method'  => 'POST',
-				'content' => http_build_query($data)
-			)
-		);
-
-		$context  = stream_context_create($options);
-		$result = json_decode((file_get_contents($url, false, $context)), true);
-
-		if ($result["resultado"] === 0) {
-			$mensaje = 'Se ha enviado el SMS exitosamente';
-		} else {
-			$mensaje = 'ha ocurrido un error!!';
-		}
-
-		return response()->json([$mensaje, $result]);
-	}
-
 	public function getContactData($identificationNumber)
 	{
 		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", trim($identificationNumber));
@@ -572,55 +557,6 @@ class OportuyaV2Controller extends Controller
 		$resp = DB::connection('oportudata')->select($query);
 
 		return response()->json($resp[0]);
-	}
-
-	public function execCreditPolicy($identificationNumber)
-	{
-		// Negacion, condicion 1, vectores comportamiento
-		$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-		$respVectores = DB::connection('oportudata')->select($queryVectores);
-		$aprobado = false;
-		foreach ($respVectores as $key => $payment) {
-			$aprobado = false;
-			$paymentArray = explode('|', $payment->fdcompor);
-			$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-			$popArray = array_pop($paymentArray);
-			$paymentArray = array_reverse($paymentArray);
-			$paymentArray = array_splice($paymentArray, 0, 12);
-			$elementsPaymentExt = array_keys($paymentArray, 'N');
-			$paymentsExtNumber = count($elementsPaymentExt);
-			if ($paymentsExtNumber == 12) {
-				$aprobado = true;
-				break;
-			}
-		}
-
-		if ($aprobado == false) {
-			return -1; // Credito negado
-		}
-
-		// Negacion, codicion 2, saldo en mora
-		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
-		FROM `cifin_finmora`
-		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
-		AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-
-		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
-
-		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
-		FROM `cifin_realmora`
-		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
-		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-
-		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
-
-		$totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
-
-		if ($totalValorMora > 100) {
-			return -2; // Credito negado
-		}
-
-		return 1300000;
 	}
 
 	public function simulatePolicyGroup()
@@ -762,48 +698,57 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		$getDataCliente = DB::connection('oportudata')->select("SELECT `EDAD`, `ACTIVIDAD`, `ANTIG`, `EDAD_INDP`, `CIUD_UBI`, `SUC` FROM `CLIENTE_FAB` WHERE `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
-
 		// 3.2	Puntaje y 3.4 Calificacion Score
-		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		if (empty($queryScoreClient)) {
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$data = ['CEDULA' => $identificationNumber];
+		$customerIntention =  $this->intentionInterface->createIntention($data);
+
+		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			if ($queryScoreClient[0]->score <= -8) {
-				$perfilCrediticio = 'TIPO NE';
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.9');
+			if ($customerScore <= -8) {
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->PERFIL_CREDITICIO =  'TIPO NE';
+				$customerIntention->ID_DEF =  '3.9';
+				$customerIntention->save();
+
 				return ['resp' => "false"];
 			}
 
-			if ($queryScoreClient[0]->score >= 1 && $queryScoreClient[0]->score <= 275) {
-				$perfilCrediticio = 'TIPO D';
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.2');
+			if ($customerScore >= 1 && $customerScore <= 275) {
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->PERFIL_CREDITICIO =  'TIPO D';
+				$customerIntention->ID_DEF =  '3.2';
+				$customerIntention->save();
+
 				return ['resp' => "false"];
 			}
 
-			if ($queryScoreClient[0]->score >= -7 && $queryScoreClient[0]->score <= 0) {
+			if ($customerScore >= -7 && $customerScore <= 0) {
 				$perfilCrediticio = 'TIPO 5';
 			}
 
-			if ($queryScoreClient[0]->score >= 275 && $queryScoreClient[0]->score <= 527) {
+			if ($customerScore >= 275 && $customerScore <= 527) {
 				$perfilCrediticio = 'TIPO D';
 			}
 
-			if ($queryScoreClient[0]->score >= 528 && $queryScoreClient[0]->score <= 624) {
+			if ($customerScore >= 528 && $customerScore <= 624) {
 				$perfilCrediticio = 'TIPO C';
 			}
 
-			if ($queryScoreClient[0]->score >= 625 && $queryScoreClient[0]->score <= 674) {
+			if ($customerScore >= 625 && $customerScore <= 674) {
 				$perfilCrediticio = 'TIPO B';
 			}
 
-			if ($queryScoreClient[0]->score >= 675 && $queryScoreClient[0]->score <= 1000) {
+			if ($customerScore >= 675 && $customerScore <= 1000) {
 				$perfilCrediticio = 'TIPO A';
 			}
 
-			$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio);
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+			$customerIntention->save();
 		}
 
 		// 3.3 Estado de obligaciones
@@ -814,10 +759,16 @@ class OportuyaV2Controller extends Controller
 
 		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
 
+
+		// $TotalCustomerCifinArrears = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
+		// $totalCustomerCifinRealArrears = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
+
 		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
 		FROM `cifin_realmora`
 		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
 		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
+
+
 
 		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
 
@@ -979,7 +930,7 @@ class OportuyaV2Controller extends Controller
 		//4.1 Zona de riesgo
 		$queryGetZonaRiesgo = sprintf("SELECT `ZONA`
 		FROM `SUCURSALES`
-		WHERE `CODIGO` = '%s' ", $getDataCliente[0]->SUC);
+		WHERE `CODIGO` = '%s' ", $customer->SUC);
 		$respZonaRiesgo = DB::connection('oportudata')->select($queryGetZonaRiesgo);
 		$this->updateLastIntencionLead($identificationNumber, 'ZONA_RIESGO', $respZonaRiesgo[0]->ZONA);
 
@@ -1015,7 +966,7 @@ class OportuyaV2Controller extends Controller
 		$edad = explode('-', $edad);
 		$edadMin = $edad[0];
 		$edadMax = $edad[1];
-		if ($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO') {
+		if ($customer->ACTIVIDAD == 'PENSIONADO') {
 			$validateTipoCliente = FALSE;
 			if ($edadMin >= 18 && $edadMax <= 70) {
 				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
@@ -1047,11 +998,11 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 4.5 Tiempo en Labor
-		if ($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO') {
+		if ($customer->ACTIVIDAD == 'PENSIONADO') {
 			$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
 		} else {
-			if ($getDataCliente[0]->ACTIVIDAD == 'RENTISTA' || $getDataCliente[0]->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $getDataCliente[0]->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($getDataCliente[0]->EDAD_INDP >= 4) {
+			if ($customer->ACTIVIDAD == 'RENTISTA' || $customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+				if ($customer->EDAD_INDP >= 4) {
 					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
 				} else {
 					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 0, '4.5');
@@ -1059,7 +1010,7 @@ class OportuyaV2Controller extends Controller
 					return ['resp' => "false"];
 				}
 			} else {
-				if ($getDataCliente[0]->ANTIG >= 4) {
+				if ($customer->ANTIG >= 4) {
 					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
 				} else {
 					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 0, '4.5');
@@ -1077,7 +1028,7 @@ class OportuyaV2Controller extends Controller
 		$this->updateLastIntencionLead($identificationNumber, 'TIPO_5_ESPECiAL', $tipo5Especial);
 		// 4.7 Inspecciones Oculares
 		if ($tipoCliente == 'NUEVO') {
-			if ($getDataCliente[0]->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $getDataCliente[0]->ACTIVIDAD == 'NO CERTIFICADO') {
+			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
 					$this->updateLastIntencionLead($identificationNumber, 'INSPECCION_OCULAR', 1);
 				}
@@ -1091,23 +1042,10 @@ class OportuyaV2Controller extends Controller
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
-			$queryVectores = sprintf("SELECT fdcompor, fdconsul FROM `cifin_findia` WHERE `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = '%s' ) AND `fdcedula` = '%s' AND `fdtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-			$respVectores = DB::connection('oportudata')->select($queryVectores);
-			foreach ($respVectores as $key => $payment) {
-				$paymentArray = explode('|', $payment->fdcompor);
-				$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-				$popArray = array_pop($paymentArray);
-				$paymentArray = array_reverse($paymentArray);
-				$paymentArray = array_splice($paymentArray, 0, 12);
-				$elementsPaymentExt = array_keys($paymentArray, 'N');
-				$paymentsExtNumber = count($elementsPaymentExt);
-				if ($paymentsExtNumber == 12) {
-					$aprobadoVectores = true;
-					break;
-				}
-			}
-			if ($getDataCliente[0]->CIUD_UBI == 'BOGOTÁ' || $getDataCliente[0]->CIUD_UBI == 'MEDELLÍN') {
-				if ($queryScoreClient[0]->score >= 725) {
+			$aprobado =  $this->upToDateCifinInterface->check12MonthsPaymentVector($identificationNumber);
+
+			if ($customer->CIUD_UBI == 'BOGOTÁ' || $customer->CIUD_UBI == 'MEDELLÍN') {
+				if ($customerScore >= 725) {
 					if ($aprobadoVectores == true) {
 						$aprobado = true;
 					}
@@ -1127,7 +1065,7 @@ class OportuyaV2Controller extends Controller
 
 		// 3.7 Tarjeta Gray
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false) {
-			if ($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO' || $getDataCliente[0]->ACTIVIDAD == 'EMPLEADO') {
+			if ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO') {
 				$aprobado = true;
 				$tarjeta = "Tarjeta Gray";
 				$quotaApprovedProduct = 1600000;
@@ -1186,19 +1124,19 @@ class OportuyaV2Controller extends Controller
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
-			if ($getDataCliente[0]->ACTIVIDAD == 'EMPLEADO') {
+			if ($customer->ACTIVIDAD == 'EMPLEADO') {
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-2');
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
-			if ($getDataCliente[0]->ACTIVIDAD == 'PENSIONADO') {
+			if ($customer->ACTIVIDAD == 'PENSIONADO') {
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-3');
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
-			if ($getDataCliente[0]->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $getDataCliente[0]->ACTIVIDAD == 'NO CERTIFICADO') {
+			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($historialCrediticio == 1) {
 					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 					$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-4');
@@ -1236,7 +1174,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($perfilCrediticio == 'TIPO D') {
-			if ($tipoCliente == 'OPORTUNIDADES' && $queryScoreClient[0]->score >= 275) {
+			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
 				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
 				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'D-1');
 				return ['resp' => "-2"];
@@ -1300,58 +1238,16 @@ class OportuyaV2Controller extends Controller
 		return $resp;
 	}
 
-	private function decisionCredit($identificationNumber)
-	{
-		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-
-		$respScoreClient = $queryScoreClient[0]->score;
-
-		if ($respScoreClient >= -7 && $respScoreClient <= 0) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "SIN HISTORIAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -4; // Sin Historial Crediticio
-		}
-
-		if ($respScoreClient >= 528 && $respScoreClient <= 624) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "ALMACEN" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -1; // En almacen
-		}
-
-		if ($respScoreClient >= 625 && $respScoreClient <= 675) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "TRADICIONAL" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			return -2; // Tradicional
-		}
-
-		if ($respScoreClient > 676) {
-			return 1;
-		}
-	}
-
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
 	{
 		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
 		if ($dateConsultaComercial == 'true') {
-			return $consultaComercial = $this->execConsultaComercial($identificationNumber, $tipoDoc);
+			$consultaComercial = $this->webServiceInterface->execConsultaComercial($identificationNumber, $tipoDoc);
 		} else {
 			$consultaComercial = 1;
 		}
 
 		return $consultaComercial;
-	}
-
-	private function execConsultaComercial($identificationNumber, $typeDocument)
-	{
-		$obj = new \stdClass();
-		$obj->typeDocument = trim($typeDocument);
-		$obj->identificationNumber = trim($identificationNumber);
-		try {
-			$port = config('portsWs.creditVision');
-			// 2801 CreditVision Produccion, 2020 CreditVision Pruebas
-			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-			$result = $ws->ConsultarInformacionComercial($obj);  // correcta
-			return 1;
-		} catch (\Throwable $th) {
-			return 0;
-		}
 	}
 
 	private function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
@@ -1538,101 +1434,6 @@ class OportuyaV2Controller extends Controller
 		return $aprobo;
 	}
 
-	private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
-	{
-		$coincide = 0;
-		foreach ($arrayCompare as $value) {
-			if (in_array($value, $arrayCompareTo)) {
-				$coincide = 1;
-			} else {
-				$coincide = 0;
-				break;
-			}
-		}
-
-		return $coincide;
-	}
-
-
-
-	private function execConsultaExperto($identificationNumber)
-	{
-		$solic_fab = new FactoryRequest;
-		if ($identificationNumber == '') return -1;
-		$query = sprintf("SELECT `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, CONCAT(`APELLIDOS`, ' ', `NOMBRES`) as name, `DIRECCION` as address, `FEC_NAC` as birthdate, expTi.`id` as housingTime, expTipo.`id` as housingType, `SUELDO` as salary, `ANTIG` as antiquity, expActi.`id` as occupation
-						FROM `CLIENTE_FAB` as cf
-						LEFT JOIN `exp_tiempoviv` as expTi ON cf.`TIEMPO_VIV` = expTi.`consec`
-						LEFT JOIN `exp_tipoviv` as expTipo ON cf.`TIPOV` = expTipo.`consec`
-						LEFT JOIN `exp_actividad` as expActi ON cf.`ACTIVIDAD` = expActi.`consec`
-						WHERE `CEDULA` = %s ", $identificationNumber);
-
-		/*$respLead = DB::connection('oportudata')->select($query);
-		$obj = new \stdClass();
-		$lead = $respLead[0];
-		$obj->typeDocument = $lead->typeDocument; // Tipo de documento
-		$obj->identificationNumber = $lead->identificationNumber; // Numero de identificacion
-		$obj->name = $lead->name; // NOMBRE
-		$obj->address = $lead->address; // DIRECCION ACTUAL
-		$obj->birthdate = $lead->birthdate; // FECHA DE NACIMIENTO
-		$obj->housingTime = $lead->housingTime; // TIEMPO DE VIVIENDA ARRENDADA
-		$obj->housingType = $lead->housingType; // TIPO_DE_VIVIENDA
-		$obj->salary = $lead->salary; // INGRESOS
-		$obj->antiquity = $lead->antiquity; // TIEMPO LABOR MESES
-		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
-		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
-		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
-		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
-		$obj->term = "0"; // PLAZO_
-		$obj->suc = "9999"; // SUCURSAL, FIJO
-		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
-		$obj->rateInterest = "1"; // Tasa de interes , FIJO
-		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
-		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = $lead->occupation; // ACTIVIDAD_ECONOMICA */
-
-		$obj = new \stdClass();
-
-		$obj->typeDocument = 1; // Tipo de documento
-		$obj->identificationNumber = "43185409"; // Numero de identificacion
-		$obj->name = "CRUZ QUIMBAYO YINA ROCIO"; // NOMBRE
-		$obj->address = "Centro"; // DIRECCION ACTUAL
-		$obj->birthdate = "1990-02-20"; // FECHA DE NACIMIENTO
-		$obj->housingTime = "13573"; // TIEMPO DE VIVIENDA ARRENDADA
-		$obj->housingType = "13575"; // TIPO_DE_VIVIENDA
-		$obj->salary = "2000000"; // INGRESOS
-		$obj->antiquity = "3"; // TIEMPO LABOR MESES
-		$obj->creditsClosed = "0"; // CREDITOS CERRADOS CON LAGOBO, FIJO
-		$obj->paymentHabit = "13588"; // HABITO DE PAGO CON LAGOBO, FIJO
-		$obj->monthLastPayment = "13592"; // MESES_DESDE_LA_ULTIMA_CANCELACION, FIJO
-		$obj->requestAmount = "1500000"; // MONTO SOLICITADO
-		$obj->term = "0"; // PLAZO_
-		$obj->suc = "9999"; // SUCURSAL, FIJO
-		$obj->typeClient = "13593"; // TIPO_DE_CLIENTE, FIJO
-		$obj->rateInterest = "1"; // Tasa de interes , FIJO
-		$obj->typeArticle = "13599"; // Tipo de Articulo, TIPO
-		$obj->shareValue = "350000"; // VALOR CUOTA, FIJO
-		$obj->occupation = "13601"; // ACTIVIDAD_ECONOMICA
-
-		$ws = new \SoapClient("http://10.238.14.181:3000/Experto.svc?singleWsdl", array()); //correcta
-		$result = $ws->ConsultarExperto($obj);  // correcta
-		return response() - json($result);
-		$solic_fab->setConnection('oportudata');
-		$solic_fab->CLIENTE = $identificationNumber;
-		$solic_fab->CODASESOR = "998877";
-		$solic_fab->FECHASOL = date("Y-m-d H:i:s");
-		$solic_fab->SUCURSAL = "9999";
-		$solic_fab->ESTADO = "ANALISIS";
-		$solic_fab->FTP = 0;
-		$solic_fab->STATE = "A";
-		$solic_fab->GRAN_TOTAL = 0;
-		$solic_fab->SOLICITUD_WEB = 1;
-		$solic_fab->save();
-
-		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($identificationNumber);
-
-		return response()->json(['numSolic' => $numSolic]);
-	}
-
 	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
 	{
 		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
@@ -1675,17 +1476,10 @@ class OportuyaV2Controller extends Controller
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
 
 		if ($consultaComercial == 0) {
-			$dataLead = [
-				'ESTADO' => "SIN COMERCIAL"
-			];
-
-			$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->update($dataLead);
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer->ESTADO = "SIN COMERCIAL";
+			$customer->update();
 		} else {
-			$intencion         = new Intenciones;
-			$intencion->CEDULA = $identificationNumber;
-			$intencion->save();
-
-
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
@@ -1765,7 +1559,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
-
 		$addAnalisis = $this->addAnalisis($numSolic, $identificationNumber);
 		$infoLead = [];
 		$infoLead = $this->getInfoLeadCreate($identificationNumber);
@@ -1793,8 +1586,6 @@ class OportuyaV2Controller extends Controller
 			'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']
 		];
 	}
-
-
 
 	private function validateDateConsultaUbica($identificationNumber)
 	{
@@ -2243,7 +2034,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return view
 	 */
-
 	public function step3($string)
 	{
 		$identificactionNumber = $this->decrypt($string);
@@ -2262,7 +2052,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return string
 	 */
-
 	public function encrypt($string)
 	{
 		$string = utf8_encode($string);
@@ -2271,7 +2060,7 @@ class OportuyaV2Controller extends Controller
 		$string = $control1 . $string . $control2;
 		$string = base64_encode($string);
 
-		return $string;
+		return response()->json($string);
 	}
 
 	/**
@@ -2285,7 +2074,6 @@ class OportuyaV2Controller extends Controller
 	 * @param  string
 	 * @return string
 	 */
-
 	public function decrypt($string)
 	{
 		$string = $string;
@@ -2295,56 +2083,6 @@ class OportuyaV2Controller extends Controller
 		$string = str_replace($controls, $replaces, $string);
 
 		return $string;
-	}
-
-	private function validatePolicyCredit($identificationNumber, $subsidiaryCityName)
-	{
-		$queryScoreClient = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber ORDER BY scoconsul DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-
-		if (empty($queryScoreClient)) {
-			return false;
-		} else {
-			$respScoreClient = $queryScoreClient[0]->score;
-
-			/*$queryScoreCreditPolicy = DB::connection('mysql')->select("SELECT score FROM credit_policy LIMIT 1");
-			$respScoreCreditPolicy = $queryScoreCreditPolicy[0]->score;*/
-			$scoreMin = 528;
-			if ($subsidiaryCityName == 'MEDELLÍN' || $subsidiaryCityName == 'BOGOTÁ') {
-				$scoreMin = 726;
-			}
-
-			if ($respScoreClient >= -7 && $respScoreClient <= 0) {
-				return true;
-			}
-
-			if ($respScoreClient >= $scoreMin) {
-				return true;
-			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "RECHAZADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				return false;
-			}
-		}
-	}
-
-	private function validateDateExperto($identificationNumber)
-	{
-		$daysToIncrement = DB::connection('oportudata')->select("SELECT `pub_vigencia` FROM `VIG_CONSULTA` LIMIT 1");
-		$daysToIncrement = $daysToIncrement[0]->pub_vigencia;
-		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
-		$dateNew = date('Y-m-d', $dateNew);
-		$dateLastExperto = DB::connection('oportudata')->select("SELECT fecha FROM consulta_exp WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		if (empty($dateLastExperto)) {
-			return 'true';
-		} else {
-			$dateLastConsulta = $dateLastExperto[0]->fecha;
-
-			if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
-				return 'true';
-			} else {
-				return 'false';
-			}
-		}
 	}
 
 	private function applyTrim($charItem)

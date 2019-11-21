@@ -55,4 +55,20 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         return response()->json(true);
     }
+
+    public function execConsultaComercial($identificationNumber, $typeDocument)
+    {
+        $obj = new \stdClass();
+        $obj->typeDocument = trim($typeDocument);
+        $obj->identificationNumber = trim($identificationNumber);
+        try {
+            $port = config('portsWs.creditVision');
+            // 2801 CreditVision Produccion, 2020 CreditVision Pruebas
+            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
 }
