@@ -2045,7 +2045,7 @@ class OportuyaV2Controller extends Controller
 		$string = $control1 . $string . $control2;
 		$string = base64_encode($string);
 
-		return $string;
+		return response()->json($string);
 	}
 
 	/**
