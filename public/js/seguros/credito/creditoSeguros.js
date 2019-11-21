@@ -5,7 +5,8 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 	$scope.totalErrorData        = 0;
 	$scope.formConfronta         = {};
 	$scope.estadoCliente         = "";
-	$scope.validateNum           = 0;
+	$scope.datosCliente          = {};
+	$scope.validateNum           = 1;
 	$scope.tipoCliente           = "";
 	$scope.citiesUbi             = {};
 	$scope.cities                = {};
@@ -125,7 +126,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			value: 'VIUDO'
 		},
     ];
-    3254059
+
     $scope.typesContracts = [
 		{
 			value: 'FIJO',
@@ -269,17 +270,16 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		});
 	};
 
-	$scope.addCliente = function(tipoCreacion = "CREDITO"){
-		$scope.lead.tipoCliente = tipoCreacion;
+	$scope.addCliente = function(){
 		showLoader();
 		$http({ 
 			method: 'POST',
-			url: '/assessor/api/ventaContado/addVentaContado',
+			url: '/seguros',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			hideLoader();
 			console.log(response);
-			//$scope.execConsultasLead(response.data.identificationNumber);
+			hideLoader();
+			//$scope.execConsultasLead($scope.lead.CEDULA);
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -292,7 +292,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		}, 1000);
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.datosCliente.NOM_REFPER+'/'+$scope.datosCliente.TEL_REFPER+'/'+$scope.datosCliente.NOM_REFFAM+'/'+$scope.datosCliente.TEL_REFFAM,
 		}).then(function successCallback(response) {
 			console.log(response);
 			setTimeout(() => {
