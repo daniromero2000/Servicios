@@ -135,6 +135,8 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Comments')->group(function () {
         Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });
+
+    Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');
 });
 
 
