@@ -47,7 +47,7 @@ class OportuyaV2Controller extends Controller
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $upToDateCifinInterface, $cifinArrearsInterface, $cifinRealArrearsInterface;
-	private $cifinScoreInterface, $intentionsInterface;
+	private $cifinScoreInterface, $intentionInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -90,7 +90,7 @@ class OportuyaV2Controller extends Controller
 		$this->cifinArrearsInterface             = $cifinArrearRepositoryInterface;
 		$this->cifinRealArrearsInterface         = $cifinRealArrearRepositoryInterface;
 		$this->cifinScoreInterface               = $cifinScoreRepositoryInterface;
-		$this->intentionsInterface               = $intentionRepositoryInterface;
+		$this->intentionInterface               = $intentionRepositoryInterface;
 	}
 
 	public function index()
@@ -752,39 +752,28 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
-		FROM `cifin_finmora`
-		WHERE `finconsul` = (SELECT MAX(`finconsul`) FROM `cifin_finmora` WHERE `fincedula` = %s )
-		AND `fincedula` = %s AND `fincalid` != 'CODE' AND `fintipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-
-		$respValorMoraFinanciero = DB::connection('oportudata')->select($queryValorMoraFinanciero);
-
-
-		// $TotalCustomerCifinArrears = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
-		// $totalCustomerCifinRealArrears = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
-
-		$queryValorMoraReal = sprintf("SELECT SUM(`rmvrmora`) as totalMoraReal
-		FROM `cifin_realmora`
-		WHERE `rmconsul` = (SELECT MAX(`rmconsul`) FROM `cifin_realmora` WHERE `rmcedula` = %s )
-		AND `rmcedula` = %s AND (`rmtipoent` != 'COMU' OR `rmcalid` != 'CODE') AND `rmtipocon` != 'SRV' ", $identificationNumber, $identificationNumber);
-
-
-
-		$respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
-
-		$totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
+		$respValorMoraFinanciero = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
+		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
+		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			$this->updateLastIntencionLead($identificationNumber, 'ESTADO_OBLIGACIONES', 0, '3.3');
+
+			$customer->ESTADO = 'NEGADO';
+			$customer->update();
+			$customerIntention->ESTADO_OBLIGACIONES = 0;
+			$customerIntention->ID_DEF =  '3.3';
+			$customerIntention->save();
 			return ['resp' => "false"];
 		} else {
-			$this->updateLastIntencionLead($identificationNumber, 'ESTADO_OBLIGACIONES', 1);
+			$customerIntention->ESTADO_OBLIGACIONES = 1;
+			$customerIntention->save();
 		}
 
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
 		$totalVector = 0;
+
+
 		$queryComporFin = sprintf("SELECT fdcompor, fdapert
 		FROM cifin_findia
 		WHERE fdcalid = 'PRIN' AND `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s ) AND fdcedula = %s", $identificationNumber, $identificationNumber);

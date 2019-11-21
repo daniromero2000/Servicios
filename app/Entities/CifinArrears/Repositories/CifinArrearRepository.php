@@ -20,8 +20,8 @@ class CifinArrearRepository implements CifinArrearRepositoryInterface
             return  $this->model->where('fincedula', $identificationNumber)
                 ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
                 ->where('fincalid', '!=', 'CODE')
-                ->where('fdtipocon', '!=', 'SRV')
-                ->orderBy('fdapert', 'desc')
+                ->where('fintipocon', '!=', 'SRV')
+                ->where('finvrmora', '!=', '')
                 ->get(['finvrmora']);
         } catch (QueryException $e) {
             dd($e);
