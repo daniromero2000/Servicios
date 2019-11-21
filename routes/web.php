@@ -137,7 +137,6 @@ Route::get('/step3/{numIdentification}', 'Admin\OportuyaV2Controller@step3')->na
 Route::get('api/oportuya/validationLead/{identificationNumber}', 'Admin\OportuyaV2Controller@validationLead');
 Route::get('api/oportuya/getCode/{identificationNumber}/{celNumber}', 'Admin\OportuyaV2Controller@getCodeVerification');
 Route::get('api/oportuya/verificationCode/{code}/{identificationNumber}', 'Admin\OportuyaV2Controller@verificationCode');
-Route::get('api/oportuya/enviarMensaje/', 'Admin\OportuyaV2Controller@enviarMensaje');
 Route::get('api/oportuya/getNumLead/{identificationNumber}', 'Admin\OportuyaV2Controller@getNumLead');
 Route::post('api/oportuya/validateFormConfronta', 'Admin\OportuyaV2Controller@validateFormConfronta');
 // Pasos solictud cupo

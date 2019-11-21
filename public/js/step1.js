@@ -138,7 +138,7 @@ angular.module('appStep1', ['moment-picker'])
 			$scope.emailValidate = true;
 		}
 	};
-	
+
 	$scope.confirmnumCel = function(){
 		if($scope.leadInfo.typeDocument == ''){
 			alert('Por favor selecciona el tipo de documento');
@@ -159,13 +159,13 @@ angular.module('appStep1', ['moment-picker'])
 			url: '/api/oportuya/getNumLead/'+$scope.leadInfo.identificationNumber,
 		}).then(function successCallback(response) {
 			if(typeof response.data.resp == 'number'){
-				
+
 			}else{
-				var num = response.data.resp[0].NUM.substring(0,6);
-				var telephone = response.data.resp[0].NUM.replace(num, "******");
-				$scope.leadInfo.CEL_VAL = response.data.resp[0].CEL_VAL;
+				var num = response.data.resp.NUM.substring(0,6);
+				var telephone = response.data.resp.NUM.replace(num, "******");
+				$scope.leadInfo.CEL_VAL = response.data.resp.CEL_VAL;
 				$scope.telephone = telephone;
-				$scope.leadInfo.telephone = response.data.resp[0].NUM;
+				$scope.leadInfo.telephone = response.data.resp.NUM;
 			}
 		}, function errorCallback(response) {
 			console.log(response);
@@ -312,7 +312,7 @@ angular.module('appStep1', ['moment-picker'])
 				window.location = "/step2/"+response.data;
 			}
 		}, function errorCallback(response) {
-		    
+
 		});
 	};
 

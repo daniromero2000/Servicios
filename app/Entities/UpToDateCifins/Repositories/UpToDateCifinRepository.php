@@ -34,6 +34,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
             $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
+            $popArray = array_pop($paymentArray);
             $paymentArray = array_reverse($paymentArray);
             $paymentArray = array_splice($paymentArray, 0, 12);
             $elementsPaymentExt = array_keys($paymentArray, 'N');
@@ -43,6 +44,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
                 break;
             }
         }
+
         return  $aprobado;
     }
 
@@ -52,18 +54,3 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         return $charTrim;
     }
 }
-
-
-// foreach ($respVectores as $key => $payment) {
-//     $paymentArray = explode('|', $payment->fdcompor);
-//     $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-//     $popArray = array_pop($paymentArray);
-//     $paymentArray = array_reverse($paymentArray);
-//     $paymentArray = array_splice($paymentArray, 0, 12);
-//     $elementsPaymentExt = array_keys($paymentArray, 'N');
-//     $paymentsExtNumber = count($elementsPaymentExt);
-//     if ($paymentsExtNumber == 12) {
-//         $aprobadoVectores = true;
-//         break;
-//     }
-// }
