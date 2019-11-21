@@ -1,17 +1,17 @@
 angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("insurancesCreditCtrl", function($scope, $http, $timeout) {
-    $scope.lead = {};
-	$scope.code = {};
-    $scope.formConfronta = {};
-    $scope.citiesUbi = {};
-	$scope.cities = {};
-	$scope.banks = {};
-    $scope.tipoCliente = "";
-	$scope.estadoCliente = "";
 	$scope.messageValidationLead = "";
-	$scope.showWarningErrorData = false;
-	$scope.totalErrorData = 0;
-    $scope.validateNum = 0;
+	$scope.showWarningErrorData  = false;
+	$scope.totalErrorData        = 0;
+	$scope.formConfronta         = {};
+	$scope.estadoCliente         = "";
+	$scope.validateNum           = 0;
+	$scope.tipoCliente           = "";
+	$scope.citiesUbi             = {};
+	$scope.cities                = {};
+	$scope.banks                 = {};
+	$scope.lead                  = {};
+	$scope.code                  = {};
     
     $scope.typesDocuments = [
 		{
@@ -103,8 +103,8 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
     ];
     
     $scope.genders = [
-        { label : 'Masculino',value: 'M' },
-        { label : 'Femenino',value: 'F' }
+        { label: 'Masculino',value: 'M' },
+        { label: 'Femenino',value : 'F' }
     ];
 
     $scope.civilTypes = [
@@ -142,8 +142,8 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
     ];
     
     $scope.getInfoForm = function(){
-		$scope.lead.TIPO_DOC = '1';
-		$scope.lead.CIUD_UBI = 144;
+		$scope.lead.TIPO_DOC  = '1';
+		$scope.lead.CIUD_UBI  = 144;
 		$scope.lead.ACTIVIDAD = "EMPLEADO";
 		$scope.lead.TIPO_CONT = "FIJO";
 		showLoader();
@@ -153,8 +153,8 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		}).then(function successCallback(response) {
 			hideLoader();
 			$scope.citiesUbi = response.data.ubicationsCities;
-			$scope.cities = response.data.cities;
-			$scope.banks = response.data.banks;
+			$scope.cities    = response.data.cities;
+			$scope.banks     = response.data.banks;
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -195,7 +195,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
     $scope.getNumCel = function(){
 		$scope.lead.CEL_VAL = 0;
 		$scope.lead.CELULAR = '';
-		$scope.lead.ORIGEN = "SEGUROS";
+		$scope.lead.ORIGEN  = "SEGUROS";
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/getNumLead/'+$scope.lead.CEDULA,
@@ -203,10 +203,10 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			if(typeof response.data.resp == 'number'){
 				
 			}else{
-				var num = response.data.resp[0].NUM.substring(0,6);
-				var CELULAR = response.data.resp[0].NUM.replace(num, "******");
+				var num             = response.data.resp[0].NUM.substring(0,6);
+				var CELULAR         = response.data.resp[0].NUM.replace(num, "******");
 				$scope.lead.CEL_VAL = response.data.resp[0].CEL_VAL;
-				$scope.CELULAR = CELULAR;
+				$scope.CELULAR      = CELULAR;
 				$scope.lead.CELULAR = response.data.resp[0].NUM;
 			}
 		}, function errorCallback(response) {
@@ -268,7 +268,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			console.log(response);
 		});
 	};
-	
+
 	$scope.addCliente = function(tipoCreacion = "CREDITO"){
 		$scope.lead.tipoCliente = tipoCreacion;
 		showLoader();
@@ -279,7 +279,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		}).then(function successCallback(response) {
 			hideLoader();
 			console.log(response);
-			$scope.execConsultasLead(response.data.identificationNumber);
+			//$scope.execConsultasLead(response.data.identificationNumber);
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
@@ -313,9 +313,9 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			}
 
 			if(response.data.resp == 'true'){
-				$scope.quota = response.data.quotaApprovedProduct;
-				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
-				$scope.numSolic = response.data.infoLead.numSolic;
+				$scope.quota         = response.data.quotaApprovedProduct;
+				$scope.quotaAdvance  = response.data.quotaApprovedAdvance;
+				$scope.numSolic      = response.data.infoLead.numSolic;
 				$scope.estadoCliente = response.data.estadoCliente;
 				setTimeout(() => {
 					$('#confronta').modal('hide');
@@ -355,9 +355,9 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			data: $scope.infoConfronta,
 		}).then(function successCallback(response) {
 			if (response.data.data == true) {
-				$scope.quota = response.data.quota;
-				$scope.quotaAdvance = response.data.quotaAdvance;
-				$scope.numSolic = response.data.numSolic;
+				$scope.quota         = response.data.quota;
+				$scope.quotaAdvance  = response.data.quotaAdvance;
+				$scope.numSolic      = response.data.numSolic;
 				$scope.estadoCliente = response.data.estado;
 				setTimeout(() => {
 					$('#confronta').modal('hide');
