@@ -17,8 +17,8 @@ class CifinArrearRepository implements CifinArrearRepositoryInterface
     public function checkCustomerHasCifinArrear($identificationNumber)
     {
         try {
-            return  $this->model->where('fdcedula', $identificationNumber)
-                ->where('finconsul', $this->model->where('fdcedula', $identificationNumber)->max('finconsul'))
+            return  $this->model->where('fincedula', $identificationNumber)
+                ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
                 ->where('fincalid', '!=', 'CODE')
                 ->where('fdtipocon', '!=', 'SRV')
                 ->orderBy('fdapert', 'desc')
