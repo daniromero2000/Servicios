@@ -28,6 +28,7 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
@@ -46,7 +47,7 @@ class OportuyaV2Controller extends Controller
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $upToDateCifinInterface, $cifinArrearsInterface, $cifinRealArrearsInterface;
-	private $cifinScoreInterface;
+	private $cifinScoreInterface, $intentionsInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -67,7 +68,8 @@ class OportuyaV2Controller extends Controller
 		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface,
 		CifinArrearRepositoryInterface $cifinArrearRepositoryInterface,
 		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
-		CifinScoreRepositoryInterface $cifinScoreRepositoryInterface
+		CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
+		IntentionRepositoryInterface $intentionRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -88,6 +90,7 @@ class OportuyaV2Controller extends Controller
 		$this->cifinArrearsInterface             = $cifinArrearRepositoryInterface;
 		$this->cifinRealArrearsInterface         = $cifinRealArrearRepositoryInterface;
 		$this->cifinScoreInterface               = $cifinScoreRepositoryInterface;
+		$this->intentionsInterface               = $intentionRepositoryInterface;
 	}
 
 	public function index()

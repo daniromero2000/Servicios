@@ -17,12 +17,13 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
     public function checkCustomerHasCifinRealArrear($identificationNumber)
     {
         try {
-            return  $this->model->where('fdcedula', $identificationNumber)
-                ->where('rmconsul', $this->model->where('fdcedula', $identificationNumber)->max('rmconsul'))
-                ->where('fincalid', '!=', 'CODE')
-                ->where('fdtipocon', '!=', 'SRV')
+            return  $this->model->where('rmcedula', $identificationNumber)
+                ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
+                ->where('rmtipoent', '!=', 'COMU')
+                ->where('rmcalid', '!=', 'CODE')
+                ->where('rmtipocon', '!=', 'SRV')
                 ->orderBy('fdapert', 'desc')
-                ->get(['finvrmora']);
+                ->get(['rmvrmora']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
