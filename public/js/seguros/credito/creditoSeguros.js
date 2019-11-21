@@ -279,7 +279,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		}).then(function successCallback(response) {
 			console.log(response);
 			hideLoader();
-			//$scope.execConsultasLead($scope.lead.CEDULA);
+			$scope.execConsultasLead($scope.lead.CEDULA);
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);

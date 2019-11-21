@@ -406,6 +406,75 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade modalThankYouPage-asessors hide" data-backdrop="static" data-keyboard="false" id="congratulations" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body " style="padding: 0">
+						<div class="row resetRow">
+							<div class="col-12 text-center resetCol headThankYuoModal">
+                                <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
+							</div>
+						</div>
+						<div class="row resetRow">
+                            <div class="col-12 text-center" ng-if="estadoCliente == 'CONTADO'">
+                                <p class="textTnakYouModal" style="font-size: 22px; margin-top:25px">
+                                    Cliente creado exitosamente.
+                                </p>
+                            </div>
+                            <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
+                                <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
+                                <p class="textTnakYouModal">
+                                    En este momento <b>no tienes acceso a nuestra tarjeta,</b> <br>
+                                    pero <b>SI</b> estás <b>pre-aprobado</b> para crédito tradicional.
+                                </p>
+                            </div>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
+                                <img src="{{ asset('images/asessors/openIcon.jpg') }}" class="iconThankYouModal" />
+                                <p class="textTnakYouModal">
+                                    <b>¡FELICIDADES!</b> <br>
+                                    <b>Aprobado</b> para cliente Oportunidaes
+                                </p>
+								<p class="textModalNumSolic text-center">
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+								</p>
+							</div>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO'">
+                                <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Estamos revisando tu crédito,</b> esta <br>
+                                    operación puede tardar unos minutos.
+                                </p>
+								<p class="textModalNumSolic text-center">
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+								</p>
+							</div>
+							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'SIN COMERCIAL'">
+								<img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Estamos revisando tu crédito,</b> esta <br>
+                                    operación puede tardar unos minutos.
+                                </p>
+								<p class="textModalNumSolic text-center">
+									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+								</p>
+                            </div>
+                            <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">
+								<img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+								<p class="textTnakYouModal">
+                                    <b>Lo sentimos,</b> en esta ocasión <br>
+                                    no tenemos una aprobación para ti.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12 text-center">
+                                <a class="btn btn-danger buttonBackCardExist" href="/assessor/forms/crearCliente">Nuevo Registro</a>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
