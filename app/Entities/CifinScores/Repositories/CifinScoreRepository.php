@@ -12,4 +12,15 @@ class CifinScoreRepository implements CifinScoreRepositoryInterface
     ) {
         $this->model = $cifinScore;
     }
+
+
+    public function getCustomerLastCifinScore($identificationNumber)
+    {
+        try {
+            return $this->model->where('scocedula', $identificationNumber)
+                ->orderBy('scoconsul', 'desc')->get(['score'])->first();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

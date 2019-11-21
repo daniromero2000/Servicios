@@ -10,7 +10,7 @@ class CifinArrear extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'fdconsul';
+    protected $primaryKey =  'finconsul';
 
     public $timestamps = false;
 }

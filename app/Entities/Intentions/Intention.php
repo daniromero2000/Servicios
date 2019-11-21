@@ -10,7 +10,7 @@ class Intention extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'CEDULA';
+    protected $primaryKey =  'id';
 
     protected $fillable = [
         'CEDULA',

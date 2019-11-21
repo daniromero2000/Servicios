@@ -25,7 +25,7 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function updateOrCreateCustomer($data)
     {
         try {
-            return $this->model->updateOrCreate($data);
+            return $this->model->updateOrCreate(['CEDULA' => $data['CEDULA']],$data);
         } catch (QueryException $e) {
             return $e;
         }

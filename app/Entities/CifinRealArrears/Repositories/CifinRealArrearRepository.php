@@ -18,7 +18,7 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
-                ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
+                ->where('rmconsul', $this->model->where('fdcedula', $identificationNumber)->max('rmconsul'))
                 ->where('fincalid', '!=', 'CODE')
                 ->where('fdtipocon', '!=', 'SRV')
                 ->orderBy('fdapert', 'desc')

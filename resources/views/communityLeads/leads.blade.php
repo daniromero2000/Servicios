@@ -279,9 +279,9 @@
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-12 form-group">
-                                    <label for="identificationNumber">Cédula <span class="text-danger">*</span></label>
+                                    <label for="identificationNumber">Cédula </label>
                                     <input type="text" class="form-control" validation-pattern="IdentificationNumber" id="identificationNumber"
-                                        ng-model="lead.identificationNumber" required />
+                                        ng-model="lead.identificationNumber"/>
                                 </div>
                             </div>
                             <div class="row">
