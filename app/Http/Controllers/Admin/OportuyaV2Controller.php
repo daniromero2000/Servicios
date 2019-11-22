@@ -115,7 +115,6 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
 
-
 	public function getPageDeniedTr()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDeniedTr();
@@ -166,17 +165,6 @@ class OportuyaV2Controller extends Controller
 		return $emailsValidos;
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * it get data from step by step form  (one by step),
-	 * so first through id the register is verified,
-	 * if this exist, the information is  updated,
-	 * otherwise it store a new register
-	 *
-	 * In the process, the data is stored in OPORTUDATA database
-	 *
-	 */
 	public function store(Request $request)
 	{
 		//get step one request from data sent by form
@@ -974,7 +962,6 @@ class OportuyaV2Controller extends Controller
 
 		// 2. WS Fosyga
 		$estadoCliente = "APROBADO";
-
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
 			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
@@ -995,7 +982,6 @@ class OportuyaV2Controller extends Controller
 
 		//3.1 Estado de documento
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
-
 		if (!empty($getDataRegistraduria)) {
 			if (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
@@ -1016,31 +1002,46 @@ class OportuyaV2Controller extends Controller
 		// 5 Definiciones cliente
 		if ($perfilCrediticio == 'TIPO A') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-1');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA =  $tarjeta;
+				$customerIntention->ID_DEF =  'A-1';
+				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
 			if ($customer->ACTIVIDAD == 'EMPLEADO') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-2');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA =  $tarjeta;
+				$customerIntention->ID_DEF =  'A-2';
+				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
 			if ($customer->ACTIVIDAD == 'PENSIONADO') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-3');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA =  $tarjeta;
+				$customerIntention->ID_DEF =  'A-3';
+				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($historialCrediticio == 1) {
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-					$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-4');
+					$customer->ESTADO = 'PREAPROBADO';
+					$customer->update();
+					$customerIntention->TARJETA =  $tarjeta;
+					$customerIntention->ID_DEF =  'A-4';
+					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				} else {
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-					$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'A-5');
+					$customer->ESTADO = 'PREAPROBADO';
+					$customer->update();
+					$customerIntention->TARJETA = 'Crédito Tradicional';
+					$customerIntention->ID_DEF =  'A-5';
+					$customerIntention->save();
 					return ['resp' => "-2"];
 				}
 			}
@@ -1048,53 +1049,80 @@ class OportuyaV2Controller extends Controller
 
 		if ($perfilCrediticio == 'TIPO B') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'B-1');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'B-1';
+				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'B-2');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'B-2';
+				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
 		}
 
 		if ($perfilCrediticio == 'TIPO C') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'C-1');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'C-1';
+				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'C-2');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'C-2';
+				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
 		}
 
 		if ($perfilCrediticio == 'TIPO D') {
 			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', 'D-1');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'D-1';
+				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', '', 'D-2');
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  'D-2';
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 		}
 
 		if ($perfilCrediticio == 'TIPO 5') {
 			if ($tipo5Especial == 1) {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', '5-2');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '5-2';
+				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
 			if ($tipoCliente == 'OPORTUNIDADES') {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', '5-1');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '5-1';
+				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "PREAPROBADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'TARJETA', 'Crédito Tradicional', '5-3');
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->update();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '5-3';
+				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
 		}
@@ -1105,34 +1133,11 @@ class OportuyaV2Controller extends Controller
 	public function deniedLeadForFecExp($identificationNumber, $typeDenied)
 	{
 		$identificationNumber = (string) $identificationNumber;
-		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
-		$intencion = new Intenciones;
-		$intencion->CEDULA = $identificationNumber;
-		$intencion->ID_DEF = $typeDenied;
-		$intencion->save();
-
-		$dataLead = [
-			'ESTADO' => 'NEGADO'
-		];
-
-		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->update($dataLead);
-
+		$data = ['CEDULA' => $identificationNumber, 'ID_DEF' => $typeDenied];
+		$this->intentionInterface->createIntention($data);
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->ESTADO = 'NEGADO';
 		return "true";
-	}
-
-	private function updateLastIntencionLead($identificationNumber, $campo, $value, $idDef = false)
-	{
-		$queryUpdate = sprintf("UPDATE `TB_INTENCIONES` SET `%s` = '%s' ", $campo, $value);
-
-		if ($idDef != false) {
-			$queryUpdate .= sprintf(", `ID_DEF` = '%s' ", $idDef);
-		}
-
-		$queryUpdate .= sprintf(" WHERE `CEDULA` = '%s' ORDER BY FECHA_INTENCION DESC LIMIT 1", $identificationNumber);
-
-		$resp = DB::connection('oportudata')->select($queryUpdate);
-
-		return $resp;
 	}
 
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
