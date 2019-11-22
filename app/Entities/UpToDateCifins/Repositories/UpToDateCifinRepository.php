@@ -14,12 +14,27 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         $this->model = $upToDateCifin;
     }
 
-    public function checkCustomerHasUpToDateCifin($identificationNumber)
+    public function checkCustomerHasUpToDateCifin12($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
                 ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
-                ->where('fdtipocon', '!=', 'SRV')->orderBy('fdapert', 'desc')->get(['fdcompor', 'fdconsul']);
+                ->where('fdtipocon', '!=', 'SRV')
+                ->orderBy('fdapert', 'desc')
+                ->get(['fdcompor', 'fdconsul']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function checkCustomerHasUpToDateCifin6($identificationNumber)
+    {
+        try {
+            return  $this->model->where('fdcedula', $identificationNumber)
+                ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
+                ->where('fdcalid',  'PRIN')
+                ->get(['fdcompor', 'fdapert']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -29,7 +44,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasUpToDateCifin($identificationNumber);
+        $respVectores = $this->checkCustomerHasUpToDateCifin12($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
@@ -46,6 +61,42 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         }
 
         return  $aprobado;
+    }
+
+
+    public function check6MonthsPaymentVector($identificationNumber)
+    {
+        $respQueryComporFin = $this->checkCustomerHasUpToDateCifin6($identificationNumber);
+
+        foreach ($respQueryComporFin as $value) {
+            $totalVector = 0;
+            if ($value->fdapert == '') {
+                break;
+            }
+            $fechaComporFin = $value->fdapert;
+            $fechaComporFin = explode('/', $fechaComporFin);
+            $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
+            $dateNow = date('Y-m-d');
+            $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
+            if (strtotime($fechaComporFin) > $dateNew) {
+                $paymentArray = explode('|', $value->fdcompor);
+                $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
+                $popArray = array_pop($paymentArray);
+                $paymentArray = array_reverse($paymentArray);
+                foreach ($paymentArray as $habit) {
+                    if ($totalVector >= 6) { // Poner parametrizable
+                        $historialCrediticio = 1;
+                        break;
+                    }
+
+                    if ($habit == 'N') {
+                        $totalVector++;
+                    } else {
+                        $totalVector = 0;
+                    }
+                }
+            }
+        }
     }
 
     private function applyTrim($charItem)

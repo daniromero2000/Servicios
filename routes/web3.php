@@ -1,10 +1,13 @@
 <?php
 
-
+Route::get('/adminlte', function () {
+    return view('adminlte.admin');
+});
 Route::group(['prefix' => '/Catalog/'], function () {
     Route::get('/taxis', function () {
         return view('seguros.taxis.index');
     });
+   
     //display catalog layout
     Route::get("/", function () {
         return view('catalog.public.layout');
