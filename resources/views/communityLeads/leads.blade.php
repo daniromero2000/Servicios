@@ -2,7 +2,7 @@
 
     <div class="row form-group" ng-if="filtros">
         <div class="col-12">
-           
+
             <div class="card" style="font-size:10pt;">
                 <div class="card-body">
                     <form ng-submit="searchLeads()">
@@ -52,9 +52,9 @@
                                                         class="fas fa-filter"></i></button>
                                             </div>
                                         </div>
-                
+
                                 </div>
-                       
+
                     </form>
                 </div>
             </div>
@@ -281,15 +281,9 @@
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-12 form-group">
-<<<<<<< HEAD
                                     <label for="identificationNumber">Cédula <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" validation-pattern="IdentificationNumber"
-                                        id="identificationNumber" ng-model="lead.identificationNumber" required />
-=======
-                                    <label for="identificationNumber">Cédula </label>
-                                    <input type="text" class="form-control" validation-pattern="IdentificationNumber" id="identificationNumber"
-                                        ng-model="lead.identificationNumber"/>
->>>>>>> 430dcac5cae427977bc4e1acca95975570c9cf38
+                                        id="identificationNumber" ng-model="lead.identificationNumber"/>
                                 </div>
                             </div>
                             <div class="row">
