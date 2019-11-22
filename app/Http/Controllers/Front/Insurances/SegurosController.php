@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class SegurosController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $customerInterface, $subsidiaryInterface;
 
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
@@ -31,8 +31,13 @@ class SegurosController extends Controller
 
     public function store(Request $request)
     {
-        $birthday = new Carbon($request->FEC_NAC);
-        $request['EDAD'] = $birthday->diffInYears(Carbon::now());
+        $birthday            = new Carbon($request->FEC_NAC);
+        $subsidiaryCityName  = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
+        $request['EDAD']     = $birthday->diffInYears(Carbon::now());
+        $request['SUC']      = $request->get('CIUD_UBI');
+        $request['CIUD_UBI'] = $subsidiaryCityName;
+        $request['POSEEVEH'] = "S";
+
         return $this->customerInterface->updateOrCreateCustomer($request->input());
     }
 }

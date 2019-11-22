@@ -66,23 +66,27 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-sm-6 col-md-3">
 							<div ng-hide="lead.CEL_VAL">
-								<label class="ventaContado-label">Celular</label>
+								<label class="ventaContado-label labels">Celular</label>
 								<input class="inputs form-control" name="CELULAR" ng-model="lead.CELULAR" validation-pattern="telephone" required/>
 							</div>
 							<div ng-show="lead.CEL_VAL" >
-								<label class="ventaContado-label">Celular</label>
+								<label class="ventaContado-label labels">Celular</label>
 								<input class="inputs form-control" required ng-model="CELULAR" readonly ng-disabled="true" />
 							</div>
 						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-sm-6 col-md-3">
 							<label class="ventaContado-label labels" for="actividad">Ocupación</label>
 							<select class="inputs form-control" ng-model="lead.ACTIVIDAD" id="actividad" ng-options="actividad.value as actividad.label for actividad in occupations"></select>
 						</div>
-						<div class="col-12 col-md-4">
-							<label class="ventaContado-label" for="ciud_ubi">Ciudad de ubicación</label>
+						<div class="col-12 col-sm-6 col-md-3">
+							<label class="ventaContado-label labels" for="ciud_ubi">Ciudad de ubicación</label>
 							<select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi" ng-options="city.value as city.label for city in citiesUbi"></select>
+						</div>
+						<div class="col-12 col-sm-6 col-md-3">
+							<label class="ventaContado-label labels" for="PLACA">Placa del Vehículo*</label>
+							<input type="text" class="inputs form-control" ng-model="lead.PLACA" id="PLACA" validation-pattern="text" required>
 						</div>
 					</div>
 				</div>
@@ -468,7 +472,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-12 text-center">
-                                <a class="btn btn-danger buttonBackCardExist" href="/assessor/forms/crearCliente">Nuevo Registro</a>
+                                <a class="btn btn-danger buttonBackCardExist" href="/seguros/credito">Nuevo Registro</a>
                             </div>
                         </div>
 					</div>
