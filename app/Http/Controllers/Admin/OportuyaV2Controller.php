@@ -10,6 +10,7 @@ use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
+use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
@@ -51,7 +52,7 @@ class OportuyaV2Controller extends Controller
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -76,7 +77,8 @@ class OportuyaV2Controller extends Controller
 		IntentionRepositoryInterface $intentionRepositoryInterface,
 		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
-		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface
+		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
+		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -101,6 +103,7 @@ class OportuyaV2Controller extends Controller
 		$this->extintFinancialCifinInterface     = $extintFinancialCifinRepositoryInterface;
 		$this->UpToDateRealCifinInterface        = $upToDateRealCifinsRepositoryInterface;
 		$this->extinctRealCifinInterface        = $extintRealCifinRepositoryInterface;
+		$this->cifinBasicDataInterface        = $cifinBasicDataRepositoryInterface;
 	}
 
 	public function index()
@@ -797,14 +800,11 @@ class OportuyaV2Controller extends Controller
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
 		//4.1 Zona de riesgo
 		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
-		$customerIntention->save();
-
 		// 4.2 Tipo de cliente
 		$tipoCliente = '';
 		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
 		FROM TB_CLIENTES_ACTIVOS
 		WHERE `CEDULA` = %s AND FECHA >= date_add(NOW(), INTERVAL -24 MONTH)", $identificationNumber);
-		$this->updateLastIntencionLead($identificationNumber, 'TIPO_CLIENTE', $tipoCliente);
 
 		$respClienteActivo = DB::connection('oportudata')->select($queryGetClienteActivo);
 		if ($respClienteActivo[0]->tipoCliente == 1) {
@@ -813,73 +813,104 @@ class OportuyaV2Controller extends Controller
 			$tipoCliente = 'NUEVO';
 		}
 
-		$this->updateLastIntencionLead($identificationNumber, 'TIPO_CLIENTE', $tipoCliente);
+		$customerIntention->TIPO_CLIENTE = $tipoCliente;
+		$customerIntention->save();
+
 		// 4.3 Edad.
-		$validateTipoCliente = TRUE;
-		$queryEdad = DB::connection('oportudata')->select("SELECT `teredad` FROM `cifin_tercero` WHERE `tercedula` = :identificationNumber ORDER BY `terconsul` DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
+		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
 		if ($queryEdad == false || empty($queryEdad)) {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+			$customer->ESTADO = 'NEGADO';
+			$customer->update();
+			$customerIntention->EDAD = 0;
+			$customerIntention->ID_DEF =  '4.3';
+			$customerIntention->save();
 			return ['resp' => "false"];
 		}
-		if ($queryEdad[0]->teredad == 'Mas 75') {
-			$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-			$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+
+		if ($queryEdad == 'Mas 75') {
+			$customer->ESTADO = 'NEGADO';
+			$customer->update();
+			$customerIntention->EDAD = 0;
+			$customerIntention->ID_DEF =  '4.3';
+			$customerIntention->save();
 			return ['resp' => "false"];
 		}
-		$edad = $queryEdad[0]->teredad;
-		$edad = explode('-', $edad);
-		$edadMin = $edad[0];
-		$edadMax = $edad[1];
+
+		$queryEdad = explode('-', $queryEdad);
+		$edadMin = $queryEdad[0];
+		$edadMax = $queryEdad[1];
+
+		$validateTipoCliente = TRUE;
 		if ($customer->ACTIVIDAD == 'PENSIONADO') {
 			$validateTipoCliente = FALSE;
 			if ($edadMin >= 18 && $edadMax <= 70) {
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->EDAD = 0;
+				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 		}
 
 		if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
 			if ($edadMin >= 18 && $edadMax <= 75) {
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->EDAD = 0;
+				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 		}
 
 		if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
 			if ($edadMin >= 18 && $edadMax <= 70) {
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 1);
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
 			} else {
-				$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-				$this->updateLastIntencionLead($identificationNumber, 'EDAD', 0, '4.3');
+				$customer->ESTADO = 'NEGADO';
+				$customer->update();
+				$customerIntention->EDAD = 0;
+				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 		}
 
 		// 4.5 Tiempo en Labor
 		if ($customer->ACTIVIDAD == 'PENSIONADO') {
-			$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
+			$customerIntention->TIEMPO_LABOR = 1;
+			$customerIntention->save();
 		} else {
 			if ($customer->ACTIVIDAD == 'RENTISTA' || $customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($customer->EDAD_INDP >= 4) {
-					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
+					$customerIntention->TIEMPO_LABOR = 1;
+					$customerIntention->save();
 				} else {
-					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 0, '4.5');
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+					$customer->ESTADO = 'NEGADO';
+					$customer->update();
+					$customerIntention->TIEMPO_LABOR = 0;
+					$customerIntention->ID_DEF =  '4.5';
+					$customerIntention->save();
 					return ['resp' => "false"];
 				}
 			} else {
 				if ($customer->ANTIG >= 4) {
-					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 1);
+					$customerIntention->TIEMPO_LABOR = 1;
+					$customerIntention->save();
 				} else {
-					$this->updateLastIntencionLead($identificationNumber, 'TIEMPO_LABOR', 0, '4.5');
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+					$customer->ESTADO = 'NEGADO';
+					$customer->update();
+					$customerIntention->TIEMPO_LABOR = 0;
+					$customerIntention->ID_DEF =  '4.5';
+					$customerIntention->save();
 					return ['resp' => "false"];
 				}
 			}
@@ -890,37 +921,27 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO 5') {
 			$tipo5Especial = 1;
 		}
-		$this->updateLastIntencionLead($identificationNumber, 'TIPO_5_ESPECiAL', $tipo5Especial);
+
+		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
+		$customerIntention->save();
+
 		// 4.7 Inspecciones Oculares
 		if ($tipoCliente == 'NUEVO') {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
-					$this->updateLastIntencionLead($identificationNumber, 'INSPECCION_OCULAR', 1);
+					$customerIntention->INSPECCION_OCULAR = 1;
+					$customerIntention->save();
 				}
 			}
 		}
 
 		// 3.6 Tarjeta Black
 		$tarjeta = '';
-		$aprobadoVectores = false;
 		$aprobado = false;
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
 			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($identificationNumber);
-
-			if ($customer->CIUD_UBI == 'BOGOTÁ' || $customer->CIUD_UBI == 'MEDELLÍN') {
-				if ($customerScore >= 725) {
-					if ($aprobadoVectores == true) {
-						$aprobado = true;
-					}
-				}
-			} else {
-				if ($aprobadoVectores == true) {
-					$aprobado = true;
-				}
-			}
-
 			if ($aprobado == true) {
 				$tarjeta = "Tarjeta Black";
 				$quotaApprovedProduct = 1900000;
@@ -939,25 +960,32 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($aprobado == true) {
-			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta);
+			$customerIntention->TARJETA = $tarjeta;
+			$customerIntention->save();
 		}
 
 		if ($aprobado == false && $historialCrediticio == 0) {
 			$tarjeta = "Crédito Tradicional";
-			$this->updateLastIntencionLead($identificationNumber, 'TARJETA', $tarjeta, 'A-2');
+			$customerIntention->TARJETA = $tarjeta;
+			$customerIntention->ID_DEF =  'A-2';
+			$customerIntention->save();
 			return ['resp' => "-2"];
 		}
 
 		// 2. WS Fosyga
 		$estadoCliente = "APROBADO";
-		$getDataFosyga = DB::connection('oportudata')->select("SELECT `estado`, `regimen`, `tipoAfiliado` FROM `fosyga_bdua` WHERE `cedula` =  :identificationNumber AND `fuenteFallo` = 'NO'  ORDER BY `idBdua` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+
+		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
-			if (empty($getDataFosyga[0]->estado) || empty($getDataFosyga[0]->regimen) || empty($getDataFosyga[0]->tipoAfiliado)) {
+			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				return ['resp' => "false"];
 			} else {
-				if ($getDataFosyga[0]->estado != 'ACTIVO' || $getDataFosyga[0]->regimen != 'CONTRIBUTIVO' || $getDataFosyga[0]->tipoAfiliado != 'COTIZANTE') {
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-					$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '2.1');
+				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
+					$customer->ESTADO = 'NEGADO';
+					$customer->update();
+					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
+					$customerIntention->ID_DEF =  '2.1';
+					$customerIntention->save();
 					return ['resp' => "false"];
 				}
 			}
@@ -966,12 +994,16 @@ class OportuyaV2Controller extends Controller
 		}
 
 		//3.1 Estado de documento
-		$getDataRegistraduria = DB::connection('oportudata')->select("SELECT  `estado` FROM `fosyga_estadoCedula` WHERE `cedula` =  :identificationNumber AND `fuenteFallo` = 'NO' ORDER BY `idEstadoCedula` DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
+		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
+
 		if (!empty($getDataRegistraduria)) {
-			if (!empty($getDataRegistraduria[0]->estado)) {
-				if ($getDataRegistraduria[0]->estado != 'VIGENTE') {
-					$updateLeadState = DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
-					$this->updateLastIntencionLead($identificationNumber, 'PERFIL_CREDITICIO', $perfilCrediticio, '3.1');
+			if (!empty($getDataRegistraduria->estado)) {
+				if ($getDataRegistraduria->estado != 'VIGENTE') {
+					$customer->ESTADO = 'NEGADO';
+					$customer->update();
+					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
+					$customerIntention->ID_DEF =  '3.1';
+					$customerIntention->save();
 					return ['resp' => "false"];
 				}
 			} else {

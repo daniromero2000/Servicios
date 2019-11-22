@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
+use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Imagenes;
@@ -31,7 +32,8 @@ class AdvanceController extends Controller
         UpToDateFinancialCifinRepositoryInterface $UpToDateFinancialCifinRepositoryInterface,
         ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
         UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
-        ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface
+        ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
+        CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -43,6 +45,7 @@ class AdvanceController extends Controller
         $this->extint = $extintFinancialCifinRepositoryInterface;
         $this->real = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal = $extintRealCifinRepositoryInterface;
+        $this->cifinBasic = $cifinBasicDataRepositoryInterface;
     }
 
     private function applyTrim($charItem)
@@ -56,6 +59,8 @@ class AdvanceController extends Controller
 
         $identificationNumber = '1088019814';
 
+        $edad = $this->cifinBasic->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
+        dd($edad);
 
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
