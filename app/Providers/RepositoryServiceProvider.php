@@ -47,12 +47,18 @@ use App\Entities\Punishments\Repositories\PunishmentRepository;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\CustomerVerificationCodes\Repositories\CustomerVerificationCodeRepository;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
-use App\Entities\UpToDateCifins\Repositories\UpToDateCifinRepository;
-use App\Entities\CifinArrears\Repositories\CifinArrearRepository;
-use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\Repositories\UpToDateFinancialCifinRepository;
+use App\Entities\CifinFinancialArrears\Repositories\CifinFinancialArrearRepository;
+use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\CifinRealArrearRepository;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\Tools\Repositories\ToolRepository;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\ExtintFinancialCifins\Repositories\ExtintFinancialCifinRepository;
+use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateRealCifins\Repositories\UpToDateRealCifinRepository;
+use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -60,18 +66,33 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
+            UpToDateRealCifinRepositoryInterface::class,
+            UpToDateRealCifinRepository::class
+        );
+
+        $this->app->bind(
+            ExtintFinancialCifinRepositoryInterface::class,
+            ExtintFinancialCifinRepository::class
+        );
+
+        $this->app->bind(
+            ToolRepositoryInterface::class,
+            ToolRepository::class
+        );
+
+        $this->app->bind(
             CifinRealArrearRepositoryInterface::class,
             CifinRealArrearRepository::class
         );
 
         $this->app->bind(
-            CifinArrearRepositoryInterface::class,
-            CifinArrearRepository::class
+            CifinFinancialArrearRepositoryInterface::class,
+            CifinFinancialArrearRepository::class
         );
 
         $this->app->bind(
-            UpToDateCifinRepositoryInterface::class,
-            UpToDateCifinRepository::class
+            UpToDateFinancialCifinRepositoryInterface::class,
+            UpToDateFinancialCifinRepository::class
         );
 
         $this->app->bind(

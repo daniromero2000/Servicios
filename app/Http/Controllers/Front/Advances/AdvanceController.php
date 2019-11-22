@@ -10,9 +10,11 @@ use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 
 class AdvanceController extends Controller
 {
@@ -23,17 +25,21 @@ class AdvanceController extends Controller
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         IntentionRepositoryInterface $intentionRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface,
-        CifinArrearRepositoryInterface $cifinArrearRepositoryInterface,
+        CifinFinancialArrearRepositoryInterface $CifinFinancialArrearRepositoryInterface,
         CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
-        UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface
+        UpToDateFinancialCifinRepositoryInterface $UpToDateFinancialCifinRepositoryInterface,
+        ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
+        UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->intentionInterface = $intentionRepositoryInterface;
         $this->customerInterface = $customerRepositoryInterface;
-        $this->cifinArrearsInterface = $cifinArrearRepositoryInterface;
+        $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
         $this->cifinRealArrearsInterface = $cifinRealArrearRepositoryInterface;
-        $this->upToDate = $upToDateCifinRepositoryInterface;
+        $this->upToDate = $UpToDateFinancialCifinRepositoryInterface;
+        $this->extint = $extintFinancialCifinRepositoryInterface;
+        $this->real = $upToDateRealCifinsRepositoryInterface;
     }
 
     private function applyTrim($charItem)
@@ -45,51 +51,14 @@ class AdvanceController extends Controller
     public function index()
     {
 
-        // $identificationNumber = 1088019814;
+        $identificationNumber = '1088310731';
 
-        // //3.5 Historial de Crédito
-        // $historialCrediticio = 0;
-        // $totalVector = 0;
-
-
-        // $queryComporFin = sprintf("SELECT fdcompor, fdapert
-        // FROM cifin_findia
-        // WHERE fdcalid = 'PRIN' AND `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s ) AND fdcedula = %s", $identificationNumber, $identificationNumber);
-        // $respQueryComporFin = DB::connection('oportudata')->select($queryComporFin);
-
-        // // $respQueryComporFin =  $this->upToDate->checkCustomerHasUpToDateCifin6($identificationNumber);
-        // foreach ($respQueryComporFin as $value) {
-        //     $totalVector = 0;
-        //     if ($value->fdapert == '') {
-        //         break;
-        //     }
-        //     $fechaComporFin = $value->fdapert;
-        //     $fechaComporFin = explode('/', $fechaComporFin);
-        //     $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-        //     $dateNow = date('Y-m-d');
-        //     $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-        //     if (strtotime($fechaComporFin) > $dateNew) {
-        //         $paymentArray = explode('|', $value->fdcompor);
-        //         $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-        //         $popArray = array_pop($paymentArray);
-        //         $paymentArray = array_reverse($paymentArray);
-        //         foreach ($paymentArray as $habit) {
-        //             if ($totalVector >= 6) { // Poner parametrizable
-        //                 $historialCrediticio = 1;
-        //                 break;
-        //             }
-
-        //             if ($habit == 'N') {
-        //                 $totalVector++;
-        //             } else {
-        //                 $totalVector = 0;
-        //             }
-        //         }
-        //     }
-        // }
+        $historialCrediticio = 0;
+        $totalVector = 0;
+        $historialCrediticio = $this->real->check6MonthsPaymentVector($identificationNumber);
 
 
-        // dd($totalVector);
+        dd($historialCrediticio);
 
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),

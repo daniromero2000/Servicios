@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\UpToDateCifins\Repositories;
+namespace App\Entities\UpToDateFinancialCifins\Repositories;
 
-use App\Entities\UpToDateCifins\UpToDateCifin;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
+use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
+class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinRepositoryInterface
 {
     public function __construct(
-        UpToDateCifin $upToDateCifin
+        UpToDateFinancialCifin $UpToDateFinancialCifin
     ) {
-        $this->model = $upToDateCifin;
+        $this->model = $UpToDateFinancialCifin;
     }
 
-    public function checkCustomerHasUpToDateCifin12($identificationNumber)
+    public function checkCustomerHasUpToDateFinancialCifin12($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
@@ -28,7 +28,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         }
     }
 
-    public function checkCustomerHasUpToDateCifin6($identificationNumber)
+    public function checkCustomerHasVectors($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
@@ -44,7 +44,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasUpToDateCifin12($identificationNumber);
+        $respVectores = $this->checkCustomerHasUpToDateFinancialCifin12($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
@@ -66,7 +66,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
 
     public function check6MonthsPaymentVector($identificationNumber)
     {
-        $respQueryComporFin = $this->checkCustomerHasUpToDateCifin6($identificationNumber);
+        $respQueryComporFin = $this->checkCustomerHasVectors($identificationNumber);
 
         foreach ($respQueryComporFin as $value) {
             $totalVector = 0;
@@ -97,6 +97,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
                 }
             }
         }
+        return $historialCrediticio;
     }
 
     private function applyTrim($charItem)

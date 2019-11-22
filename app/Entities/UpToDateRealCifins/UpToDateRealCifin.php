@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entities\UpToDateCifins;
+namespace App\Entities\UpToDateRealCifins;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UpToDateCifin extends Model
+class UpToDateRealCifin extends Model
 {
-    protected $table = 'cifin_findia';
+    protected $table = 'cifin_realdia';
 
     protected $connection = 'oportudata';
 
