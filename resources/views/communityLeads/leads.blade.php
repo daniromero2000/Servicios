@@ -76,7 +76,7 @@
                         Leads
                     </p>
                 </div>
-                <div class="col-sm-12 col-md-1 offset-md-5 text-center col-md-3">
+                <div class="col-sm-12 col-md-1 offset-md-4 text-center col-md-3">
                     <div class="input-group mb-3">
                         <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                         <div class="input-group-append">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-1 text-center resetCol">
+                <div class="col-sm-12 col-md-2 text-center resetCol">
                     <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
                             class="fas fa-filter"></i></button>
                 </div>
@@ -138,14 +138,7 @@
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-6 text-right">
-                <a href="/Administrator/dashboard"><i class="fas fa-arrow-left"></i> Dashboard</a>
-            </div>
-            <div class="col-6 text-left">
-                <a href="/community"><i class="far fa-newspaper"></i> Gestión de Campañas</a>
-            </div>
-        </div>
+      
     </div>
 </div>
 

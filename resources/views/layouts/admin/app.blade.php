@@ -133,7 +133,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
-    <div class="wrapper">
+    <div class="wrapper ">
 
         <!-- Navbar -->
         @include('layouts.admin.header')
@@ -142,7 +142,7 @@
         <!-- Main Sidebar Container -->
         @include('layouts.admin.sidebar')
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper bg-white">
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
