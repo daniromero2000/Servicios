@@ -67,7 +67,8 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
     public function check6MonthsPaymentVector($identificationNumber)
     {
         $respQueryComporFin = $this->checkCustomerHasVectors($identificationNumber);
-
+        $historialCrediticio = 0;
+        $totalVector = 0;
         foreach ($respQueryComporFin as $value) {
             $totalVector = 0;
             if ($value->fdapert == '') {

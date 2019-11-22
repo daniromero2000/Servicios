@@ -2,9 +2,9 @@
 
 namespace App\Entities\ExtintRealCifins\Repositories\Interfaces;
 
-interface ExtintRealCifinsRepositoryInterface
+interface ExtintRealCifinRepositoryInterface
 {
-  public function checkCustomerHasExtintRealCifins12($identificationNumber);
+  public function checkCustomerHasExtintRealCifin12($identificationNumber);
 
   public function check12MonthsPaymentVector($identificationNumber);
 

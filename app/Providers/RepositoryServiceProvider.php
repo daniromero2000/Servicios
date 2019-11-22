@@ -59,12 +59,19 @@ use App\Entities\ExtintFinancialCifins\Repositories\ExtintFinancialCifinReposito
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\UpToDateRealCifinRepository;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
+use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
+use App\Entities\ExtintRealCifins\Repositories\ExtintRealCifinRepository;
 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            ExtintRealCifinRepositoryInterface::class,
+            ExtintRealCifinRepository::class
+        );
+
         $this->app->bind(
             UpToDateRealCifinRepositoryInterface::class,
             UpToDateRealCifinRepository::class

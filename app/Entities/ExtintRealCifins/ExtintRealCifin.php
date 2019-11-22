@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities\ExtintRealCifinss;
+namespace App\Entities\ExtintRealCifins;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExtintRealCifins extends Model
+class ExtintRealCifin extends Model
 {
     protected $table = 'cifin_realext';
 

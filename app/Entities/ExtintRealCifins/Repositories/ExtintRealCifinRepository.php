@@ -31,15 +31,16 @@ class ExtintRealCifinRepository implements ExtintRealCifinRepositoryInterface
     public function checkCustomerHasVectors($identificationNumber)
     {
         try {
-            return  $this->model->where('extcedula', $identificationNumber)
-                ->where('extconsul', $this->model->where('extcedula', $identificationNumber)->max('extconsul'))
-                ->where('extcalid',  'PRIN')
-                ->get(['extcompor', 'exttermin', 'extapert']);
+            return  $this->model->where('rexcedula', $identificationNumber)
+                ->where('rexconsul', $this->model->where('rexcedula', $identificationNumber)->max('rexconsul'))
+                ->where('rexcalid',  'PRIN')
+                ->get(['rexcompor', 'rexcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
         }
     }
+
 
     public function check12MonthsPaymentVector($identificationNumber)
     {
@@ -68,18 +69,16 @@ class ExtintRealCifinRepository implements ExtintRealCifinRepositoryInterface
     {
         $respQueryComporFinExt = $this->checkCustomerHasVectors($identificationNumber);
         $historialCrediticio = 0;
+        $totalVector = 0;
+
         foreach ($respQueryComporFinExt as $value) {
-            $totalVector = 0;
-            if ($value->exttermin == '' && $value->extapert == '') {
-                break;
-            }
-            $fechaComporFin = ($value->exttermin != '') ? $value->exttermin : $value->extapert;
+            $fechaComporFin = $value->rexcorte;
             $fechaComporFin = explode('/', $fechaComporFin);
             $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
             $dateNow = date('Y-m-d');
             $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
             if (strtotime($fechaComporFin) > $dateNew) {
-                $paymentArray = explode('|', $value->extcompor);
+                $paymentArray = explode('|', $value->rexcompor);
                 $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
                 $popArray = array_pop($paymentArray);
                 $paymentArray = array_reverse($paymentArray);
