@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Entities\UpToDateCifins;
+namespace App\Entities\UpToDateFinancialCifins;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UpToDateCifin extends Model
+class UpToDateFinancialCifin extends Model
 {
     protected $table = 'cifin_findia';
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'fdconsul';
+    // protected $primaryKey =  'fdconsul';
 
     public $timestamps = false;
 }

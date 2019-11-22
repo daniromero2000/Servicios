@@ -22,7 +22,7 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
                 ->where('rmtipoent', '!=', 'COMU')
                 ->where('rmcalid', '!=', 'CODE')
                 ->where('rmtipocon', '!=', 'SRV')
-                ->orderBy('fdapert', 'desc')
+                ->where('rmvrmora', '!=', '')
                 ->get(['rmvrmora']);
         } catch (QueryException $e) {
             dd($e);

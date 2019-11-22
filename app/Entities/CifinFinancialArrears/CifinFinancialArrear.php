@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities\CifinArrears;
+namespace App\Entities\CifinFinancialArrears;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CifinArrear extends Model
+class CifinFinancialArrear extends Model
 {
     protected $table = 'cifin_finmora';
 

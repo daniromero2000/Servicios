@@ -32,14 +32,14 @@
 
 	public function execCreditPolicy($identificationNumber)
 	{
-		$aprobado =  $this->upToDateCifinInterface->check12MonthsPaymentVector($identificationNumber);
+		$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($identificationNumber);
 
 		if ($aprobado == false) {
 			return -1; // Credito negado
 		}
 
 		// Negacion, codicion 2, saldo en mora
-		$TotalCustomerCifinArrears = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
+		$TotalCustomerCifinFinancialArrears = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber)->sum('finvrmora');
 
 		// $queryValorMoraFinanciero = sprintf("SELECT SUM(`finvrmora`) as totalMoraFin
 		// FROM `cifin_finmora`
@@ -57,7 +57,7 @@
 		// $respValorMoraReal = DB::connection('oportudata')->select($queryValorMoraReal);
 		// $totalValorMora = $respValorMoraFinanciero[0]->totalMoraFin + $respValorMoraReal[0]->totalMoraReal;
 
-		$totalValorMora = $TotalCustomerCifinArrears + $totalCustomerCifinRealArrears;
+		$totalValorMora = $TotalCustomerCifinFinancialArrears + $totalCustomerCifinRealArrears;
 
 		if ($totalValorMora > 100) {
 			return -2; // Credito negado
