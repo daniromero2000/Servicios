@@ -1140,18 +1140,6 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
-	{
-		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaComercial == 'true') {
-			$consultaComercial = $this->webServiceInterface->execConsultaComercial($identificationNumber, $tipoDoc);
-		} else {
-			$consultaComercial = 1;
-		}
-
-		return $consultaComercial;
-	}
-
 	private function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
 	{
 		$obj = new \stdClass();
@@ -1436,6 +1424,19 @@ class OportuyaV2Controller extends Controller
 		}
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
 	}
+
+	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
+	{
+		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaComercial == 'true') {
+			$consultaComercial = $this->webServiceInterface->execConsultaComercial($identificationNumber, $tipoDoc);
+		} else {
+			$consultaComercial = 1;
+		}
+
+		return $consultaComercial;
+	}
+
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
