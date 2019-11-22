@@ -56,46 +56,6 @@ class AdvanceController extends Controller
 
         $identificationNumber = '1088019814';
 
-        $historialCrediticio = 0;
-        $totalVector = 0;
-        $historialCrediticio = $this->extintreal->check6MonthsPaymentVector($identificationNumber);
-
-
-
-        $queryComporFinExt = sprintf("SELECT rexcompor , rexcorte
-			FROM cifin_realext
-			WHERE rexcalid  = 'PRIN' AND `rexconsul` = (SELECT MAX(`rexconsul`) FROM `cifin_realext` WHERE `rexcedula` = %s ) AND rexcedula = %s", $identificationNumber, $identificationNumber);
-
-        $respQueryComporFinExt = DB::connection('oportudata')->select($queryComporFinExt);
-
-        foreach ($respQueryComporFinExt as $value) {
-            $fechaComporFin = $value->rexcorte;
-            $fechaComporFin = explode('/', $fechaComporFin);
-            $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-            $dateNow = date('Y-m-d');
-            $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-            if (strtotime($fechaComporFin) > $dateNew) {
-                $paymentArray = explode('|', $value->rexcompor);
-                $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-                $popArray = array_pop($paymentArray);
-                $paymentArray = array_reverse($paymentArray);
-                foreach ($paymentArray as $habit) {
-                    if ($totalVector >= 6) {
-                        $historialCrediticio = 1;
-                        break;
-                    }
-
-                    if ($habit == 'N') {
-                        $totalVector++;
-                    } else {
-                        $totalVector = 0;
-                    }
-                }
-            }
-        }
-
-
-        dd($historialCrediticio);
 
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),

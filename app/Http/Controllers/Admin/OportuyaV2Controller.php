@@ -794,14 +794,10 @@ class OportuyaV2Controller extends Controller
 			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
 		}
 
-		$this->updateLastIntencionLead($identificationNumber, 'HISTORIAL_CREDITO', $historialCrediticio);
-
+		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
 		//4.1 Zona de riesgo
-		$queryGetZonaRiesgo = sprintf("SELECT `ZONA`
-		FROM `SUCURSALES`
-		WHERE `CODIGO` = '%s' ", $customer->SUC);
-		$respZonaRiesgo = DB::connection('oportudata')->select($queryGetZonaRiesgo);
-		$this->updateLastIntencionLead($identificationNumber, 'ZONA_RIESGO', $respZonaRiesgo[0]->ZONA);
+		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
+		$customerIntention->save();
 
 		// 4.2 Tipo de cliente
 		$tipoCliente = '';
