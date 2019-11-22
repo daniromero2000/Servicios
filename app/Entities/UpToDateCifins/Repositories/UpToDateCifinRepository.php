@@ -34,7 +34,6 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
             return  $this->model->where('fdcedula', $identificationNumber)
                 ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
                 ->where('fdcalid',  'PRIN')
-                ->orderBy('fdapert', 'desc')
                 ->get(['fdcompor', 'fdapert']);
         } catch (QueryException $e) {
             dd($e);
@@ -67,8 +66,6 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
 
     public function check6MonthsPaymentVector($identificationNumber)
     {
-
-
         $respQueryComporFin = $this->checkCustomerHasUpToDateCifin6($identificationNumber);
 
         foreach ($respQueryComporFin as $value) {

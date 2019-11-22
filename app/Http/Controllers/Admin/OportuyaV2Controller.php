@@ -772,13 +772,8 @@ class OportuyaV2Controller extends Controller
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
 		$totalVector = 0;
+		$respQueryComporFin =  $this->upToDateCifinInterface->checkCustomerHasUpToDateCifin6($identificationNumber);
 
-
-		$queryComporFin = sprintf("SELECT fdcompor, fdapert
-		FROM cifin_findia
-		WHERE fdcalid = 'PRIN' AND `fdconsul` = (SELECT MAX(`fdconsul`) FROM `cifin_findia` WHERE `fdcedula` = %s ) AND fdcedula = %s", $identificationNumber, $identificationNumber);
-
-		$respQueryComporFin = DB::connection('oportudata')->select($queryComporFin);
 		foreach ($respQueryComporFin as $value) {
 			$totalVector = 0;
 			if ($value->fdapert == '') {
