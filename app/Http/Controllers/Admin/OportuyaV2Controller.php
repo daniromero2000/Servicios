@@ -10,7 +10,7 @@ use App\Entities\CreditCards\CreditCard;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
-use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Exports\ExportToExcel;
@@ -24,6 +24,8 @@ use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRep
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -31,7 +33,8 @@ use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,8 +49,9 @@ class OportuyaV2Controller extends Controller
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
 	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
-	private $upToDateCifinInterface, $cifinArrearsInterface, $cifinRealArrearsInterface;
-	private $cifinScoreInterface, $intentionInterface;
+	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
+	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -65,11 +69,14 @@ class OportuyaV2Controller extends Controller
 		EmployeeRepositoryInterface $employeeRepositoryInterface,
 		PunishmentRepositoryInterface $punishmentRepositoryInterface,
 		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
-		UpToDateCifinRepositoryInterface $upToDateCifinRepositoryInterface,
-		CifinArrearRepositoryInterface $cifinArrearRepositoryInterface,
+		UpToDateFinancialCifinRepositoryInterface $UpToDateFinancialCifinRepositoryInterface,
+		CifinFinancialArrearRepositoryInterface $CifinFinancialArrearRepositoryInterface,
 		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
 		CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
-		IntentionRepositoryInterface $intentionRepositoryInterface
+		IntentionRepositoryInterface $intentionRepositoryInterface,
+		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
+		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
+		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -86,11 +93,14 @@ class OportuyaV2Controller extends Controller
 		$this->employeeInterface                 = $employeeRepositoryInterface;
 		$this->punishmentInterface               = $punishmentRepositoryInterface;
 		$this->customerVerificationCodeInterface = $customerVerificationCodeRepositoryInterface;
-		$this->upToDateCifinInterface            = $upToDateCifinRepositoryInterface;
-		$this->cifinArrearsInterface             = $cifinArrearRepositoryInterface;
+		$this->UpToDateFinancialCifinInterface   = $UpToDateFinancialCifinRepositoryInterface;
+		$this->CifinFinancialArrearsInterface    = $CifinFinancialArrearRepositoryInterface;
 		$this->cifinRealArrearsInterface         = $cifinRealArrearRepositoryInterface;
 		$this->cifinScoreInterface               = $cifinScoreRepositoryInterface;
-		$this->intentionInterface               = $intentionRepositoryInterface;
+		$this->intentionInterface                = $intentionRepositoryInterface;
+		$this->extintFinancialCifinInterface     = $extintFinancialCifinRepositoryInterface;
+		$this->UpToDateRealCifinInterface        = $upToDateRealCifinsRepositoryInterface;
+		$this->extinctRealCifinInterface        = $extintRealCifinRepositoryInterface;
 	}
 
 	public function index()
@@ -752,12 +762,11 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$respValorMoraFinanciero = $this->cifinArrearsInterface->checkCustomerHasCifinArrear($identificationNumber)->sum('finvrmora');
+		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber)->sum('finvrmora');
 		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
 		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
-
 			$customer->ESTADO = 'NEGADO';
 			$customer->update();
 			$customerIntention->ESTADO_OBLIGACIONES = 0;
@@ -771,142 +780,18 @@ class OportuyaV2Controller extends Controller
 
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
-		$totalVector = 0;
-		$respQueryComporFin =  $this->upToDateCifinInterface->checkCustomerHasUpToDateCifin6($identificationNumber);
+		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
 
-		foreach ($respQueryComporFin as $value) {
-			$totalVector = 0;
-			if ($value->fdapert == '') {
-				break;
-			}
-			$fechaComporFin = $value->fdapert;
-			$fechaComporFin = explode('/', $fechaComporFin);
-			$fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-			$dateNow = date('Y-m-d');
-			$dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-			if (strtotime($fechaComporFin) > $dateNew) {
-				$paymentArray = explode('|', $value->fdcompor);
-				$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-				$popArray = array_pop($paymentArray);
-				$paymentArray = array_reverse($paymentArray);
-				foreach ($paymentArray as $habit) {
-					if ($totalVector >= 6) { // Poner parametrizable
-						$historialCrediticio = 1;
-						break;
-					}
-
-					if ($habit == 'N') {
-						$totalVector++;
-					} else {
-						$totalVector = 0;
-					}
-				}
-			}
+		if ($historialCrediticio == 0) {
+			$historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
 		}
 
 		if ($historialCrediticio == 0) {
-			$queryComporFinExt = sprintf("SELECT extcompor, exttermin, extapert
-			FROM cifin_finext
-			WHERE extcalid = 'PRIN' AND `extconsul` = (SELECT MAX(`extconsul`) FROM `cifin_finext` WHERE `extcedula` = %s ) AND extcedula = %s", $identificationNumber, $identificationNumber);
-
-			$respQueryComporFinExt = DB::connection('oportudata')->select($queryComporFinExt);
-
-			foreach ($respQueryComporFinExt as $value) {
-				if ($value->exttermin == '' && $value->extapert == '') {
-					break;
-				}
-				$fechaComporFin = ($value->exttermin != '') ? $value->exttermin : $value->extapert;
-				$fechaComporFin = explode('/', $fechaComporFin);
-				$fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-				$dateNow = date('Y-m-d');
-				$dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-				if (strtotime($fechaComporFin) > $dateNew) {
-					$paymentArray = explode('|', $value->extcompor);
-					$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-					$popArray = array_pop($paymentArray);
-					$paymentArray = array_reverse($paymentArray);
-					foreach ($paymentArray as $habit) {
-						if ($totalVector >= 6) {
-							$historialCrediticio = 1;
-							break;
-						}
-
-						if ($habit == 'N') {
-							$totalVector++;
-						} else {
-							$totalVector = 0;
-						}
-					}
-				}
-			}
+			$historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
 		}
 
 		if ($historialCrediticio == 0) {
-			$queryComporFinExt = sprintf("SELECT rdcompor , rdapert
-			FROM cifin_realdia
-			WHERE rdcalid = 'PRIN' AND `rdconsul` = (SELECT MAX(`rdconsul`) FROM `cifin_realdia` WHERE `rdcedula` = %s ) AND rdcedula = %s", $identificationNumber, $identificationNumber);
-
-			$respQueryComporFinExt = DB::connection('oportudata')->select($queryComporFinExt);
-
-			foreach ($respQueryComporFinExt as $value) {
-				$fechaComporFin = $value->rdapert;
-				$fechaComporFin = explode('/', $fechaComporFin);
-				$fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-				$dateNow = date('Y-m-d');
-				$dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-				if (strtotime($fechaComporFin) > $dateNew) {
-					$paymentArray = explode('|', $value->rdcompor);
-					$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-					$popArray = array_pop($paymentArray);
-					$paymentArray = array_reverse($paymentArray);
-					foreach ($paymentArray as $habit) {
-						if ($totalVector >= 6) {
-							$historialCrediticio = 1;
-							break;
-						}
-
-						if ($habit == 'N') {
-							$totalVector++;
-						} else {
-							$totalVector = 0;
-						}
-					}
-				}
-			}
-		}
-
-		if ($historialCrediticio == 0) {
-			$queryComporFinExt = sprintf("SELECT rexcompor , rexcorte
-			FROM cifin_realext
-			WHERE rexcalid  = 'PRIN' AND `rexconsul` = (SELECT MAX(`rexconsul`) FROM `cifin_realext` WHERE `rexcedula` = %s ) AND rexcedula = %s", $identificationNumber, $identificationNumber);
-
-			$respQueryComporFinExt = DB::connection('oportudata')->select($queryComporFinExt);
-
-			foreach ($respQueryComporFinExt as $value) {
-				$fechaComporFin = $value->rexcorte;
-				$fechaComporFin = explode('/', $fechaComporFin);
-				$fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-				$dateNow = date('Y-m-d');
-				$dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-				if (strtotime($fechaComporFin) > $dateNew) {
-					$paymentArray = explode('|', $value->rexcompor);
-					$paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-					$popArray = array_pop($paymentArray);
-					$paymentArray = array_reverse($paymentArray);
-					foreach ($paymentArray as $habit) {
-						if ($totalVector >= 6) {
-							$historialCrediticio = 1;
-							break;
-						}
-
-						if ($habit == 'N') {
-							$totalVector++;
-						} else {
-							$totalVector = 0;
-						}
-					}
-				}
-			}
+			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
 		}
 
 		$this->updateLastIntencionLead($identificationNumber, 'HISTORIAL_CREDITO', $historialCrediticio);
@@ -1026,7 +911,7 @@ class OportuyaV2Controller extends Controller
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
-			$aprobado =  $this->upToDateCifinInterface->check12MonthsPaymentVector($identificationNumber);
+			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($identificationNumber);
 
 			if ($customer->CIUD_UBI == 'BOGOTÁ' || $customer->CIUD_UBI == 'MEDELLÍN') {
 				if ($customerScore >= 725) {

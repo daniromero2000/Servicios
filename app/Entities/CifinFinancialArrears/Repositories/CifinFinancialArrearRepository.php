@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\CifinArrears\Repositories;
+namespace App\Entities\CifinFinancialArrears\Repositories;
 
-use App\Entities\CifinArrears\CifinArrear;
-use App\Entities\CifinArrears\Repositories\Interfaces\CifinArrearRepositoryInterface;
+use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
+use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class CifinArrearRepository implements CifinArrearRepositoryInterface
+class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryInterface
 {
     public function __construct(
-        CifinArrear $cifinArrear
+        CifinFinancialArrear $CifinFinancialArrear
     ) {
-        $this->model = $cifinArrear;
+        $this->model = $CifinFinancialArrear;
     }
 
-    public function checkCustomerHasCifinArrear($identificationNumber)
+    public function checkCustomerHasCifinFinancialArrear($identificationNumber)
     {
         try {
             return  $this->model->where('fincedula', $identificationNumber)
@@ -32,7 +32,7 @@ class CifinArrearRepository implements CifinArrearRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasCifinArrear($identificationNumber);
+        $respVectores = $this->checkCustomerHasCifinFinancialArrear($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);

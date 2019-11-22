@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entities\UpToDateCifins\Repositories;
+namespace App\Entities\ExtintFinancialCifins\Repositories;
 
-use App\Entities\UpToDateCifins\UpToDateCifin;
-use App\Entities\UpToDateCifins\Repositories\Interfaces\UpToDateCifinRepositoryInterface;
+use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
+use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
+class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryInterface
 {
     public function __construct(
-        UpToDateCifin $upToDateCifin
+        ExtintFinancialCifin $ExtintFinancialCifin
     ) {
-        $this->model = $upToDateCifin;
+        $this->model = $ExtintFinancialCifin;
     }
 
-    public function checkCustomerHasUpToDateCifin12($identificationNumber)
+    public function checkCustomerHasExtintFinancialCifin12($identificationNumber)
     {
         try {
             return  $this->model->where('fdcedula', $identificationNumber)
@@ -28,13 +28,13 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
         }
     }
 
-    public function checkCustomerHasUpToDateCifin6($identificationNumber)
+    public function checkCustomerHasVectors($identificationNumber)
     {
         try {
-            return  $this->model->where('fdcedula', $identificationNumber)
-                ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
-                ->where('fdcalid',  'PRIN')
-                ->get(['fdcompor', 'fdapert']);
+            return  $this->model->where('extcedula', $identificationNumber)
+                ->where('extconsul', $this->model->where('extcedula', $identificationNumber)->max('extconsul'))
+                ->where('extcalid',  'PRIN')
+                ->get(['extcompor', 'exttermin', 'extapert']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -44,7 +44,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
     public function check12MonthsPaymentVector($identificationNumber)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasUpToDateCifin12($identificationNumber);
+        $respVectores = $this->checkCustomerHasExtintFinancialCifin12($identificationNumber);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);
@@ -66,25 +66,25 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
 
     public function check6MonthsPaymentVector($identificationNumber)
     {
-        $respQueryComporFin = $this->checkCustomerHasUpToDateCifin6($identificationNumber);
-
-        foreach ($respQueryComporFin as $value) {
+        $respQueryComporFinExt = $this->checkCustomerHasVectors($identificationNumber);
+        $historialCrediticio = 0;
+        foreach ($respQueryComporFinExt as $value) {
             $totalVector = 0;
-            if ($value->fdapert == '') {
+            if ($value->exttermin == '' && $value->extapert == '') {
                 break;
             }
-            $fechaComporFin = $value->fdapert;
+            $fechaComporFin = ($value->exttermin != '') ? $value->exttermin : $value->extapert;
             $fechaComporFin = explode('/', $fechaComporFin);
             $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
             $dateNow = date('Y-m-d');
             $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
             if (strtotime($fechaComporFin) > $dateNew) {
-                $paymentArray = explode('|', $value->fdcompor);
+                $paymentArray = explode('|', $value->extcompor);
                 $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
                 $popArray = array_pop($paymentArray);
                 $paymentArray = array_reverse($paymentArray);
                 foreach ($paymentArray as $habit) {
-                    if ($totalVector >= 6) { // Poner parametrizable
+                    if ($totalVector >= 6) {
                         $historialCrediticio = 1;
                         break;
                     }
@@ -97,6 +97,7 @@ class UpToDateCifinRepository implements UpToDateCifinRepositoryInterface
                 }
             }
         }
+        return $historialCrediticio;
     }
 
     private function applyTrim($charItem)
