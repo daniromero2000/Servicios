@@ -6,7 +6,7 @@
     **Descripción: view for render PRODUCT CRUD
     **Fecha: 13/12/2018
      -->
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('content')
     <div ng-app="catalogApp" class="containerleads container">
         <div class="row" style="margin-top: 50px;">

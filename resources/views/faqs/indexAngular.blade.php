@@ -6,7 +6,7 @@
     **Descripción: view for FAQS CRUD
     **Fecha: 12/12/2018
      -->
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('linkStyleSheets')
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">

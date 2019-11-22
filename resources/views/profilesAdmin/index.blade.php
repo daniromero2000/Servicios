@@ -7,7 +7,7 @@
     **Fecha: 21/12/2018
      -->
      
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
     <div ng-app="ProfileApp" class="containerleads container">

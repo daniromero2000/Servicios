@@ -1,6 +1,9 @@
+@extends('layouts.admin.app')
+@section('content')
+    
 <div class="contentDashboard">
     <div class="headerDashBoard">
-        <h3>Bienvenido {{$currentUser->name}}</h3>
+        <h3>Bienvenido </h3>
     </div>
     <div class="row">
         <div class="col-12 col-sm-4 form-group" ng-repeat="module in modules">
@@ -15,3 +18,4 @@
         </div>
     </div>
 </div>
+@endsection
