@@ -56,12 +56,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $identificationNumber = '1088019814';
-
-        $edad = $this->cifinBasic->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
-        dd($edad);
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
