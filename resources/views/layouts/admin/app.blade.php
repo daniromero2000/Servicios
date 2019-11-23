@@ -5,11 +5,11 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Oportudata</title>
     <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
     <script>
-        window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823'); 
+        window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823');
     </script>
     @yield('eventTag')
     <!-- Google Tag Manager -->
@@ -41,7 +41,7 @@
 		t.src=v;s=b.getElementsByTagName(e)[0];
 		s.parentNode.insertBefore(t,s)}(window,document,'script',
 		'https://connect.facebook.net/en_US/fbevents.js');
-		 fbq('init', '406230336580137'); 
+		 fbq('init', '406230336580137');
 		fbq('track', 'PageView');
     </script>
     <noscript>
@@ -111,18 +111,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <script>
         function hideLoader(){
-				
-				$('#ex-global-content').removeClass('ex-loader-blur'); 
+
+				$('#ex-global-content').removeClass('ex-loader-blur');
 				$(".ex-loader").fadeOut(1000,function(){
 					$(".ex-loader").remove();
-					
-				}); 
+
+				});
 			};
 
 			window.onload = function(){
-				hideLoader();	
+				hideLoader();
 			};
-			
+
 			$(document).ready(function($) {
 				setTimeout(function(){
 					hideLoader();
