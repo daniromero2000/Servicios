@@ -173,18 +173,16 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 				$('#validationLead').modal('show');
                 $scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
 			}else if(response.data == -2){
-                console.log("2");
 				$('#validationLead').modal('show');
 				$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
 			}else if(response.data == -3){
-                console.log("3");
 				$('#validationLead').modal('show');
 				$scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
 			}else if(response.data == -4){
-                console.log("4");
 				$('#validationLead').modal('show');
 				$scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
 			}else{
+				$scope.getNumCel();
 				console.log("Validado !!");
 			}
 		}, function errorCallback(response) {
@@ -204,11 +202,11 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			if(typeof response.data.resp == 'number'){
 				
 			}else{
-				var num             = response.data.resp[0].NUM.substring(0,6);
-				var CELULAR         = response.data.resp[0].NUM.replace(num, "******");
-				$scope.lead.CEL_VAL = response.data.resp[0].CEL_VAL;
+				var num             = response.data.resp.NUM.substring(0,6);
+				var CELULAR         = response.data.resp.NUM.replace(num, "******");
+				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
 				$scope.CELULAR      = CELULAR;
-				$scope.lead.CELULAR = response.data.resp[0].NUM;
+				$scope.lead.CELULAR = response.data.resp.NUM;
 			}
 		}, function errorCallback(response) {
 			console.log(response);
@@ -277,7 +275,6 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			url: '/seguros',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			console.log(response);
 			hideLoader();
 			$scope.execConsultasLead($scope.lead.CEDULA);
 		}, function errorCallback(response) {
@@ -287,17 +284,17 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 	};
     
     $scope.execConsultasLead = function(identificationNumber){
-		setTimeout(() => {
+		/*setTimeout(() => {
 			showLoader();
-		}, 1000);
+		}, 1000);*/
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.datosCliente.NOM_REFPER+'/'+$scope.datosCliente.TEL_REFPER+'/'+$scope.datosCliente.NOM_REFFAM+'/'+$scope.datosCliente.TEL_REFFAM,
 		}).then(function successCallback(response) {
 			console.log(response);
-			setTimeout(() => {
+			/*setTimeout(() => {
 				hideLoader();
-			}, 2000);
+			}, 2000);*/
 
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;

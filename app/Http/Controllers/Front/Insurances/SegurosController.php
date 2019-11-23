@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use Carbon\Carbon;
 
 class SegurosController extends Controller
 {
-    private $customerInterface, $subsidiaryInterface;
+    private $customerInterface, $subsidiaryInterface, $customerCellPhoneInterface;
 
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
-        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface
     ) {
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->customerInterface       = $customerRepositoryInterface;
+        $this->customerCellPhoneInterface        = $customerCellPhoneRepositoryInterface;
     }
 
     public function index()
@@ -38,6 +41,16 @@ class SegurosController extends Controller
         $request['CIUD_UBI'] = $subsidiaryCityName;
         $request['POSEEVEH'] = "S";
 
-        return $this->customerInterface->updateOrCreateCustomer($request->input());
+        $this->customerInterface->updateOrCreateCustomer($request->input());
+
+        if (empty($this->customerCellPhoneInterface->checkIfExists($request->input('CEDULA'), $request->input('CELULAR')))) {
+            $clienteCelular = [];
+            $clienteCelular['IDENTI'] = $request->input('CEDULA');
+            $clienteCelular['NUM'] = trim($request->get('CELULAR'));
+            $clienteCelular['TIPO'] = 'CEL';
+            $clienteCelular['CEL_VAL'] = 1;
+            $clienteCelular['FECHA'] = date("Y-m-d H:i:s");
+            $this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
+        }
     }
 }
