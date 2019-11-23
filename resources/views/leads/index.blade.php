@@ -1,18 +1,6 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
-<link rel="stylesheet"
-    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-<!-- Ionicons -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- jsGrid -->
-<link rel="stylesheet" href="{{ asset('plugins/jsgrid/jsgrid.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/jsgrid/jsgrid-theme.min.css') }}">
-<!-- Theme style -->
-<link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-<!-- Google Font: Source Sans Pro -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
 <div class="content-header">
