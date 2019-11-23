@@ -15,6 +15,7 @@ use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArr
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
+use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 
@@ -33,7 +34,8 @@ class AdvanceController extends Controller
         ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
         UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
-        CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface
+        CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
+        UbicaRepositoryInterface $ubicaRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -46,12 +48,7 @@ class AdvanceController extends Controller
         $this->real = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
-    }
-
-    private function applyTrim($charItem)
-    {
-        $charTrim = trim($charItem);
-        return $charTrim;
+        $this->ubica = $ubicaRepositoryInterface;
     }
 
     public function index()

@@ -4,8 +4,10 @@ namespace App\Entities\Customers;
 
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
+use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Intentions\Intention;
+use App\Entities\Ubicas\Ubica;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -144,5 +146,20 @@ class Customer extends Model
     public function latestIntention()
     {
         return $this->hasOne(Intention::class, 'CEDULA')->latest('FECHA_INTENCION');
+    }
+
+    public function ubicaConsultations()
+    {
+        return $this->hasMany(Ubica::class, 'cedula');
+    }
+
+    public function lastUbicaConsultation()
+    {
+        return $this->hasOne(Ubica::class, 'cedula');
+    }
+
+    public function checkedPhone()
+    {
+        return $this->hasOne(CustomerCellPhone::class, 'IDENTI')->where('CEL_VAL', 1);
     }
 }

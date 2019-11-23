@@ -34,6 +34,7 @@ use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
@@ -53,6 +54,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
+	private $ubicaInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -78,7 +80,8 @@ class OportuyaV2Controller extends Controller
 		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
-		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface
+		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
+		UbicaRepositoryInterface $ubicaRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -102,8 +105,9 @@ class OportuyaV2Controller extends Controller
 		$this->intentionInterface                = $intentionRepositoryInterface;
 		$this->extintFinancialCifinInterface     = $extintFinancialCifinRepositoryInterface;
 		$this->UpToDateRealCifinInterface        = $upToDateRealCifinsRepositoryInterface;
-		$this->extinctRealCifinInterface        = $extintRealCifinRepositoryInterface;
-		$this->cifinBasicDataInterface        = $cifinBasicDataRepositoryInterface;
+		$this->extinctRealCifinInterface         = $extintRealCifinRepositoryInterface;
+		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
+		$this->ubicaInterface                    = $ubicaRepositoryInterface;
 	}
 
 	public function index()
@@ -1140,28 +1144,11 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
-	{
-		$obj = new \stdClass();
-		$obj->typeDocument = trim($typeDocument);
-		$obj->identificationNumber = trim($identificationNumber);
-		$obj->lastName = trim($lastName);
-		try {
-			// 2040 Ubica Pruebas
-			$port = config('portsWs.ubica');
-			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-			$result = $ws->ConsultaUbicaPlus($obj);  // correcta
-			return 1;
-		} catch (\Throwable $th) {
-			return 0;
-		}
-	}
-
 	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
 	{
-		$dateConsultaUbica = $this->validateDateConsultaUbica($identificationNumber);
+		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
 		if ($dateConsultaUbica == 'true') {
-			$consultaUbica = $this->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
+			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
 		} else {
 			$consultaUbica = 1;
 		}
@@ -1265,13 +1252,17 @@ class OportuyaV2Controller extends Controller
 
 	public function validateConsultaUbica($identificationNumber)
 	{
-		$consecConsultaUbica = DB::connection('oportudata')->select("SELECT `consec` FROM `consulta_ubica` WHERE `cedula` = :identificationNumber ORDER BY consec DESC LIMIT 1", ['identificationNumber' => $identificationNumber]);
-		$getDataCliente = DB::connection('oportudata')->select("SELECT `TEL_EMP`, `TEL2_EMP`, `EMAIL` FROM `CLIENTE_FAB` WHERE  `CEDULA` = :identificationNumber", ['identificationNumber' => $identificationNumber]);
-		$consec = $consecConsultaUbica[0]->consec;
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerUbicaConsultation = $customer->lastUbicaConsultation;
+		$consec = $customerUbicaConsultation->consec;
 		$aprobo = 0;
-		// Validacion Celular
-		$numLead = $this->getNumLead($identificationNumber, 'normal');
-		$celLead = $numLead->NUM;
+		$celLead = 0;
+
+		$customerPhone =  $customer->checkedPhone;
+		if (!empty($customerPhone)) {
+			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
+		}
+
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
 			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
@@ -1281,8 +1272,8 @@ class OportuyaV2Controller extends Controller
 
 		if ($aprobo == 0) {
 			// Validacion Telefono empresarial
-			if ($getDataCliente[0]->TEL_EMP != '' && $getDataCliente[0]->TEL_EMP != '0') {
-				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $getDataCliente[0]->TEL_EMP, 'tel2_emp' => $getDataCliente[0]->TEL2_EMP]);
+			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
 				if (!empty($telEmpConsultaUbica)) {
 					$aprobo = $this->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
 				} else {
@@ -1295,8 +1286,8 @@ class OportuyaV2Controller extends Controller
 
 		if ($aprobo == 0) {
 			// Validacion Correo
-			if ($getDataCliente[0]->EMAIL != '') {
-				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $getDataCliente[0]->EMAIL]);
+			if ($customer->EMAIL != '') {
+				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $customer->EMAIL]);
 				if (!empty($emailConsultaUbica)) {
 					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
 				}
@@ -1396,7 +1387,7 @@ class OportuyaV2Controller extends Controller
 				}
 			}
 
-			$estadoSolic       = 'ANALISIS';
+			$estadoSolic = 'ANALISIS';
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
@@ -1488,25 +1479,6 @@ class OportuyaV2Controller extends Controller
 			'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'],
 			'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']
 		];
-	}
-
-	private function validateDateConsultaUbica($identificationNumber)
-	{
-		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- $this->daysToIncrement day", strtotime($dateNow));
-		$dateNew = date('Y-m-d', $dateNew);
-		$dateLastConsultaUbica = DB::connection('oportudata')->select("SELECT fecha FROM consulta_ubica WHERE cedula = :identificationNumber ORDER BY consec DESC LIMIT 1 ", ['identificationNumber' => $identificationNumber]);
-		if (empty($dateLastConsultaUbica)) {
-			return 'true';
-		} else {
-			$dateLastConsulta = $dateLastConsultaUbica[0]->fecha;
-
-			if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
-				return 'true';
-			} else {
-				return 'false';
-			}
-		}
 	}
 
 	private function addSolicFab($identificationNumber, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
