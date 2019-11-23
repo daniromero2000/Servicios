@@ -7,4 +7,6 @@ interface SubsidiaryRepositoryInterface
     public function getAllSubsidiaryCityNames();
 
     public function getSubsidiaryCityByCode($code);
+
+    public function getSubsidiaryRiskZone($customerSubsidiary);
 }
