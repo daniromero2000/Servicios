@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 	<link rel="stylesheet" href="{{ asset('css/creditPolicy/creditPolicy.css') }}">
