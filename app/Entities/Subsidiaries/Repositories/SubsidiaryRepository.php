@@ -33,6 +33,15 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
     }
 
 
+    public function getSubsidiaryRiskZone($customerSubsidiary)
+    {
+        try {
+            return $this->model->where('CODIGO', $customerSubsidiary)->get(['ZONA'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
 
     private function getNameCiudadExp($city)
     {

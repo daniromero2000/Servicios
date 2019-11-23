@@ -19,6 +19,7 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
     {
         try {
             return $this->model->where('cedula', $identificationNumber)
+                ->where('fuenteFallo', 'NO')
                 ->orderBy('idEstadoCedula', 'desc')->get()
                 ->first();
         } catch (QueryException $e) {

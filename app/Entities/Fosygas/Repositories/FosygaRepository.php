@@ -19,6 +19,7 @@ class FosygaRepository implements FosygaRepositoryInterface
     {
         try {
             return $this->model->where('cedula', $identificationNumber)
+                ->where('fuenteFallo', 'NO')
                 ->orderBy('idBdua', 'desc')->get()->first();
         } catch (QueryException $e) {
             dd($e);
