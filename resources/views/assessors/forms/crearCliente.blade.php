@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Crear Cliente'.' - '.Auth::guard('assessor')->user()->NOMBRE)
+@extends('layouts.admin.app')
 
 @section('metaTags')
 	<meta name="googlebot" content="noindex">
@@ -16,9 +15,6 @@
     <div class="container" ng-app="asessorVentaContadoApp" ng-controller="asessorVentaContadoCtrl">
         <div class="row">
             <div class="col-12 text-center">
-                <h3 class="ventaContado-nameAssessor">
-                    {{ Auth::guard('assessor')->user()->NOMBRE }}
-                </h3>
                 <p class="ventaContado-text">
                     <i>* Recuerde que el correcto diligenciamiento de este formulario agilizará el proceso de facturación de la cajera con Apoteosys.</i>
                 </p>
@@ -238,17 +234,17 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa</label>
-                                        <input type="text" validation-pattern="text" id="RAZON_IND" ng-model="lead.RAZON_IND" />
+                                        <input class="form-control inputs" type="text" validation-pattern="text" id="RAZON_IND" ng-model="lead.RAZON_IND" />
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="ACT_IND">Qué vendes o comercializas?</label>
-                                        <input type="text" id="ACT_IND" validation-pattern="text" ng-model="lead.ACT_IND" />
+                                        <input class="form-control inputs" type="text" id="ACT_IND" validation-pattern="text" ng-model="lead.ACT_IND" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="ACT_ECO">EPS</label>
-                                        <input type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
+                                        <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
                                     </div>
                                     <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
                                         <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución</label>
@@ -276,7 +272,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario</label>
-                                        <input required type="text" name="SUELDOIND" ng-model="lead.SUELDOIND" ng-currency fraction="0" />
+                                        <input class="form-control inputs" required type="text" name="SUELDOIND" ng-model="lead.SUELDOIND" ng-currency fraction="0" />
                                     </div>
                                 </div>
                             </div>
@@ -284,7 +280,7 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <label class="ventaContado-label" for="RAZON_SOC">Nombre de la empresa</label>
-                                        <input type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC"/>
+                                        <input class="form-control inputs" type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC"/>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <label class="ventaContado-label">Fecha de Pensión</label>
@@ -302,15 +298,15 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="SUELDOIND">Salario</label>
-                                        <input required type="text" ng-model="lead.SUELDOIND" id="SUELDOIND" name="SUELDOIND" ng-currency fraction="0" />
+                                        <input class="form-control inputs" required type="text" ng-model="lead.SUELDOIND" id="SUELDOIND" name="SUELDOIND" ng-currency fraction="0" />
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="ACT_ECO">EPS</label>
-                                        <input type="text" name="ACT_ECO" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
+                                        <input class="form-control inputs" type="text" name="ACT_ECO" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="BANCOP">Banco</label>
-                                        <select class="form-control" ng-model="lead.BANCOP" id="BANCOP" ng-options="bank.value as bank.label for bank in banks"></select>
+                                        <select class="form-control inputs" ng-model="lead.BANCOP" id="BANCOP" ng-options="bank.value as bank.label for bank in banks"></select>
                                     </div>
                                 </div>
                             </div>
@@ -523,7 +519,7 @@
 										<p ng-bind-html="messageValidationLead">
 										</p>
 									<div class="text-center">
-										<a class="btn btn-danger buttonBackCardExist" href="/assessor/forms/crearCliente">Regresar</a>
+										<a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Regresar</a>
 									</div>
 									</div>
 								</div>
@@ -624,7 +620,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-12 text-center">
-                                <a class="btn btn-danger buttonBackCardExist" href="/assessor/forms/crearCliente">Nuevo Registro</a>
+                                <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo Registro</a>
                             </div>
                         </div>
 					</div>

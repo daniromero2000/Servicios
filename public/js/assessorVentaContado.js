@@ -255,11 +255,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			if(typeof response.data.resp == 'number'){
 				
 			}else{
-				var num = response.data.resp[0].NUM.substring(0,6);
-				var CELULAR = response.data.resp[0].NUM.replace(num, "******");
-				$scope.lead.CEL_VAL = response.data.resp[0].CEL_VAL;
+				var num = response.data.resp.NUM.substring(0,6);
+				var CELULAR = response.data.resp.NUM.replace(num, "******");
+				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
 				$scope.CELULAR = CELULAR;
-				$scope.lead.CELULAR = response.data.resp[0].NUM;
+				$scope.lead.CELULAR = response.data.resp.NUM;
 			}
 		}, function errorCallback(response) {
 			console.log(response);

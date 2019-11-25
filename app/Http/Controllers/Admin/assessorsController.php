@@ -18,7 +18,7 @@ class assessorsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:assessor']);
+        $this->middleware('auth');
     }
     /**
      * Show the application dashboard.
@@ -231,7 +231,7 @@ class assessorsController extends Controller
 
     public function getFormVentaContado()
     {
-        if (Auth::guard('assessor')->check()) {
+        if (Auth::user()) {
             return view('assessors.forms.crearCliente');
         } else {
             return view('assessors.login');
