@@ -1,6 +1,7 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
-<link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+<link rel="stylesheet"
+    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 <!-- Ionicons -->
@@ -15,20 +16,21 @@
 @endsection
 @section('content')
 <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Bienvenido</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="/Administrator/communityLeads#!/">Leads Community Manager</a></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Bienvenido</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="/Administrator/communityLeads#!/">Leads Community
+                            Manager</a></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
 <div ng-app="communityLeadsApp" class="containerleads ">
     <br>
     @if (Session::get('success'))
@@ -37,7 +39,7 @@
     </div>
     @endif
     <div class="container">
-       
+
         <ng-view></ng-view>
     </div>
 
