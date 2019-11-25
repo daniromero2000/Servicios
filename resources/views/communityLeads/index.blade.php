@@ -19,7 +19,6 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Bienvenido</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -44,7 +43,7 @@
     </div>
 
 </div>
-
+<script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
 <script src="{{ asset('js/appCommunityLeads/app.js') }}"></script>
 <script src="{{ asset('js/appCommunityLeads/services/myService.js') }}"></script>
 <script src="{{ asset('js/appCommunityLeads/controllers/communityController.js') }}"></script>

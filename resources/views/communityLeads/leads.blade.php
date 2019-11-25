@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body text-center ">
             <div class="table ">
                 <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
                     <thead class=" text-center">

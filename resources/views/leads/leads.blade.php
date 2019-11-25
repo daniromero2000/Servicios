@@ -107,8 +107,8 @@
 
 
             <div class="card-body">
-                <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                <div class="table reset-table">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -287,7 +287,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table class="table text-center table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -468,7 +468,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -587,7 +587,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table" >
-                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -739,7 +739,7 @@
 
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
