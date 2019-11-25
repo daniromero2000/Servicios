@@ -310,6 +310,10 @@ Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
+    Route::get('/crearCliente', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+    Route::get('/analisis', function () {
+        return view('assessors.forms.analisis');
+    })->name('assessorAnalisis');
 
     Route::get("/libranzaLeads", function () {
         if (Auth::guest()) {
