@@ -450,7 +450,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="telephone">telefono<span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone" validation-pattern="telephone"
+                                        <input type="text" ng-model="lead.telephone" 
                                             id="telephone" cols="10" class="form-control" value="@{{lead.telephone}}"
                                             required>
                                     </div>
