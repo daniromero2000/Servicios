@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body text-center ">
             <div class="table ">
                 <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
                     <thead class=" text-center">
@@ -299,7 +299,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 form-group no-padding-right">
                                     <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="text" validation-pattern="telephone" ng-model="lead.telephone"
+                                    <input type="text"  ng-model="lead.telephone"
                                         id="telephone" cols="10" class="form-control" required>
                                 </div>
                             </div>
@@ -450,7 +450,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="telephone">telefono<span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone" validation-pattern="telephone"
+                                        <input type="text" ng-model="lead.telephone" 
                                             id="telephone" cols="10" class="form-control" value="@{{lead.telephone}}"
                                             required>
                                     </div>

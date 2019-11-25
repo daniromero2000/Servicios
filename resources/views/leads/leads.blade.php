@@ -107,8 +107,8 @@
 
 
             <div class="card-body">
-                <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                <div class="table reset-table">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -287,7 +287,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table class="table text-center table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -468,7 +468,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -587,7 +587,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table" >
-                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -739,7 +739,7 @@
 
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -884,7 +884,7 @@
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="telephone">telefono <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.telephone" validation-pattern="telephone" id="telephone" cols="10"
+                                            <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
                                                 class="form-control" value="@{{lead.telephone}}" required>
                                         </div>
                                     </div>
@@ -998,7 +998,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone" validation-pattern="telephone" id="telephone" cols="10"
+                                        <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
                                             class="form-control" required>
                                     </div>
                                 </div>
