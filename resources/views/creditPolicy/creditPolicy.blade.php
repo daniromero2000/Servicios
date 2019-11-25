@@ -2,12 +2,13 @@
 
     <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
 
-        @if(auth()->user()->hasIdProfile('2', auth()->user()->id))
-        <a class="nav-item nav-link cursor" id="nav-general-tab" class="active" ng-click="tabs = 2" data-toggle="tab"
-            role="tab" aria-controls="nav-general">Simular Individual</a>
-        @else
-        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1"
-            data-toggle="tab" role="tab" aria-controls="nav-general">Parametría</a>
+    @if(auth()->user()->hasIdProfile('2', auth()->user()->id))
+        <a class="nav-item nav-link cursor" id="nav-general-tab" class="active" ng-click="tabs = 2"
+            data-toggle="tab" role="tab" aria-controls="nav-general" ng-init="tabs = 2">Simular Individual</a>
+    @else
+        <a class="nav-item nav-link cursor"
+            id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1" data-toggle="tab" role="tab"
+            aria-controls="nav-general">Parametría</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2"
             data-toggle="tab" role="tab" aria-controls="nav-general">Simular Individual</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }" ng-click="tabs = 3"
@@ -16,7 +17,6 @@
 </nav>
 
 <div class="tab-content" id="nav-tabContent">
-    @if(auth()->user()->hasIdProfile('1', auth()->user()->id))
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 1 }">
         <div class="row mt-5">
@@ -194,7 +194,6 @@
             </div>
         </div>
     </div>
-    @if(auth()->user()->hasIdProfile('1', auth()->user()->id))
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-controller="simulatePolicyGroupCtrl" ng-class="{ 'show active': tabs == 3 }">
         <div class="row mt-5">
@@ -254,5 +253,4 @@
             </div>
         </div>
     </div>
-    @endif
 </div>
