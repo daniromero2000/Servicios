@@ -147,6 +147,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		$scope.lead.CIUD_UBI  = 144;
 		$scope.lead.ACTIVIDAD = "EMPLEADO";
 		$scope.lead.TIPO_CONT = "FIJO";
+		$scope.lead.ORIGEN = "Seguros";
 		showLoader();
 		$http({
 		  method: 'GET',
