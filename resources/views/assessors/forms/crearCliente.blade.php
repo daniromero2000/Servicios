@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="CEDULA">Número de documento*</label>
-                                    <input class="inputs" validation-pattern="IdentificationNumber" ng-blur="getValidationLead()" type="text" ng-model="lead.CEDULA" id="CEDULA"  />
+                                    <input class="inputs" validation-pattern="IdentificationNumber" ng-blur="getValidationLead()" type="text" ng-model="lead.CEDULA" id="CEDULA"  required/>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
@@ -58,7 +58,7 @@
                                         moment-picker="lead.FEC_EXP"
                                         format="YYYY-MM-DD">
                                         <input class="form-control inputs"
-                                            ng-model="lead.FEC_EXP" id="FEC_EXP" readonly="" placeholder="Año/Mes/Día">
+                                            ng-model="lead.FEC_EXP" id="FEC_EXP" readonly="" placeholder="Año/Mes/Día" required>
                                         <span class="input-group-addon">
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
@@ -68,22 +68,22 @@
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="nombres">Nombres*</label>
-                                    <input class="inputs" id="nombres" validation-pattern="name" ng-model="lead.NOMBRES" type="text"  />
+                                    <input class="inputs" id="nombres" validation-pattern="name" ng-model="lead.NOMBRES" type="text"  required />
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="lastName">Apellidos*</label>
-                                    <input class="inputs" id="lastName" validation-pattern="name" type="text" ng-model="lead.APELLIDOS"  />
+                                    <input class="inputs" id="lastName" validation-pattern="name" type="text" ng-model="lead.APELLIDOS" required />
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="email">Correo electrónico*</label>
-                                    <input class="inputs" id="email" type="text" validation-pattern="email" ng-model="lead.EMAIL"  />
+                                    <input class="inputs" id="email" type="text" validation-pattern="email" ng-model="lead.EMAIL"  required />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <div ng-hide="lead.CEL_VAL">
                                         <label class="ventaContado-label">Celular</label>
-                                        <input class="inputs" ng-model="lead.CELULAR" validation-pattern="telephone" />
+                                        <input class="inputs" ng-model="lead.CELULAR" validation-pattern="telephone" required/>
                                     </div>
                                     <div ng-show="lead.CEL_VAL" >
                                         <label class="ventaContado-label">Celular</label>
@@ -114,7 +114,7 @@
                                         moment-picker="lead.FEC_NAC"
                                         format="YYYY-MM-DD">
                                         <input class="form-control inputs"
-                                            ng-model="lead.FEC_NAC" id="FEC_NAC" readonly="" placeholder="Año/Mes/Día">
+                                            ng-model="lead.FEC_NAC" id="FEC_NAC" readonly="" placeholder="Año/Mes/Día" required>
                                         <span class="input-group-addon">
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
@@ -122,17 +122,17 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="ciud_exp">Ciudad expedición documento*</label>
-                                    <select ng-model="lead.CIUD_EXP" class="inputs form-control" id="ciud_exp" ng-options="city.value as city.label for city in cities" ></select>
+                                    <select ng-model="lead.CIUD_EXP" class="inputs form-control" id="ciud_exp" ng-options="city.value as city.label for city in cities" required></select>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="tipov">Tipo de vivienda*</label>
-                                    <select ng-model="lead.TIPOV" class="inputs form-control" id="tipov" ng-options="housingType.value as housingType.label for housingType in housingTypes" ></select>
+                                    <select ng-model="lead.TIPOV" class="inputs form-control" id="tipov" ng-options="housingType.value as housingType.label for housingType in housingTypes" required></select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="antiquity">Antigüedad en vivienda*</label>
-                                    <input class="inputs" id="antiquity" validation-pattern="number" type="number" ng-model="lead.TIEMPO_VIV"  />
+                                    <input class="inputs" id="antiquity" validation-pattern="number" type="number" ng-model="lead.TIEMPO_VIV" required />
                                 </div>
                                 <div class="col-12 col-md-4"  ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">
                                     <label class="labels" for="PROPIETARIO">Propietario de la vivienda</label>
@@ -146,17 +146,17 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <label class="ventaContado-label labels" for="direccion">Dirección de residencia*</label>
-                                    <input class="inputs" type="text" id="direccion" validation-pattern="text" ng-model="lead.DIRECCION"  />
+                                    <input class="inputs" type="text" id="direccion" validation-pattern="text" ng-model="lead.DIRECCION"  required/>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label class="labels" for="TELFIJO">Teléfono de residencia*</label>
-                                    <input class="inputs" validation-pattern="telephone" type="text" ng-model="lead.TELFIJO" id="TELFIJO"  />
+                                    <input class="inputs" validation-pattern="telephone" type="text" ng-model="lead.TELFIJO" id="TELFIJO"  required/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="estrato">Estrato*</label>
-                                    <input class="inputs" id="estrato" validation-pattern="number" type="text" ng-model="lead.ESTRATO"  />
+                                    <input class="inputs" id="estrato" validation-pattern="number" type="text" ng-model="lead.ESTRATO"  required/>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="genero">Género</label>
@@ -175,29 +175,29 @@
                                     <img src="http://192.168.200.60:8081/images/datosPersonales.png" class="img-fluid forms-descImg">
                                 <span class="forms-descStepNum">3</span>
                             </div>
-                            <div ng-show="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                            <div ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="empresaNombre">Nombre de la empresa*</label>
-                                        <input class="inputs" type="text" validation-pattern="text" id="empresaNombre" ng-model="lead.RAZON_SOC" />
+                                        <input class="inputs" type="text" validation-pattern="text" id="empresaNombre" ng-model="lead.RAZON_SOC" required/>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="dirEmpresa">Dirección de la empresa*</label>
-                                        <input class="inputs" type="text" validation-pattern="text" id="dirEmpresa" ng-model="lead.DIR_EMP" />
+                                        <input class="inputs" type="text" validation-pattern="text" id="dirEmpresa" ng-model="lead.DIR_EMP" required/>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="telEmpresa">Teléfono de la empresa*</label>
-                                        <input class="inputs" id="telEmpresa" validation-pattern="telephone" type="text" ng-model="lead.TEL_EMP" />
+                                        <input class="inputs" id="telEmpresa" validation-pattern="telephone" type="text" ng-model="lead.TEL_EMP" required/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="eps">E.P.S*</label>
-                                        <input class="inputs" id="eps" validation-pattern="text" type="text" ng-model="lead.ACT_ECO" />
+                                        <input class="inputs" id="eps" validation-pattern="text" type="text" ng-model="lead.ACT_ECO" required/>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="cargo">Cargo*</label>
-                                        <input class="inputs" id="cargo" validation-pattern="text" type="text" ng-model="lead.CARGO" />
+                                        <input class="inputs" id="cargo" validation-pattern="text" type="text" ng-model="lead.CARGO" required/>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="FEC_ING">Fecha de ingreso*</label>
@@ -205,7 +205,7 @@
                                             moment-picker="lead.FEC_ING"
                                             format="YYYY-MM">
                                             <input class="form-control inputs"
-                                                ng-model="lead.FEC_ING" id="FEC_ING" readonly="" placeholder="Año/Mes" />
+                                                ng-model="lead.FEC_ING" id="FEC_ING" readonly="" placeholder="Año/Mes" required/>
                                             <span class="input-group-addon">
                                                 <i class="octicon octicon-calendar"></i>
                                             </span>
@@ -219,7 +219,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="labels" for="salario">Salario*</label>
-                                        <input class="inputs" id="salario" ng-currency fraction="0" min="0" type="text" ng-model="lead.SUELDO"  />
+                                        <input class="inputs" id="salario" ng-currency fraction="0" min="0" type="text" ng-model="lead.SUELDO"  required/>
                                     </div>
                                 </div>      
                             </div>
@@ -233,26 +233,26 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa</label>
-                                        <input class="form-control inputs" type="text" validation-pattern="text" id="RAZON_IND" ng-model="lead.RAZON_IND" />
+                                        <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa *</label>
+                                        <input class="form-control inputs" type="text" validation-pattern="text" id="RAZON_IND" ng-model="lead.RAZON_IND" required/>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="ACT_IND">Qué vendes o comercializas?</label>
-                                        <input class="form-control inputs" type="text" id="ACT_IND" validation-pattern="text" ng-model="lead.ACT_IND" />
+                                        <label class="ventaContado-label" for="ACT_IND">Qué vendes o comercializas? *</label>
+                                        <input class="form-control inputs" type="text" id="ACT_IND" validation-pattern="text" ng-model="lead.ACT_IND" required/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="ACT_ECO">EPS</label>
-                                        <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
+                                        <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
+                                        <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" required />
                                     </div>
                                     <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                        <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución</label>
+                                        <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución*</label>
                                         <div class="input-group"
                                             moment-picker="lead.FEC_CONST"
                                             format="YYYY-MM">
                                             <input class="form-control inputs"
-                                                ng-model="lead.FEC_CONST" id="FEC_CONST" readonly="" placeholder="Año/Mes" >
+                                                ng-model="lead.FEC_CONST" id="FEC_CONST" readonly="" placeholder="Año/Mes" required>
                                             <span class="input-group-addon">
                                                 <i class="octicon octicon-calendar"></i>
                                             </span>
@@ -271,24 +271,24 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label">Salario</label>
-                                        <input class="form-control inputs"  type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" />
+                                        <label class="ventaContado-label">Salario*</label>
+                                        <input class="form-control inputs"  type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required/>
                                     </div>
                                 </div>
                             </div>
                             <div ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                        <label class="ventaContado-label" for="RAZON_SOC">Nombre de la empresa</label>
-                                        <input class="form-control inputs" type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC"/>
+                                        <label class="ventaContado-label" for="RAZON_SOC">Nombre de la empresa*</label>
+                                        <input class="form-control inputs" type="text" validation-pattern="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC" required/>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
-                                        <label class="ventaContado-label">Fecha de Pensión</label>
+                                        <label class="ventaContado-label">Fecha de Pensión*</label>
                                         <div class="input-group"
                                             moment-picker="lead.FEC_CONST"
                                             format="YYYY-MM">
                                             <input class="form-control inputs"
-                                                ng-model="lead.FEC_CONST" id="FEC_CONST" readonly="" placeholder="Año/Mes">
+                                                ng-model="lead.FEC_CONST" id="FEC_CONST" readonly="" placeholder="Año/Mes" required>
                                             <span class="input-group-addon">
                                                 <i class="octicon octicon-calendar"></i>
                                             </span>
@@ -297,16 +297,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="SUELDOIND">Salario</label>
-                                        <input class="form-control inputs"  type="text" ng-model="lead.SUELDOIND" id="SUELDOIND" ng-currency fraction="0" />
+                                        <label class="ventaContado-label" for="SUELDOIND">Salario*</label>
+                                        <input class="form-control inputs"  type="text" ng-model="lead.SUELDOIND" id="SUELDOIND" ng-currency fraction="0" required/>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="ACT_ECO">EPS</label>
-                                        <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" />
+                                        <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
+                                        <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" validation-pattern="textOnly" required/>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label class="ventaContado-label" for="BANCOP">Banco</label>
-                                        <select class="form-control inputs" ng-model="lead.BANCOP" id="BANCOP" ng-options="bank.value as bank.label for bank in banks"></select>
+                                        <label class="ventaContado-label" for="BANCOP">Banco*</label>
+                                        <select class="form-control inputs" ng-model="lead.BANCOP" id="BANCOP" ng-options="bank.value as bank.label for bank in banks" required></select>
                                     </div>
                                 </div>
                             </div>
@@ -321,21 +321,21 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label class="labels-blue" for="refPersonalNombre">Referencia personal:</label>
-                                    <input class="inputs" id="refPersonalNombre" ng-model="lead.NOM_REFPER" validation-pattern="name" type="text"  placeholder="Nombre*" />
+                                    <input class="inputs" id="refPersonalNombre" ng-model="lead.NOM_REFPER" validation-pattern="name" type="text"  placeholder="Nombre*" required/>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label class="labels" for="refPersonalCelular"></label>
-                                    <input class="inputs" id="refPersonalCelular" ng-model="lead.TEL_REFPER" validation-pattern="telephone" type="text"  placeholder="Celular*" />
+                                    <input class="inputs" id="refPersonalCelular" ng-model="lead.TEL_REFPER" validation-pattern="telephone" type="text"  placeholder="Celular*" required/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label class="labels-blue" for="refFamiliarNombre">Referencia familiar:</label>
-                                    <input class="inputs" type="text" id="refFamiliarNombre" ng-model="lead.NOM_REFFAM" validation-pattern="name"  placeholder="Nombre*" />
+                                    <input class="inputs" type="text" id="refFamiliarNombre" ng-model="lead.NOM_REFFAM" validation-pattern="name"  placeholder="Nombre*" required/>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label class="labels" for="refFamiliarCelular"></label>
-                                    <input class="inputs" type="text" id="refFamiliarCelular" ng-model="lead.TEL_REFFAM" validation-pattern="telephone"  placeholder="Celular*" />
+                                    <input class="inputs" type="text" id="refFamiliarCelular" ng-model="lead.TEL_REFFAM" validation-pattern="telephone"  placeholder="Celular*" required/>
                                 </div>
                             </div>
                             <div class="row" ng-show="showWarningErrorData">
