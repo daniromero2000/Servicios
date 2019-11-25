@@ -299,7 +299,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 form-group no-padding-right">
                                     <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="text" validation-pattern="telephone" ng-model="lead.telephone"
+                                    <input type="text"  ng-model="lead.telephone"
                                         id="telephone" cols="10" class="form-control" required>
                                 </div>
                             </div>
