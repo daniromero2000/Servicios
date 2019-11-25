@@ -25,7 +25,8 @@
 	</div>
 	<div class="row resetRow">
 		<div class="col-12 step2-containTitle">
-			<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ leadInfo.name + ' ' + leadInfo.lastName }}</strong>
+			<h2 class="text-center step2-titleAnalista"><strong>Hola!
+					@{{ leadInfo.name + ' ' + leadInfo.lastName }}</strong>
 				soy @{{ analyst.name }} tu analista digital</h2>
 			<p class="text-center step2-textAnalista">Cuéntanos más sobre tu información laboral</p>
 		</div>
@@ -70,38 +71,26 @@
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="companyName">Nombre de la Empresa*</label>
-						<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text"
-							ng-model="leadInfo.companyName" required="" />
+						<input type="text" class="form-control inputsSteps inputText" id="companyName"
+							validation-pattern="text" ng-model="leadInfo.companyName" required="" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="companyAddres">Dirección de la Empresa*</label>
-						<input type="text" class="form-control inputsSteps inputText" id="companyAddres" validation-pattern="text"
-							ng-model="leadInfo.companyAddres" required="" />
+						<input type="text" class="form-control inputsSteps inputText" id="companyAddres"
+							validation-pattern="text" ng-model="leadInfo.companyAddres" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="companyTelephone">Teléfono de la Empresa*</label>
-						<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone" validation-pattern="telephone"
-							class="form-control inputsSteps inputText" required="" />
+						<input type="text" id="companyTelephone" ng-model="leadInfo.companyTelephone"
+							validation-pattern="telephone" class="form-control inputsSteps inputText" required="" />
 					</div>
-				</div>
-				<div class="row resetRow">
-					<div class="col-sm-12 col-md-4 form-group">
-						<label for="eps">EPS*</label>
-						<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly"
-							class="form-control inputsSteps inputText" required="" />
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label for="companyPosition">Cargo*</label>
-						<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition" validation-pattern="textOnly"
-							class="form-control inputsSteps inputText" required="" />
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
+					<div class="col-sm-12 col-md-6 form-group">
 						<label for="admissionDate">Fecha de Ingreso</label>
 						<div class="input-group" moment-picker="leadInfo.admissionDate" format="YYYY-MM-DD">
-							<input class="form-control inputsSteps inputText" ng-model="leadInfo.admissionDate" id="admissionDate"
-								readonly="" placeholder="Año/Mes/Día">
+							<input class="form-control inputsSteps inputText" ng-model="leadInfo.admissionDate"
+								id="admissionDate" readonly="" placeholder="Año/Mes/Día">
 							<span class="input-group-addon">
 								<i class="octicon octicon-calendar"></i>
 							</span>
@@ -110,23 +99,35 @@
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
+						<label>Tipo de Contrato*</label>
+						<select class="form-control inputsSteps inputSelect" id="typeContract"
+							ng-model="leadInfo.typeContract" validation-pattern="textOnly"
+							ng-options="type.value as type.label for type in typesContracts" required="">
+						</select>
+					</div>
+
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="companyPosition">Cargo*</label>
+						<input type="text" id="companyPosition" ng-model="leadInfo.companyPosition"
+							validation-pattern="textOnly" class="form-control inputsSteps inputText" required="" />
+					</div>
+
+				</div>
+				<div class="row resetRow">
+					<div class="col-sm-12 col-md-4 form-group">
 						<label for="salary">Salario</label>
 						<input type="text" id="salary" ng-model="leadInfo.salary" ng-currency fraction="0" min="0"
 							class="form-control inputsSteps inputText" />
 					</div>
-				</div>
-				<div class="row resetRow">
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Tipo de Contrato*</label>
-						<select class="form-control inputsSteps inputSelect" id="typeContract" ng-model="leadInfo.typeContract"
-							validation-pattern="textOnly" ng-options="type.value as type.label for type in typesContracts"
-							required="">
-						</select>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
+					<div class="col-sm-12 col-md-4 form-group">
 						<label for="otherRevenue">Otros ingresos</label>
-						<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" ng-currency fraction="0" min="0"
-							class="form-control inputsSteps inputText" />
+						<input type="text" id="otherRevenue" ng-model="leadInfo.otherRevenue" ng-currency fraction="0"
+							min="0" class="form-control inputsSteps inputText" />
+					</div>
+					<div class="col-sm-12 col-md-4 form-group">
+						<label for="eps">EPS*</label>
+						<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly"
+							class="form-control inputsSteps inputText" required="" />
 					</div>
 				</div>
 			</div>
@@ -135,31 +136,25 @@
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="camaraComercio">Cámara de Comercio</label>
-						<select id="camaraComercio" ng-model="leadInfo.camaraComercio" class="form-control inputsSteps inputSelect"
+						<select id="camaraComercio" ng-model="leadInfo.camaraComercio"
+							class="form-control inputsSteps inputSelect"
 							ng-options="type.value as type.label for type in typesCamaraComercio">
 						</select>
 					</div>
-
-				</div>
-				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="companyNameInd">Nombre de la Empresa*</label>
-						<input type="text" class="form-control inputsSteps inputText" id="companyNameInd" validation-pattern="text"
-							ng-model="leadInfo.companyNameInd" required="" />
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label for="whatSell">Qué Vendes o Comercializas?</label>
-						<input type="text" class="form-control inputsSteps inputText" id="whatSell" validation-pattern="text"
-							ng-model="leadInfo.whatSell" />
+						<input type="text" class="form-control inputsSteps inputText" id="companyNameInd"
+							validation-pattern="text" ng-model="leadInfo.companyNameInd" required="" />
 					</div>
 				</div>
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
-						<label for="eps">EPS*</label>
-						<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly"
-							class="form-control inputsSteps inputText" required="" />
+						<label for="whatSell">Qué Vendes o Comercializas?</label>
+						<input type="text" class="form-control inputsSteps inputText" id="whatSell"
+							validation-pattern="text" ng-model="leadInfo.whatSell" />
 					</div>
-					<div class="col-sm-12 col-md-6 form-group" ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO'">
+					<div class="col-sm-12 col-md-6 form-group"
+						ng-if="leadInfo.occupation == 'INDEPENDIENTE CERTIFICADO'">
 						<label for="dateCreationCompany">Fecha de Constitución*</label>
 						<div class="input-group" moment-picker="leadInfo.dateCreationCompany" format="YYYY-MM">
 							<input class="form-control inputsSteps inputText" ng-model="leadInfo.dateCreationCompany"
@@ -187,14 +182,21 @@
 						<input type="text" id="salaryInd" ng-model="leadInfo.salaryInd" ng-currency fraction="0" min="0"
 							class="form-control inputsSteps inputText" />
 					</div>
+					<div class="col-sm-12 col-md-6 form-group">
+						<label for="eps">EPS*</label>
+						<input type="text" id="eps" ng-model="leadInfo.eps" validation-pattern="textOnly"
+							class="form-control inputsSteps inputText" required="" />
+					</div>
+
 				</div>
+
 			</div>
 			<div ng-if="leadInfo.occupation == 'PENSIONADO'">
 				<div class="row resetRow">
 					<div class="col-sm-12 col-md-6 form-group">
 						<label>Nombre de la Empresa*</label>
-						<input type="text" class="form-control inputsSteps inputText" id="companyName" validation-pattern="text"
-							ng-model="leadInfo.companyName" required="" />
+						<input type="text" class="form-control inputsSteps inputText" id="companyName"
+							validation-pattern="text" ng-model="leadInfo.companyName" required="" />
 					</div>
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="dateCreationCompany">Fecha de Pensión*</label>
@@ -228,8 +230,8 @@
 					<div class="col-sm-12 col-md-6 form-group">
 						<label for="bankSavingsAccount">Banco*</label>
 						<select ng-model="leadInfo.bankSavingsAccount" id="bankSavingsAccount"
-							class="form-control inputsSteps inputSelect" ng-options="bank.value as bank.label for bank in banks"
-							required="">
+							class="form-control inputsSteps inputSelect"
+							ng-options="bank.value as bank.label for bank in banks" required="">
 						</select>
 					</div>
 				</div>
@@ -290,9 +292,10 @@
 						<div class="col-12 form-group" ng-repeat="pregunta in formConfronta">
 							<p>@{{ pregunta.pregunta }}</p>
 							<div ng-repeat="opcion in pregunta.opciones">
-								<input type="radio" name="@{{ pregunta.secuencia }}" ng-model="pregunta.opcion" class="form-group"
-									id="@{{ opcion.secuencia_resp }}" ng-value="opcion.secuencia_resp" required><label
-									class="confronta-label" for="@{{ opcion.secuencia_resp }}">@{{ opcion.opcion }}</label>
+								<input type="radio" name="@{{ pregunta.secuencia }}" ng-model="pregunta.opcion"
+									class="form-group" id="@{{ opcion.secuencia_resp }}"
+									ng-value="opcion.secuencia_resp" required><label class="confronta-label"
+									for="@{{ opcion.secuencia_resp }}">@{{ opcion.opcion }}</label>
 							</div>
 						</div>
 						<div class="row">
@@ -327,10 +330,12 @@
 								<span class="text-quotamodal">$@{{ quota | number:0 }}</span> para compras
 							</p>
 							<p class="text-center">
-								<span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> para avances en efectivo
+								<span class="text-quotamodal">$@{{ quotaAdvance | number:0 }}</span> para avances en
+								efectivo
 							</p>
 							<p class="textModalNumSolic text-center">
-								Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
+								Tu número de scolitud es <strong
+									style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
 								guárdala para cualquier consulta posterior
 							</p>
 						</div>
@@ -344,7 +349,8 @@
 								$@{{ quota | number:0 }}
 							</p>
 							<p class="textModalNumSolic text-center">
-								Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
+								Tu número de scolitud es <strong
+									style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
 								guárdala para cualquier consulta posterior
 							</p>
 						</div>
@@ -355,7 +361,8 @@
 								Tu solictud fue creada exitosamente.
 							</p>
 							<p class="textModalNumSolic text-center">
-								Tu número de scolitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
+								Tu número de scolitud es <strong
+									style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
 								guárdala para cualquier consulta posterior
 							</p>
 						</div>
@@ -365,7 +372,8 @@
 							<form ng-submit="sendComment()">
 								<div class="form-group">
 									<label for="">A que hora te podemos llamar*</label>
-									<select ng-model="comment.availability" ng-options="time.value as time.label for time in timesContact"
+									<select ng-model="comment.availability"
+										ng-options="time.value as time.label for time in timesContact"
 										class="form-control" required="">
 									</select>
 								</div>

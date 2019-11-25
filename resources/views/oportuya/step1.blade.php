@@ -63,7 +63,7 @@
 					<strong>Información básica</strong><br>
 					<span class="forms-descText">Ingresa tus datos personales</span>
 					<img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg" />
-					<span class="forms-descStepNum">1</span>
+					<span class="forms-descStepNum text-center">1</span>
 				</div>
 			</div>
 			<form role=form id="saveLeadOportuya" ng-submit="confirmnumCel()">
