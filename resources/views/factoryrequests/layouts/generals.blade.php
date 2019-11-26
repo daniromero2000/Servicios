@@ -1,5 +1,5 @@
-<div class="box" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .25);">
-  <div class="box-body">
+
+
     <h2><i class="fa fa-user" aria-hidden="true"></i> Solicitud {{ $customer->SOLICITUD }} Sucursal {{ $customer->SUCURSAL }} {{ $customer->ESTADO }}
     </h2>
     <table class="table table-borderless table-hover table-sm">
@@ -26,5 +26,12 @@
       </tbody>
     </table>
 
-  </div>
-</div>
+@section('scriptsJs')
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- jsGrid -->
+<script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
+<script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
+@endsection
