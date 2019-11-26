@@ -1,6 +1,7 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
-    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+<link rel="stylesheet"
+    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
 <div ng-app="creditPolicyApp" ng-controller="simulatePolicySingleCtrl" class="containerleads container">
@@ -14,7 +15,8 @@
                     <div class="col-12">
                         <md-input-container class="md-block">
                             <label class="ventaContado-label">Número de identificación</label>
-                            <input required name="cedula" ng-model="lead.cedula" validation-pattern="number" ng-blur="getInfoLead()">
+                            <input required name="cedula" ng-model="lead.cedula" validation-pattern="number"
+                                ng-blur="getInfoLead()">
                         </md-input-container>
                     </div>
                     <div class="col-12 text-center">
@@ -71,12 +73,16 @@
                     <label for="">Actividad independiente: </label>@{{ infoLead.ACT_IND }}
                 </p>
                 <p>
-                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.TIEMPO_LABOR == 1">Si cumple</span> <span ng-if="infoLead.TIEMPO_LABOR == 0">No cumple</span>
+                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.TIEMPO_LABOR == 1">Si cumple</span> <span
+                        ng-if="infoLead.TIEMPO_LABOR == 0">No cumple</span>
                 </p>
-                <p ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
-                    <label for="">Ingresos: </label><span>$ @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
+                <p
+                    ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
+                    <label for="">Ingresos: </label><span>$
+                        @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
                 </p>
-                <p ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                <p
+                    ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                     <label for="">Ingresos: </label><span>$@{{ infoLead.SUELDO + infoLead.OTROS_ING | number:0 }}</span>
                 </p>
             </div>
@@ -110,12 +116,16 @@
         </div>
     </div>
 </div>
-    <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
+<script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
+<script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
+<script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
+<script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
 @stop
 @section('scriptsJs')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
-        <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+<script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 @endsection

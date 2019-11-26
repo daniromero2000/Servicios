@@ -5,9 +5,19 @@ namespace App\Entities\FactoryRequests\Repositories;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Collection as Support;
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
+
+    private $columns = [
+        'CLIENTE',
+        'SOLICITUD',
+        'SUCURSAL',
+        'FECHASOL',
+        'ESTADO',
+    ];
+
     public function __construct(
         FactoryRequest $factoryRequest
     ) {
@@ -77,6 +87,20 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 })->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
         } catch (QueryException $e) {
             $e;
+        }
+    }
+
+
+    public function listFactoryRequests($totalView): Support
+    {
+        try {
+            return  $this->model
+                ->orderBy('SOLICITUD', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
         }
     }
 }

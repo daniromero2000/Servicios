@@ -193,21 +193,6 @@ Route::group(['prefix' => 'api/'], function () {
 });
 
 
-Route::get("/fabricaLeads", function () {
-    if (Auth::guest()) {
-        return view('auth.login');
-    }
-    return view('fabricaLeads.index');
-});
-
-
-Route::group(['prefix' => '/fabricaLeads/', 'middleware' => 'auth'], function () {
-
-    Route::get('/leads', function () {
-        return view('fabricaLeads.leads');
-    });
-});
-
 /**
  **Proyecto: SERVICIOS FINANCIEROS
  **Caso de Uso: Administrador de leads - Canal dígital
