@@ -37,7 +37,7 @@ class FactoryRequestController extends Controller
 
     public function show(int $id)
     {
-        $customer = $this->factoryRequestInterface->findFactoryRequestById($id);
+        $customer = $this->factoryRequestInterface->findFactoryRequestByIdFull($id);
 
         return view('factoryrequests.show', [
             'customer'                     => $customer,
