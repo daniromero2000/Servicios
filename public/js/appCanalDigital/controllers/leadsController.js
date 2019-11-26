@@ -495,6 +495,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         }, function errorCallback(response) { });
     };
 
+<<<<<<< HEAD
 
     $scope.showDialogDelete = function (idLead) {
         $scope.idLead = idLead;
@@ -525,6 +526,33 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         });
     }
 
+=======
+      $scope.showDialogDelete = function (idLead) {
+          $scope.idLead = idLead;
+          $('#deleteCommunityModal').modal("show");
+      }
+
+
+      $scope.confirmDelete = function () {
+          $scope.deleteCommunityLeads($scope.idLead);
+      }
+
+      $scope.cancelDelete = function () {
+          $('#deleteCommunityModal').modal('hide');
+      }
+
+      $scope.deleteCommunityLeads = function (idLead) {
+          $http({
+              method: 'POST',
+              url: '/communityLeads/deleteCommunityLeads/' + idLead
+          }).then(function successCallback(response) {
+              if (response.data != false) {
+                  $scope.searchLeads();
+                  $('#deleteCommunityModal').modal('hide');
+              }
+          }, function errorCallback(response) {});
+      }
+>>>>>>> b504c86008bdc7920b6fdc8c631a1e78ce52aed3
 
     $scope.getLeads();
     $scope.getCities();

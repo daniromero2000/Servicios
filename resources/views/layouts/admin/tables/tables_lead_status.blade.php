@@ -1,24 +1,30 @@
-<table class="table table-borderless table-hover table-sm">
-    <thead class="thead-dark">
-        <tr>
-            @foreach ($headers as $header)
-            <th class="text-center" scope="col">{{ $header }}</th>
-            @endforeach
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($datas as $data)
-        <tr>
-            @foreach($data->toArray() as $key => $value)
-            <td class="text-center">
-                {{ $data[$key] }}
-            </td>
-            @endforeach
 
-            <td class="text-center">
+                <div class="table table-responsive-lg ">
 
-            </td>
-        </tr>
-        @endforeach
-    <tbody>
-</table>
+                    <table id="example2" class="table  table-stripped  table-hover">
+                        <thead class="text-center">
+                            <tr>
+                                @foreach ($headers as $header)
+                                <th  scope="col">{{ $header }}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($datas as $data)
+                            <tr>
+                                @foreach($data->toArray() as $key => $value)
+                                <td>
+                                    {{ $data[$key] }}
+                                </td>
+                                @endforeach
+
+                                <td>
+
+                                </td>
+                            </tr>
+                            @endforeach
+
+                        <tbody>
+                    </table>
+                </div>
+           
