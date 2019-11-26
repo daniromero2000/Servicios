@@ -2,7 +2,9 @@
 
 namespace App\Entities\Intentions;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\Definitions\Definition;
 
 class Intention extends Model
 {
@@ -28,4 +30,14 @@ class Intention extends Model
     ];
 
     public $timestamps = false;
+
+    public function definition()
+    {
+        return $this->belongsTo(Definition::class, 'ID_DEF');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'CEDULA');
+    }
 }

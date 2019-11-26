@@ -23,12 +23,14 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function findCustomerIntentionById($id)
+    public function findCustomerIntentionById($id): Intention
     {
         try {
-            return $this->model->findOrFail($id);
-        } catch (\Throwable $th) {
-            //throw $th;
+            return $this->model
+                ->with(['customer', 'definition'])
+                ->findOrFail($id);
+        } catch (QueryException $e) {
+        dd($e);
         }
     }
 }

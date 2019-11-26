@@ -173,7 +173,7 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
         AND sb.STATE = 'A'
-        AND cf.`ESTADO` = 'APROBADO'
+        AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
