@@ -35,6 +35,16 @@ class FactoryRequestController extends Controller
         ]);
     }
 
+    public function show(int $id)
+    {
+        $customer = $this->factoryRequestInterface->findFactoryRequestById($id);
+
+        return view('factoryrequests.show', [
+            'customer'                     => $customer,
+
+        ]);
+    }
+
     public function assignAssesorDigitalToLead($solicitud)
     {
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
