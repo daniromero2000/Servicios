@@ -25,7 +25,7 @@ class FactoryRequest extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'CLIENTE');
+        return $this->belongsTo(Customer::class, trim('CLIENTE'));
     }
 
     public function subsidiary()
