@@ -22,7 +22,6 @@
           <td class="text-center">{{ $customer->GRAN_TOTAL }}</td>
           <td class="text-center">{{ $customer->PRODUC_W }}</td>
           <td class="text-center">{{ $customer->AVANCE_W }}</td>
-
         </tr>
       </tbody>
     </table>

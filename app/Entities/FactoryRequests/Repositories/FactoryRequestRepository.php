@@ -33,6 +33,16 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+
+    public function findFactoryRequestByIdFull(int $id): FactoryRequest
+    {
+        try {
+            return $this->model->with('customer')->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getCustomerFactoryRequest($identificationNumber): FactoryRequest
     {
         try {
