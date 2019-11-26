@@ -57,13 +57,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 
     $scope.leadsChannels = [{
-            label: 'FACEBOOK',
-            value: 2
-        },
-        {
-            label: 'WHATSAPP',
-            value: 3
-        }
+        label: 'FACEBOOK',
+        value: 2
+    },
+    {
+        label: 'WHATSAPP',
+        value: 3
+    }
     ];
 
     $scope.comment = {
@@ -82,53 +82,53 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.cities = [];
 
     $scope.typeServices = [{
-            label: 'Crédito',
-            value: 'Crédito'
-        },
-        {
-            label: 'Crédito Motos',
-            value: 'Motos'
-        },
-        {
-            label: 'Crédito Libranza',
-            value: 'Credito libranza'
-        },
-        {
-            label: 'Seguros',
-            value: 'Seguros'
-        },
+        label: 'Crédito',
+        value: 'Crédito'
+    },
+    {
+        label: 'Crédito Motos',
+        value: 'Motos'
+    },
+    {
+        label: 'Crédito Libranza',
+        value: 'Credito libranza'
+    },
+    {
+        label: 'Seguros',
+        value: 'Seguros'
+    },
     ];
 
     $scope.typeStates = [{
-            label: 'Pendiente',
-            value: 0
-        },
-        {
-            label: 'En estudio',
-            value: 1
-        },
-        {
-            label: 'En espera',
-            value: 2
-        },
-        {
-            label: 'Aprobado',
-            value: 3
-        },
-        {
-            label: 'Negado',
-            value: 4
-        }
+        label: 'Pendiente',
+        value: 0
+    },
+    {
+        label: 'En estudio',
+        value: 1
+    },
+    {
+        label: 'En espera',
+        value: 2
+    },
+    {
+        label: 'Aprobado',
+        value: 3
+    },
+    {
+        label: 'Negado',
+        value: 4
+    }
     ];
 
     $scope.cardTypes = [{
-            label: 'Tarjeta Black',
-            value: 0
-        },
-        {
-            label: 'Tarjeta Gray',
-            value: 1
-        }
+        label: 'Tarjeta Black',
+        value: 0
+    },
+    {
+        label: 'Tarjeta Gray',
+        value: 1
+    }
     ];
 
     $scope.getCities = function () {
@@ -310,11 +310,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/communityLeads/viewCommunityLeads/' + idLead
         }).then(function successCallback(response) {
-                if (response.data != false) {
-                    $scope.lead = response.data;
-                }
-            },
-            function errorCallback(response) {});
+            if (response.data != false) {
+                $scope.lead = response.data;
+            }
+        },
+            function errorCallback(response) { });
     };
 
     $scope.updateCommunityLeads = function () {
@@ -492,9 +492,41 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 $scope.comment.comment = "";
                 $scope.viewAddComent = false;
             }
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) { });
     };
 
+<<<<<<< HEAD
+
+    $scope.showDialogDelete = function (idLead) {
+        $scope.idLead = idLead;
+        $('#deleteCommunityModal').modal("show");
+    }
+
+
+    $scope.confirmDelete = function () {
+        $scope.deleteCommunityLeads($scope.idLead);
+    }
+
+    $scope.cancelDelete = function () {
+        $('#deleteCommunityModal').modal('hide');
+    }
+
+    $scope.deleteCommunityLeads = function (idLead) {
+            $http({
+            method: 'POST',
+            url: '/communityLeads/deleteCommunityLeads/' + idLead
+                  }).then(function successCallback(response) {
+                      if (response.data != false) {
+                              $scope.searchLeads();
+                $('#deleteCommunityModal').modal('hide');
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+
+        });
+    }
+
+=======
       $scope.showDialogDelete = function (idLead) {
           $scope.idLead = idLead;
           $('#deleteCommunityModal').modal("show");
@@ -520,7 +552,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
               }
           }, function errorCallback(response) {});
       }
+>>>>>>> b504c86008bdc7920b6fdc8c631a1e78ce52aed3
 
     $scope.getLeads();
     $scope.getCities();
 })
+
+
+// 5691

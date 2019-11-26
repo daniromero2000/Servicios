@@ -416,7 +416,7 @@ class LeadsController extends Controller
     public function deleteCommunityLeads($id)
     {
         $lead = $this->leadInterface->findLeadById($id);
-        $lead->delete();
+        $lead->delete(); 
 
         return response()->json([true]);
     }
