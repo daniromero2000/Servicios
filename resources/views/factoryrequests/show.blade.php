@@ -1,23 +1,30 @@
 @extends('layouts.admin.app')
 @section('content')
 
-<section class="content">
+<section class="content border-0">
     @include('layouts.errors-and-messages')
 
-    <div class="box" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .25);">
-        <ul class="nav nav-tabs" role="tablist" id="tablist">
-            <li role="presentation" @if(!request()->has('info')) class="active" @endif><a href="#info"
-                    aria-controls="home" role="tab" data-toggle="tab">Cliente</a></li>
-            <li role="presentation" @if(request()->has('contact')) class="active" @endif><a href="#contact"
-                    aria-controls="profile" role="tab" data-toggle="tab">Contacto</a></li>
-            <li role="presentation" @if(request()->has('seguimiento')) class="active" @endif><a href="#seguimiento"
-                    aria-controls="profile" role="tab" data-toggle="tab">Seguimiento</a></li>
+    <div class="card border-0 mt-5">
+        <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
+            <li class="active" role="presentation">
+                <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
+            </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
+            </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
+                    aria-controls="profile">Seguimiento</a>
+            </li>
         </ul>
         <div class="tab-content" id="tabcontent">
             <div role="tabpanel" class="tab-pane active" id="info">
-                @include('factoryrequests.layouts.generals')
-                @include('factoryrequests.layouts.customer')
+                <div class="container-fluid">
 
+                    @include('factoryrequests.layouts.generals')
+                    @include('factoryrequests.layouts.customer')
+                    @include('factoryrequests.layouts.creditcard')
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
@@ -31,11 +38,12 @@
                     @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
-        </div>
 
-    </div>
+
+            <div class="row border-0">
+                <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
+            </div>
+
+        </div>
 </section>
 @endsection
