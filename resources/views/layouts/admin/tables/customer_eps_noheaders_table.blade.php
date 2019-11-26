@@ -7,8 +7,6 @@
       {{ $data->toArray()[$key] }}
     </td>
     @endforeach
-
   </tr>
-
   @endif
 <tbody>
