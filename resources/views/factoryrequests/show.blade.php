@@ -16,11 +16,12 @@
         <div class="tab-content" id="tabcontent">
             <div role="tabpanel" class="tab-pane active" id="info">
                 @include('factoryrequests.layouts.generals')
+                @include('factoryrequests.layouts.customer')
 
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
-                    @include('factoryrequests.layouts.phones')
+
 
                 </div>
             </div>
@@ -32,7 +33,7 @@
             </div>
         </div>
         <div class="row">
-            <a href="{{ route('admin.customers.index') }}" class="btn btn-default btn-sm">Regresar</a>
+            <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
         </div>
 
     </div>
