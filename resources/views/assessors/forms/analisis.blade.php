@@ -3,22 +3,20 @@
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
-<div ng-app="creditPolicyApp" ng-controller="simulatePolicySingleCtrl" class="containerleads container">
+<div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
     <div class="row">
         <div class="col-12 text-center">
             <h2 class="headerAdmin ng-scope">Aplicar política / individual</h2>
         </div>
-        <div class="col-6 offset-3">
+        <div class="col-12 col-sm-4 offset-sm-4">
             <form name="simular" ng-submit="simulate()">
                 <div class="row">
-                    <div class="col-12">
-                        <md-input-container class="md-block">
-                            <label class="ventaContado-label">Número de identificación</label>
-                            <input required name="cedula" ng-model="lead.cedula" validation-pattern="number" ng-blur="getInfoLead()">
-                        </md-input-container>
+                    <div class="col-12 form-group">
+                        <label class="ventaContado-label">Número de identificación</label>
+                        <input required class="form-control" ng-model="lead.cedula" validation-pattern="number" ng-blur="getInfoLead()">
                     </div>
                     <div class="col-12 text-center">
-                        <md-button type="submit" class="md-raised md-primary">Aplicar</md-button>
+                        <button type="submit" class="btn btn-primary">Aplicar</button>
                     </div>
                 </div>
             </form>
@@ -110,12 +108,11 @@
         </div>
     </div>
 </div>
-    <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/assessorVentaContado.js') }}"></script>
 @stop
 @section('scriptsJs')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
-        <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+    <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-currency/1.2.7/ng-currency.min.js"></script>
 @endsection

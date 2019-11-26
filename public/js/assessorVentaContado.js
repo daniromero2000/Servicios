@@ -438,4 +438,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.getInfoVentaContado();
 	$scope.resetInfo();
-});
+})
+
+.controller("realizarAnalisisCtrl", function($scope, $http, $timeout) {
+	$scope.infoLead = {};
+
+	$scope.simulate = function(){
+
+	};
+})
