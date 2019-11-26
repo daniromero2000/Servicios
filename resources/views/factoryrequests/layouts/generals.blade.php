@@ -1,5 +1,5 @@
 <div class="card-header">
-  <h2><i class="fas fa-credit-card" aria-hidden="true"></i> Solicitud {{ $customer->SOLICITUD }} Sucursal
+  <h2><i class="fas fa-tags" aria-hidden="true"></i> Solicitud {{ $customer->SOLICITUD }} Sucursal
     {{ $customer->SUCURSAL }} {{ $customer->ESTADO }}
   </h2>
 </div>

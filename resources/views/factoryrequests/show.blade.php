@@ -26,8 +26,14 @@
 
                 <div class="container-fluid mt-5 card">
                     @include('factoryrequests.layouts.customer')
-                    {{-- @include('factoryrequests.layouts.creditcard') --}}
+
                 </div>
+
+                <div class="container-fluid mt-5 card">
+                    @include('factoryrequests.layouts.creditcard')
+
+                </div>
+
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
