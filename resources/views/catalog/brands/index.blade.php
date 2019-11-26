@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="table">
-      <table class="table table-lg table-responsive table-stripped leadTable  table-hover">
+      <table class="table table-responsive-lg table-stripped leadTable  table-hover">
         <thead class="headTableLeads">
           <tr>
             <th scope="col" width="90%">Marca</th>

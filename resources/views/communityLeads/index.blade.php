@@ -17,7 +17,7 @@
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row">
             <div class="col-sm-6">
             </div><!-- /.col -->
             <div class="col-sm-6">
@@ -31,7 +31,6 @@
     </div><!-- /.container-fluid -->
 </div>
 <div ng-app="communityLeadsApp" class="containerleads ">
-    <br>
     @if (Session::get('success'))
     <div class="alert alert-success">
         <p>{{ Session::get('success') }}</p>
@@ -41,8 +40,7 @@
 
         <ng-view></ng-view>
     </div>
-
-</div>
+ </div>
 <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
 <script src="{{ asset('js/appCommunityLeads/app.js') }}"></script>
 <script src="{{ asset('js/appCommunityLeads/services/myService.js') }}"></script>
