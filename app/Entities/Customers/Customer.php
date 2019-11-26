@@ -16,7 +16,7 @@ class Customer extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey = 'trim(CEDULA)';
+    protected $primaryKey = 'CEDULA';
 
     public $timestamps = false;
 
