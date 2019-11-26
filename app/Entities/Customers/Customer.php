@@ -124,13 +124,20 @@ class Customer extends Model
     ];
 
     protected $hidden = [
+        'CON1',
+        'USU',
+        'CON2',
+        'TEL2_EMP',
+        'termsAndConditions',
         'TIPO_DOC',
+        'NIT_EMP',
+        'PROFESION',
         'TIPOCLIENTE',
         'SUBTIPO',
         'SEXO',
         'FEC_EXP',
         'CIUD_EXP',
-
+        'TARJETA_OP',
         'DEPTO',
         'TIPOV',
         'TIEMPO_VIV',
