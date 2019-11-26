@@ -119,7 +119,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
  * Admin routes
  */
 Route::namespace('Admin')->group(function () {
-
     Route::namespace('Directors')->group(function () {
         Route::resource('director', 'DirectorController');
     });
@@ -129,6 +128,7 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('FactoryRequests')->group(function () {
+        Route::resource('factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
     });
 

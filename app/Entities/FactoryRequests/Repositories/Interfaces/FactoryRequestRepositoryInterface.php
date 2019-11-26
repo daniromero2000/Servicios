@@ -3,6 +3,7 @@
 namespace App\Entities\FactoryRequests\Repositories\Interfaces;
 
 use App\Entities\FactoryRequests\FactoryRequest;
+use Illuminate\Support\Collection as Support;
 
 interface FactoryRequestRepositoryInterface
 {
@@ -15,4 +16,6 @@ interface FactoryRequestRepositoryInterface
   public function checkCustomerHasFactoryRequest($identificationNumber, $timeRejectedVigency);
 
   public function getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
+
+  public function listFactoryRequests($totalView): Support;
 }
