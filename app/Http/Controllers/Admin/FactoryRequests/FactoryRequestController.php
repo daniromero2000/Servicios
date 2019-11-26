@@ -20,6 +20,8 @@ class FactoryRequestController extends Controller
         $this->middleware('auth');
     }
 
+
+
     public function index(Request $request)
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
@@ -50,5 +52,9 @@ class FactoryRequestController extends Controller
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
         $factoryRequest->ASESOR_DIG = auth()->user()->id;
         return response()->json($factoryRequest->save());
+    }
+    public function dashboard(Request $request)
+    {
+        return view('factoryrequests.dashboard');
     }
 }
