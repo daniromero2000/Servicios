@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class FactoryRequest extends Model
 {
+
+    private $columns = [
+        'CEDULA',
+        'APELLIDOS',
+        'NOMBRES',
+        'TIPOCLIENTE',
+        'SUBTIPO',
+    ];
+
     protected $table = 'SOLIC_FAB';
 
     protected $connection = 'oportudata';
