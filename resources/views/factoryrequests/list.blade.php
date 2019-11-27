@@ -3,7 +3,6 @@
 
 <section>
     @include('layouts.errors-and-messages')
-
     @if(!is_null($customers))
     <div >
             <div class="content-header">
