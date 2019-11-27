@@ -67,24 +67,43 @@ class FactoryRequestController extends Controller
         $from = Carbon::now()->subMonth();
 
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
+        $webCounts = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
+
+
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
+            $webCounts = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
         }
 
+
         $estadosNames =  $estadosNames->toArray();
+        $webCounts =  $webCounts->toArray();
+
+
         $estadosNames = array_values($estadosNames);
+        $webCounts = array_values($webCounts);
+
         $statusesNames = [];
         $statusesValues = [];
+        $webValues = [];
+        $webNames = [];
         foreach ($estadosNames as $estadosName) {
 
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
         }
 
+        foreach ($webCounts as $webCount) {
+            array_push($webNames, trim($webCount['SOLICITUD_WEB']));
+            array_push($webValues, trim($webCount['total']));
+        }
+
         return view('factoryrequests.dashboard', [
             'statusesNames' => $statusesNames,
-            'statusesValues' => $statusesValues
+            'statusesValues' => $statusesValues,
+            'webValues' => $webValues,
+            'webNames' => $webNames
 
         ]);
     }

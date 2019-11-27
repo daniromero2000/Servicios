@@ -127,11 +127,9 @@
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-
     </div>
     <!-- /.col (RIGHT) -->
   </div>
-
   <div class="row">
     <!-- /.col (RIGTH) -->
     <div class="col-md-4">
@@ -224,52 +222,52 @@
   <!-- /.row -->
 
   <div class="row">
-      <div class="col-md-6">
-        <!-- Line chart -->
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Line Chart
-            </h3>
+    <div class="col-md-6">
+      <!-- Line chart -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Line Chart
+          </h3>
 
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-              </button>
-            </div>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
           </div>
-          <div class="card-body">
-            <div id="line-chart" style="height: 300px;"></div>
-          </div>
-          <!-- /.card-body-->
         </div>
-        <!-- /.card -->
-
-        <!-- Area chart -->
-        <div hidden class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Area Chart
-            </h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="area-chart" style="height: 338px;" class="full-width-chart"></div>
-          </div>
-          <!-- /.card-body-->
+        <div class="card-body">
+          <div id="line-chart" style="height: 300px;"></div>
         </div>
-        <!-- /.card -->
-
+        <!-- /.card-body-->
       </div>
+      <!-- /.card -->
+
+      <!-- Area chart -->
+      <div hidden class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Area Chart
+          </h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="area-chart" style="height: 338px;" class="full-width-chart"></div>
+        </div>
+        <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+
+    </div>
     <!-- /.col -->
     <div class="col-md-6">
       <div class="card card-primary card-outline">
@@ -316,47 +314,47 @@
       </div>
     </div>
     <div class="col-lg-6">
-        <div class="card">
-          <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-              <h3 class="card-title">Online Store Visitors</h3>
-              <a href="javascript:void(0);">View Report</a>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="d-flex">
-              <p class="d-flex flex-column">
-                <span class="text-bold text-lg">820</span>
-                <span>Visitors Over Time</span>
-              </p>
-              <p class="ml-auto d-flex flex-column text-right">
-                <span class="text-success">
-                  <i class="fas fa-arrow-up"></i> 12.5%
-                </span>
-                <span class="text-muted">Since last week</span>
-              </p>
-            </div>
-            <!-- /.d-flex -->
-
-            <div class="position-relative mb-4">
-              <canvas id="visitors-chart" height="200"></canvas>
-            </div>
-
-            <div class="d-flex flex-row justify-content-end">
-              <span class="mr-2">
-                <i class="fas fa-square text-primary"></i> This Week
-              </span>
-
-              <span>
-                <i class="fas fa-square text-gray"></i> Last Week
-              </span>
-            </div>
+      <div class="card">
+        <div class="card-header border-0">
+          <div class="d-flex justify-content-between">
+            <h3 class="card-title">Online Store Visitors</h3>
+            <a href="javascript:void(0);">View Report</a>
           </div>
         </div>
-        <!-- /.card -->
+        <div class="card-body">
+          <div class="d-flex">
+            <p class="d-flex flex-column">
+              <span class="text-bold text-lg">820</span>
+              <span>Visitors Over Time</span>
+            </p>
+            <p class="ml-auto d-flex flex-column text-right">
+              <span class="text-success">
+                <i class="fas fa-arrow-up"></i> 12.5%
+              </span>
+              <span class="text-muted">Since last week</span>
+            </p>
+          </div>
+          <!-- /.d-flex -->
 
-       
+          <div class="position-relative mb-4">
+            <canvas id="visitors-chart" height="200"></canvas>
+          </div>
+
+          <div class="d-flex flex-row justify-content-end">
+            <span class="mr-2">
+              <i class="fas fa-square text-primary"></i> This Week
+            </span>
+
+            <span>
+              <i class="fas fa-square text-gray"></i> Last Week
+            </span>
+          </div>
+        </div>
       </div>
+      <!-- /.card -->
+
+
+    </div>
   </div>
 
 
@@ -767,10 +765,14 @@
     // Get context with jQuery - using jQuery's .get() method.
     var estados = [];
     var values = [];
+    var webValues = [];
+    var webNames = [];
 
 
 var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
+var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
+var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -844,7 +846,34 @@ var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
       options: donutOptions
     })
 
- 
+    //-------------
+      //- DONUT CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+
+      var donutData2 = {
+      labels: webNames,
+      datasets: [
+      {
+      data: webValues,
+      backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
+      '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+      }
+      ]
+      }
+      var donutOptions2 = {
+      maintainAspectRatio : false,
+      responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart2 = new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+      })
+
+
     //-------------
     //- PIE CHART -
     //-------------
@@ -867,7 +896,7 @@ var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var pieChartCanvas = $('#pieChart2').get(0).getContext('2d')
-    var pieData        = donutData;
+    var pieData        = donutData2;
     var pieOptions     = {
       maintainAspectRatio : false,
       responsive : true,

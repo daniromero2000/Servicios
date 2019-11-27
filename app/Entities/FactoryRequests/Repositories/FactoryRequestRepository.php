@@ -104,7 +104,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function listFactoryRequests($totalView): Support
     {
         try {
@@ -131,6 +130,18 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     }
 
 
+    public function countWebFactoryRequests($from, $to)
+    {
+        try {
+            return  $this->model->select('SOLICITUD_WEB', DB::raw('count(*) as total'))
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('SOLICITUD_WEB')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
@@ -139,7 +150,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->take(30)
                 ->get($this->columns);
         }
-
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
@@ -151,7 +161,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->take(100)
                 ->get($this->columns);
         }
-
 
         return $this->model->searchFactoryRequest($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
