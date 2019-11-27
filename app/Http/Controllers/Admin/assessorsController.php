@@ -22,7 +22,8 @@ class assessorsController extends Controller
         CustomerRepositoryInterface $customerRepositoryInterface
     )
     {
-        //$this->middleware(['auth:assessor']);
+        $this->middleware('auth');
+        $this->customerInterface = $customerRepositoryInterface;
     }
     /**
      * Show the application dashboard.
