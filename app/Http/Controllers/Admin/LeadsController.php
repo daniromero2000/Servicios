@@ -299,7 +299,7 @@ class LeadsController extends Controller
     {
         $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION
         FROM `CLIENTE_FAB` as cf, `cifin_score` as score, `TB_INTENCIONES`
-        LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.ID_DEF
+        LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
         AND score.`scocedula` = cf.`CEDULA`
@@ -421,7 +421,7 @@ class LeadsController extends Controller
     public function deleteCommunityLeads($id)
     {
         $lead = $this->leadInterface->findLeadById($id);
-        $lead->delete(); 
+        $lead->delete();
 
         return response()->json([true]);
     }

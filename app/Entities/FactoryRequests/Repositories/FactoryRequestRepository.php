@@ -4,11 +4,11 @@ namespace App\Entities\FactoryRequests\Repositories;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
@@ -118,36 +118,46 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function countFactoryRequestsStatuses()
+    public function countFactoryRequestsStatuses($from, $to)
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+            dd($e);
         }
     }
 
 
-    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null): Collection
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
             return $this->model->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
         }
 
+
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
+
         return $this->model->searchFactoryRequest($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO', $status);
+            })->orderBy('SOLICITUD', 'desc')
             ->get($this->columns);
     }
 }

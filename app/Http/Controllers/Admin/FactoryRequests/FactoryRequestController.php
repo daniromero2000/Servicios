@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin\FactoryRequests;
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FactoryRequestController extends Controller
 {
     private $factoryRequestInterface, $toolsInterface;
+
 
     public function __construct(
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
@@ -27,7 +29,8 @@ class FactoryRequestController extends Controller
         $listCount = $list->count();
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip,  request()->input('from'), request()->input('to'))->sortByDesc('SOLICITUD');
+            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
+
             $listCount = $list->count();
         }
 
@@ -60,11 +63,26 @@ class FactoryRequestController extends Controller
 
     public function dashboard(Request $request)
     {
+        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now());
 
-        // dd($this->factoryRequestInterface->countFactoryRequestsStatuses());
+
+        if (request()->has('from')) {
+            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
+        }
+
+        $estadosNames =  $estadosNames->toArray();
+        $estadosNames = array_values($estadosNames);
+        $statusesNames = [];
+        $statusesValues = [];
+        foreach ($estadosNames as $estadosName) {
+
+            array_push($statusesNames, trim($estadosName['ESTADO']));
+            array_push($statusesValues, trim($estadosName['total']));
+        }
 
         return view('factoryrequests.dashboard', [
-            'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses(),
+            'statusesNames' => $statusesNames,
+            'statusesValues' => $statusesValues
 
         ]);
     }
