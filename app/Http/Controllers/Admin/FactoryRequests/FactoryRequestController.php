@@ -67,44 +67,39 @@ class FactoryRequestController extends Controller
         $from = Carbon::now()->subMonth();
 
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
-        $webCounts = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
-
-
+        $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
-            $webCounts = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
+            $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
         }
 
+        $estadosNames   = $estadosNames->toArray();
+        $webCounts      = $webCounts->toArray();
+        $estadosNames   = array_values($estadosNames);
+        $webCounts      = array_values($webCounts);
 
-        $estadosNames =  $estadosNames->toArray();
-        $webCounts =  $webCounts->toArray();
-
-
-        $estadosNames = array_values($estadosNames);
-        $webCounts = array_values($webCounts);
-
-        $statusesNames = [];
+        $statusesNames  = [];
         $statusesValues = [];
-        $webValues = [];
-        $webNames = [];
         foreach ($estadosNames as $estadosName) {
-
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
         }
 
+        $webValues      = [];
+        $webNames       = [];
         foreach ($webCounts as $webCount) {
             array_push($webNames, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
         }
 
         return view('factoryrequests.dashboard', [
-            'statusesNames' => $statusesNames,
+            'statusesNames'  => $statusesNames,
             'statusesValues' => $statusesValues,
-            'webValues' => $webValues,
-            'webNames' => $webNames
-
+            'webValues'      => $webValues,
+            'webNames'       => $webNames,
+            'totalWeb'       => array_sum($webValues),
+            'totalStatuses'  => array_sum($statusesValues),
         ]);
     }
 }
