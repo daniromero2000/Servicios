@@ -3,9 +3,9 @@
 </div>
 <div class="card-body table-responsive pt-1">
   @if(!empty($customer->customer))
-  <table class="table table-hover table-stripped leadTable ">
+  <table class="table table-hover table-stripped leadTable " >
     <thead>
-      <tr>
+       <tr>
         <th class="text-center" scope="col">Cedula</th>
         <th class="text-center" scope="col">Apellido</th>
         <th class="text-center" scope="col">Nombre</th>
