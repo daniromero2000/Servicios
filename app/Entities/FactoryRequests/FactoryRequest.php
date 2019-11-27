@@ -6,9 +6,13 @@ use App\Entities\CreditCards\CreditCard;
 use App\Entities\Customers\Customer;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class FactoryRequest extends Model
 {
+
+    use SearchableTrait;
+
     protected $table = 'SOLIC_FAB';
 
     protected $connection = 'oportudata';
@@ -16,6 +20,26 @@ class FactoryRequest extends Model
     protected $primaryKey = 'SOLICITUD';
 
     public $timestamps = false;
+
+    protected $hidden = [
+        'relevance'
+    ];
+
+
+    protected $searchable = [
+        'columns' => [
+            'SOLIC_FAB.CLIENTE'   => 10,
+            'SOLIC_FAB.SOLICITUD' => 5,
+            'SOLIC_FAB.SUCURSAL'  => 10,
+            'SOLIC_FAB.ESTADO'    => 10,
+        ],
+
+    ];
+
+    public function searchFactoryRequest($term)
+    {
+        return self::search($term);
+    }
 
     public function hasCustomer()
     {
