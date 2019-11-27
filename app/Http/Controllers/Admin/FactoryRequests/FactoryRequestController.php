@@ -35,7 +35,7 @@ class FactoryRequestController extends Controller
             'customers'     => $list,
             'optionsRoutes' => (request()->segment(1)),
             'headers'       => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado'],
-            'listCount'          => $listCount,
+            'listCount'     => $listCount,
             'skip'          => $skip,
 
         ]);

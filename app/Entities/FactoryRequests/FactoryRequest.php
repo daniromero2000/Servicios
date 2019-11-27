@@ -24,12 +24,11 @@ class FactoryRequest extends Model
         'relevance'
     ];
 
-
     protected $searchable = [
         'columns' => [
-            'SOLIC_FAB.CLIENTE'   => 10,
+            'SOLIC_FAB.CLIENTE'   => 1,
             'SOLIC_FAB.SOLICITUD' => 5,
-            'SOLIC_FAB.SUCURSAL'  => 10,
+            'SOLIC_FAB.SUCURSAL'  => 1,
             'SOLIC_FAB.ESTADO'    => 10,
         ],
 
