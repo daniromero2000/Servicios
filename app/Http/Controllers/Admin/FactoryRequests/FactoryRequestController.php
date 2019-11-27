@@ -63,8 +63,10 @@ class FactoryRequestController extends Controller
 
     public function dashboard(Request $request)
     {
-        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now());
+        $to = Carbon::now();
+        $from = Carbon::now()->subMonth();
 
+        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
