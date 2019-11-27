@@ -29,7 +29,6 @@ class FactoryRequest extends Model
             'SOLIC_FAB.CLIENTE'   => 1,
             'SOLIC_FAB.SOLICITUD' => 5,
             'SOLIC_FAB.SUCURSAL'  => 1,
-            'SOLIC_FAB.ESTADO'    => 10,
         ],
 
     ];

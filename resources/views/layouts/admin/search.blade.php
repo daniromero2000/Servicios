@@ -12,9 +12,10 @@
                 <option disabled selected value> -- Selecciona Estado -- </option>
                 <option>APROBADO</option>
                 <option>ANALISIS</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option>EN SUCURSAL</option>
+                <option>PROBLEMAS EN ANALISIS</option>
+                <option>EN SUCURSAL</option>
+                <option>PROBLEMAS EN REFERENCIACION</option>
             </select>
         </div>
         <div class="form-group">
