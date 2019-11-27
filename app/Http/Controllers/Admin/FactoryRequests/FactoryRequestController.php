@@ -66,6 +66,10 @@ class FactoryRequestController extends Controller
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
 
+
+        $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+        $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
 
@@ -81,23 +85,31 @@ class FactoryRequestController extends Controller
 
         $statusesNames  = [];
         $statusesValues = [];
+        $statusesColors = [];
         foreach ($estadosNames as $estadosName) {
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
+            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+            array_push($statusesColors, trim($color));
         }
 
         $webValues      = [];
         $webNames       = [];
+        $webColors = [];
         foreach ($webCounts as $webCount) {
             array_push($webNames, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
+            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+            array_push($webColors, trim($color));
         }
 
         return view('factoryrequests.dashboard', [
             'statusesNames'  => $statusesNames,
             'statusesValues' => $statusesValues,
+            'statusesColors' => $statusesColors,
             'webValues'      => $webValues,
             'webNames'       => $webNames,
+            'webColors'       => $webColors,
             'totalWeb'       => array_sum($webValues),
             'totalStatuses'  => array_sum($statusesValues),
         ]);
