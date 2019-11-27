@@ -26,58 +26,50 @@
         <div class="row">
 
             @foreach ($estados as $estado)
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text"> {{$estado->ESTADO }} </span>
-                            <span class="info-box-number">
-                                {{ $estado->total}}
-                            </span>
-                        </div>
-                        <!-- /.info-box-content -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"> {{$estado->ESTADO }} </span>
+                        <span class="info-box-number">
+                            {{ $estado->total}}
+                        </span>
                     </div>
-                    <!-- /.info-box -->
+                    <!-- /.info-box-content -->
                 </div>
+                <!-- /.info-box -->
+            </div>
             @endforeach
 
             <!-- /.col -->
+            <!-- Main row -->
+            <div class="row">
+                <!-- /.card-header -->
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Pie Chart</h3>
 
-
-        <!-- Main row -->
-        <div class="row">
-
-
-
-            <!-- /.card-header -->
-            <div class="card card-danger">
-                <div class="card-header">
-                    <h3 class="card-title">Pie Chart</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                    class="fas fa-times"></i></button>
+                        </div>
                     </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <div class="card-body">
-                    <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
-                </div>
-                <!-- /.card-body -->
+                <!-- /.col -->
             </div>
-
-
-            <!-- /.col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!--/. container-fluid -->
+        <!--/. container-fluid -->
 </section>
 <!-- /.content -->
 @endsection
-
 
 @section('scriptsJs')
 <!-- jQuery -->
