@@ -6,12 +6,11 @@ use App\Entities\CreditCards\CreditCard;
 use App\Entities\Customers\Customer;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
+
 
 class FactoryRequest extends Model
 {
 
-    use SearchableTrait;
 
     protected $table = 'SOLIC_FAB';
 
