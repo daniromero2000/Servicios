@@ -254,11 +254,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			if(typeof response.data.resp == 'number'){
 				
 			}else{
-				var num = response.data.resp[0].NUM.substring(0,6);
-				var CELULAR = response.data.resp[0].NUM.replace(num, "******");
-				$scope.lead.CEL_VAL = response.data.resp[0].CEL_VAL;
+				var num = response.data.resp.NUM.substring(0,6);
+				var CELULAR = response.data.resp.NUM.replace(num, "******");
+				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
 				$scope.CELULAR = CELULAR;
-				$scope.lead.CELULAR = response.data.resp[0].NUM;
+				$scope.lead.CELULAR = response.data.resp.NUM;
 			}
 		}, function errorCallback(response) {
 			console.log(response);
@@ -329,7 +329,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
-					$scope.deniedLeadForFecExp('1.1');
+					$scope.deniedLeadForFecExp('1');
 				}
 			}
 
@@ -437,4 +437,24 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.getInfoVentaContado();
 	$scope.resetInfo();
-});
+})
+
+.controller("realizarAnalisisCtrl", function($scope, $http, $timeout) {
+	$scope.infoLead = {};
+	$scope.lead = {};
+	$scope.showResp = false;
+
+	$scope.getInfoLead = function(){
+		$http({
+			method: 'GET',
+			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
+		  }).then(function successCallback(response) {
+			$scope.infoLead = response.data;
+			$scope.showResp = true;
+			hideLoader();
+		  }, function errorCallback(response) {
+			  hideLoader();
+			  console.log(response);
+		  });
+	};
+})

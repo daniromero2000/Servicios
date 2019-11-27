@@ -9,7 +9,7 @@
                     <h5 class="card-title hederUser">@{{ module.name }}</h5>
                 </div>
                 <div class="card-body">
-                    <a ng-href="@{{module.route}}"><span><i ng-class="module.icon" class="iconUser" ></i></span></a>
+                    <a ng-href="@{{ module.route}}"><span><i ng-class="module.icon" class="iconUser" ></i></span></a>
                 </div>
             </div>
         </div>

@@ -8,5 +8,5 @@ interface IntentionRepositoryInterface
 {
   public function createIntention($data): Intention;
 
-  public function findCustomerIntentionById($id);
+  public function findCustomerIntentionById($id): Intention;
 }

@@ -44,7 +44,10 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function findCustomerById($identificationNumber): Customer
     {
         try {
-            return $this->model->findOrFail($identificationNumber);
+            return $this->model->with([
+                    'latestCifinScore', 
+                    'latestIntention'
+                ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -58,4 +61,5 @@ class CustomerRepository implements CustomerRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+    
 }

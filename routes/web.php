@@ -63,7 +63,7 @@ Route::get('/OPN_gracias_denied', 'Admin\OportuyaV2Controller@getPageDenied')->n
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
 
@@ -193,21 +193,6 @@ Route::group(['prefix' => 'api/'], function () {
 });
 
 
-Route::get("/fabricaLeads", function () {
-    if (Auth::guest()) {
-        return view('auth.login');
-    }
-    return view('fabricaLeads.index');
-});
-
-
-Route::group(['prefix' => '/fabricaLeads/', 'middleware' => 'auth'], function () {
-
-    Route::get('/leads', function () {
-        return view('fabricaLeads.leads');
-    });
-});
-
 /**
  **Proyecto: SERVICIOS FINANCIEROS
  **Caso de Uso: Administrador de leads - Canal dígital
@@ -310,6 +295,10 @@ Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
+    Route::get('/crearCliente', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+    Route::get('/analisis', function () {
+        return view('assessors.forms.analisis');
+    })->name('assessorAnalisis');
 
     Route::get("/libranzaLeads", function () {
         if (Auth::guest()) {

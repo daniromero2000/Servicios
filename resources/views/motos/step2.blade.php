@@ -1,5 +1,7 @@
 @extends('layouts.steps')
-
+@php
+	dd('hola');
+@endphp
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 
 @section('linkStyleSheets')

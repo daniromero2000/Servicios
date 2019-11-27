@@ -1,79 +1,108 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
 
-@section('content')
-<div class="container containerLogin">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header row">
-                	<div class="col-6 loginText">
-                		<p> {{ __('Login') }} </p>	
-                	</div>
-                	<div class="col-6 loginLogo">
-                		<img src="{{ asset('images/logoDashboard.png')}}">
-                	</div>
-                	
-                </div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}" id="loginForm">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page" style="font-size: 11pt;">
+    <div class="login-box">
+        <div class="login-logo">
+            <img style="width: 250px;" src="{{ asset('images/Oportudata.png')}}">
+        </div>
+        @include('layouts.errors-and-messages')<div class="login-box-body">
+
+            <!-- /.login-logo -->
+            <div class="card" style="border-radius: 27px;">
+                <div class="card-body login-card-body" style="border-radius: 10px;">
+                    <h3 class="login-box-msg">Inicia Sesión</h3>
+                    <form method="POST" action="{{ route('login') }}" method="post">
                         @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Correo Electrónico') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
+                        <div class="input-group mb-3">
+                            <div class="input-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                                    placeholder="Email" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
+                                </div>
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                                 @endif
                             </div>
+
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+                        <div class="input-group mb-3">
+                            <div class="input-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+                                <input type="password" name="password" class="form-control" placeholder="Contraseña"
+                                    required>
+                                    <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock"></span>
+                                            </div>
+                                        </div>
                                 @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
+
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Recordar') }}
+                        <a class="auth-links text-right" href="{{ route('password.request') }}">
+                            {{ __('¿ Olvidaste tu contraseña ?') }}
+                        </a>
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <div class="icheck-primary">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                        {{ old('remember') ? 'checked' : '' }}>
+                                    <label for="remember">
+                                        Recordarme
                                     </label>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Iniciar sesión') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('¿ Olvidaste tu contraseña ?') }}
-                                </a>
+                            <!-- /.col -->
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary btn-block"
+                                    style="border-radius: 20px;">Iniciar
+                                    Sesion</button>
                             </div>
+                            <!-- /.col -->
                         </div>
                     </form>
                 </div>
+                <!-- /.login-card-body -->
             </div>
         </div>
-    </div>
-</div>
-@endsection
+        <!-- /.login-box -->
+
+        <!-- jQuery -->
+        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        <!-- Bootstrap 4 -->
+        <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- AdminLTE App -->
+        <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+</body>
+
+</html>

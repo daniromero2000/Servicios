@@ -35,6 +35,6 @@ class Subsidiary extends Model
 
   public function factoryRequests()
   {
-    return $this->hasMany(FactoryRequest::class);
+    return $this->hasMany(FactoryRequest::class, 'SUCURSAL');
   }
 }

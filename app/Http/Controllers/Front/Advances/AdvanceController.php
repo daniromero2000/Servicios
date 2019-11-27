@@ -13,14 +13,16 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use Illuminate\Support\Facades\DB;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\Definitions\Definition;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
+use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -33,7 +35,8 @@ class AdvanceController extends Controller
         ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
         UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
-        CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface
+        CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
+        UbicaRepositoryInterface $ubicaRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -46,16 +49,14 @@ class AdvanceController extends Controller
         $this->real = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
-    }
-
-    private function applyTrim($charItem)
-    {
-        $charTrim = trim($charItem);
-        return $charTrim;
+        $this->ubica = $ubicaRepositoryInterface;
     }
 
     public function index()
     {
+
+        $customer = $this->customerInterface->findCustomerById(1088019814);
+        dd($customer);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

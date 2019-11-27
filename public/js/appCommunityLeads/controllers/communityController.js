@@ -283,7 +283,7 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
         $scope.comment.idLead = $scope.idLead;
         $http({
             method: 'GET',
-            url: '/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
+            url: '/Admin/Comments/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
         }).then(function successCallback(response) {
             if (response.data != false) {
                 $scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.lead.state, $scope.idLead, false);

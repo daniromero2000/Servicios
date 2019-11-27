@@ -1,7 +1,4 @@
 <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.0.0
-        </div>
-      </footer>
+  <div class="pull-right hidden-xs"> <b>Versión</b> 0.1.0</div> <strong>Copyright &copy; {{ date('Y') }} -
+      {{ date('Y') + 1 }}</strong>
+</footer>

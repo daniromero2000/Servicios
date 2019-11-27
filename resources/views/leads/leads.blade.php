@@ -10,7 +10,7 @@
 </style>
 
 <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }" ng-click="tabs = 1"
             data-toggle="tab" role="tab" aria-controls="nav-general">Aprobados</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 7 }" ng-click="tabs = 7"
@@ -107,8 +107,8 @@
 
 
             <div class="card-body">
-                <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                <div class="table reset-table">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -287,7 +287,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table class="table text-center table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -468,7 +468,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -587,7 +587,7 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table" >
-                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -639,6 +639,8 @@
                                     <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-user cursor"
                                     title="Asignar cliente a asesor"
                                         ng-click="assignAssesorDigitalToLeadCM(leadCM.id)"></i>
+                                    <i class="fas fa-times cursor" title="Eliminar Lead"
+                                        ng-click="showDialogDelete(leadCM.id)"></i>
                                 </td>
                             </tr>
                         </tbody>
@@ -739,7 +741,7 @@
 
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2" class="table table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -884,7 +886,7 @@
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="telephone">telefono <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.telephone" validation-pattern="telephone" id="telephone" cols="10"
+                                            <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
                                                 class="form-control" value="@{{lead.telephone}}" required>
                                         </div>
                                     </div>
@@ -998,7 +1000,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone" validation-pattern="telephone" id="telephone" cols="10"
+                                        <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
                                             class="form-control" required>
                                     </div>
                                 </div>
@@ -1065,3 +1067,45 @@
             </div>
         </div>
     </div>
+
+    <!--Delete modal-->
+<div class="modal fade" id="deleteCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-header text-center">
+                <h4 class="modal-title" id="myModalLabel">Eliminar Lead</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row resetRow ">
+                        <div class="col-12 text-center">
+                            <p>¿Estás seguro que deseas eliminar este registro?</p>
+                        </div>
+                        <div class="col-12">
+                            <div class="row resetRow">
+
+                                <div class=" offset-4 col-4 form-group float-right">
+                                    <form ng-submit="confirmDelete()">
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary">Eliminar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-4 form-group float-right">
+                                    <form ng-submit="cancelDelete()">
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-danger">Cancelar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

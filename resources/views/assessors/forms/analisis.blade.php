@@ -1,24 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('linkStyleSheets')
-    <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
+<link rel="stylesheet"
+    href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 @section('content')
-<div ng-app="creditPolicyApp" ng-controller="simulatePolicySingleCtrl" class="containerleads container">
+<div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
     <div class="row">
         <div class="col-12 text-center">
             <h2 class="headerAdmin ng-scope">Aplicar política / individual</h2>
         </div>
-        <div class="col-6 offset-3">
-            <form name="simular" ng-submit="simulate()">
+        <div class="col-12 col-sm-4 offset-sm-4">
+            <form name="simular" ng-submit="getInfoLead()">
                 <div class="row">
-                    <div class="col-12">
-                        <md-input-container class="md-block">
-                            <label class="ventaContado-label">Número de identificación</label>
-                            <input required name="cedula" ng-model="lead.cedula" validation-pattern="number" ng-blur="getInfoLead()">
-                        </md-input-container>
+                    <div class="col-12 form-group">
+                        <label class="ventaContado-label">Número de identificación</label>
+                        <input required class="form-control" ng-model="lead.cedula" validation-pattern="number">
                     </div>
                     <div class="col-12 text-center">
-                        <md-button type="submit" class="md-raised md-primary">Aplicar</md-button>
+                        <button type="submit" class="btn btn-primary">Aplicar</button>
                     </div>
                 </div>
             </form>
@@ -31,11 +30,8 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="headerAdmin ng-scope">Resultado política</h2>
-                <p class="resultadoPolitica colourGreen" ng-if="infoLead.ESTADO == 'PREAPROBADO'">
-                    @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
-                </p>
-                <p class="resultadoPolitica colourRed" ng-if="infoLead.ESTADO != 'PREAPROBADO'">
-                    @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
+                <p class="resultadoPolitica colourGreen">
+                    @{{ infoLead.latest_intention.definition.DESCRIPCION + " / " + infoLead.latest_intention.definition.ID_DEF }}
                 </p>
             </div>
         </div>
@@ -56,7 +52,7 @@
                     <label for="">Número de documento: </label>@{{ infoLead.CEDULA }}
                 </p>
                 <p>
-                    <label for="">Tipo de cliente: </label>@{{ infoLead.TIPO_CLIENTE }}
+                    <label for="">Tipo de cliente: </label>@{{ infoLead.latest_intention.TIPO_CLIENTE }}
                 </p>
                 <p>
                     <label for="">Fecha nacimiento: </label>@{{ infoLead.FEC_NAC }}
@@ -71,12 +67,16 @@
                     <label for="">Actividad independiente: </label>@{{ infoLead.ACT_IND }}
                 </p>
                 <p>
-                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.TIEMPO_LABOR == 1">Si cumple</span> <span ng-if="infoLead.TIEMPO_LABOR == 0">No cumple</span>
+                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 1">Si cumple</span> <span
+                        ng-if="infoLead.latest_intention.TIEMPO_LABOR == 0">No cumple</span>
                 </p>
-                <p ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
-                    <label for="">Ingresos: </label><span>$ @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
+                <p
+                    ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
+                    <label for="">Ingresos: </label><span>$
+                        @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
                 </p>
-                <p ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                <p
+                    ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                     <label for="">Ingresos: </label><span>$@{{ infoLead.SUELDO + infoLead.OTROS_ING | number:0 }}</span>
                 </p>
             </div>
@@ -91,10 +91,10 @@
                     <label for="">Celular: </label>@{{ infoLead.CELULAR }}
                 </p>
                 <p>
-                    <label for="">Score: </label>@{{ infoLead.score }}
+                    <label for="">Score: </label>@{{ infoLead.latest_cifin_score.score }}
                 </p>
                 <p>
-                    <label for="">Tarjeta: </label> @{{ infoLead.TARJETA }}
+                    <label for="">Tarjeta: </label> @{{ infoLead.latest_intention.TARJETA }}
                 </p>
                 <p>
                     <label for="">Estado: </label> @{{ infoLead.ESTADO }}
@@ -104,18 +104,17 @@
         <div class="row">
             <div class="col-12 text-center">
                 <p class="caracteristicaPolitica">
-                    <i>* @{{ infoLead.CARACTERISTICA }}</i>
+                    <i>* @{{ infoLead.latest_intention.definition.CARACTERISTICA }}</i>
                 </p>
             </div>
         </div>
     </div>
 </div>
-    <script src="{{ asset('js/libsJs/bootbox.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/app.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/services/myService.js') }}"></script>
-    <script src="{{ asset('js/appCreditPolicy/controllers/creditPolicyController.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/assessorVentaContado.js') }}"></script>
 @stop
 @section('scriptsJs')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
-        <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+    <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-currency/1.2.7/ng-currency.min.js"></script>
 @endsection

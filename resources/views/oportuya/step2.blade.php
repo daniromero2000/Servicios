@@ -20,7 +20,7 @@
 				<span class="steps-textStep"><strong>Solicitud de Crédito Paso 2</strong> > (Información Personal)</span>
 			</div>
 		</div>
-		<div class="row resetRow">
+		<div class="row resetRow">	
 			<div class="col-12 step2-containTitle">
 				<h2 class="text-center step2-titleAnalista"><strong>Hola! @{{ leadInfo.name + ' ' + leadInfo.lastName }}</strong> soy @{{ analyst.name }} tu analista digital</h2>
 				<p class="text-center step2-textAnalista">En este momento te encuentras haciendo tu solicitud de crédito, por favor diligencia <br> todos los datos para que tu aprobación sea más fácil</p>
@@ -57,7 +57,7 @@
 					<strong>Cuéntanos sobre ti</strong><br>
 					<span class="forms-descText">Ingresa tus datos personales</span>
 					<img src="{{ asset('images/datosPersonales2.png') }}" class="img-fluid forms-descImg" />
-					<span class="forms-descStepNum">2</span>
+					<span class="forms-descStepNum text-center">2</span>
 				</div>
 			</div>
 			<form id="step2Form" ng-submit="saveStep2()">

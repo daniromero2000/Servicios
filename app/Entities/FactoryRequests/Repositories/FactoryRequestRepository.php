@@ -5,9 +5,21 @@ namespace App\Entities\FactoryRequests\Repositories;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Collection as Support;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
+
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
+    private $columns = [
+        'CLIENTE',
+        'SOLICITUD',
+        'SUCURSAL',
+        'FECHASOL',
+        'ESTADO',
+    ];
+
     public function __construct(
         FactoryRequest $factoryRequest
     ) {
@@ -18,6 +30,18 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return $this->model->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function findFactoryRequestByIdFull(int $id): FactoryRequest
+    {
+        try {
+            return $this->model
+                ->with('creditCard')
+                ->with('customer')
+                ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
         }
@@ -78,5 +102,52 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         } catch (QueryException $e) {
             $e;
         }
+    }
+
+
+    public function listFactoryRequests($totalView): Support
+    {
+        try {
+            return  $this->model
+                ->orderBy('SOLICITUD', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function countFactoryRequestsStatuses()
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to)) {
+            return $this->model->orderBy('SOLICITUD', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryRequest($text, null, true, true)
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryRequest($text, null, true, true)
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->get($this->columns);
     }
 }

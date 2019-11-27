@@ -6,7 +6,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'q': '',
         'qtipoTarjetaAprobados': '',
         'qcityAprobados': '',
-         'qleadChannel': '',
+        'qleadChannel': '',
         'qfechaInicialAprobados': '',
         'qfechaFinalAprobados': '',
         'qCM': '',
@@ -50,15 +50,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.lead = {};
     $scope.idLead = '';
 
-    $scope.socialNetworks = [
-        {
-            label: 'WHATSAPP',
-            value: 3
-        }
-    ];
+    $scope.socialNetworks = [{
+        label: 'WHATSAPP',
+        value: 3
+    }];
 
 
-$scope.leadsChannels = [{
+    $scope.leadsChannels = [{
         label: 'FACEBOOK',
         value: 2
     },
@@ -66,7 +64,7 @@ $scope.leadsChannels = [{
         label: 'WHATSAPP',
         value: 3
     }
-];
+    ];
 
     $scope.comment = {
         comment: '',
@@ -84,57 +82,53 @@ $scope.leadsChannels = [{
     $scope.cities = [];
 
     $scope.typeServices = [{
-            label: 'Oportuya',
-            value: 'Oportuya'
-        },
-        {
-            label: 'Crédito Motos',
-            value: 'Motos'
-        },
-        {
-            label: 'Crédito Libranza',
-            value: 'Credito libranza'
-        },
-        {
-            label: 'Seguros',
-            value: 'Seguros'
-        },
-        {
-            label: 'Viajes',
-            value: 'Viajes'
-        },
+        label: 'Crédito',
+        value: 'Crédito'
+    },
+    {
+        label: 'Crédito Motos',
+        value: 'Motos'
+    },
+    {
+        label: 'Crédito Libranza',
+        value: 'Credito libranza'
+    },
+    {
+        label: 'Seguros',
+        value: 'Seguros'
+    },
     ];
 
     $scope.typeStates = [{
-            label: 'Pendiente',
-            value: 0
-        },
-        {
-            label: 'En estudio',
-            value: 1
-        },
-        {
-            label: 'En espera',
-            value: 2
-        },
-        {
-            label: 'Aprobado',
-            value: 3
-        },
-        {
-            label: 'Negado',
-            value: 4
-        }
+        label: 'Pendiente',
+        value: 0
+    },
+    {
+        label: 'En estudio',
+        value: 1
+    },
+    {
+        label: 'En espera',
+        value: 2
+    },
+    {
+        label: 'Aprobado',
+        value: 3
+    },
+    {
+        label: 'Negado',
+        value: 4
+    }
     ];
 
     $scope.cardTypes = [{
-            label: 'Tarjeta Black',
-            value: 0
-        },
-        {
-            label: 'Tarjeta Gray',
-            value: 1
-        }
+        label: 'Tarjeta Black',
+        value: 0
+    },
+    {
+        label: 'Tarjeta Gray',
+        value: 1
+    }
     ];
 
     $scope.getCities = function () {
@@ -166,7 +160,7 @@ $scope.leadsChannels = [{
             url: '/leads?q=' + $scope.q.q +
                 '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados +
                 '&qcityAprobados=' + $scope.q.qcityAprobados +
-                 '&qleadChannel=' + $scope.q.qleadChannel +
+                '&qleadChannel=' + $scope.q.qleadChannel +
                 '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados +
                 '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados +
                 '&qfechaInicialTR=' + $scope.q.qfechaInicialTR +
@@ -273,7 +267,7 @@ $scope.leadsChannels = [{
             'q': '',
             'qtipoTarjetaAprobados': '',
             'qcityAprobados': '',
-              'qleadChannel': '',
+            'qleadChannel': '',
             'qfechaInicialAprobados': '',
             'qfechaFinalAprobados': '',
             'qCM': '',
@@ -316,11 +310,11 @@ $scope.leadsChannels = [{
             method: 'GET',
             url: '/communityLeads/viewCommunityLeads/' + idLead
         }).then(function successCallback(response) {
-                if (response.data != false) {
-                    $scope.lead = response.data;
-                }
-            },
-            function errorCallback(response) {});
+            if (response.data != false) {
+                $scope.lead = response.data;
+            }
+        },
+            function errorCallback(response) { });
     };
 
     $scope.updateCommunityLeads = function () {
@@ -368,7 +362,7 @@ $scope.leadsChannels = [{
                 showLoader();
                 $http({
                     method: 'GET',
-                    url: '/api/canalDigital/assignAssesorDigitalToLead/' + idLead,
+                    url: '/api/canalDigital/assignAssesorDigitalToLead/' + solicitud,
                 }).then(function successCallback(response) {
                     console.log(response);
                     $scope.searchLeads();
@@ -498,9 +492,43 @@ $scope.leadsChannels = [{
                 $scope.comment.comment = "";
                 $scope.viewAddComent = false;
             }
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) { });
     };
+
+
+    $scope.showDialogDelete = function (idLead) {
+        $scope.idLead = idLead;
+        $('#deleteCommunityModal').modal("show");
+    }
+
+
+    $scope.confirmDelete = function () {
+        $scope.deleteCommunityLeads($scope.idLead);
+    }
+
+    $scope.cancelDelete = function () {
+        $('#deleteCommunityModal').modal('hide');
+    }
+
+    $scope.deleteCommunityLeads = function (idLead) {
+            $http({
+            method: 'POST',
+            url: '/communityLeads/deleteCommunityLeads/' + idLead
+                  }).then(function successCallback(response) {
+                      if (response.data != false) {
+                              $scope.searchLeads();
+                $('#deleteCommunityModal').modal('hide');
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+
+        });
+    }
+
 
     $scope.getLeads();
     $scope.getCities();
 })
+
+
+// 5691

@@ -98,6 +98,12 @@ Route::group(['prefix' => '/admin/motos/'], function () {
     Route::put('addImage/{idMoto}', 'Admin\MotosAdminController@storeImageMoto');
 });
 
+Route::group(['prefix' => '/assessor/'], function () {
+    Route::group(['prefix' => '/api/'], function () {
+        Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
+    });
+});
+
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
     // Gestion de Leads
@@ -119,17 +125,19 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
  * Admin routes
  */
 Route::namespace('Admin')->group(function () {
-
     Route::namespace('Directors')->group(function () {
         Route::resource('director', 'DirectorController');
     });
 
     Route::namespace('Subsidiaries')->group(function () {
+
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
 
     Route::namespace('FactoryRequests')->group(function () {
+        Route::resource('factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
+        Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard');
     });
 
     Route::namespace('Comments')->group(function () {
