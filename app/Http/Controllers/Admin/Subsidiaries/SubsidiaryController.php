@@ -37,12 +37,11 @@ class SubsidiaryController extends Controller
 
   public function show($id)
   {
-    $customer = $this->subsidiaryinterface->findSubsidiaryByIdFull($id);
+    // $customer = $this->subsidiaryinterface->findSubsidiaryByIdFull($id);
+    // return view('factoryrequests.show', [
+    //   'customer'                     => $customer,
 
-    return view('factoryrequests.show', [
-      'customer'                     => $customer,
-
-    ]);
+    // ]);
   }
 
   public function getSubsidiariesCity()
