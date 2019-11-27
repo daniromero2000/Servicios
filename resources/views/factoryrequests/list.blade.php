@@ -10,7 +10,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                    <h1 class="ml-3">Solicitudes</h1>
+                                    <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
                                     <div class="row">
                                         <div class="col-md-12">
                                             @include('layouts.admin.search', ['route' => route('factoryrequests.index')])

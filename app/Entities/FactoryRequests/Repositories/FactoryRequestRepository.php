@@ -132,11 +132,17 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null): Collection
     {
-
         if (is_null($text) && is_null($from) && is_null($to)) {
             return $this->model->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryRequest($text)
+                ->skip($totalView)
+                ->take(100)
                 ->get($this->columns);
         }
 
