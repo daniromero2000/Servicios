@@ -1,8 +1,5 @@
 @extends('layouts.app')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Seguros','page_path':'/seguros'});
-</script>
+
 @section('title', 'Seguros')
 
 @section('metaTags')
@@ -16,59 +13,134 @@
 @endsection()
 
 @section('content')
-	<div id="construccion">
-		<div class="container">
-			<h2 class="creditoLibranza-title text-center">Esta sección está actualmente en construcción</h2>
-			<p class="text-center">Si te interesa conocer más sobre seguros, déjanos tus datos y un asesor se pondrá en contacto</p>
-			<div class="modalFormulario-body" style="margin: auto;">
-				<div class="modal-containerFormulario">
-					<h3 class="modal-titleForm titleForm-seguros">Seguros</h3>
-					<form role=form method="POST" id="saveLeadSeguros" action="{{ route('seguros.store') }}">
-						{{ csrf_field() }}
-						<input type="hidden" name="typeProduct" value="Seguros">
-						<input type="hidden" name="typeService" value="Seguros">
-						<input type="hidden" name="channel" value="1">
-						<div class="form-group">
-							<label for="name" class="control-label">Nombres</label>
-							<input type="text" name="name" class="form-control" id="name" validation-pattern="name" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="lastName" class="control-label">Apellidos</label>
-							<input type="text" name="lastName" class="form-control" id="lastName" validation-pattern="name" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="email" class="control-label">Correo electrónico</label>
-							<input type="email" name="email" class="form-control" id="email" validation-pattern="email" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="city class="control-label">Ciudad</label>
-							<select name="city" id="city" class="form-control" >
-								@foreach($cities as $city)
-									<option value="{{ $city['CIUDAD'] }}">{{ $city['CIUDAD'] }}</option>
-								@endforeach
-							</select>
-						</div>
-						<div class="form-group">
-							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
-							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
-							</label>
-						</div>
-						<p class="textCityForm">
-							*Válido solo para ciudades que se desplieguen en la casilla.
-						</p>
-						<div class="form-group text-right">
-							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
-								Guardar
-							</button>
-						</div>
-					</form>
+<style>
+.content{
+	background-color: #0FAAE0;
+	height: 100%;
+	margin: auto;
+	width: 100%;
+}
+.content-1{
+	background-color:#103A9E;
+	width: 90%;
+	height: 302px;
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 5%;
+	border-radius: 50px 50px 0px 0px;
+}
+.img1{
+	max-width: 100%;
+	height: auto;
+}
+.content-text1{
+	text-align: center;
+	color: white;
+	font-size: 40px;
+	font-weight: bold;
+}
+.text-soat{
+	color: #FDBF3C;
+}
+.content-2{
+	width: 90%;
+	height: 330px;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 1%;
+}
+.content-product{
+	background-color: #103A9E;
+	height: auto;
+	border-radius: 0px 0px 30px 30px;
+	text-align: center;
+}
+.imgproduct1{
+	width: 100%;
+}
+.imgproduct2{
+	width: 100%;
+}
+.imgproduct3{
+	width: 100%;
+}
+.text-product1{
+	font-size: 20px;
+}
+.text-products{
+	font-size: 20px;
+	color: white;
+	text-align: center;
+}
+.content-imgHeader{
+	background-color: white;
+	width: 100%;
+	margin: auto;
+	height: 80px;
+}
+.text-header{
+	color: #09329B;
+	font-size: 25px;
+	font-weight: bold;
+}
+.btn-product{
+	background-color:#E13236;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 5px 15px;
+	border-radius: 10px;
+}
+a:hover{
+	text-decoration: none;
+	color: white;
+}
+</style>
+<div id="container">
+	<div class="row content">
+		<div class="row content-imgHeader" >
+			<div class="col-12 col-sm-12 content-img d-flex align-items-center justify-content-center">
+				<span class="text-header">¡Lleva tu SOAT a crédito!</span>
+			</div>
+		</div>
+		<div class="row content-1">
+			<div class="col-12 col-sm-6 d-flex align-items-center justify-content-center content-text1">
+				<span class="">¡Adquiere el <span class="text-soat">SOAT</span><br>para tu vehículo <br> a CRÉDITO!</span>
+			</div>
+			<div class="col-12 col-sm-6">
+				<img src="{{ asset('images/seguros/img1.png')}}" class="img1">
+			</div>
+		</div>
+		<div class="row content-2">
+			<div class="col-12 col-md-4 col-sm-4 resetCol">
+				<div class="content-product">
+					<img src="{{ asset('images/seguros/img2.png')}}" class="imgproduct1">
+					<div>
+						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+					</div>
+					<h1 class="text-products">Automóviles</h1>
+				</div>
+			</div>
+			<div class="col-12 col-md-4 col-sm-4 restCol">
+				<div class="content-product">
+					<img src="{{ asset('images/seguros/img3.png')}}" class="imgproduct2">
+					<div>
+						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+					</div>
+					<h1 class="text-products">Motos</h1>
+				</div>
+			</div>
+			<div class="col-12 col-md-4 col-sm-4 resetCol">
+				<div class="content-product">
+					<img src="{{ asset('images/seguros/img4.png')}}" class="imgproduct3">
+					<div>
+						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+					</div>
+					<h1 class="text-products">Carga Pesada</h1>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 @endsection
