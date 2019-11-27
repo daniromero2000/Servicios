@@ -27,7 +27,7 @@ class FactoryRequestController extends Controller
         $listCount = $list->count();
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'),)->sortByDesc('SOLICITUD');
+            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
 
             $listCount = $list->count();
         }
