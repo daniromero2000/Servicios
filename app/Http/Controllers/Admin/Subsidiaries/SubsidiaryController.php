@@ -35,15 +35,15 @@ class SubsidiaryController extends Controller
     ]);
   }
 
-  public function show(int $id)
-  {
-    $customer = $this->subsidiaryinterface->findSubsidiaryByIdFull($id);
+  // public function show(int $id)
+  // {
+  //   $customer = $this->subsidiaryinterface->findSubsidiaryByIdFull($id);
 
-    return view('factoryrequests.show', [
-      'customer'                     => $customer,
+  //   return view('factoryrequests.show', [
+  //     'customer'                     => $customer,
 
-    ]);
-  }
+  //   ]);
+  // }
 
   public function getSubsidiariesCity()
   {
