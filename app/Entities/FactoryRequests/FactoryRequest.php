@@ -24,7 +24,6 @@ class FactoryRequest extends Model
         'relevance'
     ];
 
-
     protected $searchable = [
         'columns' => [
             'SOLIC_FAB.CLIENTE'   => 10,
