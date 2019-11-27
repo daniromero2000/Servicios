@@ -61,7 +61,6 @@ class FactoryRequestController extends Controller
 
     public function dashboard(Request $request)
     {
-
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses();
         $estadosNames =  $estadosNames->toArray();
         $estadosNames = array_values($estadosNames);
