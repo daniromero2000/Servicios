@@ -155,15 +155,7 @@
 
       <!-- Card 1 -->
 
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Likes</span>
-          <span class="info-box-number">41,410</span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
+     
 
 
     </div>
