@@ -124,7 +124,7 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('Subsidiaries')->group(function () {
-        Route::resource('subsidiaries', 'SubsidiaryController');
+
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
 
