@@ -316,7 +316,7 @@
                 </div>
                 <!-- /.card -->
             </div>
-        
+
             <div class="col-md-12">
                 <!-- BAR CHART -->
                 <div class="card card-success">
@@ -325,7 +325,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart" style="height:230px; min-height:230px">
-                           
+
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -351,6 +351,7 @@
 @section('scriptsJs')
 
 
+
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -374,33 +375,29 @@
     //--------------
 
     // Get context with jQuery - using jQuery's .get() method.
+    var estados = [];
+    var values = [];
+
+
+var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
+
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
     var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  : estados,
       datasets: [
         {
           label               : 'Digital Goods',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
+          pointRadius          : true,
           pointColor          : '#3b8bba',
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
-        },
-        {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
-        },
+          data                :values
+        }
       ]
     }
 
@@ -425,9 +422,9 @@
     }
 
     // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, { 
+    var areaChart       = new Chart(areaChartCanvas, {
       type: 'line',
-      data: areaChartData, 
+      data: areaChartData,
       options: areaChartOptions
     })
 
@@ -437,18 +434,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: [
-          'Chrome', 
-          'IE',
-          'FireFox', 
-          'Safari', 
-          'Opera', 
-          'Navigator', 
-          'Navigator',
-      ],
+      labels: estados,
       datasets: [
         {
-          data: [700,500,400,600,300,100,50],
+          data: values,
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de'],
         }
       ]
@@ -462,7 +451,7 @@
     var donutChart = new Chart(donutChartCanvas, {
       type: 'doughnut',
       data: donutData,
-      options: donutOptions      
+      options: donutOptions
     })
 
     //-------------
@@ -480,7 +469,7 @@
     var pieChart = new Chart(pieChartCanvas, {
       type: 'pie',
       data: pieData,
-      options: pieOptions      
+      options: pieOptions
     })
 
     //-------------
@@ -489,8 +478,8 @@
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChartData = jQuery.extend(true, {}, areaChartData)
     var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
+
+
     barChartData.datasets[1] = temp0
 
     var barChartOptions = {
@@ -500,12 +489,12 @@
     }
 
     var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
+      type: 'bar',
       data: barChartData,
       options: barChartOptions
     })
 
-  
+
   })
 </script>
 @endsection
