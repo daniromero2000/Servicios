@@ -112,7 +112,7 @@
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Bar Chart</h3>
-    
+
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-minus"></i>
@@ -392,6 +392,7 @@
 <!-- /.content-wrapper -->
 @endsection
 @section('scriptsJs')
+<!-- jQuery -->
 
 <!-- jQuery UI -->
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -638,7 +639,7 @@
       })
       /* END BAR CHART */
 
-     
+
 
     })
 

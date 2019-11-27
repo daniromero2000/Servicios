@@ -160,6 +160,7 @@
     <!-- ./wrapper -->
 
     @yield('scriptsJs')
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- jsGrid -->
@@ -167,7 +168,7 @@
     <script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-        $.widget.bridge('uibutton', $.ui.button) 
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- ChartJS -->
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
@@ -203,6 +204,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+<<<<<<< HEAD
     <script>
             $(function () {
               //Initialize Select2 Elements
@@ -272,6 +274,9 @@
           
             })
           </script>
+=======
+
+>>>>>>> 43c8c46a831ca60f0f3225b35134c4bea29dc751
 </body>
 
 </html>

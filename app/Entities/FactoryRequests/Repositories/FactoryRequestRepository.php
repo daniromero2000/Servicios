@@ -4,6 +4,7 @@ namespace App\Entities\FactoryRequests\Repositories;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
@@ -117,11 +118,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function countFactoryRequestsStatuses()
+    public function countFactoryRequestsStatuses($from, $to)
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-                ->where('FECHASOL', '>', '2019-10-01')
+                ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {

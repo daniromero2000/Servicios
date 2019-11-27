@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\FactoryRequests;
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FactoryRequestController extends Controller
@@ -61,7 +62,7 @@ class FactoryRequestController extends Controller
 
     public function dashboard(Request $request)
     {
-        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses();
+        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now());
         $estadosNames =  $estadosNames->toArray();
         $estadosNames = array_values($estadosNames);
         $statusesNames = [];
@@ -73,7 +74,7 @@ class FactoryRequestController extends Controller
         }
 
         return view('factoryrequests.dashboard', [
-            'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses(),
+            'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now()),
             'statusesNames' => $statusesNames,
             'statusesValues' => $statusesValues
 
