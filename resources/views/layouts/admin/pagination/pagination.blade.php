@@ -1,5 +1,5 @@
 <nav aria-label="...">
-    <ul class="pagination">
+    <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
             <a id="previous" name="previous" type="submit" class="page-link"
                 href="{{ route("$optionsRoutes.index", ['skip' => ($skip - 1)] ) }}" @if ($skip<1 ) hidden
