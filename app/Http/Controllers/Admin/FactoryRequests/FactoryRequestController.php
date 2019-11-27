@@ -95,7 +95,7 @@ class FactoryRequestController extends Controller
         }
 
         foreach ($webCounts as $webCount) {
-            array_push($webNames, trim($webCount['SOLICITUD_WEB']));
+            array_push($webNames, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
         }
 

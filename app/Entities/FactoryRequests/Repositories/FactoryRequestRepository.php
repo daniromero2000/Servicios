@@ -133,9 +133,10 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countWebFactoryRequests($from, $to)
     {
         try {
-            return  $this->model->select('SOLICITUD_WEB', DB::raw('count(*) as total'))
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('SOLICITUD_WEB', 1)
                 ->whereBetween('FECHASOL', [$from, $to])
-                ->groupBy('SOLICITUD_WEB')
+                ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
             dd($e);
