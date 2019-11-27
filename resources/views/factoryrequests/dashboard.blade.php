@@ -318,7 +318,7 @@
                 <i class="far fa-chart-bar"></i>
                 Donut Chart
               </h3>
-      
+
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
@@ -333,7 +333,7 @@
           </div>
     </div>
     <!-- Donut chart -->
-  
+
     <!-- /.card -->
   </div>
   <!-- /.col -->
@@ -677,12 +677,12 @@
 
        var donutData = [
         {
-          label: 'Series2',
+          label: 'Aprobados',
           data: 30,
           color: '#3c8dbc'
         },
         {
-          label: 'Series3',
+          label: 'Pendientes',
           data: 20,
           color: '#0073b7'
         },
@@ -697,7 +697,7 @@
           pie: {
             show: true,
             radius: 1,
-            innerRadius: 0.5,
+            innerRadius: 0.0,
             label: {
               show: true,
               radius: 2 / 3,
@@ -808,7 +808,7 @@ var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
       datasets: [
         {
           data: values,
-          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de'],
+          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc',  '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
         }
       ]
     }
