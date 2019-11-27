@@ -62,10 +62,21 @@ class FactoryRequestController extends Controller
     public function dashboard(Request $request)
     {
 
-        // dd($this->factoryRequestInterface->countFactoryRequestsStatuses());
+        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses();
+        $estadosNames =  $estadosNames->toArray();
+        $estadosNames = array_values($estadosNames);
+        $statusesNames = [];
+        $statusesValues = [];
+        foreach ($estadosNames as $estadosName) {
+
+            array_push($statusesNames, trim($estadosName['ESTADO']));
+            array_push($statusesValues, trim($estadosName['total']));
+        }
 
         return view('factoryrequests.dashboard', [
             'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses(),
+            'statusesNames' => $statusesNames,
+            'statusesValues' => $statusesValues
 
         ]);
     }
