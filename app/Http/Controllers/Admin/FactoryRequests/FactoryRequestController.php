@@ -24,12 +24,18 @@ class FactoryRequestController extends Controller
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
+        $listCount = $list->count();
 
+        if (request()->has('q')) {
+            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip,  request()->input('from'), request()->input('to'))->sortByDesc('SOLICITUD');
+            $listCount = $list->count();
+        }
 
         return view('factoryrequests.list', [
             'customers'     => $list,
             'optionsRoutes' => (request()->segment(1)),
             'headers'       => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado'],
+            'listCount'          => $listCount,
             'skip'          => $skip,
 
         ]);
@@ -50,5 +56,16 @@ class FactoryRequestController extends Controller
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
         $factoryRequest->ASESOR_DIG = auth()->user()->id;
         return response()->json($factoryRequest->save());
+    }
+
+    public function dashboard(Request $request)
+    {
+
+        // dd($this->factoryRequestInterface->countFactoryRequestsStatuses());
+
+        return view('factoryrequests.dashboard', [
+            'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses(),
+
+        ]);
     }
 }

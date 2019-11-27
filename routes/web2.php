@@ -130,12 +130,14 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('Subsidiaries')->group(function () {
+
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
 
     Route::namespace('FactoryRequests')->group(function () {
         Route::resource('factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
+        Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard');
     });
 
     Route::namespace('Comments')->group(function () {

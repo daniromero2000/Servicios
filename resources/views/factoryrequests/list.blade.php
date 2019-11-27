@@ -10,7 +10,13 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                    <h1 class="ml-3">Solicitudes</h1>
+                                    <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
+                                        </div>
+
+                                    </div>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
@@ -21,7 +27,7 @@
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </div>
-       
+
         <div class="container">
             <div class="card  mb-4 border-0 shadow-lg">
                 <div class="row form-group" ng-if="filtros">
@@ -38,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
     @endif

@@ -17,23 +17,14 @@
                     aria-controls="profile">Seguimiento</a>
             </li>
         </ul>
-        <div class="tab-content mt-4" id="tabcontent">
-            <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-                <div class="container-fluid card">
+        <div class="tab-content" id="tabcontent">
+            <div role="tabpanel" class="tab-pane active" id="info">
+                <div class="container-fluid">
 
                     @include('factoryrequests.layouts.generals')
-                </div>
-
-                <div class="container-fluid mt-5 card">
                     @include('factoryrequests.layouts.customer')
-
-                </div>
-
-                <div class="container-fluid mt-5 card">
                     @include('factoryrequests.layouts.creditcard')
-
                 </div>
-
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">

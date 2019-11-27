@@ -18,4 +18,6 @@ interface FactoryRequestRepositoryInterface
   public function getCustomerlatestFactoryRequest($identificationNumber, $timeRejectedVigency);
 
   public function listFactoryRequests($totalView): Support;
+
+  public function countFactoryRequestsStatuses();
 }

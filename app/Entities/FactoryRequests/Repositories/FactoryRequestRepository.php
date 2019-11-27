@@ -6,10 +6,12 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
+
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
-
     private $columns = [
         'CLIENTE',
         'SOLICITUD',
@@ -114,5 +116,38 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
+    }
+
+    public function countFactoryRequestsStatuses()
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to)) {
+            return $this->model->orderBy('SOLICITUD', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryRequest($text)
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryRequest($text)
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->get($this->columns);
     }
 }
