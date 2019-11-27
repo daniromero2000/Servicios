@@ -757,14 +757,18 @@
     // Get context with jQuery - using jQuery's .get() method.
     var estados = [];
     var values = [];
+    var statusesColors = [];
     var webValues = [];
     var webNames = [];
+    var webColors = [];
 
 
 var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
 var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
+var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
+var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
