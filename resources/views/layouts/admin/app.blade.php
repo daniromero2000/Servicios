@@ -204,9 +204,9 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
-<<<<<<< HEAD
+
     <script>
-            $(function () {
+        $(function () {
               //Initialize Select2 Elements
               $('.select2').select2()
           
@@ -273,10 +273,7 @@
               });
           
             })
-          </script>
-=======
-
->>>>>>> 43c8c46a831ca60f0f3225b35134c4bea29dc751
+    </script>
 </body>
 
 </html>
