@@ -458,8 +458,4 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			  console.log(response);
 		  });
 	};
-<<<<<<< HEAD
 })
-=======
-})
->>>>>>> develop

@@ -5,6 +5,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.q = {
         'q': '',
         'qtipoTarjetaAprobados': '',
+        'qOrigenAprobados' : '',
         'qcityAprobados': '',
         'qleadChannel': '',
         'qfechaInicialAprobados': '',
@@ -131,6 +132,20 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     }
     ];
 
+    $scope.origenes = [{
+        label: 'Oportuya',
+        value: 'Oportuya'
+    },
+    {
+        label:'Avances',
+        value:'Avance'
+    },
+    {
+        label:'Seguros - SOAT',
+        value:'SEGUROS'
+    }
+    ];
+
     $scope.getCities = function () {
         $http({
             method: 'GET',
@@ -159,6 +174,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/leads?q=' + $scope.q.q +
                 '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados +
+                '&qOrigenAprobados=' + $scope.q.qOrigenAprobados +
                 '&qcityAprobados=' + $scope.q.qcityAprobados +
                 '&qleadChannel=' + $scope.q.qleadChannel +
                 '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados +
