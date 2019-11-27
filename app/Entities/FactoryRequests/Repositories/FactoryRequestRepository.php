@@ -140,13 +140,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchFactoryRequest($text)
+            return $this->model->searchFactoryRequest($text, null, true, true)
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
-        return $this->model->searchFactoryRequest($text)
+        return $this->model->searchFactoryRequest($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
             ->get($this->columns);
     }

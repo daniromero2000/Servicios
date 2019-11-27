@@ -13,6 +13,7 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use Illuminate\Support\Facades\DB;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\Definitions\Definition;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
@@ -21,7 +22,7 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -53,6 +54,9 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+        $customer = $this->customerInterface->findCustomerById(1088019814);
+        dd($customer);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

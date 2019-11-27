@@ -98,6 +98,12 @@ Route::group(['prefix' => '/admin/motos/'], function () {
     Route::put('addImage/{idMoto}', 'Admin\MotosAdminController@storeImageMoto');
 });
 
+Route::group(['prefix' => '/assessor/'], function () {
+    Route::group(['prefix' => '/api/'], function () {
+        Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
+    });
+});
+
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
     // Gestion de Leads
