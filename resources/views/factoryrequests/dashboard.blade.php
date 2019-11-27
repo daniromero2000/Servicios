@@ -603,7 +603,14 @@
         }
 
       })
-      /* END LINE CHART */
+      var estados = [];
+        var values = [];
+
+
+        var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
+
+            /* END LINE CHART */
 
       /*
        * FULL WIDTH STATIC AREA CHART
@@ -754,7 +761,7 @@ var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
       datasets: [
         {
           data: values,
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de'],
+          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#d2d6de'],
         }
       ]
     }
