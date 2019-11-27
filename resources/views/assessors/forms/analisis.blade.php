@@ -10,11 +10,11 @@
             <h2 class="headerAdmin ng-scope">Aplicar política / individual</h2>
         </div>
         <div class="col-12 col-sm-4 offset-sm-4">
-            <form name="simular" ng-submit="simulate()">
+            <form name="simular" ng-submit="getInfoLead()">
                 <div class="row">
                     <div class="col-12 form-group">
                         <label class="ventaContado-label">Número de identificación</label>
-                        <input required class="form-control" ng-model="lead.cedula" validation-pattern="number" ng-blur="getInfoLead()">
+                        <input required class="form-control" ng-model="lead.cedula" validation-pattern="number">
                     </div>
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary">Aplicar</button>
@@ -30,11 +30,8 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="headerAdmin ng-scope">Resultado política</h2>
-                <p class="resultadoPolitica colourGreen" ng-if="infoLead.ESTADO == 'PREAPROBADO'">
-                    @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
-                </p>
-                <p class="resultadoPolitica colourRed" ng-if="infoLead.ESTADO != 'PREAPROBADO'">
-                    @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
+                <p class="resultadoPolitica colourGreen">
+                    @{{ infoLead.latest_intention.definition.DESCRIPCION + " / " + infoLead.latest_intention.definition.ID_DEF }}
                 </p>
             </div>
         </div>
@@ -55,7 +52,7 @@
                     <label for="">Número de documento: </label>@{{ infoLead.CEDULA }}
                 </p>
                 <p>
-                    <label for="">Tipo de cliente: </label>@{{ infoLead.TIPO_CLIENTE }}
+                    <label for="">Tipo de cliente: </label>@{{ infoLead.latest_intention.TIPO_CLIENTE }}
                 </p>
                 <p>
                     <label for="">Fecha nacimiento: </label>@{{ infoLead.FEC_NAC }}
@@ -70,8 +67,8 @@
                     <label for="">Actividad independiente: </label>@{{ infoLead.ACT_IND }}
                 </p>
                 <p>
-                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.TIEMPO_LABOR == 1">Si cumple</span> <span
-                        ng-if="infoLead.TIEMPO_LABOR == 0">No cumple</span>
+                    <label for="">Tiempo Labor: </label><span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 1">Si cumple</span> <span
+                        ng-if="infoLead.latest_intention.TIEMPO_LABOR == 0">No cumple</span>
                 </p>
                 <p
                     ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
@@ -94,10 +91,10 @@
                     <label for="">Celular: </label>@{{ infoLead.CELULAR }}
                 </p>
                 <p>
-                    <label for="">Score: </label>@{{ infoLead.score }}
+                    <label for="">Score: </label>@{{ infoLead.latest_cifin_score.score }}
                 </p>
                 <p>
-                    <label for="">Tarjeta: </label> @{{ infoLead.TARJETA }}
+                    <label for="">Tarjeta: </label> @{{ infoLead.latest_intention.TARJETA }}
                 </p>
                 <p>
                     <label for="">Estado: </label> @{{ infoLead.ESTADO }}
@@ -107,7 +104,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <p class="caracteristicaPolitica">
-                    <i>* @{{ infoLead.CARACTERISTICA }}</i>
+                    <i>* @{{ infoLead.latest_intention.definition.CARACTERISTICA }}</i>
                 </p>
             </div>
         </div>

@@ -330,7 +330,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
-					$scope.deniedLeadForFecExp('1.1');
+					$scope.deniedLeadForFecExp('1');
 				}
 			}
 
@@ -442,8 +442,20 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 .controller("realizarAnalisisCtrl", function($scope, $http, $timeout) {
 	$scope.infoLead = {};
+	$scope.lead = {};
+	$scope.showResp = false;
 
-	$scope.simulate = function(){
-
+	$scope.getInfoLead = function(){
+		$http({
+			method: 'GET',
+			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
+		  }).then(function successCallback(response) {
+			$scope.infoLead = response.data;
+			$scope.showResp = true;
+			hideLoader();
+		  }, function errorCallback(response) {
+			  hideLoader();
+			  console.log(response);
+		  });
 	};
 })

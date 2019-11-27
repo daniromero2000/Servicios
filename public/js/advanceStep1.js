@@ -178,7 +178,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 						window.location = "/UsuarioMoroso";
 					} else {
 						if ($scope.totalErrorData >= 2) {
-							$scope.deniedLeadForFecExp("1.1");
+							$scope.deniedLeadForFecExp("1");
 						} else {
 							if ($scope.validateNum == 1) {
 								$scope.saveStep1();
@@ -290,7 +290,7 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 					$scope.encryptText();
 				}
 				if (response.data == "-1") {
-					$scope.deniedLeadForFecExp("1.2");
+					$scope.deniedLeadForFecExp("2");
 				}
 				if (response.data == "-3" || response.data == "-4") {
 					$scope.totalErrorData++;

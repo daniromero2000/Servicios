@@ -22,7 +22,7 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -55,9 +55,8 @@ class AdvanceController extends Controller
     public function index()
     {
 
-        $definition = Definition::find('A-1');
-        $intention = $this->intentionInterface->findCustomerIntentionById(1774);
-        dd($intention);
+        $customer = $this->customerInterface->findCustomerById(1088019814);
+        dd($customer);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

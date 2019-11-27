@@ -241,7 +241,7 @@ class OportuyaV2Controller extends Controller
 				$clienteCelular['NUM']     = trim($request->get('telephone'));
 				$clienteCelular['TIPO']    = 'CEL';
 				$clienteCelular['CEL_VAL'] = 1;
-				$clienteCelular['FECHA']   = date("Y-m-d H: i: s");
+				$clienteCelular['FECHA']   = date("Y-m-d H:i:s");
 				$this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
 			}
 
@@ -527,7 +527,6 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata['identificationNumber'] = $identificationNumber;
 		$codeUserVerificationOportudata['telephone']            = $celNumber;
 		$codeUserVerificationOportudata['type']                 = $type;
-		$codeUserVerificationOportudata['created_at']           = date('Y-m-d H: i: s');
 
 		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
@@ -1502,7 +1501,7 @@ class OportuyaV2Controller extends Controller
 		$solic_fab->CODASESOR     = $assessorCode;
 		$solic_fab->id_asesor     = $assessorCode;
 		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
-		$solic_fab->FECHASOL      = date("Y-m-d H: i: s");
+		$solic_fab->FECHASOL      = date("Y-m-d H:i:s");
 		$solic_fab->SUCURSAL      = $sucursal;
 		$solic_fab->ESTADO        = $estado;
 		$solic_fab->FTP           = 0;
@@ -1584,7 +1583,7 @@ class OportuyaV2Controller extends Controller
 
 		$analisis               = new Analisis;
 		$analisis->solicitud    = $numSolic->SOLICITUD;
-		$analisis->ini_analis   = date("Y-m-d H : i : s");
+		$analisis->ini_analis   = date("Y-m-d H:i:s");
 		$analisis->fec_datacli  = "1900-01-01 00: 00: 00";
 		$analisis->fec_datacod1 = "1900-01-01 00: 00: 00";
 		$analisis->fec_datacod2 = "1900-01-01 00: 00: 00";
@@ -1661,7 +1660,7 @@ class OportuyaV2Controller extends Controller
 		$turnosOportuya            = new TurnosOportuya;
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
 		$turnosOportuya->CEDULA    = $identificationNumber;
-		$turnosOportuya->FECHA     = date("Y-m-d H : i : s");
+		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
 		$turnosOportuya->SUC       = 9999;
 		$turnosOportuya->USUARIO   = '';
 		$turnosOportuya->PRIORIDAD = '2';
