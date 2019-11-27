@@ -139,8 +139,12 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
 
-        if (is_null($from) || is_null($to)) {
+        if (!empty($status) || is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
@@ -151,6 +155,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
-            })->get($this->columns);
+            })->orderBy('SOLICITUD', 'desc')
+            ->get($this->columns);
     }
 }
