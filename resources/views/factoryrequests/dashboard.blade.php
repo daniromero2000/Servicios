@@ -36,10 +36,10 @@
       <!-- Card 1 -->
 
       <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Likes</span>
+          <span class="info-box-text">Aprobados</span>
           <span class="info-box-number">41,410</span>
         </div>
         <!-- /.info-box-content -->
@@ -50,10 +50,10 @@
       <!-- Card 2 -->
 
       <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-home"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Likes</span>
+          <span class="info-box-text">En Sucursal</span>
           <span class="info-box-number">41,410</span>
         </div>
         <!-- /.info-box-content -->
@@ -62,10 +62,10 @@
 
       <div class="card ">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-down"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Likes</span>
+            <span class="info-box-text">Negados</span>
             <span class="info-box-number">41,410</span>
           </div>
           <!-- /.info-box-content -->
