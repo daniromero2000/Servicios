@@ -157,8 +157,7 @@
     <!-- ./wrapper -->
 
     @yield('scriptsJs')
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- jsGrid -->
@@ -172,8 +171,7 @@
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+   
     <!-- daterangepicker -->
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
@@ -204,4 +202,5 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
+
 </html>
