@@ -5,120 +5,110 @@
 <!-- Main content -->
 <div class="container-fluid">
 
-    <div class="row">
-        <!-- /.col (RIGHT) -->
-        <div class="col-md-4">
-            <!-- AREA CHART debe ir oculta -->
-            <div hidden class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Area Chart</h3>
+  <div class="row">
+    <!-- /.col (RIGHT) -->
+    <div class="col-md-4">
+      <!-- AREA CHART debe ir oculta -->
+      <div hidden class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Area Chart</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- Card 1 -->
-            <div class="card ">
-                <div class="card-header ">
-                    <h3 class="card-title ">Solicitudes Pendientes</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="areaChart" style="height:150px; min-height:150px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- Card 2 -->
-            <div class="card ">
-                <div class="card-header">
-                    <h3 class="card-title">Solicitudes Fuera de Linea</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="areaChart" style="height:150px; min-height:150px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
         </div>
-        <!-- /.col (LEFT) -->
-        <div class="col-md-8">
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
 
-            <!-- debe ir oculta -->
-            <div hidden class="card card-danger">
-                <div class="card-header">
-                    <h3 class="card-title">Donut Chart</h3>
+      <!-- Card 1 -->
+      <div class="card ">
+        <div class="card-header ">
+          <h3 class="card-title ">Solicitudes Pendientes</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:150px; min-height:150px"></canvas>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
 
-            <!-- TORTA -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Pie Chart</h3>
-                    @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="pieChart" style="height:330px; min-height:420px"></canvas>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+      <!-- Card 2 -->
+      <div class="card ">
+        <div class="card-header">
+          <h3 class="card-title">Solicitudes Fuera de Linea</h3>
 
-            {{-- <!-- BAR CHART -->
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:150px; min-height:150px"></canvas>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </div>
+    <!-- /.col (LEFT) -->
+    <div class="col-md-8">
+
+      <!-- debe ir oculta -->
+      <div hidden class="card card-danger">
+        <div class="card-header">
+          <h3 class="card-title">Donut Chart</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+      <!-- TORTA -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Pie Chart</h3>
+          @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="pieChart" style="height:330px; min-height:420px"></canvas>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+      {{-- <!-- BAR CHART -->
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Bar Chart</h3>
@@ -142,207 +132,221 @@
 
 
 
-        </div>
-        <!-- /.col (RIGHT) -->
     </div>
+    <!-- /.col (RIGHT) -->
+  </div>
 
-    <div class="row">
-        <!-- /.col (RIGTH) -->
-        <div class="col-md-4">
-            <!-- AREA CHART DEBE IR OCULTA-->
-            <div hidden class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Area Chart</h3>
+  <div class="row">
+    <!-- /.col (RIGTH) -->
+    <div class="col-md-4">
+      <!-- AREA CHART DEBE IR OCULTA-->
+      <div hidden class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Area Chart</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- Card 1 -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Solicitudes Pendientes</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="areaChart" style="height:225px; min-height:225px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
         </div>
-        <!-- /.col (LEFT) -->
-        <div class="col-md-8">
-            <!-- PORCENTAJES -->
-            <div class="card ">
-                <div class="card-header">
-                    <h3 class="card-title">Bar Chart</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+          </div>
         </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Solicitudes Pendientes</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:225px; min-height:225px"></canvas>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+
     </div>
+    <!-- /.col (LEFT) -->
+    <div class="col-md-8">
+      <!-- PORCENTAJES -->
+      <div class="card ">
+        <div class="card-header">
+          <h3 class="card-title">Bar Chart</h3>
 
-    <div class="row">
-        <div class="col-12">
-            <!-- interactive chart -->
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="far fa-chart-bar"></i>
-                        Interactive Area Chart
-                    </h3>
-
-                    <div class="card-tools">
-                        Real time
-                        <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                            <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="interactive" style="height: 300px;"></div>
-                </div>
-                <!-- /.card-body-->
-            </div>
-            <!-- /.card -->
-
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
         </div>
-        <!-- /.col -->
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
     </div>
-    <!-- /.row -->
+  </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <!-- Line chart -->
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="far fa-chart-bar"></i>
-                        Line Chart
-                    </h3>
+  <div class="row">
+    <div class="col-12">
+      <!-- interactive chart -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Interactive Area Chart
+          </h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="line-chart" style="height: 300px;"></div>
-                </div>
-                <!-- /.card-body-->
+          <div class="card-tools">
+            Real time
+            <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+              <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+              <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
             </div>
-            <!-- /.card -->
-
-            <!-- Area chart -->
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="far fa-chart-bar"></i>
-                        Area Chart
-                    </h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                                class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="area-chart" style="height: 338px;" class="full-width-chart"></div>
-                </div>
-                <!-- /.card-body-->
-            </div>
-            <!-- /.card -->
-
+          </div>
         </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-            <!-- Bar chart -->
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="far fa-chart-bar"></i>
-                        Bar Chart
-                    </h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="bar-chart" style="height: 300px;"></div>
-                </div>
-                <!-- /.card-body-->
-            </div>
-            <!-- /.card -->
-
+        <div class="card-body">
+          <div id="interactive" style="height: 300px;"></div>
         </div>
-        <!-- /.card -->
+        <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Line chart -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Line Chart
+          </h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="line-chart" style="height: 300px;"></div>
+        </div>
+        <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+
+      <!-- Area chart -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Area Chart
+          </h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="area-chart" style="height: 338px;" class="full-width-chart"></div>
+        </div>
+        <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+
     </div>
     <!-- /.col -->
 
-    <!-- /.row -->
+    <div class="col-md-6">
+      <!-- Bar chart -->
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Bar Chart
+          </h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="bar-chart" style="height: 300px;"></div>
+        </div>
+        <!-- /.card-body-->
+      </div>
+      <!-- /.card -->
+
+    </div>
+    <!-- /.card -->
+    <div class="col-md-6">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                Donut Chart
+              </h3>
+      
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="donut-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.card-body-->
+          </div>
+    </div>
+    <!-- Donut chart -->
+  
+    <!-- /.card -->
+  </div>
+  <!-- /.col -->
+
+  <!-- /.row -->
 
 
-    <!-- /.content -->
+  <!-- /.content -->
 
-    <!-- /.content-wrapper -->
-    <!-- Content Wrapper. Contains page content -->
+  <!-- /.content-wrapper -->
+  <!-- Content Wrapper. Contains page content -->
 
-    {{-- <!-- Content Header (Page header) -->
+  {{-- <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -369,9 +373,9 @@
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"> {{$estado->ESTADO }} </span>
-    <span class="info-box-number">
-        {{ $estado->total}}
-    </span>
+  <span class="info-box-number">
+    {{ $estado->total}}
+  </span>
 </div>
 <!-- /.info-box-content -->
 </div>
@@ -382,24 +386,23 @@
 <!-- /.col -->
 <!-- Main row -->
 <div class="row">
-    <!-- /.card-header -->
-    <div class="card card-danger">
-        <div class="card-header">
-            <h3 class="card-title">Pie Chart</h3>
+  <!-- /.card-header -->
+  <div class="card card-danger">
+    <div class="card-header">
+      <h3 class="card-title">Pie Chart</h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                        class="fas fa-times"></i></button>
-            </div>
-        </div>
-        <div class="card-body">
-            <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
-        </div>
-        <!-- /.card-body -->
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      </div>
     </div>
-    <!-- /.col -->
+    <div class="card-body">
+      <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.col -->
 </div>
 <!-- /.row -->
 </div>
@@ -431,7 +434,7 @@
 <script src="{{ asset('plugins/flot-old/jquery.flot.pie.min.js') }}"></script>
 <!-- Page script -->
 <script>
-    $(function () {
+  $(function () {
       /*
        * Flot Interactive Chart
        * -----------------------
@@ -667,6 +670,50 @@
       })
       /* END BAR CHART */
 
+ /*
+       * DONUT CHART
+       * -----------
+       */
+
+       var donutData = [
+        {
+          label: 'Series2',
+          data: 30,
+          color: '#3c8dbc'
+        },
+        {
+          label: 'Series3',
+          data: 20,
+          color: '#0073b7'
+        },
+        {
+          label: 'Series4',
+          data: 50,
+          color: '#00c0ef'
+        }
+      ]
+      $.plot('#donut-chart', donutData, {
+        series: {
+          pie: {
+            show: true,
+            radius: 1,
+            innerRadius: 0.5,
+            label: {
+              show: true,
+              radius: 2 / 3,
+              formatter: labelFormatter,
+              threshold: 0.1
+            }
+
+          }
+        },
+        legend: {
+          show: false
+        }
+      })
+      /*
+       * END DONUT CHART
+       */
 
 
     })
@@ -687,7 +734,7 @@
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Page script -->
 <script>
-    $(function () {
+  $(function () {
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
