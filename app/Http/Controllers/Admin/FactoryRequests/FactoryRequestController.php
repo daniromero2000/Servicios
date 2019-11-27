@@ -12,6 +12,7 @@ class FactoryRequestController extends Controller
 {
     private $factoryRequestInterface, $toolsInterface;
 
+
     public function __construct(
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface
@@ -63,6 +64,12 @@ class FactoryRequestController extends Controller
     public function dashboard(Request $request)
     {
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now());
+
+
+        if (request()->has('from')) {
+            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
+        }
+
         $estadosNames =  $estadosNames->toArray();
         $estadosNames = array_values($estadosNames);
         $statusesNames = [];
@@ -74,7 +81,6 @@ class FactoryRequestController extends Controller
         }
 
         return view('factoryrequests.dashboard', [
-            'estados' => $this->factoryRequestInterface->countFactoryRequestsStatuses($from = '2019-10-01', $to = Carbon::now()),
             'statusesNames' => $statusesNames,
             'statusesValues' => $statusesValues
 

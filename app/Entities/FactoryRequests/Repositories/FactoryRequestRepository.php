@@ -126,7 +126,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+            dd($e);
         }
     }
 
