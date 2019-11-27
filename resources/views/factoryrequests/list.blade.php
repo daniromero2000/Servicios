@@ -3,13 +3,12 @@
 
 <section>
     @include('layouts.errors-and-messages')
-
     @if(!is_null($customers))
     <div >
             <div class="content-header">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-8">
                                     <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
                                     <div class="row">
                                         <div class="col-md-12">
