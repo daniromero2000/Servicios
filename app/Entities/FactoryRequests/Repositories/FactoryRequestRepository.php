@@ -139,7 +139,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
 
-        if (!empty($status) || is_null($from) || is_null($to)) {
+        if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
