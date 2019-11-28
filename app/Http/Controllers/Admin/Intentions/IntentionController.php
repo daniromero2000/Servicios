@@ -31,6 +31,7 @@ class IntentionController extends Controller
             $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
         }
 
+        //dd
         $listCount = $list->count();
 
         return view('intentions.list', [
