@@ -13,6 +13,8 @@ interface IntentionRepositoryInterface
 
   public function findCustomerIntentionById($id): Intention;
 
+  public function findIntentionByIdFull(int $id): Intention;
+
   public function listIntentions($totalView): Support;
 
   public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection;

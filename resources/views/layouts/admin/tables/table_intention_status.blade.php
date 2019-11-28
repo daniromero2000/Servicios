@@ -1,0 +1,38 @@
+<div class="table " style="font-size: 10pt;">
+    <table id="example2" class="table table-responsive table-stripped  table-hover">
+        <thead class="text-center">
+            <tr>
+                @foreach ($headers as $header)
+                <th scope="col">{{ $header }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($datas as $data)
+            <tr>
+                <td>{{ $data->id}}</td>
+                <td>{{ $data->CEDULA}} </td>
+                <td>{{ $data->FECHA_INTENCION}}</td>
+                <td>@if ($data->ESTADO_OBLIGACIONES == 1)OK @endif
+                    @if ($data->ESTADO_OBLIGACIONES == 0)NO @endif</td>
+                <td>{{ $data->PERFIL_CREDITICIO}}</td>
+                <td>@if ($data->HISTORIAL_CREDITO == 1)OK @endif
+                    @if ($data->HISTORIAL_CREDITO == 0)NO @endif</td>
+                <td>{{ $data->TARJETA}}</td>
+                <td>{{ $data->ZONA}}</td>
+                <td>@if ($data->EDAD == 1)OK @endif
+                    @if ($data->EDAD == 0)NO @endif</td>
+                <td>@if ($data->TIEMPO_LABOR == 1)OK @endif
+                    @if ($data->TIEMPO_LABOR == 0)NO @endif</td>
+                <td>{{ $data->TIPO_5_ESPECIAL}}</td>
+                <td>{{ $data->INSPECCION_OCULAR}}</td>
+                <td>{{ $data->ESTADO_INTENCION}}</td>
+                <td>{{ $data->definition['DESCRIPCION']}}</td>
+                <td>{{ $data->customer['ESTADO']}}</td>
+            </tr>
+            @endforeach
+        <tbody>
+    </table>
+</div>@php
+
+@endphp

@@ -37,7 +37,7 @@ class IntentionController extends Controller
         return view('Intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(1)),
-            'headers'              => ['Intención', 'Cliente', 'Fecha', 'Definición', 'Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5', 'Inspección Ocular', 'Estado'],
+            'headers'              => ['Intención', 'Cliente', 'Fecha', 'Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5', 'Inspección Ocular', 'Estado Intención', 'Definición', 'Estado Cliente'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
@@ -45,9 +45,11 @@ class IntentionController extends Controller
 
     public function show(int $id)
     {
-        // $customer = $this->intentionInterface->findFactoryRequestByIdFull($id);
+        $intention = $this->intentionInterface->findIntentionByIdFull($id);
 
-        return view('Intentions.show');
+        return view('Intentions.show', [
+            'intention' =>  $intention
+        ]);
     }
 
     public function assignAssesorDigitalToLead($solicitud)
