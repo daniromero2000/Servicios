@@ -177,7 +177,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
-            return $this->model->whereBetween('FECHASOL', [$from, $to])->sum('GRAN_TOTAL');
+            return $this->model
+
+                ->sum('GRAN_TOTAL');
         } catch (\Throwable $th) {
             //throw $th;
         }
