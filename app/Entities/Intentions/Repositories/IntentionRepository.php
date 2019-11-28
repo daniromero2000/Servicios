@@ -89,7 +89,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchIntentions($text, null, true, true)
+            return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
                 })
@@ -100,10 +100,11 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
 
         return $this->model->searchIntentions($text, null, true, true)
-            ->whereBetween('FECHA_INTENCION', [$from, $to])
+            ->whereBetween('FECHA_INTENCION', [$from, $to])->with(['customer', 'definition'])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
-            })->orderBy('id', 'desc')
+            })
+            ->orderBy('id', 'desc')
             ->get($this->columns);
     }
 }

@@ -9,6 +9,8 @@
         </thead>
         <tbody>
             @foreach($datas as $data)
+
+
             <tr>
                 <td>{{ $data->id}}</td>
                 <td>{{ $data->CEDULA}} </td>
