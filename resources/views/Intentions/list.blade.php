@@ -32,7 +32,7 @@
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
                         <div class="card-header">
-                            @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
+                            @include('layouts.admin.filter_intention', ['route' => route('intentions.index')])
                         </div>
                         <h1 class="ml-3"> {{ $listCount }}  </h1>
                         <div class="card-body text-center pt-0 pb-0 ">
