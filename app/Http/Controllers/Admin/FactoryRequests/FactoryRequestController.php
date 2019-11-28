@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin\FactoryRequests;
-
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
