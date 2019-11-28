@@ -24,9 +24,11 @@
                     @if ($data->EDAD == 0)NO @endif</td>
                 <td>@if ($data->TIEMPO_LABOR == 1)OK @endif
                     @if ($data->TIEMPO_LABOR == 0)NO @endif</td>
-                <td>{{ $data->TIPO_5_ESPECIAL}}</td>
-                <td>{{ $data->INSPECCION_OCULAR}}</td>
-                <td>{{ $data->ESTADO_INTENCION}}</td>
+                <td>@if ($data->TIPO_5_ESPECIAL == 1)SI @endif
+                    @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
+                              <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
+                    @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
+
                 <td>{{ $data->definition['DESCRIPCION']}}</td>
                 <td>{{ $data->customer['ESTADO']}}</td>
             </tr>
