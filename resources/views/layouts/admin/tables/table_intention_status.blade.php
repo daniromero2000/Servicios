@@ -18,7 +18,7 @@
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)OK @endif
                     @if ($data->ESTADO_OBLIGACIONES == 0)NO OK @endif</td>
-                    <td>{{ $data->customer->latestCifinScore['score']}}</td>
+                    <td> @if($data->customer) {{ $data->customer->latestCifinScore['score']}} @endif</td>
                 <td>{{ $data->PERFIL_CREDITICIO}}</td>
                 <td>@if ($data->HISTORIAL_CREDITO == 1)OK @endif
                     @if ($data->HISTORIAL_CREDITO == 0)NO OK @endif</td>

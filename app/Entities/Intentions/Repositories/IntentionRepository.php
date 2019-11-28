@@ -65,7 +65,6 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-
     public function listIntentions($totalView): Support
     {
         try {
