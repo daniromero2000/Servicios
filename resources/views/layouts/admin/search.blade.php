@@ -41,16 +41,16 @@
                     </div>
                     <div class="col-3 d-flex align-items-end">
                         <div class="form-group w-100">
-                            <label for="status">Sucursal</label>
-                            <select class="form-control  select2" id="status2" name="status" {!!
-                                request()->input('status')!!} style="width: 100%;">
+                            <label for="subsidiary">Sucursal</label>
+                            <select class="form-control  select2" id="subsidiary" name="subsidiary" {!!
+                                request()->input('subsidiary')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
-                                <option>APROBADO</option>
-                                <option>ANALISIS</option>
-                                <option>EN SUCURSAL</option>
-                                <option>PROBLEMAS EN ANALISIS</option>
-                                <option>EN SUCURSAL</option>
-                                <option>PROBLEMAS EN REFERENCIACION</option>
+                                <option>125</option>
+                                <option>121</option>
+                                <option>133</option>
+                                <option>144</option>
+                                <option>147</option>
+                                <option>157</option>
                             </select>
                         </div>
                     </div>

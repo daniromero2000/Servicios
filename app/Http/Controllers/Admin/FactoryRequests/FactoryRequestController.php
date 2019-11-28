@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\FactoryRequests;
+
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
@@ -27,7 +28,14 @@ class FactoryRequestController extends Controller
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
+            $list = $this->factoryRequestInterface->searchFactoryRequest(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary')
+            )->sortByDesc('SOLICITUD');
         }
 
         $listCount = $list->count();
