@@ -10,9 +10,6 @@
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
             </li>
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
-            </li>
-            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                     aria-controls="profile">Seguimiento</a>
             </li>

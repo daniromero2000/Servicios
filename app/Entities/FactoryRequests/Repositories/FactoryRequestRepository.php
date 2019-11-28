@@ -18,6 +18,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'SUCURSAL',
         'FECHASOL',
         'ESTADO',
+        'GRAN_TOTAL'
     ];
 
     public function __construct(
@@ -104,7 +105,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function listFactoryRequests($totalView): Support
     {
         try {
@@ -131,6 +131,20 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     }
 
 
+    public function countWebFactoryRequests($from, $to)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('SOLICITUD_WEB', 1)
+                ->where('STATE', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
@@ -139,7 +153,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->take(30)
                 ->get($this->columns);
         }
-
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
@@ -152,12 +165,23 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->get($this->columns);
         }
 
-
         return $this->model->searchFactoryRequest($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
             })->orderBy('SOLICITUD', 'desc')
             ->get($this->columns);
+    }
+
+
+    public function getFactoryRequestsTotal($from, $to)
+    {
+        try {
+            return $this->model
+
+                ->sum('GRAN_TOTAL');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }
