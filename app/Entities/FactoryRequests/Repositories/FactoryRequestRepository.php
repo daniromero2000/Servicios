@@ -172,4 +172,14 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             })->orderBy('SOLICITUD', 'desc')
             ->get($this->columns);
     }
+
+
+    public function getFactoryRequestsTotal($from, $to)
+    {
+        try {
+            return $this->model->whereBetween('FECHASOL', [$from, $to])->sum('GRAN_TOTAL');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

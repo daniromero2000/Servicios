@@ -71,10 +71,12 @@ class FactoryRequestController extends Controller
 
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
+        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
+            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
         }
 
         $estadosNames   = $estadosNames->toArray();
@@ -111,6 +113,7 @@ class FactoryRequestController extends Controller
             'webColors'       => $webColors,
             'totalWeb'       => array_sum($webValues),
             'totalStatuses'  => array_sum($statusesValues),
+            'factoryRequestsTotal'       => $factoryRequestsTotal,
         ]);
     }
 }
