@@ -33,15 +33,14 @@ class FactoryRequestController extends Controller
 
         $listCount = $list->count();
         $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
-        dd($factoryRequestsTotal);
-
 
         return view('factoryrequests.list', [
-            'customers'     => $list,
-            'optionsRoutes' => (request()->segment(1)),
-            'headers'       => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-            'listCount'     => $listCount,
-            'skip'          => $skip,
+            'customers'            => $list,
+            'optionsRoutes'        => (request()->segment(1)),
+            'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'            => $listCount,
+            'skip'                 => $skip,
+            'factoryRequestsTotal' => $factoryRequestsTotal,
 
         ]);
     }
