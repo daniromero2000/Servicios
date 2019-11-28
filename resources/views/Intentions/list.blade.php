@@ -41,7 +41,6 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h2>{{ $listCount }}</h2>
-
                                             <p>Solicitudes</p>
                                         </div>
                                         <div class="icon">
@@ -66,7 +65,7 @@
 
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($intentions)
-                            @include('layouts.admin.tables.tables_lead_status', [$headers, 'datas' => $intentions ])
+                            @include('layouts.admin.tables.table_intention_status', [$headers, 'datas' => $intentions ])
                             @include('layouts.admin.pagination.pagination', [$skip])
                             @else
                             @include('layouts.admin.pagination.pagination_null', [$skip])

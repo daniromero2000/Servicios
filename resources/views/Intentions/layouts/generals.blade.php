@@ -1,6 +1,5 @@
 <div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Solicitud {{ $customer->SOLICITUD }} Sucursal
-    {{ $customer->SUCURSAL }} {{ $customer->ESTADO }}
+  <h2><i class="fas fa-tags" aria-hidden="true"></i> Intención {{ $intention->id }} {{ $intention->ESTADO_INTENCION }}
   </h2>
 </div>
 <div class="card-body table-responsive pt-1">
@@ -18,20 +17,20 @@
     </thead>
     <tbody>
       <tr>
-        <td class="text-center">{{ $customer->FECHASOL }}</td>
-        <td class="text-center">{{ $customer->CODEUDOR1 }}/{{ $customer->CODEUDOR2 }}/{{ $customer->CODEUDOR3 }}</td>
-        <td class="text-center">{{ $customer->CODASESOR }}</td>
-        <td class="text-center">{{ $customer->GRAN_TOTAL }}</td>
-        <td class="text-center">{{ $customer->PRODUC_W }}</td>
-        <td class="text-center">{{ $customer->AVANCE_W }}</td>
+        <td class="text-center">{{ $intention->FECHA_INTENCION }}</td>
+        <td class="text-center">{{ $intention->definition->DESCRIPCION }}</td>
+        <td class="text-center">{{ $intention->ESTADO_OBLIGACIONES }}</td>
+        <td class="text-center">{{ $intention->PERFIL_CREDITICIO }}</td>
+        <td class="text-center">{{ $intention->HISTORIAL_CREDITO }}</td>
+        <td class="text-center">{{ $intention->TARJETA }}</td>
+        <td class="text-center">{{ $intention->EDAD }}</td>
+        <td class="text-center">{{ $intention->TIEMPO_LABOR }}</td>
+        <td class="text-center">{{ $intention->TIPO_5_ESPECIAL }}</td>
+        <td class="text-center">{{ $intention->INSPECCION_OCULAR }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-
-
-
-
 
 @section('scriptsJs')
 <!-- jQuery -->

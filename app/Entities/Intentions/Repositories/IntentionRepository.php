@@ -54,10 +54,22 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+    public function findIntentionByIdFull(int $id): Intention
+    {
+        try {
+            return $this->model
+                ->with(['customer', 'definition'])
+                ->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
     public function listIntentions($totalView): Support
     {
         try {
-            return  $this->model
+            return  $this->model->with(['customer', 'definition'])
                 ->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
