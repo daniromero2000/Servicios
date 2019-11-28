@@ -15,6 +15,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qGen': '',
         'qfechaInicialTR': '',
         'qfechaFinalTR': '',
+        'qOrigenTR': '',
         'qTRAnt': '',
         'initFrom': 0,
         'initFromAnt': 0,
@@ -151,7 +152,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/subsidiaries/cities'
         }).then(function successCallback(response) {
-            console.log(response.data);
             if (response.data != false) {
                 $scope.cities = response.data;
             }
@@ -181,6 +181,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados +
                 '&qfechaInicialTR=' + $scope.q.qfechaInicialTR +
                 '&qfechaFinalTR=' + $scope.q.qfechaFinalTR +
+                '&qOrigenTR=' + $scope.q.qOrigenTR +
                 '&qCM=' + $scope.q.qCM +
                 '&qRL=' + $scope.q.qRL +
                 '&qGen=' + $scope.q.qGen +
@@ -199,8 +200,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&channel' + $scope.q.channel,
 
         }).then(function successCallback(response) {
-            console.log(response.data);
-
             $scope.codeAsesor = response.data.codeAsesor;
             $scope.totalLeads = response.data.totalLeads;
             $scope.totalLeadsAnt = response.data.totalLeadsAnt;
@@ -261,7 +260,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.q.initFromAnt = 0;
         $scope.q.initFromCM = 0;
         $scope.q.initFromGen = 0;
-        1
         $scope.q.initFromTR = 0;
         $scope.q.initFromTRAnt = 0;
         $scope.leads = [];
@@ -339,7 +337,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             url: '/communityLeads/updateCommunityLeads',
             data: $scope.lead
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.searchLeads();
                 $('#updateCommunityModal').modal('hide');
@@ -360,7 +357,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             url: '/communityLeads/addCommunityLeads',
             data: $scope.lead
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.searchLeads();
                 $('#addCommunityLead').modal('hide');
@@ -380,7 +376,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     method: 'GET',
                     url: '/api/canalDigital/assignAssesorDigitalToLead/' + solicitud,
                 }).then(function successCallback(response) {
-                    console.log(response);
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
@@ -399,7 +394,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     method: 'GET',
                     url: '/api/canalDigital/assignAssesorDigitalToLeadCM/' + solicitud,
                 }).then(function successCallback(response) {
-                    console.log(response);
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
@@ -420,6 +414,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
+                    hideLoader();
                     console.log(response);
                 });
             });
@@ -485,7 +480,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/Admin/Comments/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.state, $scope.idLead, false);
                 $scope.comment.comment = "";

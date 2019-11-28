@@ -51,11 +51,12 @@ class LeadsController extends Controller
         ]);
 
         $getLeadsTR = $this->getLeadsTradicional([
-            'q'              => $request->get('q'),
+            'q'               => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
             'qfechaInicialTR' => $request->get('qfechaInicialTR'),
             'qfechaFinalTR'   => $request->get('qfechaFinalTR'),
-            'qcityAprobados' => $request->get('qcityAprobados'),
+            'qOrigenTR'       => $request->get('qOrigenTR'),
+            'qcityAprobados'  => $request->get('qcityAprobados'),
         ]);
 
         $getLeadsDigital = $this->getLeadsCanalDigital([
@@ -328,6 +329,10 @@ class LeadsController extends Controller
         if ($request['qfechaFinalTR'] != '') {
             $request['qfechaFinalTR'] .= " 23:59:59";
             $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` <= '%s') ", $request['qfechaFinalTR']);
+        }
+
+        if($request['qOrigenTR'] != ''){
+            $queryTradicional .= sprintf(" AND (cf.`ORIGEN` = '%s') ", $request['qOrigenTR']);
         }
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
