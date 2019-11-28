@@ -171,7 +171,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
             })
-            ->when($status, function ($q, $subsidiary) {
+            ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
             })
             ->orderBy('SOLICITUD', 'desc')
