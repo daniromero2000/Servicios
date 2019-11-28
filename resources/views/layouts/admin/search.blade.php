@@ -20,7 +20,7 @@
                             <label for="status">Estado</label>
                             <select class="form-control  select2" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Sucursal -- </option>
+                                <option disabled selected value> -- Selecciona Estado -- </option>
                                 <option>APROBADO</option>
                                 <option>ANALISIS</option>
                                 <option>EN SUCURSAL</option>
@@ -44,7 +44,7 @@
                             <label for="subsidiary">Sucursal</label>
                             <select class="form-control  select2" id="subsidiary" name="subsidiary" {!!
                                 request()->input('subsidiary')!!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option disabled selected value> -- Selecciona Sucursal -- </option>
                                 <option>125</option>
                                 <option>121</option>
                                 <option>133</option>
