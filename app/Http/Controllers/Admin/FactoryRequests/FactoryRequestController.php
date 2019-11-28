@@ -26,13 +26,15 @@ class FactoryRequestController extends Controller
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
-        $listCount = $list->count();
 
         if (request()->has('q')) {
             $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
-
-            $listCount = $list->count();
         }
+
+        $listCount = $list->count();
+        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+        dd($factoryRequestsTotal);
+
 
         return view('factoryrequests.list', [
             'customers'     => $list,

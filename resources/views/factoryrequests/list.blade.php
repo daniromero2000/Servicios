@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
+
                         <div class="row">
                             <div class="col-md-12">
 
@@ -34,6 +34,7 @@
                         <div class="card-header">
                             @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
                         </div>
+                        <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($customers)
                             @include('layouts.admin.tables.tables_lead_status', [$headers, 'datas' => $customers ])
