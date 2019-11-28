@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6">
             <!-- /.info-box -->
-            <div class="small-box bg-info">
+            <div class="small-box ">
               <div class="inner">
                 {{-- <h2>{{ $totalStatuses }}</h2> --}}
 
@@ -25,7 +25,7 @@
           </div>
 
           <div class="col-12 col-sm-6 col-md-6">
-            <div class="small-box bg-success">
+            <div class="small-box ">
               <div class="inner">
                 <h2>Total</h2>
 
@@ -59,7 +59,7 @@
 
       <!-- Card 1 -->
       <div class="col-12">
-        <div class="info-box bg-success">
+        <div class="info-box ">
           <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
 
           <div class="info-box-content">
@@ -69,7 +69,7 @@
                 <span class="info-box-number">41,410</span>
               </div>
               <div class="col-6">
-                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                <span class="info-box-text text-right"><a href="" style="color: black; !important">Ver
                     Mas</a></span>
               </div>
             </div>
@@ -86,7 +86,7 @@
 
       <!-- Card 2 -->
       <div class="col-12">
-        <div class="info-box bg-warning">
+        <div class="info-box ">
           <span class="info-box-icon"><i class="fas fa-envelope-open-text"></i></span>
 
           <div class="info-box-content">
@@ -96,7 +96,7 @@
                 <span class="info-box-number">41,410</span>
               </div>
               <div class="col-6">
-                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: black; !important">Ver
+                <span class="info-box-text text-right"><a href="" style="color: black; !important">Ver
                     Mas</a></span>
               </div>
             </div>
@@ -113,7 +113,7 @@
 
       <!-- Card 3 -->
       <div class="col-12">
-        <div class="info-box bg-primary">
+        <div class="info-box ">
           <span class="info-box-icon"><i class="fas fa-door-open"></i></span>
 
           <div class="info-box-content">
@@ -123,7 +123,7 @@
                 <span class="info-box-number">41,410</span>
               </div>
               <div class="col-6">
-                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                <span class="info-box-text text-right"><a href="" style="color: black; !important">Ver
                     Mas</a></span>
               </div>
             </div>
@@ -140,7 +140,7 @@
 
       <!-- Card 4 -->
       <div class="col-12">
-        <div class="info-box bg-danger">
+        <div class="info-box ">
           <span class="info-box-icon"><i class="fas fa-thumbs-down"></i></span>
 
           <div class="info-box-content">
@@ -150,7 +150,7 @@
                 <span class="info-box-number">41,410</span>
               </div>
               <div class="col-6">
-                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                <span class="info-box-text text-right"><a href="" style="color: black; !important">Ver
                     Mas</a></span>
               </div>
             </div>

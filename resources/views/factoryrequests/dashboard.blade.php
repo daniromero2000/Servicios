@@ -69,7 +69,7 @@
                 <span class="info-box-number">41,410</span>
               </div>
               <div class="col-6">
-                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: black; !important">Ver
                     Mas</a></span>
               </div>
             </div>
@@ -123,7 +123,7 @@
                     <span class="info-box-number">41,410</span>
                 </div>
                 <div class="col-6">
-                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: black; !important">Ver
                       Mas</a></span>
                 </div>
               </div>
@@ -150,7 +150,7 @@
                     <span class="info-box-number">41,410</span>
                 </div>
                 <div class="col-6">
-                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: black; !important">Ver
                       Mas</a></span>
                 </div>
               </div>
