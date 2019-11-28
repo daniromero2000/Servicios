@@ -34,7 +34,7 @@
                         <div class="card-header">
                             @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
                         </div>
-                        <h1 class="ml-3"> {{ $listCount }} Solicitudes para un total de  ${{ $factoryRequestsTotal }} </h1>
+                        <h1 class="ml-3"> {{ $listCount }} Solicitudes para un total de  ${{ number_format ($factoryRequestsTotal) }} </h1>
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($customers)
                             @include('layouts.admin.tables.tables_lead_status', [$headers, 'datas' => $customers ])
