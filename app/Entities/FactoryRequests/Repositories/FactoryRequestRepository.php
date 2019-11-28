@@ -130,7 +130,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function countWebFactoryRequests($from, $to)
     {
         try {
@@ -173,15 +172,14 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
-
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
             return $this->model
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (QueryException $e) {
+            dd($e);
         }
     }
 }
