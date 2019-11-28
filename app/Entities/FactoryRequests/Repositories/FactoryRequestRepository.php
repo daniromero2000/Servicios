@@ -178,7 +178,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return $this->model
-
+                ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
         } catch (\Throwable $th) {
             //throw $th;
