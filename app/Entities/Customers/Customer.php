@@ -131,7 +131,6 @@ class Customer extends Model
         'termsAndConditions',
         'NIT_EMP',
         'PROFESION',
-        'TIPOCLIENTE',
         'SUBTIPO',
         'SEXO',
         'FEC_EXP',
