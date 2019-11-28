@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-3 d-flex align-items-center">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i>
+                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i class="fa fa-search"></i>
                                 Buscar
                             </button>
                         </span>

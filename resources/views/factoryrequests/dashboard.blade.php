@@ -166,27 +166,14 @@
         </div>
 
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
-        </div>
-        <!-- /.card-body -->
-      </div>
+     
 
     </div>
 
 
     <!-- /.col (LEFT) -->
     <div class="col-md-8">
+      
       <!-- debe ir oculta -->
       <div hidden class="card card-danger">
         <div class="card-header">
@@ -220,7 +207,7 @@
               @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
             </div>
             <div class="col-12">
-              <canvas id="pieChart" style="height:605px; min-height:600px"></canvas>
+              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
             </div>
           </div>
 
@@ -234,6 +221,21 @@
   <div class="row">
     <!-- /.col (RIGTH) -->
     <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
+    
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
       <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
@@ -257,8 +259,9 @@
       <!-- Card 1 -->
 
     </div>
+    
     <!-- /.col (LEFT) -->
-    <div class="col-md-12">
+    <div class="col-md-8">
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">
