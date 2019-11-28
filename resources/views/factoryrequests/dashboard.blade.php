@@ -34,7 +34,7 @@
       <!-- /.card -->
 
       <!-- Card 1 -->
-    <span> {{ $totalStatuses }} Solicitudes para un total de {{ $factoryRequestsTotal }}</span>
+    <span> {{ $totalStatuses }} Solicitudes para un total de {{ number_format ($factoryRequestsTotal) }}</span>
       <div class="info-box mb-3">
         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
