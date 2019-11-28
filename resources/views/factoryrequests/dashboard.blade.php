@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6">
             <!-- /.info-box -->
-            <div class="small-box bg-warning">
+            <div class="small-box bg-info">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
 
@@ -26,15 +26,15 @@
 
           <div class="col-12 col-sm-6 col-md-6">
             <div class="small-box bg-success">
-                <div class="inner">
-                  <h2>Total</h2>
-  
-                  <p>${{ number_format ($factoryRequestsTotal) }}</p>
-                </div>
-                <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
-                </div>
+              <div class="inner">
+                <h2>Total</h2>
+
+                <p>${{ number_format ($factoryRequestsTotal) }}</p>
               </div>
+              <div class="icon">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,54 +58,113 @@
       </div>
 
       <!-- Card 1 -->
+      <div class="col-12">
+        <div class="info-box bg-success">
+          <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
 
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">Aprobados</span>
-          <span class="info-box-number">41,410</span>
-          <span class="info-box-text text-right"><a href="/factoryrequests">Ver Mas</a></span>
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-6">
+                <span class="info-box-text">Aprobados</span>
+                <span class="info-box-number">41,410</span>
+              </div>
+              <div class="col-6">
+                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                    Mas</a></span>
+              </div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 70%"></div>
+            </div>
+            <span class="progress-description">
+              70% Increase in 30 Days
+            </span>
+          </div>
+          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box-content -->
       </div>
 
       <!-- Card 2 -->
+      <div class="col-12">
+        <div class="info-box bg-warning">
+          <span class="info-box-icon"><i class="fas fa-envelope-open-text"></i></span>
 
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-envelope-open-text"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Pendientes</span>
-          <span class="info-box-number">41,410</span>
-          <span class="info-box-text text-right"><a href="/factoryrequests">Ver Mas</a></span>
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-6">
+                <span class="info-box-text">Pendientes</span>
+                <span class="info-box-number">41,410</span>
+              </div>
+              <div class="col-6">
+                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: black; !important">Ver
+                    Mas</a></span>
+              </div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 70%"></div>
+            </div>
+            <span class="progress-description">
+              70% Increase in 30 Days
+            </span>
+          </div>
+          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box-content -->
       </div>
 
-      <!-- Card 2 -->
-
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-door-open"></i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">Desistidos</span>
-          <span class="info-box-number">41,410</span>
-          <span class="info-box-text text-right"><a href="/factoryrequests">Ver Mas</a></span>
+      <!-- Card 3 -->
+      <div class="col-12">
+          <div class="info-box bg-primary">
+            <span class="info-box-icon"><i class="fas fa-door-open"></i></span>
+  
+            <div class="info-box-content">
+              <div class="row">
+                <div class="col-6">
+                    <span class="info-box-text">Desistidos</span>
+                    <span class="info-box-number">41,410</span>
+                </div>
+                <div class="col-6">
+                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                      Mas</a></span>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+              <span class="progress-description">
+                70% Increase in 30 Days
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
         </div>
-        <!-- /.info-box-content -->
-      </div>
 
-      <!-- Card 2 -->
-
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-down"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Negados</span>
-          <span class="info-box-number">41,410</span>
-          <span class="info-box-text text-right"><a href="/factoryrequests">Ver Mas</a></span>
+      <!-- Card 4 -->
+      <div class="col-12">
+          <div class="info-box bg-danger">
+            <span class="info-box-icon"><i class="fas fa-thumbs-down"></i></span>
+  
+            <div class="info-box-content">
+              <div class="row">
+                <div class="col-6">
+                    <span class="info-box-text">Negados</span>
+                    <span class="info-box-number">41,410</span>
+                </div>
+                <div class="col-6">
+                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                      Mas</a></span>
+                </div>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+              <span class="progress-description">
+                70% Increase in 30 Days
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
         </div>
-        <!-- /.info-box-content -->
-      </div>
+
 
       <div class="card">
         <div class="card-header">
@@ -149,7 +208,6 @@
       <!-- TORTA -->
       <div class="card">
         <div class="card-header">
-          @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])  
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -157,7 +215,15 @@
           </div>
         </div>
         <div class="card-body">
-          <canvas id="pieChart" style="height:605px; min-height:600px"></canvas>
+          <div class="row">
+            <div class="col-12">
+              @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
+            </div>
+            <div class="col-12">
+              <canvas id="pieChart" style="height:605px; min-height:600px"></canvas>
+            </div>
+          </div>
+
         </div>
         <!-- /.card-body -->
       </div>
