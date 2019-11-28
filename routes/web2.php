@@ -140,6 +140,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
     });
 
+    Route::namespace('Intentions')->group(function () {
+        Route::resource('Intenttions', 'IntentionController');
+        Route::get('dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
+    });
+
     Route::namespace('Comments')->group(function () {
         Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });

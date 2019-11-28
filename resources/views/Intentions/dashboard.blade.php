@@ -12,9 +12,9 @@
         <div class="row">
           <div class="col-12 col-sm-6 col-md-6">
             <!-- /.info-box -->
-            <div class="small-box ">
+            <div class="small-box bg-info">
               <div class="inner">
-                <h2>{{ $totalStatuses }}</h2>
+                {{-- <h2>{{ $totalStatuses }}</h2> --}}
 
                 <p>Solicitudes</p>
               </div>
@@ -25,11 +25,11 @@
           </div>
 
           <div class="col-12 col-sm-6 col-md-6">
-            <div class="small-box ">
+            <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
 
-                <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                {{-- <p>${{ number_format ($factoryRequestsTotal) }}</p> --}}
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -59,7 +59,7 @@
 
       <!-- Card 1 -->
       <div class="col-12">
-        <div class="info-box ">
+        <div class="info-box bg-success">
           <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
 
           <div class="info-box-content">
@@ -86,7 +86,7 @@
 
       <!-- Card 2 -->
       <div class="col-12">
-        <div class="info-box ">
+        <div class="info-box bg-warning">
           <span class="info-box-icon"><i class="fas fa-envelope-open-text"></i></span>
 
           <div class="info-box-content">
@@ -113,62 +113,62 @@
 
       <!-- Card 3 -->
       <div class="col-12">
-          <div class="info-box ">
-            <span class="info-box-icon"><i class="fas fa-door-open"></i></span>
-  
-            <div class="info-box-content">
-              <div class="row">
-                <div class="col-6">
-                    <span class="info-box-text">Desistidos</span>
-                    <span class="info-box-number">41,410</span>
-                </div>
-                <div class="col-6">
-                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
-                      Mas</a></span>
-                </div>
+        <div class="info-box bg-primary">
+          <span class="info-box-icon"><i class="fas fa-door-open"></i></span>
+
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-6">
+                <span class="info-box-text">Desistidos</span>
+                <span class="info-box-number">41,410</span>
               </div>
-              <div class="progress">
-                <div class="progress-bar" style="width: 70%"></div>
+              <div class="col-6">
+                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                    Mas</a></span>
               </div>
-              <span class="progress-description">
-                70% Increase in 30 Days
-              </span>
             </div>
-            <!-- /.info-box-content -->
+            <div class="progress">
+              <div class="progress-bar" style="width: 70%"></div>
+            </div>
+            <span class="progress-description">
+              70% Increase in 30 Days
+            </span>
           </div>
+          <!-- /.info-box-content -->
         </div>
+      </div>
 
       <!-- Card 4 -->
       <div class="col-12">
-          <div class="info-box ">
-            <span class="info-box-icon"><i class="fas fa-thumbs-down"></i></span>
-  
-            <div class="info-box-content">
-              <div class="row">
-                <div class="col-6">
-                    <span class="info-box-text">Negados</span>
-                    <span class="info-box-number">41,410</span>
-                </div>
-                <div class="col-6">
-                  <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
-                      Mas</a></span>
-                </div>
+        <div class="info-box bg-danger">
+          <span class="info-box-icon"><i class="fas fa-thumbs-down"></i></span>
+
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-6">
+                <span class="info-box-text">Negados</span>
+                <span class="info-box-number">41,410</span>
               </div>
-              <div class="progress">
-                <div class="progress-bar" style="width: 70%"></div>
+              <div class="col-6">
+                <span class="info-box-text text-right"><a href="/factoryrequests" style="color: white; !important">Ver
+                    Mas</a></span>
               </div>
-              <span class="progress-description">
-                70% Increase in 30 Days
-              </span>
             </div>
-            <!-- /.info-box-content -->
+            <div class="progress">
+              <div class="progress-bar" style="width: 70%"></div>
+            </div>
+            <span class="progress-description">
+              70% Increase in 30 Days
+            </span>
           </div>
+          <!-- /.info-box-content -->
         </div>
+      </div>
 
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
+          {{-- <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3> --}}
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -279,8 +279,7 @@
       </div>
       <!-- /.card -->
     </div>
-  </div>
-  {{--
+    {{--
     <div class="row">
       <div class="col-12">
         <!-- interactive chart -->
@@ -448,10 +447,10 @@
     </div>  --}}
 
 
-  <!-- /.content-wrapper -->
-  <!-- Content Wrapper. Contains page content -->
+    <!-- /.content-wrapper -->
+    <!-- Content Wrapper. Contains page content -->
 
-  {{-- <!-- Content Header (Page header) -->
+    {{-- <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -478,42 +477,42 @@
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"> {{$estado->ESTADO }} </span>
-  <span class="info-box-number">
-    {{ $estado->total}}
-  </span>
-</div>
-<!-- /.info-box-content -->
-</div>
-<!-- /.info-box -->
-</div>
-@endforeach
+    <span class="info-box-number">
+      {{-- {{ $estado->total}} --}}
+    </span>
 
-<!-- /.col -->
-<!-- Main row -->
-<div class="row">
-  <!-- /.card-header -->
-  <div class="card card-danger">
-    <div class="card-header">
-      <h3 class="card-title">Pie Chart</h3>
+    <!-- /.info-box-content -->
 
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+    <!-- /.info-box -->
+
+    {{-- @endforeach  --}}
+
+    <!-- /.col -->
+    <!-- Main row -->
+    <div class="row">
+      <!-- /.card-header -->
+      <div class="card card-danger">
+        <div class="card-header">
+          <h3 class="card-title">Pie Chart</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
+        </div>
+        <!-- /.card-body -->
       </div>
+      <!-- /.col -->
     </div>
-    <div class="card-body">
-      <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
-    </div>
-    <!-- /.card-body -->
+    <!-- /.row -->
   </div>
-  <!-- /.col -->
-</div>
-<!-- /.row -->
-</div>
-<!--/. container-fluid -->
-</section> --}}
-<!-- Main content -->
+  <!--/. container-fluid -->
+  </section>
+  <!-- Main content -->
 </div><!-- /.container-fluid -->
 
 <!-- /.content -->
@@ -541,487 +540,5 @@
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
 <script src="{{ asset('plugins/flot-old/jquery.flot.pie.min.js') }}"></script>
 <!-- Page script -->
-<script>
-  $(function () {
-      /*
-       * Flot Interactive Chart
-       * -----------------------
-       */
-      // We use an inline data source in the example, usually data would
-      // be fetched from a server
-      var data = [],
-        totalPoints = 100
 
-      function getRandomData() {
-
-        if (data.length > 0) {
-          data = data.slice(1)
-        }
-
-        // Do a random walk
-        while (data.length < totalPoints) {
-
-          var prev = data.length > 0 ? data[data.length - 1] : 50,
-            y = prev + Math.random() * 10 - 5
-
-          if (y < 0) {
-            y = 0
-          } else if (y > 100) {
-            y = 100
-          }
-
-          data.push(y)
-        }
-
-        // Zip the generated y values with the x values
-        var res = []
-        for (var i = 0; i < data.length; ++i) {
-          res.push([i, data[i]])
-        }
-
-        return res
-      }
-
-      var interactive_plot = $.plot('#interactive', [
-        {
-          data: getRandomData(),
-        }
-      ],
-        {
-          grid: {
-            borderColor: '#f3f3f3',
-            borderWidth: 1,
-            tickColor: '#f3f3f3'
-          },
-          series: {
-            color: '#3c8dbc',
-            lines: {
-              lineWidth: 2,
-              show: true,
-              fill: true,
-            },
-          },
-          yaxis: {
-            min: 0,
-            max: 100,
-            show: true
-          },
-          xaxis: {
-            show: true
-          }
-        }
-      )
-
-      var updateInterval = 500 //Fetch data ever x milliseconds
-      var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
-      function update() {
-
-        interactive_plot.setData([getRandomData()])
-
-        // Since the axes don't change, we don't need to call plot.setupGrid()
-        interactive_plot.draw()
-        if (realtime === 'on') {
-          setTimeout(update, updateInterval)
-        }
-      }
-
-      //INITIALIZE REALTIME DATA FETCHING
-      if (realtime === 'on') {
-        update()
-      }
-      //REALTIME TOGGLE
-      $('#realtime .btn').click(function () {
-        if ($(this).data('toggle') === 'on') {
-          realtime = 'on'
-        }
-        else {
-          realtime = 'off'
-        }
-        update()
-      })
-      /*
-       * END INTERACTIVE CHART
-       */
-
-
-      /*
-       * LINE CHART
-       * ----------
-       */
-      //LINE randomly generated data
-
-      var sin = [],
-        cos = []
-      for (var i = 0; i < 14; i += 0.5) {
-        sin.push([i, Math.sin(i)])
-        cos.push([i, Math.cos(i)])
-      }
-      var line_data1 = {
-        data: sin,
-        color: '#3c8dbc'
-      }
-      var line_data2 = {
-        data: cos,
-        color: '#00c0ef'
-      }
-      $.plot('#line-chart', [line_data1, line_data2], {
-        grid: {
-          hoverable: true,
-          borderColor: '#f3f3f3',
-          borderWidth: 1,
-          tickColor: '#f3f3f3'
-        },
-        series: {
-          shadowSize: 0,
-          lines: {
-            show: true
-          },
-          points: {
-            show: true
-          }
-        },
-        lines: {
-          fill: false,
-          color: ['#3c8dbc', '#f56954']
-        },
-        yaxis: {
-          show: true
-        },
-        xaxis: {
-          show: true
-        }
-      })
-      //Initialize tooltip on hover
-      $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-        position: 'absolute',
-        display: 'none',
-        opacity: 0.8
-      }).appendTo('body')
-      $('#line-chart').bind('plothover', function (event, pos, item) {
-
-        if (item) {
-          var x = item.datapoint[0].toFixed(2),
-            y = item.datapoint[1].toFixed(2)
-
-          $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-            .css({
-              top: item.pageY + 5,
-              left: item.pageX + 5
-            })
-            .fadeIn(200)
-        } else {
-          $('#line-chart-tooltip').hide()
-        }
-
-      })
-      var estados = [];
-        var values = [];
-
-
-        var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
-
-            /* END LINE CHART */
-
-      /*
-       * FULL WIDTH STATIC AREA CHART
-       * -----------------
-       */
-      var areaData = [[2, 88.0], [3, 93.3], [4, 102.0], [5, 108.5], [6, 115.7], [7, 115.6],
-      [8, 124.6], [9, 130.3], [10, 134.3], [11, 141.4], [12, 146.5], [13, 151.7], [14, 159.9],
-      [15, 165.4], [16, 167.8], [17, 168.7], [18, 169.5], [19, 168.0]]
-      $.plot('#area-chart', [areaData], {
-        grid: {
-          borderWidth: 0
-        },
-        series: {
-          shadowSize: 0, // Drawing is faster without shadows
-          color: '#00c0ef',
-          lines: {
-            fill: true //Converts the line chart to area chart
-          },
-        },
-        yaxis: {
-          show: false
-        },
-        xaxis: {
-          show: false
-        }
-      })
-
-      /* END AREA CHART */
-
-      /*
-       * BAR CHART
-       * ---------
-       */
-
-      var bar_data = {
-        data: [[1, 10], [2, 8], [3, 4], [4, 13], [5, 17], [6, 9]],
-        bars: { show: true }
-      }
-      $.plot('#bar-chart', [bar_data], {
-        grid: {
-          borderWidth: 1,
-          borderColor: '#f3f3f3',
-          tickColor: '#f3f3f3'
-        },
-        series: {
-          bars: {
-            show: true, barWidth: 0.5, align: 'center',
-          },
-        },
-        colors: ['#3c8dbc'],
-        xaxis: {
-          ticks: [[1, 'January'], [2, 'February'], [3, 'March'], [4, 'April'], [5, 'May'], [6, 'June']]
-        }
-      })
-      /* END BAR CHART */
-
- /*
-       * DONUT CHART
-       * -----------
-       */
-
-       var donutData = [
-        {
-          label: 'Aprobados',
-          data: 30,
-          color: '#3c8dbc'
-        },
-        {
-          label: 'Pendientes',
-          data: 20,
-          color: '#0073b7'
-        },
-        {
-          label: 'Series4',
-          data: 50,
-          color: '#00c0ef'
-        }
-      ]
-      $.plot('#donut-chart', donutData, {
-        series: {
-          pie: {
-            show: true,
-            radius: 1,
-            innerRadius: 0.0,
-            label: {
-              show: true,
-              radius: 2 / 3,
-              formatter: labelFormatter,
-              threshold: 0.1
-            }
-
-          }
-        },
-        legend: {
-          show: false
-        }
-      })
-      /*
-       * END DONUT CHART
-       */
-
-
-    })
-
-    /*
-     * Custom Label formatter
-     * ----------------------
-     */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-</script>
-
-<!-- ChartJS -->
-<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
-<!-- Page script -->
-<script>
-  $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var estados = [];
-    var values = [];
-    var statusesColors = [];
-    var webValues = [];
-    var webNames = [];
-    var webColors = [];
-
-
-var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
-var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
-var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
-var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
-var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
-var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
-
-    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-    var areaChartData = {
-      labels  : estados,
-      datasets: [
-        {
-          label               : 'Estados',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : true,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                :values
-        }
-      ]
-    }
-
-    var areaChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: true
-      },
-      scales: {
-        xAxes: [{
-          gridLines : {
-            display : true,
-          }
-        }],
-        yAxes: [{
-          gridLines : {
-            display : true,
-          }
-        }]
-      }
-    }
-
-    // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, {
-      type: 'line',
-      data: areaChartData,
-      options: areaChartOptions
-    })
-
-    //-------------
-    //- DONUT CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-    var donutData        = {
-      labels: estados,
-      datasets: [
-        {
-          data: values,
-          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc',  '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-        }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    var donutChart = new Chart(donutChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions
-    })
-
-    //-------------
-      //- DONUT CHART -
-      //-------------
-      // Get context with jQuery - using jQuery's .get() method.
-
-      var donutData2 = {
-      labels: webNames,
-      datasets: [
-      {
-      data: webValues,
-      backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
-      '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-      }
-      ]
-      }
-      var donutOptions2 = {
-      maintainAspectRatio : false,
-      responsive : true,
-      }
-      //Create pie or douhnut chart
-      // You can switch between pie and douhnut using the method below.
-      var donutChart2 = new Chart(donutChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions
-      })
-
-
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData        = donutData;
-    var pieOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    })
-     //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart2').get(0).getContext('2d')
-    var pieData        = donutData2;
-    var pieOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    })
-
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : true,
-      datasetFill             : true
-    }
-
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barChartData,
-      options: barChartOptions,
-    })
-  })
-</script>
 @endsection
