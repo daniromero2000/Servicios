@@ -16,7 +16,6 @@ class IntentionRepository implements IntentionRepositoryInterface
         'CEDULA',
         'FECHA_INTENCION',
         'ID_DEF',
-        'TIPO_CLIENTE',
         'ESTADO_OBLIGACIONES',
         'PERFIL_CREDITICIO',
         'HISTORIAL_CREDITO',
@@ -71,28 +70,28 @@ class IntentionRepository implements IntentionRepositoryInterface
     public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
-            return $this->model->orderBy('SOLICITUD', 'desc')
+            return $this->model->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchFactoryRequest($text, null, true, true)
+            return $this->model->searchIntentions($text, null, true, true)
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
                 })
-                ->orderBy('SOLICITUD', 'desc')
+                ->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
-        return $this->model->searchFactoryRequest($text, null, true, true)
-            ->whereBetween('FECHASOL', [$from, $to])
+        return $this->model->searchIntentions($text, null, true, true)
+            ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
-            })->orderBy('SOLICITUD', 'desc')
+            })->orderBy('id', 'desc')
             ->get($this->columns);
     }
 }
