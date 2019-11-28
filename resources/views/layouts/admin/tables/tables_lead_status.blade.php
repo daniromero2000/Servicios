@@ -1,7 +1,7 @@
 
-                <div class="table " style="font-size: 10pt;">
+                <div class="table ">
 
-                    <table id="example2" class="table table-responsive table-stripped  table-hover">
+                    <table id="example2" class="table table-responsive-lg table-stripped  table-hover">
                         <thead class="text-center">
                             <tr>
                                 @foreach ($headers as $header)
