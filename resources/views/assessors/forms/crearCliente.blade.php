@@ -31,7 +31,6 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 content-top">
-                        <img class="img-top"src="{{asset('images/asessors/top.jpg')}}" alt="" class="img-fluid">
                     </div>
                 </div>
                 <form name="clienteCredito" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CREDITO'">
@@ -726,8 +725,7 @@
 @endsection
 
 @section('scriptsJs')
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/assessorVentaContado.js') }}"></script>

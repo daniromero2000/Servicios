@@ -68,7 +68,7 @@
                         <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
                     </button>
                 </div>
-                <div class="col-sm-12 col-md-1">
+                <div class="col-sm-12 col-md-3 col-lg-1">
                     <p class="totalLeadsDigital text-center">
                         @{{ totalLeads }}
                     </p>
@@ -76,7 +76,7 @@
                         Leads
                     </p>
                 </div>
-                <div class="col-sm-12 col-md-1 offset-md-4 text-center col-md-3">
+                <div class="col-sm-12 col-md-3 offset-md-2 offset-lg-4 text-center">
                     <div class="input-group mb-3">
                         <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
                         <div class="input-group-append">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-2 text-center resetCol">
+                <div class="col-sm-12 col-md-2 col-lg-2 text-center resetCol">
                     <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
                             class="fas fa-filter"></i></button>
                 </div>
