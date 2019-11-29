@@ -15,7 +15,7 @@
             <div class="small-box ">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes</p>
+                <p>Intenciones</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -57,7 +57,7 @@
                     <span class="info-box-number">{{ $creditCard['total'] }}</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('intentions.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
