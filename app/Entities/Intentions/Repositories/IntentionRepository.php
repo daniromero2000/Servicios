@@ -98,8 +98,8 @@ class IntentionRepository implements IntentionRepositoryInterface
                 ->get($this->columns);
         }
 
-        return $this->model->searchIntentions($text, null, true, true)
-            ->whereBetween('FECHA_INTENCION', [$from, $to])->with(['customer', 'definition'])
+        return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
+            ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->when($creditprofile, function ($q, $creditprofile) {
                 return $q->where('PERFIL_CREDITICIO', $creditprofile);
             })

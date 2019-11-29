@@ -5,11 +5,12 @@ namespace App\Entities\Intentions;
 use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Definitions\Definition;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Intention extends Model
 {
-    use SearchableTrait;
+    use SearchableTrait, SoftDeletes;
 
     protected $table = 'TB_INTENCIONES';
 
