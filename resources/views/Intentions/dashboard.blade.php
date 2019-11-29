@@ -492,11 +492,8 @@
     var estados = [];
         var values = [];
 
-
         var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
-
-        alert(values);
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
