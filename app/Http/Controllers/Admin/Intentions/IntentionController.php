@@ -60,12 +60,14 @@ class IntentionController extends Controller
         $from = Carbon::now()->subMonth();
 
         $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
+        $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
+            $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
         }
 
-        $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+
 
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
@@ -75,12 +77,10 @@ class IntentionController extends Controller
         $creditProfilesNames  = [];
         $creditProfilesValues  = [];
 
-
         foreach ($creditProfiles as $creditProfile) {
             array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
             array_push($creditProfilesValues, trim($creditProfile['total']));
         }
-
 
 
         return view('Intentions.dashboard', [

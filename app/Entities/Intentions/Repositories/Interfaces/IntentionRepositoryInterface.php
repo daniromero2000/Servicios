@@ -19,5 +19,7 @@ interface IntentionRepositoryInterface
 
   public function countIntentionsCreditProfiles($from, $to);
 
+
+
   public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection;
 }
