@@ -20,6 +20,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         'PERFIL_CREDITICIO',
         'HISTORIAL_CREDITO',
         'TARJETA',
+        'ZONA_RIESGO',
         'EDAD',
         'TIEMPO_LABOR',
         'TIPO_5_ESPECIAL',
