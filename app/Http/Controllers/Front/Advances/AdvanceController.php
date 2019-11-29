@@ -60,7 +60,7 @@ class AdvanceController extends Controller
     {
 
 
-        $identificationNumber = 1077865377;
+        $identificationNumber = 1232390326;
         $dateConsultaUbica = $this->ubica->validateDateConsultaUbica($identificationNumber, 30);
         $consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, 1, 'Castro');
 
