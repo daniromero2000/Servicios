@@ -14,18 +14,18 @@
                 <td>{{ $data->CEDULA}} </td>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
-                <td>@if ($data->ESTADO_OBLIGACIONES == 1)OK @endif
-                    @if ($data->ESTADO_OBLIGACIONES == 0)NO OK @endif</td>
+                <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
+                    @if ($data->ESTADO_OBLIGACIONES == 0)En Mora @endif</td>
                     <td> @if($data->customer) {{ $data->customer->latestCifinScore['score']}} @endif</td>
                 <td>{{ $data->PERFIL_CREDITICIO}}</td>
-                <td>@if ($data->HISTORIAL_CREDITO == 1)OK @endif
-                    @if ($data->HISTORIAL_CREDITO == 0)NO OK @endif</td>
+                <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
+                    @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
                 <td>{{ $data->TARJETA}}</td>
                 <td>{{ $data->ZONA}}</td>
-                <td>@if ($data->EDAD == 1)OK @endif
-                    @if ($data->EDAD == 0)NO @endif</td>
-                <td>@if ($data->TIEMPO_LABOR == 1)OK @endif
-                    @if ($data->TIEMPO_LABOR == 0)NO OK @endif</td>
+                <td>@if ($data->EDAD == 1)Cumple @endif
+                    @if ($data->EDAD == 0)NO Cumple @endif</td>
+                <td>@if ($data->TIEMPO_LABOR == 1)Cumple @endif
+                    @if ($data->TIEMPO_LABOR == 0)NO Cumple @endif</td>
                 <td>@if ($data->TIPO_5_ESPECIAL == 1)SI @endif
                     @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
                 <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
