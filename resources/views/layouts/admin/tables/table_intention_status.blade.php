@@ -21,7 +21,7 @@
                 <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
                     @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
                 <td>{{ $data->TARJETA}}</td>
-                <td>{{ $data->ZONA}}</td>
+                <td>{{ $data->ZONA_RIESGO}}</td>
                 <td>@if ($data->EDAD == 1)Cumple @endif
                     @if ($data->EDAD == 0)NO Cumple @endif</td>
                 <td>@if ($data->TIEMPO_LABOR == 1)Cumple @endif
