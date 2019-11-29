@@ -48,7 +48,7 @@ class AdvanceController extends Controller
         $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
         $this->cifinRealArrearsInterface = $cifinRealArrearRepositoryInterface;
         $this->upToDate = $UpToDateFinancialCifinRepositoryInterface;
-        $this->extint = $extintFinancialCifinRepositoryInterface;
+        $this->extint = $extintFinancialCifinRepositoryInterface;leads
         $this->real = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
@@ -58,8 +58,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
