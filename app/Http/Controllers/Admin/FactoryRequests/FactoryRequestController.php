@@ -43,7 +43,7 @@ class FactoryRequestController extends Controller
 
         return view('factoryrequests.list', [
             'customers'            => $list,
-            'optionsRoutes'        => (request()->segment(1)),
+            'optionsRoutes'        => 'Administrator' . (request()->segment(1)),
             'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
