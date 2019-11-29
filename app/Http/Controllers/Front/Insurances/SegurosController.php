@@ -34,13 +34,18 @@ class SegurosController extends Controller
 
     public function store(Request $request)
     {
-        $birthday            = new Carbon($request->FEC_NAC);
-        $subsidiaryCityName  = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
-        $request['EDAD']     = $birthday->diffInYears(Carbon::now());
-        $request['SUC']      = $request->get('CIUD_UBI');
-        $request['CIUD_UBI'] = $subsidiaryCityName;
-        $request['POSEEVEH'] = "S";
-
+        $request['FEC_ING']   = $request->input('FEC_ING')."-01";
+        $antig                = new Carbon($request['FEC_ING']);
+        $request['FEC_CONST'] = $request->input('FEC_CONST')."-01";
+        $antig_ind            = new Carbon($request['FEC_CONST']);
+        $birthday             = new Carbon($request->FEC_NAC);
+        $subsidiaryCityName   = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
+        $request['EDAD_INDP'] = $antig_ind->diffInYears(Carbon::now());
+        $request['ANTIG']     = $antig->diffInMonths(Carbon::now());
+        $request['EDAD']      = $birthday->diffInYears(Carbon::now());
+        $request['SUC']       = $request->get('CIUD_UBI');
+        $request['CIUD_UBI']  = $subsidiaryCityName;
+        $request['POSEEVEH']  = "S";
         $this->customerInterface->updateOrCreateCustomer($request->input());
 
         if (empty($this->customerCellPhoneInterface->checkIfExists($request->input('CEDULA'), $request->input('CELULAR')))) {
