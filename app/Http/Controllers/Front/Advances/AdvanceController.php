@@ -19,6 +19,7 @@ use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinReposit
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 
 class AdvanceController extends Controller
 {
@@ -36,7 +37,9 @@ class AdvanceController extends Controller
         UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
-        UbicaRepositoryInterface $ubicaRepositoryInterface
+        UbicaRepositoryInterface $ubicaRepositoryInterface,
+        WebServiceRepositoryInterface $webServiceRepositoryInterface
+
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -50,6 +53,7 @@ class AdvanceController extends Controller
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
         $this->ubica = $ubicaRepositoryInterface;
+        $this->webServiceInterface = $webServiceRepositoryInterface;
     }
 
     public function index()
