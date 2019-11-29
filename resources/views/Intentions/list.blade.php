@@ -1,6 +1,5 @@
 @extends('layouts.admin.app')
 @section('content')
-
 <section>
     @include('layouts.errors-and-messages')
     @if(!is_null($intentions))
@@ -27,7 +26,6 @@
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-
         <div class="container-fluid">
             <div class="card  mb-4 border-0 shadow-lg">
                 <div class="row form-group" ng-if="filtros">
@@ -49,21 +47,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12 col-sm-6 col-md-6">
-                                    <div class="small-box ">
-                                        <div class="inner">
-                                            <h2>Total</h2>
-                                            <p>{{ $listCount }}</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($intentions)
                             @include('layouts.admin.tables.table_intention_status', [$headers, 'datas' => $intentions ])
@@ -80,8 +65,5 @@
     @endif
 </section>
 @endsection
-
 @section('scriptsJs')
-
-
 @endsection
