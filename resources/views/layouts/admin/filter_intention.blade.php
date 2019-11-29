@@ -25,6 +25,8 @@
                                 <option>TIPO B</option>
                                 <option>TIPO C</option>
                                 <option>TIPO D</option>
+                                <option>TIPO 5</option>
+                                <option>TIPO D</option>
                             </select>
                         </div>
                     </div>
