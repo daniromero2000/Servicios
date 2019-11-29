@@ -30,10 +30,11 @@ class UbicaRepository implements UbicaRepositoryInterface
         $dateNow = date('Y-m-d');
         $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
         $dateNew = date('Y-m-d', $dateNew);
-        $dateLastConsulta = $this->getLastUbicaConsultation($identificationNumber)->fecha;
+        $dataLastConsulta = $this->getLastUbicaConsultation($identificationNumber);
         if (empty($dateLastConsultaUbica)) {
             return 'true';
         } else {
+            $dateLastConsulta = $dataLastConsulta->fecha;
             if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
                 return 'true';
             } else {
