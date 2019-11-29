@@ -78,6 +78,31 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+
+    public function countIntentionsCreditProfiles($from, $to)
+    {
+        try {
+            return  $this->model->select('PERFIL_CREDITICIO', DB::raw('count(*) as total'))
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('PERFIL_CREDITICIO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionsCreditCards($from, $to)
+    {
+        try {
+            return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('TARJETA')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)) {

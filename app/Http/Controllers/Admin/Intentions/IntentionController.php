@@ -55,7 +55,40 @@ class IntentionController extends Controller
 
     public function dashboard(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->subMonth();
 
-        return view('Intentions.dashboard');
+        $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
+
+        if (request()->has('from')) {
+            $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
+        }
+
+        $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+
+        $creditProfiles   = $creditProfiles->toArray();
+        $creditProfiles   = array_values($creditProfiles);
+        $creditCards   = $creditCards->toArray();
+        $creditCards   = array_values($creditCards);
+
+
+
+        $creditProfilesNames  = [];
+        $creditProfilesValues  = [];
+
+
+        foreach ($creditProfiles as $creditProfile) {
+            array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
+            array_push($creditProfilesValues, trim($creditProfile['total']));
+        }
+
+
+
+        return view('Intentions.dashboard', [
+            'creditProfilesNames'  => $creditProfilesNames,
+            'creditProfilesValues' => $creditProfilesValues,
+            'creditCards'  => $creditCards,
+            'totalStatuses'  => array_sum($creditProfilesValues),
+        ]);
     }
 }
