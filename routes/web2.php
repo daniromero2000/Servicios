@@ -137,12 +137,12 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('FactoryRequests')->group(function () {
         Route::resource('factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
-        Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
+        Route::get('factoryrequests/dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
     });
 
     Route::namespace('Intentions')->group(function () {
         Route::resource('intentions', 'IntentionController');
-        Route::get('dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
+        Route::get('intentions/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
     });
 
     Route::namespace('Comments')->group(function () {
