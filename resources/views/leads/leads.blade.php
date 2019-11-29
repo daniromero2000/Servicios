@@ -295,7 +295,7 @@
                                 <th scope="col">Asesor</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Teléfono</th>
-                                <th scope="col">Canal adquisición</th>
+                                {{-- <th scope="col">Canal adquisición</th> --}}
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Cupo Producto/Avance</th>
                                 <th scope="col" style="width: 10%;">Fecha registro</th>
@@ -309,7 +309,11 @@
                                 <td>@{{ lead.nameAsesor }}</td>
                                 <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS  }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
-
+                                {{-- <td>
+                                    <span ng-if="lead.channel == 1">Página Web</span>
+                                    <span ng-if="lead.channel == 2">Facebook</span>
+                                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                                </td> --}}
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
