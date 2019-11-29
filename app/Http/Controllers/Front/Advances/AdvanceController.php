@@ -60,12 +60,6 @@ class AdvanceController extends Controller
     {
 
 
-        $identificationNumber = 1232390326;
-        $dateConsultaUbica = $this->ubica->validateDateConsultaUbica($identificationNumber, 30);
-        $consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, 1, 'Castro');
-
-
-        dd($consultaUbica);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
