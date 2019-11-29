@@ -28,9 +28,7 @@ class FactoryRequest extends Model
         'columns' => [
             'SOLIC_FAB.CLIENTE'   => 1,
             'SOLIC_FAB.SOLICITUD' => 5,
-            'SOLIC_FAB.SUCURSAL'  => 1,
         ],
-
     ];
 
     public function searchFactoryRequest($term)

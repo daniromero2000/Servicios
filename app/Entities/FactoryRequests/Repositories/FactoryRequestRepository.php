@@ -4,7 +4,6 @@ namespace App\Entities\FactoryRequests\Repositories;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
-use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
@@ -130,7 +129,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function countWebFactoryRequests($from, $to)
     {
         try {
@@ -145,10 +143,10 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
-            return $this->model->orderBy('SOLICITUD', 'desc')
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -159,7 +157,10 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
                 })
-                ->orderBy('SOLICITUD', 'desc')
+                ->when($subsidiary, function ($q, $subsidiary) {
+                    return $q->where('SUCURSAL', $subsidiary);
+                })
+                ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
@@ -169,19 +170,22 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
-            })->orderBy('SOLICITUD', 'desc')
+            })
+            ->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
-
 
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
             return $this->model
-
+                ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (QueryException $e) {
+            dd($e);
         }
     }
 }

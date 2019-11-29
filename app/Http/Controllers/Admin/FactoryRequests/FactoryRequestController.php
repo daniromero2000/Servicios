@@ -26,20 +26,28 @@ class FactoryRequestController extends Controller
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
-        $listCount = $list->count();
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequest(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
-
-            $listCount = $list->count();
+            $list = $this->factoryRequestInterface->searchFactoryRequest(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary')
+            )->sortByDesc('FECHASOL');
         }
 
+        $listCount = $list->count();
+        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+
         return view('factoryrequests.list', [
-            'customers'     => $list,
-            'optionsRoutes' => (request()->segment(1)),
-            'headers'       => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-            'listCount'     => $listCount,
-            'skip'          => $skip,
+            'customers'            => $list,
+            'optionsRoutes'        => (request()->segment(1)),
+            'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'            => $listCount,
+            'skip'                 => $skip,
+            'factoryRequestsTotal' => $factoryRequestsTotal,
 
         ]);
     }
