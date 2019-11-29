@@ -142,7 +142,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('Intentions')->group(function () {
         Route::resource('intentions', 'IntentionController');
-        Route::get('dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
+        Route::get('Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
     });
 
     Route::namespace('Comments')->group(function () {
