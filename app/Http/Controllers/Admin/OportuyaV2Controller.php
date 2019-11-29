@@ -1140,6 +1140,7 @@ class OportuyaV2Controller extends Controller
 		$this->intentionInterface->createIntention($data);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->ESTADO = 'NEGADO';
+		$customer->save();
 		return "true";
 	}
 
