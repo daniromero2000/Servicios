@@ -17,5 +17,5 @@ interface IntentionRepositoryInterface
 
   public function listIntentions($totalView): Support;
 
-  public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection;
+  public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection;
 }

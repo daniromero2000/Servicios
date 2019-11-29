@@ -28,7 +28,7 @@ class IntentionController extends Controller
         $list = $this->intentionInterface->listIntentions($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('status'))->sortByDesc('SOLICITUD');
+            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'))->sortByDesc('SOLICITUD');
         }
         $listCount = $list->count();
 
