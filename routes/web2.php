@@ -135,9 +135,14 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('FactoryRequests')->group(function () {
-        Route::resource('factoryrequests', 'FactoryRequestController');
+        Route::resource('Administrator/factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
-        Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
+        Route::get('/Administrator/dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
+    });
+
+    Route::namespace('Intentions')->group(function () {
+        Route::resource('Administrator/intentions', 'IntentionController');
+        Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('Administrator.intention_dashboard');
     });
 
     Route::namespace('Comments')->group(function () {

@@ -151,10 +151,10 @@ class LeadsController extends Controller
                 $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
-            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id      = $respChannel[0]->id;
-            $resp[$key]->state   = $respChannel[0]->state;
+            // $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
+            // $resp[$key]->channel = $respChannel[0]->channel;
+            // $resp[$key]->id      = $respChannel[0]->id;
+            // $resp[$key]->state   = $respChannel[0]->state;
             $leadsDigital[]      = $resp[$key];
         }
 
@@ -224,10 +224,10 @@ class LeadsController extends Controller
                 $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
-            $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            $resp[$key]->channel = $respChannel[0]->channel;
-            $resp[$key]->id      = $respChannel[0]->id;
-            $resp[$key]->state   = $respChannel[0]->state;
+            // $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
+            // $resp[$key]->channel = $respChannel[0]->channel;
+            // $resp[$key]->id      = $respChannel[0]->id;
+            // $resp[$key]->state   = $respChannel[0]->state;
             $leadsDigital[]      = $resp[$key];
         }
 

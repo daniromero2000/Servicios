@@ -49,7 +49,7 @@
 
     <div ng-show="showResp">
         <div class="row d-flex justify-content-center">
-            <div class="col-10">
+            <div class="col-sm-12 col-md-12 col-lg-10">
                 <div class="card mt-4 mb-4 shadow" style="border-radius: 22px;">
                     <div class="card-header border-bottom-0">
                         <div class="row">
@@ -63,8 +63,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8">
                                     <p>
                                         <label for="">Tipo de documento: </label>
@@ -111,7 +111,7 @@
                                         </p>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+                            <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8 ">
                                     <p
                                         ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
