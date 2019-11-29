@@ -48,7 +48,7 @@ class AdvanceController extends Controller
         $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
         $this->cifinRealArrearsInterface = $cifinRealArrearRepositoryInterface;
         $this->upToDate = $UpToDateFinancialCifinRepositoryInterface;
-        $this->extint = $extintFinancialCifinRepositoryInterface;leads
+        $this->extint = $extintFinancialCifinRepositoryInterface;
         $this->real = $upToDateRealCifinsRepositoryInterface;
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;

@@ -155,7 +155,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
+                @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
               </div>
               <div class="col-12">
                 <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
@@ -548,9 +548,9 @@
     }
 
     // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, { 
+    var areaChart       = new Chart(areaChartCanvas, {
       type: 'line',
-      data: areaChartData, 
+      data: areaChartData,
       options: areaChartOptions
     })
 
@@ -564,9 +564,9 @@
     lineChartData.datasets[1].fill = false;
     lineChartOptions.datasetFill = false
 
-    var lineChart = new Chart(lineChartCanvas, { 
+    var lineChart = new Chart(lineChartCanvas, {
       type: 'line',
-      data: lineChartData, 
+      data: lineChartData,
       options: lineChartOptions
     })
 
@@ -577,12 +577,12 @@
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [
-          'Chrome', 
+          'Chrome',
           'IE',
-          'FireFox', 
-          'Safari', 
-          'Opera', 
-          'Navigator', 
+          'FireFox',
+          'Safari',
+          'Opera',
+          'Navigator',
       ],
       datasets: [
         {
@@ -600,7 +600,7 @@
     var donutChart = new Chart(donutChartCanvas, {
       type: 'doughnut',
       data: donutData,
-      options: donutOptions      
+      options: donutOptions
     })
 
     //-------------
@@ -618,10 +618,10 @@
     var pieChart = new Chart(pieChartCanvas, {
       type: 'pie',
       data: pieData,
-      options: pieOptions      
+      options: pieOptions
     })
 
-   
+
     //- PIE CHART2 -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
@@ -636,7 +636,7 @@
     var pieChart = new Chart(pieChartCanvas, {
       type: 'pie',
       data: pieData,
-      options: pieOptions      
+      options: pieOptions
     })
 
     //-------------
@@ -656,7 +656,7 @@
     }
 
     var barChart = new Chart(barChartCanvas, {
-      type: 'bar', 
+      type: 'bar',
       data: barChartData,
       options: barChartOptions
     })
@@ -681,7 +681,7 @@
     }
 
     var stackedBarChart = new Chart(stackedBarChartCanvas, {
-      type: 'bar', 
+      type: 'bar',
       data: stackedBarChartData,
       options: stackedBarChartOptions
     })
