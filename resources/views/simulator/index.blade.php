@@ -12,7 +12,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="/Administrator/simulador#!/parametros">Simulador Libranza</a></li>
+                    <li class="breadcrumb-item active"><a href="/Administrator/simulador#!/parametros">Simulador
+                            Libranza</a></li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -64,13 +65,6 @@
     rel="stylesheet">
 @stop
 @section('scriptsJs')
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- jsGrid -->
-<script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
-<script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/3.0.0/angucomplete-alt.min.js"></script>
