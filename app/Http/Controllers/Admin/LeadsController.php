@@ -151,7 +151,7 @@ class LeadsController extends Controller
 
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            if (!empty($respChannel)) {
+            if ($respChannel) {
                 $resp[$key]->channel = $respChannel[0]->channel;
                 $resp[$key]->id      = $respChannel[0]->id;
                 $resp[$key]->state   = $respChannel[0]->state;
@@ -222,7 +222,7 @@ class LeadsController extends Controller
             }
 
             $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            if (!empty($respChannel)) {
+            if ($respChannel) {
                 $resp[$key]->channel = $respChannel[0]->channel;
                 $resp[$key]->id      = $respChannel[0]->id;
                 $resp[$key]->state   = $respChannel[0]->state;
