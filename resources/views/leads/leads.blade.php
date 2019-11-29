@@ -309,11 +309,7 @@
                                 <td>@{{ lead.nameAsesor }}</td>
                                 <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS  }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
-                                <td>
-                                    <span ng-if="lead.channel == 1">Página Web</span>
-                                    <span ng-if="lead.channel == 2">Facebook</span>
-                                    <span ng-if="lead.channel == 3">WhatsApp</span>
-                                </td>
+
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
