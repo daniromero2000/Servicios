@@ -146,7 +146,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
-            return $this->model->orderBy('SOLICITUD', 'desc')
+            return $this->model->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -160,7 +160,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($subsidiary, function ($q, $subsidiary) {
                     return $q->where('SUCURSAL', $subsidiary);
                 })
-                ->orderBy('SOLICITUD', 'desc')
+                ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
@@ -174,7 +174,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
             })
-            ->orderBy('SOLICITUD', 'desc')
+            ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
 

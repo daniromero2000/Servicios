@@ -35,7 +35,7 @@ class FactoryRequestController extends Controller
                 request()->input('to'),
                 request()->input('status'),
                 request()->input('subsidiary')
-            )->sortByDesc('SOLICITUD');
+            )->sortByDesc('FECHASOL');
         }
 
         $listCount = $list->count();
