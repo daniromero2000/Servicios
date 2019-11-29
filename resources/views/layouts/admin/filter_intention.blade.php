@@ -26,7 +26,7 @@
                                 <option>TIPO C</option>
                                 <option>TIPO D</option>
                                 <option>TIPO 5</option>
-                                <option>TIPO D</option>
+                                <option>TIPO NE</option>
                             </select>
                         </div>
                     </div>
