@@ -78,9 +78,9 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $status = null): Collection
+    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)) {
             return $this->model->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -89,8 +89,8 @@ class IntentionRepository implements IntentionRepositoryInterface
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
-                ->when($status, function ($q, $status) {
-                    return $q->where('ESTADO', $status);
+                ->when($creditprofile, function ($q, $creditprofile) {
+                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
                 })
                 ->orderBy('id', 'desc')
                 ->skip($totalView)
@@ -100,8 +100,8 @@ class IntentionRepository implements IntentionRepositoryInterface
 
         return $this->model->searchIntentions($text, null, true, true)
             ->whereBetween('FECHA_INTENCION', [$from, $to])->with(['customer', 'definition'])
-            ->when($status, function ($q, $status) {
-                return $q->where('ESTADO', $status);
+            ->when($creditprofile, function ($q, $creditprofile) {
+                return $q->where('PERFIL_CREDITICIO', $creditprofile);
             })
             ->orderBy('id', 'desc')
             ->get($this->columns);
