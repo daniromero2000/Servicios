@@ -487,6 +487,16 @@
 
 <script>
   $(function () {
+
+
+    var estados = [];
+        var values = [];
+
+
+        var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
+
+        alert(values);
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
@@ -500,7 +510,7 @@
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
     var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  :estados,
       datasets: [
         {
           label               : 'Digital Goods',
@@ -511,7 +521,7 @@
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          data                :values
         },
         {
           label               : 'Electronics',
@@ -522,7 +532,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : values
         },
       ]
     }
@@ -576,17 +586,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: [
-          'Chrome',
-          'IE',
-          'FireFox',
-          'Safari',
-          'Opera',
-          'Navigator',
-      ],
+      labels: estados,
       datasets: [
         {
-          data: [700,500,400,600,300,100],
+          data: values,
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]
