@@ -5,13 +5,13 @@
 
                 <div class="card-header bg-white">
                     <div class="row resetRow">
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-3 mb-1">
                             <button class="btn btn-primary" ng-click="addUserForm()">
                                 <a>Agregar Usuario <i class="far fa-plus-square"></i></a>
                             </button>
                         </div>
 
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-3 mb-1">
                             <button class="btn btn-primary">
                                 <a ng-click="addAssessorForm()">Asignar perfil a asesor <i
                                         class="fas fa-user-check"></i></a>
