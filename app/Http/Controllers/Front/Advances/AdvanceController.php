@@ -55,8 +55,12 @@ class AdvanceController extends Controller
     public function index()
     {
 
-        $customer = $this->customerInterface->findCustomerById(1088019814);
-        dd($customer);
+
+        $identificationNumber = 1077865377;
+        $dateConsultaUbica = $this->ubica->validateDateConsultaUbica($identificationNumber, 30);
+
+
+        dd($dateConsultaUbica);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
