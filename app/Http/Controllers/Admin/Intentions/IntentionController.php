@@ -32,9 +32,10 @@ class IntentionController extends Controller
         }
         $listCount = $list->count();
 
+
         return view('Intentions.list', [
             'intentions'            => $list,
-            'optionsRoutes'        => 'Administrator' . (request()->segment(1)),
+            'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Intención', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5', 'Inspección Ocular', 'Definición', 'Estado Cliente'],
             'listCount'            => $listCount,
             'skip'                 => $skip,

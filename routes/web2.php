@@ -120,7 +120,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     });
 });
 
-
 /**
  * Admin routes
  */
@@ -130,7 +129,6 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('Subsidiaries')->group(function () {
-
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
 
@@ -142,7 +140,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('Intentions')->group(function () {
         Route::resource('Administrator/intentions', 'IntentionController');
-        Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('Administrator.intention_dashboard');
+        Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
     });
 
     Route::namespace('Comments')->group(function () {
@@ -151,7 +149,6 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');
 });
-
 
 /**
  * Frontend routes
