@@ -762,7 +762,7 @@ class OportuyaV2Controller extends Controller
 
 		if ($totalValorMora > 100) {
 			$customer->ESTADO = 'NEGADO';
-			$customer->update();
+			$customer->save();
 			$customerIntention->ESTADO_OBLIGACIONES = 0;
 			$customerIntention->ID_DEF =  '6';
 			$customerIntention->save();
