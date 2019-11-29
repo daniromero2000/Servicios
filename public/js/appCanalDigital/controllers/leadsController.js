@@ -144,6 +144,10 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     {
         label:'Seguros - SOAT',
         value:'SEGUROS'
+    },
+    {
+        label:'ASESORES - CRÉDITO',
+        value:'ASESORES-CREDITO'
     }
     ];
 
@@ -280,6 +284,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.q = {
             'q': '',
             'qtipoTarjetaAprobados': '',
+            'qOrigenAprobados' : '',
             'qcityAprobados': '',
             'qleadChannel': '',
             'qfechaInicialAprobados': '',
@@ -289,6 +294,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qGen': '',
             'qfechaInicialTR': '',
             'qfechaFinalTR': '',
+            'qOrigenTR': '',
             'qTRAnt': '',
             'initFrom': 0,
             'initFromAnt': 0,
