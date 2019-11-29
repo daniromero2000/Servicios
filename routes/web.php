@@ -389,7 +389,7 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
         });
     });
     // Dashboard
-    Route::resource('dashboard', 'Admin\DashboardController',)->except(['show']);
+    Route::resource('dashboard', 'Admin\DashboardController')->except(['show']);
 
     // Administrador de usuarios
     Route::group(['prefix' => '/adminUsers/'], function () {
