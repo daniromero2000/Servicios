@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="row">
-
+        @foreach ($customerSteps as $customerStep)
         <div class="col-12 col-sm-6 col-md-12">
           <!-- Card 1 -->
           <div class="col-12">
@@ -34,8 +34,8 @@
               <div class="info-box-content">
                 <div class="row">
                   <div class="col-6">
-                    <span class="info-box-text">Aprobados</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-text">{{$customerStep['PASO']}}</span>
+                    <span class="info-box-number"> {{$customerStep['total']}} </span>
                   </div>
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="/factoryrequests"
@@ -53,87 +53,8 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-12">
-          <!-- Card 2 -->
-          <div class="col-12">
-            <div class="info-box ">
-              <span class="info-box-icon"><i class="fas fa-envelope-open-text"></i></span>
-              <div class="info-box-content">
-                <div class="row">
-                  <div class="col-6">
-                    <span class="info-box-text">Pendientes</span>
-                    <span class="info-box-number">41,410</span>
-                  </div>
-                  <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
-                        style="color: black; !important">Ver
-                        Mas</a></span>
-                  </div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-12">
-          <!-- Card 3 -->
-          <div class="col-12">
-            <div class="info-box ">
-              <span class="info-box-icon"><i class="fas fa-door-open"></i></span>
-              <div class="info-box-content">
-                <div class="row">
-                  <div class="col-6">
-                    <span class="info-box-text">Desistidos</span>
-                    <span class="info-box-number">41,410</span>
-                  </div>
-                  <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
-                        style="color: black; !important">Ver
-                        Mas</a></span>
-                  </div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-12">
-          <!-- Card 4 -->
-          <div class="col-12">
-            <div class="info-box ">
-              <span class="info-box-icon"><i class="fas fa-thumbs-down"></i></span>
-              <div class="info-box-content">
-                <div class="row">
-                  <div class="col-6">
-                    <span class="info-box-text">Negados</span>
-                    <span class="info-box-number">41,410</span>
-                  </div>
-                  <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
-                        style="color: black; !important">Ver
-                        Mas</a></span>
-                  </div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        @endforeach
+
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">

@@ -70,7 +70,6 @@ class CustomerController extends Controller
         $customerStepsValues  = [];
 
         foreach ($customerSteps as $customerStep) {
-
             array_push($customerStepsNames, trim($customerStep['PASO']));
             array_push($customerStepsValues, trim($customerStep['total']));
         }
@@ -78,6 +77,7 @@ class CustomerController extends Controller
         return view('customers.dashboard', [
             'customerStepsNames'  => $customerStepsNames,
             'customerStepsValues' => $customerStepsValues,
+            'customerSteps' => $customerSteps,
             'totalStatuses'  => array_sum($customerStepsValues),
         ]);
     }
