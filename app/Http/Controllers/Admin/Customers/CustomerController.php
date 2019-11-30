@@ -27,7 +27,7 @@ class CustomerController extends Controller
         $list = $this->CustomerInterface->listCustomers($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->CustomerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->CustomerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'))->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 

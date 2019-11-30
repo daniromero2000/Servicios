@@ -6,9 +6,11 @@ use App\Entities\Customers\Customer;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
+use Illuminate\Database\Eloquent\Collection;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
+
     private $columns = [
         'CREACION',
         'CEDULA',
@@ -113,32 +115,32 @@ class CustomerRepository implements CustomerRepositoryInterface
         }
     }
 
-    public function searchCustomers(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection
+    public function searchCustomers(string $text = null, $totalView,  $from = null,  $to = null,  $step = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)) {
-            return $this->model->orderBy('FECHA_INTENCION', 'desc')
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($step)) {
+            return $this->model->orderBy('CREACION', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchCustomers($text, null, true, true)->with(['customer', 'definition'])
-                ->when($creditprofile, function ($q, $creditprofile) {
-                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
+            return $this->model->searchCustomers($text, null, true, true)
+                ->when($step, function ($q, $step) {
+                    return $q->where('PASO', $step);
                 })
-                ->orderBy('FECHA_INTENCION', 'desc')
+                ->orderBy('CREACION', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
-        return $this->model->searchCustomers($text, null, true, true)->with(['customer', 'definition'])
-            ->whereBetween('FECHA_INTENCION', [$from, $to])
-            ->when($creditprofile, function ($q, $creditprofile) {
-                return $q->where('PERFIL_CREDITICIO', $creditprofile);
+        return $this->model->searchCustomers($text, null, true, true)
+            ->whereBetween('CREACION', [$from, $to])
+            ->when($step, function ($q, $step) {
+                return $q->where('PASO', $step);
             })
-            ->orderBy('FECHA_INTENCION', 'desc')
+            ->orderBy('CREACION', 'desc')
             ->get($this->columns);
     }
 }
