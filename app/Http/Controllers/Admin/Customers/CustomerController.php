@@ -66,6 +66,7 @@ class CustomerController extends Controller
         $customerSteps = $customerSteps->toArray();
         $customerSteps = array_values($customerSteps);
 
+
         $customerStepsNames  = [];
         $customerStepsValues  = [];
 
