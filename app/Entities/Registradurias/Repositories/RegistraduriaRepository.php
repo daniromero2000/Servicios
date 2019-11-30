@@ -94,20 +94,17 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
             $dateExplode = explode("/", $dateExpEstadoCedula);
             $dateExpEstadoCedula = $dateExplode[2] . "/" . $dateExplode[1] . "/" . $dateExplode[0];
 
-
             if (strtotime($dateExpedition) != strtotime($dateExpEstadoCedula)) {
                 DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
-                DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "REGISTRADURIA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
                 return -4; // Fecha de expedicion no coincide
             }
         }
 
         if ($respEstadoCedula->estado != 'VIGENTE') {
-            DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "REGISTRADURIA" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
+            DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
             return -1; // Cedula no vigente
         }
 
-        DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
         DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
         return 1;
     }

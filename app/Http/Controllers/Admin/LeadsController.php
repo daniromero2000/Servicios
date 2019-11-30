@@ -287,9 +287,6 @@ class LeadsController extends Controller
             $leadsCM[]      = $resp[$key];
         }
 
-
-
-
         return [
             'leadsCM' =>  $leadsCM,
             'totalLeadsCM' => count($respTotalLeadsCM)
