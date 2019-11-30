@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Intentions;
+namespace App\Http\Controllers\Admin\Customers;
 
-use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
-use App\Entities\Intentions\Repositories\IntentionRepository;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 
-class IntentionController extends Controller
+class CustomerController extends Controller
 {
-    private $intentionInterface, $toolsInterface;
+    private $CustomerInterface, $toolsInterface;
 
     public function __construct(
-        IntentionRepositoryInterface $intentionRepositoryInterface,
+        CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface
     ) {
-        $this->intentionInterface = $intentionRepositoryInterface;
+        $this->CustomerInterface = $CustomerRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->middleware('auth');
     }
@@ -25,18 +24,18 @@ class IntentionController extends Controller
     public function index(Request $request)
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->intentionInterface->listIntentions($skip * 30);
+        $list = $this->CustomerInterface->listCustomers($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->CustomerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'))->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 
 
-        return view('Intentions.list', [
-            'intentions'            => $list,
+        return view('Customers.list', [
+            'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Intención', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
+            'headers'              => ['Cedula', 'Apellido', 'Nombre', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
@@ -44,10 +43,10 @@ class IntentionController extends Controller
 
     public function show(int $id)
     {
-        $intention = $this->intentionInterface->findIntentionByIdFull($id);
+        $Customer = $this->CustomerInterface->findCustomerByIdFull($id);
 
-        return view('Intentions.show', [
-            'intention' =>  $intention
+        return view('Customers.show', [
+            'Customer' =>  $Customer
         ]);
     }
 
@@ -59,12 +58,12 @@ class IntentionController extends Controller
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
 
-        $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
-        $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+        $creditProfiles = $this->CustomerInterface->countCustomersCreditProfiles($from, $to);
+        $creditCards = $this->CustomerInterface->countCustomersCreditCards($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
+            $creditProfiles = $this->CustomerInterface->countCustomersCreditProfiles(request()->input('from'), request()->input('to'));
+            $creditCards = $this->CustomerInterface->countCustomersCreditCards(request()->input('from'), request()->input('to'));
         }
 
         $creditProfiles   = $creditProfiles->toArray();
@@ -81,7 +80,7 @@ class IntentionController extends Controller
         }
 
 
-        return view('Intentions.dashboard', [
+        return view('Customers.dashboard', [
             'creditProfilesNames'  => $creditProfilesNames,
             'creditProfilesValues' => $creditProfilesValues,
             'creditCards'  => $creditCards,

@@ -89,15 +89,8 @@
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
-
       </div>
-
       <div class="col-md-8">
         <!-- PORCENTAJES -->
         <div class="card ">
@@ -119,14 +112,12 @@
           </div>
         </div>
       </div>
-
       <!-- /.col (LEFT) -->
       <div class=" col-md-7 col-lg-8">
         <!-- debe ir oculta -->
         <div hidden class="card card-danger">
           <div class="card-header">
             <h3 class="card-title">Donut Chart</h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -137,7 +128,6 @@
             <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
           </div>
         </div>
-
         <!-- TORTA -->
         <div class="card">
           <div class="card-header">
@@ -157,12 +147,9 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <!-- /.col (RIGTH) -->
       <div class="col-md-4">
-
-
         <!-- AREA CHART DEBE IR OCULTA-->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -181,9 +168,7 @@
         </div>
       </div>
       <!-- Card 1 -->
-
       <!-- /.col (LEFT) -->
-
     </div>
     {{--
     <div class="row">

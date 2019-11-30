@@ -3,11 +3,12 @@
 namespace App\Entities\Customers\Repositories\Interfaces;
 
 use App\Entities\Customers\Customer;
+use Illuminate\Support\Collection as Support;
 
 
 interface CustomerRepositoryInterface
 {
-  public function listCustomers();
+  public function listCustomers($totalView): Support;
 
   public function listCustomersDigitalChannel();
 
