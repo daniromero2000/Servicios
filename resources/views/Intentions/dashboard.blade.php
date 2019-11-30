@@ -41,7 +41,7 @@
         </div>
         <div class="row">
           @foreach ($creditCards as $creditCard)
-          @if(!empty($creditCard['TARJETA']))
+
           <div class="col-12 col-sm-6 col-md-12">
             <!-- Card 1 -->
             <div class="col-12">
@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          @endif
+
           @endforeach
 
           <!-- AREA CHART debe ir oculta -->
