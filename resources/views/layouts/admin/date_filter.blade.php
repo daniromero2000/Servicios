@@ -1,7 +1,7 @@
 <!-- search form -->
 <div class="row">
     <div class="col-12 text-center">
-        <h3>Filtrar</h3>
+        <h3>Filtrar Solicitudes Fábrica</h3>
     </div>
     <div class="col-12 mt-2 mb-5">
         <form action="{{$route}}" method="get" id="admin-search">
@@ -14,7 +14,6 @@
                         <input type="date" name="from" class="form-control form-control-sm"
                             value="{!! request()->input('from') !!}">
                     </div>
-                    
                     <div class="col-md-3">
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control form-control-sm"
@@ -31,5 +30,4 @@
             </div>
         </form>
     </div>
-
 </div>
