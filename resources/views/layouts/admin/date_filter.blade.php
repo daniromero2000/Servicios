@@ -1,7 +1,7 @@
 <!-- search form -->
 <div class="row">
     <div class="col-12 text-center">
-        <h3>Filtrar Solicitudes Fábrica</h3>
+        <h3>Filtrar</h3>
     </div>
     <div class="col-12 mt-2 mb-5">
         <form action="{{$route}}" method="get" id="admin-search">
