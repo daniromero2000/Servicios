@@ -173,16 +173,7 @@ class OportuyaV2Controller extends Controller
 	{
 		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
-			$paso = "";
-			switch ($request->get('typeService')) {
-				case 'Avance':
-					$paso = "A-PASO1";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO1";
-					break;
-			}
+			$paso = "PASO1";
 
 			$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 			if (Auth::user()) {
@@ -266,16 +257,7 @@ class OportuyaV2Controller extends Controller
 		if ($request->get('step') == 2) {
 			$identificationNumber = trim($request->get('identificationNumber'));
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "";
-			switch ($oportudataLead->ORIGEN) {
-				case 'Avance':
-					$paso = "A-PASO2";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO2";
-					break;
-			}
+			$paso = "PASO2";
 
 			$getIdcityExp = $this->cityInterface->getCityByName(trim($request->get('cityExpedition')));
 			$dataLead = [
@@ -313,17 +295,8 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');
 			$identificationNumber = (string) $identificationNumber;
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "";
-			switch ($oportudataLead->ORIGEN) {
-				case 'Avance':
-					$paso = "A-PASO3";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO3";
-					break;
-			}
-
+			$paso = "PASO3";
+			
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
 			$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency);
 
