@@ -143,6 +143,12 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
     });
 
+
+    Route::namespace('Customers')->group(function () {
+        Route::resource('Administrator/customers', 'CustomerController');
+        Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
+    });
+
     Route::namespace('Comments')->group(function () {
         Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });
