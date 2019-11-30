@@ -67,10 +67,9 @@ class IntentionController extends Controller
             $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
         }
 
-
-
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
+
         $creditCards   = $creditCards->toArray();
         $creditCards   = array_values($creditCards);
 

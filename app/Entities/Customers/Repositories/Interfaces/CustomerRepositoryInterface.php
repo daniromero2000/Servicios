@@ -3,11 +3,13 @@
 namespace App\Entities\Customers\Repositories\Interfaces;
 
 use App\Entities\Customers\Customer;
+use Illuminate\Support\Collection as Support;
+use Illuminate\Database\Eloquent\Collection;
 
 
 interface CustomerRepositoryInterface
 {
-  public function listCustomers();
+  public function listCustomers($totalView): Support;
 
   public function listCustomersDigitalChannel();
 
@@ -16,4 +18,6 @@ interface CustomerRepositoryInterface
   public function checkIfExists($identificationNumber);
 
   public function updateOrCreateCustomer($data);
+
+  public function countCustomersSteps($from, $to);
 }
