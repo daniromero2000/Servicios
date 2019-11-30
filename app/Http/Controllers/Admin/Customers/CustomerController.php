@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $listCount = $list->count();
 
 
-        return view('Customers.list', [
+        return view('customers.list', [
             'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Cedula', 'Apellido', 'Nombre', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
@@ -45,7 +45,7 @@ class CustomerController extends Controller
     {
         $Customer = $this->CustomerInterface->findCustomerByIdFull($id);
 
-        return view('Customers.show', [
+        return view('customers.show', [
             'Customer' =>  $Customer
         ]);
     }
@@ -80,7 +80,7 @@ class CustomerController extends Controller
         }
 
 
-        return view('Customers.dashboard', [
+        return view('customers.dashboard', [
             'creditProfilesNames'  => $creditProfilesNames,
             'creditProfilesValues' => $creditProfilesValues,
             'creditCards'  => $creditCards,
