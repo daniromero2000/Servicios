@@ -11,6 +11,7 @@
         <tbody>
             @foreach($datas as $data)
             <tr>
+                <td>{{ $data->CREACION}} </td>
                 <td>{{ $data->CEDULA}} </td>
                 <td>{{ $data->APELLIDOS}}</td>
                 <td>{{ $data->NOMBRES}} </td>

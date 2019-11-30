@@ -10,6 +10,7 @@ use Illuminate\Support\Collection as Support;
 class CustomerRepository implements CustomerRepositoryInterface
 {
     private $columns = [
+        'CREACION',
         'CEDULA',
         'APELLIDOS',
         'NOMBRES',
