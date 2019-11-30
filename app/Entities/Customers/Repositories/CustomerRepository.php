@@ -7,6 +7,7 @@ use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -91,12 +92,12 @@ class CustomerRepository implements CustomerRepositoryInterface
         }
     }
 
-    public function countCustomersCreditProfiles($from, $to)
+    public function countCustomersSteps($from, $to)
     {
         try {
-            return  $this->model->select('PERFIL_CREDITICIO', DB::raw('count(*) as total'))
-                ->whereBetween('FECHA_INTENCION', [$from, $to])
-                ->groupBy('PERFIL_CREDITICIO')
+            return  $this->model->select('PASO', DB::raw('count(*) as total'))
+                ->whereBetween('CREACION', [$from, $to])
+                ->groupBy('PASO')
                 ->get();
         } catch (QueryException $e) {
             dd($e);

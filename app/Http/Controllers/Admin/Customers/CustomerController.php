@@ -57,34 +57,28 @@ class CustomerController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
-
-        $creditProfiles = $this->CustomerInterface->countCustomersCreditProfiles($from, $to);
-        $creditCards = $this->CustomerInterface->countCustomersCreditCards($from, $to);
+        $customerSteps = $this->CustomerInterface->countCustomersSteps($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles = $this->CustomerInterface->countCustomersCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards = $this->CustomerInterface->countCustomersCreditCards(request()->input('from'), request()->input('to'));
+            $customerSteps = $this->CustomerInterface->countCustomersSteps(request()->input('from'), request()->input('to'));
         }
 
-        $creditProfiles   = $creditProfiles->toArray();
-        $creditProfiles   = array_values($creditProfiles);
-        $creditCards   = $creditCards->toArray();
-        $creditCards   = array_values($creditCards);
+        $customerSteps   = $customerSteps->toArray();
+        dd($customerSteps);
+        $customerSteps   = array_values($customerSteps);
+        $customerStepsNames  = [];
+        $customerStepsValues  = [];
 
-        $creditProfilesNames  = [];
-        $creditProfilesValues  = [];
+        foreach ($customerSteps as $customerStep) {
 
-        foreach ($creditProfiles as $creditProfile) {
-            array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
-            array_push($creditProfilesValues, trim($creditProfile['total']));
+            array_push($customerStepsNames, trim($customerStep['PASO']));
+            array_push($customerStepsValues, trim($customerStep['total']));
         }
 
 
         return view('customers.dashboard', [
-            'creditProfilesNames'  => $creditProfilesNames,
-            'creditProfilesValues' => $creditProfilesValues,
-            'creditCards'  => $creditCards,
-            'totalStatuses'  => array_sum($creditProfilesValues),
+            'customerStepsNames'  => $customerStepsNames,
+            'customerStepsValues' => $customerStepsValues,
         ]);
     }
 }
