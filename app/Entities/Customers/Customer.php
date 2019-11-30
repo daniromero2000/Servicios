@@ -178,7 +178,6 @@ class Customer extends Model
         'NOTA2',
         'CON3',
         'ORIGEN',
-        'PASO',
         'RAZON_SOC',
         'FEC_ING',
         'ANTIG',

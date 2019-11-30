@@ -69,6 +69,7 @@ class IntentionController extends Controller
 
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
+
         $creditCards   = $creditCards->toArray();
         $creditCards   = array_values($creditCards);
 

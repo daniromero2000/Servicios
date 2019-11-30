@@ -15,7 +15,7 @@
             <div class="small-box ">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes</p>
+                <p>Clientes</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -27,7 +27,7 @@
             <div class="small-box ">
               <div class="inner">
                 <h2>Total</h2>
-                <p>${{ number_format ($factoryRequestsTotal) }}</p>
+
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -224,7 +224,7 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
+          <h3 class="card-title">  Solicitudes Web</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -714,9 +714,8 @@
       var estados = [];
         var values = [];
 
-
-        var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
+var estados = [<?php echo '"'.implode('","', $customerStepsNames).'"' ?>];
+var values = [<?php echo '"'.implode('","', $customerStepsValues).'"' ?>];
 
             /* END LINE CHART */
 
@@ -852,18 +851,11 @@
     // Get context with jQuery - using jQuery's .get() method.
     var estados = [];
     var values = [];
-    var statusesColors = [];
-    var webValues = [];
-    var webNames = [];
-    var webColors = [];
 
 
-var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
-var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
-var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
-var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
-var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
-var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
+var estados = [<?php echo '"'.implode('","', $customerStepsNames).'"' ?>];
+var values = [<?php echo '"'.implode('","', $customerStepsValues).'"' ?>];
+
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
