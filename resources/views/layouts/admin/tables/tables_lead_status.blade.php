@@ -1,30 +1,30 @@
+<div class="table ">
 
-                <div class="table ">
+    <table id="example2" class="table table-responsive-lg table-stripped  table-hover">
+        <thead class="text-center">
+            <tr>
+                @foreach ($headers as $header)
+                <th scope="col">{{ $header }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($datas as $data)
+            <tr>
+                <td>{{ $data->CREACION}} </td>
+                <td>{{ $data->CEDULA}} </td>
+                <td>{{ $data->APELLIDOS}}</td>
+                <td>{{ $data->NOMBRES}} </td>
+                <td>{{ $data->TIPOCLIENTE}} </td>
+                <td>{{ $data->SUBTIPO}} </td>
+                <td>{{ $data->ORIGEN}} </td>
+                <td>{{ $data->PASO}} </td>
+                <td>{{ $data->ESTADO}} </td>
 
-                    <table id="example2" class="table table-responsive-lg table-stripped  table-hover">
-                        <thead class="text-center">
-                            <tr>
-                                @foreach ($headers as $header)
-                                <th  scope="col">{{ $header }}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($datas as $data)
-                            <tr>
-                                @foreach($data->toArray() as $key => $value)
-                                <td>
-                                    {{ $data[$key] }}
-                                </td>
-                                @endforeach
+            </tr>
+            @endforeach
 
-                                <td>
+        <tbody>
+    </table>
+</div>
 
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        <tbody>
-                    </table>
-                </div>
-           

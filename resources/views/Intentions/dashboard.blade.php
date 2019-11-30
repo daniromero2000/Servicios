@@ -11,10 +11,10 @@
       <!-- /.col (RIGHT) -->
       <div class="col-sm-12 col-md-5 col-lg-4">
         <div class="col-12 col-sm-12">
-          <div class="row">
+          <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-6 col-md-6">
               <!-- /.info-box -->
-              <div class="small-box ">
+              <div class="small-box">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
                   <p>Intenciones</p>
@@ -26,11 +26,9 @@
             </div>
           </div>
         </div>
-
-        <!-- AREA CHART debe ir oculta -->
-        <div hidden class="card card-primary">
+        <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Area Chart</h3>
+            <h3 class="card-title"> Resumen Intenciones</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -38,34 +36,9 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="chart">
-              <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
-            </div>
+            <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
           </div>
         </div>
-
-        <div class="col-md-6">
-          <!-- DEBE IR OCULTA-->
-          <div hidden class="card card-info">
-            <div class="card-header">
-              <h3 class="card-title">Line Chart</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="chart">
-                <canvas id="lineChart" style="height:250px; min-height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-        </div>
-
         <div class="row">
           @foreach ($creditCards as $creditCard)
           @if(!empty($creditCard['TARJETA']))
@@ -116,22 +89,35 @@
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
-
       </div>
-
+      <div class="col-md-8">
+        <!-- PORCENTAJES -->
+        <div class="card ">
+          <div class="card-header">
+            <h3 class="card-title">Perfiles Crediticios</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="col-12">
+              @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+            </div>
+            <div class="chart">
+              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- /.col (LEFT) -->
       <div class=" col-md-7 col-lg-8">
         <!-- debe ir oculta -->
         <div hidden class="card card-danger">
           <div class="card-header">
             <h3 class="card-title">Donut Chart</h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -142,7 +128,6 @@
             <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
           </div>
         </div>
-
         <!-- TORTA -->
         <div class="card">
           <div class="card-header">
@@ -155,9 +140,6 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
-              </div>
-              <div class="col-12">
                 <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
               </div>
             </div>
@@ -165,24 +147,9 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <!-- /.col (RIGTH) -->
       <div class="col-md-4">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title"> Solicitudes Web</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-            </div>
-          </div>
-          <div class="card-body">
-            <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
-          </div>
-        </div>
-
         <!-- AREA CHART DEBE IR OCULTA-->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -201,26 +168,7 @@
         </div>
       </div>
       <!-- Card 1 -->
-
       <!-- /.col (LEFT) -->
-      <div class="col-md-8">
-        <!-- PORCENTAJES -->
-        <div class="card ">
-          <div class="card-header">
-            <h3 class="card-title">Bar Chart</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="chart">
-              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     {{--
     <div class="row">
@@ -482,16 +430,11 @@
 <script>
   $(function () {
 
-
     var estados = [];
         var values = [];
 
         var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
 
     //--------------
     //- AREA CHART -
@@ -504,7 +447,7 @@
       labels  :estados,
       datasets: [
         {
-          label               : 'Digital Goods',
+          label               : 'Perfil Crediticio',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
@@ -515,60 +458,29 @@
           data                :values
         },
         {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : values
+
         },
       ]
     }
 
-    var areaChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }],
-        yAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }]
-      }
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = jQuery.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    barChartData.datasets[0] = temp0
+
+    var barChartOptions = {
+    responsive : true,
+    maintainAspectRatio : false,
+    datasetFill : false
     }
 
-    // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, {
-      type: 'line',
-      data: areaChartData,
-      options: areaChartOptions
-    })
-
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = jQuery.extend(true, {}, areaChartOptions)
-    var lineChartData = jQuery.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
+    var barChart = new Chart(barChartCanvas, {
+    type: 'bar',
+    data: barChartData,
+    options: barChartOptions
     })
 
     //-------------
@@ -633,27 +545,6 @@
       options: pieOptions
     })
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = jQuery.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
-    }
-
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barChartData,
-      options: barChartOptions
-    })
 
     //---------------------
     //- STACKED BAR CHART -
