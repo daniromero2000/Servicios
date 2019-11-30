@@ -488,16 +488,11 @@
 <script>
   $(function () {
 
-
     var estados = [];
         var values = [];
 
         var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
 
     //--------------
     //- AREA CHART -
@@ -510,7 +505,7 @@
       labels  :estados,
       datasets: [
         {
-          label               : 'Digital Goods',
+          label               : 'Perfil Crediticio',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
@@ -521,61 +516,10 @@
           data                :values
         },
         {
-          label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : values
+
         },
       ]
     }
-
-    var areaChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: false
-      },
-      scales: {
-        xAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }],
-        yAxes: [{
-          gridLines : {
-            display : false,
-          }
-        }]
-      }
-    }
-
-    // This will get the first returned node in the jQuery collection.
-    var areaChart       = new Chart(areaChartCanvas, {
-      type: 'line',
-      data: areaChartData,
-      options: areaChartOptions
-    })
-
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = jQuery.extend(true, {}, areaChartOptions)
-    var lineChartData = jQuery.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
-    })
 
     //-------------
     //- DONUT CHART -
@@ -645,9 +589,7 @@
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChartData = jQuery.extend(true, {}, areaChartData)
     var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
+    barChartData.datasets[0] = temp0
 
     var barChartOptions = {
       responsive              : true,
