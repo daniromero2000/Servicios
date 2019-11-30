@@ -65,15 +65,11 @@ class CustomerController extends Controller
 
         $totalStatuses = $customerSteps->sum('total');
 
-
         foreach ($customerSteps as $key => $value) {
             $customerSteps[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
-
-            # code...
         }
         $customerSteps = $customerSteps->toArray();
         $customerSteps = array_values($customerSteps);
-
 
         $customerStepsNames  = [];
         $customerStepsValues  = [];

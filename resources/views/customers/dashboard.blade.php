@@ -47,7 +47,7 @@
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
                 <span class="progress-description">
-                 {{ number_format ($customerStep['percentage'])}}%
+                 {{ number_format ($customerStep['percentage'])}}% llegó a este paso
                 </span>
               </div>
             </div>
