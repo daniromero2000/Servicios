@@ -175,6 +175,7 @@ Route::get('/googledd6db54bffdd55e4.html', function () {
 
 /* Admin Leads */
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
+Route::get('/api/leads/getFactoryRequestComments/{solicitud}', 'Admin\LeadsController@getFactoryRequestComments');
 
 /* Apis */
 Route::group(['prefix' => 'api/'], function () {

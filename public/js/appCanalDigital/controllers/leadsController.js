@@ -136,7 +136,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/subsidiaries/cities'
         }).then(function successCallback(response) {
-            console.log(response.data);
             if (response.data != false) {
                 $scope.cities = response.data;
             }
@@ -183,7 +182,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&channel' + $scope.q.channel,
 
         }).then(function successCallback(response) {
-            console.log(response.data);
 
             $scope.codeAsesor = response.data.codeAsesor;
             $scope.totalLeads = response.data.totalLeads;
@@ -323,7 +321,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             url: '/communityLeads/updateCommunityLeads',
             data: $scope.lead
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.searchLeads();
                 $('#updateCommunityModal').modal('hide');
@@ -344,7 +341,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             url: '/communityLeads/addCommunityLeads',
             data: $scope.lead
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.searchLeads();
                 $('#addCommunityLead').modal('hide');
@@ -364,7 +360,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     method: 'GET',
                     url: '/api/canalDigital/assignAssesorDigitalToLead/' + solicitud,
                 }).then(function successCallback(response) {
-                    console.log(response);
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
@@ -383,7 +378,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     method: 'GET',
                     url: '/api/canalDigital/assignAssesorDigitalToLeadCM/' + solicitud,
                 }).then(function successCallback(response) {
-                    console.log(response);
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
@@ -408,6 +402,31 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 });
             });
     }
+
+    $scope.viewCommentsFactoryRequest = function(name, lastName, solicitud, init = true){
+        $scope.comments = [];
+        showLoader();
+        $http({
+            method: 'GET',
+            url: '/api/leads/getFactoryRequestComments/' + solicitud
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                angular.forEach(response.data, function (value, key) {
+                    $scope.comments.push(value);
+                });
+            }
+
+            if (init) {
+                $("#viewComments").modal("show");
+                $scope.nameLead = name;
+                $scope.lastNameLead = lastName;
+            }
+            hideLoader();
+        }, function errorCallback(response) {
+            console.log(response);
+            hideLoader();
+        });
+    };
 
     $scope.viewComments = function (name, lastName, state, idLead, init = true) {
         $scope.comments = [];
@@ -469,7 +488,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/Admin/Comments/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
         }).then(function successCallback(response) {
-            console.log(response);
             if (response.data != false) {
                 $scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.state, $scope.idLead, false);
                 $scope.comment.comment = "";
