@@ -12,7 +12,7 @@
       <div class="col-sm-12 col-md-5 col-lg-4">
         <div class="col-12 col-sm-12">
           <div class="row d-flex justify-content-center">
-            <div class="col-12 col-sm-6 col-md-6">
+            <div class="col-12 ">
               <!-- /.info-box -->
               <div class="small-box">
                 <div class="inner">
