@@ -63,6 +63,14 @@ class CustomerController extends Controller
             $customerSteps = $this->CustomerInterface->countCustomersSteps(request()->input('from'), request()->input('to'));
         }
 
+        $totalStatuses = $customerSteps->sum('total');
+
+
+        foreach ($customerSteps as $key => $value) {
+            $customerSteps[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+
+            # code...
+        }
         $customerSteps = $customerSteps->toArray();
         $customerSteps = array_values($customerSteps);
 
@@ -74,6 +82,7 @@ class CustomerController extends Controller
             array_push($customerStepsNames, trim($customerStep['PASO']));
             array_push($customerStepsValues, trim($customerStep['total']));
         }
+
 
         return view('customers.dashboard', [
             'customerStepsNames'  => $customerStepsNames,
