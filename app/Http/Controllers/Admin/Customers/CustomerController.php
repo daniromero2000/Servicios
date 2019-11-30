@@ -35,7 +35,7 @@ class CustomerController extends Controller
         return view('customers.list', [
             'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cedula', 'Apellido', 'Nombre', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
+            'headers'              => ['Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Score', 'Origen', 'Paso', 'Estado'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
