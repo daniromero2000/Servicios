@@ -2,7 +2,7 @@
   <h1><i class="fa fa-user" aria-hidden="true"></i> Cliente</h1>
 </div>
 <div class="card-body table-responsive pt-1">
-  @if(!empty($customer->customer))
+  @if(!empty($intention->intention))
   <table class="table table-hover table-stripped leadTable " >
     <thead>
        <tr>
@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      @include('layouts.admin.tables.customer_eps_noheaders_table', ['data' => $customer->customer])
+      @include('layouts.admin.tables.intention_eps_noheaders_table', ['data' => $intention->intention])
     </tbody>
   </table>
   @else

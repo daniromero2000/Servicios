@@ -9,7 +9,6 @@ use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
-
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
     private $columns = [
@@ -18,6 +17,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'SUCURSAL',
         'FECHASOL',
         'ESTADO',
+        'GRAN_TOTAL'
     ];
 
     public function __construct(
@@ -104,7 +104,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function listFactoryRequests($totalView): Support
     {
         try {
@@ -118,22 +117,36 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function countFactoryRequestsStatuses()
+    public function countFactoryRequestsStatuses($from, $to)
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+            dd($e);
         }
     }
 
-
-    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null): Collection
+    public function countWebFactoryRequests($from, $to)
     {
-        if (is_null($text) && is_null($from) && is_null($to)) {
-            return $this->model->orderBy('SOLICITUD', 'desc')
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('SOLICITUD_WEB', 1)
+                ->where('STATE', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -141,6 +154,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequest($text, null, true, true)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->when($subsidiary, function ($q, $subsidiary) {
+                    return $q->where('SUCURSAL', $subsidiary);
+                })
+                ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
@@ -148,6 +168,24 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         return $this->model->searchFactoryRequest($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO', $status);
+            })
+            ->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
+    }
+
+    public function getFactoryRequestsTotal($from, $to)
+    {
+        try {
+            return $this->model
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
     }
 }

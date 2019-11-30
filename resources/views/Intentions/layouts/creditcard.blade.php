@@ -4,7 +4,7 @@
   <h1><i class="fas fa-credit-card" aria-hidden="true"></i> Tarjeta de Crédito</h1>
 </div>
 <div class="card-body table-responsive pt-1">
-  @if(!empty($customer->creditCard))
+  @if(!empty($intention->creditCard))
   <table class="table table-hover table-stripped leadTable">
     <thead>
       <tr>
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      @include('layouts.admin.tables.customer_eps_noheaders_table', ['data' => $customer->creditCard])
+      @include('layouts.admin.tables.intention_eps_noheaders_table', ['data' => $intention->creditCard])
     </tbody>
   </table>
   @else

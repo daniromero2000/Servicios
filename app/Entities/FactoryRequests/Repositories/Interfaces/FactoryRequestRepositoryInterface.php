@@ -19,5 +19,7 @@ interface FactoryRequestRepositoryInterface
 
   public function listFactoryRequests($totalView): Support;
 
-  public function countFactoryRequestsStatuses();
+  public function countFactoryRequestsStatuses($from, $to);
+
+  public function getFactoryRequestsTotal($from, $to);
 }

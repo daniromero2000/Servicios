@@ -3,38 +3,68 @@
 
 <section>
     @include('layouts.errors-and-messages')
-
     @if(!is_null($customers))
-    <div >
-            <div class="content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                    <h1 class="ml-3"> {{ $listCount }} Solicitudes</h1>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
-                                        </div>
+    <div>
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
 
-                                    </div>
-                            </div><!-- /.col -->
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                                    <li class="breadcrumb-item active"><a href="/Administrator/communityLeads#!/"></a></li>
-                                </ol>
-                            </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                            </div>
+
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/communityLeads#!/"></a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
 
         <div class="container">
             <div class="card  mb-4 border-0 shadow-lg">
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
-
+                        <div class="card-header">
+                            @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
+                        </div>
+                        <div class=" mt-2 col-12 col-sm-6 col-md-12">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 col-md-6">
+                                    <!-- /.info-box -->
+                                    <div class="small-box ">
+                                      <div class="inner">
+                                        <h2>{{ $listCount }}</h2>
+                        
+                                        <p>Solicitudes</p>
+                                      </div>
+                                      <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                        
+                                  <div class="col-12 col-sm-6 col-md-6">
+                                    <div class="small-box ">
+                                      <div class="inner">
+                                        <h2>Total</h2>
+                        
+                                        <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                                      </div>
+                                      <div class="icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                         <div class="card-body text-center pt-0 pb-0 ">
-
                             @if($customers)
                             @include('layouts.admin.tables.tables_lead_status', [$headers, 'datas' => $customers ])
                             @include('layouts.admin.pagination.pagination', [$skip])
@@ -53,11 +83,5 @@
 
 @section('scriptsJs')
 
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- jsGrid -->
-<script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
-<script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
+
 @endsection
