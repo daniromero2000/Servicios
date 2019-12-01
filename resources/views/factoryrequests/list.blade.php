@@ -63,7 +63,7 @@
             </div>
             <div class="card-body text-center pt-0 pb-0 ">
               @if($factoryRequests)
-              @include('layouts.admin.tables.tables_lead_status', [$headers, 'datas' => $factoryRequests ])
+              @include('layouts.admin.tables.tables_factory_requests_status', [$headers, 'datas' => $factoryRequests ])
               @include('layouts.admin.pagination.pagination', [$skip])
               @else
               @include('layouts.admin.pagination.pagination_null', [$skip])
