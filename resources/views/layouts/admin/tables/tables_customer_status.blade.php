@@ -1,29 +1,29 @@
-<table class="table table-borderless table-hover table-sm">
-    <thead class="thead-dark">
-        <tr>
-            @foreach ($headers as $header)
-            <th class="text-center" scope="col">{{ $header }}</th>
-            @endforeach
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($datas as $data)
-        <tr>
-            @foreach($data->toArray() as $key => $value)
-            <td class="text-center">
-                {{ $data[$key] }}
-            </td>
-            @endforeach
-            <td class="text-center">
-                <p class="text-center label"
-                    style="color: #ffffff; background-color: {{ $data->color }}">
+<div class="table ">
 
-                </p>
-            </td>
-            <td class="text-center">
-                @include('layouts.admin.tables.table_options', [$data, 'optionsRoutes' => $optionsRoutes])
-            </td>
-        </tr>
-        @endforeach
-    <tbody>
-</table>
+    <table id="example2" class="table table-responsive-lg table-stripped  table-hover">
+        <thead class="text-center">
+            <tr>
+                @foreach ($headers as $header)
+                <th scope="col">{{ $header }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($datas as $data)
+            <tr>
+                <td>{{ $data->CREACION}} </td>
+                <td>{{ $data->CEDULA}} </td>
+                <td>{{ $data->APELLIDOS}}</td>
+                <td>{{ $data->NOMBRES}} </td>
+                <td>{{ $data->TIPOCLIENTE}} </td>
+                <td>{{ $data->SUBTIPO}} </td>
+                <td>{{ $data->ORIGEN}} </td>
+                <td>{{ $data->PASO}} </td>
+                <td>{{ $data->ESTADO}} </td>
+            </tr>
+            @endforeach
+
+        <tbody>
+    </table>
+</div>
+
