@@ -9,18 +9,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($datas as $data)
+           @foreach($datas as $data)
             <tr>
-                <td>{{ $data->CREACION}} </td>
-                <td>{{ $data->CEDULA}} </td>
-                <td>{{ $data->APELLIDOS}}</td>
-                <td>{{ $data->NOMBRES}} </td>
-                <td>{{ $data->TIPOCLIENTE}} </td>
-                <td>{{ $data->SUBTIPO}} </td>
-                <td>{{ $data->ORIGEN}} </td>
-                <td>{{ $data->PASO}} </td>
-                <td>{{ $data->ESTADO}} </td>
+                @foreach($data->toArray() as $key => $value)
+                <td class="text-center">
+                    {{ $data[$key] }}
+                </td>
+                @endforeach
 
+                <td class="text-center">
+
+                </td>
             </tr>
             @endforeach
 
