@@ -10,9 +10,9 @@
     <div class="col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-6 col-md-6 ">
             <!-- /.info-box -->
-            <div class="small-box ">
+            <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
                 <p>Solicitudes Crédito</p>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="col-12 col-sm-6 col-md-6">
-            <div class="small-box ">
+            <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
                 <p>${{ number_format ($factoryRequestsTotal) }}</p>

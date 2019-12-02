@@ -7,11 +7,16 @@ Route::group(['prefix' => '/admin/'], function () {
         return view('adminlte.modulesV2');
     });
 });
-Route::group(['prefix' => '/Catalog/'], function () {
+
+
+Route::group(['prefix' => '/seguros/'], function (){
     Route::get('/taxis', function () {
         return view('seguros.taxis.index');
     });
+});
 
+
+Route::group(['prefix' => '/Catalog/'], function () {
     //display catalog layout
     Route::get("/", function () {
         return view('catalog.public.layout');

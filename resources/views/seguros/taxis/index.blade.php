@@ -49,8 +49,7 @@
                 </div>
 
                 <div class="col-12 col-sm-9 col-md-11 col-lg-11 col-xl-11 text-center" style="margin: auto;">
-                    <a href="#" class="btn boton-submit btn-primary py-3 shadow-lg w-75 px-3" data-toggle="modal"
-                        data-target="#modalAppointment" style="border-radius: 40px;">Quiero mi soat a crédito</a>
+                    <a href="/seguros/credito" class="btn boton-submit btn-primary py-3 shadow-lg w-75 px-3" style="border-radius: 40px;">Quiero mi soat a crédito</a>
                 </div>
 
                 <div class="col-8 col-sm-6 col-md-7 col-lg-7 col-xl-7 text-center mt-5  " style="margin: auto;">

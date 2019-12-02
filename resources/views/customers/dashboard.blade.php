@@ -30,7 +30,7 @@
           <!-- Card 1 -->
           <div class="col-12">
             <div class="info-box ">
-              <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
+              <span class="info-box-icon"><i class="fas fa-stopwatch"></i></span>
               <div class="info-box-content">
                 <div class="row">
                   <div class="col-6">
