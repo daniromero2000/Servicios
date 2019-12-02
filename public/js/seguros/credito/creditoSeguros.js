@@ -1,17 +1,19 @@
-angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
-.controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
-	$scope.lead = {};
-	$scope.code = {};
-	$scope.formConfronta = {};
-	$scope.citiesUbi = {};
-	$scope.cities = {};
-	$scope.banks = {};
-	$scope.tipoCliente = "";
-	$scope.estadoCliente = "";
+angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
+.controller("insurancesCreditCtrl", function($scope, $http, $timeout) {
 	$scope.messageValidationLead = "";
-	$scope.showWarningErrorData = false;
-	$scope.totalErrorData = 0;
-	$scope.validateNum = 0;
+	$scope.showWarningErrorData  = false;
+	$scope.totalErrorData        = 0;
+	$scope.formConfronta         = {};
+	$scope.estadoCliente         = "";
+	$scope.datosCliente          = {};
+	$scope.validateNum           = 1;
+	$scope.tipoCliente           = "";
+	$scope.citiesUbi             = {};
+	$scope.cities                = {};
+	$scope.banks                 = {};
+	$scope.lead                  = {};
+	$scope.code                  = {};
+    
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -54,7 +56,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			'label' : 'Carnet Diplomático'
 		}
     ];
-    
+
     $scope.occupations = [
 		{
 			'value'	: 'EMPLEADO',
@@ -84,9 +86,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			'value'	: 'PENSIONADO',
 			'label' : 'Pensionado'
 		}
-	];
-  
-	$scope.housingTypes = [
+    ];
+    
+    $scope.housingTypes = [
 		{
 		label: 'Propia',
 		value: 'PROPIA'
@@ -99,14 +101,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		label: 'Familiar',
 		value: 'FAMILIAR'
 		}
-	];
-  
-	$scope.genders = [
-			{ label : 'Masculino',value: 'M' },
-			{ label : 'Femenino',value: 'F' }
-	];
-  
-	$scope.civilTypes = [
+    ];
+    
+    $scope.genders = [
+        { label: 'Masculino',value: 'M' },
+        { label: 'Femenino',value : 'F' }
+    ];
+
+    $scope.civilTypes = [
 		{
 			label: 'Soltero',
 			value: 'SOLTERO'
@@ -123,9 +125,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			label: 'Viudo',
 			value: 'VIUDO'
 		},
-	];
+    ];
 
-	$scope.typesContracts = [
+    $scope.typesContracts = [
 		{
 			value: 'FIJO',
 			label: 'Fijo'
@@ -138,9 +140,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			value: 'SERVICIOS',
 			label: 'Servicios'
 		}
-	];
-
-	$scope.getInfoVentaContado = function(){
+    ];
+    
+    $scope.getInfoForm = function(){
+		$scope.lead.TIPO_DOC  = '1';
+		$scope.lead.CIUD_UBI  = 144;
+		$scope.lead.ACTIVIDAD = "EMPLEADO";
+		$scope.lead.TIPO_CONT = "FIJO";
+		$scope.lead.ORIGEN = "Seguros";
 		showLoader();
 		$http({
 		  method: 'GET',
@@ -148,17 +155,68 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}).then(function successCallback(response) {
 			hideLoader();
 			$scope.citiesUbi = response.data.ubicationsCities;
-			$scope.cities = response.data.cities;
-			$scope.banks = response.data.banks;
+			$scope.cities    = response.data.cities;
+			$scope.banks     = response.data.banks;
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
 		});
-  	};
-	
-	$scope.getCodeVerification = function(renew = false){
+    };
+
+    $scope.getValidationLead = function(){
+		showLoader();
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/validationLead/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			hideLoader();
+			if(response.data == -1){
+				$('#validationLead').modal('show');
+                $scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
+			}else if(response.data == -2){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
+			}else if(response.data == -3){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
+			}else if(response.data == -4){
+				$('#validationLead').modal('show');
+				$scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
+			}else{
+				$scope.getNumCel();
+				console.log("Validado !!");
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+        });
+    }
+
+    $scope.getNumCel = function(){
+		$scope.lead.CEL_VAL = 0;
+		$scope.lead.CELULAR = '';
+		$scope.lead.ORIGEN  = "SEGUROS";
+		$http({
+			method: 'GET',
+			url: '/api/oportuya/getNumLead/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			if(typeof response.data.resp == 'number'){
+				
+			}else{
+				var num             = response.data.resp.NUM.substring(0,6);
+				var CELULAR         = response.data.resp.NUM.replace(num, "******");
+				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
+				$scope.CELULAR      = CELULAR;
+				$scope.lead.CELULAR = response.data.resp.NUM;
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
+
+    $scope.getCodeVerification = function(renew = false){
 		if($scope.validateNum > 0){
-			$scope.addCliente('CREDITO');
+			$scope.addCliente();
 		}else{
 			$scope.reNewToken = true;
 			showLoader();
@@ -185,87 +243,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				console.log(response);
 			});
 		}
-	};
-	
-	$scope.getInfoLead = function(){
-		$scope.getinfoLeadVentaContado();
-		setTimeout(() => {
-			$scope.getNumCel();
-		}, 1000);
-	};
+    };
 
-	$scope.getinfoLeadVentaContado = function(){
-		$http({
-			method: 'GET',
-			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
-		}).then(function successCallback(response) {
-			if(response.data == false){
-				var cedula = angular.extend({}, $scope.lead);
-				$scope.resetInfo();
-				$scope.lead.CEDULA = cedula.CEDULA;
-				delete cedula;
-			}else{
-				$scope.lead = response.data[0];
-				$scope.lead.CEL_VAL = 0;
-				$scope.lead.CELULAR = '';
-				$scope.lead.EMAIL = '';
-			}
-		}, function errorCallback(response) {
-			console.log(response);
-		});
-	};
-
-	$scope.getValidationLead = function(){
-		showLoader();
-		$http({
-			method: 'GET',
-			url: '/api/oportuya/validationLead/'+$scope.lead.CEDULA,
-		}).then(function successCallback(response) {
-			hideLoader();
-			if(response.data == -1){
-				$('#validationLead').modal('show');
-				$scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
-			}else if(response.data == -2){
-				$('#validationLead').modal('show');
-				$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
-			}else if(response.data == -3){
-				$('#validationLead').modal('show');
-				$scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
-			}else if(response.data == -4){
-				$('#validationLead').modal('show');
-				$scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
-			}else{
-				$scope.getInfoLead();
-				console.log("Validado !!");
-			}
-		}, function errorCallback(response) {
-			hideLoader();
-			console.log(response);
-		});
-	}
-
-	$scope.getNumCel = function(){
-		$scope.lead.CEL_VAL = 0;
-		$scope.lead.CELULAR = '';
-		$http({
-			method: 'GET',
-			url: '/api/oportuya/getNumLead/'+$scope.lead.CEDULA,
-		}).then(function successCallback(response) {
-			if(typeof response.data.resp == 'number'){
-				
-			}else{
-				var num = response.data.resp.NUM.substring(0,6);
-				var CELULAR = response.data.resp.NUM.replace(num, "******");
-				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
-				$scope.CELULAR = CELULAR;
-				$scope.lead.CELULAR = response.data.resp.NUM;
-			}
-		}, function errorCallback(response) {
-			console.log(response);
-		});
-	};
-
-	$scope.verificationCode = function(){
+    $scope.verificationCode = function(){
 		showLoader();
 		$http({
 			method: 'GET',
@@ -274,7 +254,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			if(response.data == true){
 				$scope.validateNum = 1;
 				$('#confirmCodeVerification').modal('hide');
-				$scope.addCliente($scope.tipoCliente);
+				$scope.addCliente();
 			}else if(response.data == -1){
 				// En caso de que el codigo sea erroneo
 				$scope.showAlertCode = true;
@@ -289,47 +269,39 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		});
 	};
 
-	$scope.addCliente = function(tipoCreacion){
-		$scope.lead.tipoCliente = tipoCreacion;
+	$scope.addCliente = function(){
 		showLoader();
 		$http({ 
 			method: 'POST',
-			url: '/assessor/api/ventaContado/addVentaContado',
+			url: '/seguros',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
 			hideLoader();
-			if(tipoCreacion == 'CONTADO'){
-				setTimeout(() => {
-					$scope.showConfirm();
-				}, 1000);
-			}
-			if(tipoCreacion == 'CREDITO'){
-				$scope.execConsultasLead(response.data.identificationNumber);
-			}
+			$scope.execConsultasLead($scope.lead.CEDULA);
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
 		});
 	};
-	
-	$scope.execConsultasLead = function(identificationNumber){
-		setTimeout(() => {
+    
+    $scope.execConsultasLead = function(identificationNumber){
+		/*setTimeout(() => {
 			showLoader();
-		}, 1000);
+		}, 1000);*/
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.datosCliente.NOM_REFPER+'/'+$scope.datosCliente.TEL_REFPER+'/'+$scope.datosCliente.NOM_REFFAM+'/'+$scope.datosCliente.TEL_REFFAM,
 		}).then(function successCallback(response) {
 			console.log(response);
-			setTimeout(() => {
+			/*setTimeout(() => {
 				hideLoader();
-			}, 2000);
+			}, 2000);*/
 
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
-					$scope.deniedLeadForFecExp('1');
+					$scope.deniedLeadForFecExp('1.1');
 				}
 			}
 
@@ -339,9 +311,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 
 			if(response.data.resp == 'true'){
-				$scope.quota = response.data.quotaApprovedProduct;
-				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
-				$scope.numSolic = response.data.infoLead.numSolic;
+				$scope.quota         = response.data.quotaApprovedProduct;
+				$scope.quotaAdvance  = response.data.quotaApprovedAdvance;
+				$scope.numSolic      = response.data.infoLead.numSolic;
 				$scope.estadoCliente = response.data.estadoCliente;
 				setTimeout(() => {
 					$('#confronta').modal('hide');
@@ -369,8 +341,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
-	
-	$scope.sendConfronta = function(){
+    
+    $scope.sendConfronta = function(){
 		$scope.infoConfronta = {
 			'confronta' : $scope.formConfronta,
 			'leadInfo' : $scope.lead
@@ -381,9 +353,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			data: $scope.infoConfronta,
 		}).then(function successCallback(response) {
 			if (response.data.data == true) {
-				$scope.quota = response.data.quota;
-				$scope.quotaAdvance = response.data.quotaAdvance;
-				$scope.numSolic = response.data.numSolic;
+				$scope.quota         = response.data.quota;
+				$scope.quotaAdvance  = response.data.quotaAdvance;
+				$scope.numSolic      = response.data.numSolic;
 				$scope.estadoCliente = response.data.estado;
 				setTimeout(() => {
 					$('#confronta').modal('hide');
@@ -393,34 +365,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 			}
 		});
-	};
-	
-	$scope.showConfirm = function(ev) {
-		$scope.estadoCliente = "CONTADO";
-		$timeout(function() {
-			$('#congratulations').modal('show');
-		}, 1500);
-	};
-
-	$scope.resetInfoLead = function(){
-		showLoader();
-		hideLoader();
-	};
-
-	$scope.resetInfo = function(){
-		$scope.lead = {
-			'TIPO_DOC' : '1', 
-			'ACTIVIDAD' : 'EMPLEADO',
-			'MEDIO_PAGO' : '12',
-			'TRAT_DATOS' : 'SI',
-			'CEL_VAL' : 0
-		};
-		$scope.code = {
-			'code' : ''
-		};
-	};
-
-	$scope.deniedLeadForFecExp = function(typeDenied){
+    };
+    
+    $scope.deniedLeadForFecExp = function(typeDenied){
 		showLoader();
 		$http({
 			method: 'GET',
@@ -435,26 +382,5 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		});
 	};
 
-	$scope.getInfoVentaContado();
-	$scope.resetInfo();
-})
-
-.controller("realizarAnalisisCtrl", function($scope, $http, $timeout) {
-	$scope.infoLead = {};
-	$scope.lead = {};
-	$scope.showResp = false;
-
-	$scope.getInfoLead = function(){
-		$http({
-			method: 'GET',
-			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
-		  }).then(function successCallback(response) {
-			$scope.infoLead = response.data;
-			$scope.showResp = true;
-			hideLoader();
-		  }, function errorCallback(response) {
-			  hideLoader();
-			  console.log(response);
-		  });
-	};
-})
+	$scope.getInfoForm();
+});

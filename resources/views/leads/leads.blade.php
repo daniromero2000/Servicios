@@ -39,16 +39,22 @@
                     <div class="card-body">
                         <form ng-submit="searchLeads()">
                             <div class="row form-group">
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
                                     <label>Ciudad</label>
                                     <select class="form-control" ng-model="q.qcityAprobados"
                                         ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
                                     <label for="qtipoTarjetaAprobados">Tipo Tarjeta</label>
                                     <select class="form-control" ng-model="q.qtipoTarjetaAprobados"
                                         id="qtipoTarjetaAprobados"
                                         ng-options="cardType.label as cardType.label for cardType in cardTypes"></select>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="qOrigenAprobados">Origen</label>
+                                    <select class="form-control" ng-model="q.qOrigenAprobados"
+                                        id="qOrigenAprobados"
+                                        ng-options="origen.value as origen.label for origen in origenes"></select>
                                 </div>
 
                             </div>
@@ -117,6 +123,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Teléfono</th>
                                 <th scope="col">Tarjeta</th>
+                                <th scope="col">Origen</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Cupo Producto/Avance</th>
                                 <th scope="col" style="width: 10%;">Fecha registro</th>
@@ -130,9 +137,8 @@
                                 <td>@{{ lead.nameAsesor }}</td>
                                 <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
-                                <td>
-                                    @{{ lead.TARJETA }}
-                                </td>
+                                <td>@{{ lead.TARJETA }}</td>
+                                <td>@{{ lead.ORIGEN }} <span ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
@@ -415,6 +421,12 @@
                                     <select class="form-control" ng-model="q.qcityAprobados"
                                         ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="qOrigenTR">Origen</label>
+                                    <select class="form-control" ng-model="q.qOrigenTR"
+                                        id="qOrigenTR"
+                                        ng-options="origen.value as origen.label for origen in origenes"></select>
+                                </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-sm-6">
@@ -475,6 +487,7 @@
                                 <th scope="col">Nombres</th>
                                 <th scope="col">Celular</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Origen</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Definición</th>
                                 <th scope="col">Fecha Intención</th>
@@ -487,6 +500,7 @@
                                 <td>@{{ lead.NOMBRES + ' ' + lead.APELLIDOS }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
                                 <td>@{{ lead.EMAIL }}</td>
+                                <td>@{{ lead.ORIGEN }} <span ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>@{{ lead.DESCRIPCION }}</td>
                                 <td>@{{ lead.FECHA_INTENCION }}</td>

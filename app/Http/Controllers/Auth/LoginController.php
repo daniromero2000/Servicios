@@ -56,7 +56,7 @@ class LoginController extends Controller
             $resp = DB::select("SELECT modu.name, modu.icon, modu.route
             FROM permissions_profile_module as ppm
             LEFT JOIN modules as modu ON ppm.id_module = modu.id
-            WHERE ppm.id_profile = :idProfile", ['idProfile' => $userInfo->idProfile]);
+            WHERE ppm.id_profile = :idProfile order by modu.name", ['idProfile' => $userInfo->idProfile]);
             session(['modules' => $resp]);
 
             return $this->sendLoginResponse($request);

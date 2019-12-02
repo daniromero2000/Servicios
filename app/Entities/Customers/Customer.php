@@ -6,6 +6,7 @@ use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\FactoryRequests\FactoryRequest;
+use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
 use Illuminate\Database\Eloquent\Model;
@@ -250,7 +251,7 @@ class Customer extends Model
 
     public function latestIntention()
     {
-        return $this->hasOne(Intention::class, 'CEDULA')->latest('FECHA_INTENCION');
+        return $this->hasOne(Intention::class, 'CEDULA')->with('definition')->latest('FECHA_INTENCION');
     }
 
     public function ubicaConsultations()
@@ -266,5 +267,10 @@ class Customer extends Model
     public function checkedPhone()
     {
         return $this->hasOne(CustomerCellPhone::class, 'IDENTI')->where('CEL_VAL', 1);
+    }
+
+    public function customerFosygas()
+    {
+        return $this->hasMany(Fosyga::class, 'cedula');
     }
 }

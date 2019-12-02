@@ -1,6 +1,8 @@
 @extends('layouts.admin.app')
 <style type="text/css">
-  #header, #preHeader,#footer{
+  #header,
+  #preHeader,
+  #footer {
     display: none;
   }
 </style>
@@ -20,5 +22,7 @@
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
-@endsection
+<section class="content">
 
+</section>
+@endsection
