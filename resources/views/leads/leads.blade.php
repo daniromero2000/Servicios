@@ -170,7 +170,7 @@
                         <div class="container">
                             <div class="row resetRow " ng-if="viewAddComent">
                                 <div class="col-12 form-group">
-                                    <form ng-submit="addComment()">
+                                    <form ng-submit="addFactoryRequestComment()">
                                         {{ csrf_field() }}
                                         <div class="form-group">
                                             <label for="comment">Comentario</label>
