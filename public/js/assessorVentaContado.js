@@ -449,7 +449,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
 		  }).then(function successCallback(response) {
-			  console.log(response);
 			$scope.infoLead = response.data;
 			$scope.showResp = true;
 			hideLoader();
