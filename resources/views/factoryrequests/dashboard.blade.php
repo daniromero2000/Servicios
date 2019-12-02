@@ -152,7 +152,6 @@
             </div>
           </div>
         </div>
-
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -169,15 +168,8 @@
             </div>
           </div>
         </div>
-
-
-
-
-
       </div>
-
     </div>
-
     <!-- /.col (LEFT) -->
     <div class=" col-md-7 col-lg-8">
       <!-- debe ir oculta -->
@@ -195,10 +187,10 @@
           <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
         </div>
       </div>
-
       <!-- TORTA -->
       <div class="card">
         <div class="card-header">
+          <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -218,7 +210,6 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <!-- /.col (RIGTH) -->
     <div class="col-md-4">
@@ -235,7 +226,6 @@
           <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
         </div>
       </div>
-
       <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
@@ -254,13 +244,12 @@
       </div>
     </div>
     <!-- Card 1 -->
-
     <!-- /.col (LEFT) -->
     <div class="col-md-8">
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">
-          <h3 class="card-title">Bar Chart</h3>
+          <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
