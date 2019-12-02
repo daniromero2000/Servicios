@@ -13,13 +13,13 @@
           <div class="row d-flex justify-content-center">
             <div class="col-12 ">
               <!-- /.info-box -->
-              <div class="small-box">
+              <div class="small-box bg-primary" >
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
                   <p>Intenciones</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
+                  <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
             <!-- Card 1 -->
             <div class="col-12">
               <div class="info-box ">
-                <span class="info-box-icon"><i class="fas fa-thumbs-up"></i></span>
+                <span class="info-box-icon"><i class="fas fa-credit-card"></i></span>
                 <div class="info-box-content">
                   <div class="row">
                     <div class="col-6">
