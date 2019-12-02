@@ -67,6 +67,12 @@ class IntentionController extends Controller
             $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
         }
 
+        $totalStatuses = $creditCards->sum('total');
+
+        foreach ($creditCards as $key => $value) {
+            $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+        }
+
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
 

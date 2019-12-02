@@ -38,7 +38,7 @@
                     <span class="info-box-number"> {{$customerStep['total']}} </span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('customers.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -47,7 +47,7 @@
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
                 <span class="progress-description">
-                  70% Increase in 30 Days
+                 {{ number_format ($customerStep['percentage'])}}% llegó a este paso
                 </span>
               </div>
             </div>

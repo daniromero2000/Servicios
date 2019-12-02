@@ -42,13 +42,10 @@
                             <select class="form-control  select2" id="step" name="step" {!!
                                 request()->input('step')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Paso -- </option>
-                                <option>O-PASO1</option>
-                                <option>O-PASO2</option>
-                                <option>O-PASO3</option>
-                                <option>A-PASO1</option>
-                                <option>A-PASO2</option>
-                                <option>A-PASO3</option>
-                            </select>
+                                <option>PASO1</option>
+                                <option>PASO2</option>
+                                <option>PASO3</option>
+                                                          </select>
                         </div>
                     </div>
                     <div class="col-3 d-flex align-items-center">
