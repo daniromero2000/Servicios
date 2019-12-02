@@ -671,10 +671,7 @@
                                     <i ng-if="leadCM.state == 1" class="fas fa-check cursor"
                                         title="Marcar cliente como procesado"
                                         ng-click="checkLeadProcess(leadCM.id)"></i>
-                                    <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-user cursor"
-                                        title="Asignar cliente a asesor"
-                                        ng-click="assignAssesorDigitalToLeadCM(leadCM.id)"></i>
-                                    <i class="fas fa-times cursor" title="Eliminar Lead"
+                                                                      <i class="fas fa-times cursor" title="Eliminar Lead"
                                         ng-click="showDialogDelete(leadCM.id)"></i>
                                 </td>
                             </tr>
@@ -977,8 +974,18 @@
                                                 id="product" cols="10" class="form-control"
                                                 value="@{{lead.typeProduct}}">
                                         </div>
+                                        <div class="col-3 d-flex align-items-end">
+                                            <div class="form-group w-100">
+                                                <label for="assessor_id">Asesor</label>
+                                                <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
+                                                    style="width: 100%;">
+                                                    <option disabled selected value> -- Selecciona Paso -- </option>
+                                                    <option value="13">Evelyn Correa</option>
+                                                    <option value="18">Vannesa Parra</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-
                                     <div class="form-group text-left">
                                         <button class="btn btn-primary">Actualizar</button>
                                     </div>
