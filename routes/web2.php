@@ -98,6 +98,12 @@ Route::group(['prefix' => '/admin/motos/'], function () {
     Route::put('addImage/{idMoto}', 'Admin\MotosAdminController@storeImageMoto');
 });
 
+Route::group(['prefix' => '/assessor/'], function () {
+    Route::group(['prefix' => '/api/'], function () {
+        Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
+    });
+});
+
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
     // Gestion de Leads
@@ -114,7 +120,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     });
 });
 
-
 /**
  * Admin routes
  */
@@ -128,9 +133,20 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::namespace('FactoryRequests')->group(function () {
-        Route::resource('factoryrequests', 'FactoryRequestController');
+        Route::resource('Administrator/factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
-        Route::get('dashboard/factoryrequests', 'FactoryRequestController@dashboard');
+        Route::get('/Administrator/dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
+    });
+
+    Route::namespace('Intentions')->group(function () {
+        Route::resource('Administrator/intentions', 'IntentionController');
+        Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
+    });
+
+
+    Route::namespace('Customers')->group(function () {
+        Route::resource('Administrator/customers', 'CustomerController');
+        Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
     Route::namespace('Comments')->group(function () {
@@ -139,7 +155,6 @@ Route::namespace('Admin')->group(function () {
 
     Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');
 });
-
 
 /**
  * Frontend routes

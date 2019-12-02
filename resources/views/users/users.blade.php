@@ -5,13 +5,13 @@
 
                 <div class="card-header bg-white">
                     <div class="row resetRow">
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-3 mb-1">
                             <button class="btn btn-primary" ng-click="addUserForm()">
                                 <a>Agregar Usuario <i class="far fa-plus-square"></i></a>
                             </button>
                         </div>
 
-                        <div class="col-sm-12 col-md-3">
+                        <div class="col-sm-12 col-md-3 mb-1">
                             <button class="btn btn-primary">
                                 <a ng-click="addAssessorForm()">Asignar perfil a asesor <i
                                         class="fas fa-user-check"></i></a>
@@ -50,9 +50,9 @@
                         <tbody>
                             <tr ng-repeat="user in users">
                                 <td>@{{ user.name }}</td>
-                                <td>@{{ user.email }}</td>
-                                <td>@{{ user.profileName }}</td>
-                                <td>
+                                <td class="text-center">@{{ user.email }}</td>
+                                <td class="text-center">@{{ user.profileName }}</td>
+                                <td class="text-center">
                                     <i class="fas fa-edit cursor" title="Actualizar usuario"
                                         ng-click="updateUserForm(user)"></i>
                                     <i class="fas fa-times cursor" title="eliminar campaña"

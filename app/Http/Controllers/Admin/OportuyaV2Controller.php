@@ -173,16 +173,7 @@ class OportuyaV2Controller extends Controller
 	{
 		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
-			$paso = "";
-			switch ($request->get('typeService')) {
-				case 'Avance':
-					$paso = "A-PASO1";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO1";
-					break;
-			}
+			$paso = "PASO1";
 
 			$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 			if (Auth::user()) {
@@ -206,42 +197,42 @@ class OportuyaV2Controller extends Controller
 			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 			$estado             = "";
 			$dataOportudata = [
-				'TIPO_DOC' => $request->get('typeDocument'),
-				'CEDULA' => $identificationNumber,
-				'NOMBRES' => trim(strtoupper($request->get('name'))),
-				'APELLIDOS' => trim(strtoupper($request->get('lastName'))),
-				'EMAIL' => trim($request->get('email')),
-				'CELULAR' => trim($request->get('telephone')),
-				'PROFESION' => 'NO APLICA',
-				'ACTIVIDAD' => strtoupper($request->get('occupation')),
-				'CIUD_UBI' => trim($subsidiaryCityName),
-				'DEPTO' =>  trim($city->DEPARTAMENTO),
-				'FEC_EXP' => trim($request->get('dateDocumentExpedition')),
-				'TIPOCLIENTE' => 'OPORTUYA',
-				'SUBTIPO' => 'WEB',
-				'STATE' => 'A',
-				'SUC' => $request->get('city'),
-				'ESTADO' => $estado,
-				'PASO' => $paso,
-				'ORIGEN' => $request->get('typeService'),
-				'CLIENTE_WEB' => $clienteWeb,
-				'TRAT_DATOS' => "SI",
-				'USUARIO_CREACION' => $usuarioCreacion,
+				'TIPO_DOC'              => $request->get('typeDocument'),
+				'CEDULA'                => $identificationNumber,
+				'NOMBRES'               => trim(strtoupper($request->get('name'))),
+				'APELLIDOS'             => trim(strtoupper($request->get('lastName'))),
+				'EMAIL'                 => trim($request->get('email')),
+				'CELULAR'               => trim($request->get('telephone')),
+				'PROFESION'             => 'NO APLICA',
+				'ACTIVIDAD'             => strtoupper($request->get('occupation')),
+				'CIUD_UBI'              => trim($subsidiaryCityName),
+				'DEPTO'                 => trim($city->DEPARTAMENTO),
+				'FEC_EXP'               => trim($request->get('dateDocumentExpedition')),
+				'TIPOCLIENTE'           => 'OPORTUYA',
+				'SUBTIPO'               => 'WEB',
+				'STATE'                 => 'A',
+				'SUC'                   => $request->get('city'),
+				'ESTADO'                => $estado,
+				'PASO'                  => $paso,
+				'ORIGEN'                => $request->get('typeService'),
+				'CLIENTE_WEB'           => $clienteWeb,
+				'TRAT_DATOS'            => "SI",
+				'USUARIO_CREACION'      => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
-				'FECHA_ACTUALIZACION' => date('Y-m-d H:i:s'),
-				'ID_CIUD_UBI' => trim($city->ID_DIAN),
-				'MEDIO_PAGO' => 12,
+				'FECHA_ACTUALIZACION'   => date('Y-m-d H: i: s'),
+				'ID_CIUD_UBI'           => trim($city->ID_DIAN),
+				'MEDIO_PAGO'            => 12,
 			];
 
 			$this->customerInterface->updateOrCreateCustomer($dataOportudata);
 
 			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
-				$clienteCelular = [];
-				$clienteCelular['IDENTI'] = $identificationNumber;
-				$clienteCelular['NUM'] = trim($request->get('telephone'));
-				$clienteCelular['TIPO'] = 'CEL';
+				$clienteCelular            = [];
+				$clienteCelular['IDENTI']  = $identificationNumber;
+				$clienteCelular['NUM']     = trim($request->get('telephone'));
+				$clienteCelular['TIPO']    = 'CEL';
 				$clienteCelular['CEL_VAL'] = 1;
-				$clienteCelular['FECHA'] = date("Y-m-d H:i:s");
+				$clienteCelular['FECHA']   = date("Y-m-d H:i:s");
 				$this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
 			}
 
@@ -266,16 +257,7 @@ class OportuyaV2Controller extends Controller
 		if ($request->get('step') == 2) {
 			$identificationNumber = trim($request->get('identificationNumber'));
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "";
-			switch ($oportudataLead->ORIGEN) {
-				case 'Avance':
-					$paso = "A-PASO2";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO2";
-					break;
-			}
+			$paso = "PASO2";
 
 			$getIdcityExp = $this->cityInterface->getCityByName(trim($request->get('cityExpedition')));
 			$dataLead = [
@@ -313,17 +295,8 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = $request->get('identificationNumber');
 			$identificationNumber = (string) $identificationNumber;
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "";
-			switch ($oportudataLead->ORIGEN) {
-				case 'Avance':
-					$paso = "A-PASO3";
-					break;
-
-				case 'Oportuya':
-					$paso = "O-PASO3";
-					break;
-			}
-
+			$paso = "PASO3";
+			
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
 			$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency);
 
@@ -396,10 +369,10 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($request->get('step') == 'comment') {
-			$oportudataLead = $this->customerInterface->findCustomerById($request->get('identificationNumber'));
+			$oportudataLead        = $this->customerInterface->findCustomerById($request->get('identificationNumber'));
 			$oportudataLead->NOTA1 = $request->get('availability');
 			$oportudataLead->NOTA2 = trim($request->get('comment'));
-			$oportudataLead->update();
+			$oportudataLead->save();
 
 			return response()->json([true]);
 		}
@@ -521,13 +494,12 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
-		$code = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
-		$codeUserVerificationOportudata = [];
-		$codeUserVerificationOportudata['token'] = $code;
+		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
+		$codeUserVerificationOportudata                         = [];
+		$codeUserVerificationOportudata['token']                = $code;
 		$codeUserVerificationOportudata['identificationNumber'] = $identificationNumber;
-		$codeUserVerificationOportudata['telephone'] = $celNumber;
-		$codeUserVerificationOportudata['type'] = $type;
-		$codeUserVerificationOportudata['created_at'] = date('Y-m-d H:i:s');
+		$codeUserVerificationOportudata['telephone']            = $celNumber;
+		$codeUserVerificationOportudata['type']                 = $type;
 
 		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
@@ -545,7 +517,7 @@ class OportuyaV2Controller extends Controller
 		if ($dateNow <= $dateCodeNew) {
 			if ($code === $getCode->token) {
 				$getCode->state = 1;
-				$getCode->update();
+				$getCode->save();
 				return response()->json(true);
 			} else {
 				return response()->json(-1);
@@ -648,9 +620,9 @@ class OportuyaV2Controller extends Controller
 			$ingresos = "";
 			if ($value->ACTIVIDAD == 'RENTISTA' || $value->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $value->ACTIVIDAD == 'NO CERTIFICADO') {
 				$tiempoLabor = $value->EDAD_INDP;
-				$ingresos = $value->SUELDOIND;
+				$ingresos    = $value->SUELDOIND;
 			} else {
-				$ingresos = $value->SUELDO;
+				$ingresos    = $value->SUELDO;
 				$tiempoLabor = $value->ANTIG;
 			}
 
@@ -703,7 +675,7 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		// 3.2	Puntaje y 3.4 Calificacion Score
+		// 5	Puntaje y 3.4 Calificacion Score
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
 		$data = ['CEDULA' => $identificationNumber];
@@ -714,9 +686,9 @@ class OportuyaV2Controller extends Controller
 		} else {
 			if ($customerScore <= -8) {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->PERFIL_CREDITICIO =  'TIPO NE';
-				$customerIntention->ID_DEF =  '3.9';
+				$customerIntention->ID_DEF =  '8';
 				$customerIntention->save();
 
 				return ['resp' => "false"];
@@ -724,9 +696,9 @@ class OportuyaV2Controller extends Controller
 
 			if ($customerScore >= 1 && $customerScore <= 275) {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
-				$customerIntention->PERFIL_CREDITICIO =  'TIPO D';
-				$customerIntention->ID_DEF =  '3.2';
+				$customer->save();
+				$customerIntention->PERFIL_CREDITICIO = 'TIPO D';
+				$customerIntention->ID_DEF            = '5';
 				$customerIntention->save();
 
 				return ['resp' => "false"];
@@ -763,9 +735,9 @@ class OportuyaV2Controller extends Controller
 
 		if ($totalValorMora > 100) {
 			$customer->ESTADO = 'NEGADO';
-			$customer->update();
+			$customer->save();
 			$customerIntention->ESTADO_OBLIGACIONES = 0;
-			$customerIntention->ID_DEF =  '3.3';
+			$customerIntention->ID_DEF =  '6';
 			$customerIntention->save();
 			return ['resp' => "false"];
 		} else {
@@ -812,18 +784,18 @@ class OportuyaV2Controller extends Controller
 		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
 		if ($queryEdad == false || empty($queryEdad)) {
 			$customer->ESTADO = 'NEGADO';
-			$customer->update();
+			$customer->save();
 			$customerIntention->EDAD = 0;
-			$customerIntention->ID_DEF =  '4.3';
+			$customerIntention->ID_DEF =  '9';
 			$customerIntention->save();
 			return ['resp' => "false"];
 		}
 
 		if ($queryEdad == 'Mas 75') {
 			$customer->ESTADO = 'NEGADO';
-			$customer->update();
+			$customer->save();
 			$customerIntention->EDAD = 0;
-			$customerIntention->ID_DEF =  '4.3';
+			$customerIntention->ID_DEF =  '9';
 			$customerIntention->save();
 			return ['resp' => "false"];
 		}
@@ -840,9 +812,9 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->save();
 			} else {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -854,9 +826,9 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->save();
 			} else {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -868,9 +840,9 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->save();
 			} else {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '4.3';
+				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -887,9 +859,9 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->save();
 				} else {
 					$customer->ESTADO = 'NEGADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->ID_DEF =  '4.5';
+					$customerIntention->ID_DEF =  '10';
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
@@ -899,9 +871,9 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->save();
 				} else {
 					$customer->ESTADO = 'NEGADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->ID_DEF =  '4.5';
+					$customerIntention->ID_DEF =  '10';
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
@@ -956,10 +928,10 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
-		if ($aprobado == false && $historialCrediticio == 0) {
+		if ($aprobado == false && $historialCrediticio == 0 && $perfilCrediticio == 'TIPO A') {
 			$tarjeta = "Crédito Tradicional";
 			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->ID_DEF =  'A-2';
+			$customerIntention->ID_DEF =  '15';
 			$customerIntention->save();
 			return ['resp' => "-2"];
 		}
@@ -973,9 +945,9 @@ class OportuyaV2Controller extends Controller
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
 					$customer->ESTADO = 'NEGADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
-					$customerIntention->ID_DEF =  '2.1';
+					$customerIntention->ID_DEF =  '3';
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
@@ -990,9 +962,9 @@ class OportuyaV2Controller extends Controller
 			if (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO = 'NEGADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
-					$customerIntention->ID_DEF =  '3.1';
+					$customerIntention->ID_DEF =  '4';
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
@@ -1007,27 +979,27 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO A') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  'A-1';
+				$customerIntention->ID_DEF =  '14';
 				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
 			if ($customer->ACTIVIDAD == 'EMPLEADO') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  'A-2';
+				$customerIntention->ID_DEF =  '15';
 				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
 
 			if ($customer->ACTIVIDAD == 'PENSIONADO') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  'A-3';
+				$customerIntention->ID_DEF =  '16';
 				$customerIntention->save();
 				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 			}
@@ -1035,16 +1007,16 @@ class OportuyaV2Controller extends Controller
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($historialCrediticio == 1) {
 					$customer->ESTADO = 'PREAPROBADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  'A-4';
+					$customerIntention->ID_DEF =  '17';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				} else {
 					$customer->ESTADO = 'PREAPROBADO';
-					$customer->update();
+					$customer->save();
 					$customerIntention->TARJETA = 'Crédito Tradicional';
-					$customerIntention->ID_DEF =  'A-5';
+					$customerIntention->ID_DEF =  '18';
 					$customerIntention->save();
 					return ['resp' => "-2"];
 				}
@@ -1054,16 +1026,16 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO B') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'B-1';
+				$customerIntention->ID_DEF =  '19';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'B-2';
+				$customerIntention->ID_DEF =  '20';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
@@ -1072,16 +1044,16 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO C') {
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'C-1';
+				$customerIntention->ID_DEF =  '21';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'C-2';
+				$customerIntention->ID_DEF =  '22';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
@@ -1090,16 +1062,16 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO D') {
 			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'D-1';
+				$customerIntention->ID_DEF =  '23';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'NEGADO';
-				$customer->update();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  'D-2';
+				$customer->save();
+				$customerIntention->TARJETA = '';
+				$customerIntention->ID_DEF =  '24';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -1108,24 +1080,24 @@ class OportuyaV2Controller extends Controller
 		if ($perfilCrediticio == 'TIPO 5') {
 			if ($tipo5Especial == 1) {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '5-2';
+				$customerIntention->ID_DEF =  '12';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '5-1';
+				$customerIntention->ID_DEF =  '11';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
-				$customer->update();
+				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '5-3';
+				$customerIntention->ID_DEF =  '13';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
@@ -1141,6 +1113,7 @@ class OportuyaV2Controller extends Controller
 		$this->intentionInterface->createIntention($data);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->ESTADO = 'NEGADO';
+		$customer->save();
 		return "true";
 	}
 
@@ -1359,7 +1332,7 @@ class OportuyaV2Controller extends Controller
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->update();
+			$customer->save();
 		} else {
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -1453,9 +1426,9 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
-		$addAnalisis = $this->addAnalisis($numSolic, $identificationNumber);
-		$infoLead = [];
-		$infoLead = $this->getInfoLeadCreate($identificationNumber);
+		$addAnalisis        = $this->addAnalisis($numSolic, $identificationNumber);
+		$infoLead           = [];
+		$infoLead           = $this->getInfoLeadCreate($identificationNumber);
 		$infoLead->numSolic = $numSolic->SOLICITUD;
 		if ($estadoSolic == "APROBADO") {
 			$estadoResult = "APROBADO";
@@ -1467,7 +1440,7 @@ class OportuyaV2Controller extends Controller
 		$dataLead = [
 			'ESTADO' => $estadoResult,
 		];
-		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->update($dataLead);
+		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', ' = ', $identificationNumber)->update($dataLead);
 		$infoLead = [];
 		$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		$infoLead->numSolic = $numSolic->SOLICITUD;
@@ -1495,19 +1468,19 @@ class OportuyaV2Controller extends Controller
 		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
 		$sucursal = $sucursal[0]->CODIGO;
 
-		$solic_fab = new FactoryRequest;
-		$solic_fab->AVANCE_W = $quotaApprovedAdvance;
-		$solic_fab->PRODUC_W = $quotaApprovedProduct;
-		$solic_fab->CLIENTE = $identificationNumber;
-		$solic_fab->CODASESOR = $assessorCode;
-		$solic_fab->id_asesor = $assessorCode;
-		$solic_fab->ID_EMPRESA = $IdEmpresa[0]->ID_EMPRESA;
-		$solic_fab->FECHASOL = date("Y-m-d H:i:s");
-		$solic_fab->SUCURSAL = $sucursal;
-		$solic_fab->ESTADO = $estado;
-		$solic_fab->FTP = 0;
-		$solic_fab->STATE = $estado;
-		$solic_fab->GRAN_TOTAL = 0;
+		$solic_fab                = new FactoryRequest;
+		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
+		$solic_fab->PRODUC_W      = $quotaApprovedProduct;
+		$solic_fab->CLIENTE       = $identificationNumber;
+		$solic_fab->CODASESOR     = $assessorCode;
+		$solic_fab->id_asesor     = $assessorCode;
+		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
+		$solic_fab->FECHASOL      = date("Y-m-d H:i:s");
+		$solic_fab->SUCURSAL      = $sucursal;
+		$solic_fab->ESTADO        = $estado;
+		$solic_fab->FTP           = 0;
+		$solic_fab->STATE         = $estado;
+		$solic_fab->GRAN_TOTAL    = 0;
 		$solic_fab->SOLICITUD_WEB = 1;
 		$solic_fab->save();
 		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($identificationNumber);
@@ -1517,10 +1490,10 @@ class OportuyaV2Controller extends Controller
 
 	private function addDatosCliente($data = [])
 	{
-		$datosCliente = new DatosCliente;
+		$datosCliente             = new DatosCliente;
 
-		$datosCliente->CEDULA = $data['identificationNumber'];
-		$datosCliente->SOLICITUD = $data['numSolic']->SOLICITUD;
+		$datosCliente->CEDULA     = $data['identificationNumber'];
+		$datosCliente->SOLICITUD  = $data['numSolic']->SOLICITUD;
 		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
 		$datosCliente->DIR_REFPER = 'NA';
 		$datosCliente->BAR_REFPER = 'NA';
@@ -1554,24 +1527,24 @@ class OportuyaV2Controller extends Controller
 		$datosCliente->EPS_CONYUG = 'NA';
 		$datosCliente->TEL_CONYUG = 'NA';
 		$datosCliente->ING_CONYUG = 0;
-		$datosCliente->CON_CLI1 = " ";
-		$datosCliente->CON_CLI2 = " ";
-		$datosCliente->CON_CLI3 = " ";
-		$datosCliente->CON_CLI4 = " ";
+		$datosCliente->CON_CLI1   = " ";
+		$datosCliente->CON_CLI2   = " ";
+		$datosCliente->CON_CLI3   = " ";
+		$datosCliente->CON_CLI4   = " ";
 		$datosCliente->EDIT_RFCLI = " ";
 		$datosCliente->EDIT_RFCL2 = " ";
 		$datosCliente->EDIT_RFCL3 = " ";
-		$datosCliente->INFORMA1 = 'NA';
+		$datosCliente->INFORMA1   = 'NA';
 		$datosCliente->CARGO_INF1 = 'NA';
-		$datosCliente->FEC_COM1 = 'NA';
-		$datosCliente->FEC_COM2 = 'NA';
-		$datosCliente->ART_COM1 = 'NA';
-		$datosCliente->ART_COM2 = 'NA';
-		$datosCliente->CUOT_COM1 = 'NA';
-		$datosCliente->CUOT_COM2 = "Al Dia";
-		$datosCliente->HABITO1 = "Al Dia";
-		$datosCliente->HABITO2 = "Al Dia";
-		$datosCliente->STATE = "A";
+		$datosCliente->FEC_COM1   = 'NA';
+		$datosCliente->FEC_COM2   = 'NA';
+		$datosCliente->ART_COM1   = 'NA';
+		$datosCliente->ART_COM2   = 'NA';
+		$datosCliente->CUOT_COM1  = 'NA';
+		$datosCliente->CUOT_COM2  = "Al Dia";
+		$datosCliente->HABITO1    = "Al Dia";
+		$datosCliente->HABITO2    = "Al Dia";
+		$datosCliente->STATE      = "A";
 		$createData = $datosCliente->save();
 
 		return "true";
@@ -1582,71 +1555,71 @@ class OportuyaV2Controller extends Controller
 		$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
 		$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
 
-		$analisis = new Analisis;
-		$analisis->solicitud = $numSolic->SOLICITUD;
-		$analisis->ini_analis = date("Y-m-d H:i:s");
-		$analisis->fec_datacli = "1900-01-01 00:00:00";
-		$analisis->fec_datacod1 = "1900-01-01 00:00:00";
-		$analisis->fec_datacod2 = "1900-01-01 00:00:00";
-		$analisis->ini_ref = "1900-01-01 00:00:00";
-		$analisis->valor = "0";
-		$analisis->rf_fpago = "1900-01-01 00:00:00";
-		$analisis->fin_analis = "1900-01-01 00:00:00";
-		$analisis->fin_analis = "1900-01-01 00:00:00";
-		$analisis->Fin_ref = "1900-01-01 00:00:00";
-		$analisis->autoriz = "0";
-		$analisis->fact_aur = "0";
-		$analisis->ini_def = "1900-01-01 00:00:00";
-		$analisis->fin_def = "1900-01-01 00:00:00";
-		$analisis->fec_aur = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli1 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli3 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli3 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod1 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod12 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod13 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod2 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod21 = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod22 = "1900-01-01 00:00:00";
-		$analisis->aurcu_cli1 = "0";
-		$analisis->aurcu_cli2 = "0";
-		$analisis->aurcu_cli3 = "0";
-		$analisis->aurcu_cod1 = "0";
-		$analisis->aurcu_cod12 = "0";
-		$analisis->aurcu_cod13 = "0";
-		$analisis->aurcu_cod2 = "0";
-		$analisis->scor_cli = "0";
-		$analisis->scor_cod1 = "0";
-		$analisis->scor_cod2 = "0";
-		$analisis->data_cli = "0";
-		$analisis->data_cod1 = "0";
-		$analisis->data_cod2 = "0";
-		$analisis->rec_cod1 = "0";
-		$analisis->rec_cod2 = "0";
-		$analisis->io_cod1 = "0";
-		$analisis->io_cod2 = "0";
-		$analisis->aurcu_cod21 = "0";
-		$analisis->aurcu_cod22 = "0";
-		$analisis->vcu_cli1 = "0";
-		$analisis->vcu_cli2 = "0";
-		$analisis->vcu_cli3 = "0";
-		$analisis->vcu_cod1 = "0";
-		$analisis->vcu_cod12 = "0";
-		$analisis->vcu_cod13 = "0";
-		$analisis->vcu_cod2 = "0";
-		$analisis->vcu_cod21 = "0";
-		$analisis->vcu_cod22 = "0";
-		$analisis->aurcre_cli1 = "0";
-		$analisis->aurcre_cli2 = "0";
-		$analisis->aurcre_cli3 = "0";
-		$analisis->aurcre_cod1 = "0";
+		$analisis               = new Analisis;
+		$analisis->solicitud    = $numSolic->SOLICITUD;
+		$analisis->ini_analis   = date("Y-m-d H:i:s");
+		$analisis->fec_datacli  = "1900-01-01 00: 00: 00";
+		$analisis->fec_datacod1 = "1900-01-01 00: 00: 00";
+		$analisis->fec_datacod2 = "1900-01-01 00: 00: 00";
+		$analisis->ini_ref      = "1900-01-01 00: 00: 00";
+		$analisis->valor        = "0";
+		$analisis->rf_fpago     = "1900-01-01 00: 00: 00";
+		$analisis->fin_analis   = "1900-01-01 00: 00: 00";
+		$analisis->fin_analis   = "1900-01-01 00: 00: 00";
+		$analisis->Fin_ref      = "1900-01-01 00: 00: 00";
+		$analisis->autoriz      = "0";
+		$analisis->fact_aur     = "0";
+		$analisis->ini_def      = "1900-01-01 00: 00: 00";
+		$analisis->fin_def      = "1900-01-01 00: 00: 00";
+		$analisis->fec_aur      = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cli1   = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cli3   = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cli3   = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod1   = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod12  = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod13  = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod2   = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod21  = "1900-01-01 00: 00: 00";
+		$analisis->aurfe_cod22  = "1900-01-01 00: 00: 00";
+		$analisis->aurcu_cli1   = "0";
+		$analisis->aurcu_cli2   = "0";
+		$analisis->aurcu_cli3   = "0";
+		$analisis->aurcu_cod1   = "0";
+		$analisis->aurcu_cod12  = "0";
+		$analisis->aurcu_cod13  = "0";
+		$analisis->aurcu_cod2   = "0";
+		$analisis->scor_cli     = "0";
+		$analisis->scor_cod1    = "0";
+		$analisis->scor_cod2    = "0";
+		$analisis->data_cli     = "0";
+		$analisis->data_cod1    = "0";
+		$analisis->data_cod2    = "0";
+		$analisis->rec_cod1     = "0";
+		$analisis->rec_cod2     = "0";
+		$analisis->io_cod1      = "0";
+		$analisis->io_cod2      = "0";
+		$analisis->aurcu_cod21  = "0";
+		$analisis->aurcu_cod22  = "0";
+		$analisis->vcu_cli1     = "0";
+		$analisis->vcu_cli2     = "0";
+		$analisis->vcu_cli3     = "0";
+		$analisis->vcu_cod1     = "0";
+		$analisis->vcu_cod12    = "0";
+		$analisis->vcu_cod13    = "0";
+		$analisis->vcu_cod2     = "0";
+		$analisis->vcu_cod21    = "0";
+		$analisis->vcu_cod22    = "0";
+		$analisis->aurcre_cli1  = "0";
+		$analisis->aurcre_cli2  = "0";
+		$analisis->aurcre_cli3  = "0";
+		$analisis->aurcre_cod1  = "0";
 		$analisis->aurcre_cod12 = "0";
 		$analisis->aurcre_cod13 = "0";
-		$analisis->aurcre_cod2 = "0";
+		$analisis->aurcre_cod2  = "0";
 		$analisis->aurcre_cod21 = "0";
 		$analisis->aurcre_cod22 = "0";
 		if (count($respQueryTemp) > 0) {
-			$analisis->paz_cli = $respQueryTemp[0]->paz_cli;
+			$analisis->paz_cli     = $respQueryTemp[0]->paz_cli;
 			$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;
 		}
 		$analisis->save();
@@ -1658,29 +1631,29 @@ class OportuyaV2Controller extends Controller
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 		$scoreLead = $respScoreLead[0]->score;
 
-		$turnosOportuya = new TurnosOportuya;
+		$turnosOportuya            = new TurnosOportuya;
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
-		$turnosOportuya->CEDULA = $identificationNumber;
-		$turnosOportuya->FECHA = date("Y-m-d H:i:s");
-		$turnosOportuya->SUC = 9999;
-		$turnosOportuya->USUARIO = '';
+		$turnosOportuya->CEDULA    = $identificationNumber;
+		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
+		$turnosOportuya->SUC       = 9999;
+		$turnosOportuya->USUARIO   = '';
 		$turnosOportuya->PRIORIDAD = '2';
-		$turnosOportuya->ESTADO = 'ANALISIS';
-		$turnosOportuya->TIPO = 'OPORTUYA';
-		$turnosOportuya->SUB_TIPO = 'WEB';
-		$turnosOportuya->FEC_RET = '1994-09-30 00:00:00';
-		$turnosOportuya->FEC_FIN = '1994-09-30 00:00:00';
-		$turnosOportuya->VALOR = '0';
-		$turnosOportuya->FEC_ASIG = '1994-09-30 00:00:00';
-		$turnosOportuya->SCORE = $scoreLead;
-		$turnosOportuya->TIPO_CLI = '';
-		$turnosOportuya->CED_COD1 = '';
-		$turnosOportuya->SCO_COD1 = '0';
+		$turnosOportuya->ESTADO    = 'ANALISIS';
+		$turnosOportuya->TIPO      = 'OPORTUYA';
+		$turnosOportuya->SUB_TIPO  = 'WEB';
+		$turnosOportuya->FEC_RET   = '1994-09-30 00: 00: 00';
+		$turnosOportuya->FEC_FIN   = '1994-09-30 00: 00: 00';
+		$turnosOportuya->VALOR     = '0';
+		$turnosOportuya->FEC_ASIG  = '1994-09-30 00: 00: 00';
+		$turnosOportuya->SCORE     = $scoreLead;
+		$turnosOportuya->TIPO_CLI  = '';
+		$turnosOportuya->CED_COD1  = '';
+		$turnosOportuya->SCO_COD1  = '0';
 		$turnosOportuya->TIPO_COD1 = '';
-		$turnosOportuya->CED_COD2 = '';
-		$turnosOportuya->SCO_COD2 = '0';
+		$turnosOportuya->CED_COD2  = '';
+		$turnosOportuya->SCO_COD2  = '0';
 		$turnosOportuya->TIPO_COD2 = '';
-		$turnosOportuya->STATE = 'A';
+		$turnosOportuya->STATE     = 'A';
 		$turnosOportuya->save();
 
 		return "true";
@@ -1694,52 +1667,52 @@ class OportuyaV2Controller extends Controller
 		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
 			$tipoTarjeta = 'Gray';
 		}
-		$tarjeta = new CreditCard;
-		$tarjeta->NUMERO = "8712769999999";
-		$tarjeta->SOLICITUD = $numSolic;
-		$tarjeta->CLIENTE = $identificationNumber;
+		$tarjeta             = new CreditCard;
+		$tarjeta->NUMERO     = "8712769999999";
+		$tarjeta->SOLICITUD  = $numSolic;
+		$tarjeta->CLIENTE    = $identificationNumber;
 		$tarjeta->APROBACION = "0";
-		$tarjeta->DESPACHO = "0000-00-00";
-		$tarjeta->LOTE = "0";
-		$tarjeta->FEC_APROB = "0000-00-00";
-		$tarjeta->CUOTA_MAN = "9900";
-		$tarjeta->CARGO = "9300";
+		$tarjeta->DESPACHO   = "0000-00-00";
+		$tarjeta->LOTE       = "0";
+		$tarjeta->FEC_APROB  = "0000-00-00";
+		$tarjeta->CUOTA_MAN  = "9900";
+		$tarjeta->CARGO      = "9300";
 		$tarjeta->CUP_INICIA = $cupoCompra;
 		$tarjeta->CUP_COMPRA = $cupoCompra;
 		$tarjeta->COMPRA_ACT = $cupoCompra;
 		$tarjeta->COMPRA_EFE = "0";
-		$tarjeta->CUPO_EFEC = $cupoAvance;
+		$tarjeta->CUPO_EFEC  = $cupoAvance;
 		$tarjeta->CUP_ACTUAL = $cupoAvance;
-		$tarjeta->CUPOMAX = 480000;
-		$tarjeta->SUC = $sucursal;
-		$tarjeta->ESTADO = "I";
-		$tarjeta->FEC_ACTIV = "0000-00-00";
-		$tarjeta->CONS = "0";
-		$tarjeta->OPORTUNID = "0";
-		$tarjeta->EXTRACUPO = "0";
-		$tarjeta->EXTRA_ACT = "0";
-		$tarjeta->RECEPC1 = "";
-		$tarjeta->RECEPC2 = "";
-		$tarjeta->RECEPC3 = "";
-		$tarjeta->FEC_REC = "0000-00-00";
-		$tarjeta->OBSTAR1 = "";
-		$tarjeta->OBSTAR2 = "";
-		$tarjeta->OBSTAR3 = "";
-		$tarjeta->TIPO_TAR = $tipoTarjeta;
-		$tarjeta->RESPUEST = "";
-		$tarjeta->RECEPCOFI = "";
-		$tarjeta->OBSTAROFI = "";
+		$tarjeta->CUPOMAX    = 480000;
+		$tarjeta->SUC        = $sucursal;
+		$tarjeta->ESTADO     = "I";
+		$tarjeta->FEC_ACTIV  = "0000-00-00";
+		$tarjeta->CONS       = "0";
+		$tarjeta->OPORTUNID  = "0";
+		$tarjeta->EXTRACUPO  = "0";
+		$tarjeta->EXTRA_ACT  = "0";
+		$tarjeta->RECEPC1    = "";
+		$tarjeta->RECEPC2    = "";
+		$tarjeta->RECEPC3    = "";
+		$tarjeta->FEC_REC    = "0000-00-00";
+		$tarjeta->OBSTAR1    = "";
+		$tarjeta->OBSTAR2    = "";
+		$tarjeta->OBSTAR3    = "";
+		$tarjeta->TIPO_TAR   = $tipoTarjeta;
+		$tarjeta->RESPUEST   = "";
+		$tarjeta->RECEPCOFI  = "";
+		$tarjeta->OBSTAROFI  = "";
 		$tarjeta->FEC_RECOFI = "0000-00-00";
-		$tarjeta->RECEPCSUC = "";
-		$tarjeta->OBSTARSUC = "";
+		$tarjeta->RECEPCSUC  = "";
+		$tarjeta->OBSTARSUC  = "";
 		$tarjeta->FEC_RECSUC = "0000-00-00";
-		$tarjeta->RECEPCCLI = "";
-		$tarjeta->OBSTARCLI = "";
+		$tarjeta->RECEPCCLI  = "";
+		$tarjeta->OBSTARCLI  = "";
 		$tarjeta->FEC_RECCLI = "0000-00-00";
-		$tarjeta->FTP = 0;
-		$tarjeta->TOKEN_CE = "";
+		$tarjeta->FTP        = 0;
+		$tarjeta->TOKEN_CE   = "";
 		$tarjeta->CELULAR_CE = "";
-		$tarjeta->STATE = "A";
+		$tarjeta->STATE      = "A";
 
 		$tarjeta->save();
 

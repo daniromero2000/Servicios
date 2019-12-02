@@ -9,9 +9,13 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Customer extends Model
 {
+
+    use SearchableTrait;
+
     protected $table = 'CLIENTE_FAB';
 
     protected $connection = 'oportudata';
@@ -129,26 +133,17 @@ class Customer extends Model
         'CON2',
         'TEL2_EMP',
         'termsAndConditions',
-        'TIPO_DOC',
         'NIT_EMP',
         'PROFESION',
-        'TIPOCLIENTE',
         'SUBTIPO',
         'SEXO',
-        'FEC_EXP',
         'CIUD_EXP',
         'TARJETA_OP',
         'DEPTO',
-        'TIPOV',
         'TIEMPO_VIV',
-        'PROPIETARIO',
-        'DIRECCION',
         'VRARRIENDO',
-        'TELFIJO',
         'ESTRATO',
-        'FEC_NAC',
         'EDAD',
-        'ESTADOCIVIL',
         'NOMBRE_CONYU',
         'CEDULA_C',
         'CELULAR_CONYU',
@@ -161,9 +156,7 @@ class Customer extends Model
         'POSEEVEH',
         'PLACA',
         'STATE',
-        'SUC',
         'CREACION',
-        'ACTIVIDAD',
         'PERSONAS',
         'TEL_PROP',
         'VARRIENDO',
@@ -185,8 +178,6 @@ class Customer extends Model
         'NOTA2',
         'CON3',
         'ORIGEN',
-        'ESTADO',
-        'PASO',
         'RAZON_SOC',
         'FEC_ING',
         'ANTIG',
@@ -194,14 +185,10 @@ class Customer extends Model
         'DIR_EMP',
         'TEL_EMP',
         'TIPO_CONT',
-        'SUELDO',
         'NIT_IND',
         'RAZON_IND',
-        'ACT_IND',
         'EDAD_INDP',
         'FEC_CONST',
-        'OTROS_ING',
-        'SUELDOIND',
         'VCON_NOM1',
         'VCON_CED1',
         'VCON_TEL1',
@@ -225,6 +212,21 @@ class Customer extends Model
         'USUARIO_CREACION',
         'FECHA_ACTUALIZACION'
     ];
+
+
+    protected $searchable = [
+        'columns' => [
+            'CLIENTE_FAB.CEDULA'   => 10,
+            'CLIENTE_FAB.NOMBRES'   => 10,
+            'CLIENTE_FAB.APELLIDOS'   => 10,
+        ],
+    ];
+
+    public function searchCustomers($term)
+    {
+        return self::search($term);
+    }
+
 
     public function latestCifinScore()
     {

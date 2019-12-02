@@ -62,6 +62,7 @@
         </div>
     </div>
     @endif
+    
     <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-controller="simulatePolicySingleCtrl" ng-class="{ 'show active': tabs == 2 }">
         <div class="row mt-5">
@@ -149,15 +150,12 @@
                                             <label for="">Ingresos: </label><span>$
                                                 @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
                                         </p>
-                                        <p
-                                            ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
-                                            <label for="">Ingresos:
-                                            </label><span>$@{{ infoLead.SUELDO + infoLead.OTROS_ING | number:0 }}</span>
-                                        </p>
+                                       
                                     </div>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
                                     <div class="col-sm-12 col-md-8">
+                                        
                                         <p >
                                             <label for="">Sucursal: </label>@{{ infoLead.SUC }}
                                         </p>

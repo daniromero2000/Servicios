@@ -1,12 +1,14 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
+	$scope.lead = {};
+	$scope.code = {};
+	$scope.formConfronta = {};
+	$scope.citiesUbi = {};
+	$scope.cities = {};
+	$scope.banks = {};
 	$scope.tipoCliente = "";
 	$scope.estadoCliente = "";
 	$scope.messageValidationLead = "";
-	$scope.lead = {};
-	$scope.infoLead = {};
-	$scope.code = {};
-	$scope.formConfronta = {};
 	$scope.showWarningErrorData = false;
 	$scope.totalErrorData = 0;
 	$scope.validateNum = 0;
@@ -99,47 +101,44 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 	];
   
-  $scope.genders = [
-		{ label : 'Masculino',value: 'M' },
-		{ label : 'Femenino',value: 'F' }
-  ];
+	$scope.genders = [
+			{ label : 'Masculino',value: 'M' },
+			{ label : 'Femenino',value: 'F' }
+	];
   
 	$scope.civilTypes = [
-	{
-		label: 'Soltero',
-		value: 'SOLTERO'
-	},
-	{
-		label: 'Casado',
-		value: 'CASADO'
-	},
-	{
-		label: 'Unión Libre',
-		value: 'UNION LIBRE'
-	},
-	{
-		label: 'Viudo',
-		value: 'VIUDO'
-	},
+		{
+			label: 'Soltero',
+			value: 'SOLTERO'
+		},
+		{
+			label: 'Casado',
+			value: 'CASADO'
+		},
+		{
+			label: 'Unión Libre',
+			value: 'UNION LIBRE'
+		},
+		{
+			label: 'Viudo',
+			value: 'VIUDO'
+		},
 	];
 
 	$scope.typesContracts = [
-	{
-		value: 'FIJO',
-		label: 'Fijo'
-	},
-	{
-		value: 'INDEFINIDO',
-		label: 'Indefinido'
-	},
-	{
-		value: 'SERVICIOS',
-		label: 'Servicios'
-	}
+		{
+			value: 'FIJO',
+			label: 'Fijo'
+		},
+		{
+			value: 'INDEFINIDO',
+			label: 'Indefinido'
+		},
+		{
+			value: 'SERVICIOS',
+			label: 'Servicios'
+		}
 	];
-	$scope.citiesUbi = {};
-	$scope.cities = {};
-	$scope.banks = {};
 
 	$scope.getInfoVentaContado = function(){
 		showLoader();
@@ -200,7 +199,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
-			if(response.data == 'false'){
+			if(response.data == false){
 				var cedula = angular.extend({}, $scope.lead);
 				$scope.resetInfo();
 				$scope.lead.CEDULA = cedula.CEDULA;
@@ -330,7 +329,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
-					$scope.deniedLeadForFecExp('1.1');
+					$scope.deniedLeadForFecExp('1');
 				}
 			}
 
@@ -438,4 +437,25 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.getInfoVentaContado();
 	$scope.resetInfo();
-});
+})
+
+.controller("realizarAnalisisCtrl", function($scope, $http, $timeout) {
+	$scope.infoLead = {};
+	$scope.lead = {};
+	$scope.showResp = false;
+
+	$scope.getInfoLead = function(){
+		$http({
+			method: 'GET',
+			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
+		  }).then(function successCallback(response) {
+			  console.log(response);
+			$scope.infoLead = response.data;
+			$scope.showResp = true;
+			hideLoader();
+		  }, function errorCallback(response) {
+			  hideLoader();
+			  console.log(response);
+		  });
+	};
+})

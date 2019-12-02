@@ -2,15 +2,23 @@
 
 namespace App\Entities\Intentions;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\Definitions\Definition;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Intention extends Model
 {
+    use SearchableTrait, SoftDeletes;
+
     protected $table = 'TB_INTENCIONES';
 
     protected $connection = 'oportudata';
 
     protected $primaryKey =  'id';
+
+    public $timestamps = false;
 
     protected $fillable = [
         'CEDULA',
@@ -27,5 +35,24 @@ class Intention extends Model
         'ESTADO_OBLIGACIONES'
     ];
 
-    public $timestamps = false;
+    protected $searchable = [
+        'columns' => [
+            'TB_INTENCIONES.CEDULA'   => 1,
+        ],
+    ];
+
+    public function searchIntentions($term)
+    {
+        return self::search($term);
+    }
+
+    public function definition()
+    {
+        return $this->belongsTo(Definition::class, 'ID_DEF');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'CEDULA');
+    }
 }

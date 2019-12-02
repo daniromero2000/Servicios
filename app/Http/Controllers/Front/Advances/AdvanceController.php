@@ -13,15 +13,17 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use Illuminate\Support\Facades\DB;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\Definitions\Definition;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -35,7 +37,9 @@ class AdvanceController extends Controller
         UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
-        UbicaRepositoryInterface $ubicaRepositoryInterface
+        UbicaRepositoryInterface $ubicaRepositoryInterface,
+        WebServiceRepositoryInterface $webServiceRepositoryInterface
+
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -49,6 +53,7 @@ class AdvanceController extends Controller
         $this->extintreal = $extintRealCifinRepositoryInterface;
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
         $this->ubica = $ubicaRepositoryInterface;
+        $this->webServiceInterface = $webServiceRepositoryInterface;
     }
 
     public function index()

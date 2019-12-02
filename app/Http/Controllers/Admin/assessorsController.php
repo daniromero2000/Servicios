@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\cliCel;
 use App\Entities\Customers\Customer;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,14 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class assessorsController extends Controller
 {
+    private $customerInterface;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        CustomerRepositoryInterface $customerRepositoryInterface
+    )
     {
         $this->middleware('auth');
+        $this->customerInterface = $customerRepositoryInterface;
     }
     /**
      * Show the application dashboard.
@@ -280,5 +285,11 @@ class assessorsController extends Controller
         $fechaActual = date("Y-m-d");
         $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
         return $dateDiff;
+    }
+
+    public function getInfoLead($identificationNumber){
+        $customer = $this->customerInterface->findCustomerById($identificationNumber);
+        $definition = $customer->latestIntention->definition;
+        return $customer;
     }
 }
