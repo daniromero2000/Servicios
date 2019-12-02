@@ -96,7 +96,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     {
         try {
             return  $this->model->select('PASO', DB::raw('count(*) as total'))
-                ->withCount('customerFosygas')
                 ->whereBetween('CREACION', [$from, $to])
                 ->where('PASO', '!=', '')
                 ->groupBy('PASO')
