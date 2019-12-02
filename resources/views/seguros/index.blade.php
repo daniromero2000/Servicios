@@ -11,10 +11,10 @@
 	<meta property="og:image" content="" />
 	<meta property="og:description" content=""> --}}
 @endsection()
-
-@section('content')
+@section('linkStyleSheets')
+	
 <style>
-.content{
+#content-landing{
 	background-color: #0FAAE0;
 	height: 100%;
 	margin: auto;
@@ -23,11 +23,11 @@
 .content-1{
 	background-color:#103A9E;
 	width: 90%;
-	height: 302px;
+	height: 100%;
 	margin-top: 3%;
 	margin-left: 5%;
 	margin-right: 5%;
-	border-radius: 50px 50px 0px 0px;
+	border-radius: 55px 55px 0px 0px;
 }
 .img1{
 	max-width: 100%;
@@ -36,7 +36,7 @@
 .content-text1{
 	text-align: center;
 	color: white;
-	font-size: 40px;
+	font-size: 320%;
 	font-weight: bold;
 }
 .text-soat{
@@ -44,7 +44,7 @@
 }
 .content-2{
 	width: 90%;
-	height: 330px;
+	height: 100%;
 	margin-top: 1%;
 	margin-left: 5%;
 	margin-right: 5%;
@@ -56,14 +56,9 @@
 	border-radius: 0px 0px 30px 30px;
 	text-align: center;
 }
-.imgproduct1{
+.imgproduct{
 	width: 100%;
-}
-.imgproduct2{
-	width: 100%;
-}
-.imgproduct3{
-	width: 100%;
+	height: 280px;
 }
 .text-product1{
 	font-size: 20px;
@@ -72,6 +67,8 @@
 	font-size: 20px;
 	color: white;
 	text-align: center;
+	padding: 8%;
+	font-weight: bold;
 }
 .content-imgHeader{
 	background-color: white;
@@ -85,60 +82,120 @@
 	font-weight: bold;
 }
 .btn-product{
-	background-color:#E13236;
+	background-color: #E13236;
 	color: white;
-	font-size: 15px;
+	font-size: 100%;
 	font-weight: bold;
-	padding: 5px 15px;
+	padding: 2% 4%;
 	border-radius: 10px;
 }
 a:hover{
 	text-decoration: none;
 	color: white;
 }
+.pd-img{
+	padding: 0%;
+}
+.content-btn{
+	margin-top: 3%;
+}
+.content-textProduct{
+	margin-top: -13%;
+    padding: 1%;	
+}
+.resetCol1{
+	padding: 0px 10px 0px 0px;
+}
+.resetCol2{
+	padding: 0px 10px 0px 0px;
+}
+.resetCol3{
+	padding:0px;
+}
+.content-wpp{
+	margin: 0% 0% 0% 70%;
+}
+.img-wpp{
+	width: 20%;
+	padding-bottom: 2%;
+}
+@media (max-width: 840px) {
+.content-wpp{
+	margin: 0% 0% 0% 23%;
+}
+.img-wpp{
+	width: 50%;
+	padding-bottom: 2%;
+}
+}
 </style>
-<div id="container">
-	<div class="row content">
+@endsection
+@section('content')
+<div id="content-landing">
+	<div id="header-seguros">
 		<div class="row content-imgHeader" >
 			<div class="col-12 col-sm-12 content-img d-flex align-items-center justify-content-center">
 				<span class="text-header">¡Lleva tu SOAT a crédito!</span>
 			</div>
 		</div>
 		<div class="row content-1">
-			<div class="col-12 col-sm-6 d-flex align-items-center justify-content-center content-text1">
+			<div class="col-12 col-md-6 d-flex align-items-center justify-content-center content-text1">
 				<span class="">¡Adquiere el <span class="text-soat">SOAT</span><br>para tu vehículo <br> a CRÉDITO!</span>
 			</div>
-			<div class="col-12 col-sm-6">
-				<img src="{{ asset('images/seguros/img1.png')}}" class="img1">
+			<div class="col-12 col-md-6 pd-img">
+				<div>
+					<img src="{{ asset('images/seguros/img1.png')}}" class="img1">
+				</div>
 			</div>
 		</div>
+	</div>
+	<div id="imagenes">
 		<div class="row content-2">
-			<div class="col-12 col-md-4 col-sm-4 resetCol">
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
-					<img src="{{ asset('images/seguros/img2.png')}}" class="imgproduct1">
 					<div>
-						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+						<img src="{{ asset('images/seguros/img2.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
 					</div>
-					<h1 class="text-products">Automóviles</h1>
+					<div class="content-btn">
+						<h1 class="text-products">Automóviles</h1>
+					</div>
 				</div>
 			</div>
-			<div class="col-12 col-md-4 col-sm-4 restCol">
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
-					<img src="{{ asset('images/seguros/img3.png')}}" class="imgproduct2">
 					<div>
-						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+						<img src="{{ asset('images/seguros/img3.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
 					</div>
-					<h1 class="text-products">Motos</h1>
+					<div class="content-btn">
+						<h1 class="text-products">Motos</h1>
+					</div>
 				</div>
 			</div>
-			<div class="col-12 col-md-4 col-sm-4 resetCol">
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
-					<img src="{{ asset('images/seguros/img4.png')}}" class="imgproduct3">
 					<div>
-						<a class="btn-product" href="">Quiero mi SOAT a crédito</a>
+						<img src="{{ asset('images/seguros/img4.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
 					</div>
-					<h1 class="text-products">Carga Pesada</h1>
+					<div class="content-btn">
+						<h1 class="text-products">Carga Pesada</h1>
+					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-md-12 content-wpp">
+				<a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
+					target="_blank"><img class="img-wpp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
+				</a>
 			</div>
 		</div>
 	</div>
