@@ -113,6 +113,38 @@
     </div>
   </div>
 
+  <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> {{ $totalFosygas }} Consultas Fosyga</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+        </div>
+      </div>
+      <!-- AREA CHART DEBE IR OCULTA-->
+      <div hidden class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Area Chart</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
   {{--
     <div class="row">
       <div class="col-12">
@@ -694,6 +726,12 @@ var values = [<?php echo '"'.implode('","', $customerStepsValues).'"' ?>];
 var estados = [<?php echo '"'.implode('","', $customerStepsNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $customerStepsValues).'"' ?>];
 
+var estadosFosyga = [];
+  var valuesFosyga = [];
+
+  var estadosFosyga = [<?php echo '"'.implode('","', $customerFosygaNames).'"' ?>];
+  var valuesFosyga = [<?php echo '"'.implode('","', $customerFosygaValues).'"' ?>];
+
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -767,6 +805,33 @@ var values = [<?php echo '"'.implode('","', $customerStepsValues).'"' ?>];
       options: donutOptions
     })
 
+
+//-------------
+  //- DONUT CHART -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+  var donutData2 = {
+  labels: estadosFosyga,
+  datasets: [
+  {
+  data: valuesFosyga,
+  backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
+  '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+  }
+  ]
+  }
+  var donutOptions = {
+  maintainAspectRatio : false,
+  responsive : true,
+  }
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  var donutChart = new Chart(donutChartCanvas, {
+  type: 'doughnut',
+  data: donutData2,
+  options: donutOptions
+  })
 
 
 

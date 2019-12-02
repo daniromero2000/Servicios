@@ -79,8 +79,6 @@ class CustomerController extends Controller
             $customersFosygas[$key]['percentage'] = ($value['total'] / $totalFosygas) * 100;
         }
 
-        dd($customersFosygas);
-
         $customerSteps = $customerSteps->toArray();
         $customerSteps = array_values($customerSteps);
 
@@ -95,12 +93,24 @@ class CustomerController extends Controller
             array_push($customerStepsValues, trim($customerStep['total']));
         }
 
+        $customerFosygaNames  = [];
+        $customerFosygaValues  = [];
+
+        foreach ($customersFosygas as $customersFosyga) {
+            array_push($customerFosygaNames, trim($customersFosyga['fuenteFallo']));
+            array_push($customerFosygaValues, trim($customersFosyga['total']));
+        }
+
 
         return view('customers.dashboard', [
             'customerStepsNames'  => $customerStepsNames,
             'customerStepsValues' => $customerStepsValues,
+            'customerFosygaNames'  => $customerFosygaNames,
+            'customerFosygaValues' => $customerFosygaValues,
             'customerSteps' => $customerSteps,
             'totalStatuses'  => array_sum($customerStepsValues),
+            'totalFosygas' => $totalFosygas,
+
         ]);
     }
 }
