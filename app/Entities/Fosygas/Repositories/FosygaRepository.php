@@ -51,6 +51,19 @@ class FosygaRepository implements FosygaRepositoryInterface
         }
     }
 
+    public function countCustomersfosygasConsultatios($from, $to)
+    {
+        try {
+            return  $this->model->select('fuenteFallo', DB::raw('count(*) as total'))
+                ->whereBetween('fechaConsulta', [$from, $to])
+                ->where('fuenteFallo', '!=', '')
+                ->groupBy('fuenteFallo')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function createConsultaFosyga($infoBdua, $identificationNumber)
     {
         $bdua = new Fosyga();

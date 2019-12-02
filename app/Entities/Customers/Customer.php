@@ -6,6 +6,7 @@ use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\FactoryRequests\FactoryRequest;
+use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
 use Illuminate\Database\Eloquent\Model;
@@ -266,5 +267,10 @@ class Customer extends Model
     public function checkedPhone()
     {
         return $this->hasOne(CustomerCellPhone::class, 'IDENTI')->where('CEL_VAL', 1);
+    }
+
+    public function customerFosygas()
+    {
+        return $this->hasMany(Fosyga::class, 'cedula');
     }
 }
