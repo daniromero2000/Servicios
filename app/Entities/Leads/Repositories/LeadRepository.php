@@ -5,6 +5,7 @@ namespace App\Entities\Leads\Repositories;
 use App\Entities\Leads\Lead;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class LeadRepository implements LeadRepositoryInterface
 {
@@ -47,6 +48,18 @@ class LeadRepository implements LeadRepositoryInterface
             return $this->model->update($params);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
+        }
+    }
+
+    public function countLeadChannels($from, $to)
+    {
+        try {
+            return  $this->model->select('channel', DB::raw('count(*) as total'))
+                ->whereBetween('created_at', [$from, $to])
+                ->groupBy('channel')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
         }
     }
 }

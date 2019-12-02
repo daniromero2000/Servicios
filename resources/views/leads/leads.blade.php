@@ -974,16 +974,22 @@
                                                 id="product" cols="10" class="form-control"
                                                 value="@{{lead.typeProduct}}">
                                         </div>
-                                        <div class="col-3 d-flex align-items-end">
-                                            <div class="form-group w-100">
-                                                <label for="assessor_id">Asesor</label>
-                                                <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
-                                                    style="width: 100%;">
-                                                    <option disabled selected value> -- Selecciona Paso -- </option>
-                                                    <option value="13">Evelyn Correa</option>
-                                                    <option value="18">Vannesa Parra</option>
-                                                </select>
-                                            </div>
+                                    </div>
+
+                                    <div class="col-3 d-flex align-items-end">
+                                        <div class="form-group w-100">
+                                            <label for="state">Estado</label>
+                                            <select class="form-control  select2" id="state" name="state" ng-model="lead.state"
+                                                style="width: 100%;">
+                                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                                <option value="1">Contactado</option>
+                                                <option value="2">Vendido</option>
+                                                <option value="3">Asignado a:</option>
+                                                <option value="4">Impactado</option>
+                                                <option value="5">Desistido</option>
+                                                <option value="6">Negado</option>
+                                                <option value="7">Cotizado</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group text-left">
@@ -1096,6 +1102,17 @@
                                         <label for="product">Producto <span class="text-danger">*</span></label>
                                         <input type="text" ng-model="lead.typeProduct" validation-pattern="text"
                                             id="product" cols="10" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-end">
+                                    <div class="form-group w-100">
+                                        <label for="assessor_id">Asesor</label>
+                                        <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
+                                            style="width: 100%;">
+                                            <option disabled selected value> -- Selecciona Paso -- </option>
+                                            <option value="13">Evelyn Correa</option>
+                                            <option value="18">Vannesa Parra</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group text-left">
