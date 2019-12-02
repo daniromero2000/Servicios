@@ -121,7 +121,7 @@
 					</div>
 					<div class="row">
 						<div class="col-12 col-md-4">
-							<label class="labels" for="antiquity">Antigüedad en vivienda*</label>
+							<label class="labels" for="antiquity">Antigüedad en vivienda <small>(Meses)</small>*</label>
 							<input class="inputs form-control" id="antiquity" validation-pattern="number" type="number" ng-model="lead.TIEMPO_VIV" required />
 						</div>
 						<div class="col-12 col-md-4"  ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">

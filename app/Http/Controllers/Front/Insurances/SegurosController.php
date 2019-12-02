@@ -46,6 +46,11 @@ class SegurosController extends Controller
         $request['SUC']       = $request->get('CIUD_UBI');
         $request['CIUD_UBI']  = $subsidiaryCityName;
         $request['POSEEVEH']  = "S";
+
+        foreach ($request->input() as $key => $value) {
+            $request[$key] = trim(strtoupper($request[$key]));
+        }
+        
         $this->customerInterface->updateOrCreateCustomer($request->input());
 
         if (empty($this->customerCellPhoneInterface->checkIfExists($request->input('CEDULA'), $request->input('CELULAR')))) {
