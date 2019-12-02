@@ -113,7 +113,7 @@ a:hover{
 	padding:0px;
 }
 .content-wpp{
-	margin: 0% 0% 0% 70%;
+	text-align: right;
 }
 .img-wpp{
 	width: 20%;
@@ -191,7 +191,7 @@ a:hover{
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row resetRow">
 			<div class="col-12 col-md-12 content-wpp">
 				<a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
 					target="_blank"><img class="img-wpp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
