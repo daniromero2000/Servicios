@@ -68,6 +68,7 @@ class CustomerController extends Controller
             $customersFosygas = $this->fosygaInterface->countCustomersfosygasConsultatios(request()->input('from'), request()->input('to'));
         }
 
+
         $totalStatuses = $customerSteps->sum('total');
         $totalFosygas = $customersFosygas->sum('total');
 
