@@ -120,9 +120,6 @@ a:hover{
 	padding-bottom: 2%;
 }
 @media (max-width: 840px) {
-.content-wpp{
-	margin: 0% 0% 0% 23%;
-}
 .img-wpp{
 	width: 50%;
 	padding-bottom: 2%;
