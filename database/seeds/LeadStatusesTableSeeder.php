@@ -9,17 +9,17 @@ class LeadStatusesTableSeeder extends Seeder
     {
         factory(LeadStatus::class)->create([
             'status'  => 'Contactado',
-            'color' => 'green'
+            'color' => 'blue'
         ]);
 
         factory(LeadStatus::class)->create([
             'status'  => 'Vendido',
-            'color' => 'yellow'
+            'color' => 'green'
         ]);
 
         factory(LeadStatus::class)->create([
             'status'  => 'Asignado a:',
-            'color' => 'red'
+            'color' => 'yellow'
         ]);
 
         factory(LeadStatus::class)->create([
@@ -29,17 +29,17 @@ class LeadStatusesTableSeeder extends Seeder
 
         factory(LeadStatus::class)->create([
             'status'  => 'Desistido',
-            'color' => 'grey'
+            'color' => 'purple'
         ]);
 
         factory(LeadStatus::class)->create([
             'status'  => 'Negado',
-            'color' => 'orange'
+            'color' => 'red'
         ]);
 
         factory(LeadStatus::class)->create([
             'status'  => 'Cotizado',
-            'color' => 'orange'
+            'color' => 'pink'
         ]);
     }
 }

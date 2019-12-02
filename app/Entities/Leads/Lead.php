@@ -22,7 +22,8 @@ class Lead extends Model
         'typeDocument',
         'identificationNumber',
         'assessor',
-        'nearbyCity'
+        'nearbyCity',
+        'assessor_id'
     ];
 
     protected $guarded = [

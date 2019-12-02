@@ -194,7 +194,7 @@ class LeadsController extends Controller
             $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
         }
 
-        if($request['qOrigenAprobados'] != ''){
+        if ($request['qOrigenAprobados'] != '') {
             $query .= sprintf(" AND (cf.`ORIGEN` = '%s') ", $request['qOrigenAprobados']);
         }
 
@@ -328,7 +328,7 @@ class LeadsController extends Controller
             $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
-        if($request['qOrigenTR'] != ''){
+        if ($request['qOrigenTR'] != '') {
             $queryTradicional .= sprintf(" AND (cf.`ORIGEN` = '%s') ", $request['qOrigenTR']);
         }
 
@@ -410,6 +410,7 @@ class LeadsController extends Controller
         $idCampaign =  $this->campaignInterface->findCampaignByName($request->get('campaign'));
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
         $request['termsAndConditions'] = 2;
+        $request['state'] = 3;
         $request['campaign'] = $idCampaign;
 
         return response()->json($this->leadInterface->createLead($request->input()));

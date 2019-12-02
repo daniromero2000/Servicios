@@ -109,23 +109,29 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="lead in leads">
-<td>
-    <span class="text-center label" ng-if="lead.state == 1" style="color: #ffffff; background-color: green" class="btn btn-info btn-block">Contactado</span>
-   <span class="text-center label" ng-if="lead.state == 2" style="color: #ffffff; background-color: yellow"
-        class="btn btn-info btn-block">Vendido</span>
-         <span class="text-center label" ng-if="lead.state == 3" style="color: #ffffff; background-color: red" class="btn btn-info btn-block">Asignado a:</span>
-         <span class="text-center label" ng-if="lead.state == 4" style="color: #ffffff; background-color: blue"
-            class="btn btn-info btn-block">Impactado</span>
-            <span class="text-center label" ng-if="lead.state == 5" style="color: #ffffff; background-color: Desistido"
-                class="btn btn-info btn-block">Desistido</span>
-                 <span class="text-center label" ng-if="lead.state == 6" style="color: #ffffff; background-color: orange" class="btn btn-info btn-block">Negado</span>
-                 <span class="text-center label" ng-if="lead.state == 7" style="color: #ffffff; background-color: black"
-                    class="btn btn-info btn-block">Cotizado</span>
-
-</td>
-
-
-
+                            <td>
+                                <span class="text-center label" ng-if="lead.state == 1"
+                                    style="color: #ffffff; background-color: blue"
+                                    class="btn btn-info btn-block">Contactado</span>
+                                <span class="text-center label" ng-if="lead.state == 2"
+                                    style="color: #ffffff; background-color: green"
+                                    class="btn btn-info btn-block">Vendido</span>
+                                <span class="text-center label" ng-if="lead.state == 3"
+                                    style="color: #ffffff; background-color: yellow"
+                                    class="btn btn-info btn-block">Asignado a:</span>
+                                <span class="text-center label" ng-if="lead.state == 4"
+                                    style="color: #ffffff; background-color: purple"
+                                    class="btn btn-info btn-block">Impactado</span>
+                                <span class="text-center label" ng-if="lead.state == 5"
+                                    style="color: #ffffff; background-color: orange"
+                                    class="btn btn-info btn-block">Desistido</span>
+                                <span class="text-center label" ng-if="lead.state == 6"
+                                    style="color: #ffffff; background-color: red"
+                                    class="btn btn-info btn-block">Negado</span>
+                                <span class="text-center label" ng-if="lead.state == 7"
+                                    style="color: #ffffff; background-color: pink"
+                                    class="btn btn-info btn-block">Cotizado</span>
+                            </td>
                             <td>@{{ lead.nameLast }}</td>
                             <td>@{{ lead.telephone }}</td>
                             <td>
@@ -371,6 +377,17 @@
                                     <label for="product">Producto <span class="text-danger">*</span></label>
                                     <input type="text" ng-model="lead.typeProduct" validation-pattern="text"
                                         id="product" cols="10" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-3 d-flex align-items-end">
+                                <div class="form-group w-100">
+                                    <label for="assessor_id">Asesor</label>
+                                    <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
+                                        style="width: 100%;">
+                                        <option disabled selected value> -- Selecciona Paso -- </option>
+                                        <option value="13">Evelyn Correa</option>
+                                        <option value="18">Vannesa Parra</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group text-left">
