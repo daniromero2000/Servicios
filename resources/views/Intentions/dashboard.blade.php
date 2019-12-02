@@ -151,9 +151,10 @@
           </div>
         </div>
       </div>
-      <!-- Card 1 -->
-      <!-- /.col (LEFT) -->
     </div>
+    <!-- Card 1 -->
+    <!-- /.col (LEFT) -->
+</div>
 @endsection
 @section('scriptsJs')
 
