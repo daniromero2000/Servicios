@@ -79,7 +79,6 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-
     public function countIntentionsCreditProfiles($from, $to)
     {
         try {

@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="col-8 col-sm-6 col-md-7 col-lg-7 col-xl-7 text-center mt-5  " style="margin: auto;">
-                    <a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de libranza"
+                    <a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
                         target="_blank"><img class="img-fluid boton-wp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
                     </a>
                 </div>

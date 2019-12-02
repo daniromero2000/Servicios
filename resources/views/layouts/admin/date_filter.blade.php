@@ -14,7 +14,6 @@
                         <input type="date" name="from" class="form-control form-control-sm"
                             value="{!! request()->input('from') !!}">
                     </div>
-                    
                     <div class="col-md-3">
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control form-control-sm"
@@ -31,5 +30,4 @@
             </div>
         </form>
     </div>
-
 </div>

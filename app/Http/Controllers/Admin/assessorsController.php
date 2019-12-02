@@ -20,9 +20,9 @@ class assessorsController extends Controller
      */
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface
-    )
-    {
-        //$this->middleware(['auth:assessor']);
+    ) {
+        $this->middleware('auth');
+        $this->customerInterface = $customerRepositoryInterface;
     }
     /**
      * Show the application dashboard.
@@ -286,9 +286,10 @@ class assessorsController extends Controller
         return $dateDiff;
     }
 
-    public function getInfoLead($identificationNumber){
+    public function getInfoLead($identificationNumber)
+    {
         $customer = $this->customerInterface->findCustomerById($identificationNumber);
-        $definition = $customer->latestIntention->definition;
+
         return $customer;
     }
 }

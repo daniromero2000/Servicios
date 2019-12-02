@@ -13,7 +13,7 @@
 	<meta name="keywords" content="">
 	<meta property="og:title" content="" />
 	<meta property="og:url" content="" />
-	<meta property="og:type" content="" />
+	<meta property="og:type" content="" />		
 	<meta property="og:image" content="" />
 	<meta property="og:description" content=""> --}}
 @endsection()
@@ -92,7 +92,7 @@
 				</div>
 				<div class="col-12 col-sm-12 col-md-12 type-client">
 					<div class="forms-descStep forms-descStep-avances">
-						<strong>Cuentanos más de ti</strong><br>
+						<strong>Cuéntanos más de ti</strong><br>
 						<span class="forms-descText">Ingresa tu información personal</span>
 							<img src="http://192.168.200.60:8081/images/datosPersonales.png" class="img-fluid forms-descImg">
 						<span class="forms-descStepNum">2</span>
@@ -309,22 +309,24 @@
 						<span class="forms-descStepNum">4</span>
 					</div> 
 					<div class="row">
+						<div class="col-12">
+							<p class="labels-blue" style="margin:0; font-size:13px"><b>Referencia personal</b></p>
+						</div>
 						<div class="col-12 col-sm-6">
-							<label class="labels-blue" for="refPersonalNombre">Referencia personal:</label>
 							<input class="inputs" id="refPersonalNombre" ng-model="datosCliente.NOM_REFPER" validation-pattern="name" type="text" required placeholder="Nombre*" />
 						</div>
 						<div class="col-12 col-sm-6">
-							<label class="labels" for="refPersonalCelular"></label>
 							<input class="inputs" id="refPersonalCelular" ng-model="datosCliente.TEL_REFPER" validation-pattern="telephone" type="text" required placeholder="Celular*" />
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-12">
+							<p class="labels-blue" style="margin:0; font-size:13px"><b>Referencia familiar</b></p>
+						</div>
 						<div class="col-12 col-sm-6">
-							<label class="labels-blue" for="refFamiliarNombre">Referencia familiar:</label>
 							<input class="inputs" type="text" id="refFamiliarNombre" ng-model="datosCliente.NOM_REFFAM" validation-pattern="name" required placeholder="Nombre*" />
 						</div>
 						<div class="col-12 col-sm-6">
-							<label class="labels" for="refFamiliarCelular"></label>
 							<input class="inputs" type="text" id="refFamiliarCelular" ng-model="datosCliente.TEL_REFFAM" validation-pattern="telephone" required placeholder="Celular*" />
 						</div>
 					</div>
@@ -428,15 +430,17 @@
                             <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                                 <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                                 <p class="textTnakYouModal">
-                                    En este momento <b>no tienes acceso a nuestra tarjeta,</b> <br>
-                                    pero <b>SI</b> estás <b>pre-aprobado</b> para crédito tradicional.
+									<b>¡FELICIDADES!</b> <br>
+									Tu solicitud de crédito para SOAT fue <b>Aprobada</b> <br>
+									<small>*Un asesor se pondrá en contacto contigo para cordinar la entregar del producto</small>
                                 </p>
                             </div>
 							<div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
                                 <img src="{{ asset('images/asessors/openIcon.jpg') }}" class="iconThankYouModal" />
                                 <p class="textTnakYouModal">
                                     <b>¡FELICIDADES!</b> <br>
-                                    <b>Aprobado</b> para cliente Oportunidaes
+									Tu solicitud de crédito para SOAT fue <b>Aprobada</b> <br>
+									<small>*Un asesor se pondrá en contacto contigo para cordinar la entregar del producto</small>
                                 </p>
 								<p class="textModalNumSolic text-center">
 									El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>

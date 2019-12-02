@@ -15,7 +15,7 @@
             <div class="small-box ">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes</p>
+                <p>Solicitudes Crédito</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -50,7 +50,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -525,12 +525,6 @@
 <script src="{{ asset('dist/js/pages/dashboard3.js') }}"></script>
 <!-- jQuery UI -->
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js') }}"></script>
 <!-- FLOT CHARTS -->
 <script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
