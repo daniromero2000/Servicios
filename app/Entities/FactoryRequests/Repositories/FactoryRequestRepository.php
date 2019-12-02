@@ -129,6 +129,19 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    // public function countAssessorFactoryRequestsStatuses($from, $to, $asesor)
+    // {
+    //     try {
+    //         return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+    //         ->where('asesor_id', $asesor)
+    //             ->whereBetween('FECHASOL', [$from, $to])
+    //             ->groupBy('ESTADO')
+    //             ->get();
+    //     } catch (QueryException $e) {
+    //         dd($e);
+    //     }
+    // }
+
     public function countWebFactoryRequests($from, $to)
     {
         try {

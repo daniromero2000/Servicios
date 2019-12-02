@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('content')
 	<div class="container">
 		<div class="row text-center assessorHeader">
