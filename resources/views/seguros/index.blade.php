@@ -15,19 +15,19 @@
 	
 <style>
 #content-landing{
-	background-color: #0FAAE0;
+	background-color: white;
 	height: 100%;
 	margin: auto;
 	width: 100%;
 }
 .content-1{
 	background-color:#103A9E;
-	width: 90%;
+	width: 89%;
 	height: 100%;
 	margin-top: 3%;
 	margin-left: 5%;
 	margin-right: 5%;
-	border-radius: 55px 55px 0px 0px;
+	border-radius: 58px 58px 0px 0px;
 }
 .img1{
 	max-width: 100%;
@@ -119,6 +119,10 @@ a:hover{
 	width: 20%;
 	padding-bottom: 2%;
 }
+.img-ajust{
+	width: 100%;
+	height: 100%;
+}
 @media (max-width: 840px) {
 .img-wpp{
 	width: 50%;
@@ -151,7 +155,7 @@ a:hover{
 			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
 					<div>
-						<img src="{{ asset('images/seguros/img2.png')}}" class="imgproduct">
+						<img class="img-ajust" src="{{ asset('images/seguros/img2.png')}}" class="imgproduct">
 						<div class="content-textProduct">
 							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
 						</div>
@@ -164,7 +168,7 @@ a:hover{
 			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
 					<div>
-						<img src="{{ asset('images/seguros/img3.png')}}" class="imgproduct">
+						<img class="img-ajust" src="{{ asset('images/seguros/img3.png')}}" class="imgproduct">
 						<div class="content-textProduct">
 							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
 						</div>
@@ -177,7 +181,7 @@ a:hover{
 			<div class="col-12 col-md-4 col-sm-4 resetCol1">
 				<div class="content-product">
 					<div>
-						<img src="{{ asset('images/seguros/img4.png')}}" class="imgproduct">
+						<img class="img-ajust" src="{{ asset('images/seguros/img4.png')}}" class="imgproduct">
 						<div class="content-textProduct">
 							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
 						</div>
