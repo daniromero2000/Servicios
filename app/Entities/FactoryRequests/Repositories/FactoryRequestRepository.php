@@ -195,7 +195,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
@@ -209,7 +209,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return  $this->model
                 ->orderBy('SOLICITUD', 'desc')
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -223,38 +223,38 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return $this->model->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(30)
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->get($this->columns);
         }
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryAseessors($text, null, true, true)
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
                 })
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->when($subsidiary, function ($q, $subsidiary) {
                     return $q->where('SUCURSAL', $subsidiary);
                 })
                 ->orderBy('FECHASOL', 'desc')
-                ->where('id_asesor', $assessor)
+                ->where('CODASESOR', $assessor)
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
 
         return $this->model->searchFactoryAseessors($text, null, true, true)
-            ->where('id_asesor', $assessor)
+            ->where('CODASESOR', $assessor)
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
             })
-            ->where('id_asesor', $assessor)
+            ->where('CODASESOR', $assessor)
             ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
             })
-            ->where('id_asesor', $assessor)
+            ->where('CODASESOR', $assessor)
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
