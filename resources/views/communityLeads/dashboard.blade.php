@@ -22,7 +22,7 @@
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
                 <div class="text-right mr-2" >
-                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/communityLeads"
                         style="color: white; !important">Ver
                         Mas</a></span>
                   </div>
