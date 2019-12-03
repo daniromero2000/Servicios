@@ -52,8 +52,7 @@
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="qOrigenAprobados">Origen</label>
-                                    <select class="form-control" ng-model="q.qOrigenAprobados"
-                                        id="qOrigenAprobados"
+                                    <select class="form-control" ng-model="q.qOrigenAprobados" id="qOrigenAprobados"
                                         ng-options="origen.value as origen.label for origen in origenes"></select>
                                 </div>
 
@@ -114,7 +113,8 @@
 
             <div class="card-body">
                 <div class="table reset-table">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
+                    <table id="example2"
+                        class="table table-responsive-lg table-stripped leadTable  text-center table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -138,7 +138,8 @@
                                 <td>@{{ lead.NOMBRES + " " + lead.APELLIDOS }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
                                 <td>@{{ lead.TARJETA }}</td>
-                                <td>@{{ lead.ORIGEN }} <span ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
+                                <td>@{{ lead.ORIGEN }} <span
+                                        ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
@@ -293,7 +294,8 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table class="table text-center table-responsive-lg table-stripped leadTable text-center table-hover">
+                    <table
+                        class="table text-center table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -423,8 +425,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="qOrigenTR">Origen</label>
-                                    <select class="form-control" ng-model="q.qOrigenTR"
-                                        id="qOrigenTR"
+                                    <select class="form-control" ng-model="q.qOrigenTR" id="qOrigenTR"
                                         ng-options="origen.value as origen.label for origen in origenes"></select>
                                 </div>
                             </div>
@@ -480,7 +481,8 @@
             </div>
             <div class="card-body">
                 <div class="table reset-table">
-                    <table id="example2" class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
+                    <table id="example2"
+                        class="table text-center table-responsive-lg table-stripped leadTable  table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th scope="col">Cedula</th>
@@ -500,7 +502,8 @@
                                 <td>@{{ lead.NOMBRES + ' ' + lead.APELLIDOS }}</td>
                                 <td>@{{ lead.CELULAR }}</td>
                                 <td>@{{ lead.EMAIL }}</td>
-                                <td>@{{ lead.ORIGEN }} <span ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
+                                <td>@{{ lead.ORIGEN }} <span
+                                        ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>@{{ lead.DESCRIPCION }}</td>
                                 <td>@{{ lead.FECHA_INTENCION }}</td>
@@ -600,8 +603,9 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table reset-table" >
-                    <table id="example2" class="table table-responsive table-stripped leadTable text-center table-hover">
+                <div class="table reset-table">
+                    <table id="example2"
+                        class="table table-responsive table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -621,10 +625,27 @@
                         <tbody>
                             <tr ng-repeat="leadCM in leadsCM">
                                 <td>
-                                    <i ng-if="leadCM.state == 1" class="fas fa-clock"
-                                        title="Cliente en espera de procesar"></i>
-                                    <i style="color: green" ng-if="leadCM.state == 2" class="fas fa-check-double"
-                                        title="Cliente procesado"></i>
+                                    <span class="text-center label" ng-if="leadCM.state == 1"
+                                        style="color: #ffffff; background-color: blue"
+                                        class="btn btn-info btn-block">Contactado</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 2"
+                                        style="color: #ffffff; background-color: green"
+                                        class="btn btn-info btn-block">Vendido</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 3"
+                                        style="color: #ffffff; background-color: yellow"
+                                        class="btn btn-info btn-block">Asignado a:</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 4"
+                                        style="color: #ffffff; background-color: purple"
+                                        class="btn btn-info btn-block">Impactado</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 5"
+                                        style="color: #ffffff; background-color: orange"
+                                        class="btn btn-info btn-block">Desistido</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 6"
+                                        style="color: #ffffff; background-color: red"
+                                        class="btn btn-info btn-block">Negado</span>
+                                    <span class="text-center label" ng-if="leadCM.state == 7"
+                                        style="color: #ffffff; background-color: pink"
+                                        class="btn btn-info btn-block">Cotizado</span>
                                 </td>
                                 <td>
                                     <span ng-if="leadCM.channel == 2">Facebook</span>
@@ -650,10 +671,7 @@
                                     <i ng-if="leadCM.state == 1" class="fas fa-check cursor"
                                         title="Marcar cliente como procesado"
                                         ng-click="checkLeadProcess(leadCM.id)"></i>
-                                    <i ng-if="lead.ASESOR_DIG == NULL" class="fas fa-user cursor"
-                                    title="Asignar cliente a asesor"
-                                        ng-click="assignAssesorDigitalToLeadCM(leadCM.id)"></i>
-                                    <i class="fas fa-times cursor" title="Eliminar Lead"
+                                                                      <i class="fas fa-times cursor" title="Eliminar Lead"
                                         ng-click="showDialogDelete(leadCM.id)"></i>
                                 </td>
                             </tr>
@@ -755,7 +773,8 @@
 
             <div class="card-body">
                 <div class="table reset-table ">
-                    <table id="example2" class="table table-responsive-lg table-stripped leadTable text-center table-hover">
+                    <table id="example2"
+                        class="table table-responsive-lg table-stripped leadTable text-center table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -863,7 +882,6 @@
         </div>
     </div>
 
-
     <!--Update modal-->
     <div class="modal fade" id="updateCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -879,33 +897,31 @@
                             <div class="col-12 form-group">
                                 <form ng-submit="updateCommunityLeads()">
                                     {{ csrf_field() }}
-
                                     <div class="form-group row">
                                         <div class="col-12 col-sm-6">
                                             <label for="name">Nombre <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.name" validation-pattern="name" id="name" cols="10"
-                                                class="form-control" value="@{{ lead.name }}" required>
+                                            <input type="text" ng-model="lead.name" validation-pattern="name" id="name"
+                                                cols="10" class="form-control" value="@{{ lead.name }}" required>
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" cols="10"
-                                                class="form-control" value="@{{lead.lastName}}" required>
+                                            <input type="text" ng-model="lead.lastName" validation-pattern="name"
+                                                id="lastName" cols="10" class="form-control" value="@{{lead.lastName}}"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12 col-sm-6">
                                             <label for="email">email </label>
-                                            <input type="text" ng-model="lead.email" validation-pattern="email" id="email" cols="10"
-                                                class="form-control" value="@{{lead.email}}">
+                                            <input type="text" ng-model="lead.email" validation-pattern="email"
+                                                id="email" cols="10" class="form-control" value="@{{lead.email}}">
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="telephone">telefono <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
+                                            <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
                                                 class="form-control" value="@{{lead.telephone}}" required>
                                         </div>
                                     </div>
-
-
                                     <div class="form-group row">
                                         <div class="col-12 col-sm-6">
                                             <label for="city">Ciudad <span class="text-danger">*</span></label>
@@ -914,7 +930,8 @@
                                             </select>
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
-                                            <label for="socialNetwork">Canal de adquisición <span class="text-danger">*</span></label>
+                                            <label for="socialNetwork">Canal de adquisición <span
+                                                    class="text-danger">*</span></label>
                                             <select id="socialNetwork" class="form-control" ng-model="lead.channel"
                                                 ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks">
                                                 <option>
@@ -923,13 +940,11 @@
 
                                         </div>
                                     </div>
-
-
                                     <div class="row">
                                         <div class="col-12 col-sm-6 form-group">
                                             <label for="name">Ciudad aledaña</label>
-                                            <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity" cols="10"
-                                                class="form-control">
+                                            <input type="text" ng-model="lead.nearbyCity" validation-pattern="name"
+                                                id="nearbyCity" cols="10" class="form-control">
                                         </div>
                                     </div>
 
@@ -955,11 +970,28 @@
                                         </div>
                                         <div class="col-12 col-sm-6 no-padding-right">
                                             <label for="product">Producto <span class="text-danger">*</span></label>
-                                            <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" cols="10"
-                                                class="form-control" value="@{{lead.typeProduct}}">
+                                            <input type="text" ng-model="lead.typeProduct" validation-pattern="text"
+                                                id="product" cols="10" class="form-control"
+                                                value="@{{lead.typeProduct}}">
                                         </div>
                                     </div>
 
+                                    <div class="col-3 d-flex align-items-end">
+                                        <div class="form-group w-100">
+                                            <label for="state">Estado</label>
+                                            <select class="form-control  select2" id="state" name="state" ng-model="lead.state"
+                                                style="width: 100%;">
+                                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                                <option value="1">Contactado</option>
+                                                <option value="2">Vendido</option>
+                                                <option value="3">Asignado a:</option>
+                                                <option value="4">Impactado</option>
+                                                <option value="5">Desistido</option>
+                                                <option value="6">Negado</option>
+                                                <option value="7">Cotizado</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group text-left">
                                         <button class="btn btn-primary">Actualizar</button>
                                     </div>
@@ -991,30 +1023,32 @@
                                 <div class="row">
                                     <div class="col-12 form-group">
                                         <label for="identificationNumber">Cédula</label>
-                                        <input type="text" class="form-control" validation-pattern="IdentificationNumber" id="identificationNumber" ng-model="lead.identificationNumber">
+                                        <input type="text" class="form-control"
+                                            validation-pattern="IdentificationNumber" id="identificationNumber"
+                                            ng-model="lead.identificationNumber">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-sm-6 form-group">
                                         <label for="name">Nombre <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.name" validation-pattern="name" id="name" cols="10" class="form-control"
-                                            required>
+                                        <input type="text" ng-model="lead.name" validation-pattern="name" id="name"
+                                            cols="10" class="form-control" required>
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" cols="10"
-                                            class="form-control" required>
+                                        <input type="text" ng-model="lead.lastName" validation-pattern="name"
+                                            id="lastName" cols="10" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-sm-6 form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" ng-model="lead.email" validation-pattern="email" id="email" cols="10"
-                                            class="form-control">
+                                        <input type="text" ng-model="lead.email" validation-pattern="email" id="email"
+                                            cols="10" class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone"  id="telephone" cols="10"
+                                        <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
                                             class="form-control" required>
                                     </div>
                                 </div>
@@ -1026,7 +1060,8 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
-                                        <label for="socialNetwork">Canal de Adquisición <span class="text-danger">*</span></label>
+                                        <label for="socialNetwork">Canal de Adquisición <span
+                                                class="text-danger">*</span></label>
                                         <select id="socialNetwork" class="form-control" ng-model="lead.channel">
                                             <option ng-repeat="socialNetwork in socialNetworks"
                                                 value="@{{socialNetwork.value}}">
@@ -1039,14 +1074,15 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-6 form-group">
                                         <label for="name">Ciudad aledaña</label>
-                                        <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity" cols="10"
-                                            class="form-control">
+                                        <input type="text" ng-model="lead.nearbyCity" validation-pattern="name"
+                                            id="nearbyCity" cols="10" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 form-group">
                                         <label for="socialNetwork">Campaña</label>
-                                        <select id="socialNetwork" class="form-control" ng-model="lead.campaign" required>
+                                        <select id="socialNetwork" class="form-control" ng-model="lead.campaign"
+                                            required>
                                             <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}">
                                                 @{{campaign.name}}
                                             </option>
@@ -1064,8 +1100,19 @@
                                     </div>
                                     <div class="col-12 col-sm-6 form-group no-padding-right">
                                         <label for="product">Producto <span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" cols="10"
-                                            class="form-control" required>
+                                        <input type="text" ng-model="lead.typeProduct" validation-pattern="text"
+                                            id="product" cols="10" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-end">
+                                    <div class="form-group w-100">
+                                        <label for="assessor_id">Asesor</label>
+                                        <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
+                                            style="width: 100%;">
+                                            <option disabled selected value> -- Selecciona Paso -- </option>
+                                            <option value="13">Evelyn Correa</option>
+                                            <option value="18">Vannesa Parra</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group text-left">
@@ -1083,43 +1130,43 @@
     </div>
 
     <!--Delete modal-->
-<div class="modal fade" id="deleteCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content text-center">
-            <div class="modal-header text-center">
-                <h4 class="modal-title" id="myModalLabel">Eliminar Lead</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row resetRow ">
-                        <div class="col-12 text-center">
-                            <p>¿Estás seguro que deseas eliminar este registro?</p>
-                        </div>
-                        <div class="col-12">
-                            <div class="row resetRow">
+    <div class="modal fade" id="deleteCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title" id="myModalLabel">Eliminar Lead</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row resetRow ">
+                            <div class="col-12 text-center">
+                                <p>¿Estás seguro que deseas eliminar este registro?</p>
+                            </div>
+                            <div class="col-12">
+                                <div class="row resetRow">
 
-                                <div class=" offset-4 col-4 form-group float-right">
-                                    <form ng-submit="confirmDelete()">
-                                        <div class="form-group text-right">
-                                            <button class="btn btn-primary">Eliminar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-4 form-group float-right">
-                                    <form ng-submit="cancelDelete()">
-                                        <div class="form-group text-right">
-                                            <button class="btn btn-danger">Cancelar</button>
-                                        </div>
-                                    </form>
+                                    <div class=" offset-4 col-4 form-group float-right">
+                                        <form ng-submit="confirmDelete()">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-primary">Eliminar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-4 form-group float-right">
+                                        <form ng-submit="cancelDelete()">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-danger">Cancelar</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
+                            <hr>
                         </div>
-                        <hr>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

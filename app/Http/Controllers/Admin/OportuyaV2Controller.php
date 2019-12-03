@@ -1663,12 +1663,12 @@ class OportuyaV2Controller extends Controller
 	{
 		$tipoTarjeta = "";
 		if ($tipoTarjetaAprobada == 'Tarjeta Black') {
-			$tipoTarjeta = 'Black';
+			$tipoTarjeta = 'BLACK';
 		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
-			$tipoTarjeta = 'Gray';
+			$tipoTarjeta = 'GRAY';
 		}
 		$tarjeta             = new CreditCard;
-		$tarjeta->NUMERO     = "8712769999999";
+		$tarjeta->NUMERO     = "8712760999999";
 		$tarjeta->SOLICITUD  = $numSolic;
 		$tarjeta->CLIENTE    = $identificationNumber;
 		$tarjeta->APROBACION = "0";

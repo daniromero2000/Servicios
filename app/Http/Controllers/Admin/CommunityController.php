@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use Carbon\Carbon;
+
 
 class CommunityController extends Controller
 {
@@ -75,5 +77,44 @@ class CommunityController extends Controller
         $this->leadInterface->createLead($request->input());
 
         return response()->json([true]);
+    }
+
+
+    public function dashboard(Request $request)
+    {
+        $to = Carbon::now();
+        $from = Carbon::now()->subMonth();
+
+        $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
+
+
+        if (request()->has('from')) {
+            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
+        }
+
+        $totalStatuses = $leadChannels->sum('total');
+
+        foreach ($leadChannels as $key => $value) {
+            $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+        }
+
+        $leadChannels   = $leadChannels->toArray();
+        $leadChannels   = array_values($leadChannels);
+
+        $leadChannelNames  = [];
+        $leadChannelValues  = [];
+
+        foreach ($leadChannels as $leadChannel) {
+            array_push($leadChannelNames, trim($leadChannel['channel']));
+            array_push($leadChannelValues, trim($leadChannel['total']));
+        }
+
+
+        return view('Intentions.dashboard', [
+            'leadChannelNames'  => $leadChannelNames,
+            'leadChannelValues' => $leadChannelValues,
+            'creditCards'  => $creditCards,
+            'totalStatuses'  => $totalStatuses
+        ]);
     }
 }

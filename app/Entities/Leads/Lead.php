@@ -3,6 +3,7 @@
 namespace App\Entities\Leads;
 
 use App\Entities\Comments\Comment;
+use App\Entities\LeadStatuses\LeadStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
@@ -21,7 +22,8 @@ class Lead extends Model
         'typeDocument',
         'identificationNumber',
         'assessor',
-        'nearbyCity'
+        'nearbyCity',
+        'assessor_id'
     ];
 
     protected $guarded = [
@@ -38,5 +40,10 @@ class Lead extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'idLead');
+    }
+
+    public function leadStatus()
+    {
+        return $this->belongsTo(LeadStatus::Class);
     }
 }
