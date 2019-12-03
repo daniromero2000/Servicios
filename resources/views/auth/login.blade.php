@@ -35,7 +35,7 @@
                         @csrf
                         <div class="input-group mb-3">
                             <div class="input-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                                <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                                <input type="text" name="email" class="form-control" value="{{ old('email') }}"
                                     placeholder="Email" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">

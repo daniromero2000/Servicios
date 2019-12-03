@@ -44,6 +44,6 @@ class Lead extends Model
 
     public function leadStatus()
     {
-        return $this->belongsTo(LeadStatus::Class);
+        return $this->belongsTo(LeadStatus::Class, 'state', 'id');
     }
 }

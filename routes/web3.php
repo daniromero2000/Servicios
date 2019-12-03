@@ -15,7 +15,6 @@ Route::group(['prefix' => '/seguros/'], function (){
     });
 });
 
-
 Route::group(['prefix' => '/Catalog/'], function () {
     //display catalog layout
     Route::get("/", function () {

@@ -405,7 +405,6 @@
         </div>
     </div>
 
-
     <div class="tab-pane fade card mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
         ng-class="{ 'show active': tabs == 2 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
         <div class="row form-group" ng-if="filtros">
@@ -625,25 +624,24 @@
                         <tbody>
                             <tr ng-repeat="leadCM in leadsCM">
                                 <td>
-                                    <span class="text-center label" ng-if="leadCM.state == 1"
+                                    <span class="text-center badge" ng-if="leadCM.state == 1"
                                         style="color: #ffffff; background-color: blue"
                                         class="btn btn-info btn-block">Contactado</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 2"
+                                    <span class="text-center badge" ng-if="leadCM.state == 2"
                                         style="color: #ffffff; background-color: green"
                                         class="btn btn-info btn-block">Vendido</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 3"
-                                        style="color: #ffffff; background-color: yellow"
+                                    <span class="text-center badge badge-warning" ng-if="leadCM.state == 3"
                                         class="btn btn-info btn-block">Asignado a:</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 4"
+                                    <span class="text-center badge" ng-if="leadCM.state == 4"
                                         style="color: #ffffff; background-color: purple"
                                         class="btn btn-info btn-block">Impactado</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 5"
+                                    <span class="text-center badge" ng-if="leadCM.state == 5"
                                         style="color: #ffffff; background-color: orange"
                                         class="btn btn-info btn-block">Desistido</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 6"
+                                    <span class="text-center badge" ng-if="leadCM.state == 6"
                                         style="color: #ffffff; background-color: red"
                                         class="btn btn-info btn-block">Negado</span>
-                                    <span class="text-center label" ng-if="leadCM.state == 7"
+                                    <span class="text-center badge" ng-if="leadCM.state == 7"
                                         style="color: #ffffff; background-color: pink"
                                         class="btn btn-info btn-block">Cotizado</span>
                                 </td>

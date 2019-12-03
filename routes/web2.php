@@ -155,6 +155,17 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
+    Route::namespace('Asesors')->group(function () {
+        Route::resource('Administrator/asesors', 'CustomerController');
+        Route::get('/Administrator/dashboard/asesors', 'CustomerController@dashboard')->name('asesores_dashboard');
+    });
+
+    Route::group(['prefix' => '/assessor/'], function () {
+        Route::group(['prefix' => '/api/'], function () {
+            Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
+        });
+    });
+  
     Route::namespace('Comments')->group(function () {
         Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });
