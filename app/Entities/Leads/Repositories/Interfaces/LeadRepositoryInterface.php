@@ -15,4 +15,6 @@ interface LeadRepositoryInterface
     public function updateLead(array $params): bool;
 
     public function countLeadChannels($from, $to);
+
+    public function countLeadStatuses($from, $to);
 }

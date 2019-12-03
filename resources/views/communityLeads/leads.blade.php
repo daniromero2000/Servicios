@@ -110,25 +110,24 @@
                     <tbody>
                         <tr ng-repeat="lead in leads">
                             <td>
-                                <span class="text-center label" ng-if="lead.state == 1"
+                                <span class="text-center badge" ng-if="lead.state == 1"
                                     style="color: #ffffff; background-color: blue"
                                     class="btn btn-info btn-block">Contactado</span>
-                                <span class="text-center label" ng-if="lead.state == 2"
+                                <span class="text-center badge" ng-if="lead.state == 2"
                                     style="color: #ffffff; background-color: green"
                                     class="btn btn-info btn-block">Vendido</span>
-                                <span class="text-center label" ng-if="lead.state == 3"
-                                    style="color: #ffffff; background-color: yellow"
+                                <span class="text-center badge badge-warning" ng-if="lead.state == 3"
                                     class="btn btn-info btn-block">Asignado a:</span>
-                                <span class="text-center label" ng-if="lead.state == 4"
+                                <span class="text-center badge " ng-if="lead.state == 4"
                                     style="color: #ffffff; background-color: purple"
                                     class="btn btn-info btn-block">Impactado</span>
-                                <span class="text-center label" ng-if="lead.state == 5"
+                                <span class="text-center badge" ng-if="lead.state == 5"
                                     style="color: #ffffff; background-color: orange"
                                     class="btn btn-info btn-block">Desistido</span>
-                                <span class="text-center label" ng-if="lead.state == 6"
+                                <span class="text-center badge" ng-if="lead.state == 6"
                                     style="color: #ffffff; background-color: red"
                                     class="btn btn-info btn-block">Negado</span>
-                                <span class="text-center label" ng-if="lead.state == 7"
+                                <span class="text-center badge" ng-if="lead.state == 7"
                                     style="color: #ffffff; background-color: pink"
                                     class="btn btn-info btn-block">Cotizado</span>
                             </td>
