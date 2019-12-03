@@ -1,172 +1,174 @@
-<div class="card  mb-4 border-0 shadow-lg">
+<div class="container-fluid">
 
-    <div class="row form-group" ng-if="filtros">
-        <div class="col-12">
-
-            <div class="card" style="font-size:10pt;">
-                <div class="card-body">
-                    <form ng-submit="searchLeads()">
-                        <div class="container">
-                            <div class="row form-group">
-                                <div class="col-12 col-sm-4">
-                                    <label for="city">Ciudad</label>
-                                    <select id="city" class="form-control" ng-model="q.city"
-                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <label for="typeService">Tipo de Servicio</label>
-                                    <select id="typeService" class="form-control" ng-model="q.typeService"
-                                        ng-options="service.value as service.label for service in typeServices"></select>
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <label for="state">Estado</label>
-                                    <select id="state" class="form-control" ng-model="q.state"
-                                        ng-options="state.value as state.label for state in typeStates"></select>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-12 col-sm-6">
-                                    <label for="fecha_ini">Fecha Inicial</label>
-                                    <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
-                                        <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+    <div class="card  mb-4 border-0 shadow-lg">
+        <div class="row form-group" ng-if="filtros">
+            <div class="col-12">
+                <div class="card" style="font-size:10pt;">
+                    <div class="card-body">
+                        <form ng-submit="searchLeads()">
+                            <div class="container">
+                                <div class="row form-group">
+                                    <div class="col-12 col-sm-4">
+                                        <label for="city">Ciudad</label>
+                                        <select id="city" class="form-control" ng-model="q.city"
+                                            ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <label for="typeService">Tipo de Servicio</label>
+                                        <select id="typeService" class="form-control" ng-model="q.typeService"
+                                            ng-options="service.value as service.label for service in typeServices"></select>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <label for="state">Estado</label>
+                                        <select id="state" class="form-control" ng-model="q.state"
+                                            ng-options="state.value as state.label for state in typeStates"></select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="fecha_fin">Fecha Final</label>
-                                    <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
-                                        <input class="form-control" ng-model="q.fecha_fin">
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                <div class="row form-group">
+                                    <div class="col-12 col-sm-6">
+                                        <label for="fecha_ini">Fecha Inicial</label>
+                                        <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
+                                            <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
+                                            <span class="input-group-addon">
+                                                <i class="octicon octicon-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <label for="fecha_fin">Fecha Final</label>
+                                        <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
+                                            <input class="form-control" ng-model="q.fecha_fin">
+                                            <span class="input-group-addon">
+                                                <i class="octicon octicon-calendar"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear
-                                        Filtros
-                                        <i class="fas fa-times"></i></button>
-                                    <button type="submit" class="btn btn-primary">Filtrar <i
-                                            class="fas fa-filter"></i></button>
+                                <div class="row">
+                                    <div class="col-12 text-right">
+                                        <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear
+                                            Filtros
+                                            <i class="fas fa-times"></i></button>
+                                        <button type="submit" class="btn btn-primary">Filtrar <i
+                                                class="fas fa-filter"></i></button>
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class=" border-0">
-        <div class="card-header bg-white border-bottom-0">
-            <div class="row resetRow">
-                <div class="col-sm-12 col-md-2  ">
-                    <button class="btn btn-primary">
-                        <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
-                    </button>
-                </div>
-                <div class="col-sm-12 col-md-3 col-lg-1">
-                    <p class="totalLeadsDigital text-center">
-                        @{{ totalLeads }}
-                    </p>
-                    <p class="text-center">
-                        Leads
-                    </p>
-                </div>
-                <div class="col-sm-12 col-md-3 offset-md-2 offset-lg-4 text-center">
-                    <div class="input-group mb-3">
-                        <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
-                                    class="fas fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 text-center resetCol">
-                    <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
-                            class="fas fa-filter"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="card-body text-center ">
-            <div class="table ">
-                <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
-                    <thead class=" text-center">
-                        <tr>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col">Canal Adquisición</th>
-                            <th scope="col">Ciudad</th>
-                            <th scope="col">Fecha de registro</th>
-                            <th scope="col">Campaña</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="lead in leads">
-                            <td>
-                                <span class="text-center badge" ng-if="lead.state == 1"
-                                    style="color: #ffffff; background-color: blue"
-                                    class="btn btn-info btn-block">Contactado</span>
-                                <span class="text-center badge" ng-if="lead.state == 2"
-                                    style="color: #ffffff; background-color: green"
-                                    class="btn btn-info btn-block">Vendido</span>
-                                <span class="text-center badge badge-warning" ng-if="lead.state == 3"
-                                    class="btn btn-info btn-block">Asignado a:</span>
-                                <span class="text-center badge " ng-if="lead.state == 4"
-                                    style="color: #ffffff; background-color: purple"
-                                    class="btn btn-info btn-block">Impactado</span>
-                                <span class="text-center badge" ng-if="lead.state == 5"
-                                    style="color: #ffffff; background-color: orange"
-                                    class="btn btn-info btn-block">Desistido</span>
-                                <span class="text-center badge" ng-if="lead.state == 6"
-                                    style="color: #ffffff; background-color: red"
-                                    class="btn btn-info btn-block">Negado</span>
-                                <span class="text-center badge" ng-if="lead.state == 7"
-                                    style="color: #ffffff; background-color: pink"
-                                    class="btn btn-info btn-block">Cotizado</span>
-                            </td>
-                            <td>@{{ lead.nameLast }}</td>
-                            <td>@{{ lead.telephone }}</td>
-                            <td>
-                                <span ng-if="lead.channel == 1">Página Web</span>
-                                <span ng-if="lead.channel == 2">Facebook</span>
-                                <span ng-if="lead.channel == 3">WhatsApp</span>
-                            </td>
-                            <td ng-if="lead.nearbyCity == null">@{{ lead.city }} </td>
-                            <td ng-if="lead.nearbyCity != null">@{{ lead.city+" / "+lead.nearbyCity }} </td>
-                            <td>@{{ lead.created_at }}</td>
-                            <td>@{{ lead.campaignName }}</td>
-                            <td>
-                                <i class="fas fa-edit cursor" title="Actualizar Lead"
-                                    ng-click="showUpdateDialog(lead.id)"></i>
-                                <i class="fas fa-times cursor" title="eliminar Lead"
-                                    ng-click="showDialogDelete(lead.id)"></i>
-                                <i class="fas fa-comment cursor"
-                                    ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-12 text-center mb-1">
-                        <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar
-                            Más</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class=" border-0">
+            <div class="card-header bg-white border-bottom-0">
+                <div class="row resetRow">
+                    <div class="col-sm-12 col-md-2  ">
+                        <button class="btn btn-primary">
+                            <a ng-click="addCommunityForm()">Agregar Lead <i class="far fa-plus-square"></i></a>
+                        </button>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-1">
+                        <p class="totalLeadsDigital text-center">
+                            @{{ totalLeads }}
+                        </p>
+                        <p class="text-center">
+                            Leads
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-3 offset-md-2 offset-lg-4 text-center">
+                        <div class="input-group mb-3">
+                            <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
+                                        class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2 text-center resetCol">
+                        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary btnFilter">Filtros <i
+                                class="fas fa-filter"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body text-center ">
+                <div class="table ">
+                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
+                        <thead class=" text-center">
+                            <tr>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Asesor</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Canal Adquisición</th>
+                                <th scope="col">Ciudad</th>
+                                <th scope="col">Fecha de registro</th>
+                                <th scope="col">Campaña</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lead in leads">
+                                <td>
+                                    <span class="text-center badge" ng-if="lead.state == 1"
+                                        style="color: #ffffff; background-color: blue"
+                                        class="btn btn-info btn-block">Contactado</span>
+                                    <span class="text-center badge" ng-if="lead.state == 2"
+                                        style="color: #ffffff; background-color: green"
+                                        class="btn btn-info btn-block">Vendido</span>
+                                    <span class="text-center badge badge-warning" ng-if="lead.state == 3"
+                                        class="btn btn-info btn-block">Asignado a:</span>
+                                    <span class="text-center badge " ng-if="lead.state == 4"
+                                        style="color: #ffffff; background-color: purple"
+                                        class="btn btn-info btn-block">Impactado</span>
+                                    <span class="text-center badge" ng-if="lead.state == 5"
+                                        style="color: #ffffff; background-color: orange"
+                                        class="btn btn-info btn-block">Desistido</span>
+                                    <span class="text-center badge" ng-if="lead.state == 6"
+                                        style="color: #ffffff; background-color: red"
+                                        class="btn btn-info btn-block">Negado</span>
+                                    <span class="text-center badge" ng-if="lead.state == 7"
+                                        style="color: #ffffff; background-color: pink"
+                                        class="btn btn-info btn-block">Cotizado</span>
+                                </td>
+                                <td>@{{ lead.nameAsesor }}</td>
+                                <td>@{{ lead.nameLast }}</td>
+                                <td>@{{ lead.telephone }}</td>
+                                <td>
+                                    <span ng-if="lead.channel == 1">Página Web</span>
+                                    <span ng-if="lead.channel == 2">Facebook</span>
+                                    <span ng-if="lead.channel == 3">WhatsApp</span>
+                                </td>
+                                <td ng-if="lead.nearbyCity == null">@{{ lead.city }} </td>
+                                <td ng-if="lead.nearbyCity != null">@{{ lead.city+" / "+lead.nearbyCity }} </td>
+                                <td>@{{ lead.created_at }}</td>
+                                <td>@{{ lead.campaignName }}</td>
+                                <td>
+                                    <i class="fas fa-edit cursor" title="Actualizar Lead"
+                                        ng-click="showUpdateDialog(lead.id)"></i>
+                                    <i class="fas fa-times cursor" title="eliminar Lead"
+                                        ng-click="showDialogDelete(lead.id)"></i>
+                                    <i class="fas fa-comment cursor"
+                                        ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12 text-center mb-1">
+                            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar
+                                Más</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
     </div>
 </div>
 
-</div>
 
 
 

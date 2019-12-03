@@ -129,18 +129,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    // public function countAssessorFactoryRequestsStatuses($from, $to, $asesor)
-    // {
-    //     try {
-    //         return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-    //         ->where('asesor_id', $asesor)
-    //             ->whereBetween('FECHASOL', [$from, $to])
-    //             ->groupBy('ESTADO')
-    //             ->get();
-    //     } catch (QueryException $e) {
-    //         dd($e);
-    //     }
-    // }
 
     public function countWebFactoryRequests($from, $to)
     {
@@ -191,6 +179,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
+
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
@@ -200,5 +189,73 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
+    }
+
+    public function countAssessorFactoryRequestStatuses($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('CODASESOR', $assessor)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function listFactoryAssessors($totalView, $assessor): Support
+    {
+        try {
+            return  $this->model
+                ->orderBy('SOLICITUD', 'desc')
+                ->where('CODASESOR', $assessor)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+    public function searchFactoryAseessors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $assessor): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->where('CODASESOR', $assessor)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryAseessors($text, null, true, true)
+                ->where('CODASESOR', $assessor)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->where('CODASESOR', $assessor)
+                ->when($subsidiary, function ($q, $subsidiary) {
+                    return $q->where('SUCURSAL', $subsidiary);
+                })
+                ->orderBy('FECHASOL', 'desc')
+                ->where('CODASESOR', $assessor)
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryAseessors($text, null, true, true)
+            ->where('CODASESOR', $assessor)
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO', $status);
+            })
+            ->where('CODASESOR', $assessor)
+            ->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->where('CODASESOR', $assessor)
+            ->orderBy('FECHASOL', 'desc')
+            ->get($this->columns);
     }
 }

@@ -6,9 +6,29 @@ use App\Entities\Leads\Lead;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Support;
 
 class LeadRepository implements LeadRepositoryInterface
 {
+
+    private $columns = [
+        'id',
+        'CEDULA',
+        'FECHA_INTENCION',
+        'ID_DEF',
+        'ESTADO_OBLIGACIONES',
+        'PERFIL_CREDITICIO',
+        'HISTORIAL_CREDITO',
+        'TARJETA',
+        'ZONA_RIESGO',
+        'EDAD',
+        'TIEMPO_LABOR',
+        'TIPO_5_ESPECIAL',
+        'INSPECCION_OCULAR',
+        'ESTADO_INTENCION',
+    ];
+
+
     public function __construct(
         lead $lead
     ) {
@@ -20,6 +40,16 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function findLeadByIdFull(int $id): Lead
+    {
+        try {
+            return $this->model
+                ->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
         }
     }
@@ -51,13 +81,13 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+
     public function countLeadChannels($from, $to)
     {
         try {
-            return  $this->model->select('channel', DB::raw('count(*) as total'))
+            return  $this->model->with('leadChannel')
                 ->whereBetween('created_at', [$from, $to])
-                ->groupBy('channel')
-                ->get();
+                ->get(['channel'])->groupBy('leadChannel.channel');
         } catch (QueryException $e) {
             dd($e);
         }
@@ -66,9 +96,22 @@ class LeadRepository implements LeadRepositoryInterface
     public function countLeadStatuses($from, $to)
     {
         try {
-            return  $this->model->with('leadStatus')
+            return  $this->model->with('leadStatuses')
                 ->whereBetween('created_at', [$from, $to])
-                ->get()->groupBy('leadStatus.status');
+                ->get(['state'])->groupBy('leadStatuses.status');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function listleads($totalView): Support
+    {
+        try {
+            return  $this->model->with(['leadStatus'])
+                ->orderBy('id', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);
         }

@@ -4,23 +4,34 @@ namespace App\Http\Controllers\Admin;
 
 use App\cliCel;
 use App\Entities\Customers\Customer;
+use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class assessorsController extends Controller
 {
-    private $customerInterface;
+    private $customerInterface,$assessorInterface, $toolsInterface, $factoryInterface;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(
+        AssessorRepositoryInterface $AssessorRepositoryInterface,
+        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
+        ToolRepositoryInterface $toolRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface
     ) {
+        $this->assessorInterface = $AssessorRepositoryInterface;
+        $this->factoryInterface = $factoryRequestRepositoryInterface;
+        $this->toolsInterface = $toolRepositoryInterface;
         $this->middleware('auth');
         $this->customerInterface = $customerRepositoryInterface;
     }
@@ -29,9 +40,36 @@ class assessorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('assessors.dashboard');
+        $assessor = auth()->user()->email;      
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->factoryInterface->listFactoryAssessors($skip * 30 , $assessor );
+
+        if (request()->has('q')) {
+            $list = $this->factoryInterface->searchFactoryAseessors(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary'),
+                $assessor
+            )->sortByDesc('FECHASOL');
+        }
+
+        $listCount = $list->count();
+        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+
+        return view('assessors.assessors.list', [
+            'factoryRequests'            => $list,
+            'optionsRoutes'        => (request()->segment(2)),
+            'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'            => $listCount,
+            'skip'                 => $skip,
+            'factoryRequestsTotal' => $factoryRequestsTotal,
+
+        ]);
     }
 
     public function store(Request $request)
@@ -291,5 +329,63 @@ class assessorsController extends Controller
         $customer = $this->customerInterface->findCustomerById($identificationNumber);
 
         return $customer;
+    }
+
+    public function dashboard(Request $request)
+    {
+
+        $assessor = auth()->user()->email;        
+        $to = Carbon::now();
+        $from = Carbon::now()->subMonth();
+
+        $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+        $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+
+        $estadosNames = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
+        $webCounts    = $this->factoryInterface->countWebFactoryRequests($from, $to);
+        $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal($from, $to);
+
+        if (request()->has('from')) {
+            $estadosNames = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
+            $webCounts    = $this->factoryInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
+            $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
+        }
+
+        $estadosNames   = $estadosNames->toArray();
+        $webCounts      = $webCounts->toArray();
+        $estadosNames   = array_values($estadosNames);
+        $webCounts      = array_values($webCounts);
+
+        $statusesNames  = [];
+        $statusesValues = [];
+        $statusesColors = [];
+        foreach ($estadosNames as $estadosName) {
+            array_push($statusesNames, trim($estadosName['ESTADO']));
+            array_push($statusesValues, trim($estadosName['total']));
+            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+            array_push($statusesColors, trim($color));
+        }
+
+        $webValues      = [];
+        $webNames       = [];
+        $webColors = [];
+        foreach ($webCounts as $webCount) {
+            array_push($webNames, trim($webCount['ESTADO']));
+            array_push($webValues, trim($webCount['total']));
+            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+            array_push($webColors, trim($color));
+        }
+
+        return view('assessors.assessors.dashboard', [
+            'statusesNames'  => $statusesNames,
+            'statusesValues' => $statusesValues,
+            'statusesColors' => $statusesColors,
+            'webValues'      => $webValues,
+            'webNames'       => $webNames,
+            'webColors'       => $webColors,
+            'totalWeb'       => array_sum($webValues),
+            'totalStatuses'  => array_sum($statusesValues),
+            'factoryRequestsTotal'       => $factoryRequestsTotal,
+        ]);
     }
 }

@@ -151,10 +151,7 @@ class LeadsController extends Controller
                 $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
-            // $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            // $resp[$key]->channel = $respChannel[0]->channel;
-            // $resp[$key]->id      = $respChannel[0]->id;
-            // $resp[$key]->state   = $respChannel[0]->state;
+
             $leadsDigital[]      = $resp[$key];
         }
 
@@ -224,10 +221,6 @@ class LeadsController extends Controller
                 $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
             }
 
-            // $respChannel         = $this->leadInterface->getLeadChannel($lead->CEDULA);
-            // $resp[$key]->channel = $respChannel[0]->channel;
-            // $resp[$key]->id      = $respChannel[0]->id;
-            // $resp[$key]->state   = $respChannel[0]->state;
             $leadsDigital[]      = $resp[$key];
         }
 
@@ -413,7 +406,10 @@ class LeadsController extends Controller
         $request['state'] = 3;
         $request['campaign'] = $idCampaign;
 
-        return response()->json($this->leadInterface->createLead($request->input()));
+        $lead =  $this->leadInterface->createLead($request->input());
+        $lead->leadStatus()->attach(3);
+
+        return response()->json($lead);
     }
 
     public function viewCommunityLeads($id)
@@ -432,7 +428,9 @@ class LeadsController extends Controller
     public function updateCommunityLeads(Request $request)
     {
         $nameCampaign = (string) $request->get('campaignName');
-        $leadRerpo = new leadRepository($this->leadInterface->findLeadById($request->get('id')));
+        $lead = $this->leadInterface->findLeadById($request->get('id'));
+        $lead->leadStatus()->attach($request['state']);
+        $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
             $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);

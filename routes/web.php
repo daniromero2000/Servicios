@@ -85,8 +85,6 @@ if ($options['verify'] ?? false) {
 
 //Assessor Auth
 Route::group(['prefix' => '/assessor/'], function () {
-    Route::get('/dashboard', 'Admin\assessorsController@index')->name('assessors.dashboard');
-    Route::get('/login', 'Assessor\LoginController@showLoginForm')->name('assessors.login');
     Route::post('/dashboard', 'Assessor\LoginController@login')->name('assessors.access');
     Route::post('/password/email', 'Assessor\ForgotPasswordController@sendResetLinkEmail')->name('assessors.password.email');
     Route::get('/password/reset', 'Assessor\ForgotPasswordController@showLinkRequestForm')->name('assessors.password.request');

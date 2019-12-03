@@ -1,73 +1,55 @@
-@extends('layouts.app')
- 
+@extends('layouts.admin.app')
 @section('content')
- 
- <div class="container">
-     
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2> Show Leads</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('leads.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
- 
- 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {{ $leads->name }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>lastName:</strong>
-                {{ $leads->lastName }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>email:</strong>
-                {{ $leads->email }}
-            </div>
-        </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Phone Number:</strong>
-                {{ $leads->telephone }}
-            </div>
-        </div>
+<section class="content border-0">
+    @include('layouts.errors-and-messages')
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>City:</strong>
-                {{ $leads->city }}
-            </div>
-        </div>
+    <div class="card border-0 mt-5">
+        <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
+            <li class="active" role="presentation">
+                <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
+            </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
+                    aria-controls="profile">Seguimiento</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4" id="tabcontent">
+            <div role="tabpanel" class="tab-pane container-fluid active" id="info">
+                <div class="container-fluid card">
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Type Service:</strong>
-                {{ $leads->typeService }}
-            </div>
-        </div>
+                    @include('leads.layouts.generals')
+                </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Type Product:</strong>
-                {{ $leads->typeProduct }}
+                <div class="container-fluid mt-5 card">
+                    @include('leads.layouts.customer')
+
+                </div>
+
+                <div class="container-fluid mt-5 card">
+                    @include('leads.layouts.creditcard')
+
+                </div>
+
             </div>
-        </div>
+            <div role="tabpanel" class="tab-pane" id="contact">
+                <div class="row">
 
 
-    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="seguimiento">
+                <div class="row">
+                    {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
+                    @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
+                </div>
+            </div>
 
- </div>
-    
- 
-@stop
+
+            <div class="row border-0">
+                <a href="{{ route('leads.index') }}" class="btn btn-default btn-sm">Regresar</a>
+            </div>
+
+        </div>
+</section>
+@endsection
