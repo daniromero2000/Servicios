@@ -73,9 +73,9 @@ class CommunityController extends Controller
         $leadsCM = [];
         $leadsCM = DB::select($queryCM);
 
-        foreach ($respTotalLeads as $key => $lead) {
+        foreach ($leadsCM as $key => $lead) {
             if ($lead->assessor_id != '') {
-                $respTotalLeads[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
+                $leadsCM[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
             }
             $leadsCM[]      = $respTotalLeads[$key];
         }
