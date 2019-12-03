@@ -13,14 +13,19 @@
           <div class="row d-flex justify-content-center">
             <div class="col-12 ">
               <!-- /.info-box -->
-              <div class="small-box bg-primary" >
+              <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p>Leads</p>
+                  <p style="margin-bottom: -4px !important;">Leads</p>
                 </div>
-                <div class="icon">
+                <div class="icon mt-3">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
+                <div class="text-right mr-2" >
+                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
+                        style="color: white; !important">Ver
+                        Mas</a></span>
+                  </div>
               </div>
             </div>
           </div>
@@ -44,7 +49,7 @@
           <!-- TORTA -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"> Resumen Intenciones</h3>
+              <h3 class="card-title"> Canales de Adquisición</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
@@ -54,6 +59,38 @@
             </div>
             <div class="card-body">
               <canvas id="pieChart" style="height:200px; min-height:auto"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class=" col-md-8 col-lg-12">
+          <!-- debe ir oculta -->
+          <div hidden class="card card-danger">
+            <div class="card-header">
+              <h3 class="card-title">Donut Chart</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
+            </div>
+          </div>
+          <!-- TORTA -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"> Resumen Estados Leads</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
             </div>
           </div>
         </div>
@@ -112,7 +149,7 @@
         <!-- PORCENTAJES -->
         <div class="card ">
           <div class="card-header">
-            <h3 class="card-title">Perfiles Crediticios</h3>
+            <h3 class="card-title">Estados Leads</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -121,7 +158,7 @@
           </div>
           <div class="card-body">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('community_dashboard')])
             </div>
             <div class="chart">
               <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
@@ -177,8 +214,14 @@
     var estados = [];
         var values = [];
 
-        var estados = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $leadStatusesNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $leadStatusesValues).'"' ?>];
+
+        var channels = [];
+        var channelsValues = [];
+
+        var channels = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
+        var channelsValues = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -191,7 +234,7 @@
       labels  :estados,
       datasets: [
         {
-          label               : 'Perfil Crediticio',
+          label               : 'Estados',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
@@ -254,6 +297,32 @@
     })
 
     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+    var donutData2 = {
+    labels: channels,
+    datasets: [
+    {
+    data: channelsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+    }
+    ]
+    }
+    var donutOptions2 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart2 = new Chart(donutChartCanvas2, {
+    type: 'doughnut',
+    data: donutData2,
+    options: donutOptions2
+    })
+
+    //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
@@ -263,6 +332,17 @@
       maintainAspectRatio : false,
       responsive : true,
     }
+
+    //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+      var pieData = donutData2;
+      var pieOptions2 = {
+      maintainAspectRatio : false,
+      responsive : true,
+      }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     var pieChart = new Chart(pieChartCanvas, {
