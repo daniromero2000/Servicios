@@ -533,21 +533,6 @@
             </div>
         </div>
     </div>
-    <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1"
-        role="dialog" aria-hidden="true">
-        <div class="modal-dialog modalPrincipal" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="text-center" style="padding: 50px;">
-                        <img src="{{ asset('images/gif-load.gif') }}" alt="">
-                        <p class="text-procces">
-                            Procesando Información...
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="validationLead"
         tabindex="-1" role="dialog" aria-hidden="true">
@@ -690,108 +675,23 @@
             </div>
         </div>
     </div>
-
-    <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="showResp" tabindex="-1"
-        role="dialog" aria-hidden="true">
+    <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modalPrincipal" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h2 style="margin:0" class="headerAdmin ng-scope">Resultado política</h2>
-                            <p class="resultadoPolitica colourGreen" ng-if="infoLead.ESTADO == 'PREAPROBADO'">
-                                @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
-                            </p>
-                            <p class="resultadoPolitica colourRed" ng-if="infoLead.ESTADO != 'PREAPROBADO'">
-                                @{{ infoLead.DESCRIPCION + " / " + infoLead.ID_DEF }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <label for="">Tipo de documento: </label>
-                                <span ng-if="infoLead.TIPO_DOC == 1">Cédula de ciudadanía</span>
-                                <span ng-if="infoLead.TIPO_DOC == 2">NIT</span>
-                                <span ng-if="infoLead.TIPO_DOC == 3">Cédula de extranjería</span>
-                                <span ng-if="infoLead.TIPO_DOC == 4">Tarjeta de identidad</span>
-                                <span ng-if="infoLead.TIPO_DOC == 5">Pasaporte</span>
-                                <span ng-if="infoLead.TIPO_DOC == 6">Tarjeta seguro social extranjero</span>
-                                <span ng-if="infoLead.TIPO_DOC == 7">Sociedad extranjera sin NIT en Colombia</span>
-                                <span ng-if="infoLead.TIPO_DOC == 8">Fidecoismo</span>
-                            </p>
-                            <p>
-                                <label for="">Número de documento: </label>@{{ infoLead.CEDULA }}
-                            </p>
-                            <p>
-                                <label for="">Tipo de cliente: </label>@{{ infoLead.TIPO_CLIENTE }}
-                            </p>
-                            <p>
-                                <label for="">Fecha nacimiento: </label>@{{ infoLead.FEC_NAC }}
-                            </p>
-                            <p>
-                                <label for="">Tipo de vivienda: </label>@{{ infoLead.TIPOV }}
-                            </p>
-                            <p>
-                                <label for="">Actividad: </label>@{{ infoLead.ACTIVIDAD }}
-                            </p>
-                            <p
-                                ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                <label for="">Actividad independiente: </label>@{{ infoLead.ACT_IND }}
-                            </p>
-                            <p>
-                                <label for="">Tiempo Labor: </label><span ng-if="infoLead.TIEMPO_LABOR == 1">Si
-                                    cumple</span> <span ng-if="infoLead.TIEMPO_LABOR == 0">No cumple</span>
-                            </p>
-                            <p
-                                ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
-                                <label for="">Ingresos: </label><span>$
-                                    @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
-                            </p>
-                            <p
-                                ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
-                                <label for="">Ingresos:
-                                </label><span>$@{{ infoLead.SUELDO + infoLead.OTROS_ING | number:0 }}</span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <label for="">Sucursal: </label>@{{ infoLead.SUC }}
-                            </p>
-                            <p>
-                                <label for="">Dirección: </label>@{{ infoLead.DIRECCION }}
-                            </p>
-                            <p>
-                                <label for="">Celular: </label>@{{ infoLead.CELULAR }}
-                            </p>
-                            <p>
-                                <label for="">Score: </label>@{{ infoLead.score }}
-                            </p>
-                            <p>
-                                <label for="">Tarjeta: </label> @{{ infoLead.TARJETA }}
-                            </p>
-                            <p>
-                                <label for="">Estado: </label> @{{ infoLead.ESTADO }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <p class="caracteristicaPolitica">
-                                <i>* @{{ infoLead.CARACTERISTICA }}</i>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <a href="/assessor/forms/crearCliente" class="btn btn-primary">Nuevo Registro</a>
-                            <a href="/assessor/dashboard" class="btn btn-secondary">Volver al Menú</a>
-                        </div>
+                    <div class="text-center" style="padding: 50px;">
+                        <img src="{{ asset('images/gif-load.gif') }}" alt="">
+                        <p class="text-procces">
+                            Procesando Solicitud...<br>
+                            <span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se están realizando las consultas necesarias, esto
+                                puede tomar un tiempo de aproximadamente 2 minutos</span>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 @endsection
 
