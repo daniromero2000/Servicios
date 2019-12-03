@@ -40,9 +40,34 @@ class assessorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('assessors.assessors.dashboard');
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->factoryInterface->listFactoryRequests($skip * 30);
+
+        if (request()->has('q')) {
+            $list = $this->factoryInterface->searchFactoryRequest(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary')
+            )->sortByDesc('FECHASOL');
+        }
+
+        $listCount = $list->count();
+        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+
+        return view('assessors.assessors.list', [
+            'factoryRequests'            => $list,
+            'optionsRoutes'        => (request()->segment(2)),
+            'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'            => $listCount,
+            'skip'                 => $skip,
+            'factoryRequestsTotal' => $factoryRequestsTotal,
+
+        ]);
     }
 
     public function store(Request $request)
