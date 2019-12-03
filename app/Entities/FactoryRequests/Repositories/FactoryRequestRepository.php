@@ -204,7 +204,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function listFactoryAssessors($totalView, $assessor ): Support
+    public function listFactoryAssessors($totalView, $assessor): Support
     {
         try {
             return  $this->model
@@ -228,7 +228,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchFactoryAssessor($text, null, true, true)
+            return $this->model->searchFactoryAseessors($text, null, true, true)
                 ->where('id_asesor', $assessor)
                 ->when($status, function ($q, $status) {
                     return $q->where('ESTADO', $status);
@@ -244,9 +244,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->get($this->columns);
         }
 
-        return $this->model->searchFactoryAssessor($text, null, true, true)
-            ->whereBetween('FECHASOL', [$from, $to])
+        return $this->model->searchFactoryAseessors($text, null, true, true)
             ->where('id_asesor', $assessor)
+            ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO', $status);
             })

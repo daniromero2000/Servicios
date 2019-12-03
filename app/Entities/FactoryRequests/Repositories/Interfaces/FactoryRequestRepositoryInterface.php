@@ -26,4 +26,5 @@ interface FactoryRequestRepositoryInterface
   public function getFactoryRequestsTotal($from, $to);
 
   public function countAssessorFactoryRequestStatuses($from, $to, $assessor);
+  
 }

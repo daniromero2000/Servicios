@@ -127,14 +127,10 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 				<a class="preHeader-item  borderLeftItems" href="#">01 8000 11 77 87 o (1) 484 2122 en Bogotá</a>
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
 				@if(Auth::guard('web')->check())
-				<div class="logoutButton">
-					<a class="dropdown-item" href="{{ route('logout') }}"
-						onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-						{{ __('Logout') }}
-					</a>
-					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-						@csrf
-					</form>
+				<div class="logoutButton mr-2">
+					<a href=" {{ route('logout') }}" class="badge text-md badge-danger">
+						<i class="fas fa-power-off"></i> Cerrar Session
+					  </a>
 				</div>
 
 				@elseif(Auth::guard('assessor')->check())
@@ -152,7 +148,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 				@else
 
 				<div class="assesorLogin">
-					<a href="assessor/login">Ingreso asesores</a>
+					<a href="/login">Ingreso asesores</a>
 					<p>{{Auth::user()}}</p>
 				</div>
 				@endif

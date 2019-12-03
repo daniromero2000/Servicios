@@ -32,7 +32,7 @@
         <div class="row form-group" ng-if="filtros">
           <div class="col-12">
             <div class="card-header">
-              @include('layouts.admin.search', ['route' => route('factoryrequests.index')])
+              @include('layouts.admin.filter_assessors', ['route' => route('assessors.index')])
             </div>
             <div class=" mt-2 col-12 col-sm-6 col-md-12">
               <div class="row">

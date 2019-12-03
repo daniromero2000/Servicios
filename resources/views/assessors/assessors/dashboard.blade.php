@@ -50,7 +50,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
+                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -79,7 +79,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -109,7 +109,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -137,7 +137,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
