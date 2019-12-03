@@ -57,6 +57,36 @@
             </div>
           </div>
         </div>
+        <div class=" col-md-8 col-lg-12">
+          <!-- debe ir oculta -->
+          <div hidden class="card card-danger">
+            <div class="card-header">
+              <h3 class="card-title">Donut Chart</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
+            </div>
+          </div>
+          <!-- TORTA -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"> Resumen Estados Leads</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+            </div>
+          </div>
+        </div>
         <div class="row">
           @foreach ($creditCards as $creditCard)
           @if(!empty($creditCard['TARJETA']))
@@ -180,6 +210,12 @@
         var estados = [<?php echo '"'.implode('","', $leadStatusesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $leadStatusesValues).'"' ?>];
 
+        var channels = [];
+        var channelsValues = [];
+
+        var channels = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
+        var channelsValues = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
+
     //--------------
     //- AREA CHART -
     //--------------
@@ -254,6 +290,32 @@
     })
 
     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+    var donutData2 = {
+    labels: channels,
+    datasets: [
+    {
+    data: channelsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+    }
+    ]
+    }
+    var donutOptions2 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart2 = new Chart(donutChartCanvas2, {
+    type: 'doughnut',
+    data: donutData2,
+    options: donutOptions2
+    })
+
+    //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
@@ -263,6 +325,17 @@
       maintainAspectRatio : false,
       responsive : true,
     }
+
+    //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+      var pieData = donutData2;
+      var pieOptions2 = {
+      maintainAspectRatio : false,
+      responsive : true,
+      }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     var pieChart = new Chart(pieChartCanvas, {

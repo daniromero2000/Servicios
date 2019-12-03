@@ -94,9 +94,16 @@ class CommunityController extends Controller
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
 
+
+
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
+        }
+
+        foreach ($leadChannels as $key => $status) {
+            $leadChannels[] = ['channel' => $key, 'total' => count($leadChannels[$key])];
+            unset($leadChannels[$key]);
         }
 
         foreach ($leadStatuses as $key => $status) {

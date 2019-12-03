@@ -71,13 +71,13 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+
     public function countLeadChannels($from, $to)
     {
         try {
-            return  $this->model->select('channel', DB::raw('count(*) as total'))
+            return  $this->model->with('leadChannel')
                 ->whereBetween('created_at', [$from, $to])
-                ->groupBy('channel')
-                ->get();
+                ->get(['channel'])->groupBy('leadChannel.channel');
         } catch (QueryException $e) {
             dd($e);
         }

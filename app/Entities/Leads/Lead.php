@@ -2,6 +2,7 @@
 
 namespace App\Entities\Leads;
 
+use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
 use Illuminate\Database\Eloquent\Model;
@@ -52,5 +53,10 @@ class Lead extends Model
     public function leadStatuses()
     {
         return $this->belongsTo(LeadStatus::class, 'state', 'id');
+    }
+
+    public function leadChannel()
+    {
+        return $this->belongsTo(Channel::class, 'channel', 'id');
     }
 }
