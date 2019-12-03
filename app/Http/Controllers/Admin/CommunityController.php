@@ -94,6 +94,16 @@ class CommunityController extends Controller
     }
 
 
+    public function show(int $id)
+    {
+        $lead = $this->leadInterface->findLeadByIdFull($id);
+
+        return view('leads.show', [
+            'lead' => $lead,
+
+        ]);
+    }
+
     public function dashboard(Request $request)
     {
         $to = Carbon::now();
