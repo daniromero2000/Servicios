@@ -6,54 +6,55 @@
             <div class="card" style="font-size:10pt;">
                 <div class="card-body">
                     <form ng-submit="searchLeads()">
-                            <div class="container">
-                                    <div class="row form-group">
-                                            <div class="col-12 col-sm-4">
-                                                <label for="city">Ciudad</label>
-                                                <select id="city" class="form-control" ng-model="q.city"
-                                                    ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <label for="typeService">Tipo de Servicio</label>
-                                                <select id="typeService" class="form-control" ng-model="q.typeService"
-                                                    ng-options="service.value as service.label for service in typeServices"></select>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <label for="state">Estado</label>
-                                                <select id="state" class="form-control" ng-model="q.state"
-                                                    ng-options="state.value as state.label for state in typeStates"></select>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-12 col-sm-6">
-                                                <label for="fecha_ini">Fecha Inicial</label>
-                                                <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
-                                                    <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
-                                                    <span class="input-group-addon">
-                                                        <i class="octicon octicon-calendar"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <label for="fecha_fin">Fecha Final</label>
-                                                <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
-                                                    <input class="form-control" ng-model="q.fecha_fin">
-                                                    <span class="input-group-addon">
-                                                        <i class="octicon octicon-calendar"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 text-right">
-                                                <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros
-                                                    <i class="fas fa-times"></i></button>
-                                                <button type="submit" class="btn btn-primary">Filtrar <i
-                                                        class="fas fa-filter"></i></button>
-                                            </div>
-                                        </div>
-
+                        <div class="container">
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-4">
+                                    <label for="city">Ciudad</label>
+                                    <select id="city" class="form-control" ng-model="q.city"
+                                        ng-options="city.CIUDAD as city.CIUDAD for city in cities"></select>
                                 </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="typeService">Tipo de Servicio</label>
+                                    <select id="typeService" class="form-control" ng-model="q.typeService"
+                                        ng-options="service.value as service.label for service in typeServices"></select>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="state">Estado</label>
+                                    <select id="state" class="form-control" ng-model="q.state"
+                                        ng-options="state.value as state.label for state in typeStates"></select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-6">
+                                    <label for="fecha_ini">Fecha Inicial</label>
+                                    <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
+                                        <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="fecha_fin">Fecha Final</label>
+                                    <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
+                                        <input class="form-control" ng-model="q.fecha_fin">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear
+                                        Filtros
+                                        <i class="fas fa-times"></i></button>
+                                    <button type="submit" class="btn btn-primary">Filtrar <i
+                                            class="fas fa-filter"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </form>
                 </div>
@@ -96,6 +97,7 @@
                 <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
                     <thead class=" text-center">
                         <tr>
+                            <th scope="col">Estado</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Teléfono</th>
                             <th scope="col">Canal Adquisición</th>
@@ -107,6 +109,29 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="lead in leads">
+                            <td>
+                                <span class="text-center label" ng-if="lead.state == 1"
+                                    style="color: #ffffff; background-color: blue"
+                                    class="btn btn-info btn-block">Contactado</span>
+                                <span class="text-center label" ng-if="lead.state == 2"
+                                    style="color: #ffffff; background-color: green"
+                                    class="btn btn-info btn-block">Vendido</span>
+                                <span class="text-center label" ng-if="lead.state == 3"
+                                    style="color: #ffffff; background-color: yellow"
+                                    class="btn btn-info btn-block">Asignado a:</span>
+                                <span class="text-center label" ng-if="lead.state == 4"
+                                    style="color: #ffffff; background-color: purple"
+                                    class="btn btn-info btn-block">Impactado</span>
+                                <span class="text-center label" ng-if="lead.state == 5"
+                                    style="color: #ffffff; background-color: orange"
+                                    class="btn btn-info btn-block">Desistido</span>
+                                <span class="text-center label" ng-if="lead.state == 6"
+                                    style="color: #ffffff; background-color: red"
+                                    class="btn btn-info btn-block">Negado</span>
+                                <span class="text-center label" ng-if="lead.state == 7"
+                                    style="color: #ffffff; background-color: pink"
+                                    class="btn btn-info btn-block">Cotizado</span>
+                            </td>
                             <td>@{{ lead.nameLast }}</td>
                             <td>@{{ lead.telephone }}</td>
                             <td>
@@ -138,7 +163,7 @@
             </div>
         </div>
 
-      
+
     </div>
 </div>
 
@@ -276,7 +301,7 @@
                                 <div class="col-12 form-group">
                                     <label for="identificationNumber">Cédula <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" validation-pattern="IdentificationNumber"
-                                        id="identificationNumber" ng-model="lead.identificationNumber"/>
+                                        id="identificationNumber" ng-model="lead.identificationNumber" />
                                 </div>
                             </div>
                             <div class="row">
@@ -299,8 +324,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6 form-group no-padding-right">
                                     <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="text"  ng-model="lead.telephone"
-                                        id="telephone" cols="10" class="form-control" required>
+                                    <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
+                                        class="form-control" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -352,6 +377,17 @@
                                     <label for="product">Producto <span class="text-danger">*</span></label>
                                     <input type="text" ng-model="lead.typeProduct" validation-pattern="text"
                                         id="product" cols="10" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-3 d-flex align-items-end">
+                                <div class="form-group w-100">
+                                    <label for="assessor_id">Asesor</label>
+                                    <select class="form-control  select2" id="assessor_id" name="assessor_id"
+                                        ng-model="lead.assessor_id" style="width: 100%;">
+                                        <option disabled selected value> -- Selecciona Paso -- </option>
+                                        <option value="13">Evelyn Correa</option>
+                                        <option value="18">Vannesa Parra</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group text-left">
@@ -450,9 +486,8 @@
                                     </div>
                                     <div class="col-12 col-sm-6 no-padding-right">
                                         <label for="telephone">telefono<span class="text-danger">*</span></label>
-                                        <input type="text" ng-model="lead.telephone" 
-                                            id="telephone" cols="10" class="form-control" value="@{{lead.telephone}}"
-                                            required>
+                                        <input type="text" ng-model="lead.telephone" id="telephone" cols="10"
+                                            class="form-control" value="@{{lead.telephone}}" required>
                                     </div>
                                 </div>
 
@@ -511,7 +546,17 @@
                                             id="product" cols="10" class="form-control" value="@{{lead.typeProduct}}">
                                     </div>
                                 </div>
-
+                                <div class="col-3 d-flex align-items-end">
+                                    <div class="form-group w-100">
+                                        <label for="assessor_id">Asesor</label>
+                                        <select class="form-control  select2" id="assessor_id" name="assessor_id"
+                                            ng-model="lead.assessor_id" style="width: 100%;">
+                                            <option disabled selected value> -- Selecciona Asesor -- </option>
+                                            <option value="13">Evelyn Correa</option>
+                                            <option value="18">Vannesa Parra</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group text-left">
                                     <button class="btn btn-primary">Actualizar</button>
                                 </div>
