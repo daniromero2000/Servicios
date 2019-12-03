@@ -25,8 +25,34 @@ class DirectorController extends Controller
 
   public function index(Request $request)
   {
-    $director = auth()->user()->codeOportudata;
+    $director = auth()->user()->codeOportudata;   
+    $skip = $this->toolsInterface->getSkip($request->input('skip'));
+    $list = $this->factoryInterface->listFactoryDirector($skip * 30 , $director );
 
+    if (request()->has('q')) {
+        $list = $this->factoryInterface->searchFactoryDirectors(
+            request()->input('q'),
+            $skip,
+            request()->input('from'),
+            request()->input('to'),
+            request()->input('status'),
+            request()->input('subsidiary'),
+            $director
+        )->sortByDesc('FECHASOL');
+    }
+
+    $listCount = $list->count();
+    $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+
+    return view('director.list', [
+        'factoryRequests'            => $list,
+        'optionsRoutes'        => (request()->segment(2)),
+        'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+        'listCount'            => $listCount,
+        'skip'                 => $skip,
+        'factoryRequestsTotal' => $factoryRequestsTotal,
+
+    ]);
   
   }
 

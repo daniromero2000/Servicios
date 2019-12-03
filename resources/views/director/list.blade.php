@@ -20,7 +20,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active"><a href="/Administrator/communityLeads#!/"></a></li>
+              <li class="breadcrumb-item active"><a href="/Administrator/director">Solicitudes</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,7 +32,7 @@
         <div class="row form-group" ng-if="filtros">
           <div class="col-12">
             <div class="card-header">
-              @include('layouts.admin.filter_assessors', ['route' => route('assessors.index')])
+              @include('layouts.admin.filter_director', ['route' => route('director.index')])
             </div>
             <div class=" mt-2 col-12 col-sm-6 col-md-12">
               <div class="row">
