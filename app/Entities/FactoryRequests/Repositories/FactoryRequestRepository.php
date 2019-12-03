@@ -129,18 +129,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    // public function countAssessorFactoryRequestsStatuses($from, $to, $asesor)
-    // {
-    //     try {
-    //         return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-    //         ->where('asesor_id', $asesor)
-    //             ->whereBetween('FECHASOL', [$from, $to])
-    //             ->groupBy('ESTADO')
-    //             ->get();
-    //     } catch (QueryException $e) {
-    //         dd($e);
-    //     }
-    // }
 
     public function countWebFactoryRequests($from, $to)
     {
@@ -197,6 +185,19 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return $this->model
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countAssessorFactoryRequestStatuses($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('id_asesor', $assessor)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
         } catch (QueryException $e) {
             dd($e);
         }

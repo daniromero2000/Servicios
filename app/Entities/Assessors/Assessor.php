@@ -22,4 +22,29 @@ class Assessor extends \Eloquent implements AuthenticatableContract
         'SUCURSAL',
         'STATE'
     ];
+    public function searchAssessor($term)
+    {
+        return self::search($term);
+    }
+
+    public function hasCustomer()
+    {
+        return $this->belongsTo(Customer::class, 'CLIENTE')
+            ->where('ESTADO', 'APROBADO');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'CLIENTE');
+    }
+
+    public function subsidiary()
+    {
+        return $this->belongsTo(Subsidiary::class);
+    }
+
+    public function creditCard()
+    {
+        return $this->hasOne(CreditCard::class, 'SOLICITUD');
+    }
 }

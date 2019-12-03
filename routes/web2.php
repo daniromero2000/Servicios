@@ -98,11 +98,11 @@ Route::group(['prefix' => '/admin/motos/'], function () {
     Route::put('addImage/{idMoto}', 'Admin\MotosAdminController@storeImageMoto');
 });
 
-Route::group(['prefix' => '/assessor/'], function () {
-    Route::group(['prefix' => '/api/'], function () {
-        Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
-    });
-});
+// Route::group(['prefix' => '/assessor/'], function () {
+//     Route::group(['prefix' => '/api/'], function () {
+//         Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
+//     });
+// });
 
 // Administrator
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
@@ -131,7 +131,7 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
     });
-
+    
     Route::namespace('FactoryRequests')->group(function () {
         Route::resource('Administrator/factoryrequests', 'FactoryRequestController');
         Route::get('/api/canalDigital/assignAssesorDigitalToLead/{solicitud}', 'FactoryRequestController@assignAssesorDigitalToLead');
@@ -149,17 +149,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
-    Route::namespace('Asesors')->group(function () {
-        Route::resource('Administrator/asesors', 'CustomerController');
-        Route::get('/Administrator/dashboard/asesors', 'CustomerController@dashboard')->name('asesores_dashboard');
-    });
-
-    Route::group(['prefix' => '/assessor/'], function () {
-        Route::group(['prefix' => '/api/'], function () {
-            Route::get('getInfoLead/{identificationNumber}', 'Admin\assessorsController@getInfoLead');
-        });
-    });
-  
+    //asesores
+        Route::resource('Administrator/assessors', 'assessorsController');
+        Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors.dashboard');
+   
+ 
     Route::namespace('Comments')->group(function () {
         Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
     });
