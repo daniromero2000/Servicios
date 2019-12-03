@@ -175,6 +175,7 @@ Route::get('/googledd6db54bffdd55e4.html', function () {
 
 /* Admin Leads */
 Route::get('api/leads/getComentsLeads/{idLead}', 'Admin\LeadsController@getComentsLeads');
+Route::get('/api/leads/getFactoryRequestComments/{solicitud}', 'Admin\LeadsController@getFactoryRequestComments');
 
 /* Apis */
 Route::group(['prefix' => 'api/'], function () {
@@ -463,5 +464,12 @@ Route::group(['prefix' => '/campaigns'], function () {
 });
 
 Route::get('/campaigns/auteco2');
+
+
+Route::namespace('Admin')->group(function () {
+    Route::namespace('FactoryRequestsComments')->group(function () {
+        Route::resource('factoryRequestsComments', 'FactoryRequestsCommentController');
+    });
+});
 include "web2.php";
 include "web3.php";

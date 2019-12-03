@@ -4,6 +4,7 @@ namespace App\Entities\FactoryRequests;
 
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\Customers\Customer;
+use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -55,5 +56,10 @@ class FactoryRequest extends Model
     public function creditCard()
     {
         return $this->hasOne(CreditCard::class, 'SOLICITUD');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(FactoryRequestComment::class, 'solicitud');
     }
 }

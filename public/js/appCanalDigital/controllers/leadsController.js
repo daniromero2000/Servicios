@@ -426,7 +426,35 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             });
     }
 
+    $scope.viewCommentsFactoryRequest = function(name, lastName, solicitud, init = true){
+        $scope.comment = {};
+        $scope.comments = [];
+        $scope.solicitud = solicitud;
+        showLoader();
+        $http({
+            method: 'GET',
+            url: '/api/leads/getFactoryRequestComments/' + solicitud
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                angular.forEach(response.data, function (value, key) {
+                    $scope.comments.push(value);
+                });
+            }
+
+            if (init) {
+                $("#viewFactoryRequestComments").modal("show");
+                $scope.nameLead = name;
+                $scope.lastNameLead = lastName;
+            }
+            hideLoader();
+        }, function errorCallback(response) {
+            console.log(response);
+            hideLoader();
+        });
+    };
+
     $scope.viewComments = function (name, lastName, state, idLead, init = true) {
+        $scope.comment = {};
         $scope.comments = [];
         $scope.idLead = idLead;
         $http({
@@ -478,6 +506,23 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.viewCommentChange = function () {
         $scope.viewAddComent = !$scope.viewAddComent;
+    };
+
+    $scope.addFactoryRequestComment = function(){
+        $scope.comment.solicitud = $scope.solicitud;
+        $http({
+            method: 'POST',
+            data: $scope.comment,
+            url: '/factoryRequestsComments'
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                $scope.viewCommentsFactoryRequest($scope.lead.name, $scope.lead.lastName, $scope.solicitud, false);
+                $scope.comment.comment = "";
+                $scope.viewAddComent = false;
+            }
+        }, function errorCallback(response) {
+            console.log(response);
+        });
     };
 
     $scope.addComment = function () {
