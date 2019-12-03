@@ -16,11 +16,16 @@
               <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p>Leads</p>
+                  <p style="margin-bottom: -4px !important;">Leads</p>
                 </div>
-                <div class="icon">
+                <div class="icon mt-3">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
+                <div class="text-right mr-2" >
+                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
+                        style="color: white; !important">Ver
+                        Mas</a></span>
+                  </div>
               </div>
             </div>
           </div>
@@ -65,7 +70,8 @@
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
               </div>
             </div>
             <div class="card-body">
@@ -79,7 +85,8 @@
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
               </div>
             </div>
             <div class="card-body">
