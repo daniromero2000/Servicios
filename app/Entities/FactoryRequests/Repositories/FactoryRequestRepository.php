@@ -179,6 +179,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
+
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
@@ -201,5 +202,60 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
+    }
+
+    public function listFactoryAssessors($totalView, $assessor ): Support
+    {
+        try {
+            return  $this->model
+                ->orderBy('SOLICITUD', 'desc')
+                ->where('id_asesor', $assessor)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+    public function searchFactoryAseessors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $assessor): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->where('id_asesor', $assessor)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryAssessor($text, null, true, true)
+                ->where('id_asesor', $assessor)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->where('id_asesor', $assessor)
+                ->when($subsidiary, function ($q, $subsidiary) {
+                    return $q->where('SUCURSAL', $subsidiary);
+                })
+                ->orderBy('FECHASOL', 'desc')
+                ->where('id_asesor', $assessor)
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryAssessor($text, null, true, true)
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->where('id_asesor', $assessor)
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO', $status);
+            })
+            ->where('id_asesor', $assessor)
+            ->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->where('id_asesor', $assessor)
+            ->orderBy('FECHASOL', 'desc')
+            ->get($this->columns);
     }
 }

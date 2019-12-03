@@ -42,17 +42,19 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
+        $assessor = auth()->user()->email;      
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->factoryInterface->listFactoryRequests($skip * 30);
+        $list = $this->factoryInterface->listFactoryAssessors($skip * 30 , $assessor );
 
         if (request()->has('q')) {
-            $list = $this->factoryInterface->searchFactoryRequest(
+            $list = $this->factoryInterface->searchFactoryAseessors(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
                 request()->input('status'),
-                request()->input('subsidiary')
+                request()->input('subsidiary'),
+                $assessor
             )->sortByDesc('FECHASOL');
         }
 
