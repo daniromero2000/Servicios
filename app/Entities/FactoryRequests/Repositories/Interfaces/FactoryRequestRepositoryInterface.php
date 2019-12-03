@@ -19,12 +19,16 @@ interface FactoryRequestRepositoryInterface
 
   public function listFactoryRequests($totalView): Support;
 
-  public function listFactoryAssessors($totalView, $assessor): Support;
-
   public function countFactoryRequestsStatuses($from, $to);
 
   public function getFactoryRequestsTotal($from, $to);
 
   public function countAssessorFactoryRequestStatuses($from, $to, $assessor);
-  
+
+  public function listFactoryAssessors($totalView, $assessor): Support;
+
+  public function countDirectorFactoryRequestStatuses($from, $to, $assessor);
+
+  public function listFactoryDirector($totalView, $assessor): Support;
+
 }

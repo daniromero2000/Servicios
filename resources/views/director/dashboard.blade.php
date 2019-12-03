@@ -15,7 +15,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito</p>
+                <p>Solicitudes Crédito</p>                
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -200,7 +200,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('assessors.index')])
+              @include('layouts.admin.date_filter', ['route' => route('directors_dashboard')])
             </div>
             <div class="col-12">
               <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
