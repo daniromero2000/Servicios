@@ -448,6 +448,10 @@ class LeadsController extends Controller
         return  $this->leadInterface->findLeadById($idLead)->comments;
     }
 
+    public function getFactoryRequestComments($solicitud){
+        return $this->factoryRequestInterface->findFactoryRequestById($solicitud)->comments;
+    }
+
     public function deniedRequest($idLead, $comment)
     {
         $lead =  $this->leadInterface->findLeadById($idLead);

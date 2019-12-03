@@ -44,6 +44,16 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function findLeadByIdFull(int $id): Lead
+    {
+        try {
+            return $this->model
+                ->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getLeadChannel($cedula)
     {
         try {

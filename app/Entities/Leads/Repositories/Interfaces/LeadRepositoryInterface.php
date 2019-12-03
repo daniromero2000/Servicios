@@ -20,4 +20,6 @@ interface LeadRepositoryInterface
     public function countLeadStatuses($from, $to);
 
     public function listleads($totalView): Support;
+
+    public function findLeadByIdFull(int $id): Lead;
 }

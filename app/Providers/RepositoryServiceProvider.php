@@ -65,12 +65,19 @@ use App\Entities\CifinBasicDatas\Repositories\CifinBasicDataRepository;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\Ubicas\Repositories\UbicaRepository;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
+use App\Entities\FactoryRequestComments\Repositories\FactoryRequestCommentRepository;
+use App\Entities\FactoryRequestComments\Repositories\Interfaces\FactoryRequestCommentRepositoryInterface;
 
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            FactoryRequestCommentRepositoryInterface::class,
+            FactoryRequestCommentRepository::class
+        );
+
         $this->app->bind(
             UbicaRepositoryInterface::class,
             UbicaRepository::class

@@ -145,7 +145,6 @@ Route::namespace('Admin')->group(function () {
 
 
     /*Community Leads Resource*/
-
     Route::resource('communityleads', 'CommunityController');
     Route::get('/Administrator/dashboard/communitymanager', 'CommunityController@dashboard')->name('community_dashboard');
 
