@@ -5,6 +5,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.q = {
         'q': '',
         'qtipoTarjetaAprobados': '',
+        'qOrigenAprobados' : '',
         'qcityAprobados': '',
         'qleadChannel': '',
         'qfechaInicialAprobados': '',
@@ -14,6 +15,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qGen': '',
         'qfechaInicialTR': '',
         'qfechaFinalTR': '',
+        'qOrigenTR': '',
         'qTRAnt': '',
         'initFrom': 0,
         'initFromAnt': 0,
@@ -131,6 +133,24 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     }
     ];
 
+    $scope.origenes = [{
+        label: 'Oportuya',
+        value: 'Oportuya'
+    },
+    {
+        label:'Avances',
+        value:'Avance'
+    },
+    {
+        label:'Seguros - SOAT',
+        value:'SEGUROS'
+    },
+    {
+        label:'ASESORES - CRÉDITO',
+        value:'ASESORES-CREDITO'
+    }
+    ];
+
     $scope.getCities = function () {
         $http({
             method: 'GET',
@@ -158,12 +178,14 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/leads?q=' + $scope.q.q +
                 '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados +
+                '&qOrigenAprobados=' + $scope.q.qOrigenAprobados +
                 '&qcityAprobados=' + $scope.q.qcityAprobados +
                 '&qleadChannel=' + $scope.q.qleadChannel +
                 '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados +
                 '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados +
                 '&qfechaInicialTR=' + $scope.q.qfechaInicialTR +
                 '&qfechaFinalTR=' + $scope.q.qfechaFinalTR +
+                '&qOrigenTR=' + $scope.q.qOrigenTR +
                 '&qCM=' + $scope.q.qCM +
                 '&qRL=' + $scope.q.qRL +
                 '&qGen=' + $scope.q.qGen +
@@ -182,7 +204,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&channel' + $scope.q.channel,
 
         }).then(function successCallback(response) {
-
             $scope.codeAsesor = response.data.codeAsesor;
             $scope.totalLeads = response.data.totalLeads;
             $scope.totalLeadsAnt = response.data.totalLeadsAnt;
@@ -243,7 +264,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.q.initFromAnt = 0;
         $scope.q.initFromCM = 0;
         $scope.q.initFromGen = 0;
-        1
         $scope.q.initFromTR = 0;
         $scope.q.initFromTRAnt = 0;
         $scope.leads = [];
@@ -264,6 +284,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.q = {
             'q': '',
             'qtipoTarjetaAprobados': '',
+            'qOrigenAprobados' : '',
             'qcityAprobados': '',
             'qleadChannel': '',
             'qfechaInicialAprobados': '',
@@ -273,6 +294,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qGen': '',
             'qfechaInicialTR': '',
             'qfechaFinalTR': '',
+            'qOrigenTR': '',
             'qTRAnt': '',
             'initFrom': 0,
             'initFromAnt': 0,
@@ -398,6 +420,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     $scope.searchLeads();
                     hideLoader();
                 }, function errorCallback(response) {
+                    hideLoader();
                     console.log(response);
                 });
             });

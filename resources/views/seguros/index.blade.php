@@ -1,8 +1,5 @@
 @extends('layouts.app')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Seguros','page_path':'/seguros'});
-</script>
+
 @section('title', 'Seguros')
 
 @section('metaTags')
@@ -14,61 +11,194 @@
 	<meta property="og:image" content="" />
 	<meta property="og:description" content=""> --}}
 @endsection()
-
+@section('linkStyleSheets')
+	
+<style>
+#content-landing{
+	background-color: white;
+	height: 100%;
+	margin: auto;
+	width: 100%;
+}
+.content-1{
+	background-color:#103A9E;
+	width: 89%;
+	height: 100%;
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 5%;
+	border-radius: 58px 58px 0px 0px;
+}
+.img1{
+	max-width: 100%;
+	height: auto;
+}
+.content-text1{
+	text-align: center;
+	color: white;
+	font-size: 320%;
+	font-weight: bold;
+}
+.text-soat{
+	color: #FDBF3C;
+}
+.content-2{
+	width: 90%;
+	height: 100%;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 1%;
+}
+.content-product{
+	background-color: #103A9E;
+	height: auto;
+	border-radius: 0px 0px 30px 30px;
+	text-align: center;
+}
+.imgproduct{
+	width: 100%;
+	height: 280px;
+}
+.text-product1{
+	font-size: 20px;
+}
+.text-products{
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	padding: 8%;
+	font-weight: bold;
+}
+.content-imgHeader{
+	background-color: white;
+	width: 100%;
+	margin: auto;
+	height: 80px;
+}
+.text-header{
+	color: #09329B;
+	font-size: 25px;
+	font-weight: bold;
+}
+.btn-product{
+	background-color: #E13236;
+	color: white;
+	font-size: 100%;
+	font-weight: bold;
+	padding: 2% 4%;
+	border-radius: 10px;
+}
+a:hover{
+	text-decoration: none;
+	color: white;
+}
+.pd-img{
+	padding: 0%;
+}
+.content-btn{
+	margin-top: 3%;
+}
+.content-textProduct{
+	margin-top: -13%;
+    padding: 1%;	
+}
+.resetCol1{
+	padding: 0px 10px 0px 0px;
+}
+.resetCol2{
+	padding: 0px 10px 0px 0px;
+}
+.resetCol3{
+	padding:0px;
+}
+.content-wpp{
+	text-align: right;
+}
+.img-wpp{
+	width: 20%;
+	padding-bottom: 2%;
+}
+.img-ajust{
+	width: 100%;
+	height: 100%;
+}
+@media (max-width: 840px) {
+.img-wpp{
+	width: 50%;
+	padding-bottom: 2%;
+}
+}
+</style>
+@endsection
 @section('content')
-	<div id="construccion">
-		<div class="container">
-			<h2 class="creditoLibranza-title text-center">Esta sección está actualmente en construcción</h2>
-			<p class="text-center">Si te interesa conocer más sobre seguros, déjanos tus datos y un asesor se pondrá en contacto</p>
-			<div class="modalFormulario-body" style="margin: auto;">
-				<div class="modal-containerFormulario">
-					<h3 class="modal-titleForm titleForm-seguros">Seguros</h3>
-					<form role=form method="POST" id="saveLeadSeguros" action="{{ route('seguros.store') }}">
-						{{ csrf_field() }}
-						<input type="hidden" name="typeProduct" value="Seguros">
-						<input type="hidden" name="typeService" value="Seguros">
-						<input type="hidden" name="channel" value="1">
-						<div class="form-group">
-							<label for="name" class="control-label">Nombres</label>
-							<input type="text" name="name" class="form-control" id="name" validation-pattern="name" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="lastName" class="control-label">Apellidos</label>
-							<input type="text" name="lastName" class="form-control" id="lastName" validation-pattern="name" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="email" class="control-label">Correo electrónico</label>
-							<input type="email" name="email" class="form-control" id="email" validation-pattern="email" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="telephone class="control-label">Teléfono</label>
-							<input type="text" name="telephone" class="form-control" id="telephone" validation-pattern="telephone" required="true"/>
-						</div>
-						<div class="form-group">
-							<label for="city class="control-label">Ciudad</label>
-							<select name="city" id="city" class="form-control" >
-								@foreach($cities as $city)
-									<option value="{{ $city['CIUDAD'] }}">{{ $city['CIUDAD'] }}</option>
-								@endforeach
-							</select>
-						</div>
-						<div class="form-group">
-							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
-							<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
-								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
-							</label>
-						</div>
-						<p class="textCityForm">
-							*Válido solo para ciudades que se desplieguen en la casilla.
-						</p>
-						<div class="form-group text-right">
-							<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
-								Guardar
-							</button>
-						</div>
-					</form>
+<div id="content-landing">
+	<div id="header-seguros">
+		<div class="row content-imgHeader" >
+			<div class="col-12 col-sm-12 content-img d-flex align-items-center justify-content-center">
+				<span class="text-header">¡Lleva tu SOAT a crédito!</span>
+			</div>
+		</div>
+		<div class="row content-1">
+			<div class="col-12 col-md-6 d-flex align-items-center justify-content-center content-text1">
+				<span class="">¡Adquiere el <span class="text-soat">SOAT</span><br>para tu vehículo <br> a CRÉDITO!</span>
+			</div>
+			<div class="col-12 col-md-6 pd-img">
+				<div>
+					<img src="{{ asset('images/seguros/img1.png')}}" class="img1">
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="imagenes">
+		<div class="row content-2">
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
+				<div class="content-product">
+					<div>
+						<img class="img-ajust" src="{{ asset('images/seguros/img2.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
+					</div>
+					<div class="content-btn">
+						<h1 class="text-products">Automóviles</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
+				<div class="content-product">
+					<div>
+						<img class="img-ajust" src="{{ asset('images/seguros/img3.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
+					</div>
+					<div class="content-btn">
+						<h1 class="text-products">Motos</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-4 col-sm-4 resetCol1">
+				<div class="content-product">
+					<div>
+						<img class="img-ajust" src="{{ asset('images/seguros/img4.png')}}" class="imgproduct">
+						<div class="content-textProduct">
+							<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
+						</div>
+					</div>
+					<div class="content-btn">
+						<h1 class="text-products">Carga Pesada</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row resetRow">
+			<div class="col-12 col-md-12 content-wpp">
+				<a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
+					target="_blank"><img class="img-wpp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection

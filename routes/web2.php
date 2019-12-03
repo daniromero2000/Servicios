@@ -144,6 +144,12 @@ Route::namespace('Admin')->group(function () {
     });
 
 
+    /*Community Leads Resource*/
+
+    Route::resource('communityleads', 'CommunityController');
+    Route::get('/Administrator/dashboard/communitymanager', 'CommunityController@dashboard')->name('community_dashboard');
+
+
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
@@ -169,7 +175,13 @@ Route::namespace('Front')->group(function () {
     });
 
     Route::namespace('Insurances')->group(function () {
-        Route::resource('seguros', 'SegurosController');
+        Route::resource('seguros', 'SegurosController', [
+            'except' => ['show']
+        ]);
+
+        Route::get('seguros/credito', function () {
+            return view('seguros.credito.index');
+        });
     });
 
     Route::namespace('Motos')->group(function () {

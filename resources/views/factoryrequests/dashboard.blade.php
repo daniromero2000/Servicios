@@ -10,12 +10,12 @@
     <div class="col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12 col-sm-6 col-md-6 ">
             <!-- /.info-box -->
-            <div class="small-box ">
+            <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes</p>
+                <p>Solicitudes Crédito</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="col-12 col-sm-6 col-md-6">
-            <div class="small-box ">
+            <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
                 <p>${{ number_format ($factoryRequestsTotal) }}</p>
@@ -50,7 +50,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -152,7 +152,6 @@
             </div>
           </div>
         </div>
-
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -169,15 +168,8 @@
             </div>
           </div>
         </div>
-
-
-
-
-
       </div>
-
     </div>
-
     <!-- /.col (LEFT) -->
     <div class=" col-md-7 col-lg-8">
       <!-- debe ir oculta -->
@@ -195,10 +187,10 @@
           <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
         </div>
       </div>
-
       <!-- TORTA -->
       <div class="card">
         <div class="card-header">
+          <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -218,7 +210,6 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <!-- /.col (RIGTH) -->
     <div class="col-md-4">
@@ -235,7 +226,6 @@
           <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
         </div>
       </div>
-
       <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
@@ -254,13 +244,12 @@
       </div>
     </div>
     <!-- Card 1 -->
-
     <!-- /.col (LEFT) -->
     <div class="col-md-8">
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">
-          <h3 class="card-title">Bar Chart</h3>
+          <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -525,12 +514,6 @@
 <script src="{{ asset('dist/js/pages/dashboard3.js') }}"></script>
 <!-- jQuery UI -->
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js') }}"></script>
 <!-- FLOT CHARTS -->
 <script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->

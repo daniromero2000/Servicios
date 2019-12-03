@@ -5,19 +5,23 @@ namespace App\Http\Controllers\Front\Insurances;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
+use Carbon\Carbon;
 
 class SegurosController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface;
+    private $customerInterface, $subsidiaryInterface, $customerCellPhoneInterface;
 
     public function __construct(
-        LeadRepositoryInterface $leadRepositoryInterface,
-        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface
     ) {
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
-        $this->leadInterface       = $leadRepositoryInterface;
+        $this->customerInterface       = $customerRepositoryInterface;
+        $this->customerCellPhoneInterface        = $customerCellPhoneRepositoryInterface;
     }
 
     public function index()
@@ -30,8 +34,33 @@ class SegurosController extends Controller
 
     public function store(Request $request)
     {
-        $this->leadInterface->createLead($request->input());
+        $request['FEC_ING']   = $request->input('FEC_ING')."-01";
+        $antig                = new Carbon($request['FEC_ING']);
+        $request['FEC_CONST'] = $request->input('FEC_CONST')."-01";
+        $antig_ind            = new Carbon($request['FEC_CONST']);
+        $birthday             = new Carbon($request->FEC_NAC);
+        $subsidiaryCityName   = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
+        $request['EDAD_INDP'] = $antig_ind->diffInYears(Carbon::now());
+        $request['ANTIG']     = $antig->diffInMonths(Carbon::now());
+        $request['EDAD']      = $birthday->diffInYears(Carbon::now());
+        $request['SUC']       = $request->get('CIUD_UBI');
+        $request['CIUD_UBI']  = $subsidiaryCityName;
+        $request['POSEEVEH']  = "S";
 
-        return redirect()->route('thankYouPageSeguros');
+        foreach ($request->input() as $key => $value) {
+            $request[$key] = trim(strtoupper($request[$key]));
+        }
+        
+        $this->customerInterface->updateOrCreateCustomer($request->input());
+
+        if (empty($this->customerCellPhoneInterface->checkIfExists($request->input('CEDULA'), $request->input('CELULAR')))) {
+            $clienteCelular = [];
+            $clienteCelular['IDENTI'] = $request->input('CEDULA');
+            $clienteCelular['NUM'] = trim($request->get('CELULAR'));
+            $clienteCelular['TIPO'] = 'CEL';
+            $clienteCelular['CEL_VAL'] = 1;
+            $clienteCelular['FECHA'] = date("Y-m-d H:i:s");
+            $this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
+        }
     }
 }

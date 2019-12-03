@@ -11,4 +11,6 @@ interface FosygaRepositoryInterface
     public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition);
 
     public function validateDateConsultaFosyga($identificationNumber, $daysToIncrement);
+
+    public function countCustomersfosygasConsultatios($from, $to);
 }

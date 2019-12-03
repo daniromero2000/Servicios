@@ -39,21 +39,19 @@
                     <div class="col-3 d-flex align-items-end">
                         <div class="form-group w-100">
                             <label for="step">Sucursal</label>
-                            <select class="form-control  select2" id="step" name="step" {!!
-                                request()->input('step')!!} style="width: 100%;">
+                            <select class="form-control  select2" id="step" name="step" {!! request()->input('step')!!}
+                                style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Paso -- </option>
-                                <option>O-PASO1</option>
-                                <option>O-PASO2</option>
-                                <option>O-PASO3</option>
-                                <option>A-PASO1</option>
-                                <option>A-PASO2</option>
-                                <option>A-PASO3</option>
+                                <option>PASO1</option>
+                                <option>PASO2</option>
+                                <option>PASO3</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-3 d-flex align-items-center">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i class="fa fa-search"></i>
+                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
+                                    class="fa fa-search"></i>
                                 Buscar
                             </button>
                         </span>

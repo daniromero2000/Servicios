@@ -290,6 +290,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.addCliente = function(tipoCreacion){
+		$('#proccess').modal('show');
 		$scope.lead.tipoCliente = tipoCreacion;
 		showLoader();
 		$http({ 
@@ -297,7 +298,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			hideLoader();
+			$('#proccess').modal('hide');
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
 					$scope.showConfirm();
@@ -313,18 +314,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 	
 	$scope.execConsultasLead = function(identificationNumber){
-		setTimeout(() => {
-			showLoader();
-		}, 1000);
+		$('#proccess').modal('show');
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
-			console.log(response);
-			setTimeout(() => {
-				hideLoader();
-			}, 2000);
-
+			$('#proccess').modal('hide');
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
@@ -365,7 +360,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 			}
 		}, function errorCallback(response) {
-			hideLoader();
 			console.log(response);
 		});
 	};
@@ -449,7 +443,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/getInfoLead/'+$scope.lead.cedula,
 		  }).then(function successCallback(response) {
-			  console.log(response);
 			$scope.infoLead = response.data;
 			$scope.showResp = true;
 			hideLoader();

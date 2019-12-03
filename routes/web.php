@@ -194,18 +194,6 @@ Route::group(['prefix' => 'api/'], function () {
 });
 
 
-/**
- **Proyecto: SERVICIOS FINANCIEROS
- **Caso de Uso: Administrador de leads - Canal dígital
- **Autor: Robert García
- **Email: desarrollo1@lagobo.com
- **Fecha: 6/12/2018
- **/
-
-/*Community Leads Resource*/
-
-Route::resource('communityleads', 'Admin\CommunityController');
-
 /*Community Leads routes*/
 Route::post('communityLeads/addCommunityLeads', 'Admin\LeadsController@addCommunityLeads');
 Route::get('api/execCreditPolicy/{identificationNumber}', 'Admin\OportuyaV2Controller@execCreditPolicy');
@@ -213,14 +201,6 @@ Route::post('api/simulateCreditPolicy/', 'Admin\CreditPolicyController@simulateC
 Route::post('communityLeads/updateCommunityLeads', 'Admin\LeadsController@updateCommunityLeads');
 Route::get('communityLeads/viewCommunityLeads/{idLead}', 'Admin\LeadsController@viewCommunityLeads');
 Route::post('communityLeads/deleteCommunityLeads/{idLead}', 'Admin\LeadsController@deleteCommunityLeads');
-
-/**
- **Proyecto: SERVICIOS FINANCIEROS
- **Caso de Uso: Administrador de campañas
- **Autor: Robert García
- **Email: desarrollo1@lagobo.com
- **Fecha: 13/12/2018
- **/
 
 /*Campaign resource*/
 
@@ -262,14 +242,6 @@ Route::group(['prefix' => '/solicitudesAsessores/'], function () {
     });
 });
 
-
-/**
- **Proyecto: SERVICIOS FINANCIEROS
- **Caso de Uso: Administrador de Usuarios
- **Autor: Robert García
- **Email: desarrollo1@lagobo.com
- **Fecha: 20/12/2018
- **/
 Route::get('/api/canalDigital/checkLeadProcess/{idLead}', 'Admin\LeadsController@checkLeadProcess');
 
 Route::resource('creditPolicy', 'Admin\CreditPolicyController');

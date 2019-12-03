@@ -50,9 +50,9 @@
                         <tbody>
                             <tr ng-repeat="user in users">
                                 <td>@{{ user.name }}</td>
-                                <td>@{{ user.email }}</td>
-                                <td>@{{ user.profileName }}</td>
-                                <td>
+                                <td class="text-center">@{{ user.email }}</td>
+                                <td class="text-center">@{{ user.profileName }}</td>
+                                <td class="text-center">
                                     <i class="fas fa-edit cursor" title="Actualizar usuario"
                                         ng-click="updateUserForm(user)"></i>
                                     <i class="fas fa-times cursor" title="eliminar campaña"

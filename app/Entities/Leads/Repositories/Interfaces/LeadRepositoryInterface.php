@@ -13,4 +13,6 @@ interface LeadRepositoryInterface
     public function findLeadById(int $id): Lead;
 
     public function updateLead(array $params): bool;
+
+    public function countLeadChannels($from, $to);
 }
