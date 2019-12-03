@@ -13,7 +13,7 @@
           <div class="row d-flex justify-content-center">
             <div class="col-12 ">
               <!-- /.info-box -->
-              <div class="small-box bg-primary" >
+              <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
                   <p>Leads</p>
@@ -44,7 +44,7 @@
           <!-- TORTA -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"> Resumen Intenciones</h3>
+              <h3 class="card-title"> Resumen Estados Leads</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
@@ -112,7 +112,7 @@
         <!-- PORCENTAJES -->
         <div class="card ">
           <div class="card-header">
-            <h3 class="card-title">Perfiles Crediticios</h3>
+            <h3 class="card-title">Estados Leads</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -121,7 +121,7 @@
           </div>
           <div class="card-body">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('community_dashboard')])
             </div>
             <div class="chart">
               <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
@@ -177,8 +177,8 @@
     var estados = [];
         var values = [];
 
-        var estados = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $leadStatusesNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $leadStatusesValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -191,7 +191,7 @@
       labels  :estados,
       datasets: [
         {
-          label               : 'Perfil Crediticio',
+          label               : 'Estados',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,

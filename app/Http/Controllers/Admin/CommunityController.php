@@ -92,17 +92,16 @@ class CommunityController extends Controller
         $from = Carbon::now()->subMonth();
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
-
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
+
+        if (request()->has('from')) {
+            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
+            $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
+        }
 
         foreach ($leadStatuses as $key => $status) {
             $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
             unset($leadStatuses[$key]);
-        }
-        dd($leadStatuses);
-
-        if (request()->has('from')) {
-            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
         }
 
         $totalStatuses = $leadChannels->sum('total');
@@ -114,6 +113,9 @@ class CommunityController extends Controller
         $leadChannels   = $leadChannels->toArray();
         $leadChannels   = array_values($leadChannels);
 
+        $leadStatuses   = $leadStatuses->toArray();
+        $leadStatuses   = array_values($leadStatuses);
+
         $leadChannelNames  = [];
         $leadChannelValues  = [];
 
@@ -123,9 +125,19 @@ class CommunityController extends Controller
         }
 
 
+        $leadStatusesNames  = [];
+        $leadStatusesValues  = [];
+
+        foreach ($leadStatuses as $leadStatus) {
+            array_push($leadStatusesNames, trim($leadStatus['status']));
+            array_push($leadStatusesValues, trim($leadStatus['total']));
+        }
+
         return view('communityLeads.dashboard', [
             'leadChannelNames'  => $leadChannelNames,
             'leadChannelValues' => $leadChannelValues,
+            'leadStatusesNames'  => $leadStatusesNames,
+            'leadStatusesValues' => $leadStatusesValues,
             'creditCards'  => $creditCards,
             'totalStatuses'  => $totalStatuses
         ]);

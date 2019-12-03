@@ -48,4 +48,9 @@ class Lead extends Model
     {
         return $this->belongsToMany(LeadStatus::class, 'lead_status', 'lead_id', 'lead_status_id');
     }
+
+    public function leadStatuses()
+    {
+        return $this->belongsTo(LeadStatus::class, 'state', 'id');
+    }
 }
