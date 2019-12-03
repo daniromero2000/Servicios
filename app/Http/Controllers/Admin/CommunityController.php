@@ -6,21 +6,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Carbon\Carbon;
 
 
 class CommunityController extends Controller
 {
-    private $leadInterface;
+    private $leadInterface, $toolsInterface;
 
     public function __construct(
-        LeadRepositoryInterface $leadRepositoryInterface
+        LeadRepositoryInterface $leadRepositoryInterface,
+        ToolRepositoryInterface $toolRepositoryInterface
     ) {
         $this->leadInterface = $leadRepositoryInterface;
+        $this->toolsInterface = $toolRepositoryInterface;
     }
 
     public function index(Request $request)
     {
+
+
+
         $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`, lead.`campaign`, cam.`name` as campaignName
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
@@ -89,7 +95,10 @@ class CommunityController extends Controller
 
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
 
-
+        foreach ($leadStatuses as $key => $status) {
+            $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            unset($leadStatuses[$key]);
+        }
         dd($leadStatuses);
 
         if (request()->has('from')) {

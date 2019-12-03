@@ -5,6 +5,8 @@ namespace App\Entities\Leads;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class Lead extends Model
 {
@@ -44,6 +46,6 @@ class Lead extends Model
 
     public function leadStatus()
     {
-        return $this->belongsTo(LeadStatus::Class, 'state', 'id');
+        return $this->belongsToMany(LeadStatus::class, 'lead_status', 'lead_id', 'lead_status_id');
     }
 }

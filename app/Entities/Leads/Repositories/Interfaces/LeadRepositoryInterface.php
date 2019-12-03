@@ -3,6 +3,7 @@
 namespace App\Entities\Leads\Repositories\Interfaces;
 
 use App\Entities\Leads\Lead;
+use Illuminate\Support\Collection as Support;
 
 interface LeadRepositoryInterface
 {
@@ -17,4 +18,6 @@ interface LeadRepositoryInterface
     public function countLeadChannels($from, $to);
 
     public function countLeadStatuses($from, $to);
+
+    public function listleads($totalView): Support;
 }
