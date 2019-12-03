@@ -62,4 +62,15 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
+
+    public function countLeadStatuses($from, $to)
+    {
+        try {
+            return  $this->model->with('leadStatus')
+                ->whereBetween('created_at', [$from, $to])
+                ->get()->groupBy('leadStatus.status');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

@@ -87,6 +87,10 @@ class CommunityController extends Controller
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
 
+        $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
+
+
+        dd($leadStatuses);
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
@@ -110,7 +114,7 @@ class CommunityController extends Controller
         }
 
 
-        return view('Intentions.dashboard', [
+        return view('communityLeads.dashboard', [
             'leadChannelNames'  => $leadChannelNames,
             'leadChannelValues' => $leadChannelValues,
             'creditCards'  => $creditCards,

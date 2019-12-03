@@ -16,7 +16,7 @@
               <div class="small-box bg-primary" >
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p>Intenciones</p>
+                  <p>Leads</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
@@ -177,8 +177,8 @@
     var estados = [];
         var values = [];
 
-        var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
