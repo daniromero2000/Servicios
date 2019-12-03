@@ -7,27 +7,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Carbon\Carbon;
 
 
 class CommunityController extends Controller
 {
-    private $leadInterface, $toolsInterface;
+    private $leadInterface, $toolsInterface, $userInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface
     ) {
         $this->leadInterface = $leadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->userInterface = $userRepositoryInterface;
     }
 
     public function index(Request $request)
     {
-
-
-
-        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`, lead.`campaign`, cam.`name` as campaignName
+        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`, lead.`assessor_id`, lead.`campaign`, cam.`name` as campaignName
         FROM `leads` as lead
         LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
         WHERE (`channel` = 2 OR `channel` = 3)";
@@ -66,14 +66,22 @@ class CommunityController extends Controller
             $queryCM .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['fecha_fin']);
         }
 
-
         $respTotalLeads = DB::select($queryCM);
-
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
 
+        $leadsCM = [];
+        $leadsCM = DB::select($queryCM);
+
+        foreach ($respTotalLeads as $key => $lead) {
+            if ($lead->assessor_id != '') {
+                $respTotalLeads[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
+            }
+            $leadsCM[]      = $respTotalLeads[$key];
+        }
+
         return [
-            'leadsCommunity' => DB::select($queryCM),
+            'leadsCommunity' =>  $leadsCM,
             'totalLeads'   => count($respTotalLeads)
         ];
     }

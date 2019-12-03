@@ -1,5 +1,4 @@
 <div class="card  mb-4 border-0 shadow-lg">
-
     <div class="row form-group" ng-if="filtros">
         <div class="col-12">
 
@@ -98,6 +97,7 @@
                     <thead class=" text-center">
                         <tr>
                             <th scope="col">Estado</th>
+                            <th scope="col">Asesor</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Teléfono</th>
                             <th scope="col">Canal Adquisición</th>
@@ -131,6 +131,7 @@
                                     style="color: #ffffff; background-color: pink"
                                     class="btn btn-info btn-block">Cotizado</span>
                             </td>
+                            <td>@{{ lead.nameAsesor }}</td>
                             <td>@{{ lead.nameLast }}</td>
                             <td>@{{ lead.telephone }}</td>
                             <td>
