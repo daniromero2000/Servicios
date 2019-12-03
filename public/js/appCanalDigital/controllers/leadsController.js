@@ -442,7 +442,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             }
 
             if (init) {
-                $("#viewComments").modal("show");
+                $("#viewFactoryRequestComments").modal("show");
                 $scope.nameLead = name;
                 $scope.lastNameLead = lastName;
             }
@@ -511,11 +511,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.addFactoryRequestComment = function(){
         $scope.comment.solicitud = $scope.solicitud;
         $http({
-            method: 'GET',
-            url: '/Admin/Comments/api/leads/addComent/' + $scope.comment.solicitud + '/' + $scope.comment.comment
+            method: 'POST',
+            data: $scope.comment,
+            url: '/factoryRequestsComments'
         }).then(function successCallback(response) {
             if (response.data != false) {
-                $scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.state, $scope.idLead, false);
+                $scope.viewCommentsFactoryRequest($scope.lead.name, $scope.lead.lastName, $scope.solicitud, false);
                 $scope.comment.comment = "";
                 $scope.viewAddComent = false;
             }
