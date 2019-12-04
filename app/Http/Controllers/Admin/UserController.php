@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\Users\Repositories\UserRepository;
 use App\User;
 use App\Profiles;
 use App\ProfilesAssessor;
@@ -12,13 +14,19 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $userInterface;
+    public function __construct(
+        UserRepositoryInterface $UserRepositoryInterface
+    )
     {
+        $this->userInterface = $UserRepositoryInterface;
+
         $this->middleware('auth')->except('logout');
     }
 
     public function index(Request $request)
     {
+               
         $query = "SELECT `profiles`.`id` AS profileID, `profiles`.`name` AS profileName, users.`id`, users.`name`, users.`email`, users.`idProfile`, users.`created_at`, users.`created_at`, users.`codeOportudata` FROM users LEFT JOIN profiles ON `profiles`.`id`=`users`.`idProfile` WHERE 1";
 
         if ($request->get('q')) {
@@ -80,7 +88,7 @@ class UserController extends Controller
     }
 
     public function show($id)
-    {
+    {   
         return  view('users.show', [
             'user' =>  User::find($id)
         ]);
@@ -105,7 +113,7 @@ class UserController extends Controller
         } elseif ($request->get('idProfile') == "digital") {
             $user->idProfile = 2;
         } else {
-            $user->idProfile = 3;
+            $user->idProfile = 3;   
         }
         $user->save();
 
@@ -118,5 +126,27 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json([true]);
+    }
+    public function Profile(Request $request)
+    {
+        $sesion= auth()->user()->id;
+        return view('users.profileUser', [
+            'user' => $this->userInterface->findUserById($sesion)
+        ]);
+
+    }
+    public function updateProfile(Request $request, $id)
+    {
+        $sesion= auth()->user()->id;
+        $user = $this->userInterface->findUserById($id);
+        $update   = new UserRepository($user);
+        $update->updateUser($request->except('_token', '_method', 'password'));
+
+        if ($request->has('password') && $request->input('password') != '') {
+            $update->updateUser($request->only('password'));
+        }
+
+        return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
+            ->with('message', 'Actualización Exitosa!');
     }
 }

@@ -154,6 +154,9 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
+        Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');
+        Route::put('/Administrator/{user}/profile', 'UserController@updateProfile')->name('user.profile.update');
+
     Route::namespace('Directors')->group(function () {
         Route::resource('/Administrator/director', 'DirectorController');
         Route::get('/Administrator/dashboard/director', 'DirectorController@dashboard')->name('directors_dashboard');

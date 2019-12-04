@@ -323,9 +323,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
-    public function searchFactoryDirectors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $director): Collection
+    public function searchFactoryDirectors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $assessor = null, $director): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {
             return $this->model->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -340,8 +340,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     return $q->where('ESTADO', $status);
                 })
                 ->where('SUCURSAL', $director)
-                ->when($subsidiary, function ($q, $subsidiary) {
-                    return $q->where('SUCURSAL', $subsidiary);
+                ->when($assessor, function ($q, $assessor) {
+                    return $q->where('CODASESOR', $assessor);
                 })
                 ->orderBy('FECHASOL', 'desc')
                 ->where('SUCURSAL', $director)
@@ -357,8 +357,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 return $q->where('ESTADO', $status);
             })
             ->where('SUCURSAL', $director)
-            ->when($subsidiary, function ($q, $subsidiary) {
-                return $q->where('SUCURSAL', $subsidiary);
+            ->when($assessor, function ($q, $assessor) {
+                return $q->where('CODASESOR', $assessor);
             })
             ->where('SUCURSAL', $director)
             ->orderBy('FECHASOL', 'desc')

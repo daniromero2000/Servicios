@@ -36,7 +36,7 @@ class DirectorController extends Controller
             request()->input('from'),
             request()->input('to'),
             request()->input('status'),
-            request()->input('subsidiary'),
+            request()->input('assessor'),
             $director
         )->sortByDesc('FECHASOL');
     }
