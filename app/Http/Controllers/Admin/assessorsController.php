@@ -341,51 +341,51 @@ class assessorsController extends Controller
         $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
         $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
 
-        $estadosNames = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
+        $estadosAssessors = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webCounts    = $this->factoryInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal($from, $to);
 
         if (request()->has('from')) {
-            $estadosNames = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
+            $estadosAssessors = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
             $webCounts    = $this->factoryInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
             $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
         }
 
-        $estadosNames   = $estadosNames->toArray();
+        $estadosAssessors   = $estadosAssessors->toArray();
         $webCounts      = $webCounts->toArray();
-        $estadosNames   = array_values($estadosNames);
+        $estadosAssessors   = array_values($estadosAssessors);
         $webCounts      = array_values($webCounts);
 
-        $statusesNames  = [];
+        $statusesAssessors  = [];
         $statusesValues = [];
         $statusesColors = [];
-        foreach ($estadosNames as $estadosName) {
-            array_push($statusesNames, trim($estadosName['ESTADO']));
+        foreach ($estadosAssessors as $estadosName) {
+            array_push($statusesAssessors, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
             $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
             array_push($statusesColors, trim($color));
         }
 
         $webValues      = [];
-        $webNames       = [];
+        $webAssessors       = [];
         $webColors = [];
         foreach ($webCounts as $webCount) {
-            array_push($webNames, trim($webCount['ESTADO']));
+            array_push($webAssessors, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
             $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
             array_push($webColors, trim($color));
         }
 
         return view('assessors.assessors.dashboard', [
-            'statusesNames'  => $statusesNames,
-            'statusesValues' => $statusesValues,
-            'statusesColors' => $statusesColors,
-            'webValues'      => $webValues,
-            'webNames'       => $webNames,
-            'webColors'       => $webColors,
-            'totalWeb'       => array_sum($webValues),
-            'totalStatuses'  => array_sum($statusesValues),
-            'factoryRequestsTotal'       => $factoryRequestsTotal,
+            'statusesAssessors'       => $statusesAssessors,
+            'statusesValues'          => $statusesValues,
+            'statusesColors'          => $statusesColors,
+            'webValues'               => $webValues,
+            'webAssessors'            => $webAssessors,
+            'webColors'               => $webColors,
+            'totalStatuses'           => array_sum($statusesValues),
+            'totalWeb'                => array_sum($webValues),
+            'factoryRequestsTotal'    => $factoryRequestsTotal,
         ]);
     }
 }

@@ -719,7 +719,7 @@
         var values = [];
 
 
-        var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $statusesAssessors).'"' ?>];
         var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 
             /* END LINE CHART */
@@ -858,13 +858,13 @@
     var values = [];
     var statusesColors = [];
     var webValues = [];
-    var webNames = [];
+    var webAssessors = [];
     var webColors = [];
 
 
-var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+var estados = [<?php echo '"'.implode('","', $statusesAssessors).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
-var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
+var webAssessors = [<?php echo '"'.implode('","', $webAssessors).'"' ?>];
 var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
 var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
 var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
@@ -947,7 +947,7 @@ var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
       // Get context with jQuery - using jQuery's .get() method.
 
       var donutData2 = {
-      labels: webNames,
+      labels: webAssessors,
       datasets: [
       {
       data: webValues,
