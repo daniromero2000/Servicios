@@ -98,6 +98,7 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
                 '&city=' + $scope.q.city,
 
         }).then(function successCallback(response) {
+            console.log(response);
             $scope.totalLeads = response.data.totalLeads;
             if (response.data.leadsCommunity != false) {
                 $scope.q.initFromCM += response.data.leadsCommunity.length;
@@ -121,7 +122,6 @@ app.controller('communityController', function ($scope, $http, $rootScope) {
             method: 'GET',
             url: '/subsidiaries/cities'
         }).then(function successCallback(response) {
-            console.log(response.data);
             if (response.data != false) {
                 $scope.cities = response.data;
             }
