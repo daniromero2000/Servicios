@@ -555,7 +555,8 @@
                                             ng-model="lead.assessor_id" style="width: 100%;">
                                             <option disabled selected value> -- Selecciona Asesor -- </option>
                                             <option value="13">Evelyn Correa</option>
-                                            <option value="18">Vannesa Parra</option>
+                                           <option value="18">Vanessa Parra</option>
+                                        <option value="85">Danitza Naranjo</option>
                                         </select>
                                     </div>
                                 </div>
