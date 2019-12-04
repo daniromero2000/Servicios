@@ -48,7 +48,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
-                <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                <p>${{ number_format ($factoryAssessorsTotal) }}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -233,7 +233,7 @@
   </div>
   <div class="row">
     <!-- /.col (RIGTH) -->
-    <div class="col-md-4">
+    <div hidden class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
@@ -266,7 +266,7 @@
     </div>
     <!-- Card 1 -->
     <!-- /.col (LEFT) -->
-    <div class="col-md-8">
+    <div class="col-md-12">
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">

@@ -713,7 +713,7 @@
         var values = [];
 
 
-        var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $statusesDirectorNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 
             /* END LINE CHART */
@@ -856,7 +856,7 @@
     var webColors = [];
 
 
-var estados = [<?php echo '"'.implode('","', $statusesNames).'"' ?>];
+var estados = [<?php echo '"'.implode('","', $statusesDirectorNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
 var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];

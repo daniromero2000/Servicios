@@ -26,8 +26,8 @@ class DirectorController extends Controller
   public function index(Request $request)
   {
     $director = auth()->user()->codeOportudata;   
-    $skip = $this->toolsInterface->getSkip($request->input('skip'));
-    $list = $this->factoryInterface->listFactoryDirector($skip * 30 , $director );
+    $skip     = $this->toolsInterface->getSkip($request->input('skip'));
+    $list     = $this->factoryInterface->listFactoryDirector($skip * 30 , $director );
 
     if (request()->has('q')) {
         $list = $this->factoryInterface->searchFactoryDirectors(
@@ -41,7 +41,7 @@ class DirectorController extends Controller
         )->sortByDesc('FECHASOL');
     }
 
-    $listCount = $list->count();
+    $listCount            = $list->count();
     $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
     return view('director.list', [
@@ -62,40 +62,42 @@ class DirectorController extends Controller
 
       $director = auth()->user()->codeOportudata;   
      
-      $to = Carbon::now();
+      $to   = Carbon::now();
       $from = Carbon::now()->subMonth();
 
-      $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+      $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
       $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
 
-      $estadosNames = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
-      $webCounts    = $this->factoryInterface->countWebFactoryRequests($from, $to);
-      $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal($from, $to);
+      $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
+      $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory($from, $to, $director);
+      $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal($from, $to, $director);
       if (request()->has('from')) {
-          $estadosNames = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);
-          $webCounts    = $this->factoryInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-          $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
+          $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);
+          $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory(request()->input('from'), request()->input('to'), $director);
+          $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal(request()->input('from'), request()->input('to'), $director);
       }
 
-      $estadosNames   = $estadosNames->toArray();
-      $webCounts      = $webCounts->toArray();
-      $estadosNames   = array_values($estadosNames);
-      $webCounts      = array_values($webCounts);
+      $estadosNamesDirector   = $estadosNamesDirector->toArray();
+      $webDirectorCounts      = $webDirectorCounts->toArray();
+      $estadosNamesDirector   = array_values($estadosNamesDirector);
+      $webDirectorCounts      = array_values($webDirectorCounts);
 
-      $statusesNames  = [];
-      $statusesValues = [];
-      $statusesColors = [];
-      foreach ($estadosNames as $estadosName) {
-          array_push($statusesNames, trim($estadosName['ESTADO']));
-          array_push($statusesValues, trim($estadosName['total']));
+      $statusesDirectorNames  = [];
+      $statusesDirectorValues = [];
+      $statusesDirectorColors = [];
+
+      foreach ($estadosNamesDirector as $estadosName) {
+          array_push($statusesDirectorNames, trim($estadosName['ESTADO']));
+          array_push($statusesDirectorValues, trim($estadosName['total']));
           $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
-          array_push($statusesColors, trim($color));
+          array_push($statusesDirectorColors, trim($color));
       }
 
-      $webValues      = [];
-      $webNames       = [];
-      $webColors = [];
-      foreach ($webCounts as $webCount) {
+      $webValues   = [];
+      $webNames    = [];
+      $webColors   = [];
+      
+      foreach ($webDirectorCounts as $webCount) {
           array_push($webNames, trim($webCount['ESTADO']));
           array_push($webValues, trim($webCount['total']));
           $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
@@ -103,15 +105,15 @@ class DirectorController extends Controller
       }
 
       return view('director.dashboard', [
-          'statusesNames'  => $statusesNames,
-          'statusesValues' => $statusesValues,
-          'statusesColors' => $statusesColors,
-          'webValues'      => $webValues,
-          'webNames'       => $webNames,
-          'webColors'       => $webColors,
-          'totalWeb'       => array_sum($webValues),
-          'totalStatuses'  => array_sum($statusesValues),
-          'factoryRequestsTotal'       => $factoryRequestsTotal,
+          'statusesDirectorNames'  => $statusesDirectorNames,
+          'statusesValues'         => $statusesDirectorValues,
+          'statusesColors'         => $statusesDirectorColors,
+          'webValues'              => $webValues,
+          'webNames'               => $webNames,
+          'webColors'              => $webColors,
+          'totalWeb'               => array_sum($webValues),
+          'totalStatuses'          => array_sum($statusesDirectorValues),
+          'factoryRequestsTotal'   => $factoryRequestsTotal,
       ]);
   }
 }

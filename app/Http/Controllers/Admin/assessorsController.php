@@ -17,7 +17,7 @@ use Carbon\Carbon;
 
 class assessorsController extends Controller
 {
-    private $customerInterface,$assessorInterface, $toolsInterface, $factoryInterface;
+    private $customerInterface, $assessorInterface, $toolsInterface, $factoryInterface;
     /**
      * Create a new controller instance.
      *
@@ -42,9 +42,9 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
-        $assessor = auth()->user()->email;      
-        $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->factoryInterface->listFactoryAssessors($skip * 30 , $assessor );
+        $assessor = auth()->user()->email;
+        $skip     = $this->toolsInterface->getSkip($request->input('skip'));
+        $list     = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 
         if (request()->has('q')) {
             $list = $this->factoryInterface->searchFactoryAseessors(
@@ -58,11 +58,11 @@ class assessorsController extends Controller
             )->sortByDesc('FECHASOL');
         }
 
-        $listCount = $list->count();
+        $listCount            = $list->count();
         $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
         return view('assessors.assessors.list', [
-            'factoryRequests'            => $list,
+            'factoryRequests'      => $list,
             'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
@@ -334,31 +334,31 @@ class assessorsController extends Controller
     public function dashboard(Request $request)
     {
 
-        $assessor = auth()->user()->email;        
-        $to = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $assessor = auth()->user()->email;
+        $to       = Carbon::now();
+        $from     = Carbon::now()->subMonth();
 
-        $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+        $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
         $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
 
-        $estadosAssessors = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
-        $webCounts    = $this->factoryInterface->countWebFactoryRequests($from, $to);
-        $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal($from, $to);
+        $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
+        $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
+        $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
 
         if (request()->has('from')) {
-            $estadosAssessors = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
-            $webCounts    = $this->factoryInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-            $factoryRequestsTotal = $this->factoryInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
+            $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
+            $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory(request()->input('from'), request()->input('to'), $assessor);
+            $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal(request()->input('from'), request()->input('to'), $assessor);
         }
 
-        $estadosAssessors   = $estadosAssessors->toArray();
-        $webCounts      = $webCounts->toArray();
-        $estadosAssessors   = array_values($estadosAssessors);
-        $webCounts      = array_values($webCounts);
+        $estadosAssessors     = $estadosAssessors->toArray();
+        $webAssessorsCounts   = $webAssessorsCounts->toArray();
+        $estadosAssessors     = array_values($estadosAssessors);
+        $webAssessorsCounts   = array_values($webAssessorsCounts);
+        $statusesAssessors    = [];
+        $statusesValues       = [];
+        $statusesColors       = [];
 
-        $statusesAssessors  = [];
-        $statusesValues = [];
-        $statusesColors = [];
         foreach ($estadosAssessors as $estadosName) {
             array_push($statusesAssessors, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
@@ -366,12 +366,13 @@ class assessorsController extends Controller
             array_push($statusesColors, trim($color));
         }
 
-        $webValues      = [];
-        $webAssessors       = [];
-        $webColors = [];
-        foreach ($webCounts as $webCount) {
-            array_push($webAssessors, trim($webCount['ESTADO']));
-            array_push($webValues, trim($webCount['total']));
+        $webValues     = [];
+        $webAssessors  = [];
+        $webColors     = [];
+
+        foreach ($webAssessorsCounts as $webAssessorCount) {
+            array_push($webAssessors, trim($webAssessorCount['ESTADO']));
+            array_push($webValues, trim($webAssessorCount['total']));
             $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
             array_push($webColors, trim($color));
         }
@@ -385,7 +386,7 @@ class assessorsController extends Controller
             'webColors'               => $webColors,
             'totalStatuses'           => array_sum($statusesValues),
             'totalWeb'                => array_sum($webValues),
-            'factoryRequestsTotal'    => $factoryRequestsTotal,
+            'factoryAssessorsTotal'   => $factoryAssessorsTotal,
         ]);
     }
 }

@@ -262,6 +262,34 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
+
+    public function getAssessorFactoryTotal($from, $to, $assessor)
+    {
+        try {
+            return $this->model
+                ->where('CODASESOR', $assessor)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countWebAssessorFactory($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('CODASESOR', $assessor)
+                ->where('SOLICITUD_WEB', 1)
+                ->where('STATE', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     //Hasta aqui Asesores
 
     //Directores
@@ -280,7 +308,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
-    
+
 
     public function listFactoryDirector($totalView, $director): Support
     {
@@ -335,6 +363,34 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->where('SUCURSAL', $director)
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
+    }
+
+
+    public function getDirectorFactoryTotal($from, $to,  $director)
+    {
+        try {
+            return $this->model
+                ->where('SUCURSAL', $director)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countWebDirectorFactory($from, $to, $director)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('SUCURSAL', $director)
+                ->where('SOLICITUD_WEB', 1)
+                ->where('STATE', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
     }
 
     //Hasta aqui Directores
