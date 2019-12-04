@@ -11,7 +11,9 @@
         <p>{{ Session::get('success') }}</p>
     </div>
     @endif
+    
     <div class="container">
+        
         <ng-view></ng-view>
     </div>
 

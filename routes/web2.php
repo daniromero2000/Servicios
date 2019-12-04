@@ -124,9 +124,9 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
  * Admin routes
  */
 Route::namespace('Admin')->group(function () {
-    Route::namespace('Directors')->group(function () {
-        Route::resource('director', 'DirectorController');
-    });
+    // Route::namespace('Directors')->group(function () {
+    //     Route::resource('director', 'DirectorController');
+    // });
 
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
@@ -154,6 +154,10 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
+    Route::namespace('Directors')->group(function () {
+        Route::resource('/Administrator/director', 'DirectorController');
+        Route::get('/Administrator/dashboard/director', 'DirectorController@dashboard')->name('directors_dashboard');
+    });
     //asesores
     Route::resource('Administrator/assessors', 'assessorsController');
     Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors.dashboard');

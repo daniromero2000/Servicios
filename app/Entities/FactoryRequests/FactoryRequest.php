@@ -42,6 +42,12 @@ class FactoryRequest extends Model
         return self::search($term);
     }
 
+    public function searchFactoryDirectors($term)
+    {
+        return self::search($term);
+    }
+
+
     public function hasCustomer()
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')

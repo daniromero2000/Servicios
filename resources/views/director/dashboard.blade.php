@@ -1,29 +1,23 @@
 @extends('layouts.admin.app')
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<!-- Main content -->
 <div class="content-header">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row mb-2">
         <div class="col-sm-6">
-
-          <div class="row">
-            <div class="col-md-12">
-
-            </div>
-
-          </div>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/assessors">Asesores</a></li>
+            <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
+            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Directores</a></li>
+
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
+<!-- Content Wrapper. Contains page content -->
+<!-- Main content -->
 <div class="container-fluid">
 
   <div class="row mt-2">
@@ -36,7 +30,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito</p>
+                <p>Solicitudes Crédito</p>                
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -48,7 +42,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
-                <p>${{ number_format ($factoryAssessorsTotal) }}</p>
+                <p>${{ number_format ($factoryRequestsTotal) }}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -71,7 +65,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
+                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -100,7 +94,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
+                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -130,7 +124,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
+                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -158,7 +152,7 @@
                     <span class="info-box-number">41,410</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
+                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
                         Mas</a></span>
                   </div>
@@ -221,7 +215,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('assessors.dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('directors_dashboard')])
             </div>
             <div class="col-12">
               <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
@@ -233,7 +227,7 @@
   </div>
   <div class="row">
     <!-- /.col (RIGTH) -->
-    <div hidden class="col-md-4">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
@@ -266,7 +260,7 @@
     </div>
     <!-- Card 1 -->
     <!-- /.col (LEFT) -->
-    <div class="col-md-12">
+    <div class="col-md-8">
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">
@@ -719,7 +713,7 @@
         var values = [];
 
 
-        var estados = [<?php echo '"'.implode('","', $statusesAssessors).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $statusesDirectorNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 
             /* END LINE CHART */
@@ -858,13 +852,13 @@
     var values = [];
     var statusesColors = [];
     var webValues = [];
-    var webAssessors = [];
+    var webNames = [];
     var webColors = [];
 
 
-var estados = [<?php echo '"'.implode('","', $statusesAssessors).'"' ?>];
+var estados = [<?php echo '"'.implode('","', $statusesDirectorNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
-var webAssessors = [<?php echo '"'.implode('","', $webAssessors).'"' ?>];
+var webNames = [<?php echo '"'.implode('","', $webNames).'"' ?>];
 var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
 var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
 var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
@@ -947,7 +941,7 @@ var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
       // Get context with jQuery - using jQuery's .get() method.
 
       var donutData2 = {
-      labels: webAssessors,
+      labels: webNames,
       datasets: [
       {
       data: webValues,

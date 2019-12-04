@@ -69,7 +69,6 @@ class CommunityController extends Controller
         $respTotalLeads = DB::select($queryCM);
         $queryCM .= "ORDER BY `created_at` DESC ";
         $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
-
         $leadsCM = [];
         $leadsCM = DB::select($queryCM);
 
@@ -77,7 +76,6 @@ class CommunityController extends Controller
             if ($lead->assessor_id != '') {
                 $leadsCM[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
             }
-            $leadsCM[]      = $respTotalLeads[$key];
         }
 
         return [
