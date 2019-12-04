@@ -39,15 +39,21 @@
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
-                  
+                    <div class="col-3">
+                        <label for="q">Buscar: Asesor</label>
+                        <input type="text" name="assessor" class="form-control" placeholder=" Buscar por Asesor..."
+                            value="{!! request()->input('assessor') !!}">
+                    </div>
+                    <div class="col-3 d-flex align-items-end">
+                        <span class="input-group-btn btn-pr">
+                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
+                                    class="fa fa-search"></i>
+                                Buscar
+                            </button>
+                        </span>
+                    </div>
                 </div>
-                <div class="text-right col-12">
-                    <span class="input-group-btn btn-pr">
-                        <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i class="fa fa-search"></i>
-                            Buscar
-                        </button>
-                    </span>
-                </div>
+
             </div>
 
 

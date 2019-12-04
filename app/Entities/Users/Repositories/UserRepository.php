@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entities\Users\Repositories;
-
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\QueryException;
@@ -20,4 +20,28 @@ class UserRepository implements UserRepositoryInterface
             return $this->model->where('id', $assessor)->first(['name']);
         } catch (QueryException $e) { }
     }
+
+
+    public function findUserById(int $id): User
+    {
+        try {
+            return $this->model->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function updateUser(array $params): bool
+    {
+        try {
+            if (isset($params['password'])) {
+                $params['password'] = Hash::make($params['password']);
+            }
+
+            return $this->model->update($params);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
 }
