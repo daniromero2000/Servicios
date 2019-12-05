@@ -9,8 +9,12 @@ use App\Profiles;
 use App\ProfilesAssessor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+
+
 
 class UserController extends Controller
 {
@@ -138,15 +142,51 @@ class UserController extends Controller
     public function updateProfile(Request $request, $id)
     {
         $sesion= auth()->user()->id;
-        $user = $this->userInterface->findUserById($id);
-        $update   = new UserRepository($user);
-        $update->updateUser($request->except('_token', '_method', 'password'));
+        $rules = [
+            'mypassword' => 'required',
+            'password' => 'required|confirmed|min:6|max:18',
+        ];
+        
+        $messages = [
+            'mypassword.required' => 'El campo es requerido',
+            'password.required' => 'El campo es requerido',
+            'password.confirmed' => 'Los passwords no coinciden',
+            'password.min' => 'El mínimo permitido son 6 caracteres',
+            'password.max' => 'El máximo permitido son 18 caracteres',
+        ];
+        
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()){
+            return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
+            ->withErrors($validator);
+            
+        }
+        else{
+            if (Hash::check($request->mypassword, Auth::user()->password)){
+               
+                   
+                    $user = $this->userInterface->findUserById($id);
+                    $update   = new UserRepository($user);
+                    $update->updateUser($request->except('_token', '_method', 'password'));
 
-        if ($request->has('password') && $request->input('password') != '') {
-            $update->updateUser($request->only('password'));
+                    if ($request->has('password') && $request->input('password') != '') {
+                        $update->updateUser($request->only('password'));
+                        return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
+                        ->with('message', 'Actualización Exitosa!');
+             }
+            }
+            else
+            {
+                return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
+                ->with('message', 'Credenciales incorrectas');
+                
+            }
+
         }
 
-        return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
-            ->with('message', 'Actualización Exitosa!');
+
+
+
+          
     }
 }

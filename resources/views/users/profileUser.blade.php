@@ -35,7 +35,8 @@
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Usuario</b> <a class="float-right">{{ $user->email }}</a>
+                                <b>Usuario</b> <a class="float-right"
+                                    style="font-size: 10pt;margin-top: 3px;">{{ $user->email }}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Sucursal</b> <a class="float-right">{{ $user->codeOportudata }}</a>
@@ -61,29 +62,47 @@
                         <div class="tab-content">
 
                             <div class="active tab-pane" id="activity">
-                                <form class="form-horizontal" action="/Administrator/{{ $user->id }}/profile" method="post" class="form"
+                                <form id="form1" name="form1" class="form-horizontal"
+                                    action="/Administrator/{{ $user->id }}/profile" method="post" class="form"
                                     enctype="multipart/form-data">
 
                                     @method('PUT')
                                     {{ csrf_field() }}
-                                    <div class="form-group row">
-                                        <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-                                        <div class="col-sm-10">
+                                    <div class="form-group row justify-content-center">
+                                        <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+                                        <div class="col-sm-7">
                                             <input type="text" class="form-control" name="name" id="name"
-                                                value="{{ $user->name }}" placeholder="Nombre">
+                                                value="{{old('name', $user->name ?? '') }}" placeholder="Nombre">
                                         </div>
                                     </div>
+                                    <div class="form-group row justify-content-center">
+                                        <label for="mypassword" class="col-sm-3 col-form-label">Contraseña
+                                            Actual</label>
+                                        <div class="col-sm-7 mt-2">
+                                            <input type="password" class="form-control" name="mypassword"
+                                                id="mypassword" placeholder="Contraseña Actual" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row justify-content-center">
+                                        <label for="password" class="col-sm-3 col-form-label">Nueva Contraseña</label>
+                                        <div class="col-sm-7 mt-2">
+                                            <input id="password" type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row justify-content-center">
+                                        <label for="password_confirmation" class="col-sm-3 col-form-label">Confirmar
+                                            Contraseña</label>
+                                        <div class="col-sm-7 mt-2">
+                                            <input id="password_confirmation" type="password" class="form-control"
+                                                name="password_confirmation">
 
-                                    <div class="form-group row">
-                                        <label for="password" class="col-sm-2 col-form-label">Nueva Contraseña</label>
-                                        <div class="col-sm-10 mt-2">
-                                            <input type="password" class="form-control" name="password" id="password"
-                                                placeholder="Contraseña">
+
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    <div class="form-group row justify-content-center">
+                                        <div class="col-sm-10">
+                                            <button type="submit" onchange="validar_campos()"
+                                                class="btn btn-primary">Actualizar</button>
                                         </div>
                                     </div>
                                 </form>
@@ -100,4 +119,8 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+@endsection
+
+@section('scriptsJs')
+
 @endsection
