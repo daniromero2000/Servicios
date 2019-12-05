@@ -14,6 +14,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     private $columns = [
         'CLIENTE',
         'SOLICITUD',
+        'CODASESOR',
         'SUCURSAL',
         'FECHASOL',
         'ESTADO',

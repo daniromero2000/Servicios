@@ -39,22 +39,8 @@
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
-                    <div class="col-3 d-flex align-items-end">
-                        <div class="form-group w-100">
-                            <label for="subsidiary">Sucursal</label>
-                            <select class="form-control  select2" id="subsidiary" name="subsidiary" {!!
-                                request()->input('subsidiary')!!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Sucursal -- </option>
-                                <option>125</option>
-                                <option>121</option>
-                                <option>133</option>
-                                <option>144</option>
-                                <option>147</option>
-                                <option>157</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3 d-flex align-items-center">
+                    
+                    <div class="col-12 text-right ">
                         <span class="input-group-btn btn-pr">
                             <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i class="fa fa-search"></i>
                                 Buscar

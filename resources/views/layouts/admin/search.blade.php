@@ -45,12 +45,9 @@
                             <select class="form-control  select2" id="subsidiary" name="subsidiary" {!!
                                 request()->input('subsidiary')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Sucursal -- </option>
-                                <option>125</option>
-                                <option>121</option>
-                                <option>133</option>
-                                <option>144</option>
-                                <option>147</option>
-                                <option>157</option>
+                                 @foreach ($Subsidiarys as $Subsidiary)
+                                <option>{{ $Subsidiary->CODIGO }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

@@ -1,7 +1,9 @@
 @extends('layouts.admin.app')
 @section('content')
-@include('layouts.errors-and-messages')
+
 <section class="content-header">
+
+
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
@@ -115,12 +117,11 @@
                 <!-- /.nav-tabs-custom -->
             </div>
             <!-- /.col -->
+
         </div>
+        @include('layouts.errors-and-messages')
+
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
-@endsection
-
-@section('scriptsJs')
-
 @endsection
