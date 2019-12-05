@@ -296,7 +296,7 @@ class OportuyaV2Controller extends Controller
 			$identificationNumber = (string) $identificationNumber;
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			$paso = "PASO3";
-			
+
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
 			$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency);
 
@@ -415,7 +415,7 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
-		$validateConsultaRegistraduria = 1;
+
 		if ($validateConsultaRegistraduria == -1) {
 			return -1;
 		}
@@ -975,7 +975,7 @@ class OportuyaV2Controller extends Controller
 
 		// 5 Definiciones cliente
 		if ($perfilCrediticio == 'TIPO A') {
-			if($statusAfiliationCustomer == true){
+			if ($statusAfiliationCustomer == true) {
 				if ($tipoCliente == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
@@ -984,7 +984,7 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
-	
+
 				if ($customer->ACTIVIDAD == 'EMPLEADO') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
@@ -993,7 +993,7 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
-	
+
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
@@ -1002,7 +1002,7 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
-	
+
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 					if ($historialCrediticio == 1) {
 						$customer->ESTADO = 'PREAPROBADO';
@@ -1020,7 +1020,7 @@ class OportuyaV2Controller extends Controller
 						return ['resp' => "-2"];
 					}
 				}
-			}else{
+			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
 				$customerIntention->TARJETA = 'Crédito Tradicional';
