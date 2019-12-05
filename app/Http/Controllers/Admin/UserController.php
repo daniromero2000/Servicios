@@ -150,7 +150,7 @@ class UserController extends Controller
         $messages = [
             'mypassword.required' => 'El campo es requerido',
             'password.required' => 'El campo es requerido',
-            'password.confirmed' => 'Los passwords no coinciden',
+            'password.confirmed' => 'Las contraseñas no coinciden',
             'password.min' => 'El mínimo permitido son 6 caracteres',
             'password.max' => 'El máximo permitido son 18 caracteres',
         ];
@@ -162,8 +162,7 @@ class UserController extends Controller
             
         }
         else{
-            if (Hash::check($request->mypassword, Auth::user()->password)){
-               
+            if (Hash::check($request->mypassword, Auth::user()->password)){  
                    
                     $user = $this->userInterface->findUserById($id);
                     $update   = new UserRepository($user);
@@ -181,12 +180,6 @@ class UserController extends Controller
                 ->with('error', 'Credenciales incorrectas');
                 
             }
-
-        }
-
-
-
-
-          
+        } 
     }
 }
