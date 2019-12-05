@@ -58,8 +58,8 @@
                         </a>
                       </div>
                       <div class="col-5 text-right">
-                        <a href="#" class="btn btn-sm bg-teal ">
-                          <i class="fas fa-comments"></i>
+                        <a href="#" class="btn btn-sm bg-teal " style="height: 100%;">
+                          <i class="fas fa-comments mt-1"></i>
                         </a>
                       </div>
                       <div class="col-3">
