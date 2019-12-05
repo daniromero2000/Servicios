@@ -64,7 +64,7 @@ class assessorsController extends Controller
         return view('assessors.assessors.list', [
             'factoryRequests'      => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'headers'              => ['Cliente', 'Solicitud','Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'factoryRequestsTotal' => $factoryRequestsTotal,

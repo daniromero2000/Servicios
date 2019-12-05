@@ -11,6 +11,7 @@
         <tbody>
            @foreach($datas as $data)
             <tr>
+               
                 @foreach($data->toArray() as $key => $value)
                 <td class="text-center">
                     {{ $data[$key] }}

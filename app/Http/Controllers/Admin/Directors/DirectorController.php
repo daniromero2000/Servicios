@@ -45,9 +45,9 @@ class DirectorController extends Controller
     $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
     return view('director.list', [
-        'factoryRequests'            => $list,
+        'factoryRequests'      => $list,
         'optionsRoutes'        => (request()->segment(2)),
-        'headers'              => ['Cliente', 'Solicitud', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+        'headers'              => ['Cliente', 'Solicitud','Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
         'listCount'            => $listCount,
         'skip'                 => $skip,
         'factoryRequestsTotal' => $factoryRequestsTotal,
