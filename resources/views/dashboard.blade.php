@@ -6,7 +6,9 @@
     display: none;
   }
 </style>
-
+@php
+$modules = session('modules');
+@endphp
 @section('content')
 <div class="content-header">
   <div class="container-fluid">
@@ -23,6 +25,34 @@
   </div><!-- /.container-fluid -->
 </div>
 <section class="content">
+  <div class="container">
 
+
+
+    <div class="row d-flex mt-3">
+      @foreach ($modules as $module)
+      <div class="col-12 col-sm-6 col-md-3 text-center ">
+        <a class="btn btn-primary mb-3 " href="{{ $module->route}}" style="min-width: 220px; min-height: 115px;border-radius: 10px;">
+          <i class="mt-1 {{ $module->icon}} nav-icon" style="font-size: 50px;"></i>
+          <p class="mt-1" style="font-size: 17px;">{{ $module->name }}</p>
+        </a>
+
+        {{-- <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="{{ $module->icon}}"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">{{ $module->name }}</span>
+
+          <a href="{{ $module->route}}" class="text-decorection-none"> Ir</a>
+
+
+        </div>
+        <!-- /.info-box-content -->
+      </div> --}}
+      <!-- /.info-box -->
+    </div>
+    @endforeach
+    <!-- /.col -->
+  </div>
 </section>
 @endsection
