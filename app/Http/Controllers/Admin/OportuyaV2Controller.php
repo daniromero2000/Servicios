@@ -939,19 +939,15 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 2. WS Fosyga
-		$estadoCliente = "APROBADO";
+		$estadoCliente = "PREAPROBADO";
+		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
 			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				return ['resp' => "false"];
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
-					$customer->ESTADO = 'NEGADO';
-					$customer->save();
-					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
-					$customerIntention->ID_DEF =  '3';
-					$customerIntention->save();
-					return ['resp' => "false"];
+					$statusAfiliationCustomer = false;
 				}
 			}
 		} else {
@@ -979,49 +975,58 @@ class OportuyaV2Controller extends Controller
 
 		// 5 Definiciones cliente
 		if ($perfilCrediticio == 'TIPO A') {
-			if ($tipoCliente == 'OPORTUNIDADES') {
-				$customer->ESTADO = 'PREAPROBADO';
-				$customer->save();
-				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  '14';
-				$customerIntention->save();
-				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
-			}
-
-			if ($customer->ACTIVIDAD == 'EMPLEADO') {
-				$customer->ESTADO = 'PREAPROBADO';
-				$customer->save();
-				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  '15';
-				$customerIntention->save();
-				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
-			}
-
-			if ($customer->ACTIVIDAD == 'PENSIONADO') {
-				$customer->ESTADO = 'PREAPROBADO';
-				$customer->save();
-				$customerIntention->TARJETA =  $tarjeta;
-				$customerIntention->ID_DEF =  '16';
-				$customerIntention->save();
-				return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
-			}
-
-			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($historialCrediticio == 1) {
+			if($statusAfiliationCustomer == true){
+				if ($tipoCliente == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '17';
+					$customerIntention->ID_DEF =  '14';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
-				} else {
+				}
+	
+				if ($customer->ACTIVIDAD == 'EMPLEADO') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
-					$customerIntention->TARJETA = 'Crédito Tradicional';
-					$customerIntention->ID_DEF =  '18';
+					$customerIntention->TARJETA =  $tarjeta;
+					$customerIntention->ID_DEF =  '15';
 					$customerIntention->save();
-					return ['resp' => "-2"];
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
+	
+				if ($customer->ACTIVIDAD == 'PENSIONADO') {
+					$customer->ESTADO = 'PREAPROBADO';
+					$customer->save();
+					$customerIntention->TARJETA =  $tarjeta;
+					$customerIntention->ID_DEF =  '16';
+					$customerIntention->save();
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+				}
+	
+				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+					if ($historialCrediticio == 1) {
+						$customer->ESTADO = 'PREAPROBADO';
+						$customer->save();
+						$customerIntention->TARJETA =  $tarjeta;
+						$customerIntention->ID_DEF =  '17';
+						$customerIntention->save();
+						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					} else {
+						$customer->ESTADO = 'PREAPROBADO';
+						$customer->save();
+						$customerIntention->TARJETA = 'Crédito Tradicional';
+						$customerIntention->ID_DEF =  '18';
+						$customerIntention->save();
+						return ['resp' => "-2"];
+					}
+				}
+			}else{
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '18';
+				$customerIntention->save();
+				return ['resp' => "-2"];
 			}
 		}
 
