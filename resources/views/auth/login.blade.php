@@ -25,8 +25,7 @@
         <div class="login-logo">
             <img style="width: 250px;" src="{{ asset('images/Oportudata.png')}}">
         </div>
-        @include('layouts.errors-and-messages')<div class="login-box-body">
-
+        <div class="login-box-body">
             <!-- /.login-logo -->
             <div class="card" style="border-radius: 27px;">
                 <div class="card-body login-card-body" style="border-radius: 10px;">
@@ -55,14 +54,14 @@
                             <div class="input-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
                                 <input type="password" name="password" class="form-control" placeholder="Contraseña"
                                     required>
-                                    <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fas fa-lock"></span>
-                                            </div>
-                                        </div>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
                                 @if ($errors->has('password'))
                                 <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
+                                    <strong>{{ $errors->first('password') }}</strong>
                                 </span>
                                 @endif
                             </div>
