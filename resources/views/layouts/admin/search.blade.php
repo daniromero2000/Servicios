@@ -18,16 +18,17 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label for="status">Estado</label>
+                            
                             <select class="form-control  select2" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
-                                <option>APROBADO</option>
-                                <option>ANALISIS</option>
-                                <option>EN SUCURSAL</option>
-                                <option>PROBLEMAS EN ANALISIS</option>
-                                <option>EN SUCURSAL</option>
-                                <option>PROBLEMAS EN REFERENCIACION</option>
+                                 <option disabled selected value> -- Selecciona Estado -- </option>
+                                @foreach ($Subsidiarys as $Subsidiary)
+                               
+                                <option>{{ $Subsidiary->CODIGO }}</option>
+                                @endforeach
                             </select>
+                          
+                            
                         </div>
                     </div>
 

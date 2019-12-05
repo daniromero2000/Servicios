@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\FactoryRequests;
 
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ class FactoryRequestController extends Controller
 
     public function index(Request $request)
     {
+
+        $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
 
@@ -48,7 +51,7 @@ class FactoryRequestController extends Controller
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'factoryRequestsTotal' => $factoryRequestsTotal,
-
+            'Subsidiarys'          => $Subsidiarys,
         ]);
     }
 
