@@ -178,7 +178,7 @@ class UserController extends Controller
             else
             {
                 return redirect()->route('user.profile',['user' => $this->userInterface->findUserById($sesion)])
-                ->with('message', 'Credenciales incorrectas');
+                ->with('error', 'Credenciales incorrectas');
                 
             }
 

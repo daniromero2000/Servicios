@@ -191,7 +191,7 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="row resetRow" ng-if="state != 4">
+                            <div class="row resetRow">
                                 <div class="col-12 text-right form-group">
                                     <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i
                                             class="fas fa-plus"></i></button>
@@ -247,7 +247,7 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="row resetRow" ng-if="state != 4">
+                            <div class="row resetRow">
                                 <div class="col-12 text-right form-group">
                                     <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i
                                             class="fas fa-plus"></i></button>
@@ -426,7 +426,7 @@
                                                 </div>
                                                 <hr>
                                             </div>
-                                            <div class="row resetRow" ng-if="state != 4">
+                                            <div class="row resetRow">
                                                 <div class="col-12 text-right form-group">
                                                     <button type="button" ng-click="viewCommentChange()"
                                                         class="btn btn-secondary"><i class="fas fa-plus"></i></button>
@@ -766,7 +766,7 @@
                                         </div>
                                         <hr>
                                     </div>
-                                    <div class="row resetRow" ng-if="state != 4">
+                                    <div class="row resetRow">
                                         <div class="col-12 text-right form-group">
                                             <button type="button" ng-click="viewCommentChange()"
                                                 class="btn btn-secondary"><i class="fas fa-plus"></i></button>
@@ -902,7 +902,7 @@
                                         </div>
                                         <hr>
                                     </div>
-                                    <div class="row resetRow" ng-if="state != 4">
+                                    <div class="row resetRow">
                                         <div class="col-12 text-right form-group">
                                             <button type="button" ng-click="viewCommentChange()"
                                                 class="btn btn-secondary"><i class="fas fa-plus"></i></button>
