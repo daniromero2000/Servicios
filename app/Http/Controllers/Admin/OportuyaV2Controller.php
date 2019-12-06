@@ -731,7 +731,7 @@ class OportuyaV2Controller extends Controller
 		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
-			if($customerStatusDenied == false && empty($idDef)){
+			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "6";
 			}
@@ -780,7 +780,7 @@ class OportuyaV2Controller extends Controller
 		// 4.3 Edad.
 		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
 		if ($queryEdad == false || empty($queryEdad)) {
-			if($customerStatusDenied == false && empty($idDef)){
+			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "9";
 			}
@@ -789,7 +789,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($queryEdad == 'Mas 75') {
-			if($customerStatusDenied == false && empty($idDef)){
+			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "9";
 			}
@@ -808,7 +808,7 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				if($customerStatusDenied == false && empty($idDef)){
+				if ($customerStatusDenied == false && empty($idDef)) {
 					$customerStatusDenied = true;
 					$idDef = "9";
 				}
@@ -822,7 +822,7 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				if($customerStatusDenied == false && empty($idDef)){
+				if ($customerStatusDenied == false && empty($idDef)) {
 					$customerStatusDenied = true;
 					$idDef = "9";
 				}
@@ -836,7 +836,7 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				if($customerStatusDenied == false && empty($idDef)){
+				if ($customerStatusDenied == false && empty($idDef)) {
 					$customerStatusDenied = true;
 					$idDef = "9";
 				}
@@ -855,7 +855,7 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->TIEMPO_LABOR = 1;
 					$customerIntention->save();
 				} else {
-					if($customerStatusDenied == false && empty($idDef)){
+					if ($customerStatusDenied == false && empty($idDef)) {
 						$customerStatusDenied = true;
 						$idDef = "10";
 					}
@@ -867,7 +867,7 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->TIEMPO_LABOR = 1;
 					$customerIntention->save();
 				} else {
-					if($customerStatusDenied == false && empty($idDef)){
+					if ($customerStatusDenied == false && empty($idDef)) {
 						$customerStatusDenied = true;
 						$idDef = "10";
 					}
@@ -876,15 +876,6 @@ class OportuyaV2Controller extends Controller
 				}
 			}
 		}
-
-		// 4.6 Tipo 5 Especial
-		$tipo5Especial = 0;
-		if ($perfilCrediticio == 'TIPO 5') {
-			$tipo5Especial = 1;
-		}
-
-		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
-		$customerIntention->save();
 
 		// 4.7 Inspecciones Oculares
 		if ($tipoCliente == 'NUEVO') {
@@ -949,6 +940,15 @@ class OportuyaV2Controller extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
+		// 4.6 Tipo 5 Especial
+		$tipo5Especial = 0;
+		if ($perfilCrediticio == 'TIPO 5' && ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PENSIONADO') && $statusAfiliationCustomer == true) {
+			$tipo5Especial = 1;
+		}
+
+		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
+		$customerIntention->save();
+
 		//3.1 Estado de documento
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
 		if (!empty($getDataRegistraduria)) {
@@ -968,7 +968,7 @@ class OportuyaV2Controller extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
-		if($customerStatusDenied == true){
+		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';
 			$customerIntention->ID_DEF =  $idDef;
 			$customer->save();
