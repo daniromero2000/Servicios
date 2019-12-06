@@ -151,6 +151,7 @@ class OportuyaV2Controller extends Controller
 	{
 		return response()->json(true);
 		$emailsValidos = [];
+		$listaCorreos = [];
 		foreach ($listaCorreos as $value) {
 
 			$re = '/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/m';
@@ -678,6 +679,8 @@ class OportuyaV2Controller extends Controller
 	private function validatePolicyCredit_new($identificationNumber)
 	{
 		// 5	Puntaje y 3.4 Calificacion Score
+		$customerStatusDenied = false;
+		$idDef = "";
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
 		$data = ['CEDULA' => $identificationNumber];
@@ -687,23 +690,15 @@ class OportuyaV2Controller extends Controller
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
-				$customerIntention->PERFIL_CREDITICIO =  'TIPO NE';
-				$customerIntention->ID_DEF =  '8';
-				$customerIntention->save();
-
-				return ['resp' => "false"];
+				$customerStatusDenied = true;
+				$idDef = '8';
+				$perfilCrediticio = 'TIPO NE';
 			}
 
 			if ($customerScore >= 1 && $customerScore <= 275) {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
-				$customerIntention->PERFIL_CREDITICIO = 'TIPO D';
-				$customerIntention->ID_DEF            = '5';
-				$customerIntention->save();
-
-				return ['resp' => "false"];
+				$customerStatusDenied = true;
+				$idDef = '5';
+				$perfilCrediticio = 'TIPO D';
 			}
 
 			if ($customerScore >= -7 && $customerScore <= 0) {
@@ -736,12 +731,12 @@ class OportuyaV2Controller extends Controller
 		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
-			$customer->ESTADO = 'NEGADO';
-			$customer->save();
+			if($customerStatusDenied == false && empty($idDef)){
+				$customerStatusDenied = true;
+				$idDef = "6";
+			}
 			$customerIntention->ESTADO_OBLIGACIONES = 0;
-			$customerIntention->ID_DEF =  '6';
 			$customerIntention->save();
-			return ['resp' => "false"];
 		} else {
 			$customerIntention->ESTADO_OBLIGACIONES = 1;
 			$customerIntention->save();
@@ -785,21 +780,21 @@ class OportuyaV2Controller extends Controller
 		// 4.3 Edad.
 		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
 		if ($queryEdad == false || empty($queryEdad)) {
-			$customer->ESTADO = 'NEGADO';
-			$customer->save();
+			if($customerStatusDenied == false && empty($idDef)){
+				$customerStatusDenied = true;
+				$idDef = "9";
+			}
 			$customerIntention->EDAD = 0;
-			$customerIntention->ID_DEF =  '9';
 			$customerIntention->save();
-			return ['resp' => "false"];
 		}
 
 		if ($queryEdad == 'Mas 75') {
-			$customer->ESTADO = 'NEGADO';
-			$customer->save();
+			if($customerStatusDenied == false && empty($idDef)){
+				$customerStatusDenied = true;
+				$idDef = "9";
+			}
 			$customerIntention->EDAD = 0;
-			$customerIntention->ID_DEF =  '9';
 			$customerIntention->save();
-			return ['resp' => "false"];
 		}
 
 		$queryEdad = explode('-', $queryEdad);
@@ -813,12 +808,12 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
+				if($customerStatusDenied == false && empty($idDef)){
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
-				return ['resp' => "false"];
 			}
 		}
 
@@ -827,12 +822,12 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
+				if($customerStatusDenied == false && empty($idDef)){
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
-				return ['resp' => "false"];
 			}
 		}
 
@@ -841,12 +836,12 @@ class OportuyaV2Controller extends Controller
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
+				if($customerStatusDenied == false && empty($idDef)){
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
 				$customerIntention->EDAD = 0;
-				$customerIntention->ID_DEF =  '9';
 				$customerIntention->save();
-				return ['resp' => "false"];
 			}
 		}
 
@@ -860,24 +855,24 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->TIEMPO_LABOR = 1;
 					$customerIntention->save();
 				} else {
-					$customer->ESTADO = 'NEGADO';
-					$customer->save();
+					if($customerStatusDenied == false && empty($idDef)){
+						$customerStatusDenied = true;
+						$idDef = "10";
+					}
 					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->ID_DEF =  '10';
 					$customerIntention->save();
-					return ['resp' => "false"];
 				}
 			} else {
 				if ($customer->ANTIG >= 4) {
 					$customerIntention->TIEMPO_LABOR = 1;
 					$customerIntention->save();
 				} else {
-					$customer->ESTADO = 'NEGADO';
-					$customer->save();
+					if($customerStatusDenied == false && empty($idDef)){
+						$customerStatusDenied = true;
+						$idDef = "10";
+					}
 					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->ID_DEF =  '10';
 					$customerIntention->save();
-					return ['resp' => "false"];
 				}
 			}
 		}
@@ -959,10 +954,10 @@ class OportuyaV2Controller extends Controller
 		if (!empty($getDataRegistraduria)) {
 			if (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
-					$customer->ESTADO = 'NEGADO';
+					$customer->ESTADO                     = 'NEGADO';
+					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+					$customerIntention->ID_DEF            =  '4';
 					$customer->save();
-					$customerIntention->PERFIL_CREDITICIO =  $perfilCrediticio;
-					$customerIntention->ID_DEF =  '4';
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
@@ -971,6 +966,13 @@ class OportuyaV2Controller extends Controller
 			}
 		} else {
 			$estadoCliente = "PREAPROBADO";
+		}
+
+		if($customerStatusDenied == true){
+			$customer->ESTADO          = 'NEGADO';
+			$customerIntention->ID_DEF =  $idDef;
+			$customer->save();
+			$customerIntention->save();
 		}
 
 		// 5 Definiciones cliente
@@ -986,29 +988,29 @@ class OportuyaV2Controller extends Controller
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO') {
-					$customer->ESTADO = 'PREAPROBADO';
+					$customer->ESTADO           = 'PREAPROBADO';
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->ID_DEF  = '15';
 					$customer->save();
-					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '15';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
-					$customer->ESTADO = 'PREAPROBADO';
+					$customer->ESTADO           = 'PREAPROBADO';
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->ID_DEF  = '16';
 					$customer->save();
-					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '16';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 					if ($historialCrediticio == 1) {
-						$customer->ESTADO = 'PREAPROBADO';
+						$customer->ESTADO           = 'PREAPROBADO';
+						$customerIntention->TARJETA = $tarjeta;
+						$customerIntention->ID_DEF  = '17';
 						$customer->save();
-						$customerIntention->TARJETA =  $tarjeta;
-						$customerIntention->ID_DEF =  '17';
 						$customerIntention->save();
 						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 					} else {
