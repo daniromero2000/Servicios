@@ -1,30 +1,36 @@
-<div class="table ">
 
-    <table id="example2" class="table table-responsive-lg table-stripped  table-hover">
-        <thead class="text-center">
-            <tr>
-                @foreach ($headers as $header)
-                <th scope="col">{{ $header }}</th>
-                @endforeach
-            </tr>
+
+
+  <div class="container-fluid">
+
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-0" style="height: 300px;">
+      <table class="table table-head-fixed">
+        <thead>
+          <tr>
+            @foreach ($headers as $header)
+            <th scope="col">{{ $header }}</th>
+            @endforeach
+          </tr>
         </thead>
         <tbody>
-           @foreach($datas as $data)
+            @foreach($datas as $data)
             <tr>
-               
-                @foreach($data->toArray() as $key => $value)
-                <td class="text-center">
-                    {{ $data[$key] }}
-                </td>
-                @endforeach
-
-                <td class="text-center">
-
-                </td>
+          
+              @foreach($data->toArray() as $key => $value)
+              <td class="text-center">
+                {{ $data[$key] }}
+              </td>
+              @endforeach
+          
+              <td class="text-center">
+          
+              </td>
             </tr>
             @endforeach
-
-        <tbody>
-    </table>
-</div>
-
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
