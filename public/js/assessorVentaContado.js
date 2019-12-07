@@ -11,7 +11,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.messageValidationLead = "";
 	$scope.showWarningErrorData = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 0;
+	$scope.validateNum = 1;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -361,6 +361,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			console.log(response);
+			$('#proccess').modal('hide');
 		});
 	};
 	
