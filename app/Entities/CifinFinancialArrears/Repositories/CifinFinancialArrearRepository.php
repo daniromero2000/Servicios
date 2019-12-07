@@ -21,8 +21,28 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
                 ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
                 ->where('fincalid', '!=', 'CODE')
                 ->where('fintipocon', '!=', 'SRV')
+                ->where('finestob', 'VIGE')
                 ->where('finvrmora', '!=', '')
                 ->get(['finvrmora']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function checkCustomerHasCifinFinancialDoubtful($identificationNumber)
+    {
+        try {
+            return  $this->model->where('fincedula', $identificationNumber)
+                ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
+                ->where('fincalid', '!=', 'CODE')
+                ->where('fintipocon', '!=', 'SRV')
+                ->where(function ($query) {
+                    $query->orWhere('finestob', 'CAST')
+                        ->orWhere('finestob', 'DUDO');
+                })
+                ->where('finsaldob', '!=', '')
+                ->get(['finsaldob']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -55,18 +75,3 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         return $charTrim;
     }
 }
-
-
-// foreach ($respVectores as $key => $payment) {
-//     $paymentArray = explode('|', $payment->fdcompor);
-//     $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-//     $popArray = array_pop($paymentArray);
-//     $paymentArray = array_reverse($paymentArray);
-//     $paymentArray = array_splice($paymentArray, 0, 12);
-//     $elementsPaymentExt = array_keys($paymentArray, 'N');
-//     $paymentsExtNumber = count($elementsPaymentExt);
-//     if ($paymentsExtNumber == 12) {
-//         $aprobadoVectores = true;
-//         break;
-//     }
-// }

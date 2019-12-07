@@ -19,11 +19,32 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         try {
             return  $this->model->where('rmcedula', $identificationNumber)
                 ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
+                ->where('rmestob', 'VIGE')
                 ->where('rmtipoent', '!=', 'COMU')
                 ->where('rmcalid', '!=', 'CODE')
                 ->where('rmtipocon', '!=', 'SRV')
                 ->where('rmvrmora', '!=', '')
                 ->get(['rmvrmora']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function checkCustomerHasCifinRealDoubtful($identificationNumber)
+    {
+        try {
+            return  $this->model->where('rmcedula', $identificationNumber)
+                ->where('rmconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
+                ->where('rmtipoent', '!=', 'COMU')
+                ->where('rmcalid', '!=', 'CODE')
+                ->where('rmtipocon', '!=', 'SRV')
+                ->where(function ($query) {
+                    $query->orWhere('rmestob', 'CAST')
+                        ->orWhere('rmestob', 'DUDO');
+                })
+                ->where('rmsaldob', '!=', '')
+                ->get(['rmsaldob']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;

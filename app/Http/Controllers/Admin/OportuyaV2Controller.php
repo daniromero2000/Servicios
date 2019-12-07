@@ -742,6 +742,18 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
+		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
+		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+
+		if ($customerRealDoubtful > 0 || $customerFinDoubtful > 0) {
+			if ($customerStatusDenied == false && empty($idDef)) {
+				$customerStatusDenied = true;
+				$idDef = "6";
+			}
+			$customerIntention->ESTADO_OBLIGACIONES = 0;
+			$customerIntention->save();
+		}
+
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
 		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
