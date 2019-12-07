@@ -20,4 +20,9 @@ interface CustomerRepositoryInterface
   public function updateOrCreateCustomer($data);
 
   public function countCustomersSteps($from, $to);
+
+  public function listCustomersForCall($totalView): Support;
+
+  public function countCustomersForCallSteps($from, $to);
+
 }

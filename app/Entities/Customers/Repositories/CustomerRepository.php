@@ -20,6 +20,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         'TIPOCLIENTE',
         'SUBTIPO',
         'ORIGEN',
+        'CELULAR',
         'PASO',
         'ESTADO',
     ];
@@ -144,5 +145,77 @@ class CustomerRepository implements CustomerRepositoryInterface
             })
             ->orderBy('CREACION', 'desc')
             ->get($this->columns);
+    }
+
+    public function listCustomersForCall($totalView): Support
+    {
+        try {
+            return  $this->model->with([])->with('cliCell')
+                ->where(function ($query) {
+                    return $query->where('PASO',  'PASO1')
+                        ->orWhere('PASO', 'PASO2');
+                })
+                ->where('ESTADO', '')
+                ->orderBy('CREACION', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function searchCustomersForCall(string $text = null, $totalView,  $from = null,  $to = null): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to)) {
+            return $this->model->orderBy('CREACION', 'desc')
+                ->where(function ($query) {
+                    return $query->where('PASO',  'PASO1')
+                        ->orWhere('PASO', 'PASO2');
+                })
+                ->where('ESTADO', '')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchCustomers($text, null, true, true)
+                ->where(function ($query) {
+                    return $query->where('PASO',  'PASO1')
+                        ->orWhere('PASO', 'PASO2');
+                })
+                ->where('ESTADO', '')
+                ->orderBy('CREACION', 'desc')
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchCustomers($text, null, true, true)
+            ->whereBetween('CREACION', [$from, $to])
+            ->where(function ($query) {
+                return $query->where('PASO',  'PASO1')
+                    ->orWhere('PASO', 'PASO2');
+            })
+            ->where('ESTADO', '')
+            ->orderBy('CREACION', 'desc')
+            ->get($this->columns);
+    }
+
+    public function countCustomersForCallSteps($from, $to)
+    {
+        try {
+            return  $this->model->select('PASO', DB::raw('count(*) as total'))
+                ->whereBetween('CREACION', [$from, $to])
+                ->where(function ($query) {
+                    return $query->where('PASO',  'PASO1')
+                        ->orWhere('PASO', 'PASO2');
+                })
+                ->groupBy('PASO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
     }
 }

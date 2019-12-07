@@ -154,6 +154,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
     });
 
+    Route::namespace('CallCenter')->group(function () {
+        Route::resource('/Administrator/callCenter', 'CallCenterController');
+        Route::get('/Administrator/dashboard/callCenter', 'CallCenterController@dashboard')->name('callCenter_dashboard');
+    });
+
         Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');
         Route::put('/Administrator/{user}/profile', 'UserController@updateProfile')->name('user.profile.update');
 

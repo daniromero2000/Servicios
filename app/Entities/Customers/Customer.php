@@ -2,6 +2,7 @@
 
 namespace App\Entities\Customers;
 
+use App\cliCel;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
@@ -272,5 +273,10 @@ class Customer extends Model
     public function customerFosygas()
     {
         return $this->hasMany(Fosyga::class, 'cedula');
+    }
+
+    public function cliCell()
+    {
+        return $this->hasOne(cliCel::class, 'IDENTI');
     }
 }
