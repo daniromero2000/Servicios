@@ -383,7 +383,6 @@ class OportuyaV2Controller extends Controller
 	{
 		// Fosyga
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-
 		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
 		if ($dateConsultaFosyga == "true") {
 			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
@@ -742,6 +741,31 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
+		/*$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
+		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		return count($customerRealDoubtful);
+		if (!empty($customerRealDoubtful)) {
+			if ($customerRealDoubtful > 0) {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "6";
+				}
+				$customerIntention->ESTADO_OBLIGACIONES = 0;
+				$customerIntention->save();
+			}
+		}
+
+		if (!empty($customerFinDoubtful)) {
+			if ($customerFinDoubtful > 0) {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "6";
+				}
+				$customerIntention->ESTADO_OBLIGACIONES = 0;
+				$customerIntention->save();
+			}
+		}*/
+
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
 		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
@@ -917,9 +941,11 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($aprobado == false && $historialCrediticio == 0 && $perfilCrediticio == 'TIPO A') {
-			$tarjeta = "Crédito Tradicional";
+			$customer->ESTADO           = 'PREAPROBADO';
+			$tarjeta                    = "Crédito Tradicional";
 			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->ID_DEF =  '15';
+			$customerIntention->ID_DEF  = '15';
+			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "-2"];
 		}

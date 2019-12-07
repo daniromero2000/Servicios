@@ -88,4 +88,18 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             return 0;
         }
     }
+
+    public function execCheckCutomerPays($identificationNumber)
+    {
+        $obj = new \stdClass();
+        $obj->identificationNumber = trim($identificationNumber);
+        try {
+            $port = config('portsWs.pagosCliente');
+            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
 }
