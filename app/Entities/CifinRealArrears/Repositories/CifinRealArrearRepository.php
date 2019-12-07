@@ -35,7 +35,7 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
     {
         try {
             return  $this->model->where('rmcedula', $identificationNumber)
-                ->where('rmconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
+                ->where('rmconsul', $this->model->where('rmconsul', $identificationNumber)->max('rmconsul'))
                 ->where('rmtipoent', '!=', 'COMU')
                 ->where('rmcalid', '!=', 'CODE')
                 ->where('rmtipocon', '!=', 'SRV')
@@ -46,7 +46,7 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
                 ->where('rmsaldob', '!=', '')
                 ->get(['rmsaldob']);
         } catch (QueryException $e) {
-            dd($e);
+            return $e;
             //throw $th;
         }
     }
