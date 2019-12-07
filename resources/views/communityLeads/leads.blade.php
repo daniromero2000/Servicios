@@ -94,8 +94,8 @@
                 </div>
             </div>
             <div class="card-body text-center ">
-                <div class="table ">
-                    <table id="example2" class="table table-responsive table-stripped leadTable  table-hover">
+                <div class="card-body table-responsive p-0" style="height: 600px;">
+                    <table id="example2" class="table table-head-fixed table-stripped leadTable  table-hover">
                         <thead class=" text-center">
                             <tr>
                                 <th scope="col">Estado</th>
@@ -156,11 +156,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-12 text-center mb-1">
-                            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar
-                                Más</button>
-                        </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center mb-1">
+                        <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar
+                            Más</button>
                     </div>
                 </div>
             </div>
@@ -555,8 +556,8 @@
                                             ng-model="lead.assessor_id" style="width: 100%;">
                                             <option disabled selected value> -- Selecciona Asesor -- </option>
                                             <option value="13">Evelyn Correa</option>
-                                           <option value="18">Vanessa Parra</option>
-                                        <option value="85">Danitza Naranjo</option>
+                                            <option value="18">Vanessa Parra</option>
+                                            <option value="85">Danitza Naranjo</option>
                                         </select>
                                     </div>
                                 </div>

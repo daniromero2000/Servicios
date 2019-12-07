@@ -128,8 +128,9 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
 				@if(Auth::guard('web')->check())
 				<div class="logoutButton mr-2">
-					<a href=" {{ route('logout') }}" class="badge text-md badge-danger">
-						<i class="fas fa-power-off"></i> Cerrar Session
+					
+					<a href=" {{ route('logout') }}" class="badge text-md badge-danger" style="font-size: 13px;">
+						<i class="fas fa-power-off"></i> Cerrar Sesion
 					  </a>
 				</div>
 

@@ -1,10 +1,10 @@
 
 
 
-  <div class="container-fluid">
+  <div class="container-fluid mb-4">
 
     <!-- /.card-header -->
-    <div class="card-body table-responsive p-0" style="height: 300px;">
+    <div class="card-body table-responsive p-0" style="height: 500px;">
       <table class="table table-head-fixed">
         <thead>
           <tr>
@@ -22,10 +22,7 @@
                 {{ $data[$key] }}
               </td>
               @endforeach
-          
-              <td class="text-center">
-          
-              </td>
+        
             </tr>
             @endforeach
         </tbody>
