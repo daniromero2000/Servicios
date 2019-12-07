@@ -574,7 +574,7 @@
     </div>
 
     <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confronta" tabindex="-1" role="dialog"
-        aria-hidden="true">
+        aria-hidden="true" style="position: absolute;">
         <div class="modal-dialog modalConfronta">
             <div class="modal-content modalStepsContent">
                 <div class="modal-body" style="padding: 0 30px">
