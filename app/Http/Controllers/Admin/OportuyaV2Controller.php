@@ -1273,7 +1273,7 @@ class OportuyaV2Controller extends Controller
 
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
-			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+			return $aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
 			$aprobo = 0;
 		}
@@ -1396,6 +1396,9 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 'ANALISIS';
+			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
+				$estadoSolic = 'ANALISIS';
+			}
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
@@ -1415,10 +1418,6 @@ class OportuyaV2Controller extends Controller
 				}
 			} else {
 				$estadoSolic = 'APROBADO';
-			}
-
-			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
-				$estadoSolic = 'ANALISIS';
 			}
 		}
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
