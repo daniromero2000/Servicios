@@ -1154,6 +1154,7 @@ class OportuyaV2Controller extends Controller
 
 	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
 	{
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
 		if ($dateConsultaUbica == 'true') {
 			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
@@ -1273,7 +1274,7 @@ class OportuyaV2Controller extends Controller
 
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
-			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+			return $aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
 			$aprobo = 0;
 		}
@@ -1396,6 +1397,9 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 'ANALISIS';
+			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
+				$estadoSolic = 'ANALISIS';
+			}
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
@@ -1415,10 +1419,6 @@ class OportuyaV2Controller extends Controller
 				}
 			} else {
 				$estadoSolic = 'APROBADO';
-			}
-
-			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
-				$estadoSolic = 'ANALISIS';
 			}
 		}
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
@@ -1466,6 +1466,9 @@ class OportuyaV2Controller extends Controller
 		$infoLead           = $this->getInfoLeadCreate($identificationNumber);
 		$infoLead->numSolic = $numSolic->SOLICITUD;
 		if ($estadoSolic == "APROBADO") {
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer->ESTADO = "APROBADO";
+			$customer->save();
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} else {

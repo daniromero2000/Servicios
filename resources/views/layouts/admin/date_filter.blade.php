@@ -19,7 +19,7 @@
                         <input type="date" name="to" class="form-control form-control-sm"
                             value="{!! request()->input('to') !!}">
                     </div>
-                    <div class="col-md-3 d-flex justify-content-center align-items-end">
+                    <div class="col-md-3 mt-2 d-flex justify-content-center align-items-end">
                         <span class="input-group-btn ">
                             <button type="submit" id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i>
                                 Buscar

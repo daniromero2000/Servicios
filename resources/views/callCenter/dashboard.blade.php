@@ -3,6 +3,28 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <!-- Main content -->
+
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+
+        <div class="row">
+          <div class="col-md-12">
+
+          </div>
+
+        </div>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/callCenter">Dashboard CallCenter</a></li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
 <div class="container-fluid">
 
   <div class="row mt-2">
@@ -47,7 +69,7 @@
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
                 <span class="progress-description">
-                 {{ number_format ($customerStep['percentage'])}}% llegó a este paso
+                  {{ number_format ($customerStep['percentage'])}}% llegó a este paso
                 </span>
               </div>
             </div>
@@ -112,7 +134,7 @@
       </div>
     </div>
   </div>
-{{--
+  {{--
   <div class="col-md-4">
       <div class="card">
         <div class="card-header">

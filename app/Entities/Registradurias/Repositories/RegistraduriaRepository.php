@@ -38,7 +38,7 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         if (empty($dateLastConsultaFosyga)) {
             return "true";
         } else {
-            if ($dateLastConsultaFosyga->fuenteFallo == "SI") {
+            if ($dateLastConsultaFosyga->fuenteFallo == "SI" || $dateLastConsultaFosyga->estado === 'El número de documento no se encuentra en la base de datos o la fecha de expedición ingresada no corresponde con la cedula.') {
                 return "true";
             }
 

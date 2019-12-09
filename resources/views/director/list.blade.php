@@ -8,19 +8,12 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-6">
-
-            <div class="row">
-              <div class="col-md-12">
-
-              </div>
-
-            </div>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active"><a href="/Administrator/director">Solicitudes</a></li>
+              <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Dashboard Directores</a>
+              </li>
+              <li class="breadcrumb-item active"><a href="/Administrator/director">Director</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -34,7 +27,7 @@
             <div class="card-header">
               @include('layouts.admin.filter_director', ['route' => route('director.index')])
             </div>
-            <div class=" mt-2 col-12 col-sm-6 col-md-12">
+            <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
                 <div class="col-12 col-sm-6 col-md-6">
                   <!-- /.info-box -->
