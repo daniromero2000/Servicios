@@ -199,6 +199,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(response.data == false){
 				var cedula = angular.extend({}, $scope.lead);
 				$scope.resetInfo();
@@ -252,13 +253,28 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/api/oportuya/getNumLead/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
 			if(typeof response.data.resp == 'number'){
-				
 			}else{
 				var num = response.data.resp.NUM.substring(0,6);
 				var CELULAR = response.data.resp.NUM.replace(num, "******");
 				$scope.lead.CEL_VAL = response.data.resp.CEL_VAL;
 				$scope.CELULAR = CELULAR;
 				$scope.lead.CELULAR = response.data.resp.NUM;
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
+
+	$scope.checkIfExistNum = function(){
+		$http({
+			method: 'GET',
+			url: '/api/checkIfExistNum/'+$scope.lead.CELULAR,
+		}).then(function successCallback(response) {
+			if(response.data >= 1){
+				alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
+				$scope.lead.CELULAR = "";
+			}else{
+				console.log("Validado!!!");
 			}
 		}, function errorCallback(response) {
 			console.log(response);
@@ -312,7 +328,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
-	
 	$scope.execConsultasLead = function(identificationNumber){
 		$('#proccess').modal('show');
 		$http({
