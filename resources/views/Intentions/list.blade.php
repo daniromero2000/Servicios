@@ -7,20 +7,13 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-6">
-
-                        <div class="row">
-                            <div class="col-md-12">
-
-                            </div>
-
-                        </div>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard
+                                    Intenciones Web</a>
                             <li class="breadcrumb-item active"><a
-                                    href="/Administrator/communityLeads#!/">Intenciones</a></li>
+                                    href="/Administrator/intentions">Intenciones</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -34,9 +27,9 @@
                             @include('layouts.admin.filter_intention', ['route' =>
                             route('intentions.index')])
                         </div>
-                        <div class=" mt-2 col-12 col-sm-6 col-md-12">
+                        <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">
-                                <div class="col-12 col-sm-6 col-md-6">
+                                <div class="col-12 col-sm-12 col-md-6">
                                     <!-- /.info-box -->
                                     <div class="small-box ">
                                         <div class="inner">
