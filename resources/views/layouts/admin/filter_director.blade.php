@@ -10,12 +10,12 @@
 
 
                 <div class="row w-100 d-flex justify-content-center">
-                    <div class="col-3">
+                    <div class="col-6 col-md-3">
                         <label for="q">Buscar: Solicitud / Cedula</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-md-3">
                         <div class="form-group">
                             <label for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
@@ -47,20 +47,20 @@
                         </div>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-6 col-md-3">
                         <label for="from">Desde</label>
                         <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-md-3">
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
-                    <div class="col-3">
+                    <div class="col-6 col-md-3">
                         <label for="q">Buscar: Asesor</label>
                         <input type="text" name="assessor" class="form-control" placeholder=" Buscar por Asesor..."
                             value="{!! request()->input('assessor') !!}">
                     </div>
-                    <div class="col-3 d-flex align-items-end">
+                    <div class="col-6 col-md-3 d-flex align-items-end">
                         <span class="input-group-btn btn-pr">
                             <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
                                     class="fa fa-search"></i>

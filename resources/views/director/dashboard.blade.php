@@ -2,20 +2,20 @@
 
 @section('content')
 <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
-            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Directores</a></li>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
+          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Dashboard Directores</a></li>
 
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
 <!-- Content Wrapper. Contains page content -->
 <!-- Main content -->
 <div class="container-fluid">
@@ -30,7 +30,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito</p>                
+                <p>Solicitudes Crédito</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>

@@ -1,7 +1,7 @@
-<div class="container-fluid mb-4">
+<div class="mb-4">
 
     <!-- /.card-header -->
-    <div class="card-body table-responsive p-0" style="height: 500px;">
+    <div class=" table-responsive p-0" style="height: 500px;">
         <table class="table table-head-fixed">
             <thead class="text-center">
                 <tr>
@@ -18,10 +18,10 @@
                     <td>{{ $data->CEDULA}} </td>
                     <td>{{ $data->APELLIDOS}}</td>
                     <td>{{ $data->NOMBRES}} </td>
-                    <td>{{ $data->CELULAR}} </td>
                     <td>{{ $data->TIPOCLIENTE}} </td>
                     <td>{{ $data->SUBTIPO}} </td>
                     <td>{{ $data->ORIGEN}} </td>
+                    <td>{{ $data->CELULAR}} </td>
                     <td>{{ $data->PASO}} </td>
                     <td>{{ $data->ESTADO}} </td>
                 </tr>
