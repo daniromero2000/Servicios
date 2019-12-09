@@ -319,7 +319,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
 		}).then(function successCallback(response) {
-			$('#proccess').modal('hide');
+			$timeout(function() {
+				$('#proccess').modal('hide');
+			}, 800);
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
