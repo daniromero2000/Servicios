@@ -212,6 +212,7 @@ class CustomerRepository implements CustomerRepositoryInterface
                     return $query->where('PASO',  'PASO1')
                         ->orWhere('PASO', 'PASO2');
                 })
+                ->where('ESTADO', '')
                 ->groupBy('PASO')
                 ->get();
         } catch (QueryException $e) {
