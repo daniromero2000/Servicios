@@ -1154,6 +1154,7 @@ class OportuyaV2Controller extends Controller
 
 	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
 	{
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
 		if ($dateConsultaUbica == 'true') {
 			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
