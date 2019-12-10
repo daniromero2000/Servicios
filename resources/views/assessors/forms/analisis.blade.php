@@ -6,27 +6,26 @@
 
 @section('content')
 <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a
-                                href="/Administrator/analisis">Realizar Analisis</a></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="/Administrator/analisis">Realizar Analisis</a></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
 
 
 
 <div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
     <div class="row ">
         <div class="col-12 text-center">
-            <h2 class="headerAdmin ng-scope">Aplicar política / individual</h2>
+            <h2 class="headerAdmin ng-scope">Resumen análisis política</h2>
         </div>
         <div class="col-12 col-sm-4 offset-sm-4">
             <form name="simular" ng-submit="getInfoLead()">
@@ -36,7 +35,7 @@
                         <input required class="form-control" ng-model="lead.cedula" validation-pattern="number">
                     </div>
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary">Aplicar</button>
+                        <button type="submit" class="btn btn-primary">Ver Resumen</button>
                     </div>
                 </div>
             </form>
@@ -79,62 +78,48 @@
                                         <span ng-if="infoLead.TIPO_DOC == 8">Fidecomiso</span>
                                     </p>
                                     <p>
-                                        <label for="">Número de documento:  </label>  @{{ infoLead.CEDULA }}
+                                        <label for="">Número de documento: </label> @{{ infoLead.CEDULA }}
                                     </p>
                                     <p>
-                                        <label for="">Tipo de cliente: 
-                                        </label>  @{{ infoLead.latest_intention.TIPO_CLIENTE }}
+                                        <label for="">Tipo de cliente:
+                                        </label> @{{ infoLead.latest_intention.TIPO_CLIENTE }}
                                     </p>
                                     <p>
-                                        <label for="">Fecha nacimiento: </label>  @{{ infoLead.FEC_NAC }}
-                                    </p>
-                                    <p>
-                                        <label for="">Tipo de vivienda: </label>  @{{ infoLead.TIPOV }}
-                                    </p>
-                                    <p>
-                                        <label for="">Actividad: </label>  @{{ infoLead.ACTIVIDAD }}
+                                        <label for="">Actividad: </label> @{{ infoLead.ACTIVIDAD }}
                                     </p>
                                     <p
                                         ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                        <label for="">Actividad independiente: </label>  @{{ infoLead.ACT_IND }}
+                                        <label for="">Actividad independiente: </label> @{{ infoLead.ACT_IND }}
                                     </p>
                                     <p>
-                                        <label for="">Tiempo Labor: </label>  <span
-                                            ng-if="infoLead.latest_intention.TIEMPO_LABOR == 1">  Si
-                                            cumple</span> <span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 0">  No
+                                        <label for="">Tiempo Labor: </label> <span
+                                            ng-if="infoLead.latest_intention.TIEMPO_LABOR == 1"> Si
+                                            cumple</span> <span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 0"> No
                                             cumple</span>
                                     </p>
                                     <p
                                         ng-if="infoLead.ACTIVIDAD == 'NO CERTIFICADO' || infoLead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || infoLead.ACTIVIDAD == 'RENTISTA'">
                                         <label for="">Ingresos: </label> <span> $
                                             @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
-                                        </p>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8 ">
-                                    <p
-                                        ng-if="infoLead.ACTIVIDAD == 'EMPLEADO' || infoLead.ACTIVIDAD == 'PENSIONADO' || infoLead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || infoLead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
-                                        <label for="">Ingresos:
-                                        </label><span>  $@{{ infoLead.SUELDO + infoLead.OTROS_ING | number:0 }}</span>
-                                    </p>
+
                                     <p>
                                         <label for="">Sucursal: </label> @{{ infoLead.SUC }}
                                     </p>
+
                                     <p>
-                                        <label for="">Dirección: </label> @{{ infoLead.DIRECCION }}
+                                        <label for="">Celular: </label> @{{ infoLead.CELULAR }}
+                                    </p>
+
+                                    <p>
+                                        <label for="">Tarjeta: </label> @{{ infoLead.latest_intention.TARJETA }}
                                     </p>
                                     <p>
-                                        <label for="">Celular: </label>  @{{ infoLead.CELULAR }}
-                                    </p>
-                                    <p>
-                                        <label for="">Score: </label>  @{{ infoLead.latest_cifin_score.score }}
-                                    </p>
-                                    <p>
-                                        <label for="">Tarjeta: </label>  @{{ infoLead.latest_intention.TARJETA }}
-                                    </p>
-                                    <p>
-                                        <label for="">Estado: </label>  @{{ infoLead.ESTADO }}
+                                        <label for="">Estado: </label> @{{ infoLead.ESTADO }}
                                     </p>
                                 </div>
                             </div>
