@@ -1379,21 +1379,11 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 
-			if ($tipoCreacion == 'PASOAPASO') {
-				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
-					return [
-						'resp'     => $policyCredit,
-						'infoLead' => $infoLead
-					];
-				}
-			}
-			if ($tipoCreacion == 'CREDITO') {
-				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
-					return [
-						'resp'     => $policyCredit,
-						'infoLead' => $infoLead
-					];
-				}
+			if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
+				return [
+					'resp'     => $policyCredit,
+					'infoLead' => $infoLead
+				];
 			}
 
 			$estadoSolic = 'ANALISIS';
@@ -1679,10 +1669,10 @@ class OportuyaV2Controller extends Controller
 		$turnosOportuya->ESTADO    = 'ANALISIS';
 		$turnosOportuya->TIPO      = 'OPORTUYA';
 		$turnosOportuya->SUB_TIPO  = 'WEB';
-		$turnosOportuya->FEC_RET   = '1994-09-30 00: 00: 00';
-		$turnosOportuya->FEC_FIN   = '1994-09-30 00: 00: 00';
+		$turnosOportuya->FEC_RET   = '1994-09-30 00:00:00';
+		$turnosOportuya->FEC_FIN   = '1994-09-30 00:00:00';
 		$turnosOportuya->VALOR     = '0';
-		$turnosOportuya->FEC_ASIG  = '1994-09-30 00: 00: 00';
+		$turnosOportuya->FEC_ASIG  = '1994-09-30 00:00:00';
 		$turnosOportuya->SCORE     = $scoreLead;
 		$turnosOportuya->TIPO_CLI  = '';
 		$turnosOportuya->CED_COD1  = '';
