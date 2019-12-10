@@ -35,7 +35,7 @@
                         <div class="input-group mb-3">
                             <div class="input-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
                                 <input type="text" name="email" class="form-control" value="{{ old('email') }}"
-                                    placeholder="Email" required>
+                                    placeholder="Usuario" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-envelope"></span>
