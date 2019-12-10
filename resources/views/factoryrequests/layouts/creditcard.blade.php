@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      @include('layouts.admin.tables.customer_eps_noheaders_table', ['data' => $customer->creditCard])
+      @include('layouts.admin.tables.noheaders_noloop_table', ['data' => $customer->creditCard])
     </tbody>
   </table>
   @else
