@@ -124,7 +124,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('customer_dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('callCenter_dashboard')])
             </div>
             <div class="col-12">
               <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
