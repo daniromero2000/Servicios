@@ -1,6 +1,6 @@
 <div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Solicitud {{ $customer->SOLICITUD }} Sucursal
-    {{ $customer->SUCURSAL }} {{ $customer->ESTADO }}
+  <h2><i class="fas fa-tags" aria-hidden="true"></i> {{ $customer->NOMBRES }}
+    {{ $customer->APELLIDOS }} {{ $customer->ESTADO }}
   </h2>
 </div>
 <div class="card-body table-responsive pt-1">

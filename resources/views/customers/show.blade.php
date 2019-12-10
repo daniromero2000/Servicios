@@ -18,16 +18,16 @@
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 <div class="container-fluid card">
 
-                    @include('factoryrequests.layouts.generals')
+                    @include('customers.layouts.generals')
                 </div>
 
                 <div class="container-fluid mt-5 card">
-                    @include('factoryrequests.layouts.customer')
+                    @include('customers.layouts.customer')
 
                 </div>
 
                 <div class="container-fluid mt-5 card">
-                    @include('factoryrequests.layouts.creditcard')
+                    @include('customers.layouts.creditcard')
 
                 </div>
 
