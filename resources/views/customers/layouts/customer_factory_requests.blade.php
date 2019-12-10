@@ -19,7 +19,7 @@
       @foreach ($factory_requests as $factory_request )
       <tr>
         <td class="text-center">{{ $factory_request->FECHASOL }}</td>
-        <td class="text-center">{{ $factory_request->SOLICITUD }}</td>
+        <td class="text-center"><a href="{{ route('factoryrequests.show', $factory_request->SOLICITUD) }}">{{ $factory_request->SOLICITUD }}</a></td>
         <td class="text-center">{{ $factory_request->SUCURSAL }}</td>
         <td class="text-center">{{ $factory_request->ESTADO }}</td>
         <td class="text-center">{{ $factory_request->GRAN_TOTAL }}</td>
