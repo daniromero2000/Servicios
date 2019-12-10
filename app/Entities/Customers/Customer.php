@@ -250,6 +250,11 @@ class Customer extends Model
         return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
     }
 
+    public function customersFactoryRequests()
+    {
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
+    }
+
     public function latestIntention()
     {
         return $this->hasOne(Intention::class, 'CEDULA')->with('definition')->latest('FECHA_INTENCION');

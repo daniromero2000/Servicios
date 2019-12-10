@@ -76,7 +76,8 @@ class CustomerRepository implements CustomerRepositoryInterface
         try {
             return $this->model->with([
                 'latestCifinScore',
-                'latestIntention'
+                'latestIntention',
+                'customersfactoryRequests'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

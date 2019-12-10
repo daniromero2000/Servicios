@@ -13,6 +13,10 @@
                 <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
             </li>
             <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
+                    aria-controls="profile">Solicitudes Fábrica</a>
+            </li>
+            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                     aria-controls="profile">Seguimiento</a>
             </li>
@@ -25,7 +29,7 @@
                 <div class="container-fluid mt-5 card">
                     @include('customers.layouts.ids')
                 </div>
-                         </div>
+            </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
                     <div class="container-fluid mt-5 card">
@@ -33,6 +37,13 @@
                     </div>
                     <div class="container-fluid mt-5 card">
                         @include('customers.layouts.emails')
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="factoryrequests">
+                <div class="row">
+                    <div class="container-fluid mt-5 card">
+                        @include('customers.layouts.customer_factory_requests', ['factory_requests' => $customer->customersfactoryRequests])
                     </div>
                 </div>
             </div>
