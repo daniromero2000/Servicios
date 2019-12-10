@@ -1379,21 +1379,11 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 
-			if ($tipoCreacion == 'PASOAPASO') {
-				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
-					return [
-						'resp'     => $policyCredit,
-						'infoLead' => $infoLead
-					];
-				}
-			}
-			if ($tipoCreacion == 'CREDITO') {
-				if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
-					return [
-						'resp'     => $policyCredit,
-						'infoLead' => $infoLead
-					];
-				}
+			if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
+				return [
+					'resp'     => $policyCredit,
+					'infoLead' => $infoLead
+				];
 			}
 
 			$estadoSolic = 'ANALISIS';
