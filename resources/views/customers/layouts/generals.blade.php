@@ -7,32 +7,24 @@
   <table class="table table-hover table-stripped leadTable">
     <thead>
       <tr>
-        <th class="text-center" scope="col">Fecha de Solicitud</th>
-        <th class="text-center" scope="col">Codeudores</th>
-        <th class="text-center" scope="col">Asesor</th>
-        <th class="text-center" scope="col">Gran Total</th>
-        <th class="text-center" scope="col">Credito</th>
-        <th class="text-center" scope="col">Avance</th>
-        <th class="text-center" scope="col">Lead</th>
+        <th class="text-center" scope="col">Tipo Cliente / Subtipo</th>
+        <th class="text-center" scope="col">Edad</th>
+        <th class="text-center" scope="col">Sexo</th>
+        <th class="text-center" scope="col">Fecha de Nacimiento</th>
+        <th class="text-center" scope="col">Estado Civil</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="text-center">{{ $customer->FECHASOL }}</td>
-        <td class="text-center">{{ $customer->CODEUDOR1 }}/{{ $customer->CODEUDOR2 }}/{{ $customer->CODEUDOR3 }}</td>
-        <td class="text-center">{{ $customer->CODASESOR }}</td>
-        <td class="text-center">{{ $customer->GRAN_TOTAL }}</td>
-        <td class="text-center">{{ $customer->PRODUC_W }}</td>
-        <td class="text-center">{{ $customer->AVANCE_W }}</td>
+        <td class="text-center">{{ $customer->TIPOCLIENTE }}/{{ $customer->SUBTIPO }}</td>
+        <td class="text-center">{{ $customer->EDAD }} Años</td>
+        <td class="text-center">{{ $customer->SEXO }}</td>
+        <td class="text-center">{{ $customer->FEC_NAC }}</td>
+        <td class="text-center">{{ $customer->ESTADOCIVIL }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-
-
-
-
-
 @section('scriptsJs')
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

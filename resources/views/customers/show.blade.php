@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="container-fluid mt-5 card">
-                    @include('customers.layouts.customer')
+                    @include('customers.layouts.ids')
 
                 </div>
 
