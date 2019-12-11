@@ -1,6 +1,6 @@
 <div class="container-fluid card mt-5 card-table-reset">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-external-link-alt mr-2"></i> Obligaciones Extintas Sector Real
+    <h2 class="title-table"><i class="fas fa-external-link-alt mr-2"></i> Obligaciones Extintas Sector Financiero
     </h2>
   </div>
   @if($customer->extintsCifinFins->isNotEmpty())

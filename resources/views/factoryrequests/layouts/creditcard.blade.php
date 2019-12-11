@@ -21,18 +21,11 @@
       <tbody class="body-table">
         <tr>
           <td>
-            Aún no tiene Eps
+            Aún no tiene Tarjetas
           </td>
         </tr>
       </tbody>
     </table>
     @endif
-    <div class="row mt-3">
-      <div class="col">
-        <a href="# " data-toggle="modal" data-target="#epsmodal" <i class="btn btn-primary btn-sm"><i
-            class="fa fa-edit"></i>
-          Agregar Eps</a>
-      </div>
-    </div>
   </div>
 </div>
