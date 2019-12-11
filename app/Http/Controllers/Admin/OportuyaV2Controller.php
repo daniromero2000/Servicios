@@ -1369,6 +1369,11 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
 			$customer->save();
+			$estadoSolic = 'ANALISIS';
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0
+			];
 		} else {
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
