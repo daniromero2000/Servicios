@@ -10,7 +10,6 @@
           <th class="text-center" scope="col">Cédula</th>
           <th class="text-center" scope="col">Fecha Expedición</th>
           <th class="text-center" scope="col">Ciudad De Expedición</th>
-
         </tr>
       </thead>
       <tbody class="body-table">
@@ -18,7 +17,6 @@
           <td class="text-center">{{ $customer->CEDULA }}</td>
           <td class="text-center">{{ $customer->FEC_EXP }}</td>
           <td class="text-center">{{ $customer->CIUD_EXP }}</td>
-
         </tr>
       </tbody>
     </table>

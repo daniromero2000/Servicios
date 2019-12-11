@@ -10,10 +10,7 @@
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
             </li>
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
-            </li>
-            <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#arrears" role="tab" aria-controls="profile">Moras</a>
+                <a class="nav-link" data-toggle="tab" href="#arrears" role="tab" aria-controls="arrears">Moras</a>
             </li>
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#uptoday" role="tab" aria-controls="profile">Obligaciones Al
@@ -30,52 +27,34 @@
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-
                 @include('customers.layouts.generals')
-
-
                 @include('customers.layouts.ids')
-
-            </div>
-            <div role="tabpanel" class="tab-pane" id="contact">
-
                 @include('customers.layouts.phones')
-
                 @include('customers.layouts.emails')
-
             </div>
             <div role="tabpanel" class="tab-pane" id="uptoday">
-
                 @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
                 $customer->UpToDateCifinFins])
-
-
                 @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
                 $customer->UpToDateCifinReals])
-
-
             </div>
-            <div role="tabpanel" class="tab-pane" id="arrears">
 
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="arrears">
                 @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
                 $customer->cifinReals])
-
                 @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
                 $customer->cifinFins])
-
-
             </div>
-            <div role="tabpanel" class="tab-pane" id="factoryrequests">
 
+            <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
 
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
-
-                {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
-                    @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
-
+                @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
+                    @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
             </div>
             <div class="row border-0">
                 <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>

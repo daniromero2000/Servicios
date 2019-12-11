@@ -10,7 +10,6 @@
           <th class="text-center" scope="col">Móvil</th>
           <th class="text-center" scope="col">Teléfono Fijo</th>
           <th class="text-center" scope="col">Teléfono Empresa</th>
-
         </tr>
       </thead>
       <tbody class="body-table">

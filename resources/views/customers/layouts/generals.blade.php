@@ -1,5 +1,5 @@
 <div class="container-fluid card card-table-reset">
-  <div class="card-header"> 
+  <div class="card-header">
     <div class="row">
       <div class="col-8">
         <h2 class="title-table"><i class="fas fa-user mr-2"></i> {{ $customer->NOMBRES }}
