@@ -3,6 +3,7 @@
 namespace App\Entities\Customers;
 
 use App\cliCel;
+use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
@@ -229,7 +230,6 @@ class Customer extends Model
         return self::search($term);
     }
 
-
     public function latestCifinScore()
     {
         return $this->hasOne(CifinScore::class, 'scocedula')->latest('scoconsul');
@@ -283,5 +283,10 @@ class Customer extends Model
     public function cliCell()
     {
         return $this->hasOne(cliCel::class, 'IDENTI');
+    }
+
+    public function cifinReals()
+    {
+        return $this->hasMany(CifinRealArrear::class, 'rmcedula');
     }
 }

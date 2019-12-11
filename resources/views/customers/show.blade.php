@@ -13,6 +13,10 @@
                 <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
             </li>
             <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#consultations" role="tab"
+                    aria-controls="profile">Consultas</a>
+            </li>
+            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
                     aria-controls="profile">Solicitudes Fábrica</a>
             </li>
@@ -40,10 +44,19 @@
                     </div>
                 </div>
             </div>
+            <div role="tabpanel" class="tab-pane" id="consultations">
+                <div class="row">
+                    <div class="container-fluid mt-5 card">
+                        @include('customers.layouts.customer_cifin_real', ['cifin_reals' =>
+                        $customer->cifinReals])
+                    </div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 <div class="row">
                     <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_factory_requests', ['factory_requests' => $customer->customersfactoryRequests])
+                        @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
+                        $customer->customersfactoryRequests])
                     </div>
                 </div>
             </div>
