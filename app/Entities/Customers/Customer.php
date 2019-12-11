@@ -8,6 +8,7 @@ use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
+use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
@@ -310,6 +311,6 @@ class Customer extends Model
 
     public function ExtintsCifinReals()
     {
-        return $this->hasMany(UpToDateRealCifin::class, 'rdcedula');
+        return $this->hasMany(ExtintRealCifin::class, 'rexcedula');
     }
 }

@@ -46,7 +46,7 @@ class CustomerController extends Controller
 
     public function show(int $id)
     {
-        $customer = $this->customerInterface->findCustomerByIdFull($id);
+        dd($customer = $this->customerInterface->findCustomerByIdFull($id));
 
         return view('customers.show', [
             'customer' =>  $customer

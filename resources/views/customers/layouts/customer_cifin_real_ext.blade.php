@@ -19,13 +19,13 @@
     <tbody>
       @foreach ($cifin_extints_reals as $cifin_extints_real )
       <tr>
-        <td class="text-center">{{ $cifin_extints_real->rdnoment }}</td>
-        <td class="text-center">{{ $cifin_extints_real->rdestob }}</td>
-        <td class="text-center">{{ number_format (($cifin_extints_real->rdvrinic*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_extints_real->rdsaldob*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_extints_real->rdvrmora*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_extints_real->rdvrcuot*1000)) }}</td>
-        <td class="text-center">{{ $cifin_extints_real->rdcompor }}</td>
+        <td class="text-center">{{ $cifin_extints_real->rexnoment }}</td>
+        <td class="text-center">{{ $cifin_extints_real->rexestob }}</td>
+        <td class="text-center">{{ number_format (($cifin_extints_real->rexvrinic*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_extints_real->rexsaldob*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_extints_real->rexvrmora*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_extints_real->rexvrcuot*1000)) }}</td>
+        <td class="text-center">{{ $cifin_extints_real->rexcompor }}</td>
       </tr>
       @endforeach
     </tbody>
