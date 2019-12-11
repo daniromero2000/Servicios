@@ -17,7 +17,7 @@
           <th class="text-center" scope="col">Vector</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="body-table">
         @foreach ($cifin_reals as $cifin_real )
         <tr>
           <td class="text-center">{{ $cifin_real->rmnoment }}</td>

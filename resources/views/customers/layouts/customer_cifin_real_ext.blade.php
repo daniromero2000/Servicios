@@ -1,11 +1,11 @@
 <div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Extintas Sector Real
+  <h2 ><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Extintas Sector Real
   </h2>
 </div>
 @if($customer->extintsCifinReals->isNotEmpty())
 <div class="card-body table-responsive pt-1">
   <table class="table table-hover table-stripped leadTable">
-    <thead>
+    <thead >
       <tr>
         <th class="text-center" scope="col">Entidad</th>
         <th class="text-center" scope="col">Estado</th>
@@ -16,7 +16,7 @@
         <th class="text-center" scope="col">Vector</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody >
       @foreach ($cifin_real_extints as $cifin_real_extint )
       <tr>
         <td class="text-center">{{ $cifin_real_extint->rexnoment }}</td>
