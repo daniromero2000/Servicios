@@ -188,6 +188,9 @@
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Validador de campos formulario -->
+<script src="{{ asset('js/validateV2.js') }}"></script>
+
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 <script>
     $(function () {
