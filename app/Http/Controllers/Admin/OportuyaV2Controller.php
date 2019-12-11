@@ -998,6 +998,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->ID_DEF =  $idDef;
 			$customer->save();
 			$customerIntention->save();
+			return ['resp' => "false"];
 		}
 
 		// 5 Definiciones cliente
