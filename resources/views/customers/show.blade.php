@@ -38,19 +38,15 @@
                 @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
                 $customer->UpToDateCifinReals])
             </div>
-
-
             <div role="tabpanel" class="tab-pane container-fluid" id="arrears">
                 @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
                 $customer->cifinReals])
                 @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
                 $customer->cifinFins])
             </div>
-
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
-
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
