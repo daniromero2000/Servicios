@@ -71,6 +71,25 @@ class CustomerRepository implements CustomerRepositoryInterface
         }
     }
 
+    public function findCustomerByIdFull($identificationNumber): Customer
+    {
+        try {
+            return $this->model->with([
+                'latestCifinScore',
+                'latestIntention',
+                'customersfactoryRequests',
+                'cifinReals',
+                'cifinFins',
+                'UpToDateCifinFins',
+                'UpToDateCifinReals',
+                'extintsCifinReals',
+                'extintsCifinFins'
+            ])->findOrFail($identificationNumber);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function checkIfExists($identificationNumber)
     {
         try {
@@ -212,6 +231,7 @@ class CustomerRepository implements CustomerRepositoryInterface
                     return $query->where('PASO',  'PASO1')
                         ->orWhere('PASO', 'PASO2');
                 })
+                ->where('ESTADO', '')
                 ->groupBy('PASO')
                 ->get();
         } catch (QueryException $e) {

@@ -11,7 +11,7 @@
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->id}}</td>
-                <td>{{ $data->CEDULA}} </td>
+                <td><a href="{{ route('customers.show', $data->CEDULA) }}">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
