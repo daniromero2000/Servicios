@@ -1,5 +1,5 @@
 <div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Sector Financiero
+  <h2><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Sector Real
   </h2>
 </div>
 @if($customer->UpToDateCifinReals->isNotEmpty())
