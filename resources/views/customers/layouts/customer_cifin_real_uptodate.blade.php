@@ -1,6 +1,6 @@
 <div class="container-fluid mt-5 card card-table-reset">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Sector Financiero
+    <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Sector Real
     </h2>
   </div>
   @if($customer->UpToDateCifinReals->isNotEmpty())
