@@ -1,8 +1,9 @@
-@if(!empty($cifin_reals))
+
 <div class="card-header">
   <h2><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Real
   </h2>
 </div>
+@if($customer->cifinReals->isNotEmpty()))
 <div class="card-body table-responsive pt-1">
   <table class="table table-hover table-stripped leadTable">
     <thead>
@@ -31,7 +32,7 @@
     </tbody>
   </table>
 </div>@else
-<span>No tiene Moras</span><br>
+<span>No tiene Moras en el sector Real</span><br>
 @endif
 @section('scriptsJs')
 <!-- jQuery -->
