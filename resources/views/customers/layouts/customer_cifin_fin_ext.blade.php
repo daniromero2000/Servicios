@@ -2,7 +2,7 @@
   <h2><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Extintas Sector Real
   </h2>
 </div>
-@if($customer->extintsCifinReals->isNotEmpty())
+@if($customer->extintsCifinFins->isNotEmpty())
 <div class="card-body table-responsive pt-1">
   <table class="table table-hover table-stripped leadTable">
     <thead>
@@ -17,15 +17,15 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($cifin_real_extints as $cifin_real_extint )
+      @foreach ($cifin_fin_extints as $cifin_fin_extint )
       <tr>
-        <td class="text-center">{{ $cifin_real_extint->rexnoment }}</td>
-        <td class="text-center">{{ $cifin_real_extint->rexestob }}</td>
-        <td class="text-center">{{ number_format (($cifin_real_extint->rexvrinic*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real_extint->rexsaldob*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real_extint->rexvrmora*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real_extint->rexvrcuot*1000)) }}</td>
-        <td class="text-center">{{ $cifin_real_extint->rexcompor }}</td>
+        <td class="text-center">{{ $cifin_fin_extint->extnoment }}</td>
+        <td class="text-center">{{ $cifin_fin_extint->extestob }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin_extint->extvrinic*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin_extint->extsaldob*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin_extint->extvrmora*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin_extint->extvrcuot*1000)) }}</td>
+        <td class="text-center">{{ $cifin_fin_extint->extcompor }}</td>
       </tr>
       @endforeach
     </tbody>
