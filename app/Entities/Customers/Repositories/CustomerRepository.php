@@ -80,7 +80,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'customersfactoryRequests',
                 'cifinReals',
                 'cifinFins',
-                'UpToDateCifinFins'
+                'UpToDateCifinFins',
+                'UpToDateCifinReals'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

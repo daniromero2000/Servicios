@@ -2,7 +2,7 @@
   <h2><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Sector Financiero
   </h2>
 </div>
-@if($customer->UpToDateCifinFins->isNotEmpty())
+@if($customer->UpToDateCifinReals->isNotEmpty())
 <div class="card-body table-responsive pt-1">
   <table class="table table-hover table-stripped leadTable">
     <thead>
@@ -17,15 +17,15 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($cifin_uptodate_fins as $cifin_uptodate_fin )
+      @foreach ($cifin_uptodate_reals as $cifin_uptodate_real )
       <tr>
-        <td class="text-center">{{ $cifin_uptodate_fin->fdnoment }}</td>
-        <td class="text-center">{{ $cifin_uptodate_fin->fdestob }}</td>
-        <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrinic*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdsaldob*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrmora*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }}</td>
-        <td class="text-center">{{ $cifin_uptodate_fin->fdcompor }}</td>
+        <td class="text-center">{{ $cifin_uptodate_real->rdnoment }}</td>
+        <td class="text-center">{{ $cifin_uptodate_real->rdestob }}</td>
+        <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrinic*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_uptodate_real->rdsaldob*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrmora*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrcuot*1000)) }}</td>
+        <td class="text-center">{{ $cifin_uptodate_real->rdcompor }}</td>
       </tr>
       @endforeach
     </tbody>
