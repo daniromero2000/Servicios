@@ -21,10 +21,6 @@
                     @include('factoryrequests.layouts.generals')
                 </div>
 
-                <div class="container-fluid mt-5 card">
-                    @include('factoryrequests.layouts.customer')
-
-                </div>
 
                 <div class="container-fluid mt-5 card">
                     @include('factoryrequests.layouts.creditcard')
