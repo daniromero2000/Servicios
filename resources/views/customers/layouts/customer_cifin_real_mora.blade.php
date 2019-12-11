@@ -1,4 +1,3 @@
-
 <div class="card-header">
   <h2><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Real
   </h2>
@@ -20,26 +19,12 @@
     <tbody>
       @foreach ($cifin_reals as $cifin_real )
       <tr>
-        <td class="text-center">{{ $cifin_real->rmnoment }}</td>
-        <td class="text-center">{{ $cifin_real->rmestob }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrinic*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmsaldob*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrmora*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrcuot*1000)) }}</td>
-        <td class="text-center">{{ $cifin_real->rmcompor }}</td>
+        <td>
+          No tiene Moras en el sector Real
+        </td>
       </tr>
       @endforeach
     </tbody>
   </table>
-</div>@else
-<span>No tiene Moras en el sector Real</span><br>
-@endif
-@section('scriptsJs')
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- jsGrid -->
-<script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
-<script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
-@endsection
+  @endif
+</div>
