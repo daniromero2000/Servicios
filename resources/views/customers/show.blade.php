@@ -49,11 +49,11 @@
                 $customer->customersfactoryRequests])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
-                @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
-                    @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
+                {{--  @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])--}}
+                    @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])  
             </div>
             <div class="row border-0">
-                <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
+                <a href="{{ route('factoryrequests.index') }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
         </div>
 </section>
