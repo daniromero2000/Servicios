@@ -18,7 +18,6 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-
     <div class="container">
       <div class="card  mb-4 border-0 shadow-lg">
         <div class="row form-group" ng-if="filtros">
@@ -44,7 +43,7 @@
             </div>
             <div class="card-body text-center pt-0 pb-0 ">
               @if($customers)
-              @include('layouts.admin.tables.tables_customer_status', [$headers, 'datas' => $customers ])
+              @include('layouts.admin.tables.customer_status_table', [$headers, 'datas' => $customers ])
               @include('layouts.admin.pagination.pagination', [$skip])
               @else
               @include('layouts.admin.pagination.pagination_null', [$skip])

@@ -11,14 +11,14 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 
 class CustomerController extends Controller
 {
-    private $CustomerInterface, $toolsInterface, $fosygaInterface;
+    private $customerInterface, $toolsInterface, $fosygaInterface;
 
     public function __construct(
-        CustomerRepositoryInterface $CustomerRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         FosygaRepositoryInterface $fosygaRepositoryInterface
     ) {
-        $this->CustomerInterface = $CustomerRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->fosygaInterface = $fosygaRepositoryInterface;
         $this->middleware('auth');
@@ -27,10 +27,10 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->CustomerInterface->listCustomers($skip * 30);
+        $list = $this->customerInterface->listCustomers($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->CustomerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->customerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'))->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 
@@ -38,7 +38,7 @@ class CustomerController extends Controller
         return view('customers.list', [
             'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen','Celular', 'Paso', 'Estado'],
+            'headers'              => ['Fecha', 'Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
@@ -46,10 +46,10 @@ class CustomerController extends Controller
 
     public function show(int $id)
     {
-        $Customer = $this->CustomerInterface->findCustomerByIdFull($id);
+        $customer = $this->customerInterface->findCustomerByIdFull($id);
 
         return view('customers.show', [
-            'Customer' =>  $Customer
+            'customer' =>  $customer
         ]);
     }
 
@@ -60,11 +60,11 @@ class CustomerController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
-        $customerSteps = $this->CustomerInterface->countCustomersSteps($from, $to);
+        $customerSteps = $this->customerInterface->countCustomersSteps($from, $to);
         $customersFosygas = $this->fosygaInterface->countCustomersfosygasConsultatios($from, $to);
 
         if (request()->has('from')) {
-            $customerSteps = $this->CustomerInterface->countCustomersSteps(request()->input('from'), request()->input('to'));
+            $customerSteps = $this->customerInterface->countCustomersSteps(request()->input('from'), request()->input('to'));
             $customersFosygas = $this->fosygaInterface->countCustomersfosygasConsultatios(request()->input('from'), request()->input('to'));
         }
 
