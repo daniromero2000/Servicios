@@ -49,10 +49,14 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="uptoday">
                 <div class="row">
-<div class="container-fluid mt-5 card">
-    @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
-    $customer->UpToDateCifinFins])
-</div>
+                    <div class="container-fluid mt-5 card">
+                        @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
+                        $customer->UpToDateCifinFins])
+                    </div>
+                    <div class="container-fluid mt-5 card">
+                            @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
+                            $customer->UpToDateCifinReals])
+                        </div>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="arrears">
