@@ -17,6 +17,9 @@
                     Día</a>
             </li>
             <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#extints" role="tab" aria-controls="profile">Obligaciones Extintas</a>
+            </li>
+            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
                     aria-controls="profile">Solicitudes Fábrica</a>
             </li>
@@ -44,13 +47,19 @@
                 @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
                 $customer->cifinFins])
             </div>
+            <div role="tabpanel" class="tab-pane container-fluid" id="extints">
+                    @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
+                    $customer->extintsCifinReals])
+                    @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
+                    $customer->extintsCifinFins])
+                </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
-                    @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
+                @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
             </div>
             <div class="row border-0">
                 <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
