@@ -22,3 +22,8 @@ background-color:rgba(19, 123, 236, 0.1) !important;
 .header-table-responsive{
     max-height:497px;
 }
+.container-responsive{
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+}

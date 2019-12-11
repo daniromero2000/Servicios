@@ -140,7 +140,9 @@
         @include('layouts.admin.header')
         @include('layouts.admin.sidebar')
         <div class="content-wrapper bg-white">
-            @yield('content')
+            <div class="container-responsive">
+                @yield('content')
+            </div>
         </div>
         @include('layouts.admin.footer')
     </div>
@@ -188,7 +190,7 @@
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 <script>
-        $(function () {
+    $(function () {
           //Initialize Select2 Elements
           $('.select2').select2()
       
@@ -198,5 +200,6 @@
           })
       
         })
-      </script>
+</script>
+
 </html>
