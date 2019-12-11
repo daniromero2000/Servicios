@@ -1,11 +1,11 @@
 @if($factory_requests)
-<div class="container-fluid card card-table-reset">
+<div class="container-fluid card card-table-reset pb-5">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-tags" aria-hidden="true"></i> Solicitudes Fábrica
+    <h2 class="title-table"><i class="fas fa-cart-arrow-down mr-2"></i></i> Solicitudes Fábrica
     </h2>
   </div>
-  <div class="card-body table-responsive pt-1">
-    <table class="table table-hover table-stripped leadTable">
+  <div class="card-body table-responsive header-table-responsive pt-0">
+    <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Fecha Solicitud</th>

@@ -1,6 +1,6 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Real
+    <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Moras Sector Real
     </h2>
   </div>
   @if($customer->cifinReals->isNotEmpty())
@@ -9,7 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Entidad</th>
-          <th class="text-center" scope="col">Estado</th>
+          <th class="text-center" scope="col">Estsdo</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
           <th class="text-center" scope="col">Saldo Actual</th>
           <th class="text-center" scope="col">Mora</th>

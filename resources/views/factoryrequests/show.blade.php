@@ -15,24 +15,13 @@
             </li>
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
+
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-                <div class="container-fluid card">
-
-                    @include('factoryrequests.layouts.generals')
-                </div>
-
-
-                <div class="container-fluid mt-5 card">
-                    @include('factoryrequests.layouts.creditcard')
-
-                </div>
-
+                @include('factoryrequests.layouts.generals')
+                @include('factoryrequests.layouts.creditcard')
             </div>
+
             <div role="tabpanel" class="tab-pane" id="contact">
-                <div class="row">
-
-
-                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
@@ -40,8 +29,6 @@
                     @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
                 </div>
             </div>
-
-
             <div class="row border-0">
                 <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
             </div>

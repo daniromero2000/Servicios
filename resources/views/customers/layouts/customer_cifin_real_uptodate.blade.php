@@ -1,11 +1,11 @@
 <div class="container-fluid mt-5 card card-table-reset">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-tags" aria-hidden="true"></i> Obligaciones Sector Financiero
+    <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Sector Financiero
     </h2>
   </div>
   @if($customer->UpToDateCifinReals->isNotEmpty())
   <div class="card-body table-responsive pt-1">
-    <table class="table table-hover table-stripped leadTable">
+    <table class="table table-head-fixed table-hover  table-stripped leadTable">
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Entidad</th>

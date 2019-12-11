@@ -1,6 +1,6 @@
 <div class="container-fluid mt-5 card card-table-reset">
   <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Financiero
+    <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i> Moras Sector Financiero
     </h2>
   </div>
   @if($customer->cifinFins->isNotEmpty())
