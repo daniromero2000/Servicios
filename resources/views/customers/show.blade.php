@@ -47,8 +47,12 @@
             <div role="tabpanel" class="tab-pane" id="consultations">
                 <div class="row">
                     <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_cifin_real', ['cifin_reals' =>
+                        @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
                         $customer->cifinReals])
+                    </div>
+                    <div class="container-fluid mt-5 card">
+                        @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
+                        $customer->cifinFins])
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
-@if($cifin_reals)
-
+@if(!empty($cifin_fins))
 <div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Real
+  <h2><i class="fas fa-tags" aria-hidden="true"></i> Moras Sector Financiero
   </h2>
 </div>
 <div class="card-body table-responsive pt-1">
@@ -18,20 +17,22 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($cifin_reals as $cifin_real )
+      @foreach ($cifin_fins as $cifin_fin )
       <tr>
-        <td class="text-center">{{ $cifin_real->rmnoment }}</td>
-        <td class="text-center">{{ $cifin_real->rmestob }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrinic*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmsaldob*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrmora*1000)) }}</td>
-        <td class="text-center">{{ number_format (($cifin_real->rmvrcuot*1000)) }}</td>
-        <td class="text-center">{{ $cifin_real->rmcompor }}</td>
+        <td class="text-center">{{ $cifin_fin->rmnoment }}</td>
+        <td class="text-center">{{ $cifin_fin->rmestob }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin->rmvrinic*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin->rmsaldob*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin->rmvrmora*1000)) }}</td>
+        <td class="text-center">{{ number_format (($cifin_fin->rmvrcuot*1000)) }}</td>
+        <td class="text-center">{{ $cifin_fin->rmcompor }}</td>
       </tr>
       @endforeach
     </tbody>
   </table>
-</div>
+</div>@else
+<span>No tiene Moras</span><br>
+@endif
 @section('scriptsJs')
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -41,4 +42,3 @@
 <script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
 <script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
 @endsection
-@endif

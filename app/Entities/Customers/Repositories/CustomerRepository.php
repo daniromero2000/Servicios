@@ -78,7 +78,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'latestCifinScore',
                 'latestIntention',
                 'customersfactoryRequests',
-                'cifinReals'
+                'cifinReals',
+                'cifinFins'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

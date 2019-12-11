@@ -3,6 +3,7 @@
 namespace App\Entities\Customers;
 
 use App\cliCel;
+use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
@@ -288,5 +289,10 @@ class Customer extends Model
     public function cifinReals()
     {
         return $this->hasMany(CifinRealArrear::class, 'rmcedula');
+    }
+
+    public function cifinFins()
+    {
+        return $this->hasMany(CifinFinancialArrear::class, 'fincedula');
     }
 }
