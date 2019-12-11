@@ -307,4 +307,9 @@ class Customer extends Model
     {
         return $this->hasMany(UpToDateRealCifin::class, 'rdcedula');
     }
+
+    public function ExtintsCifinReals()
+    {
+        return $this->hasMany(UpToDateRealCifin::class, 'rdcedula');
+    }
 }
