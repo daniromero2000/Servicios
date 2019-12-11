@@ -13,8 +13,11 @@
                 <a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-controls="profile">Contacto</a>
             </li>
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#arrears" role="tab"
-                    aria-controls="profile">Moras</a>
+                <a class="nav-link" data-toggle="tab" href="#arrears" role="tab" aria-controls="profile">Moras</a>
+            </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#uptoday" role="tab" aria-controls="profile">Obligaciones Al
+                    Día</a>
             </li>
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
@@ -44,9 +47,16 @@
                     </div>
                 </div>
             </div>
+            <div role="tabpanel" class="tab-pane" id="uptoday">
+                <div class="row">
+<div class="container-fluid mt-5 card">
+    @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
+    $customer->UpToDateCifinFins])
+</div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" id="arrears">
                 <div class="row">
-
                     <div class="container-fluid mt-5 card">
                         @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
                         $customer->cifinReals])
@@ -56,7 +66,6 @@
                         @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
                         $customer->cifinFins])
                     </div>
-
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">

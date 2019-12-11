@@ -12,6 +12,7 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
+use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -294,5 +295,10 @@ class Customer extends Model
     public function cifinFins()
     {
         return $this->hasMany(CifinFinancialArrear::class, 'fincedula');
+    }
+
+    public function UpToDateCifinFins()
+    {
+        return $this->hasMany(UpToDateFinancialCifin::class, 'fdcedula');
     }
 }
