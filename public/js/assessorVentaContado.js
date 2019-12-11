@@ -298,7 +298,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			$('#proccess').modal('hide');
+			$timeout(function() {
+				$('#proccess').modal('hide');
+			}, 500);
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
 					$scope.showConfirm();
@@ -312,7 +314,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
-	
+
 	$scope.execConsultasLead = function(identificationNumber){
 		$('#proccess').modal('show');
 		$http({
