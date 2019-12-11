@@ -29,65 +29,39 @@
             </li>
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
-            <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-                <div class="container-fluid card">
-                    @include('customers.layouts.generals')
-                </div>
-                <div class="container-fluid mt-5 card">
-                    @include('customers.layouts.ids')
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="contact">
-                <div class="row">
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.phones')
-                    </div>
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.emails')
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="uptoday">
-                <div class="row">
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
-                        $customer->UpToDateCifinFins])
-                    </div>
-                    <div class="container-fluid mt-5 card">
-                            @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
-                            $customer->UpToDateCifinReals])
-                        </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="arrears">
-                <div class="row">
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
-                        $customer->cifinReals])
-                    </div>
 
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
-                        $customer->cifinFins])
-                    </div>
-                </div>
+            <div role="tabpanel" class="tab-pane container-fluid active" id="info">
+                @include('customers.layouts.generals')
+                @include('customers.layouts.ids')
             </div>
-            <div role="tabpanel" class="tab-pane" id="factoryrequests">
-                <div class="row">
-                    <div class="container-fluid mt-5 card">
-                        @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
-                        $customer->customersfactoryRequests])
-                    </div>
-                </div>
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="contact">
+                @include('customers.layouts.phones')
+                @include('customers.layouts.emails')
             </div>
-            <div role="tabpanel" class="tab-pane" id="seguimiento">
-                <div class="row">
-                    {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="uptoday">
+                {{-- @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' => $customer->UpToDateCifinFins])--}}
+                {{-- @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' => $customer->UpToDateCifinReals])--}}
+            </div>
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="arrears">
+                @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' => $customer->cifinReals])
+                @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' => $customer->cifinFins])
+            </div>
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="factoryrequests">
+                @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
+                $customer->customersfactoryRequests])
+            </div>
+
+            <div role="tabpanel" class="tab-pane container-fluid" id="seguimiento">
+                {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
                     @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
-                </div>
             </div>
+
             <div class="row border-0">
-                <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
+                <a href="{{ route('factoryrequests.index') }}" class="btn btn-primary ml-auto mr-3 mb-3 ">Regresar</a>
             </div>
         </div>
 </section>

@@ -1,29 +1,20 @@
-<div class="card-header">
-  <h2><i class="fas fa-tags" aria-hidden="true"></i> Email
-  </h2>
+<div class="container-fluid mt-5 card card-table-reset">
+  <div class="card-header">
+    <h2 class="title-table"><i class="fas fa-at mr-2"></i> EMAIL
+    </h2>
+  </div>
+  <div class="card-body table-responsive pt-1">
+    <table class="table table-hover table-stripped leadTable">
+      <thead class="header-table">
+        <tr>
+          <th class="text-center" scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody class="body-table">
+        <tr>
+          <td class="text-center">{{ $customer->EMAIL }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<div class="card-body table-responsive pt-1">
-  <table class="table table-hover table-stripped leadTable">
-    <thead>
-      <tr>
-        <th class="text-center" scope="col">Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="text-center">{{ $customer->EMAIL }}</td>
-
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-@section('scriptsJs')
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- jsGrid -->
-<script src="{{ asset('plugins/jsgrid/demos/db.js') }}"></script>
-<script src="{{ asset('plugins/jsgrid/jsgrid.min.js') }}"></script>
-@endsection
