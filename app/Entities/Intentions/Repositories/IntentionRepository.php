@@ -44,12 +44,11 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function findCustomerIntentionById($id): Intention
+    public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
             return $this->model
-                ->with(['customer', 'definition'])
-                ->findOrFail($id);
+                ->where('CEDULA', $CEDULA)->latest('id')->first();
         } catch (QueryException $e) {
             dd($e);
         }
