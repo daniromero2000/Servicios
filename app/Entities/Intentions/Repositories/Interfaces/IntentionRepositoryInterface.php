@@ -11,7 +11,7 @@ interface IntentionRepositoryInterface
 {
   public function createIntention($data): Intention;
 
-  public function findCustomerIntentionById($id): Intention;
+  public function findLatestCustomerIntentionByCedula($CEDULA): Intention;
 
   public function findIntentionByIdFull(int $id): Intention;
 
