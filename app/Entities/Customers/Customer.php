@@ -292,12 +292,12 @@ class Customer extends Model
 
     public function cifinReals()
     {
-        return $this->hasMany(CifinRealArrear::class, 'rmcedula');
+        return $this->hasMany(CifinRealArrear::class, 'rmcedula')->where('rmestcon', '!=', '');
     }
 
     public function cifinFins()
     {
-        return $this->hasMany(CifinFinancialArrear::class, 'fincedula');
+        return $this->hasMany(CifinFinancialArrear::class, 'fincedula')->where('finestcon', '!=', '');
     }
 
     public function UpToDateCifinFins()
@@ -307,16 +307,16 @@ class Customer extends Model
 
     public function UpToDateCifinReals()
     {
-        return $this->hasMany(UpToDateRealCifin::class, 'rdcedula');
+        return $this->hasMany(UpToDateRealCifin::class, 'rdcedula')->where('rdestcon', '!=', '');
     }
 
     public function extintsCifinReals()
     {
-        return $this->hasMany(ExtintRealCifin::class, 'rexcedula');
+        return $this->hasMany(ExtintRealCifin::class, 'rexcedula')->where('rexestcon', '!=', '');
     }
 
     public function extintsCifinFins()
     {
-        return $this->hasMany(ExtintFinancialCifin::class, 'extcedula');
+        return $this->hasMany(ExtintFinancialCifin::class, 'extcedula')->where('extestcon', '!=', '');
     }
 }
