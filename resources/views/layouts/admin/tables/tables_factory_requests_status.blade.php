@@ -13,7 +13,7 @@
         @foreach($datas as $data)
         <tr>
           <td class="text-center">
-            {{ $data->CLIENTE }}
+           <a href="{{ route('customers.show', $data->CEDULA) }}"> {{ $data->CLIENTE }} </a>
           </td>
           <td class="text-center">
             <a href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a>
