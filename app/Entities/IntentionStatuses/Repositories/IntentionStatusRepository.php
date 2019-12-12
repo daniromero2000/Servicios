@@ -90,7 +90,7 @@ class IntentionStatusRepository implements IntentionStatusRepositoryInterface
     public function countIntentionStatuses($from, $to)
     {
         try {
-            return  $this->model->with('intentions')->select('NAME', DB::raw('count(*) as total'))
+            return  $this->model->whereHas('intentions')->select('NAME', DB::raw('count(*) as total'))
                 ->groupBy('NAME')
                 ->get();
         } catch (QueryException $e) {
