@@ -8,6 +8,7 @@
     <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
+          <th class="text-center" scope="col">Codigo</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -20,6 +21,7 @@
       <tbody class="body-table">
         @foreach ($cifin_real_extints as $cifin_real_extint )
         <tr>
+          <td class="text-center">{{ $cifin_real_extint->rexnumob }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexnoment }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexestob }}</td>
           <td class="text-center">{{ number_format (($cifin_real_extint->rexvrinic*1000)) }}</td>

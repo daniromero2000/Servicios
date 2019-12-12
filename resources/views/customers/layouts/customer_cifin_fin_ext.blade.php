@@ -8,6 +8,7 @@
     <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
+          <th class="text-center" scope="col">Codigo</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -20,6 +21,7 @@
       <tbody class="body-table">
         @foreach ($cifin_fin_extints as $cifin_fin_extint )
         <tr>
+          <td class="text-center">{{ $cifin_fin_extint->extnumob }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extnoment }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extestob }}</td>
           <td class="text-center">{{ number_format (($cifin_fin_extint->extvrinic*1000)) }}</td>
