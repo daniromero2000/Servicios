@@ -5,18 +5,22 @@
     @include('layouts.errors-and-messages')
     <div class="content-header">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a></li>
-                <li class="breadcrumb-item active"><a href="/Administrator/customers">Clientes</a></li>
-                <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                </div>
+                <div class="col-sm-8">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a>
+                        </li>
+                        <li class="breadcrumb-item active"><a href="/Administrator/customers">Clientes</a></li>
+                        <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-      </div>
+    </div>
     <div class="card border-0 mt-5">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
@@ -30,7 +34,8 @@
                     Día</a>
             </li>
             <li class="active" role="presentation">
-                <a class="nav-link" data-toggle="tab" href="#extints" role="tab" aria-controls="profile">Obligaciones Extintas</a>
+                <a class="nav-link" data-toggle="tab" href="#extints" role="tab" aria-controls="profile">Obligaciones
+                    Extintas</a>
             </li>
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#factoryrequests" role="tab"
@@ -61,11 +66,11 @@
                 $customer->cifinFins])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="extints">
-                    @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
-                    $customer->extintsCifinReals])
-                    @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
-                    $customer->extintsCifinFins])
-                </div>
+                @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
+                $customer->extintsCifinReals])
+                @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
+                $customer->extintsCifinFins])
+            </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
