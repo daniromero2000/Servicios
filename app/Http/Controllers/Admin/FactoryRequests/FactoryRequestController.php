@@ -47,7 +47,7 @@ class FactoryRequestController extends Controller
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud','Asesor' , 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'factoryRequestsTotal' => $factoryRequestsTotal,
@@ -57,10 +57,8 @@ class FactoryRequestController extends Controller
 
     public function show(int $id)
     {
-        $customer = $this->factoryRequestInterface->findFactoryRequestByIdFull($id);
-
         return view('factoryrequests.show', [
-            'customer'                     => $customer,
+            'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
 
         ]);
     }

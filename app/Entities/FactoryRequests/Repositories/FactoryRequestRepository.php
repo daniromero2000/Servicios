@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
@@ -40,8 +41,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return $this->model
-                ->with('creditCard')
-                ->with('customer')
+                ->with([
+                    'creditCard',
+                    'customer',
+                    'references'
+                ])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
@@ -393,7 +397,4 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
-
-    //Hasta aqui Directores
-
 }
