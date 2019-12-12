@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use PhpParser\Node\Stmt\Foreach_;
 
 class IntentionController extends Controller
 {
@@ -71,7 +72,12 @@ class IntentionController extends Controller
         }
 
 
-        dd($intentionStatuses);
+        foreach ($intentionStatuses as $key => $value) {
+            dd($value->intentionStatus);
+        }
+
+
+
 
         $totalStatuses = $creditCards->sum('total');
 
