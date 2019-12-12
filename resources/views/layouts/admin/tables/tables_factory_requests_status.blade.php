@@ -12,11 +12,27 @@
       <tbody>
         @foreach($datas as $data)
         <tr>
-          @foreach($data->toArray() as $key => $value)
           <td class="text-center">
-            {{ $data[$key] }}
+            {{ $data->CLIENTE }}
           </td>
-          @endforeach
+          <td class="text-center">
+            <a href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a>
+          </td>
+          <td class="text-center">
+            {{ $data->CODASESOR }}
+          </td>
+          <td class="text-center">
+            {{ $data->SUCURSAL }}
+          </td>
+          <td class="text-center">
+            {{ $data->FECHASOL }}
+          </td>
+          <td class="text-center">
+            {{ $data->ESTADO }}
+          </td>
+          <td class="text-center">
+            {{ $data->GRAN_TOTAL }}
+          </td>
         </tr>
         @endforeach
       </tbody>

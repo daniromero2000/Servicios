@@ -10,13 +10,13 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h3>Referencia Personal 1</h3>
+          <h4>Referencia Personal 1</h4>
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
                 <th class="text-center" scope="col">Nombre</th>
                 <th class="text-center" scope="col">Dirección</th>
-                <th class="text-center" scope="col">Tipo Referencia</th>
+                <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
                 <th class="text-center" scope="col">Ciudad</th>
 
@@ -42,13 +42,13 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h3>Referencia Personal 2</h3>
+          <h4>Referencia Personal 2</h4>
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
                 <th class="text-center" scope="col">Nombre</th>
                 <th class="text-center" scope="col">Dirección</th>
-                <th class="text-center" scope="col">Tipo Referencia</th>
+                <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
                 <th class="text-center" scope="col">Ciudad</th>
               </tr>
@@ -73,13 +73,13 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h3>Referencia Familiar 1</h3>
+          <h4>Referencia Familiar 1</h4>
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
                 <th class="text-center" scope="col">Nombre</th>
                 <th class="text-center" scope="col">Dirección</th>
-                <th class="text-center" scope="col">Tipo Referencia</th>
+                <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
                 <th class="text-center" scope="col">Ciudad</th>
               </tr>
@@ -104,13 +104,13 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h3>Referencia Familiar 2</h3>
+          <h4>Referencia Familiar 2</h4>
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
                 <th class="text-center" scope="col">Nombre</th>
                 <th class="text-center" scope="col">Dirección</th>
-                <th class="text-center" scope="col">Tipo Referencia</th>
+                <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
                 <th class="text-center" scope="col">Ciudad</th>
 
