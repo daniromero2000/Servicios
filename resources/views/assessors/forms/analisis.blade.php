@@ -60,18 +60,6 @@
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8">
                                     <p>
-                                        <label for="">Tipo de documento: </label>
-                                        <span ng-if="infoLead.TIPO_DOC == 1">Cédula de ciudadanía</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 2">NIT</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 3">Cédula de extranjería</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 4">Tarjeta de identidad</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 5">Pasaporte</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 6">Tarjeta seguro social extranjero</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 7">Sociedad extranjera sin NIT en
-                                            Colombia</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 8">Fidecomiso</span>
-                                    </p>
-                                    <p>
                                         <label for="">Número de documento: </label> @{{ infoLead.CEDULA }}
                                     </p>
                                     <p>
