@@ -24,7 +24,7 @@ body {
     position: absolute;
     animation: aparecer 6.8s infinite;
     top: 260px;
-    border-radius: 30px;
+    border-radius: 40px;
 }
 
 .circulo:nth-child(1){
@@ -68,10 +68,10 @@ body {
     10% {
         opacity: 1;
     }
-    100% {
+    70% {
         box-shadow: 9px 9px #007BFF;
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         top: 230px;
         opacity: 0;
         transform: rotate(1080deg);

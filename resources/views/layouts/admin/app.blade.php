@@ -115,7 +115,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 </head>
 
-<body onload="cargar()"  class="hold-transition sidebar-mini sidebar-collapse">
+<body onload="cargar()" class="hold-transition sidebar-mini sidebar-collapse">
     <div class="loader">
         <div class="circulo"></div>
         <div class="circulo"></div>
@@ -185,6 +185,9 @@
 <script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 <script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
     $(function () {
           //Initialize Select2 Elements
           $('.select2').select2()

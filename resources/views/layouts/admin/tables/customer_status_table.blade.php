@@ -13,7 +13,7 @@
                 @foreach($datas as $data)
                 <tr>
                     <td>{{ date('M d, Y h:i a', strtotime($data->CREACION))}} </td>
-                    <td><a href="{{ route('customers.show', $data->CEDULA) }}">{{ $data->CEDULA}}</a></td>
+                    <td><a data-toggle="tooltip" title="Ver Cliente" href="{{ route('customers.show', $data->CEDULA) }}">{{ $data->CEDULA}}</a></td>
                     <td>{{ $data->APELLIDOS}}</td>
                     <td>{{ $data->NOMBRES}} </td>
                     <td>{{ $data->TIPOCLIENTE}} </td>
