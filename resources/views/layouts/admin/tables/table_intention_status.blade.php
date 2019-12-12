@@ -11,6 +11,7 @@
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->id}}</td>
+                <td> @if($data->customer){{ $data->customer->ORIGEN['score']}} @endif</td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
