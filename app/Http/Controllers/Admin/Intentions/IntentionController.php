@@ -81,7 +81,7 @@ class IntentionController extends Controller
         }
 
 
-        dd($intentionStatusesNames);
+        dd($intentionStatusesValues);
 
         $totalStatuses = $creditCards->sum('total');
 
