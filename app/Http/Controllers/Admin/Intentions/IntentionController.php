@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Intentions;
 use App\Entities\Intentions\Intention;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
+use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,14 +14,16 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class IntentionController extends Controller
 {
-    private $intentionInterface, $toolsInterface;
+    private $intentionStatusesInterface, $intentionInterface, $toolsInterface;
 
     public function __construct(
         IntentionRepositoryInterface $intentionRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        IntentionStatusRepositoryInterface $intentionStatusRepositoryInterface
     ) {
         $this->intentionInterface = $intentionRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->intentionStatusesInterface = $intentionStatusRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -64,6 +67,11 @@ class IntentionController extends Controller
         $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
+        $intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
+
+
+
+
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
@@ -75,13 +83,18 @@ class IntentionController extends Controller
         $intentionStatusesNames  = [];
         $intentionStatusesValues  = [];
 
+        dd($intentionStatuses);
+
         foreach ($intentionStatuses as $intentionStatus) {
-            array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
-            array_push($intentionStatusesValues, trim($intentionStatus->intentionStatus['total']));
+
+            if ($intentionStatus->intentions->isNotEmpty()) {
+                array_push($intentionStatusesNames, trim($intentionStatus['NAME']));
+                array_push($intentionStatusesValues, trim($intentionStatus['total']));
+            }
         }
 
 
-        dd($intentionStatusesValues);
+        dd($intentionStatusesNames);
 
         $totalStatuses = $creditCards->sum('total');
 

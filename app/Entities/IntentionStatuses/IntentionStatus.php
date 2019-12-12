@@ -2,9 +2,11 @@
 
 namespace App\Entities\IntentionStatuses;
 
+use App\Entities\Intentions\Intention;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Support\Facades\DB;
 
 class IntentionStatus extends Model
 {
@@ -42,5 +44,10 @@ class IntentionStatus extends Model
     public function searchIntentionsStatuss($term)
     {
         return self::search($term);
+    }
+
+    public function intentions()
+    {
+        return $this->hasMany(Intention::class, 'ESTADO_INTENCION');
     }
 }
