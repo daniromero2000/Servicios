@@ -16,8 +16,8 @@
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
                     @if ($data->ESTADO_OBLIGACIONES == 0)En Mora @endif
-               </td>
-                <td> @if($data->customer) {{ $data->customer->latestCifinScore['score']}} @endif</td>
+                </td>
+                <td> @if($data->customer) @if ($data->customer->latestCifinScore['score'] == '')Sin Datos @endif{{ $data->customer->latestCifinScore['score']}} @endif</td>
                 <td>@if ($data->PERFIL_CREDITICIO == '')Sin Datos @endif{{ $data->PERFIL_CREDITICIO}}</td>
                 <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
                     @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
