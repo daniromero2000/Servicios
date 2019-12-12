@@ -302,7 +302,7 @@ class Customer extends Model
 
     public function UpToDateCifinFins()
     {
-        return $this->hasMany(UpToDateFinancialCifin::class, 'fdcedula');
+        return $this->hasMany(UpToDateFinancialCifin::class, 'fdcedula')->where('fdestcon', '!=', '');
     }
 
     public function UpToDateCifinReals()
