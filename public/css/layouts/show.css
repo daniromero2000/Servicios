@@ -1,6 +1,9 @@
 .title-table{
     font-size: 18pt;
 }
+.row-reset{
+    margin: 0px !important;
+}
 .title-table-status{
     font-size: 13pt !important;
 }
