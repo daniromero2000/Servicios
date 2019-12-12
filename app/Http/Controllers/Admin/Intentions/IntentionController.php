@@ -75,11 +75,9 @@ class IntentionController extends Controller
         $intentionStatusesNames  = [];
         $intentionStatusesValues  = [];
 
-        foreach ($intentionStatuses['0']->intentionStatus as $intentionStatus) {
-
-            dd($intentionStatus);
-            array_push($intentionStatusesNames, trim($intentionStatus['NAME']));
-            array_push($intentionStatusesValues, trim($intentionStatus['total']));
+        foreach ($intentionStatuses as $intentionStatus) {
+            array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
+            array_push($intentionStatusesValues, trim($intentionStatus->intentionStatus['total']));
         }
 
 
