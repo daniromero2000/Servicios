@@ -40,18 +40,25 @@
                 </li>
             </ul>
             <div class="tab-content mt-4" id="tabcontent">
+
                 <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                     @include('factoryrequests.layouts.generals')
                     @include('factoryrequests.layouts.creditcard')
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="references">
                     @include('factoryrequests.layouts.references', [ 'references' => $factoryRequest->references ])
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="seguimiento">
-                    <div class="row">
-                        @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
+                    <div class="container-fluid">
+                        <div class="row">
+                            @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
+                            {{-- @include('factoryrequests.layouts.statusesLog', ['datas' =>$factoryRequest->comments]) --}}
+                        </div>
                     </div>
                 </div>
+
                 <div class="row border-0">
                     <a href="{{ route('factoryrequests.index') }}"
                         class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>

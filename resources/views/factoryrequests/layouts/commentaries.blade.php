@@ -1,5 +1,5 @@
 <div class="col-md-4">
-    <div class="card">
+    <div class="card card-table-reset">
         <div class="card-body">
             <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
             </h2>
@@ -30,7 +30,15 @@
                 </tbody>
             </table>
             @else
-            <span>Aún no tiene comentarios</span><br>
+            <table class="table table-hover table-stripped leadTable">
+                <tbody class="body-table">
+                    <tr>
+                        <td>
+                            Aún no tiene comentarios
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             @endif
         </div>
     </div>

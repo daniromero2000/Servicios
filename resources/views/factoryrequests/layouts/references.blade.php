@@ -11,6 +11,7 @@
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
           <h4>Referencia Personal 1</h4>
+          @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
@@ -36,6 +37,17 @@
 
             </tbody>
           </table>
+          @else
+          <table class="table table-hover table-stripped leadTable">
+            <tbody class="body-table">
+              <tr>
+                <td>
+                  No tiene referencias
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          @endif
         </div>
       </div>
     </div>
@@ -43,6 +55,7 @@
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
           <h4>Referencia Personal 2</h4>
+          @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
@@ -67,6 +80,17 @@
 
             </tbody>
           </table>
+          @else
+          <table class="table table-hover table-stripped leadTable">
+            <tbody class="body-table">
+              <tr>
+                <td>
+                  No tiene referencias
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          @endif
         </div>
       </div>
     </div>
@@ -74,6 +98,7 @@
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
           <h4>Referencia Familiar 1</h4>
+          @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
@@ -87,7 +112,7 @@
             <tbody class="body-table">
               @foreach ($references as $reference)
 
-              <tr> 
+              <tr>
                 <td class="text-center">{{ $reference->NOM_REFFA2 }}</td>
                 <td class="text-center">{{ $reference->DIR_REFFA2 }}</td>
                 <td class="text-center">{{ $reference->BAR_REFFA2 }}</td>
@@ -98,6 +123,17 @@
 
             </tbody>
           </table>
+          @else
+          <table class="table table-hover table-stripped leadTable">
+            <tbody class="body-table">
+              <tr>
+                <td>
+                  No tiene referencias
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          @endif
         </div>
       </div>
     </div>
@@ -105,6 +141,7 @@
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
           <h4>Referencia Familiar 2</h4>
+          @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
               <tr>
@@ -130,6 +167,17 @@
 
             </tbody>
           </table>
+          @else
+          <table class="table table-hover table-stripped leadTable">
+            <tbody class="body-table">
+              <tr>
+                <td>
+                  No tiene referencias
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          @endif
         </div>
       </div>
     </div>
