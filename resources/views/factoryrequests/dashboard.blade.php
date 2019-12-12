@@ -1,5 +1,4 @@
 @extends('layouts.admin.app')
-
 @section('content')
 <div class="content-header">
   <div class="container-fluid">
@@ -243,7 +242,6 @@
       </div>
     </div>
     <!-- Card 1 -->
-
     <div class="col-md-8">
       <!-- PORCENTAJES -->
       <div class="card ">
@@ -263,201 +261,6 @@
       </div>
     </div>
   </div>
-  {{--
-    <div class="row">
-      <div class="col-12">
-        <!-- interactive chart -->
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Interactive Area Chart
-            </h3>
-
-            <div class="card-tools">
-              Real time
-              <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="interactive" style="height: 300px;"></div>
-          </div>
-        </div>
-      </div>
-          </div>
-        <div class="row">
-      <div class="col-md-6">
-        <!-- Line chart -->
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Line Chart
-            </h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="line-chart" style="height: 300px;"></div>
-          </div>       
-        </div>
-                <!-- Area chart -->
-        <div hidden class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Area Chart
-            </h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="area-chart" style="height: 338px;" class="full-width-chart"></div>
-          </div>        
-        </div>
-              </div>
-            <div class="col-md-6">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Donut Chart
-            </h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="donut-chart" style="height: 300px;"></div>
-          </div>         
-        </div>
-      </div>
-      <div class="col-md-6">
-        <!-- Bar chart -->
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="far fa-chart-bar"></i>
-              Bar Chart
-            </h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div id="bar-chart" style="height: 300px;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="card">
-          <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-              <h3 class="card-title">Online Store Visitors</h3>
-              <a href="javascript:void(0);">View Report</a>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="d-flex">
-              <p class="d-flex flex-column">
-                <span class="text-bold text-lg">820</span>
-                <span>Visitors Over Time</span>
-              </p>
-              <p class="ml-auto d-flex flex-column text-right">
-                <span class="text-success">
-                  <i class="fas fa-arrow-up"></i> 12.5%
-                </span>
-                <span class="text-muted">Since last week</span>
-              </p>
-            </div>
-                        <div class="position-relative mb-4">
-              <canvas id="visitors-chart" height="200"></canvas>
-            </div>
-            <div class="d-flex flex-row justify-content-end">
-              <span class="mr-2">
-                <i class="fas fa-square text-primary"></i> This Week
-              </span>
-              <span>
-                <i class="fas fa-square text-gray"></i> Last Week
-              </span>
-            </div>
-          </div>
-        </div>        
-      </div>
-    </div>  --}}
-  <!-- Content Wrapper. Contains page content -->
-  {{-- <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>ChartJS</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">ChartJS</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <!-- Info boxes -->
-        <div class="row">
-            @foreach ($estados as $estado)
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text"> {{$estado->ESTADO }} </span>
-  <span class="info-box-number">
-    {{ $estado->total}}
-  </span>
-</div>
-</div>}
-</div>
-@endforeach
-<!-- Main row -->
-<div class="row">
-  <div class="card card-danger">
-    <div class="card-header">
-      <h3 class="card-title">Pie Chart</h3>
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-      </div>
-    </div>
-    <div class="card-body">
-      <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
-    </div>
-  </div>
-</div>
-</div>
-<!--/. container-fluid -->
-</section> --}}
-<!-- Main content -->
 </div>
 @endsection
 @section('scriptsJs')
@@ -854,7 +657,7 @@
       datasets: [
         {
           data: values,
-          backgroundColor : ['#215ACE', '#008F00', '#007BFF', '#E62E08','#F00909', '#FF9100', '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B' ],
+          backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
         }
       ]
     }
@@ -880,8 +683,8 @@
       datasets: [
       {
       data: webValues,
-      backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
-      '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+      backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+
       }
       ]
       }

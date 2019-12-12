@@ -1,39 +1,29 @@
 @extends('layouts.admin.app')
-
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<!-- Main content -->
-
 <div class="content-header">
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
-
         <div class="row">
           <div class="col-md-12">
-
           </div>
-
         </div>
-      </div><!-- /.col -->
+      </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
           <li class="breadcrumb-item active"><a href="/Administrator/dashboard/callCenter">Dashboard CallCenter</a></li>
         </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container-fluid">
-
   <div class="row mt-2">
-    <!-- /.col (RIGHT) -->
     <div class="col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row d-flex justify-content-center">
           <div class="col-12 col-sm-12 col-md-12">
-            <!-- /.info-box -->
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
@@ -76,7 +66,6 @@
           </div>
         </div>
         @endforeach
-
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -101,7 +90,6 @@
       <div hidden class="card card-danger">
         <div class="card-header">
           <h3 class="card-title">Donut Chart</h3>
-
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -166,9 +154,7 @@
         </div>
       </div>
     </div>
-
-
-    <div class="col-md-4">
+   <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> Falló Registraduría</h3>
@@ -199,7 +185,6 @@
         </div>
       </div>
     </div> --}}
-
   {{--
     <div class="row">
       <div class="col-12">
@@ -225,13 +210,9 @@
           <!-- /.card-body-->
         </div>
         <!-- /.card -->
-
       </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-
-    <div class="row">
+          </div>
+       <div class="row">
       <div class="col-md-6">
         <!-- Line chart -->
         <div class="card card-primary card-outline">
@@ -240,7 +221,6 @@
               <i class="far fa-chart-bar"></i>
               Line Chart
             </h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -254,7 +234,6 @@
           <!-- /.card-body-->
         </div>
         <!-- /.card -->
-
         <!-- Area chart -->
         <div hidden class="card card-primary card-outline">
           <div class="card-header">
@@ -262,7 +241,6 @@
               <i class="far fa-chart-bar"></i>
               Area Chart
             </h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -276,17 +254,14 @@
           <!-- /.card-body-->
         </div>
         <!-- /.card -->
-
       </div>
-      <!-- /.col -->
-      <div class="col-md-6">
+            <div class="col-md-6">
         <div class="card card-primary card-outline">
           <div class="card-header">
             <h3 class="card-title">
               <i class="far fa-chart-bar"></i>
               Donut Chart
             </h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
@@ -308,7 +283,6 @@
               <i class="far fa-chart-bar"></i>
               Bar Chart
             </h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -344,33 +318,23 @@
                 <span class="text-muted">Since last week</span>
               </p>
             </div>
-            <!-- /.d-flex -->
-
             <div class="position-relative mb-4">
               <canvas id="visitors-chart" height="200"></canvas>
             </div>
-
             <div class="d-flex flex-row justify-content-end">
               <span class="mr-2">
                 <i class="fas fa-square text-primary"></i> This Week
               </span>
-
               <span>
                 <i class="fas fa-square text-gray"></i> Last Week
               </span>
             </div>
           </div>
         </div>
-        <!-- /.card -->
-
-
       </div>
-    </div>  --}}
-
-
+    </div>  
   <!-- /.content-wrapper -->
   <!-- Content Wrapper. Contains page content -->
-
   {{-- <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -385,13 +349,12 @@
                 </ol>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 <section class="content">
     <div class="container-fluid">
         <!-- Info boxes -->
         <div class="row">
-
             @foreach ($estados as $estado)
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box">
@@ -407,15 +370,12 @@
 <!-- /.info-box -->
 </div>
 @endforeach
-
-<!-- /.col -->
 <!-- Main row -->
 <div class="row">
   <!-- /.card-header -->
   <div class="card card-danger">
     <div class="card-header">
       <h3 class="card-title">Pie Chart</h3>
-
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
         </button>
@@ -427,35 +387,22 @@
     </div>
     <!-- /.card-body -->
   </div>
-  <!-- /.col -->
 </div>
-<!-- /.row -->
 </div>
 <!--/. container-fluid -->
 </section> --}}
-
 <!-- Main content -->
 </div>
-<!-- /.container-fluid -->
-
 <!-- /.content -->
-
 <!-- /.content-wrapper -->
 @endsection
 @section('scriptsJs')
-
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('dist/js/pages/dashboard3.js') }}"></script>
 <!-- jQuery UI -->
 <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js') }}"></script>
 <!-- FLOT CHARTS -->
 <script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
 <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
@@ -844,7 +791,7 @@ var estadosFosyga = [];
       datasets: [
         {
           data: values,
-          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc',  '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+          backgroundColor : ['#FF9100','#007BFF','#9E0097', '#E62E08','#008F00','#F00909', '#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
         }
       ]
     }
