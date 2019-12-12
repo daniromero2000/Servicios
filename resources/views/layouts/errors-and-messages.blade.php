@@ -2,7 +2,7 @@
 
 @foreach($errors->all() as $message)
 <div class="row justify-content-end">
-  <div class="col-4 ">
+  <div class="col-12 col-md-4 ">
     <div class="card alert alert-warning alert-dismissible fade show" style="position: absolute;z-index: 999;"
       role="alert">
 
@@ -17,7 +17,7 @@
 @endforeach
 @elseif(session()->has('message'))
 <div class="row justify-content-end">
-  <div class="col-4 ">
+  <div class="col-12 col-md-4 ">
     <div class="card alert alert-success  alert-dismissible fade show" style="position: absolute;z-index: 999;"
       role="alert">
 
@@ -32,7 +32,7 @@
 </div>
 @elseif(session()->has('error'))
 <div class="row justify-content-end">
-  <div class="col-4 ">
+  <div class="col-12 col-md-4 ">
     <div class="card alert alert-danger  alert-dismissible fade show" style="position: absolute;z-index: 999;"
       role="alert">
 

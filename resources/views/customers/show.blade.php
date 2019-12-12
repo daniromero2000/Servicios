@@ -3,7 +3,20 @@
 
 <section class="content border-0">
     @include('layouts.errors-and-messages')
-
+    <div class="content-header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a></li>
+                <li class="breadcrumb-item active"><a href="/Administrator/customers">Clientes</a></li>
+                <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
     <div class="card border-0 mt-5">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
