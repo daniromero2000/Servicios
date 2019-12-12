@@ -3,6 +3,7 @@
 namespace App\Entities\FactoryRequests;
 
 use App\Entities\CreditCards\CreditCard;
+use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
 use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\Subsidiaries\Subsidiary;
@@ -47,7 +48,6 @@ class FactoryRequest extends Model
         return self::search($term);
     }
 
-
     public function hasCustomer()
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')
@@ -72,5 +72,10 @@ class FactoryRequest extends Model
     public function comments()
     {
         return $this->hasMany(FactoryRequestComment::class, 'solicitud');
+    }
+
+    public function references()
+    {
+        return $this->hasMany(CustomerReference::class, 'SOLICITUD');
     }
 }
