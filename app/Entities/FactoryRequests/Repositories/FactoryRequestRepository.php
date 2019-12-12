@@ -190,6 +190,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return $this->model
                 ->whereBetween('FECHASOL', [$from, $to])
+                ->where('ESTADO', '!=', 'NEGADO')
+                ->where('ESTADO', '!=', 'DESISTIDO')
                 ->sum('GRAN_TOTAL');
         } catch (QueryException $e) {
             dd($e);
