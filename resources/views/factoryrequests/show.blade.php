@@ -49,8 +49,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="seguimiento">
                     <div class="row">
-                        @include('factoryrequests.layouts.commentaries')
-                        {{-- ['datas' => $customer->customerCommentaries] --}}
+                        @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
                     </div>
                 </div>
                 <div class="row border-0">
