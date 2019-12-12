@@ -5,8 +5,10 @@ namespace App\Entities\Intentions;
 use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Definitions\Definition;
+use App\Entities\IntentionStatuses\IntentionStatus;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Support\Facades\DB;
 
 class Intention extends Model
 {
@@ -54,5 +56,11 @@ class Intention extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'CEDULA');
+    }
+
+    public function intentionStatus()
+    {
+        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION')->select('NAME', DB::raw('count(*) as total'))
+            ->groupBy('NAME');
     }
 }

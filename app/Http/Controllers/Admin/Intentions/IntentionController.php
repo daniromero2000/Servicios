@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Intentions;
 
+use App\Entities\Intentions\Intention;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Http\Controllers\Controller;
@@ -61,11 +62,16 @@ class IntentionController extends Controller
 
         $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+        $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
             $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
+            $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
         }
+
+
+        dd($intentionStatuses);
 
         $totalStatuses = $creditCards->sum('total');
 
