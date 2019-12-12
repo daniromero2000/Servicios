@@ -75,7 +75,7 @@
                 @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
             </div>
             <div class="row border-0">
-                <a href="{{ route('factoryrequests.index') }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                <a href="{{ route('customers.index') }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
         </div>
 </section>
