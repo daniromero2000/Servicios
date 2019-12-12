@@ -47,7 +47,7 @@
 
 
             <div class="row border-0">
-                <a href="{{ route('factoryrequests.index') }}" class="btn btn-default btn-sm">Regresar</a>
+                <a href="{{ URL::previous() }}" class="btn btn-default btn-sm">Regresar</a>
             </div>
 
         </div>
