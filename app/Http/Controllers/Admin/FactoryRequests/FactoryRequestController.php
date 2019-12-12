@@ -114,15 +114,15 @@ class FactoryRequestController extends Controller
         }
 
         return view('factoryrequests.dashboard', [
-            'statusesNames'  => $statusesNames,
-            'statusesValues' => $statusesValues,
-            'statusesColors' => $statusesColors,
-            'webValues'      => $webValues,
-            'webNames'       => $webNames,
-            'webColors'       => $webColors,
-            'totalWeb'       => array_sum($webValues),
-            'totalStatuses'  => array_sum($statusesValues),
-            'factoryRequestsTotal'       => $factoryRequestsTotal,
+            'statusesNames'        => $statusesNames,
+            'statusesValues'       => $statusesValues,
+            'statusesColors'       => $statusesColors,
+            'webValues'            => $webValues,
+            'webNames'             => $webNames,
+            'webColors'            => $webColors,
+            'totalWeb'             => array_sum($webValues),
+            'totalStatuses'        => array_sum($statusesValues),
+            'factoryRequestsTotal' => $factoryRequestsTotal,
         ]);
     }
 }

@@ -3,7 +3,6 @@
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
-
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
@@ -19,9 +18,6 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
-
-
-
 <div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
     <div class="row ">
         <div class="col-12 text-center">
@@ -44,8 +40,6 @@
     <div class="alert alert-danger" role="alert" ng-if="showMessageNoExistClienteFab || showMessageNoExistConsulta">
         Verifica la cédula ingresada, el cliente no presenta registro en nuestra base de datos.
     </div>
-
-
     <div ng-show="showResp">
         <div class="row d-flex justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-10">
@@ -66,23 +60,7 @@
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8">
                                     <p>
-                                        <label for="">Tipo de documento: </label>
-                                        <span ng-if="infoLead.TIPO_DOC == 1">Cédula de ciudadanía</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 2">NIT</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 3">Cédula de extranjería</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 4">Tarjeta de identidad</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 5">Pasaporte</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 6">Tarjeta seguro social extranjero</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 7">Sociedad extranjera sin NIT en
-                                            Colombia</span>
-                                        <span ng-if="infoLead.TIPO_DOC == 8">Fidecomiso</span>
-                                    </p>
-                                    <p>
                                         <label for="">Número de documento: </label> @{{ infoLead.CEDULA }}
-                                    </p>
-                                    <p>
-                                        <label for="">Tipo de cliente:
-                                        </label> @{{ infoLead.latest_intention.TIPO_CLIENTE }}
                                     </p>
                                     <p>
                                         <label for="">Actividad: </label> @{{ infoLead.ACTIVIDAD }}
@@ -106,15 +84,12 @@
                             </div>
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8 ">
-
                                     <p>
                                         <label for="">Sucursal: </label> @{{ infoLead.SUC }}
                                     </p>
-
                                     <p>
                                         <label for="">Celular: </label> @{{ infoLead.CELULAR }}
                                     </p>
-
                                     <p>
                                         <label for="">Tarjeta: </label> @{{ infoLead.latest_intention.TARJETA }}
                                     </p>
