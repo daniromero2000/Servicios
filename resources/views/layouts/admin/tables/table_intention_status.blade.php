@@ -12,7 +12,7 @@
             <tr>
                 <td>{{ $data->id}}</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-                <td><a href="{{ route('customers.show', $data->CEDULA) }}">{{ $data->CEDULA}}</a></td>
+                <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip" title="Ver Cliente">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
