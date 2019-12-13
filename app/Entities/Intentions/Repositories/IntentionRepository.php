@@ -136,7 +136,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         if (is_null($from) || is_null($to)) {
             return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
                 ->when($creditprofile, function ($q, $creditprofile) {
-                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
+                    return $q->where('ESTADO_INTENCION', $creditprofile);
                 })
                 ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
@@ -147,7 +147,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
             ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->when($creditprofile, function ($q, $creditprofile) {
-                return $q->where('PERFIL_CREDITICIO', $creditprofile);
+                return $q->where('ESTADO_INTENCION', $creditprofile);
             })
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);

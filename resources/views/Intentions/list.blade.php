@@ -26,7 +26,7 @@
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
                         <div class="card-header">
-                            @include('layouts.admin.filter_intention', ['route' =>
+                            @include('layouts.admin.filter_intention', ['datas' => $status,'route' =>
                             route('intentions.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">

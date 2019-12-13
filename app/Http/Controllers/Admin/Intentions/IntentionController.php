@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Intentions;
 
 use App\Entities\Intentions\Intention;
+use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
@@ -29,9 +30,9 @@ class IntentionController extends Controller
 
     public function index(Request $request)
     {
+        $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->intentionInterface->listIntentions($skip * 30);
-
         if (request()->has('q')) {
             $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'))->sortByDesc('FECHA_INTENCION');
         }
@@ -44,6 +45,7 @@ class IntentionController extends Controller
             'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
+            'status'               => $status,
         ]);
     }
 
