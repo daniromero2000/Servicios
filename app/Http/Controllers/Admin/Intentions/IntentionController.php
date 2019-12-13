@@ -61,21 +61,18 @@ class IntentionController extends Controller
 
     public function dashboard(Request $request)
     {
-        $to = Carbon::now();
+        $to   = Carbon::now();
         $from = Carbon::now()->subMonth();
 
-        $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
-        $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+        $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
+        $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
-
-
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
             $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
             $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
         }
-
 
         $intentionStatusesNames  = [];
         $intentionStatusesValues  = [];

@@ -29,64 +29,6 @@ class IntentionStatusRepository implements IntentionStatusRepositoryInterface
         }
     }
 
-    public function findLatestCustomerIntentionStatusByCedula($CEDULA): IntentionStatus
-    {
-        try {
-            return $this->model
-                ->where('CEDULA', $CEDULA)->latest('id')->first();
-        } catch (QueryException $e) {
-            dd($e);
-        }
-    }
-
-    public function findIntentionStatusByIdFull(int $id): IntentionStatus
-    {
-        try {
-            return $this->model
-                ->with(['customer', 'definition'])
-                ->findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function listIntentionStatuses($totalView): Support
-    {
-        try {
-            return  $this->model->with(['customer', 'definition'])
-                ->orderBy('id', 'desc')
-                ->skip($totalView)
-                ->take(30)
-                ->get($this->columns);
-        } catch (QueryException $e) {
-            dd($e);
-        }
-    }
-
-    public function countIntentionStatusesCreditProfiles($from, $to)
-    {
-        try {
-            return  $this->model->select('PERFIL_CREDITICIO', DB::raw('count(*) as total'))
-                ->whereBetween('FECHA_INTENCION', [$from, $to])
-                ->groupBy('PERFIL_CREDITICIO')
-                ->get();
-        } catch (QueryException $e) {
-            dd($e);
-        }
-    }
-
-    public function countIntentionStatusesCreditCards($from, $to)
-    {
-        try {
-            return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
-                ->whereBetween('FECHA_INTENCION', [$from, $to])
-                ->groupBy('TARJETA')
-                ->get();
-        } catch (QueryException $e) {
-            dd($e);
-        }
-    }
-
     public function countIntentionStatuses($from, $to)
     {
         try {
