@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front\Advances;
 
+use Midnite81\GeoLocation\Contracts\Services\GeoLocation;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
@@ -56,8 +57,12 @@ class AdvanceController extends Controller
         $this->webServiceInterface = $webServiceRepositoryInterface;
     }
 
-    public function index()
+    public function index(GeoLocation $geo, Request $request)
     {
+        dd($request->ip());
+        $ipLocation = $geo->getCity($request->ip());
+
+        dd($ipLocation);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

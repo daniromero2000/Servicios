@@ -165,6 +165,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
 
+        // GeoIp
+        Midnite81\GeoLocation\GeoLocationServiceProvider::class
+
     ],
 
     /*
@@ -213,7 +216,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        'GeoLocation' => Midnite81\GeoLocation\Facades\GeoLocation::class,
     ],
 
 ];
