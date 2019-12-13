@@ -1396,6 +1396,13 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
 			$customer->save();
+
+			$data = [
+				'CEDULA' => $identificationNumber,
+				'ESTADO_INTENCION' => 3
+			];
+
+			$this->intentionInterface->createIntention($data);
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -1495,6 +1502,13 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
+
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ESTADO_INTENCION = 4;
+			$customerIntention->save();
+
+			return		$customerIntention;
+
 
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);

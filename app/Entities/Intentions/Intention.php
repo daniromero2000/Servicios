@@ -18,7 +18,7 @@ class Intention extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'ID';
+    protected $primaryKey =  'id';
 
     public $timestamps = false;
 
@@ -34,7 +34,8 @@ class Intention extends Model
         'TIEMPO_LABOR',
         'TIPO_5_ESPECIAL',
         'INSPECCION_OCULAR',
-        'ESTADO_OBLIGACIONES'
+        'ESTADO_OBLIGACIONES',
+        'ESTADO_INTENCION'
     ];
 
     protected $searchable = [

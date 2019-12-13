@@ -45,11 +45,20 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+    public function updateOrCreateIntention($data)
+    {
+        try {
+            return $this->model->latest('id')->updateOrCreate(['CEDULA' => $data['CEDULA']], $data);
+        } catch (QueryException $e) {
+            return $e;
+        }
+    }
+
     public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
             return $this->model
-                ->where('CEDULA', $CEDULA)->latest('id')->first();
+                ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
         } catch (QueryException $e) {
             dd($e);
         }
