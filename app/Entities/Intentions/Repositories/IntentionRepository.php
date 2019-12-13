@@ -124,9 +124,9 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection
+    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status )) {
             return $this->model->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -136,18 +136,23 @@ class IntentionRepository implements IntentionRepositoryInterface
         if (is_null($from) || is_null($to)) {
             return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
                 ->when($creditprofile, function ($q, $creditprofile) {
-                    return $q->where('ESTADO_INTENCION', $creditprofile);
+                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
+                })
+                ->when($status, function ($q, $status) {
+                                       return $q->where('ESTADO_INTENCION', $status);
                 })
                 ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
-
         return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
             ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->when($creditprofile, function ($q, $creditprofile) {
-                return $q->where('ESTADO_INTENCION', $creditprofile);
+                return $q->where('PERFIL_CREDITICIO', $creditprofile);
+            })
+            ->when($status, function ($q, $status) {
+                                return $q->where('ESTADO_INTENCION', $status);
             })
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);
