@@ -119,7 +119,7 @@
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
 							<label for="telephone" class="control-label">Celular*</label>
-							<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
+							<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" ng-blur="checkIfExistNum()" />
 							<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 						</div>
 						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">

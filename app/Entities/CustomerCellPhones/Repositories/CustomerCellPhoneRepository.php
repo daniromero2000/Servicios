@@ -42,6 +42,15 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
         }
     }
 
+    public function checkIfExistNum($num)
+    {
+        try {
+            return $this->model->where('NUM', $num)->count();
+        } catch (QueryException $e) {
+            //throw $th;
+        }
+    }
+
     public function getCustomerCellPhoneVal($identificationNumber)
     {
         try {

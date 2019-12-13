@@ -427,6 +427,11 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
+	public function checkIfExistNum($cellPhone)
+	{
+		return $this->customerCellPhoneInterface->checkIfExistNum($cellPhone);
+	}
+
 	public function getNumLead($identificationNumber, $typeResp = 'json')
 	{
 		$getNumVal = $this->customerCellPhoneInterface->getCustomerCellPhoneVal($identificationNumber);

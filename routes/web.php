@@ -127,6 +127,7 @@ Route::resource('profiles', 'Admin\ProfilesController');
 Route::resource('products', 'Admin\ProductsController');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}', 'Admin\OportuyaV2Controller@encrypt');
+Route::get('api/checkIfExistNum/{cellPhone}', 'Admin\OportuyaV2Controller@checkIfExistNum');
 Route::get('api/libranza/liquidator/{maxAmount}/{quota}', 'Admin\LibranzaController@liquidator');
 // Pasos solictud credito
 Route::get('/step1', 'Admin\OportuyaV2Controller@step1')->name('step1Oportuya');
