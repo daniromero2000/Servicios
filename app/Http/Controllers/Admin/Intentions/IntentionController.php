@@ -82,7 +82,10 @@ class IntentionController extends Controller
 
 
 
-
+        foreach ($intentionStatuses as $intentionStatus) {
+            array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
+            array_push($intentionStatusesValues, trim($intentionStatus['total']));
+        }
 
         $totalStatuses = $creditCards->sum('total');
 
@@ -92,7 +95,6 @@ class IntentionController extends Controller
 
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
-
         $creditCards   = $creditCards->toArray();
         $creditCards   = array_values($creditCards);
 
@@ -108,6 +110,8 @@ class IntentionController extends Controller
         return view('Intentions.dashboard', [
             'creditProfilesNames'  => $creditProfilesNames,
             'creditProfilesValues' => $creditProfilesValues,
+            'intentionStatusesNames'  => $intentionStatusesNames,
+            'intentionStatusesValues' => $intentionStatusesValues,
             'creditCards'  => $creditCards,
             'totalStatuses'  => array_sum($creditProfilesValues),
         ]);
