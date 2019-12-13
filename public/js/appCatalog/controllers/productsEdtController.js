@@ -1,6 +1,6 @@
 app.controller('productsEdtController', function($scope, $http, $rootScope, $routeParams, $location){
 	$scope.tabs = 1;//init in first tab
-	$scope.resource = {};//resource to edit 
+	$scope.resource = {};//resource to edit
 	$scope.images = [];//list of images
 	$scope.imgs = {};// image of flow
 
@@ -11,7 +11,7 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 			  method: 'POST',
 			  url: '/Administrator/Catalog/imagesUpdate',
 			  data: $scope.images
-			}).then(function successCallback(response) {			
+			}).then(function successCallback(response) {
 			}, function errorCallback(response) {
 			});
 		}
@@ -36,14 +36,14 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 				  method: 'POST',
 				  url: '/Administrator/Catalog/imagesUpdate',
 				  data: $scope.images
-				}).then(function successCallback(response) {			
+				}).then(function successCallback(response) {
 				}, function errorCallback(response) {
 				});
 			}
-				
+
 		}, function errorCallback(response) {
 			hideLoader();
-		});		
+		});
 	}
 	//back to products admin
 	$scope.volver = function(){
@@ -57,12 +57,11 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		  url: '/products/'+$scope.resource.id,
 		  data: $scope.resource
 		}).then(function successCallback(response) {
-			console.log(response);
-			if(response.data != false){
+					if(response.data != false){
 				alert("Producto actualizado");
 			}
 		}, function errorCallback(response) {
-			
+
 		});
 	};
 
@@ -97,12 +96,12 @@ app.controller('productsEdtController', function($scope, $http, $rootScope, $rou
 		  formData.append('imgs' + i++,value.file);
 		});
 		formData.append('nImages', i);//num images to upload
-		formData.append('idProduct', $scope.resource.id);//id product to attach images 
+		formData.append('idProduct', $scope.resource.id);//id product to attach images
 		showLoader();
 		$http.post('/Administrator/Catalog/images',formData,{
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
-		}).then(function successCallback(response) {			
+		}).then(function successCallback(response) {
 			if(response.data != false){
 				//clear a flow  objet of images uploads
 				while($scope.imgs.flow.files.length>0){
