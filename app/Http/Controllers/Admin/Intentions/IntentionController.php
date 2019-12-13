@@ -41,7 +41,7 @@ class IntentionController extends Controller
         return view('Intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
+            'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
@@ -67,7 +67,7 @@ class IntentionController extends Controller
         $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
-        // $intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
+        //$intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));

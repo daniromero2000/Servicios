@@ -18,7 +18,7 @@ class Intention extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'id';
+    protected $primaryKey =  'ID';
 
     public $timestamps = false;
 
@@ -60,7 +60,6 @@ class Intention extends Model
 
     public function intentionStatus()
     {
-        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION')->select('NAME')
-            ->groupBy('NAME');
+        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION');
     }
 }

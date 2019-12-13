@@ -12,11 +12,9 @@ class IntentionStatus extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'id';
+    protected $primaryKey =  'ID';
 
     public $timestamps = false;
-
-    protected $fillable = [];
 
     public function intentions()
     {
