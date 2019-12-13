@@ -283,8 +283,6 @@
        * Flot Interactive Chart
        * -----------------------
        */
-      // We use an inline data source in the example, usually data would
-      // be fetched from a server
       var data = [],
         totalPoints = 100
 

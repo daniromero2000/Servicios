@@ -1,9 +1,5 @@
 @extends('layouts.admin.app')
-
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<!-- Main content -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -12,11 +8,10 @@
           <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
           <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard Intenciones Web</a>
           </li>
-
         </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container-fluid">
   <section class="content">
@@ -166,12 +161,9 @@
         </div>
       </div>
     </div>
-    <!-- Card 1 -->
-    <!-- /.col (LEFT) -->
 </div>
 @endsection
 @section('scriptsJs')
-
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
@@ -184,7 +176,6 @@
 <script src="{{ asset('plugins/flot-old/jquery.flot.resize.min.js') }}"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
 <script src="{{ asset('plugins/flot-old/jquery.flot.pie.min.js') }}"></script>
-
 <script>
   $(function () {
 
