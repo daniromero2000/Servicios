@@ -114,7 +114,6 @@ Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
 Route::resource('libranza', 'Admin\LibranzaController');
-
 Route::resource('leads', 'Admin\LeadsController');
 
 
