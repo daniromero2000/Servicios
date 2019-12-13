@@ -12,7 +12,7 @@ class IntentionStatus extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'ID';
+    protected $primaryKey =  'id';
 
     public $timestamps = false;
 
