@@ -19,7 +19,7 @@
           <th class="text-center" scope="col">Codeudores</th>
           <th class="text-center" scope="col">Asesor</th>
           <th class="text-center" scope="col">Gran Total</th>
-          <th class="text-center" scope="col">Credito</th>
+          <th class="text-center" scope="col">Crédito</th>
           <th class="text-center" scope="col">Avance</th>
           <th class="text-center" scope="col">Lead</th>
         </tr>
