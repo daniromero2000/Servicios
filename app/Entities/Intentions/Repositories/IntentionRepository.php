@@ -59,7 +59,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     {
         try {
             return $this->model
-                ->with(['customer', 'definition'])
+                ->with(['customer', 'definition', 'intentionStatus'])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());

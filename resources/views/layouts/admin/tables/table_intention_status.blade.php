@@ -35,7 +35,7 @@
                     @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
                 <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
                     @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
-                <td>{{ $data->customer['ESTADO']}}</td>
+                <td>{{ $data->intentionStatus->NAME}}</td>
                 <td>{{ $data->definition['DESCRIPCION']}}</td>
             </tr>
             @endforeach
