@@ -44,12 +44,11 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function findCustomerIntentionById($id): Intention
+    public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
             return $this->model
-                ->with(['customer', 'definition'])
-                ->findOrFail($id);
+                ->where('CEDULA', $CEDULA)->latest('id')->first();
         } catch (QueryException $e) {
             dd($e);
         }
@@ -97,6 +96,18 @@ class IntentionRepository implements IntentionRepositoryInterface
             return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
                 ->whereBetween('FECHA_INTENCION', [$from, $to])
                 ->groupBy('TARJETA')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionsStatuses($from, $to)
+    {
+        try {
+            return  $this->model->with('intentionStatus')->select('ESTADO_INTENCION', DB::raw('count(*) as total'))
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('ESTADO_INTENCION')
                 ->get();
         } catch (QueryException $e) {
             dd($e);

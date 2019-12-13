@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 {
@@ -40,8 +41,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return $this->model
-                ->with('creditCard')
-                ->with('customer')
+                ->with([
+                    'creditCard',
+                    'customer',
+                    'references'
+                ])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
@@ -130,7 +134,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function countWebFactoryRequests($from, $to)
     {
         try {
@@ -180,7 +183,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
-
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
@@ -193,7 +195,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     }
 
     //Asesores
-
 
     public function countAssessorFactoryRequestStatuses($from, $to, $assessor)
     {
@@ -221,6 +222,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
     public function searchFactoryAseessors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $assessor): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
@@ -263,7 +265,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
-
     public function getAssessorFactoryTotal($from, $to, $assessor)
     {
         try {
@@ -295,8 +296,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     //Directores
 
-
-
     public function countDirectorFactoryRequestStatuses($from, $to, $director)
     {
         try {
@@ -309,7 +308,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
-
 
     public function listFactoryDirector($totalView, $director): Support
     {
@@ -324,6 +322,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
     public function searchFactoryDirectors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $assessor = null, $director): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {
@@ -366,7 +365,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);
     }
 
-
     public function getDirectorFactoryTotal($from, $to,  $director)
     {
         try {
@@ -393,7 +391,4 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
-
-    //Hasta aqui Directores
-
 }

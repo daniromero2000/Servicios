@@ -8,7 +8,10 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-4">
+            <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+          </div>
+          <div class="col-sm-8">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a></li>
@@ -18,7 +21,6 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-
     <div class="container">
       <div class="card  mb-4 border-0 shadow-lg">
         <div class="row form-group" ng-if="filtros">
@@ -44,7 +46,7 @@
             </div>
             <div class="card-body text-center pt-0 pb-0 ">
               @if($customers)
-              @include('layouts.admin.tables.tables_customer_status', [$headers, 'datas' => $customers ])
+              @include('layouts.admin.tables.customer_status_table', [$headers, 'datas' => $customers ])
               @include('layouts.admin.pagination.pagination', [$skip])
               @else
               @include('layouts.admin.pagination.pagination_null', [$skip])

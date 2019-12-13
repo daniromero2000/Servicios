@@ -1,9 +1,5 @@
 @extends('layouts.admin.app')
-
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<!-- Main content -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -12,11 +8,10 @@
           <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
           <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard Intenciones Web</a>
           </li>
-
         </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container-fluid">
   <section class="content">
@@ -166,12 +161,9 @@
         </div>
       </div>
     </div>
-    <!-- Card 1 -->
-    <!-- /.col (LEFT) -->
 </div>
 @endsection
 @section('scriptsJs')
-
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
@@ -184,7 +176,6 @@
 <script src="{{ asset('plugins/flot-old/jquery.flot.resize.min.js') }}"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
 <script src="{{ asset('plugins/flot-old/jquery.flot.pie.min.js') }}"></script>
-
 <script>
   $(function () {
 
@@ -193,6 +184,13 @@
 
         var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
+
+
+        var statuses = [];
+          var valores = [];
+
+          var statuses = [<?php echo '"'.implode('","', $intentionStatusesNames).'"' ?>];
+          var valores = [<?php echo '"'.implode('","', $intentionStatusesValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -247,10 +245,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: estados,
+      labels: statuses,
       datasets: [
         {
-          data: values,
+          data: valores,
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]

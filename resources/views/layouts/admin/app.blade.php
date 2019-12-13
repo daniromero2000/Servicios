@@ -54,7 +54,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
         integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     @yield('linkStyleSheets')
-
+    <link rel="stylesheet" href="{{ asset('css/front/loader.css') }}" id="link">
+    <link rel="stylesheet" href="{{ asset('css/layouts/show.css') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -112,35 +113,26 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/oportunidadesServicios.ico') }}' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <script>
-        function hideLoader(){
-
-				$('#ex-global-content').removeClass('ex-loader-blur');
-				$(".ex-loader").fadeOut(1000,function(){
-					$(".ex-loader").remove();
-
-				});
-			};
-
-			window.onload = function(){
-				hideLoader();
-			};
-
-			$(document).ready(function($) {
-				setTimeout(function(){
-					hideLoader();
-				},800);
-			});
-
-    </script>
 </head>
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
-    <div class="wrapper ">
+<body onload="cargar()" class="hold-transition sidebar-mini sidebar-collapse">
+    <div class="loader">
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+        <div class="circulo"></div>
+    </div>
+    <div class="wrapper home">
         @include('layouts.admin.header')
         @include('layouts.admin.sidebar')
         <div class="content-wrapper bg-white">
-            @yield('content')
+            <div class="container-responsive">
+                @yield('content')
+            </div>
         </div>
         @include('layouts.admin.footer')
     </div>
@@ -186,9 +178,17 @@
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Validador de campos formulario -->
+<script src="{{ asset('js/validateV2.js') }}"></script>
+<script src="{{ asset('dist/js/demo.js') }}"></script>
+
+<script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 <script>
-        $(function () {
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+    $(function () {
           //Initialize Select2 Elements
           $('.select2').select2()
       
@@ -198,5 +198,6 @@
           })
       
         })
-      </script>
+</script>
+
 </html>

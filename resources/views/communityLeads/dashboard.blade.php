@@ -1,9 +1,5 @@
 @extends('layouts.admin.app')
-
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<!-- Main content -->
 <div class="container-fluid">
   <section class="content">
     <div class="row mt-2">
@@ -21,11 +17,11 @@
                 <div class="icon mt-3">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
-                <div class="text-right mr-2" >
-                    <span class="info-box-text text-right"><a href="/Administrator/communityLeads"
-                        style="color: white; !important">Ver
-                        Mas</a></span>
-                  </div>
+                <div class="text-right mr-2">
+                  <span class="info-box-text text-right"><a href="/Administrator/communityLeads"
+                      style="color: white; !important">Ver
+                      Mas</a></span>
+                </div>
               </div>
             </div>
           </div>
@@ -194,7 +190,6 @@
 </div>
 @endsection
 @section('scriptsJs')
-
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
@@ -207,7 +202,6 @@
 <script src="{{ asset('plugins/flot-old/jquery.flot.resize.min.js') }}"></script>
 <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
 <script src="{{ asset('plugins/flot-old/jquery.flot.pie.min.js') }}"></script>
-
 <script>
   $(function () {
 

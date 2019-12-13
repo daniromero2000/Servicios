@@ -1,29 +1,30 @@
-<!-- Phones -->
-
-<div class="card-header">
-  <h1><i class="fas fa-credit-card" aria-hidden="true"></i> Tarjeta de Crédito</h1>
-</div>
-<div class="card-body table-responsive pt-1">
-  @if(!empty($customer->creditCard))
-  <table class="table table-hover table-stripped leadTable">
-    <thead>
-      <tr>
-        <th class="text-center" scope="col">Número</th>
-        <th class="text-center" scope="col">Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      @include('layouts.admin.tables.customer_eps_noheaders_table', ['data' => $customer->creditCard])
-    </tbody>
-  </table>
-  @else
-  <span>Aún no tiene Eps</span><br>
-  @endif
-  <div class="row">
-    <div class="col">
-      <a href="# " data-toggle="modal" data-target="#epsmodal" <i class="btn btn-primary btn-sm"><i
-          class="fa fa-edit"></i>
-        Agregar Eps</a>
-    </div>
+<div class="container-fluid card mt-4 card-table-reset">
+  <div class="card-header">
+    <h2 class="title-table"><i class="fas fa-credit-card mr-3"></i> Tarjeta</h2>
+  </div>
+  <div class="card-body table-responsive pt-0 header-table-responsive">
+    @if(!empty($factoryRequest->creditCard))
+    <table class="table table-head-fixed table-hover table-stripped leadTable">
+      <thead class="header-table">
+        <tr>
+          <th class="text-center" scope="col">Número</th>
+          <th class="text-center" scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody class="body-table">
+        @include('layouts.admin.tables.noheaders_noloop_table', ['data' => $factoryRequest->creditCard])
+      </tbody>
+    </table>
+    @else
+    <table class="table table-hover table-stripped leadTable">
+      <tbody class="body-table">
+        <tr>
+          <td>
+            Aún no tiene Tarjetas
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    @endif
   </div>
 </div>

@@ -25,4 +25,5 @@ interface CustomerRepositoryInterface
 
   public function countCustomersForCallSteps($from, $to);
 
+  public function findCustomerByIdFull($identificationNumber): Customer;
 }

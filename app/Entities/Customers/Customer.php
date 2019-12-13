@@ -3,13 +3,19 @@
 namespace App\Entities\Customers;
 
 use App\cliCel;
+use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
+use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
+use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
+use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
+use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
+use App\Entities\UpToDateRealCifins\UpToDateRealCifin;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -229,7 +235,6 @@ class Customer extends Model
         return self::search($term);
     }
 
-
     public function latestCifinScore()
     {
         return $this->hasOne(CifinScore::class, 'scocedula')->latest('scoconsul');
@@ -248,6 +253,11 @@ class Customer extends Model
     public function factoryRequests()
     {
         return $this->hasOne(FactoryRequest::class, 'CLIENTE')->where('ESTADO', 'APROBADO')->where('GRAN_TOTAL', 0)->where('SOLICITUD_WEB', 1)->latest('FECHASOL');
+    }
+
+    public function customersFactoryRequests()
+    {
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
     }
 
     public function latestIntention()
@@ -278,5 +288,35 @@ class Customer extends Model
     public function cliCell()
     {
         return $this->hasOne(cliCel::class, 'IDENTI');
+    }
+
+    public function cifinReals()
+    {
+        return $this->hasMany(CifinRealArrear::class, 'rmcedula')->where('rmestcon', '!=', '');
+    }
+
+    public function cifinFins()
+    {
+        return $this->hasMany(CifinFinancialArrear::class, 'fincedula')->where('finestcon', '!=', '');
+    }
+
+    public function UpToDateCifinFins()
+    {
+        return $this->hasMany(UpToDateFinancialCifin::class, 'fdcedula')->where('fdestcon', '!=', '');
+    }
+
+    public function UpToDateCifinReals()
+    {
+        return $this->hasMany(UpToDateRealCifin::class, 'rdcedula')->where('rdestcon', '!=', '');
+    }
+
+    public function extintsCifinReals()
+    {
+        return $this->hasMany(ExtintRealCifin::class, 'rexcedula')->where('rexestcon', '!=', '');
+    }
+
+    public function extintsCifinFins()
+    {
+        return $this->hasMany(ExtintFinancialCifin::class, 'extcedula')->where('extestcon', '!=', '');
     }
 }

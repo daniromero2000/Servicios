@@ -71,6 +71,25 @@ class CustomerRepository implements CustomerRepositoryInterface
         }
     }
 
+    public function findCustomerByIdFull($identificationNumber): Customer
+    {
+        try {
+            return $this->model->with([
+                'latestCifinScore',
+                'latestIntention',
+                'customersfactoryRequests',
+                'cifinReals',
+                'cifinFins',
+                'UpToDateCifinFins',
+                'UpToDateCifinReals',
+                'extintsCifinReals',
+                'extintsCifinFins'
+            ])->findOrFail($identificationNumber);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function checkIfExists($identificationNumber)
     {
         try {

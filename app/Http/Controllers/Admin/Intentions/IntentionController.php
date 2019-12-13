@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers\Admin\Intentions;
 
+use App\Entities\Intentions\Intention;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
+use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use PhpParser\Node\Stmt\Foreach_;
 
 class IntentionController extends Controller
 {
-    private $intentionInterface, $toolsInterface;
+    private $intentionStatusesInterface, $intentionInterface, $toolsInterface;
 
     public function __construct(
         IntentionRepositoryInterface $intentionRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        IntentionStatusRepositoryInterface $intentionStatusRepositoryInterface
     ) {
         $this->intentionInterface = $intentionRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->intentionStatusesInterface = $intentionStatusRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -36,7 +41,7 @@ class IntentionController extends Controller
         return view('Intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Intención', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
+            'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado Cliente', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);
@@ -61,10 +66,25 @@ class IntentionController extends Controller
 
         $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+        $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
+
+
 
         if (request()->has('from')) {
             $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
             $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
+            $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
+        }
+
+
+        $intentionStatusesNames  = [];
+        $intentionStatusesValues  = [];
+
+        dd($intentionStatuses);
+
+        foreach ($intentionStatuses as $intentionStatus) {
+            array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
+            array_push($intentionStatusesValues, trim($intentionStatus['total']));
         }
 
         $totalStatuses = $creditCards->sum('total');
@@ -75,7 +95,6 @@ class IntentionController extends Controller
 
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
-
         $creditCards   = $creditCards->toArray();
         $creditCards   = array_values($creditCards);
 
@@ -91,6 +110,8 @@ class IntentionController extends Controller
         return view('Intentions.dashboard', [
             'creditProfilesNames'  => $creditProfilesNames,
             'creditProfilesValues' => $creditProfilesValues,
+            'intentionStatusesNames'  => $intentionStatusesNames,
+            'intentionStatusesValues' => $intentionStatusesValues,
             'creditCards'  => $creditCards,
             'totalStatuses'  => array_sum($creditProfilesValues),
         ]);
