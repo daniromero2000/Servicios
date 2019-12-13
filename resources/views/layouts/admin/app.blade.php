@@ -116,16 +116,7 @@
 </head>
 
 <body onload="cargar()" class="hold-transition sidebar-mini sidebar-collapse">
-    <div class="loader">
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-        <div class="circulo"></div>
-    </div>
+    @include('layouts.admin.loader')
     <div class="wrapper home">
         @include('layouts.admin.header')
         @include('layouts.admin.sidebar')
