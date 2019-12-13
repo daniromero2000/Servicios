@@ -1690,7 +1690,7 @@ class OportuyaV2Controller extends Controller
 		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 		$scoreLead = 0;
-		if ($respScoreLead[0]->score) {
+		if (!empty($respScoreLead)) {
 			$scoreLead = $respScoreLead[0]->score;
 		}
 
