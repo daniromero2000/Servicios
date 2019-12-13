@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="row text-right">
+        <div class="row row-reset text-right">
             <div class="col-12">
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
