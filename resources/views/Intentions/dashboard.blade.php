@@ -141,9 +141,9 @@
                 </div>
                 <div class="col-12">
                   <div class="row text-center">
-                    @foreach ($intentionStatusesValues as $p)
+                    @foreach ($statusPercentage as $statusPercentage)
                     <div class="col-3 header-table mt-2">
-                     %{{$p}}
+                      {{ number_format ($statusPercentage['percentage']) }} % {{$statusPercentage['status']}}
                     </div>
                     @endforeach
                   </div>

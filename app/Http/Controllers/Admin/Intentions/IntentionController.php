@@ -90,6 +90,15 @@ class IntentionController extends Controller
             $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
         }
 
+        $statusPercentage = [];
+
+        foreach ($intentionStatuses as $key => $value) {
+            $statusPercentage[$key]['status'] = $value->intentionStatus['NAME'];
+            $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+        }
+
+
+
         $creditProfiles   = $creditProfiles->toArray();
         $creditProfiles   = array_values($creditProfiles);
         $creditCards   = $creditCards->toArray();
@@ -110,6 +119,7 @@ class IntentionController extends Controller
             'intentionStatusesNames'  => $intentionStatusesNames,
             'intentionStatusesValues' => $intentionStatusesValues,
             'creditCards'  => $creditCards,
+            'statusPercentage'  => $statusPercentage,
             'totalStatuses'  => array_sum($creditProfilesValues),
         ]);
     }
