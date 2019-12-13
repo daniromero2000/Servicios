@@ -1494,7 +1494,7 @@ class OportuyaV2Controller extends Controller
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} else {
-
+			$estadoResult = "PREAPROBADO";
 			$turnos = $this->addTurnos($identificationNumber, $numSolic);
 		}
 		$dataLead = [
