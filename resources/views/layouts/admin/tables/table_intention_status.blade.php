@@ -1,5 +1,5 @@
-<div class="table " style="font-size: 10pt;">
-    <table id="example2" class="table table-responsive table-stripped  table-hover">
+<div class="table-responsive mb-3 p-0" style="font-size: 10pt;height: 600px;">
+    <table class="table table-head-fixed">
         <thead class="text-center">
             <tr>
                 @foreach ($headers as $header)
@@ -12,7 +12,8 @@
             <tr>
                 <td>{{ $data->id}}</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-                <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip" title="Ver Cliente">{{ $data->CEDULA}}</a></td>
+                <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
+                        title="Ver Cliente">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
