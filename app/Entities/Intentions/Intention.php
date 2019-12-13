@@ -60,7 +60,7 @@ class Intention extends Model
 
     public function intentionStatus()
     {
-        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION')->select('NAME', DB::raw('count(*) as total'))
-            ->groupBy('name');
+        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION')->select('NAME')
+            ->groupBy('NAME');
     }
 }
