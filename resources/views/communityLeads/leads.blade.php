@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
     <div class="card  mb-4 border-0 shadow-lg">
         <div class="row form-group" ng-if="filtros">
             <div class="col-12">
@@ -96,7 +95,7 @@
             <div class="card-body text-center ">
                 <div class="card-body table-responsive p-0" style="height: 600px;">
                     <table id="example2" class="table table-head-fixed table-stripped leadTable  table-hover">
-                        <thead class=" text-center">
+                        <thead class="header-table text-center">
                             <tr>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Asesor</th>
@@ -109,7 +108,7 @@
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="body-table">
                             <tr ng-repeat="lead in leads">
                                 <td>
                                     <span class="text-center badge" ng-if="lead.state == 1"
@@ -156,10 +155,9 @@
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
                 <div class="row">
-                    <div class="col-12 text-center mb-1">
+                    <div class="col-12 text-center mt-4 mb-1">
                         <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getLeads()">Cargar
                             Más</button>
                     </div>
