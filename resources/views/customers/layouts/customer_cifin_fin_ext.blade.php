@@ -24,7 +24,7 @@
           <td class="text-center">{{ $cifin_fin_extint->extnumob }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extnoment }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extestob }}</td>
-          <td class="text-center">@if (empty($cifin_fin_extint->extvrinic)) 0 @endif {{ number_format (($cifin_fin_extint->extvrinic*1000)) }}
+          <td class="text-center"> @if (empty($cifin_fin_extint->extvrinic)) 0 @endif {{ number_format (($cifin_fin_extint->extvrinic*1000)) }}
           </td>
           <td class="text-center"> @if (empty($cifin_fin_extint->extsaldob)) 0 @endif
             {{number_format (($cifin_fin_extint->extsaldob*1000)) }}
