@@ -20,6 +20,6 @@ class IntentionStatus extends Model
 
     public function intentions()
     {
-        return $this->hasMany(Intention::class, 'id');
+        return $this->hasMany(Intention::class, 'ESTADO_INTENCION');
     }
 }
