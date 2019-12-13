@@ -13,6 +13,7 @@
     </div>
   </div>
 </div>
+
 <div class="container-fluid">
   <section class="content">
     <div class="row mt-2">
@@ -118,22 +119,36 @@
         </div>
       </div>
       <div class="col-md-8">
-        <!-- PORCENTAJES -->
-        <div class="card ">
-          <div class="card-header">
-            <h3 class="card-title">Perfiles Crediticios</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
-            </div>
-            <div class="chart">
-              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+        <div class="row">
+          <div class="col-12">
+            <!-- PORCENTAJES -->
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">Perfiles Crediticios</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                      class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="col-12">
+                  @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+                </div>
+                <div class="chart">
+                  <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+                </div>
+                <div class="col-12">
+                  <div class="row text-center">
+                    @foreach ($intentionStatusesValues as $p)
+                    <div class="col-3 header-table mt-2">
+                     %{{$p}}
+                    </div>
+                    @endforeach
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
