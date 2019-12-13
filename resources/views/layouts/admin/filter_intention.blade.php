@@ -7,8 +7,6 @@
     <div class="col-12 mt-2">
         <form action="{{$route}}" method="get" id="admin-search">
             <div class="input-group">
-
-
                 <div class="row w-100 d-flex justify-content-center">
                     <div class="col-6 col-md-3">
                         <label for="q">Buscar</label>
@@ -21,12 +19,9 @@
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
-                                <option>TIPO A</option>
-                                <option>TIPO B</option>
-                                <option>TIPO C</option>
-                                <option>TIPO D</option>
-                                <option>TIPO 5</option>
-                                <option>TIPO NE</option>
+                                @foreach ($status as $state)
+                                <option value="{{ $state->ID }}">{{ $state->NAME }}</option>    
+                                @endforeach
                             </select>
                         </div>
                     </div>
