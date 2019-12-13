@@ -12,7 +12,7 @@ class IntentionStatus extends Model
 {
 
 
-    protected $table = 'ESTADOSOLICITUDES';
+    protected $table = 'ESTADOINTENCIONES';
 
     protected $connection = 'oportudata';
 
