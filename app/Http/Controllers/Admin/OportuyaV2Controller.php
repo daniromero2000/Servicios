@@ -1391,9 +1391,6 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
 			$customer->save();
-			$latestIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			$latestIntention->ESTADO_INTENCION = 3;
-			$latestIntention->save();
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
