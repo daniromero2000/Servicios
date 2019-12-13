@@ -80,18 +80,9 @@ class IntentionController extends Controller
         $intentionStatusesNames  = [];
         $intentionStatusesValues  = [];
 
-        dd($intentionStatuses);
-
-        foreach ($intentionStatuses as $intentionStatus) {
-
-            if ($intentionStatus->intentions->isNotEmpty()) {
-                array_push($intentionStatusesNames, trim($intentionStatus['NAME']));
-                array_push($intentionStatusesValues, trim($intentionStatus['total']));
-            }
-        }
 
 
-        dd($intentionStatusesNames);
+
 
         $totalStatuses = $creditCards->sum('total');
 
