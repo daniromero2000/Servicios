@@ -1391,9 +1391,6 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
 			$customer->save();
-			$latestIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			$latestIntention->ESTADO_INTENCION = 3;
-			$latestIntention->save();
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -1460,7 +1457,7 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
-		$latestIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+
 		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$dataDatosCliente = [
@@ -1493,13 +1490,11 @@ class OportuyaV2Controller extends Controller
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
-			$latestIntention->ESTADO_INTENCION = 4;
-			$latestIntention->save();
+
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} else {
-			$estadoResult = "PREAPROBADO";
-			$latestIntention->ESTADO_INTENCION = 2;
+
 			$turnos = $this->addTurnos($identificationNumber, $numSolic);
 		}
 		$dataLead = [
@@ -1694,7 +1689,10 @@ class OportuyaV2Controller extends Controller
 	{
 		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+$scoreLead = 0:
+		if($respScoreLead[0]->score){
 		$scoreLead = $respScoreLead[0]->score;
+		}
 
 		$turnosOportuya            = new TurnosOportuya;
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;

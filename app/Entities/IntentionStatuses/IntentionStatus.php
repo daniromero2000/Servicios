@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class IntentionStatus extends Model
 {
-
-
-    protected $table = 'ESTADOSOLICITUDES';
+    protected $table = 'ESTADOINTENCIONES';
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey =  'ID';
+    protected $primaryKey =  'id';
 
     public $timestamps = false;
 
