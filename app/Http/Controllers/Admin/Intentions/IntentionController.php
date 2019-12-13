@@ -70,42 +70,33 @@ class IntentionController extends Controller
         //$intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
+            $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
+            $creditCards       = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
             $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
         }
 
         $intentionStatusesNames  = [];
-        $intentionStatusesValues  = [];
-
+        $intentionStatusesValues = [];
 
         foreach ($intentionStatuses as $intentionStatus) {
             array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
             array_push($intentionStatusesValues, trim($intentionStatus['total']));
         }
 
-        $totalStatuses = $creditCards->sum('total');
-
-        foreach ($creditCards as $key => $value) {
-            $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
-        }
+        $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
 
         $statusPercentage = [];
-
+        $totalStatuses    = $creditCards->sum('total');
         foreach ($intentionStatuses as $key => $value) {
-            $statusPercentage[$key]['status'] = $value->intentionStatus['NAME'];
+            $statusPercentage[$key]['status']     = $value->intentionStatus['NAME'];
             $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
         }
 
-
-
-        $creditProfiles   = $creditProfiles->toArray();
-        $creditProfiles   = array_values($creditProfiles);
-        $creditCards   = $creditCards->toArray();
-        $creditCards   = array_values($creditCards);
+        $creditProfiles = $this->toolsInterface->extractValuesToArray($creditProfiles);
+        $creditCards    = $this->toolsInterface->extractValuesToArray($creditCards);
 
         $creditProfilesNames  = [];
-        $creditProfilesValues  = [];
+        $creditProfilesValues = [];
 
         foreach ($creditProfiles as $creditProfile) {
             array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
@@ -114,13 +105,13 @@ class IntentionController extends Controller
 
 
         return view('Intentions.dashboard', [
-            'creditProfilesNames'  => $creditProfilesNames,
-            'creditProfilesValues' => $creditProfilesValues,
+            'creditProfilesNames'     => $creditProfilesNames,
+            'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,
             'intentionStatusesValues' => $intentionStatusesValues,
-            'creditCards'  => $creditCards,
-            'statusPercentage'  => $statusPercentage,
-            'totalStatuses'  => array_sum($creditProfilesValues),
+            'creditCards'             => $creditCards,
+            'statusPercentage'        => $statusPercentage,
+            'totalStatuses'           => array_sum($creditProfilesValues),
         ]);
     }
 }
