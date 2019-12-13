@@ -1397,12 +1397,12 @@ class OportuyaV2Controller extends Controller
 			$customer->ESTADO = "SIN COMERCIAL";
 			$customer->save();
 
-			$data = [
+			$dataIntention = [
 				'CEDULA' => $identificationNumber,
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($data);
+			$this->intentionInterface->createIntention($dataIntention);
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
