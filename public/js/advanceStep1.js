@@ -158,6 +158,22 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 			});
 		};
 
+		$scope.checkIfExistNum = function(){
+			$http({
+				method: 'GET',
+				url: '/api/checkIfExistNum/'+$scope.leadInfo.telephone,
+			}).then(function successCallback(response) {
+				if(response.data >= 1){
+					alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
+					$scope.leadInfo.telephone = "";
+				}else{
+					console.log("Validado!!!");
+				}
+			}, function errorCallback(response) {
+				console.log(response);
+			});
+		};
+
 		$scope.getValidationLead = function () {
 			if ($scope.emailValidate == false) {
 				showLoader();

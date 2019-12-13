@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-<div class="container" ng-app="asessorVentaContadoApp" ng-controller="asessorVentaContadoCtrl">
+<div class="container" ng-app="asessorVentaContadoApp" ng-controller="asessorVentaContadoCtrl" ng-cloak>
     <div class="row">
         <div class="col-12 text-center">
             <p class="ventaContado-text">
@@ -89,7 +89,7 @@
                             <div class="col-12 col-md-4">
                                 <div ng-hide="lead.CEL_VAL">
                                     <label class="ventaContado-label">Celular</label>
-                                    <input class="inputs" ng-model="lead.CELULAR" validation-pattern="telephone"
+                                    <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR" validation-pattern="telephone"
                                         required />
                                 </div>
                                 <div ng-show="lead.CEL_VAL">
