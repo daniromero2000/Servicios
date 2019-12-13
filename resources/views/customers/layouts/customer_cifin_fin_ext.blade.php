@@ -24,17 +24,10 @@
           <td class="text-center">{{ $cifin_fin_extint->extnumob }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extnoment }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extestob }}</td>
-          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrinic)) {{ number_format (($cifin_fin_extint->extvrinic*1000)) }} @endif
-          </td>
-          <td class="text-center"> @if (!empty($cifin_fin_extint->extsaldob)) {{number_format (($cifin_fin_extint->extsaldob*1000)) }} @endif
-
-          </td>
-          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrmora)) {{ number_format (($cifin_fin_extint->extvrmora*1000)) }} @endif
-
-          </td>
-          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrcuot)){{ number_format (($cifin_fin_extint->extvrcuot*1000)) }} @endif
-
-          </td>
+          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrinic)) {{ number_format (($cifin_fin_extint->extvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_fin_extint->extsaldob)) {{number_format (($cifin_fin_extint->extsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrmora)) {{ number_format (($cifin_fin_extint->extvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_fin_extint->extvrcuot)){{ number_format (($cifin_fin_extint->extvrcuot*1000)) }} @endif 0 </td>
           <td class="text-center">{{ $cifin_fin_extint->extcompor }}</td>
         </tr>
         @endforeach
