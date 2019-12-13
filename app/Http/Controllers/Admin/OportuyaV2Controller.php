@@ -1502,7 +1502,9 @@ class OportuyaV2Controller extends Controller
 		];
 		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', ' = ', $identificationNumber)->update($dataLead);
 		$infoLead = [];
-		$infoLead = $this->getInfoLeadCreate($identificationNumber);
+		if ($estadoSolic != 'ANALISIS') {
+			$infoLead = $this->getInfoLeadCreate($identificationNumber);
+		}
 		$infoLead->numSolic = $numSolic->SOLICITUD;
 
 		return [
