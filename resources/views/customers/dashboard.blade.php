@@ -176,7 +176,7 @@
           <div class="row text-center">
             @foreach ($customersFosygas as $customersFosyga)
             <div class="col-3 header-table mt-2">
-              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}} Falló
+              {{ number_format ($customersFosyga['percentage']) }}% {{$customersFosyga['fuenteFallo']}} Falló
             </div>
             @endforeach
           </div>
@@ -214,7 +214,7 @@
           <div class="row text-center">
             @foreach ($customersFosygas as $customersFosyga)
             <div class="col-3 header-table mt-2">
-              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}}
+              {{ number_format ($customersFosyga['percentage']) }}% {{$customersFosyga['fuenteFallo']}} Falló
             </div>
             @endforeach
           </div>
