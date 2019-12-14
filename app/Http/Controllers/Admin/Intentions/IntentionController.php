@@ -34,7 +34,7 @@ class IntentionController extends Controller
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->intentionInterface->listIntentions($skip * 30);
         if (request()->has('q')) {
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'),request()->input('status'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 
@@ -106,7 +106,7 @@ class IntentionController extends Controller
         }
 
 
-        return view('Intentions.dashboard', [
+        return view('intentions.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,
             'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,
