@@ -9,6 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
+          <th class="text-center" scope="col">Calidad</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -22,6 +23,7 @@
         @foreach ($cifin_uptodate_reals as $cifin_uptodate_real )
         <tr>
           <td class="text-center">{{ $cifin_uptodate_real->rdnumob }}</td>
+          <td class="text-center">{{ $cifin_uptodate_real->rdcalid }}</td>
           <td class="text-center">{{ $cifin_uptodate_real->rdnoment }}</td>
           <td class="text-center">{{ $cifin_uptodate_real->rdestob }}</td>
           <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrinic*1000)) }}</td>

@@ -9,6 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
+          <th class="text-center" scope="col">Calidad</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -22,6 +23,7 @@
         @foreach ($cifin_fins as $cifin_fin )
         <tr>
           <td class="text-center">{{ $cifin_fin->finnumob }}</td>
+          <td class="text-center">{{ $cifin_fin->fincalid }}</td>
           <td class="text-center">{{ $cifin_fin->finnoment }}</td>
           <td class="text-center">{{ $cifin_fin->finestob }}</td>
           <td class="text-center">{{ number_format (($cifin_fin->finvrinic*1000)) }}</td>

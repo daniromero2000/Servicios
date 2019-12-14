@@ -121,9 +121,6 @@
         </div>
       </div>
     </div>
-
-
-
     <div class="col-md-4">
       <div hidden class="card card-danger">
         <div class="card-header">
@@ -169,8 +166,6 @@
       </div>
     </div>
 
-
-
     <div class="col-md-4">
       <div hidden class="card card-danger">
         <div class="card-header">
@@ -215,7 +210,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 @endsection
