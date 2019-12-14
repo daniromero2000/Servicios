@@ -1017,11 +1017,12 @@ class OportuyaV2Controller extends Controller
 					$customer->save();
 					$customerIntention->TARJETA =  $tarjeta;
 					$customerIntention->ID_DEF =  '14';
+					$customerIntention->ESTADO_INTENCION  = '2';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
-				if ($customer->ACTIVIDAD == 'EMPLEADO') {
+				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
 					$customerIntention->ID_DEF  = '15';
