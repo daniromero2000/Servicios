@@ -51,15 +51,10 @@ class IntentionController extends Controller
 
     public function show(int $id)
     {
-        $intention = $this->intentionInterface->findIntentionByIdFull($id);
-
         return view('intentions.show', [
-            'intention' =>  $intention
+            'intention' =>   $this->intentionInterface->findIntentionByIdFull($id)
         ]);
     }
-
-    public function assignAssesorDigitalToLead($solicitud)
-    { }
 
     public function dashboard(Request $request)
     {
