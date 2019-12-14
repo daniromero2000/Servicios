@@ -316,12 +316,6 @@ var values = [<?php echo '"'.implode('","', $countCustomersForCallStepsValues).'
 var estados = [<?php echo '"'.implode('","', $countCustomersForCallStepsNames).'"' ?>];
 var values = [<?php echo '"'.implode('","', $countCustomersForCallStepsValues).'"' ?>];
 
-var estadosFosyga = [];
-  var valuesFosyga = [];
-
-  var estadosFosyga = [<?php echo '"'.implode('","', $customerFosygaNames).'"' ?>];
-  var valuesFosyga = [<?php echo '"'.implode('","', $customerFosygaValues).'"' ?>];
-
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -394,62 +388,6 @@ var estadosFosyga = [];
       data: donutData,
       options: donutOptions
     })
-
-
-//-------------
-  //- DONUT CHART -
-  //-------------
-  // Get context with jQuery - using jQuery's .get() method.
-  var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-  var donutData2 = {
-  labels: estadosFosyga,
-  datasets: [
-  {
-  data: valuesFosyga,
-  backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
-  '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-  }
-  ]
-  }
-  var donutOptions = {
-  maintainAspectRatio : false,
-  responsive : true,
-  }
-  //Create pie or douhnut chart
-  // You can switch between pie and douhnut using the method below.
-  var donutChart = new Chart(donutChartCanvas, {
-  type: 'doughnut',
-  data: donutData2,
-  options: donutOptions
-  })
-
-
-//-------------
-//- DONUT CHART -
-//-------------
-// Get context with jQuery - using jQuery's .get() method.
-var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-var donutData3 = {
-labels: estadosFosyga,
-datasets: [
-{
-data: valuesFosyga,
-backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
-'#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-}
-]
-}
-var donutOptions = {
-maintainAspectRatio : false,
-responsive : true,
-}
-//Create pie or douhnut chart
-// You can switch between pie and douhnut using the method below.
-var donutChart = new Chart(donutChartCanvas, {
-type: 'doughnut',
-data: donutData2,
-options: donutOptions
-})
 
 
     //-------------

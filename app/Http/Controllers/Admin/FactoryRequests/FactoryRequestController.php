@@ -90,7 +90,6 @@ class FactoryRequestController extends Controller
 
         $statusesNames  = [];
         $statusesValues = [];
-        $statusesColors = [];
         foreach ($estadosNames as $estadosName) {
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
@@ -107,7 +106,6 @@ class FactoryRequestController extends Controller
         return view('factoryrequests.dashboard', [
             'statusesNames'        => $statusesNames,
             'statusesValues'       => $statusesValues,
-            'statusesColors'       => $statusesColors,
             'webValues'            => $webValues,
             'webNames'             => $webNames,
             'totalWeb'             => array_sum($webValues),
