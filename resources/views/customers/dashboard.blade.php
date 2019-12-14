@@ -212,9 +212,9 @@
         </div>
         <div class="col-12">
           <div class="row text-center">
-            @foreach ($customersFosygas as $customersFosyga)
+            @foreach ($customerRegistradurias as $customerRegistraduria)
             <div class="col-3 header-table mt-2">
-              {{ number_format ($customersFosyga['percentage']) }}% {{$customersFosyga['fuenteFallo']}} Falló
+              {{ number_format ($customerRegistraduria['percentage']) }}% {{$customerRegistraduria['fuenteFallo']}} Falló
             </div>
             @endforeach
           </div>
