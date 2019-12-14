@@ -172,8 +172,8 @@
             <canvas id="areaChart2" style="height:250px; min-height:250px"></canvas>
           </div>
         </div>
-        <div class="col-12">
-          <div class="row text-center">
+        <div class="row text-center">
+          <div class="col-12 d-flex justify-content-center">
             @foreach ($customersFosygas as $customersFosyga)
             <div class="col-3 header-table mt-2">
               {{ number_format ($customersFosyga['percentage']) }}% {{$customersFosyga['fuenteFallo']}} Falló
@@ -210,11 +210,12 @@
         <div class="card-body">
           <canvas id="pieChart3" style="height:200px; min-height:auto"></canvas>
         </div>
-        <div class="col-12">
-          <div class="row text-center">
+        <div class="row text-center">
+          <div class="col-12 d-flex justify-content-center">
             @foreach ($customerRegistradurias as $customerRegistraduria)
             <div class="col-3 header-table mt-2">
-              {{ number_format ($customerRegistraduria['percentage']) }}% {{$customerRegistraduria['fuenteFallo']}} Falló
+              {{ number_format ($customerRegistraduria['percentage']) }}% {{$customerRegistraduria['fuenteFallo']}}
+              Falló
             </div>
             @endforeach
           </div>
