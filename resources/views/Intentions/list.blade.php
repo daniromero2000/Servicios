@@ -26,7 +26,7 @@
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
                         <div class="card-header">
-                            @include('layouts.admin.filter_intention', ['route' =>
+                            @include('layouts.admin.filter_intention', ['datas' => $status,'route' =>
                             route('intentions.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="row text-right">
+        <div class="row row-reset text-right">
             <div class="col-12">
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>

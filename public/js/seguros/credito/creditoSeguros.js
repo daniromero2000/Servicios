@@ -13,7 +13,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 	$scope.banks                 = {};
 	$scope.lead                  = {};
 	$scope.code                  = {};
-    
+
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -87,7 +87,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			'label' : 'Pensionado'
 		}
     ];
-    
+
     $scope.housingTypes = [
 		{
 		label: 'Propia',
@@ -102,7 +102,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		value: 'FAMILIAR'
 		}
     ];
-    
+
     $scope.genders = [
         { label: 'Masculino',value: 'M' },
         { label: 'Femenino',value : 'F' }
@@ -141,7 +141,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			label: 'Servicios'
 		}
     ];
-    
+
     $scope.getInfoForm = function(){
 		$scope.lead.TIPO_DOC  = '1';
 		$scope.lead.CIUD_UBI  = 144;
@@ -201,7 +201,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			url: '/api/oportuya/getNumLead/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
 			if(typeof response.data.resp == 'number'){
-				
+
 			}else{
 				var num             = response.data.resp.NUM.substring(0,6);
 				var CELULAR         = response.data.resp.NUM.replace(num, "******");
@@ -271,7 +271,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 
 	$scope.addCliente = function(){
 		showLoader();
-		$http({ 
+		$http({
 			method: 'POST',
 			url: '/seguros',
 			data: $scope.lead,
@@ -283,7 +283,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			console.log(response);
 		});
 	};
-    
+
     $scope.execConsultasLead = function(identificationNumber){
 		/*setTimeout(() => {
 			showLoader();
@@ -292,8 +292,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.datosCliente.NOM_REFPER+'/'+$scope.datosCliente.TEL_REFPER+'/'+$scope.datosCliente.NOM_REFFAM+'/'+$scope.datosCliente.TEL_REFFAM,
 		}).then(function successCallback(response) {
-			console.log(response);
-			/*setTimeout(() => {
+				/*setTimeout(() => {
 				hideLoader();
 			}, 2000);*/
 
@@ -341,7 +340,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			console.log(response);
 		});
 	};
-    
+
     $scope.sendConfronta = function(){
 		$scope.infoConfronta = {
 			'confronta' : $scope.formConfronta,
@@ -366,7 +365,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 			}
 		});
     };
-    
+
     $scope.deniedLeadForFecExp = function(typeDenied){
 		showLoader();
 		$http({

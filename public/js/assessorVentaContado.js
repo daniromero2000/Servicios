@@ -54,7 +54,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			'label' : 'Carnet Diplomático'
 		}
     ];
-    
+
     $scope.occupations = [
 		{
 			'value'	: 'EMPLEADO',
@@ -85,7 +85,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			'label' : 'Pensionado'
 		}
 	];
-  
+
 	$scope.housingTypes = [
 		{
 		label: 'Propia',
@@ -100,12 +100,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		value: 'FAMILIAR'
 		}
 	];
-  
+
 	$scope.genders = [
 			{ label : 'Masculino',value: 'M' },
 			{ label : 'Femenino',value: 'F' }
 	];
-  
+
 	$scope.civilTypes = [
 		{
 			label: 'Soltero',
@@ -155,7 +155,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
   	};
-	
+
 	$scope.getCodeVerification = function(renew = false){
 		if($scope.validateNum > 0){
 			$scope.addCliente('CREDITO');
@@ -186,7 +186,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			});
 		}
 	};
-	
+
 	$scope.getInfoLead = function(){
 		$scope.getinfoLeadVentaContado();
 		setTimeout(() => {
@@ -199,8 +199,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
-			console.log(response);
-			if(response.data == false){
+						if(response.data == false){
 				var cedula = angular.extend({}, $scope.lead);
 				$scope.resetInfo();
 				$scope.lead.CEDULA = cedula.CEDULA;
@@ -309,7 +308,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$('#proccess').modal('show');
 		$scope.lead.tipoCliente = tipoCreacion;
 		showLoader();
-		$http({ 
+		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
@@ -381,7 +380,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$('#proccess').modal('hide');
 		});
 	};
-	
+
 	$scope.sendConfronta = function(){
 		$scope.infoConfronta = {
 			'confronta' : $scope.formConfronta,
@@ -406,7 +405,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		});
 	};
-	
+
 	$scope.showConfirm = function(ev) {
 		$scope.estadoCliente = "CONTADO";
 		$timeout(function() {
@@ -421,7 +420,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.resetInfo = function(){
 		$scope.lead = {
-			'TIPO_DOC' : '1', 
+			'TIPO_DOC' : '1',
 			'ACTIVIDAD' : 'EMPLEADO',
 			'MEDIO_PAGO' : '12',
 			'TRAT_DATOS' : 'SI',

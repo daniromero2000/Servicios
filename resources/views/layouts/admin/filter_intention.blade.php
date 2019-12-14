@@ -31,6 +31,18 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-3">
+                        <div class="form-group">
+                            <label for="status">Estado</label>
+                            <select class="form-control  select2" id="status" name="status" {!!
+                                request()->input('status') !!} style="width: 100%;">
+                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                @foreach ($status as $state)
+                                <option value="{{ $state->ID }}">{{ $state->NAME }}</option>    
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
                         <label for="from">Desde</label>
                         <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">
                     </div>

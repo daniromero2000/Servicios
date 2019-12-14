@@ -11,13 +11,5 @@ interface IntentionStatusRepositoryInterface
 {
   public function createIntentionStatus($data): IntentionStatus;
 
-  public function findLatestCustomerIntentionStatusByCedula($CEDULA): IntentionStatus;
-
-  public function findIntentionStatusByIdFull(int $id): IntentionStatus;
-
-  public function listIntentionStatuses($totalView): Support;
-
-  public function countIntentionStatusesCreditProfiles($from, $to);
-
   public function countIntentionStatuses($from, $to);
 }

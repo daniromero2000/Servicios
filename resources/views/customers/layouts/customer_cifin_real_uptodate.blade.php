@@ -4,11 +4,11 @@
     </h2>
   </div>
   @if($customer->UpToDateCifinReals->isNotEmpty())
-  <div class="card-body table-responsive pt-1">
+  <div class="card-body table-responsive pt-0">
     <table class="table table-head-fixed table-hover  table-stripped leadTable">
       <thead class="header-table">
         <tr>
-          <th class="text-center" scope="col">Codigo</th>
+          <th class="text-center" scope="col">Código</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>

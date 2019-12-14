@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class IntentionRepository implements IntentionRepositoryInterface
 {
@@ -44,11 +45,20 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+    public function updateOrCreateIntention($data)
+    {
+        try {
+            return $this->model->latest('id')->updateOrCreate(['CEDULA' => $data['CEDULA']], $data);
+        } catch (QueryException $e) {
+            return $e;
+        }
+    }
+
     public function findLatestCustomerIntentionByCedula($CEDULA): Intention
     {
         try {
             return $this->model
-                ->where('CEDULA', $CEDULA)->latest('id')->first();
+                ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
         } catch (QueryException $e) {
             dd($e);
         }
@@ -58,7 +68,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     {
         try {
             return $this->model
-                ->with(['customer', 'definition'])
+                ->with(['customer', 'definition', 'intentionStatus'])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
@@ -114,9 +124,9 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection
+    public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status )) {
             return $this->model->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -128,16 +138,21 @@ class IntentionRepository implements IntentionRepositoryInterface
                 ->when($creditprofile, function ($q, $creditprofile) {
                     return $q->where('PERFIL_CREDITICIO', $creditprofile);
                 })
+                ->when($status, function ($q, $status) {
+                                       return $q->where('ESTADO_INTENCION', $status);
+                })
                 ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
-
         return $this->model->searchIntentions($text, null, true, true)->with(['customer', 'definition'])
             ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->when($creditprofile, function ($q, $creditprofile) {
                 return $q->where('PERFIL_CREDITICIO', $creditprofile);
+            })
+            ->when($status, function ($q, $status) {
+                                return $q->where('ESTADO_INTENCION', $status);
             })
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);

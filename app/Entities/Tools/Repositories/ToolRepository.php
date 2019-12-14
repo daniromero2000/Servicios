@@ -15,4 +15,23 @@ class ToolRepository implements ToolRepositoryInterface
       return $RequestSkip;
     }
   }
+
+  public function getDataPercentage($data)
+  {
+    $totalData = $data->sum('total');
+
+    foreach ($data as $key => $value) {
+      $data[$key]['percentage'] = ($value['total'] / $totalData) * 100;
+    }
+
+    return $data;
+  }
+
+  public function extractValuesToArray($data)
+  {
+    $data   = $data->toArray();
+    $data   = array_values($data);
+
+    return $data;
+  }
 }

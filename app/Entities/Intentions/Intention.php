@@ -34,7 +34,8 @@ class Intention extends Model
         'TIEMPO_LABOR',
         'TIPO_5_ESPECIAL',
         'INSPECCION_OCULAR',
-        'ESTADO_OBLIGACIONES'
+        'ESTADO_OBLIGACIONES',
+        'ESTADO_INTENCION'
     ];
 
     protected $searchable = [
@@ -60,7 +61,6 @@ class Intention extends Model
 
     public function intentionStatus()
     {
-        return $this->belongsTo(IntentionStatus::class, 'ID')->select('NAME', DB::raw('count(*) as total'))
-            ->groupBy('NAME');
+        return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION');
     }
 }
