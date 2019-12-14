@@ -147,6 +147,15 @@
         <div class="card-body">
           <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
         </div>
+        <div class="col-12">
+          <div class="row text-center">
+            @foreach ($customersFosygas as $customersFosyga)
+            <div class="col-3 header-table mt-2">
+              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}}
+            </div>
+            @endforeach
+          </div>
+        </div>
       </div>
       <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
@@ -161,6 +170,15 @@
         <div class="card-body">
           <div class="chart">
             <canvas id="areaChart2" style="height:250px; min-height:250px"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row text-center">
+            @foreach ($customersFosygas as $customersFosyga)
+            <div class="col-3 header-table mt-2">
+              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}} Falló
+            </div>
+            @endforeach
           </div>
         </div>
       </div>
@@ -191,6 +209,15 @@
         </div>
         <div class="card-body">
           <canvas id="pieChart3" style="height:200px; min-height:auto"></canvas>
+        </div>
+        <div class="col-12">
+          <div class="row text-center">
+            @foreach ($customersFosygas as $customersFosyga)
+            <div class="col-3 header-table mt-2">
+              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}}
+            </div>
+            @endforeach
+          </div>
         </div>
       </div>
       <!-- AREA CHART DEBE IR OCULTA-->

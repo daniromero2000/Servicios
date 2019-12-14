@@ -87,7 +87,6 @@ class CustomerController extends Controller
             array_push($customerFosygaValues, trim($customersFosyga['total']));
         }
 
-
         $customerRegistraduriaNames  = [];
         $customerRegistraduriaValues = [];
         foreach ($customerRegistradurias as $customerRegistraduria) {
@@ -103,6 +102,8 @@ class CustomerController extends Controller
             'customerRegistraduriaNames'  => $customerRegistraduriaNames,
             'customerRegistraduriaValues' => $customerRegistraduriaValues,
             'customerSteps'               => $customerSteps,
+            'customersFosygas'            => $customersFosygas,
+            'customerRegistradurias'      => $customerRegistradurias,
             'totalStatuses'               => array_sum($customerStepsValues),
             'totalFosygas'                => $totalFosygas,
             'totalRegistradurias'         => $totalRegistradurias,
