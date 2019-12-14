@@ -1427,9 +1427,6 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 'ANALISIS';
-			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
-				$estadoSolic = 'ANALISIS';
-			}
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
