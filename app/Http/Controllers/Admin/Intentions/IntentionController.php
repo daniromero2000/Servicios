@@ -53,7 +53,7 @@ class IntentionController extends Controller
     {
         $intention = $this->intentionInterface->findIntentionByIdFull($id);
 
-        return view('Intentions.show', [
+        return view('intentions.show', [
             'intention' =>  $intention
         ]);
     }
