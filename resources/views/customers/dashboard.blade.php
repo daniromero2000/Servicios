@@ -121,6 +121,54 @@
         </div>
       </div>
     </div>
+
+
+
+<div class="col-md-4">
+  <div hidden class="card card-danger">
+      <div class="card-header">
+        <h3 class="card-title">Donut Chart</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
+      </div>
+    </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title"> {{ $totalFosygas}} Consultas Fosyga</h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+    </div>
+  </div>
+  <!-- AREA CHART DEBE IR OCULTA-->
+  <div hidden class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Area Chart</h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="chart">
+        <canvas id="areaChart2" style="height:250px; min-height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
 </div>
 @endsection
@@ -537,7 +585,7 @@ var estadosFosyga = [];
   //- DONUT CHART -
   //-------------
   // Get context with jQuery - using jQuery's .get() method.
-  var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+  var donutChartCanvas = $('#donutChart2').get(0).getContext('2d')
   var donutData2 = {
   labels: estadosFosyga,
   datasets: [
@@ -560,32 +608,32 @@ var estadosFosyga = [];
   })
 
 
-//-------------
-//- DONUT CHART -
-//-------------
-// Get context with jQuery - using jQuery's .get() method.
-var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-var donutData3 = {
-labels: estadosFosyga,
-datasets: [
-{
-data: valuesFosyga,
-backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+// //-------------
+// //- DONUT CHART -
+// //-------------
+// // Get context with jQuery - using jQuery's .get() method.
+// var donutChartCanvas = $('#donutChart2').get(0).getContext('2d')
+// var donutData2 = {
+// labels: estadosFosyga,
+// datasets: [
+// {
+// data: valuesFosyga,
+// backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
 
-}
-]
-}
-var donutOptions = {
-maintainAspectRatio : false,
-responsive : true,
-}
-//Create pie or douhnut chart
-// You can switch between pie and douhnut using the method below.
-var donutChart = new Chart(donutChartCanvas, {
-type: 'doughnut',
-data: donutData2,
-options: donutOptions
-})
+// }
+// ]
+// }
+// var donutOptions = {
+// maintainAspectRatio : false,
+// responsive : true,
+// }
+// //Create pie or douhnut chart
+// // You can switch between pie and douhnut using the method below.
+// var donutChart = new Chart(donutChartCanvas, {
+// type: 'doughnut',
+// data: donutData2,
+// options: donutOptions
+// })
 
 
     //-------------
@@ -609,12 +657,20 @@ options: donutOptions
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart2').get(0).getContext('2d')
-    var pieData        = donutData2;
-    var pieOptions     = {
+    var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+    var pieData2        = donutData2;
+    var pieOptions2     = {
       maintainAspectRatio : false,
       responsive : true,
     }
+
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var pieChart2 = new Chart(pieChartCanvas2, {
+    type: 'pie',
+    data: pieData2,
+    options: pieOptions2
+    })
 
     //-------------
       //- PIE CHART -
