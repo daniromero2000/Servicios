@@ -42,7 +42,7 @@ class IntentionController extends Controller
         return view('intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado', 'Definición'],
+            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
