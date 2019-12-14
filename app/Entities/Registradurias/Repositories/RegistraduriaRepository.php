@@ -165,4 +165,17 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
 
         return $numMonth;
     }
+
+    public function countCustomersRegistraduriaConsultations($from, $to)
+    {
+        try {
+            return  $this->model->select('fuenteFallo', DB::raw('count(*) as total'))
+                ->whereBetween('created_at', [$from, $to])
+                ->where('fuenteFallo', '!=', '')
+                ->groupBy('fuenteFallo')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

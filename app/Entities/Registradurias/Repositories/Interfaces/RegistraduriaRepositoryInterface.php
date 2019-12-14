@@ -11,4 +11,6 @@ interface RegistraduriaRepositoryInterface
     public function validateConsultaRegistraduria($identificationNumber, $names, $lastName, $dateExpedition);
 
     public function validateDateConsultaRegistraduria($identificationNumber,  $daysToIncrement);
+
+    public function countCustomersRegistraduriaConsultations($from, $to);
 }
