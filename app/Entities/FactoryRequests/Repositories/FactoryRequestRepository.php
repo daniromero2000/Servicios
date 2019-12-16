@@ -182,6 +182,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
             })
+            ->when($soliWeb, function ($q, $soliWeb) {
+                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+            })
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
