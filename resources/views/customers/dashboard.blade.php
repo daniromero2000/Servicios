@@ -137,7 +137,8 @@
       </div>
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> {{ $totalFosygas}} Consultas Fosyga<br> ¿Falló Consulta?</h3>
+          <h3 class="card-title"> <span class="badge badge-primary">{{ $totalFosygas}}</span> Consultas Fosyga<br>
+            ¿Falló Consulta?</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -148,10 +149,15 @@
           <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
         </div>
         <div class="col-12">
+
           <div class="row text-center">
             @foreach ($customersFosygas as $customersFosyga)
-            <div class="col-3 header-table mt-2">
-              {{ number_format ($customersFosyga['percentage']) }} % {{$customersFosyga['fuenteFallo']}}
+            <div class="col-6 header-table mt-2">
+
+              <p> <span @if ($customersFosyga['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                  class="badge badge-primary" @endif> {{ number_format ($customersFosyga['percentage']) }} % </span>
+                {{$customersFosyga['fuenteFallo']}} Falló</p>
+
             </div>
             @endforeach
           </div>
@@ -176,7 +182,6 @@
           <div class="col-12 d-flex justify-content-center">
             @foreach ($customersFosygas as $customersFosyga)
             <div class="col-3 header-table mt-2">
-              {{ number_format ($customersFosyga['percentage']) }}% {{$customersFosyga['fuenteFallo']}} Falló
             </div>
             @endforeach
           </div>
@@ -200,7 +205,8 @@
       </div>
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> {{ $totalRegistradurias}} Consultas Registraduría<br> ¿Falló Consulta?</h3>
+          <h3 class="card-title"> <span class="badge badge-primary">{{ $totalRegistradurias}}</span> Consultas
+            Registraduría<br> ¿Falló Consulta?</h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -213,9 +219,12 @@
         <div class="row text-center">
           <div class="col-12 d-flex justify-content-center">
             @foreach ($customerRegistradurias as $customerRegistraduria)
-            <div class="col-3 header-table mt-2">
-              {{ number_format ($customerRegistraduria['percentage']) }}% {{$customerRegistraduria['fuenteFallo']}}
-              Falló
+            <div class="col-6 header-table mt-2">
+              <p><span @if ($customerRegistraduria['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                  class="badge badge-primary" @endif>
+                  {{ number_format ($customerRegistraduria['percentage']) }} % </span>
+                {{$customerRegistraduria['fuenteFallo']}}
+                Falló</p>
             </div>
             @endforeach
           </div>
