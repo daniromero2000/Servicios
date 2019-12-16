@@ -148,7 +148,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection
+    public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
             return $this->model->orderBy('FECHASOL', 'desc')
@@ -165,6 +165,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($subsidiary, function ($q, $subsidiary) {
                     return $q->where('SUCURSAL', $subsidiary);
                 })
+                ->when($soliWeb, function ($q, $soliWeb) {
+                    return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                })
                 ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(100)
@@ -178,6 +181,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             })
             ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->when($soliWeb, function ($q, $soliWeb) {
+                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
             })
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);

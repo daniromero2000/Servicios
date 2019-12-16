@@ -55,7 +55,7 @@ class FosygaRepository implements FosygaRepositoryInterface
     {
         try {
             return  $this->model->select('fuenteFallo', DB::raw('count(*) as total'))
-                ->whereBetween('fechaConsulta', [$from, $to])
+                ->whereBetween('created_at', [$from, $to])
                 ->where('fuenteFallo', '!=', '')
                 ->groupBy('fuenteFallo')
                 ->get();

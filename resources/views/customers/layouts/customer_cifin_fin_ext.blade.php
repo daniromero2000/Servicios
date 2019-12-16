@@ -9,6 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
+          <th class="text-center" scope="col">Calidad</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -22,6 +23,7 @@
         @foreach ($cifin_fin_extints as $cifin_fin_extint )
         <tr>
           <td class="text-center">{{ $cifin_fin_extint->extnumob }}</td>
+          <td class="text-center">{{ $cifin_fin_extint->extcalid }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extnoment }}</td>
           <td class="text-center">{{ $cifin_fin_extint->extestob }}</td>
           <td class="text-center"> @if (!empty($cifin_fin_extint->extvrinic)) {{ number_format (($cifin_fin_extint->extvrinic*1000)) }} @endif 0</td>
