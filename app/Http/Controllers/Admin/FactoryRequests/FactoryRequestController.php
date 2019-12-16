@@ -37,7 +37,8 @@ class FactoryRequestController extends Controller
                 request()->input('from'),
                 request()->input('to'),
                 request()->input('status'),
-                request()->input('subsidiary')
+                request()->input('subsidiary'),
+                request()->input('soliWeb')
             )->sortByDesc('FECHASOL');
         }
 
