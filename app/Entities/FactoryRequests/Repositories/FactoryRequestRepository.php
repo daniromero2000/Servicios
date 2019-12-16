@@ -114,7 +114,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequests($totalView): Support
     {
         try {
-            return  $this->model
+            return  $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
