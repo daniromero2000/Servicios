@@ -9,6 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
+          <th class="text-center" scope="col">Calidad</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -22,12 +23,16 @@
         @foreach ($cifin_real_extints as $cifin_real_extint )
         <tr>
           <td class="text-center">{{ $cifin_real_extint->rexnumob }}</td>
+          <td class="text-center">{{ $cifin_real_extint->rexcalid }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexnoment }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexestob }}</td>
-          <td class="text-center">{{ number_format (($cifin_real_extint->rexvrinic*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real_extint->rexsaldob*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real_extint->rexvrmora*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real_extint->rexvrcuot*1000)) }}</td>
+          <td class="text-center"> @if (!empty($cifin_real_extint->rexvrinic)){{ number_format (($cifin_real_extint->rexvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real_extint->rexsaldob))
+            {{ number_format (($cifin_real_extint->rexsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real_extint->rexvrmora))
+            {{ number_format (($cifin_real_extint->rexvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real_extint->rexvrcuot))
+            {{ number_format (($cifin_real_extint->rexvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_real_extint->rexcompor }}</td>
         </tr>
         @endforeach

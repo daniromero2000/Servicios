@@ -20,7 +20,7 @@
                             <label for="creditprofile">Perfil Crediticio </label>
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option disabled selected value> -- Selecciona Perfil -- </option>
                                 <option>TIPO A</option>
                                 <option>TIPO B</option>
                                 <option>TIPO C</option>
@@ -37,7 +37,7 @@
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach ($status as $state)
-                                <option value="{{ $state->ID }}">{{ $state->NAME }}</option>    
+                                <option value="{{ $state->ID }}">{{ $state->NAME }}</option>
                                 @endforeach
                             </select>
                         </div>

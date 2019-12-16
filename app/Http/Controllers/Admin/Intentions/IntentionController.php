@@ -34,15 +34,15 @@ class IntentionController extends Controller
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->intentionInterface->listIntentions($skip * 30);
         if (request()->has('q')) {
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'),request()->input('status'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 
 
-        return view('Intentions.list', [
+        return view('intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Intención', 'Origen', 'Cliente', 'Fecha', 'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Estado', 'Definición'],
+            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
@@ -51,15 +51,10 @@ class IntentionController extends Controller
 
     public function show(int $id)
     {
-        $intention = $this->intentionInterface->findIntentionByIdFull($id);
-
-        return view('Intentions.show', [
-            'intention' =>  $intention
+        return view('intentions.show', [
+            'intention' =>   $this->intentionInterface->findIntentionByIdFull($id)
         ]);
     }
-
-    public function assignAssesorDigitalToLead($solicitud)
-    { }
 
     public function dashboard(Request $request)
     {
@@ -106,7 +101,7 @@ class IntentionController extends Controller
         }
 
 
-        return view('Intentions.dashboard', [
+        return view('intentions.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,
             'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,

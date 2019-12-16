@@ -10,11 +10,12 @@
         <tbody>
             @foreach($datas as $data)
             <tr>
+                <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->id}}</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
+                <td>{{ $data->intentionStatus['NAME']}}</td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->CEDULA}}</a></td>
-                <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
                     @if ($data->ESTADO_OBLIGACIONES === 0)En Mora @endif
@@ -35,7 +36,7 @@
                     @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
                 <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
                     @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
-                <td>{{ $data->intentionStatus['NAME']}}</td>
+
                 <td>{{ $data->definition['DESCRIPCION']}}</td>
             </tr>
             @endforeach

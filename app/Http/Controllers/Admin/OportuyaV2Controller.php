@@ -1022,7 +1022,7 @@ class OportuyaV2Controller extends Controller
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
-				if ($customer->ACTIVIDAD == 'EMPLEADO') {
+				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
 					$customer->ESTADO           = 'PREAPROBADO';
 					$customerIntention->TARJETA = $tarjeta;
 					$customerIntention->ID_DEF  = '15';
@@ -1427,9 +1427,6 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 'ANALISIS';
-			if ($policyCredit['estadoCliente'] == 'PREAPROBADO') {
-				$estadoSolic = 'ANALISIS';
-			}
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {

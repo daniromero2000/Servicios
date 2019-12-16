@@ -9,6 +9,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
+          <th class="text-center" scope="col">Calidad</th>
           <th class="text-center" scope="col">Entidad</th>
           <th class="text-center" scope="col">Estsdo</th>
           <th class="text-center" scope="col">Saldo Inicial</th>
@@ -22,6 +23,7 @@
         @foreach ($cifin_reals as $cifin_real )
         <tr>
           <td class="text-center">{{ $cifin_real->rmnumob }}</td>
+          <td class="text-center">{{ $cifin_real->rmcalid }}</td>
           <td class="text-center">{{ $cifin_real->rmnoment }}</td>
           <td class="text-center">{{ $cifin_real->rmestob }}</td>
           <td class="text-center">{{ number_format (($cifin_real->rmvrinic*1000)) }}</td>
