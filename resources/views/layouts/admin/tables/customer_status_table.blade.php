@@ -1,6 +1,6 @@
 <div class="mb-4">
     <!-- /.card-header -->
-    <div class=" table-responsive p-0" style="height: 500px;">
+    <div class=" table-responsive p-0 height-table">
         <table class="table table-head-fixed">
             <thead class="text-center header-table">
                 <tr>
