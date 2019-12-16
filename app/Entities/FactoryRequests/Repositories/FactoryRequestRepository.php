@@ -102,7 +102,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->where(function ($query) {
                     $query->orWhere('ESTADO', 'ANALISIS')
                         ->orWhere('ESTADO', 'NEGADO')
-                        ->orWhere('ESTADO', 'DESISTIDO');
+                        ->orWhere('ESTADO', 'DESISTIDO')
+                        ->orWhere('ESTADO', 'APROBADO')
+                        ->orWhere('ESTADO', 'PREAPROBADO');
                 })->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
         } catch (QueryException $e) {
             $e;
