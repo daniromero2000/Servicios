@@ -152,8 +152,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
             return $this->model->orderBy('FECHASOL', 'desc')
+                ->when($soliWeb, function ($q, $soliWeb) {
+                    return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                })
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
