@@ -13,7 +13,16 @@
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->id}}</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-                <td>{{ $data->intentionStatus['NAME']}}</td>
+                <td><span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
+                        class="badge badge-warning"
+                        @endif
+                        @if ($data->intentionStatus['NAME'] == "APROBADO")
+                        class="badge badge-success"
+                        @endif
+                        @if ($data->intentionStatus['NAME'] == "NEGADO")
+                        class="badge badge-danger"
+                        @endif style="font-size: 11px;"> {{ $data->intentionStatus['NAME']}}</span>
+                </td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>
