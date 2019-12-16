@@ -17,9 +17,9 @@
                         <li class="breadcrumb-item active"><a href="/Administrator/customers">Clientes</a></li>
                         <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card border-0 mt-5">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
