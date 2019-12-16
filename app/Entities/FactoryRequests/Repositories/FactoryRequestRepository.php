@@ -128,8 +128,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
-                ->where('ESTADO', 'A')
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
