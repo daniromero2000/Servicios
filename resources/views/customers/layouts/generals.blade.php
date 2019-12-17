@@ -9,8 +9,7 @@
       <div class="col-1 text-right"><span
           class="badge title-table-status badge-primary">{{ $customer->latestCifinScore['score'] }}
       </div>
-      <div class="col-1 text-right"><span class="badge title-table-status badge-primary">@if
-          ($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
+      <div class="col-1 text-right"><span class="badge title-table-status badge-primary"> @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
       </div>
       <div class="col-1 text-right"><span class="badge title-table-status badge-primary">{{ $customer->ESTADO }}
       </div>
