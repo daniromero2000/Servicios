@@ -29,7 +29,7 @@
         <tr>
           <td class="text-center">{{ $factoryRequest->FECHASOL }}</td>
           <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
-                  href="{{ route('customers.show', $data->CLIENTE) }}"> {{ str_replace(' ', '', $data->CLIENTE) }} </a>
+                  href="{{ route('customers.show', $factoryRequest->CLIENTE) }}"> {{ str_replace(' ', '', $factoryRequest->CLIENTE) }} </a>
               </td>
           <td class="text-center">
             {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
