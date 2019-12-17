@@ -14,8 +14,8 @@
       <tbody class="body-table">
       <tbody>
         <tr>
-          <td class="text-center">{{ $factoryRequest->factoryRequestProducts->ARTICULO}}</td>
-          <td class="text-center">{{ $factoryRequest->factoryRequestProducts->TOTAL}}</td>
+          <td class="text-center">{{ $factoryRequest->factoryRequestProducts['ARTICULO']}}</td>
+          <td class="text-center">{{ $factoryRequest->factoryRequestProducts['TOTAL']}}</td>
         </tr>
       <tbody>
       </tbody>
