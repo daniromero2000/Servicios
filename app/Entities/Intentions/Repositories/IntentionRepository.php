@@ -104,6 +104,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     {
         try {
             return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
+                ->where('ESTADO_INTENCION', '!=', 1)
                 ->whereBetween('FECHA_INTENCION', [$from, $to])
                 ->groupBy('TARJETA')
                 ->get();
@@ -126,7 +127,7 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status )) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {
             return $this->model->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -139,7 +140,7 @@ class IntentionRepository implements IntentionRepositoryInterface
                     return $q->where('PERFIL_CREDITICIO', $creditprofile);
                 })
                 ->when($status, function ($q, $status) {
-                                       return $q->where('ESTADO_INTENCION', $status);
+                    return $q->where('ESTADO_INTENCION', $status);
                 })
                 ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
@@ -152,7 +153,7 @@ class IntentionRepository implements IntentionRepositoryInterface
                 return $q->where('PERFIL_CREDITICIO', $creditprofile);
             })
             ->when($status, function ($q, $status) {
-                                return $q->where('ESTADO_INTENCION', $status);
+                return $q->where('ESTADO_INTENCION', $status);
             })
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);
