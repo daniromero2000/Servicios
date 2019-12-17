@@ -9,13 +9,15 @@
         <tr>
           <th class="text-center" scope="col">Producto</th>
           <th class="text-center" scope="col">Total</th>
+          <th class="text-center" scope="col">Plazo</th>
         </tr>
       </thead>
       <tbody class="body-table">
         @foreach ($factoryRequest->factoryRequestProducts as $factoryRequestProduct)
         <tr>
           <td class="text-center">{{ $factoryRequestProduct->ARTICULO}}</td>
-          <td class="text-center">{{ $factoryRequestProduct->TOTAL}}</td>
+          <td class="text-center">{{ number_format($factoryRequestProduct->TOTAL)}}</td>.
+          <td class="text-center">{{ $factoryRequestProduct->PLAZO}}</td>
         </tr>
         @endforeach
       </tbody>
