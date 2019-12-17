@@ -4,6 +4,10 @@
   </div>
   <div class="card-body table-responsive pt-0 header-table-responsive">
     @if($factoryRequest->factoryRequestProducts->isNotEmpty())
+
+    @php
+        dd($factoryRequest->factoryRequestProducts);
+    @endphp
     <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
@@ -14,8 +18,8 @@
       <tbody class="body-table">
       <tbody>
         <tr>
-          <td class="text-center">{{ $factoryRequest->factoryRequestProducts['ARTICULO']}}</td>
-          <td class="text-center">{{ $factoryRequest->factoryRequestProducts['TOTAL']}}</td>
+          <td class="text-center">{{ $factoryRequest->factoryRequestProducts->ARTICULO}}</td>
+          <td class="text-center">{{ $factoryRequest->factoryRequestProducts->TOTAL}}</td>
         </tr>
       <tbody>
       </tbody>
