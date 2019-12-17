@@ -32,14 +32,6 @@ class CustomerRepository implements CustomerRepositoryInterface
         $this->model = $customer;
     }
 
-    // public function listCustomers()
-    // {
-    //     return $this->model->with([
-    //         'creditCard',
-    //         'latestIntention'
-    //     ])->limit(30)->get();
-    // }
-
     public function updateOrCreateCustomer($data)
     {
         try {
@@ -84,7 +76,7 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'UpToDateCifinReals',
                 'extintsCifinReals',
                 'extintsCifinFins',
-                'customerIntentions'
+                'customerIntentions',
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
