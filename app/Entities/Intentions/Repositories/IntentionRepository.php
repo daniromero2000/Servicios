@@ -104,7 +104,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     {
         try {
             return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
-                ->where('ESTADO_INTENCION', '!=', 1)
+
                 ->whereBetween('FECHA_INTENCION', [$from, $to])
                 ->groupBy('TARJETA')
                 ->get();
