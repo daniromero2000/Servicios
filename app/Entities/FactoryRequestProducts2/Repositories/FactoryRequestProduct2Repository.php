@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\FactoryRequestProducts\Repositories;
+namespace App\Entities\FactoryRequestProducts2\Repositories;
 
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts\Repositories\Interfaces\FactoryRequestProductRepositoryInterface;

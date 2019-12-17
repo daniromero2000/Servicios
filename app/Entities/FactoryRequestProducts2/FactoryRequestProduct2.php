@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\FactoryRequestProducts;
+namespace App\Entities\FactoryRequestProducts2;
 
 use Illuminate\Database\Eloquent\Model;
 
