@@ -468,6 +468,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
 		$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest(
 			$identificationNumber,
 			$this->timeRejectedVigency
@@ -935,7 +936,7 @@ class OportuyaV2Controller extends Controller
 				$aprobado = true;
 				$tarjeta = "Tarjeta Gray";
 				$quotaApprovedProduct = 1600000;
-				$quotaApprovedAdvance = 500000;
+				$quotaApprovedAdvance = 200000;
 			}
 		}
 
@@ -1276,7 +1277,20 @@ class OportuyaV2Controller extends Controller
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$policyCredit = $this->validatePolicyCredit_new($leadInfo['identificationNumber']);
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
+		if ($customerIntention->TARJETA == 'Tarjeta Black') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1900000,
+				'quotaApprovedAdvance' => 500000,
+				'resp' => 'true'
+			];
+		} elseif ($customerIntention->TARJETA == 'Tarjeta Gray') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1600000,
+				'quotaApprovedAdvance' => 200000,
+				'resp' => 'true'
+			];
+		}
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
