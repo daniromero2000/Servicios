@@ -27,6 +27,10 @@
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
             </li>
             <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#webIntentions" role="tab"
+                    aria-controls="home">Intenciones Web</a>
+            </li>
+            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#arrears" role="tab" aria-controls="arrears">Moras</a>
             </li>
             <li class="active" role="presentation">
@@ -53,17 +57,21 @@
                 @include('customers.layouts.phones')
                 @include('customers.layouts.emails')
             </div>
-            <div role="tabpanel" class="tab-pane" id="uptoday">
-                @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
-                $customer->UpToDateCifinFins])
-                @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
-                $customer->UpToDateCifinReals])
+            <div role="tabpanel" class="tab-pane container-fluid" id="webIntentions">
+                @include('customers.layouts.intentions', ['datas' =>
+                $customer->customerIntentions])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="arrears">
                 @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
                 $customer->cifinReals])
                 @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
                 $customer->cifinFins])
+            </div>
+            <div role="tabpanel" class="tab-pane" id="uptoday">
+                @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
+                $customer->UpToDateCifinFins])
+                @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
+                $customer->UpToDateCifinReals])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="extints">
                 @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
