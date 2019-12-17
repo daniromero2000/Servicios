@@ -102,4 +102,23 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             return 0;
         }
     }
+
+    public function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName)
+    {
+        $obj = new \stdClass();
+        $obj->typeDocument = trim($typeDocument);
+        $obj->expeditionDate = trim($dateExpIdentification);
+        $obj->identificationNumber = trim($identificationNumber);
+        $obj->lastName = trim($lastName);
+        $obj->phone = "3333333";
+        try {
+            // 2040 Ubica Pruebas
+            $port = config('portsWs.confronta');
+            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->obtenerCuestionario($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
 }

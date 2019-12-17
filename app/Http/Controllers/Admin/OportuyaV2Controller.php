@@ -1193,25 +1193,6 @@ class OportuyaV2Controller extends Controller
 		return $consultaUbica;
 	}
 
-	private function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName)
-	{
-		$obj = new \stdClass();
-		$obj->typeDocument = trim($typeDocument);
-		$obj->expeditionDate = trim($dateExpIdentification);
-		$obj->identificationNumber = trim($identificationNumber);
-		$obj->lastName = trim($lastName);
-		$obj->phone = "3333333";
-		try {
-			// 2040 Ubica Pruebas
-			$port = config('portsWs.confronta');
-			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-			$result = $ws->obtenerCuestionario($obj);  // correcta
-			return 1;
-		} catch (\Throwable $th) {
-			return 0;
-		}
-	}
-
 	private function execEvaluarConfronta($cedula, $cuestionario)
 	{
 		$dataEvaluar = DB::connection('oportudata')->select("SELECT * FROM `confronta_selec` WHERE `cedula` = :cedula AND `secuencia_cuest` = :cuestionario", ['cedula' => $cedula, 'cuestionario' => $cuestionario]);
@@ -1444,7 +1425,7 @@ class OportuyaV2Controller extends Controller
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
-				$confronta = $this->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
+				$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
 				if ($confronta == 1) {
 					$form = $this->getFormConfronta($identificationNumber);
 					if (empty($form)) {
