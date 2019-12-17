@@ -8,7 +8,7 @@ use App\Entities\Customers\Customer;
 use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
-use App\Entities\FactoryRequestProducts\FactoryRequestProduct2;
+use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
