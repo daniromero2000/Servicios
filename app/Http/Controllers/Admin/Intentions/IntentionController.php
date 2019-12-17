@@ -80,12 +80,11 @@ class IntentionController extends Controller
             array_push($intentionStatusesValues, trim($intentionStatus['total']));
         }
 
-        $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
-
-        dd($creditCards);
-
-        $statusPercentage = [];
         $totalStatuses    = $creditCards->sum('total');
+
+        $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
+        $statusPercentage = [];
+
         foreach ($intentionStatuses as $key => $value) {
             $statusPercentage[$key]['status']     = $value->intentionStatus['NAME'];
             $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
