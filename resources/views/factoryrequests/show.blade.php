@@ -57,6 +57,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
+                            @include('factoryrequests.layouts.notes',['datas' => $factoryRequest->factoryRequestNotes])
                             {{-- @include('factoryrequests.layouts.statusesLog', ['datas' =>$factoryRequest->comments]) --}}
                         </div>
                     </div>

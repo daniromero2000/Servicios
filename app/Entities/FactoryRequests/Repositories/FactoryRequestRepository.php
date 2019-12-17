@@ -44,7 +44,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->with([
                     'creditCard',
                     'customer',
-                    'references'
+                    'references',
+                    'factoryRequestNotes'
                 ])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {

@@ -60,7 +60,6 @@ class FactoryRequestController extends Controller
     {
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
-
         ]);
     }
 

@@ -6,6 +6,7 @@ use App\Entities\CreditCards\CreditCard;
 use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
 use App\Entities\FactoryRequestComments\FactoryRequestComment;
+use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -77,5 +78,10 @@ class FactoryRequest extends Model
     public function references()
     {
         return $this->hasMany(CustomerReference::class, 'SOLICITUD');
+    }
+
+    public function factoryRequestNotes()
+    {
+        return $this->hasMany(FactoryRequestNote::class, 'SOLICITUD');
     }
 }
