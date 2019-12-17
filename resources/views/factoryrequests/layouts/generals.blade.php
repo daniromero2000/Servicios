@@ -16,6 +16,7 @@
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Fecha de Solicitud</th>
+          <th class="text-center" scope="col">Cliente</th>
           <th class="text-center" scope="col">Codeudores</th>
           <th class="text-center" scope="col">Asesor</th>
           <th class="text-center" scope="col">Gran Total</th>
@@ -27,6 +28,9 @@
       <tbody class="body-table">
         <tr>
           <td class="text-center">{{ $factoryRequest->FECHASOL }}</td>
+          <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
+                  href="{{ route('customers.show', $data->CLIENTE) }}"> {{ str_replace(' ', '', $data->CLIENTE) }} </a>
+              </td>
           <td class="text-center">
             {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
           <td class="text-center">{{ $factoryRequest->CODASESOR }}</td>
