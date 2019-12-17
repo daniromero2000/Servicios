@@ -7,6 +7,7 @@ use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
 use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
+use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -83,5 +84,10 @@ class FactoryRequest extends Model
     public function factoryRequestNotes()
     {
         return $this->hasMany(FactoryRequestNote::class, 'SOLICITUD');
+    }
+
+    public function factoryRequestProducts()
+    {
+        return $this->hasMany(FactoryRequestProduct::class, 'SOLICITUD');
     }
 }
