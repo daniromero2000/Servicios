@@ -64,7 +64,6 @@ class IntentionController extends Controller
         $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
-        //$intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
 
         if (request()->has('from')) {
             $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
@@ -80,11 +79,10 @@ class IntentionController extends Controller
             array_push($intentionStatusesValues, trim($intentionStatus['total']));
         }
 
-        $totalStatuses    = $creditCards->sum('total');
-
         $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
-        $statusPercentage = [];
 
+        $statusPercentage = [];
+        $totalStatuses    = $creditCards->sum('total');
         foreach ($intentionStatuses as $key => $value) {
             $statusPercentage[$key]['status']     = $value->intentionStatus['NAME'];
             $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;

@@ -1,3 +1,4 @@
+@if($customer->customerIntentions->isNotEmpty())
 <div class="card-body text-center pt-0 pb-0 ">
   <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
@@ -60,7 +61,6 @@
             @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
           <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
             @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
-
           <td>{{ $data->definition['DESCRIPCION']}}</td>
         </tr>
         @endforeach
@@ -68,3 +68,14 @@
     </table>
   </div>
 </div>
+@else
+<table class="table table-hover table-stripped leadTable">
+  <tbody class="body-table">
+    <tr>
+      <td>
+        Aun no tiene Intenciones Web
+      </td>
+    </tr>
+  </tbody>
+</table>
+@endif
