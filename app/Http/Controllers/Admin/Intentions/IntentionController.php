@@ -80,9 +80,9 @@ class IntentionController extends Controller
             array_push($intentionStatusesValues, trim($intentionStatus['total']));
         }
 
-        dd($creditCards);
-
         $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
+
+        dd($creditCards);
 
         $statusPercentage = [];
         $totalStatuses    = $creditCards->sum('total');
