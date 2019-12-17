@@ -57,6 +57,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="products">
                     @include('factoryrequests.layouts.products')
+                    @include('factoryrequests.layouts.products2')
                 </div>
                 <div role="tabpanel" class="tab-pane" id="seguimiento">
                     <div class="container-fluid">
