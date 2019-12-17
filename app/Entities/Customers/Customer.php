@@ -257,7 +257,7 @@ class Customer extends Model
 
     public function customersFactoryRequests()
     {
-        return $this->hasMany(FactoryRequest::class, 'CLIENTE');
+        return $this->hasMany(FactoryRequest::class, 'CLIENTE')->where('state', 'A');
     }
 
     public function latestIntention()

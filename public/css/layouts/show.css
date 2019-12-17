@@ -30,3 +30,6 @@ background-color:rgba(19, 123, 236, 0.1) !important;
     margin-left: auto;
     margin-right: auto;
 }
+.height-table{
+    max-height: 600px;
+}

@@ -1,19 +1,31 @@
-<div class="table-responsive mb-3 p-0" style="font-size: 10pt;height: 600px;">
+<div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
-        <thead class="text-center">
+        <thead class="text-center header-table">
             <tr>
                 @foreach ($headers as $header)
                 <th scope="col">{{ $header }}</th>
                 @endforeach
             </tr>
         </thead>
-        <tbody>
+        <tbody class="body-table">
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->FECHA_INTENCION}}</td>
                 <td>{{ $data->id}}</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-                <td>{{ $data->intentionStatus['NAME']}}</td>
+                <td><span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
+                        class="badge badge-warning"
+                        @endif
+                        @if ($data->intentionStatus['NAME'] == "APROBADO")
+                        class="badge badge-success"
+                        @endif
+                        @if ($data->intentionStatus['NAME'] == "ANALISIS")
+                        class="badge badge-primary"
+                        @endif
+                        @if ($data->intentionStatus['NAME'] == "NEGADO")
+                        class="badge badge-danger"
+                        @endif style="font-size: 11px;"> {{ $data->intentionStatus['NAME']}}</span>
+                </td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->CEDULA}}</a></td>
                 <td>{{ $data->customer['ACTIVIDAD']}}</td>

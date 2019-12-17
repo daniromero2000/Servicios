@@ -99,23 +99,15 @@ class FosygaRepository implements FosygaRepositoryInterface
 
     public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition)
     {
-        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
-        $replace = ['ñ', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u'];
-        $lastName = str_replace($search, $replace, $lastName);
-        $names = str_replace($search, $replace, $names);
-
         $respBdua = $this->getLastFosygaConsultation($identificationNumber);
 
-        $nameDataLead = explode(" ", strtolower($names));
-        $nameBdua = explode(" ", strtolower($respBdua->primerNombre));
-        $nameBdua = str_replace($search, $replace, $nameBdua);
+        $nameDataLead = explode(" ", $names);
+        $nameBdua = explode(" ", $respBdua->primerNombre);
         $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 
-        $lastNameDataLead = explode(" ", strtolower($lastName));
-        $lastNameBdua = explode(" ", strtolower($respBdua->primerApellido));
-        $lastNameBdua = str_replace($search, $replace, $lastNameBdua);
+        $lastNameDataLead = explode(" ", $lastName);
+        $lastNameBdua = explode(" ", $respBdua->primerApellido);
         $coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
-
         DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua->tipoAfiliado]);
 
         if ($coincideNames == 0 || $coincideLastNames == 0) {
@@ -128,8 +120,16 @@ class FosygaRepository implements FosygaRepositoryInterface
 
     private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
     {
+        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
+        $replace = ['n', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u'];
+
+        foreach ($arrayCompareTo as $key => $value) {
+            $arrayCompareTo[$key] = strtolower(str_replace($search, $replace, $value));
+        }
+
         $coincide = 0;
         foreach ($arrayCompare as $value) {
+            $value = strtolower(str_replace($search, $replace, $value));
             if (in_array($value, $arrayCompareTo)) {
                 $coincide = 1;
             } else {

@@ -99,11 +99,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         try {
             return  $this->model->where('CLIENTE', $identificationNumber)
-                ->where(function ($query) {
-                    $query->orWhere('ESTADO', 'ANALISIS')
-                        ->orWhere('ESTADO', 'NEGADO')
-                        ->orWhere('ESTADO', 'DESISTIDO');
-                })->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
+                ->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
         } catch (QueryException $e) {
             $e;
         }
@@ -112,7 +108,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequests($totalView): Support
     {
         try {
-            return  $this->model
+            return  $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -126,6 +122,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
@@ -150,8 +147,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function searchFactoryRequest(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
             return $this->model->orderBy('FECHASOL', 'desc')
+                ->when($soliWeb, function ($q, $soliWeb) {
+                    return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                })->where('state', 'A')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -168,6 +168,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                 })
+                ->where('state', 'A')
                 ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
                 ->take(100)
@@ -185,6 +186,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($soliWeb, function ($q, $soliWeb) {
                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
             })
+            ->where('state', 'A')
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
@@ -192,7 +194,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function getFactoryRequestsTotal($from, $to)
     {
         try {
-            return $this->model
+            return $this->model->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
         } catch (QueryException $e) {
@@ -206,6 +208,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
@@ -218,7 +221,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryAssessors($totalView, $assessor): Support
     {
         try {
-            return  $this->model
+            return  $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->where('CODASESOR', $assessor)
                 ->skip($totalView)
@@ -233,6 +236,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
             return $this->model->orderBy('FECHASOL', 'desc')
+                ->where('state', 'A')
                 ->skip($totalView)
                 ->take(30)
                 ->where('CODASESOR', $assessor)
@@ -249,6 +253,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($subsidiary, function ($q, $subsidiary) {
                     return $q->where('SUCURSAL', $subsidiary);
                 })
+                ->where('state', 'A')
                 ->orderBy('FECHASOL', 'desc')
                 ->where('CODASESOR', $assessor)
                 ->skip($totalView)
@@ -266,6 +271,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($subsidiary, function ($q, $subsidiary) {
                 return $q->where('SUCURSAL', $subsidiary);
             })
+            ->where('state', 'A')
             ->where('CODASESOR', $assessor)
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
@@ -274,7 +280,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function getAssessorFactoryTotal($from, $to, $assessor)
     {
         try {
-            return $this->model
+            return $this->model->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
@@ -307,6 +313,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('SUCURSAL', $director)
+                ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
@@ -318,7 +325,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryDirector($totalView, $director): Support
     {
         try {
-            return  $this->model
+            return  $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->where('SUCURSAL', $director)
                 ->skip($totalView)
@@ -333,6 +340,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {
             return $this->model->orderBy('FECHASOL', 'desc')
+                ->where('state', 'A')
                 ->skip($totalView)
                 ->take(30)
                 ->where('SUCURSAL', $director)
@@ -349,6 +357,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($assessor, function ($q, $assessor) {
                     return $q->where('CODASESOR', $assessor);
                 })
+                ->where('state', 'A')
                 ->orderBy('FECHASOL', 'desc')
                 ->where('SUCURSAL', $director)
                 ->skip($totalView)
@@ -366,6 +375,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->when($assessor, function ($q, $assessor) {
                 return $q->where('CODASESOR', $assessor);
             })
+            ->where('state', 'A')
             ->where('SUCURSAL', $director)
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
@@ -376,6 +386,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return $this->model
                 ->where('SUCURSAL', $director)
+                ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
         } catch (QueryException $e) {

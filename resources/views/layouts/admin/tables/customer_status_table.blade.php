@@ -1,15 +1,15 @@
 <div class="mb-4">
     <!-- /.card-header -->
-    <div class=" table-responsive p-0" style="height: 500px;">
+    <div class=" table-responsive p-0 height-table">
         <table class="table table-head-fixed">
-            <thead class="text-center">
+            <thead class="text-center header-table">
                 <tr>
                     @foreach ($headers as $header)
                     <th scope="col">{{ $header }}</th>
                     @endforeach
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="body-table">
                 @foreach($datas as $data)
                 <tr>
                     <td>{{ date('M d, Y h:i a', strtotime($data->CREACION))}} </td>

@@ -575,8 +575,8 @@
 
     <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confronta" tabindex="-1" role="dialog"
         aria-hidden="true">
-        <div class="modal-dialog modalConfronta">
-            <div class="modal-content modalStepsContent">
+        <div class="modal-dialog modal-dialog-scrollable modalConfronta">
+            <div class="modal-content">
                 <div class="modal-body" style="padding: 0 30px">
                     <h2 class="text-center confronta-title">Preguntas de Seguridad</h2>
                     <form ng-submit="sendConfronta()">
