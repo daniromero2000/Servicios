@@ -3,6 +3,7 @@
 namespace App\Entities\Definitions\Repositories;
 
 use App\Entities\Definitions\Definition;
+use App\Entities\Definitions\Repositories\Interfaces\DefinitionRepositoryInterface;
 use Illuminate\Database\QueryException;
 
 class DefinitionRepository implements DefinitionRepositoryInterface
