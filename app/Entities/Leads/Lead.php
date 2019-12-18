@@ -47,7 +47,7 @@ class Lead extends Model
 
     public function leadStatus()
     {
-        return $this->belongsToMany(LeadStatus::class, 'lead_status', 'lead_id', 'lead_status_id');
+        return $this->belongsToMany(LeadStatus::class, 'lead_status', 'lead_id', 'lead_status_id')->withTimestamps();
     }
 
     public function leadStatuses()
