@@ -2,12 +2,13 @@
 
 namespace App\Entities\DataIntentionsRequest\Repositories;
 
+use Midnite81\GeoLocation\Services\GeoLocation;
 use App\Entities\DataIntentionsRequest\DataIntentionsRequest;
 use Illuminate\Http\Request;
 use App\Entities\DataIntentionsRequest\Repositories\Interfaces\DataIntentionsRequestRepositoryInterface;
 use Illuminate\Database\QueryException;
 
-class DataIntentionsRequestRepository implements DataIntentionsRequestRepositoryInterface
+class DataIntentionsRequestRepository
 {
     public function __construct(
         DataIntentionsRequest $dataIntentionRequest
@@ -15,13 +16,15 @@ class DataIntentionsRequestRepository implements DataIntentionsRequestRepository
         $this->model = $dataIntentionRequest;
     }
 
-    public function createDataIntentionRequest(int $intention_id, Request $request)
+    public function createDataIntentionRequest($intention_id)
     {
         $data = [
             'intention_id' => $intention_id,
+            'city' => $this->getCity(),
             'type_device' => $this->getTypeDevice(),
-            'browser' => php_uname(),
-            'os' => $this->getOs(),
+            'browser' => $this->getBrowser(),
+            'os' => $this->getOs() . " - " . php_uname(),
+            'ip' => \Request::getClientIp(true)
         ];
         try {
             return $this->model->create($data);
@@ -111,5 +114,36 @@ class DataIntentionsRequestRepository implements DataIntentionsRequestRepository
             }
         }
         return $os_platform;
+    }
+
+    function getBrowser()
+    {
+        $agente = $_SERVER['HTTP_USER_AGENT'];
+        $navegador = 'Unknown';
+
+        if (preg_match('/MSIE/i', $agente) && !preg_match('/Opera/i', $agente)) {
+            $navegador = 'Internet Explorer';
+        } elseif (preg_match('/Firefox/i', $agente)) {
+            $navegador = 'Mozilla Firefox';
+        } elseif (preg_match('/Chrome/i', $agente)) {
+            $navegador = 'Google Chrome';
+        } elseif (preg_match('/Safari/i', $agente)) {
+            $navegador = 'Apple Safari';
+        } elseif (preg_match('/Opera/i', $agente)) {
+            $navegador = 'Opera';
+        } elseif (preg_match('/Netscape/i', $agente)) {
+            $navegador = 'Netscape';
+        }
+
+        return $navegador;
+    }
+
+    public function getCity()
+    {
+        $geo = new GeoLocation();
+
+        $ipLocation = $geo->getCity(\Request::getClientIp(true));
+
+        return $ipLocation->addressString;
     }
 }
