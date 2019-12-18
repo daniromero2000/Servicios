@@ -468,6 +468,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
 		$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest(
 			$identificationNumber,
 			$this->timeRejectedVigency
@@ -935,7 +936,7 @@ class OportuyaV2Controller extends Controller
 				$aprobado = true;
 				$tarjeta = "Tarjeta Gray";
 				$quotaApprovedProduct = 1600000;
-				$quotaApprovedAdvance = 500000;
+				$quotaApprovedAdvance = 200000;
 			}
 		}
 
@@ -1192,25 +1193,6 @@ class OportuyaV2Controller extends Controller
 		return $consultaUbica;
 	}
 
-	private function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName)
-	{
-		$obj = new \stdClass();
-		$obj->typeDocument = trim($typeDocument);
-		$obj->expeditionDate = trim($dateExpIdentification);
-		$obj->identificationNumber = trim($identificationNumber);
-		$obj->lastName = trim($lastName);
-		$obj->phone = "3333333";
-		try {
-			// 2040 Ubica Pruebas
-			$port = config('portsWs.confronta');
-			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-			$result = $ws->obtenerCuestionario($obj);  // correcta
-			return 1;
-		} catch (\Throwable $th) {
-			return 0;
-		}
-	}
-
 	private function execEvaluarConfronta($cedula, $cuestionario)
 	{
 		$dataEvaluar = DB::connection('oportudata')->select("SELECT * FROM `confronta_selec` WHERE `cedula` = :cedula AND `secuencia_cuest` = :cuestionario", ['cedula' => $cedula, 'cuestionario' => $cuestionario]);
@@ -1276,7 +1258,20 @@ class OportuyaV2Controller extends Controller
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$policyCredit = $this->validatePolicyCredit_new($leadInfo['identificationNumber']);
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
+		if ($customerIntention->TARJETA == 'Tarjeta Black') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1900000,
+				'quotaApprovedAdvance' => 500000,
+				'resp' => 'true'
+			];
+		} elseif ($customerIntention->TARJETA == 'Tarjeta Gray') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1600000,
+				'quotaApprovedAdvance' => 200000,
+				'resp' => 'true'
+			];
+		}
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
@@ -1430,7 +1425,7 @@ class OportuyaV2Controller extends Controller
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
-				$confronta = $this->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
+				$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
 				if ($confronta == 1) {
 					$form = $this->getFormConfronta($identificationNumber);
 					if (empty($form)) {

@@ -319,4 +319,9 @@ class Customer extends Model
     {
         return $this->hasMany(ExtintFinancialCifin::class, 'extcedula')->where('extestcon', '!=', '');
     }
+
+    public function customerIntentions()
+    {
+        return $this->hasMany(Intention::class, 'CEDULA')->with('definition');
+    }
 }

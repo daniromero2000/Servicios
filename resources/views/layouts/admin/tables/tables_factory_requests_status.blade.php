@@ -12,7 +12,7 @@
       <tbody class="body-table">
         @foreach($datas as $data)
         <tr>
-          <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente" href="{{ route('customers.show', $data->CLIENTE) }}"> {{ $data->CLIENTE }} </a>
+          <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente" href="{{ route('customers.show', $data->CLIENTE) }}"> {{ str_replace(' ', '', $data->CLIENTE) }} </a>
           </td>
           <td class="text-center">
             <a data-toggle="tooltip" title="Ver Solicitud" href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a></td>

@@ -64,7 +64,6 @@ class IntentionController extends Controller
         $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
-        //$intentionStatuses = $this->intentionStatusesInterface->countIntentionStatuses($from, $to);
 
         if (request()->has('from')) {
             $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));

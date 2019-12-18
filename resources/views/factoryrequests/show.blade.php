@@ -38,6 +38,10 @@
                         Solicitud</a>
                 </li>
                 <li class="active" role="presentation">
+                    <a class="nav-link " data-toggle="tab" href="#products" role="tab" aria-controls="home">Productos
+                        Solicitud</a>
+                </li>
+                <li class="active" role="presentation">
                     <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                         aria-controls="profile">Seguimiento</a>
                 </li>
@@ -48,15 +52,18 @@
                     @include('factoryrequests.layouts.generals')
                     @include('factoryrequests.layouts.creditcard')
                 </div>
-
                 <div role="tabpanel" class="tab-pane" id="references">
                     @include('factoryrequests.layouts.references', [ 'references' => $factoryRequest->references ])
                 </div>
-
+                <div role="tabpanel" class="tab-pane" id="products">
+                    @include('factoryrequests.layouts.products')
+                    @include('factoryrequests.layouts.products2')
+                </div>
                 <div role="tabpanel" class="tab-pane" id="seguimiento">
                     <div class="container-fluid">
                         <div class="row">
                             @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
+                            @include('factoryrequests.layouts.notes',['datas' => $factoryRequest->factoryRequestNotes])
                             {{-- @include('factoryrequests.layouts.statusesLog', ['datas' =>$factoryRequest->comments]) --}}
                         </div>
                     </div>

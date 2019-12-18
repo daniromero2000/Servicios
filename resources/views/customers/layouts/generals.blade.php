@@ -6,7 +6,12 @@
           {{ $customer->APELLIDOS }} </span>
         </h2>
       </div>
-      <div class="col-4 text-right"><span class="badge title-table-status badge-primary">{{ $customer->ESTADO }}
+      <div class="col-1 text-right"><span
+          class="badge title-table-status badge-primary"> Score {{ $customer->latestCifinScore['score'] }}
+      </div>
+      <div class="col-1 text-right"><span class="badge title-table-status badge-primary"> @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
+      </div>
+      <div class="col-1 text-right"><span class="badge title-table-status badge-primary">{{ $customer->ESTADO }}
       </div>
     </div>
   </div>
