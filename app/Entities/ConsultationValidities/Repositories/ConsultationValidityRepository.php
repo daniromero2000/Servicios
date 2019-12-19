@@ -4,6 +4,7 @@ namespace App\Entities\ConsultationValidities\Repositories;
 
 use App\Entities\ConsultationValidities\ConsultationValidity;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class ConsultationValidityRepository implements ConsultationValidityRepositoryInterface

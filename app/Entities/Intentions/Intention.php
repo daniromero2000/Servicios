@@ -3,6 +3,7 @@
 namespace App\Entities\Intentions;
 
 use App\Entities\Customers\Customer;
+use App\Entities\DataIntentionsRequest\DataIntentionsRequest;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Definitions\Definition;
 use App\Entities\IntentionStatuses\IntentionStatus;
@@ -62,5 +63,10 @@ class Intention extends Model
     public function intentionStatus()
     {
         return $this->belongsTo(IntentionStatus::class, 'ESTADO_INTENCION');
+    }
+
+    public function dataIntentionRequest()
+    {
+        return $this->hasMany(DataIntentionsRequest::class);
     }
 }
