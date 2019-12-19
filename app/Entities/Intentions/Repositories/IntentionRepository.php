@@ -2,6 +2,8 @@
 
 namespace App\Entities\Intentions\Repositories;
 
+use App\Entities\DataIntentionsRequest\DataIntentionsRequest;
+use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Intentions\Intention;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use Illuminate\Database\QueryException;
@@ -39,7 +41,11 @@ class IntentionRepository implements IntentionRepositoryInterface
     public function createIntention($data): Intention
     {
         try {
-            return $this->model->create($data);
+            $dataIntention = new DataIntentionsRequest();
+            $intention = $this->model->create($data);
+            $dataIntentionRequest = new DataIntentionsRequestRepository($dataIntention);
+            $dataIntentionRequest->createDataIntentionRequest($intention->id);
+            return $intention;
         } catch (QueryException $e) {
             //throw $th;
         }
