@@ -833,7 +833,7 @@ class OportuyaV2Controller extends Controller
 		$validateTipoCliente = TRUE;
 		if ($customer->ACTIVIDAD == 'PENSIONADO') {
 			$validateTipoCliente = FALSE;
-			if ($edadMin >= 18 && $edadMax <= 70) {
+			if ($edadMin >= 18 && $edadMax <= 80) {
 				$customerIntention->EDAD = 1;
 				$customerIntention->save();
 			} else {

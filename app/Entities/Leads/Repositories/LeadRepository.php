@@ -4,13 +4,12 @@ namespace App\Entities\Leads\Repositories;
 
 use App\Entities\Leads\Lead;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Support;
 
 class LeadRepository implements LeadRepositoryInterface
 {
-
     private $columns = [
         'id',
         'CEDULA',
