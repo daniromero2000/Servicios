@@ -4346,3 +4346,18 @@ p.wantToSecondTex{
 .colourRed{
 	color: #ec2d35;
 }
+.butonWppApp{
+	position: fixed;
+	bottom: 70px;
+	right: 0px;
+	background-color: #1BD741;
+	color: white;
+	font-size: 20px;
+	border-radius: 15px 0px 0px 15px;
+	padding: 5px 25px;
+	font-weight: bold;
+	z-index: 999999;
+}
+a:hover{
+	color: white;
+}
