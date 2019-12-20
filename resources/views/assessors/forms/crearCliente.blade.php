@@ -512,8 +512,9 @@
                                 <label for="">Código de Verificacion</label>
                                 <input type="text" ng-model="code.code" class="form-control" />
                             </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary form-group">Confirmar Código</button>
+                            <div class="col-12 text-center form-group">
+                                <button class="btn btn-primary">Confirmar Código</button>
+                                <button type="button" ng-show="reNewToken" class="btn btn-warning" ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
                             </div>
                             <div class="col-12 text-center" ng-show="showAlertCode">
                                 <div class="alert alert-danger" role="alert">
