@@ -1,5 +1,5 @@
 <!--AddCommunityLead modal-->
-<div class="modal fade" id="addCommunityLead" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="addleadmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -45,8 +45,14 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                  <select id="city" class="form-control" ng-model="lead.city" required
-                    ng-options="city.CIUDAD as city.CIUDAD for city in cities">
+                                   <select name="stratum_id" id="stratum_id" class="form-control" enabled>
+                    @if(!empty($cities))
+                    @foreach($cities as $city)
+                    <option value="{{ $city->CIUDAD }}">
+                      {{ $city->CIUDAD }}
+                    </option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">

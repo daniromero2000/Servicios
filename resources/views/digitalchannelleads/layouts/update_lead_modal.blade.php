@@ -1,5 +1,5 @@
 <!--Update modal-->
-<div class="modal fade" id="updateCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="updateleadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -16,8 +16,8 @@
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="name">Nombre <span class="text-danger">*</span></label>
-                    <input type="text" ng-model="lead.name" validation-pattern="name" id="name" cols="10"
-                      class="form-control" value="@{{ lead.name }}" required>
+                    <input type="text" validation-pattern="name" id="name" cols="10"
+                      class="form-control" value="" required>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="lastName">Apellido <span class="text-danger">*</span></label>

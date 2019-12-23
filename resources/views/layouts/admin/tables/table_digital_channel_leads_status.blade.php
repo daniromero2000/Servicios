@@ -24,15 +24,15 @@
                 <td>{{ $data->typeProduct}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
-                    <i class="fas fa-edit cursor" title="Actualizar Lead" ng-click="showUpdateDialog(leadCM.id)"></i>
+                    <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal" data-target="#updateleadModal"></i>
                     <i class="fas fa-comment cursor"
                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
-                    <i ng-if="leadCM.state == 1" class="fas fa-check cursor" title="Marcar cliente como procesado"
-                        ng-click="checkLeadProcess(leadCM.id)"></i>
-                    <i class="fas fa-times cursor" title="Eliminar Lead" ng-click="showDialogDelete(leadCM.id)"></i>
+                                       <i class="fas fa-times cursor" title="Eliminar Lead" ng-click="showDialogDelete(leadCM.id)"></i>
                 </td>
             </tr>
             @endforeach
         <tbody>
     </table>
 </div>
+
+

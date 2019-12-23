@@ -43,6 +43,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-sm-12 col-md-6 small-box inner">
+                                    <button class="btn btn-primary">
+                                        <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
+                                                class="far fa-plus-square"></i></a>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body text-center pt-0 pb-0 ">
@@ -65,6 +71,9 @@
         </div>
     </div>
     @endif
+    @include('digitalchannelleads.layouts.create_lead_modal')
+    @include('digitalchannelleads.layouts.delete_lead_modal')
+    @include('digitalchannelleads.layouts.update_lead_modal')
 </section>
 @endsection
 @section('scriptsJs')

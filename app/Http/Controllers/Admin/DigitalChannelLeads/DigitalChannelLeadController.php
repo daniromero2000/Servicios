@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,14 +13,17 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class DigitalChannelLeadController extends Controller
 {
-    private $LeadStatusesInterface, $LeadInterface, $toolsInterface;
+    private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -32,13 +36,14 @@ class DigitalChannelLeadController extends Controller
         }
         $listCount = $list->count();
 
-
         return view('digitalchannelleads.list', [
             'digitalChannelLeads'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Estado', 'Lead', 'Asesor', 'Cedula',  'Nombre',  'Correo', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
+            'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'channels' => $this->
         ]);
     }
 
