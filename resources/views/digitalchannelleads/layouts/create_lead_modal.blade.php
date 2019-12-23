@@ -98,7 +98,7 @@
                     @if(!empty($services))
                     @foreach($services as $service)
                     <option value="{{ $service->id }}">
-                      {{ $service->name }}
+                      {{ $service->service }}
                     </option>
                     @endforeach
                     @endif
