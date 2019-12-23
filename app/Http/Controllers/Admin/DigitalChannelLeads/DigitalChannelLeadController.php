@@ -69,8 +69,8 @@ class DigitalChannelLeadController extends Controller
 
     public function show(int $id)
     {
-        return view('Leads.show', [
-            'Lead' =>   $this->LeadInterface->findLeadByIdFull($id)
+        return view('digitalchannelleads.show', [
+            'digitalChannelLead' =>   $this->LeadInterface->findLeadByIdFull($id)
         ]);
     }
 
