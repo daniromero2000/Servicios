@@ -61,6 +61,7 @@ class DigitalChannelLeadController extends Controller
     public function store(Request $request)
     {
         $request['termsAndConditions'] = 2;
+        $request['state'] = 8;
         $this->LeadInterface->createLead($request->input());
         $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();

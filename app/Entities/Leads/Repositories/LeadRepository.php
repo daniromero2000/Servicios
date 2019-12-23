@@ -27,6 +27,7 @@ class LeadRepository implements LeadRepositoryInterface
         'termsAndConditions',
         'campaign',
         'assessor_id',
+        'identificationNumber',
     ];
 
 
@@ -121,7 +122,6 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
-
 
     public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection
     {

@@ -403,7 +403,7 @@ class LeadsController extends Controller
         $idCampaign =  $this->campaignInterface->findCampaignByName($request->get('campaign'));
         $idCampaign = (count($idCampaign) > 0) ? $idCampaign[0]->id : NULL;
         $request['termsAndConditions'] = 2;
-        $request['state'] = 3;
+        $request['state'] = 8;
         $request['campaign'] = $idCampaign;
         $dataOportudata = [
             'TIPO_DOC' => 1,

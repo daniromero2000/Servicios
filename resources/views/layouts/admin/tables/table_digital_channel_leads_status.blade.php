@@ -24,15 +24,21 @@
                 <td>{{ $data->typeProduct}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
-                    <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal" data-target="#updateleadModal"></i>
+                    <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal"
+                        data-target="#updateleadModal"></i>
                     <i class="fas fa-comment cursor"
                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
-                                       <i class="fas fa-times cursor" title="Eliminar Lead" ng-click="showDialogDelete(leadCM.id)"></i>
+                    <form style="display:inline-block"
+                        action="{{ route('digitalchannelleads.destroy', $data->id) }}" method="post" class="form-horizontal">
+                        <input type="hidden" name="_method" value="delete">
+                        @csrf
+                        <input type="hidden" name="_method" value="delete">
+                        <a href="#" title="Borrar Lead" onclick="return confirm('¿Estás Seguro?')" type="submit" class="iconList"><i class="fas fa-times cursor"
+                               ></i></a>
+                    </form>
                 </td>
             </tr>
             @endforeach
         <tbody>
     </table>
 </div>
-
-
