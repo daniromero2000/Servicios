@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
+use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -14,16 +15,18 @@ use PhpParser\Node\Stmt\Foreach_;
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
+    private $channelInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-
+        ChannelRepositoryInterface $channelRepositoryInterface
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->channelInterface = $channelRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -43,7 +46,7 @@ class DigitalChannelLeadController extends Controller
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
-            'channels' => $this->
+            'channels' => $this->channelInterface->getAllChannelNames()
         ]);
     }
 
