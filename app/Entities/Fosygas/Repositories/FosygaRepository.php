@@ -120,8 +120,8 @@ class FosygaRepository implements FosygaRepositoryInterface
 
     private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
     {
-        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
-        $replace = ['n', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u'];
+        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'á', 'é', 'í', 'ó', 'ú'];
+        $replace = ['n', 'a', 'e', 'i', 'o', 'u', 'n', 'a', 'e', 'i', 'o', 'u'];
 
         foreach ($arrayCompareTo as $key => $value) {
             $arrayCompareTo[$key] = strtolower(str_replace($search, $replace, $value));
