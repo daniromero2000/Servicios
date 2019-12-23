@@ -10,6 +10,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.estadoCliente = "";
 	$scope.messageValidationLead = "";
 	$scope.showWarningErrorData = false;
+	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
 	$scope.validateNum = 0;
     $scope.typesDocuments = [
@@ -157,10 +158,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
   	};
 
 	$scope.getCodeVerification = function(renew = false){
+		$scope.reNewToken = false;
 		if($scope.validateNum > 0){
 			$scope.addCliente('CREDITO');
 		}else{
-			$scope.reNewToken = true;
 			showLoader();
 			$http({
 				method: 'GET',
