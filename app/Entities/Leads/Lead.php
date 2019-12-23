@@ -2,6 +2,7 @@
 
 namespace App\Entities\Leads;
 
+use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
@@ -84,5 +85,10 @@ class Lead extends Model
     public function leadService()
     {
         return $this->belongsTo(Service::class, 'typeService');
+    }
+
+    public function leadCampaign()
+    {
+        return $this->belongsTo(Campaign::class, 'campaign');
     }
 }

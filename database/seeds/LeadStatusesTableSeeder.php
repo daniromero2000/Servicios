@@ -41,5 +41,10 @@ class LeadStatusesTableSeeder extends Seeder
             'status'  => 'Cotizado',
             'color' => 'pink'
         ]);
+
+        factory(LeadStatus::class)->create([
+            'status'  => 'En Gestión',
+            'color' => 'marron'
+        ]);
     }
 }

@@ -108,8 +108,12 @@ class LeadRepository implements LeadRepositoryInterface
     public function listleads($totalView): Support
     {
         try {
-            return  $this->model->with(['leadStatus', 'leadAssessor'])
-                ->orderBy('id', 'desc')
+            return  $this->model->with([
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign'
+            ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);

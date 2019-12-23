@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -16,20 +17,22 @@ use PhpParser\Node\Stmt\Foreach_;
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
-    private $channelInterface, $serviceInterface;
+    private $channelInterface, $serviceInterface, $campaignInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         ChannelRepositoryInterface $channelRepositoryInterface,
-        ServiceRepositoryInterface $serviceRepositoryInterface
+        ServiceRepositoryInterface $serviceRepositoryInterface,
+        CampaignRepositoryInterface $campaignRepositoryInterface
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->channelInterface = $channelRepositoryInterface;
         $this->serviceInterface = $serviceRepositoryInterface;
+        $this->campaignInterface = $campaignRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -50,7 +53,8 @@ class DigitalChannelLeadController extends Controller
             'skip'                 => $skip,
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels' => $this->channelInterface->getAllChannelNames(),
-            'services' => $this->serviceInterface->getAllServiceNames()
+            'services' => $this->serviceInterface->getAllServiceNames(),
+            'campaigns' => $this->campaignInterface->getAllCampaignNames()
         ]);
     }
 
@@ -58,7 +62,7 @@ class DigitalChannelLeadController extends Controller
     {
         $request['termsAndConditions'] = 2;
         $this->LeadInterface->createLead($request->input());
-        $request->session()->flash('message', 'Creación de Cliente Exitosa!');
+        $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();
     }
 

@@ -80,10 +80,14 @@
               <div class="row">
                 <div class="col-12 form-group">
                   <label for="socialNetwork">Campaña</label>
-                  <select id="socialNetwork" class="form-control" ng-model="lead.campaign" required>
-                    <option ng-repeat="campaign in campaigns" value="@{{campaign.name}}">
-                      @{{campaign.name}}
+                 <select id="campaign" name="campaign" class="form-control">
+                    @if(!empty($campaigns))
+                    @foreach($campaigns as $campaign)
+                    <option value="{{ $campaign->id }}">
+                      {{ $campaign->name }}
                     </option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
               </div>
@@ -94,7 +98,7 @@
                     @if(!empty($services))
                     @foreach($services as $service)
                     <option value="{{ $service->id }}">
-                      {{ $service->service }}
+                      {{ $service->name }}
                     </option>
                     @endforeach
                     @endif
