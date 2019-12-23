@@ -32,10 +32,13 @@ class DigitalChannelLeadController extends Controller
         }
         $listCount = $list->count();
 
+        dd($list);
+
+
         return view('digitalChannelLeads.list', [
             'digitalChannelLeads'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
+            'headers'              => ['Estado', 'Lead', 'Asesor', 'Cedula',  'Nombre',  'Correo', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
         ]);

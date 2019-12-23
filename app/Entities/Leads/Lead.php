@@ -5,6 +5,7 @@ namespace App\Entities\Leads;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -72,5 +73,10 @@ class Lead extends Model
     public function leadChannel()
     {
         return $this->belongsTo(Channel::class, 'channel', 'id');
+    }
+
+    public function leadAssessor()
+    {
+        return $this->belongsTo(User::class, 'assessor_id', 'id');
     }
 }
