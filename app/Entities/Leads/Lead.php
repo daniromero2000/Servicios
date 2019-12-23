@@ -7,7 +7,6 @@ use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 
@@ -46,7 +45,8 @@ class Lead extends Model
 
     protected $searchable = [
         'columns' => [
-            'leads.name'   => 1,
+            'leads.name'   => 10,
+            'leads.telephone'   => 10,
         ],
     ];
 

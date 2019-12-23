@@ -50,6 +50,14 @@ class DigitalChannelLeadController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $request['termsAndConditions'] = 2;
+        $this->LeadInterface->createLead($request->input());
+        $request->session()->flash('message', 'Creación de Cliente Exitosa!');
+        return redirect()->back();
+    }
+
     public function show(int $id)
     {
         return view('Leads.show', [

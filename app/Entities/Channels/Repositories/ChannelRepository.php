@@ -16,7 +16,6 @@ class ChannelRepository implements ChannelRepositoryInterface
         'updated_at',
     ];
 
-
     public function __construct(
         Channel $Channel
     ) {

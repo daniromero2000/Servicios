@@ -40,7 +40,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+            dd($e);
         }
     }
 
