@@ -33,7 +33,7 @@ class DigitalChannelLeadController extends Controller
         $listCount = $list->count();
 
 
-        return view('digitalChannelLeads.list', [
+        return view('digitalchannelleads.list', [
             'digitalChannelLeads'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Estado', 'Lead', 'Asesor', 'Cedula',  'Nombre',  'Correo', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
