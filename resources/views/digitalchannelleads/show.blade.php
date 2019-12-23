@@ -42,7 +42,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
-                  @include('layouts.admin.commentaries', ['datas' => $digitalChannelLead->comments])
+                  @include('digitalchannelleads.layouts.commentaries', ['datas' => $digitalChannelLead->comments])
                     {{-- @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
                 </div>
             </div>
