@@ -124,7 +124,7 @@
                                     <span class="text-center badge" ng-if="lead.state == 7"
                                         style="color: #ffffff; background-color: #e83e8c"
                                         class="btn btn-info btn-block">Cotizado</span>
-                                        <span class="text-center badge" ng-if="leadCM.state == 8" style="color: #ffffff; background-color: red"
+                                        <span class="text-center badge" ng-if="lead.state == 8" style="color: #ffffff; background-color: red"
                                             class="btn btn-info btn-block">En
                                             Gestión</span>
                                 </td>
