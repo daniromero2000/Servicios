@@ -333,7 +333,7 @@ class assessorsController extends Controller
 
     public function dashboard(Request $request)
     {
-        $assessor = auth()->user()->CODASESOR;
+        $assessor = auth()->user()->codeOportudata;
         $to       = Carbon::now();
         $from     = Carbon::now()->subMonth();
 
