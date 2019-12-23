@@ -405,7 +405,22 @@ class LeadsController extends Controller
         $request['termsAndConditions'] = 2;
         $request['state'] = 3;
         $request['campaign'] = $idCampaign;
-
+        $dataOportudata = [
+            'TIPO_DOC' => 1,
+            'CEDULA' => $request->input('identificationNumber'),
+            'APELLIDOS' => $request->input('lastName'),
+            'NOMBRES' => $request->input('name'),
+            'TIPOCLIENTE' => 'NUEVO',
+            'SUBTIPO' => 'WEB',
+            'CELULAR' => $request->input('telephone'),
+            'CIUD_UBI' => $request->input('city'),
+            'EMAIL' => $request->input('email'),
+            'MIGRADO' => 0,
+            'SUC' => 9999,
+            'ORIGEN' => 'Canal Digital',
+            'CLIENTE_WEB' => 1
+        ];
+        $this->customerInterface->updateOrCreateCustomer($dataOportudata);
         $lead =  $this->leadInterface->createLead($request->input());
         $lead->leadStatus()->attach(3);
 
@@ -448,7 +463,8 @@ class LeadsController extends Controller
         return  $this->leadInterface->findLeadById($idLead)->comments;
     }
 
-    public function getFactoryRequestComments($solicitud){
+    public function getFactoryRequestComments($solicitud)
+    {
         return $this->factoryRequestInterface->findFactoryRequestById($solicitud)->comments;
     }
 
