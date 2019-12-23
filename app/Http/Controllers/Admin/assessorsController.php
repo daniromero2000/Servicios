@@ -337,7 +337,6 @@ class assessorsController extends Controller
         $to       = Carbon::now();
         $from     = Carbon::now()->subMonth();
 
-        dd($assessor);
         $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
         $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
