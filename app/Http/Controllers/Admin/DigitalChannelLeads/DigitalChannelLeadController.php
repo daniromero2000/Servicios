@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
+use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -15,18 +17,22 @@ use PhpParser\Node\Stmt\Foreach_;
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
-    private $channelInterface;
+    private $channelInterface, $serviceInterface, $campaignInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        ChannelRepositoryInterface $channelRepositoryInterface
+        ChannelRepositoryInterface $channelRepositoryInterface,
+        ServiceRepositoryInterface $serviceRepositoryInterface,
+        CampaignRepositoryInterface $campaignRepositoryInterface
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->channelInterface = $channelRepositoryInterface;
+        $this->serviceInterface = $serviceRepositoryInterface;
+        $this->campaignInterface = $campaignRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -46,22 +52,25 @@ class DigitalChannelLeadController extends Controller
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
-            'channels' => $this->channelInterface->getAllChannelNames()
+            'channels' => $this->channelInterface->getAllChannelNames(),
+            'services' => $this->serviceInterface->getAllServiceNames(),
+            'campaigns' => $this->campaignInterface->getAllCampaignNames()
         ]);
     }
 
     public function store(Request $request)
     {
         $request['termsAndConditions'] = 2;
+        $request['state'] = 8;
         $this->LeadInterface->createLead($request->input());
-        $request->session()->flash('message', 'Creación de Cliente Exitosa!');
+        $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();
     }
 
     public function show(int $id)
     {
-        return view('Leads.show', [
-            'Lead' =>   $this->LeadInterface->findLeadByIdFull($id)
+        return view('digitalchannelleads.show', [
+            'digitalChannelLead' =>   $this->LeadInterface->findLeadByIdFull($id)
         ]);
     }
 

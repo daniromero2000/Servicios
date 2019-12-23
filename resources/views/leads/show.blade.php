@@ -40,8 +40,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
-                    {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
-                    @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
+                     @include('layouts.admin.commentaries', ['datas' => $digitalChannelLead->comments])
+                    {{-- @include('customers::layouts.statusesLog', ['datas' => $digitalChannelLead->customerStatusesLog]) --}}
                 </div>
             </div>
 

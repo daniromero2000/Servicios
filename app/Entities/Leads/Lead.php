@@ -2,9 +2,11 @@
 
 namespace App\Entities\Leads;
 
+use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
+use App\Entities\Services\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -78,5 +80,15 @@ class Lead extends Model
     public function leadAssessor()
     {
         return $this->belongsTo(User::class, 'assessor_id');
+    }
+
+    public function leadService()
+    {
+        return $this->belongsTo(Service::class, 'typeService');
+    }
+
+    public function leadCampaign()
+    {
+        return $this->belongsTo(Campaign::class, 'campaign');
     }
 }

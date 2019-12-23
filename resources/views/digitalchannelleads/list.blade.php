@@ -27,7 +27,7 @@
                     <div class="col-12">
                         <div class="card-header">
                             @include('layouts.admin.filter_digital_channel_leads', ['route' =>
-                            route('intentions.index')])
+                            route('digitalchannelleads.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">

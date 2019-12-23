@@ -4,6 +4,7 @@ namespace App\Entities\Comments\Repositories;
 
 use App\Entities\Comments\Comment;
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class CommentRepository implements CommentRepositoryInterface

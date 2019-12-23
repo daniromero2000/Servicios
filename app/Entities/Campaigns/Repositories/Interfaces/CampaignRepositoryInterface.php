@@ -8,6 +8,8 @@ interface CampaignRepositoryInterface
 {
     public function createCampaign(array $data);
 
+    public function getAllCampaignNames();
+
     public function updateCampaign(array $params): bool;
 
     public function findCampaignById(int $id): Campaign;

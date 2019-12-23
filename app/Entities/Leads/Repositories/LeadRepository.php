@@ -7,6 +7,7 @@ use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
+use Illuminate\Database\Eloquent\Collection;
 
 class LeadRepository implements LeadRepositoryInterface
 {
@@ -26,6 +27,7 @@ class LeadRepository implements LeadRepositoryInterface
         'termsAndConditions',
         'campaign',
         'assessor_id',
+        'identificationNumber',
     ];
 
 
@@ -47,7 +49,7 @@ class LeadRepository implements LeadRepositoryInterface
     public function findLeadByIdFull(int $id): Lead
     {
         try {
-            return $this->model
+            return $this->model->with('comments')
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
@@ -107,8 +109,13 @@ class LeadRepository implements LeadRepositoryInterface
     public function listleads($totalView): Support
     {
         try {
-            return  $this->model->with(['leadStatus', 'leadAssessor'])
-                ->orderBy('id', 'desc')
+            return  $this->model->with([
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments'
+            ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -116,7 +123,6 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
-
 
     public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection
     {

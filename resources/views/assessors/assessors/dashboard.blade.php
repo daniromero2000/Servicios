@@ -603,15 +603,13 @@
     var statusesColors = [];
     var webValues = [];
     var webAssessors = [];
-    var webColors = [];
-
 
 var estados = [<?php echo '"'.implode('","', $statusesAssessors).'"' ?>];
 var values = [<?php echo '"'.implode('","', $statusesValues).'"' ?>];
 var webAssessors = [<?php echo '"'.implode('","', $webAssessors).'"' ?>];
 var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
 var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
-var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
+
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 

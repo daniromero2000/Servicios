@@ -42,7 +42,7 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
-        $assessor = auth()->user()->email;
+        $assessor = auth()->user()->codeOportudata;
         $skip     = $this->toolsInterface->getSkip($request->input('skip'));
         $list     = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 
@@ -64,7 +64,7 @@ class assessorsController extends Controller
         return view('assessors.assessors.list', [
             'factoryRequests'      => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud','Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'factoryRequestsTotal' => $factoryRequestsTotal,
@@ -333,13 +333,9 @@ class assessorsController extends Controller
 
     public function dashboard(Request $request)
     {
-
-        $assessor = auth()->user()->email;
+        $assessor = auth()->user()->codeOportudata;
         $to       = Carbon::now();
         $from     = Carbon::now()->subMonth();
-
-        $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
-        $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
 
         $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
@@ -362,19 +358,14 @@ class assessorsController extends Controller
         foreach ($estadosAssessors as $estadosName) {
             array_push($statusesAssessors, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
-            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
-            array_push($statusesColors, trim($color));
         }
 
         $webValues     = [];
         $webAssessors  = [];
-        $webColors     = [];
 
         foreach ($webAssessorsCounts as $webAssessorCount) {
             array_push($webAssessors, trim($webAssessorCount['ESTADO']));
             array_push($webValues, trim($webAssessorCount['total']));
-            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
-            array_push($webColors, trim($color));
         }
 
         return view('assessors.assessors.dashboard', [
@@ -383,7 +374,6 @@ class assessorsController extends Controller
             'statusesColors'          => $statusesColors,
             'webValues'               => $webValues,
             'webAssessors'            => $webAssessors,
-            'webColors'               => $webColors,
             'totalStatuses'           => array_sum($statusesValues),
             'totalWeb'                => array_sum($webValues),
             'factoryAssessorsTotal'   => $factoryAssessorsTotal,
