@@ -11,7 +11,7 @@
         <div class="container">
           <div class="row resetRow ">
             <form action="{{ route('digitalchannelleads.store') }}" method="post" class="form"
-            enctype="multipart/form-data">
+              enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="row">
                 <div class="col-12 form-group">
@@ -28,8 +28,8 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" name="lastName" cols="10"
-                    class="form-control" required>
+                  <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" name="lastName"
+                    cols="10" class="form-control" required>
                 </div>
               </div>
               <div class="row">
@@ -40,7 +40,8 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="telephone">Teléfono <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.telephone" id="telephone" name="telephone" cols="10" class="form-control" required>
+                  <input type="text" ng-model="lead.telephone" id="telephone" name="telephone" cols="10"
+                    class="form-control" required>
                 </div>
               </div>
               <div class="row">
@@ -72,8 +73,8 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="name">Ciudad aledaña</label>
-                  <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity"  name="nearbyCity" cols="10"
-                    class="form-control">
+                  <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity"
+                    name="nearbyCity" cols="10" class="form-control">
                 </div>
               </div>
               <div class="row">
@@ -88,17 +89,21 @@
               </div>
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
-                  <label for="service">Servicio <span class="text-danger">*</span></label>
-                  <select id="service" class="form-control" ng-model="lead.typeService">
-                    <option ng-repeat="service in typeServices" value="@{{service.value}}">
-                      @{{service.value}}
+                  <label for="typeService">Servicio <span class="text-danger">*</span></label>
+                  <select id="typeService" name="typeService" class="form-control">
+                    @if(!empty($services))
+                    @foreach($services as $service)
+                    <option value="{{ $service->id }}">
+                      {{ $service->service }}
                     </option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="product">Producto <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" name="product" cols="10"
-                    class="form-control" required>
+                  <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" name="typeProduct"
+                    cols="10" class="form-control" required>
                 </div>
               </div>
               <div class="col-3 d-flex align-items-end">

@@ -4,6 +4,7 @@ namespace App\Entities\Campaigns\Repositories;
 
 use App\Entities\Campaigns\Campaign;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class CampaignRepository implements CampaignRepositoryInterface
@@ -18,6 +19,15 @@ class CampaignRepository implements CampaignRepositoryInterface
     {
         try {
             return $this->model->create($data);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function getAllCampaignNames()
+    {
+        try {
+            return $this->model->orderBy('name', 'asc')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

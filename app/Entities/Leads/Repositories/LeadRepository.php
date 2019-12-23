@@ -7,6 +7,7 @@ use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
+use Illuminate\Database\Eloquent\Collection;
 
 class LeadRepository implements LeadRepositoryInterface
 {

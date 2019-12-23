@@ -74,11 +74,18 @@ use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusReposi
 use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Channels\Repositories\ChannelRepository;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
+use App\Entities\Services\Repositories\ServiceRepository;
+use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            ServiceRepositoryInterface::class,
+            ServiceRepository::class
+        );
+
         $this->app->bind(
             ChannelRepositoryInterface::class,
             ChannelRepository::class

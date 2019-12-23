@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -15,18 +16,20 @@ use PhpParser\Node\Stmt\Foreach_;
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
-    private $channelInterface;
+    private $channelInterface, $serviceInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        ChannelRepositoryInterface $channelRepositoryInterface
+        ChannelRepositoryInterface $channelRepositoryInterface,
+        ServiceRepositoryInterface $serviceRepositoryInterface
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
         $this->channelInterface = $channelRepositoryInterface;
+        $this->serviceInterface = $serviceRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -46,7 +49,8 @@ class DigitalChannelLeadController extends Controller
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
-            'channels' => $this->channelInterface->getAllChannelNames()
+            'channels' => $this->channelInterface->getAllChannelNames(),
+            'services' => $this->serviceInterface->getAllServiceNames()
         ]);
     }
 
