@@ -417,7 +417,7 @@ class LeadsController extends Controller
             'EMAIL' => $request->input('email'),
             'MIGRADO' => 0,
             'SUC' => 9999,
-            'ORIGEN' => 'Intencion',
+            'ORIGEN' => 'Canal Digital',
             'CLIENTE_WEB' => 1
         ];
         $this->customerInterface->updateOrCreateCustomer($dataOportudata);
