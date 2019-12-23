@@ -30,7 +30,6 @@ class User extends Authenticatable
 
     public function hasIdProfile(string $profileId, $user): bool
     {
-
         return $this->where('id', $user)->where('idProfile', $profileId)->exists();
     }
 }

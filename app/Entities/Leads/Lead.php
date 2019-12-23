@@ -5,12 +5,15 @@ namespace App\Entities\Leads;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 
 class Lead extends Model
 {
+    use SearchableTrait;
+
     protected $fillable = [
         'name',
         'lastName',
@@ -40,6 +43,18 @@ class Lead extends Model
         'updated_at'
     ];
 
+    protected $searchable = [
+        'columns' => [
+            'leads.name'   => 10,
+            'leads.telephone'   => 10,
+        ],
+    ];
+
+    public function searchLeads($term)
+    {
+        return self::search($term);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'idLead');
@@ -58,5 +73,10 @@ class Lead extends Model
     public function leadChannel()
     {
         return $this->belongsTo(Channel::class, 'channel', 'id');
+    }
+
+    public function leadAssessor()
+    {
+        return $this->belongsTo(User::class, 'assessor_id');
     }
 }

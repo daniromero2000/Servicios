@@ -164,7 +164,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="viewFactoryRequestComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="viewFactoryRequestComments" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1053,8 +1054,8 @@
                                                     name="assessor_id" ng-model="lead.assessor_id" style="width: 100%;">
                                                     <option disabled selected value> -- Selecciona Paso -- </option>
                                                     <option value="13">Evelyn Correa</option>
-                                                   <option value="18">Vanessa Parra</option>
-                                                        <option value="85">Danitza Naranjo</option>
+                                                    <option value="18">Vanessa Parra</option>
+                                                    <option value="85">Danitza Naranjo</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1176,8 +1177,8 @@
                                             ng-model="lead.assessor_id" style="width: 100%;">
                                             <option disabled selected value> -- Selecciona Paso -- </option>
                                             <option value="13">Evelyn Correa</option>
-                                           <option value="18">Vanessa Parra</option>
-                                        <option value="85">Danitza Naranjo</option>
+                                            <option value="18">Vanessa Parra</option>
+                                            <option value="85">Danitza Naranjo</option>
                                         </select>
                                     </div>
                                 </div>
