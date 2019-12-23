@@ -358,19 +358,14 @@ class assessorsController extends Controller
         foreach ($estadosAssessors as $estadosName) {
             array_push($statusesAssessors, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
-            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
-            array_push($statusesColors, trim($color));
         }
 
         $webValues     = [];
         $webAssessors  = [];
-        $webColors     = [];
 
         foreach ($webAssessorsCounts as $webAssessorCount) {
             array_push($webAssessors, trim($webAssessorCount['ESTADO']));
             array_push($webValues, trim($webAssessorCount['total']));
-            $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
-            array_push($webColors, trim($color));
         }
 
         return view('assessors.assessors.dashboard', [
@@ -379,7 +374,6 @@ class assessorsController extends Controller
             'statusesColors'          => $statusesColors,
             'webValues'               => $webValues,
             'webAssessors'            => $webAssessors,
-            'webColors'               => $webColors,
             'totalStatuses'           => array_sum($statusesValues),
             'totalWeb'                => array_sum($webValues),
             'factoryAssessorsTotal'   => $factoryAssessorsTotal,
