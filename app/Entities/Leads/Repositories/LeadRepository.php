@@ -49,7 +49,7 @@ class LeadRepository implements LeadRepositoryInterface
     public function findLeadByIdFull(int $id): Lead
     {
         try {
-            return $this->model
+            return $this->model->with('comments')
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
