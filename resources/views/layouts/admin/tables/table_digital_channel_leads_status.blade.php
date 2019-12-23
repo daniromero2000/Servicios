@@ -14,7 +14,14 @@
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span></td>
                 <td>{{ $data->leadChannel->channel}}</td>
-                <td>{{ $data->leadAssessor->name}}</td>
+                <td>{{ $data->leadAssessor['name']}}</td>
+                <td>{{ $data->identificationNumber}}</td>
+                <td>{{ $data->name}} {{ $data->lastName}}</td>
+                <td>{{ $data->email}}</td>
+                <td>{{ $data->telephone}}</td>
+                <td>{{ $data->city}}</td>
+
+
             </tr>
             @endforeach
         <tbody>

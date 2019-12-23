@@ -77,6 +77,6 @@ class Lead extends Model
 
     public function leadAssessor()
     {
-        return $this->belongsTo(User::class, 'assessor_id', 'id');
+        return $this->belongsTo(User::class, 'assessor_id');
     }
 }

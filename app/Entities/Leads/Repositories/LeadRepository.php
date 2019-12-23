@@ -25,6 +25,7 @@ class LeadRepository implements LeadRepositoryInterface
         'updated_at',
         'termsAndConditions',
         'campaign',
+        'assessor_id',
     ];
 
 

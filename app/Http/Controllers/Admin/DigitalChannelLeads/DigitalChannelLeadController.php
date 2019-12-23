@@ -32,8 +32,6 @@ class DigitalChannelLeadController extends Controller
         }
         $listCount = $list->count();
 
-        dd($list);
-
 
         return view('digitalChannelLeads.list', [
             'digitalChannelLeads'            => $list,
