@@ -64,7 +64,7 @@ class assessorsController extends Controller
         return view('assessors.assessors.list', [
             'factoryRequests'      => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud','Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'factoryRequestsTotal' => $factoryRequestsTotal,
@@ -334,7 +334,7 @@ class assessorsController extends Controller
     public function dashboard(Request $request)
     {
 
-        $assessor = auth()->user()->email;
+        $assessor = auth()->user()->CODASESOR;
         $to       = Carbon::now();
         $from     = Carbon::now()->subMonth();
 
