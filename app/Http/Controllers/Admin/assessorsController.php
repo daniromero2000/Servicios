@@ -42,7 +42,7 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
-        $assessor = auth()->user()->email;
+        $assessor = auth()->user()->codeOportudata;
         $skip     = $this->toolsInterface->getSkip($request->input('skip'));
         $list     = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 
