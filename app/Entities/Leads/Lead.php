@@ -7,10 +7,13 @@ use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 
 class Lead extends Model
 {
+    use SearchableTrait;
+
     protected $fillable = [
         'name',
         'lastName',
@@ -39,6 +42,17 @@ class Lead extends Model
         'created_at',
         'updated_at'
     ];
+
+    protected $searchable = [
+        'columns' => [
+            'leads.name'   => 1,
+        ],
+    ];
+
+    public function searchLeads($term)
+    {
+        return self::search($term);
+    }
 
     public function comments()
     {

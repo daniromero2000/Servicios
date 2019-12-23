@@ -143,11 +143,14 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');
     });
 
-
     /*Community Leads Resource*/
     Route::resource('communityleads', 'CommunityController');
     Route::get('/Administrator/dashboard/communitymanager', 'CommunityController@dashboard')->name('community_dashboard');
 
+    Route::namespace('DigitalChannelLeads')->group(function () {
+        Route::resource('Administrator/digitalchannelleads', 'DigitalChannelLeadController');
+        Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
+    });
 
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
@@ -159,8 +162,8 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/callCenter', 'CallCenterController@dashboard')->name('callCenter_dashboard');
     });
 
-        Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');
-        Route::put('/Administrator/{user}/profile', 'UserController@updateProfile')->name('user.profile.update');
+    Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');
+    Route::put('/Administrator/{user}/profile', 'UserController@updateProfile')->name('user.profile.update');
 
     Route::namespace('Directors')->group(function () {
         Route::resource('/Administrator/director', 'DirectorController');
