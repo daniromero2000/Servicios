@@ -7,8 +7,8 @@
             <table class="table table-hover table-stripped leadTable">
                 <thead class="header-table">
                     <tr>
-                        <th class="text-center" scope="col">Fecha de Creación</th>
-                        <th class="text-center" scope="col">Solicitud</th>
+                        <th class="text-center" scope="col">Fecha</th>
+                        <th class="text-center" scope="col">Asesor</th>
                         <th class="text-center" scope="col">Comentario</th>
                     </tr>
                 </thead>
@@ -19,7 +19,7 @@
                             {{ $data->created_at }}
                         </td>
                         <td class="text-center">
-                            {{ $data->solicitud }}
+                            {{ $data->user->name }}
                         </td>
                         <td class="text-center">
                             {{ $data->comment }}
