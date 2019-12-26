@@ -1,7 +1,7 @@
 <div class="col-md-4">
     <div class="card card-table-reset">
         <div class="card-body">
-            <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
+            <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios Canal Digital
             </h2>
             @if($datas->isNotEmpty())
             <table class="table table-hover table-stripped leadTable">
