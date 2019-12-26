@@ -16,7 +16,7 @@
                 <td>{{ $data->leadChannel->channel}}</td>
                 <td>{{ $data->leadAssessor['name']}}</td>
                 <td>{{ $data->identificationNumber}}</td>
-                <td>{{ $data->name}} {{ $data->lastName}}</td>
+                <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip" title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
