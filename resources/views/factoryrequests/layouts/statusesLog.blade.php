@@ -11,7 +11,8 @@
             <i class="fa fa-clock-o bg-blue"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> {{ CarbonInterval::seconds($factoryRequest->FECHASOL->diffInSeconds($data->created_at))->cascade()->forHumans() }}</span>
-                <h3 class="timeline-header">{{ $data->factoryRequestStatus['name']}}</h3>
+                <h3 class="timeline-header"><span class="text-center badge" style="color: white ; background-color: {{$data->factoryRequestStatus['color'] }}"
+                    class="btn btn-info btn-block">{{ $data->factoryRequestStatus['name']}}</span>    </h3>
                 <div class="timeline-body">
               <i class="fa fa-user"></i>      {{$data->usuario}}
                 </div>
