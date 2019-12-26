@@ -6,6 +6,7 @@ use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
 use App\Entities\LeadStatuses\LeadStatus;
+use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -90,5 +91,10 @@ class Lead extends Model
     public function leadCampaign()
     {
         return $this->belongsTo(Campaign::class, 'campaign');
+    }
+
+    public function leadStatusesLogs()
+    {
+        return $this->hasMany(LeadStatusesLog::class, 'lead_id');
     }
 }

@@ -7,21 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeadStatus extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'name',
         'color',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $table = 'lead_statuses';
+
+
     protected $hidden = [];
 
     public function leads()

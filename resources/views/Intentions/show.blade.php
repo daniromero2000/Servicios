@@ -33,12 +33,7 @@
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-
                 @include('intentions.layouts.generals')
-
-
-                @include('intentions.layouts.customer')
-
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
@@ -46,8 +41,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
-                    {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries])
-                    @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
+                    {{-- @include('layouts.admin.commentaries', ['datas' => $customer->customerCommentaries]) --}}
+                    {{-- @include('intentions.layouts.statusesLog', ['datas' => $digitalChannelLeads->leadStatusesLogs]) --}}
                 </div>
             </div>
             <div class="row row-reset border-0">

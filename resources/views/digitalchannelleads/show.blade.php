@@ -34,7 +34,6 @@
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
-                @include('digitalchannelleads.layouts.customer')
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
@@ -42,8 +41,9 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
-                  @include('digitalchannelleads.layouts.commentaries', ['datas' => $digitalChannelLead->comments])
-                    {{-- @include('customers::layouts.statusesLog', ['datas' => $customer->customerStatusesLog]) --}}
+                    @include('digitalchannelleads.layouts.commentaries', ['datas' => $digitalChannelLead->comments])
+                    @include('digitalchannelleads.layouts.statusesLog', ['datas' =>
+                    $digitalChannelLead->leadStatusesLogs])
                 </div>
             </div>
             <div class="row row-reset border-0">

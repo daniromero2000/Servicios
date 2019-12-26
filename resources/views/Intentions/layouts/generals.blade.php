@@ -26,16 +26,7 @@
       </thead>
       <tbody class="body-table">
         <tr>
-          <td class="text-center">{{ $intention->FECHA_INTENCION }}</td>
-          <td class="text-center">{{ $intention->definition->DESCRIPCION }}</td>
-          <td class="text-center">{{ $intention->ESTADO_OBLIGACIONES }}</td>
-          <td class="text-center">{{ $intention->PERFIL_CREDITICIO }}</td>
-          <td class="text-center">{{ $intention->HISTORIAL_CREDITO }}</td>
-          <td class="text-center">{{ $intention->TARJETA }}</td>
-          <td class="text-center">{{ $intention->EDAD }}</td>
-          <td class="text-center">{{ $intention->TIEMPO_LABOR }}</td>
-          <td class="text-center">{{ $intention->TIPO_5_ESPECIAL }}</td>
-          <td class="text-center">{{ $intention->INSPECCION_OCULAR }}</td>
+
         </tr>
       </tbody>
     </table>

@@ -424,9 +424,9 @@ class LeadsController extends Controller
         if (empty($customer)) {
             $this->customerInterface->updateOrCreateCustomer($dataOportudata);
         }
-        $lead =  $this->leadInterface->createLead($request->input());
-        $lead->leadStatus()->attach(3);
 
+        $lead =  $this->leadInterface->createLead($request->input());
+        $lead->leadStatus()->attach(8, ['user_id' => auth()->user()->id]);
         return response()->json($lead);
     }
 
@@ -447,7 +447,7 @@ class LeadsController extends Controller
     {
         $nameCampaign = (string) $request->get('campaignName');
         $lead = $this->leadInterface->findLeadById($request->get('id'));
-        $lead->leadStatus()->attach($request['state']);
+        $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
