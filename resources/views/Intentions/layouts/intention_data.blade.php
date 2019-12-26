@@ -25,7 +25,7 @@
       <tbody class="body-table">
         <tr>
           <td>
-           Sin data
+            Sin data
           </td>
         </tr>
       </tbody>

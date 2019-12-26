@@ -24,7 +24,7 @@
     <div class="card border-0 ">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
-                <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
+                <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Intención</a>
             </li>
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
@@ -34,10 +34,6 @@
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('intentions.layouts.generals')
-            </div>
-            <div role="tabpanel" class="tab-pane" id="contact">
-                <div class="row">
-                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
