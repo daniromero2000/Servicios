@@ -4346,18 +4346,34 @@ p.wantToSecondTex{
 .colourRed{
 	color: #ec2d35;
 }
-.butonWppApp{
+.container-button{
 	position: fixed;
 	bottom: 70px;
 	right: 0px;
-	background-color: #1BD741;
-	color: white;
-	font-size: 20px;
-	border-radius: 15px 0px 0px 15px;
-	padding: 5px 25px;
 	font-weight: bold;
 	z-index: 999999;
 }
 a:hover{
 	color: white;
+}
+.textCl{
+	font-size: 10px;
+	color: #000047;
+}
+.btnwpp{
+	color: white;
+	font-size: 15px;
+	padding: 8px 10px 8px 28px;
+	background-color: #1BD741;
+	border-radius: 15px 0px 0px 15px;
+	position: relative;
+}
+.btnwpp-img{
+	position: absolute;
+}
+.img-btnWpp{
+	position: absolute;
+	width: 50px;
+	left: -19px;
+	top: -6px;
 }
