@@ -11,7 +11,8 @@
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->FECHA_INTENCION}}</td>
-                <td>{{ $data->id}}</td>
+                <td><a href="{{ route('intentions.show', $data->id) }}" data-toggle="tooltip"
+                        title="Ver Cliente">{{ $data->id}}</a></td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
                 <td><span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
                         class="badge badge-warning"
