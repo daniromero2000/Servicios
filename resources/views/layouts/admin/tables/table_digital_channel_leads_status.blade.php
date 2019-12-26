@@ -1,3 +1,7 @@
+@php
+use Carbon\Carbon;
+@endphp
+
 <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
         <thead class="text-center header-table">
@@ -10,13 +14,19 @@
         <tbody class="body-table">
             @foreach($datas as $data)
             <tr>
+                <td><span class="text-center badge" style="color: white ; background-color:
+                        @if($data->created_at->diffInDays(Carbon::now()) <= 1) green @endif
+                        @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
+                        @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
+                        " class="btn btn-info btn-block"> </span></td>
                 <td><span class="text-center badge"
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span></td>
                 <td>{{ $data->leadChannel->channel}}</td>
                 <td>{{ $data->leadAssessor['name']}}</td>
                 <td>{{ $data->identificationNumber}}</td>
-                <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip" title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
+                <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
+                        title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
@@ -28,13 +38,13 @@
                         data-target="#updateleadModal"></i>
                     <i class="fas fa-comment cursor"
                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
-                    <form style="display:inline-block"
-                        action="{{ route('digitalchannelleads.destroy', $data->id) }}" method="post" class="form-horizontal">
+                    <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
+                        method="post" class="form-horizontal">
                         <input type="hidden" name="_method" value="delete">
                         @csrf
                         <input type="hidden" name="_method" value="delete">
-                        <a href="#" title="Borrar Lead" onclick="return confirm('¿Estás Seguro?')" type="submit" class="iconList"><i class="fas fa-times cursor"
-                               ></i></a>
+                        <a href="#" title="Borrar Lead" onclick="return confirm('¿Estás Seguro?')" type="submit"
+                            class="iconList"><i class="fas fa-times cursor"></i></a>
                     </form>
                 </td>
             </tr>
