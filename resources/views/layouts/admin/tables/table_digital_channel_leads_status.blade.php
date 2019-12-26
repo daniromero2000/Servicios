@@ -13,7 +13,7 @@ use Carbon\Carbon;
         <tbody class="body-table">
             @foreach($datas as $data)
             <tr>
-                <td><span class="text-center badge" style="color: white ; background-color:
+                <td><span class="text-center badge" style="color: black ; background-color:
                         @if($data->created_at->diffInDays(Carbon::now()) <= 1) green @endif
                         @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
                         @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
