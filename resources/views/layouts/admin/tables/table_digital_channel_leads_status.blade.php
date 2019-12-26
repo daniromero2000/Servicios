@@ -1,7 +1,6 @@
 @php
 use Carbon\Carbon;
 @endphp
-
 <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
         <thead class="text-center header-table">
@@ -18,7 +17,7 @@ use Carbon\Carbon;
                         @if($data->created_at->diffInDays(Carbon::now()) <= 1) green @endif
                         @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
                         @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
-                        " class="btn btn-info btn-block"> </span></td>
+                        " class="btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
                 <td><span class="text-center badge"
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span></td>
