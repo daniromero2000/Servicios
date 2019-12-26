@@ -64,11 +64,11 @@
                         <div class="row">
                             @include('factoryrequests.layouts.commentaries',['datas' => $factoryRequest->comments])
                             @include('factoryrequests.layouts.notes',['datas' => $factoryRequest->factoryRequestNotes])
-                            {{-- @include('factoryrequests.layouts.statusesLog', ['datas' =>$factoryRequest->comments]) --}}
+                            @include('factoryrequests.layouts.statusesLog', ['datas'
+                            =>$factoryRequest->factoryRequestStatusesLogs])
                         </div>
                     </div>
                 </div>
-
                 <div class="row row-reset border-0">
                     <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                 </div>

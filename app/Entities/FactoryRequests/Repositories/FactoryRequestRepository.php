@@ -47,7 +47,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     'references',
                     'factoryRequestNotes',
                     'factoryRequestProducts',
-                    'factoryRequestProducts2'
+                    'factoryRequestProducts2',
+                    'factoryRequestStatusesLogs'
                 ])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {

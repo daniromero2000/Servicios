@@ -76,11 +76,18 @@ use App\Entities\Channels\Repositories\ChannelRepository;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\Services\Repositories\ServiceRepository;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
+use App\Entities\FactoryRequestStatusesLogs\Repositories\FactoryRequestStatusesLogRepository;
+use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            FactoryRequestStatusesLogRepositoryInterface::class,
+            FactoryRequestStatusesLogRepository::class
+        );
+
         $this->app->bind(
             ServiceRepositoryInterface::class,
             ServiceRepository::class

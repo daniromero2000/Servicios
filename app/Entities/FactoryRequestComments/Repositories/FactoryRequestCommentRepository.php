@@ -4,6 +4,7 @@ namespace App\Entities\FactoryRequestComments\Repositories;
 
 use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestComments\Repositories\Interfaces\FactoryRequestCommentRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class FactoryRequestCommentRepository implements FactoryRequestCommentRepositoryInterface
@@ -19,7 +20,7 @@ class FactoryRequestCommentRepository implements FactoryRequestCommentRepository
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
-           dd($e);
+            dd($e);
         }
     }
 

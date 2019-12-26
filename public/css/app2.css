@@ -123,8 +123,8 @@ span.renewCode:hover {
     width: 100%;
     height:0;
     padding-bottom: 100%;
-    -moz-border-radius: 50%; 
-    -webkit-border-radius: 50%; 
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
 	border-radius: 50%;
 	border:solid #1F86B3 4px;
 }
@@ -204,7 +204,7 @@ span.renewCode:hover {
 }
 
 .info-rate-quota span{
-	font-size: 30px;	
+	font-size: 30px;
 }
 
 #sliderPrincipalLibranza .row .form-simulator-header.bg-simulator .row.text-center{
@@ -213,7 +213,7 @@ span.renewCode:hover {
     border-radius: 10px 10px 0px 0px;
 }
 
-#sliderPrincipalLibranza .row .bg-simulator label{	
+#sliderPrincipalLibranza .row .bg-simulator label{
 
 	font-size: 15px;
 	color: white;
@@ -256,10 +256,10 @@ content {
 
 #sliderPrincipalLibranza .row .bg-simulator form input[type=range]::-webkit-slider-thumb {
     border: 2px solid #eca307;
-    height: 1em;	
+    height: 1em;
     width: 1em;
     border-radius: 15px;
-    background: #FDBF3C;	
+    background: #FDBF3C;
     cursor: pointer;
 	-webkit-appearance: none;
 	position: relative;
@@ -313,7 +313,7 @@ content {
 
 #sliderPrincipalLibranza .row .bg-simulator form md-slider .md-thumb:after{
 	width: 25px;
-    height: 25px;	
+    height: 25px;
 }
 
 #sliderPrincipalLibranza .row .bg-simulator form md-slider.md-primary .md-sign{
@@ -503,7 +503,7 @@ md-slider[md-discrete]:not([disable]).md-active .md-sign{
 }
 
 .items-requisitos-libranza div a{
-	
+
 	background-color: #1F9BCE;
     color: #FFF;
     font-weight: 700;
@@ -752,7 +752,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 		color:#FFF;
 		position: relative;
 		padding-top:60px;
-		margin-top:100px !important; 
+		margin-top:100px !important;
 }
 
 #oportuyaBanner .max-width-content-19:before{
@@ -761,7 +761,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 		border-top:solid #FFF 70px;
 		border-left:solid #2585C0 70px;
 		right: 0;
-		top: 0; 
+		top: 0;
 }
 
 #oportuyaBanner .max-width-content-19:after{
@@ -770,7 +770,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 	border-bottom:solid #FFF 70px;
 	border-right:solid #2585C0 70px;
 	left: 0;
-	bottom: 0; 
+	bottom: 0;
 }
 #oportuyaBanner .max-width-content-19 div.row .offset-lg-1{
 	margin-bottom: 45px;
@@ -796,7 +796,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 
 #oportuyaBanner .max-width-content-19 div.row .col-sm-4{
 	position: relative;
-} 
+}
 
 
 
@@ -892,7 +892,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 }
 
 .padding-top-30{
-	padding-top:30px; 
+	padding-top:30px;
 }
 
 .footer-modal-oportuya{
@@ -927,8 +927,8 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 .footer-modal-oportuya .col-md-5 p{
 	padding-left:20px;
 	margin-bottom:0;
-	margin-top: 10px; 
-	text-align: center; 
+	margin-top: 10px;
+	text-align: center;
 }
 
 .footer-modal-oportuya .col-md-5 p span{
@@ -956,7 +956,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 	background-color: #001980 !important;
 	box-shadow: 2px 1px 12px 3px rgba(249,224,232,1) !important;
 	color:#FFF;
-} 
+}
 
 .requirementsListAdvance{
 	margin-top: 15px !important;
@@ -1140,7 +1140,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 }
 
 .invalidFeeMsg{
-	margin-top:20px!important; 
+	margin-top:20px!important;
 	width: 60%;
 	background-color: rgba(248, 0, 0, 0.45)!important;
 }
@@ -1502,7 +1502,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 
 .menuItem-subTitle2{
 	color: #348dc7;
-	font-size: 22px;	
+	font-size: 22px;
 }
 
 .menuItem-text{
@@ -1697,7 +1697,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 	border-radius: 50%;
 	color: #fff;
 	background-color: #0082d3;
-}	
+}
 
 .progreso > .punto_dos.punto_dos_avances, .progreso > .punto_dos.punto_dos_avances + span, .progreso > .punto_tres.punto_tres_avances, .progreso > .punto_tres.punto_tres_avances + span {
     left: 33.3333%;
@@ -1955,7 +1955,7 @@ label {
 
 /**
 **Caso de Uso: WARRANTY MODULE
-**Autor: Luis David Giraldo Grajales 
+**Autor: Luis David Giraldo Grajales
 **Email: desarrolladorjunior@lagobo.com
 **Fecha: 28/02/2019
 **/
@@ -2015,7 +2015,7 @@ label {
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
-	margin-bottom: 20px; 
+	margin-bottom: 20px;
 }
 .warrantyBlack{
 	background-color:black;
@@ -2033,7 +2033,7 @@ label {
 
 .Garantia-containerForm2{
 	max-width: 900px;
-	
+
 }
 .descriptionStep{
 	background: #DE005D;
@@ -2174,12 +2174,12 @@ label {
 }
 .addPhone{
 	color: white;
-	border-radius: 50%;	
+	border-radius: 50%;
 }
 .deletePhone{
 	color: white;
 	border-radius: 50%;
-	margin-bottom: 10px 	
+	margin-bottom: 10px
 }
 .addPhoneContainer{
 	padding-bottom: 26px;
@@ -2306,7 +2306,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 #motosContact{
 	background-image: url('../images/contactslide.jpg');
 	background-repeat:no-repeat;
-	background-size: 100%; 
+	background-size: 100%;
 	margin-top: 50px !important;
 }
 
@@ -2353,7 +2353,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .motosContainer div.row div.col-12{
-	margin-top:30px;	
+	margin-top:30px;
 }
 
 .motosFormContainer form .form-group label{
@@ -2467,7 +2467,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .motosCuotasMensuales span{
-	background-color:#EDEEF1; 
+	background-color:#EDEEF1;
 	padding: 10px 20px;
 	margin-top: 20px;
 }
@@ -2521,7 +2521,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	left: 50%;
 	transform: translate(-50%);
 	content: "";
-	background-color:#FF0000; 
+	background-color:#FF0000;
 }
 
 .motosTextDescription h3:after
@@ -2561,7 +2561,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .nav-link.nav-link-motos{
 	padding: 0 0 0 1rem;
 	color: #000;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 	border-bottom: solid 1px #FF0000;
 }
 
@@ -2735,7 +2735,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	width: 80%;
 	max-width: 80%!important;
 	margin: auto!important;
-	
+
 }
 
 .modal-motos .modal-header{
@@ -2752,7 +2752,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		color:red;
 		font-weight: 700;
 		width: 100%;
-} 
+}
 
 .modal-motos .modal-body .tab-content div.row h3 i{
 	float: right;
@@ -2761,7 +2761,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 .modal-motos .modal-body .tab-content .tab-pane .colInfo div.row.fix-width h4{
 	font-weight: 600;
 	border-bottom: solid 2px #23266b;
-	
+
 }
 
 .modal-motos .modal-body .tab-content .tab-pane .colInfo div.row.fix-width p{
@@ -2819,7 +2819,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
     height: 1.7em;
     width: 1.7em;
     border-radius: 15px;
-    background: #3277C2;	
+    background: #3277C2;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -9px;
@@ -2851,7 +2851,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
   }
 
   .motosTimeLimit p.text-center{
-	width: 67%;	
+	width: 67%;
   }
 
 
@@ -2985,7 +2985,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 .button-motos{
-	margin-top: 25px;	
+	margin-top: 25px;
 }
 
 .button-motos a{
@@ -3039,7 +3039,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	width: 10%;
 	bottom: -10px;
 	left: 50%;
-	transform: translate(-50%); 
+	transform: translate(-50%);
 }
 
 #requisitos-avances div.container.text-center h3 span{
@@ -3058,7 +3058,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 #obtener-avance{
 	position: relative;
-	margin:70px 0 0 0; 
+	margin:70px 0 0 0;
 	text-align: center;
 }
 
@@ -3087,7 +3087,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	border-radius: 30px;
 	color: #FFF;
 	padding: 10px 50px;
-	border:solid 1px #FFF;	
+	border:solid 1px #FFF;
 	font-weight: 600;
 }
 
@@ -3120,7 +3120,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	width: 10%;
 	bottom: -10px;
 	left: 50%;
-	transform: translate(-50%); 
+	transform: translate(-50%);
 }
 
 .credito-online-boton{
@@ -3204,7 +3204,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 /**
 **Caso de Uso: WARRANTY MODULE
-**Autor: Luis David Giraldo Grajales 
+**Autor: Luis David Giraldo Grajales
 **Email: desarrolladorjunior@lagobo.com
 **Fecha: 28/02/2019
 **/
@@ -3288,7 +3288,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 1701px){
-	
+
 	#obtener-avance .obtener-avance-texto p{
 		font-size: 28px!important;
 	}
@@ -3301,7 +3301,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 1500px){
-	
+
 	#obtener-avance .obtener-avance-texto p{
 		font-size: 25px!important;
 	}
@@ -3334,7 +3334,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 @media(max-width: 1200px){
 
-	
+
 
 	.resumen-item{
 		font-size: 24px;
@@ -3349,7 +3349,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		font-size: 14px;
 		padding: 5px 10px;
 	}
-	
+
 	.motoSliderContent .logoMotosMarca img{
 		width: 40%;
 	}
@@ -3366,7 +3366,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	#motosContact div.row{
 		padding: 15px 0;
 	}
-	
+
 	#motosContact{
 		line-height: 1;
 	}
@@ -3401,7 +3401,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 991px){
-	
+
 	.row.h2.max-w-6 p{
 		font-size: 20px;
 	}
@@ -3492,8 +3492,8 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		bottom: 0!important;
 		color:#000;
 		right: unset;
-		margin:40px 0px; 
-		
+		margin:40px 0px;
+
 	}
 
 	#obtener-avance .obtener-avance-texto{
@@ -3506,7 +3506,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	.formularioSimulador-containerFormulario{
 		margin-top: 40px;
 	}
-	
+
 	.avanceSliderTitle p{
 		font-size: 27px;
 	}
@@ -3549,7 +3549,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 		width: 30%;
 		margin-top:unset;
 		transform: unset;
-		margin-bottom:30px;  
+		margin-bottom:30px;
 	}
 
 	#oportuyaBeneficiosModal .modal-content .content-pasos-oportuya .asesor-img-modal img{
@@ -3571,10 +3571,10 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	.footer-modal-oportuya .col-md-5{
 		height: 120px;;
 	}
-	
+
 	/**
 	**Caso de Uso: WARRANTY MODULE
-	**Autor: Luis David Giraldo Grajales 
+	**Autor: Luis David Giraldo Grajales
 	**Email: desarrolladorjunior@lagobo.com
 	**Fecha: 28/02/2019
 	**/
@@ -3606,7 +3606,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	.motoSliderContent{
 		bottom: 5em;
 		left:3em;
-		
+
 	}
 
 	.motoSliderContent .logoMotosMarca img{
@@ -3677,13 +3677,13 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 }
 
 @media(max-width: 600px){
-	
+
 	.w-50{
 		width: 100%!important;
 	}
 
 	.form-simulator-container .md-datepicker-input-container{
-		width: 60%;	
+		width: 60%;
 	}
 
 	._md-datepicker-floating-label > md-datepicker{
@@ -3693,7 +3693,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 
 @media(max-width: 550px){
 	.files-resumen ul{
-		
+
 		padding: 0;
 	}
 
@@ -3740,7 +3740,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	#WarrantyStep3{
 		min-height: 1009px;
 	}
-	
+
 	.Garantia-containerForm{
 		padding: 10px;
 	}
@@ -3778,7 +3778,7 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	}
 	/**
 	**Caso de Uso: WARRANTY MODULE
-	**Autor: Luis David Giraldo Grajales 
+	**Autor: Luis David Giraldo Grajales
 	**Email: desarrolladorjunior@lagobo.com
 	**Fecha: 14/03/2019
 	**/
@@ -3842,4 +3842,116 @@ md-input-container:not(.md-input-invalid) .md-input-focused .md-input{
 	.progreso {
 	    width: 85%;
 	}
+}
+
+/*
+ * Component: Timeline
+ * -------------------
+ */
+.timeline {
+	position: relative;
+	margin: 0 0 30px 0;
+	padding: 0;
+	list-style: none;
+}
+
+.timeline:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+	background: #ddd;
+	left: 31px;
+	margin: 0;
+	border-radius: 2px;
+}
+
+.timeline>li {
+	position: relative;
+	margin-right: 10px;
+	margin-bottom: 15px;
+}
+
+.timeline>li:before,
+.timeline>li:after {
+	content: " ";
+	display: table;
+}
+
+.timeline>li:after {
+	clear: both;
+}
+
+.timeline>li>.timeline-item {
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	margin-top: 0;
+	background: #fff;
+	color: #444;
+	margin-left: 60px;
+	margin-right: 15px;
+	padding: 0;
+	position: relative;
+}
+
+.timeline>li>.timeline-item>.time {
+	color: #999;
+	float: right;
+	padding: 10px;
+	font-size: 12px;
+}
+
+.timeline>li>.timeline-item>.timeline-header {
+	margin: 0;
+	color: #555;
+	border-bottom: 1px solid #f4f4f4;
+	padding: 10px;
+	font-size: 16px;
+	line-height: 1.1;
+}
+
+.timeline>li>.timeline-item>.timeline-header>a {
+	font-weight: 600;
+}
+
+.timeline>li>.timeline-item>.timeline-body,
+.timeline>li>.timeline-item>.timeline-footer {
+	padding: 10px;
+}
+
+.timeline>li>.fa,
+.timeline>li>.glyphicon,
+.timeline>li>.ion {
+	width: 30px;
+	height: 30px;
+	font-size: 15px;
+	line-height: 30px;
+	position: absolute;
+	color: #666;
+	background: #d2d6de;
+	border-radius: 50%;
+	text-align: center;
+	left: 18px;
+	top: 0;
+}
+
+.timeline>.time-label>span {
+	font-weight: 600;
+	padding: 5px;
+	display: inline-block;
+	background-color: #fff;
+	border-radius: 4px;
+}
+
+.timeline-inverse>li>.timeline-item {
+	background: #f0f0f0;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.timeline-inverse>li>.timeline-item>.timeline-header {
+	border-bottom-color: #ddd;
 }

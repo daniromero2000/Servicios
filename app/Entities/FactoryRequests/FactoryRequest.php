@@ -9,6 +9,7 @@ use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
+use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -35,6 +36,8 @@ class FactoryRequest extends Model
             'SOLIC_FAB.SOLICITUD' => 5,
         ],
     ];
+
+    protected $dates = ['FECHASOL'];
 
     public function searchFactoryRequest($term)
     {
@@ -95,5 +98,10 @@ class FactoryRequest extends Model
     public function factoryRequestProducts2()
     {
         return $this->hasMany(FactoryRequestProduct2::class, 'SOLICITUD');
+    }
+
+    public function factoryRequestStatusesLogs()
+    {
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');
     }
 }

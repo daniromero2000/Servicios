@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\FactoryRequests;
 
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Carbon\Carbon;
@@ -11,15 +12,17 @@ use Illuminate\Http\Request;
 
 class FactoryRequestController extends Controller
 {
-    private $factoryRequestInterface, $toolsInterface;
+    private $factoryRequestInterface, $toolsInterface, $factoryRequestStatusesLogInterface;
 
 
     public function __construct(
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        FactoryRequestStatusesLogRepositoryInterface $factoryRequestStatusesLogRepositoryInterface
     ) {
         $this->factoryRequestInterface = $factoryRequestRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->factoryRequestStatusesLogInterface = $factoryRequestStatusesLogRepositoryInterface;
         $this->middleware('auth');
     }
 
