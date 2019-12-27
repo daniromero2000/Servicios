@@ -11,37 +11,44 @@
         <div class="container">
           <div class="row resetRow ">
             <div class="col-12 form-group">
-              <form action="{{ route('digitalchannelleads.update', $digitalChannelLead->id) }}" method="post" class="form">
+              <form action="{{ route('digitalchannelleads.update', $digitalChannelLead->id) }}" method="post"
+                class="form">
                 {{ csrf_field() }}
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="name">Nombre <span class="text-danger">*</span></label>
-                   <input type="text" name="name" id="name" validation-pattern="name" placeholder="Nombre" class="form-control"
-                        value="{!! $digitalChannelLead->name ?: old('name')  !!}" required>
+                    <input type="text" name="name" id="name" validation-pattern="name" placeholder="Nombre"
+                      class="form-control" value="{!! $digitalChannelLead->name ?: old('name')  !!}" required>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                  <input type="text" name="lastName" id="lastName" validation-pattern="name" placeholder="Apellido" class="form-control"
-                    value="{!! $digitalChannelLead->lastName ?: old('lastName')  !!}" required>
+                    <input type="text" name="lastName" id="lastName" validation-pattern="name" placeholder="Apellido"
+                      class="form-control" value="{!! $digitalChannelLead->lastName ?: old('lastName')  !!}" required>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="email">email </label>
-                    <input type="text" name="email" id="email" validation-pattern="email" placeholder="Email" class="form-control"
-                      value="{!! $digitalChannelLead->email ?: old('email')  !!}" required>
+                    <input type="text" name="email" id="email" validation-pattern="email" placeholder="Email"
+                      class="form-control" value="{!! $digitalChannelLead->email ?: old('email')  !!}" required>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="telephone">telefono <span class="text-danger">*</span></label>
-                   <input type="text" name="telephone" id="telephone" validation-pattern="phone" placeholder="Nombre" class="form-control"
-                      value="{!! $digitalChannelLead->telephone ?: old('telephone')  !!}" required>
+                    <input type="text" name="telephone" id="telephone" validation-pattern="phone" placeholder="Nombre"
+                      class="form-control" value="{!! $digitalChannelLead->telephone ?: old('telephone')  !!}" required>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="city">Ciudad <span class="text-danger">*</span></label>
-                    <select id="city" class="form-control" ng-model="lead.city"
-                      ng-options="city.CIUDAD as city.CIUDAD for city in cities">
+                    <select name="city" id="city" class="form-control" enabled>
+                      @if(!empty($cities))
+                      @foreach($cities as $city)
+                      <option @if($leadCity==$city->CIUDAD) selected="selected" @endif value="{{ $city->CIUDAD }}">
+                        {{ $city->CIUDAD }}
+                      </option>
+                      @endforeach
+                      @endif
                     </select>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
@@ -57,8 +64,9 @@
                 <div class="row">
                   <div class="col-12 col-sm-6 form-group">
                     <label for="name">Ciudad aledaña</label>
-                  <input type="text" name="nearbyCity" id="nearbyCity" validation-pattern="text" placeholder="Ciudad Aledaña" class="form-control"
-                    value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}" required>
+                    <input type="text" name="nearbyCity" id="nearbyCity" validation-pattern="text"
+                      placeholder="Ciudad Aledaña" class="form-control"
+                      value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}" required>
                   </div>
                 </div>
 
