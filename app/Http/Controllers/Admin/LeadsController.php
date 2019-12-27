@@ -458,11 +458,6 @@ class LeadsController extends Controller
             $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         }
 
-        if ($request->has('assessor_id')) {
-            $lead->state = 3;
-            $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
-        }
-
         $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
