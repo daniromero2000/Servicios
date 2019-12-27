@@ -426,7 +426,12 @@ class LeadsController extends Controller
         }
 
         $lead =  $this->leadInterface->createLead($request->input());
-        $lead->leadStatus()->attach(8, ['user_id' => auth()->user()->id]);
+        $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+        if (!empty($request['assessor_id'])) {
+            $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
+            $lead['STATE'] = 3;
+            $lead->save();
+        }
         return response()->json($lead);
     }
 
@@ -447,7 +452,17 @@ class LeadsController extends Controller
     {
         $nameCampaign = (string) $request->get('campaignName');
         $lead = $this->leadInterface->findLeadById($request->get('id'));
-        $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+
+        if ($lead->state != $request['state']) {
+            $lead->state = $request['state'];
+            $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+        }
+
+        if ($request->has('assessor_id')) {
+            $lead->state = 3;
+            $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
+        }
+
         $leadRerpo = new leadRepository($lead);
 
         if ($nameCampaign) {
