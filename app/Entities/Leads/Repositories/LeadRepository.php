@@ -82,7 +82,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return $this->model->update($params);
         } catch (QueryException $e) {
-            abort(503, $e->getMessage());
+            dd($e);
         }
     }
 

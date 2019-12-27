@@ -80,7 +80,7 @@
               <div class="row">
                 <div class="col-12 form-group">
                   <label for="socialNetwork">Campaña</label>
-                 <select id="campaign" name="campaign" class="form-control">
+                  <select id="campaign" name="campaign" class="form-control">
                     @if(!empty($campaigns))
                     @foreach($campaigns as $campaign)
                     <option value="{{ $campaign->id }}">
@@ -106,11 +106,11 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="product">Producto <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" name="typeProduct"
-                    cols="10" class="form-control" required>
+                  <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product"
+                    name="typeProduct" cols="10" class="form-control" required>
                 </div>
               </div>
-              <div class="col-3 d-flex align-items-end">
+              <div class="col-5 d-flex align-items-end">
                 <div class="form-group w-100">
                   <label for="assessor_id">Asesor</label>
                   <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"

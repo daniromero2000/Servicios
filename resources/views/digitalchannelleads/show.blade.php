@@ -11,7 +11,8 @@
                     <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                     <li class="breadcrumb-item active"><a href="/Administrator/dashboard/comunitymanager">Dashboard
                             Leads Canal Digital</a>
-                    <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads Canal Digital</a></li>
+                    <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads Canal
+                            Digital</a></li>
                     <li class="breadcrumb-item active"><a href="">Detalle Intención</a></li>
                 </ol>
             </div><!-- /.col -->
@@ -20,7 +21,6 @@
 </div>
 <section class="content border-0">
     @include('layouts.errors-and-messages')
-
     <div class="card border-0 ">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
@@ -47,9 +47,11 @@
                 </div>
             </div>
             <div class="row row-reset border-0">
+                <a data-toggle="modal" data-target="#updateleadModal"
+                    class="btn btn-primary ml-auto mr-3 mb-2 ">Editar</a>
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
-
         </div>
 </section>
+@include('digitalchannelleads.layouts.update_lead_modal')
 @endsection
