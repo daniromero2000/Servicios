@@ -99,16 +99,15 @@ class DigitalChannelLeadController extends Controller
     public function show(int $id)
     {
         $digitalChannelLead =  $this->LeadInterface->findLeadByIdFull($id);
-        $leadCity = $digitalChannelLead->city;
-
 
         return view('digitalchannelleads.show', [
-            'digitalChannelLead' =>  $digitalChannelLead,
-            'leadCity' =>  $leadCity,
-            'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
-            'channels' => $this->channelInterface->getAllChannelNames(),
-            'services' => $this->serviceInterface->getAllServiceNames(),
-            'campaigns' => $this->campaignInterface->getAllCampaignNames()
+            'digitalChannelLead' => $digitalChannelLead,
+            'leadCity'           => $digitalChannelLead->city,
+            'leadChannel'        => $digitalChannelLead->channel,
+            'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'channels'           => $this->channelInterface->getAllChannelNames(),
+            'services'           => $this->serviceInterface->getAllServiceNames(),
+            'campaigns'          => $this->campaignInterface->getAllCampaignNames()
         ]);
     }
 

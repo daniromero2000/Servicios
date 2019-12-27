@@ -52,13 +52,17 @@
                     </select>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
-                    <label for="socialNetwork">Canal de adquisición <span class="text-danger">*</span></label>
-                    <select id="socialNetwork" class="form-control" ng-model="lead.channel"
-                      ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks">
-                      <option>
+                    <label for="channel">Canal de adquisición <span class="text-danger">*</span></label>
+                    <select name="channel" id="channel" class="form-control" enabled>
+                      @if(!empty($channels))
+                      @foreach($channels as $channel)
+                      <option @if($leadChannel==$channel->channel) selected="selected" @endif
+                        value="{{ $channel->id }}">
+                        {{ $channel->channel }}
                       </option>
+                      @endforeach
+                      @endif
                     </select>
-
                   </div>
                 </div>
                 <div class="row">
@@ -95,7 +99,6 @@
                       class="form-control" value="@{{lead.typeProduct}}">
                   </div>
                 </div>
-
                 <div class="row">
                   <div class="col-6 d-flex align-items-end">
                     <div class="form-group w-100">
