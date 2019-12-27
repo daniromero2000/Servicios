@@ -248,7 +248,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		<div id="container">
 			@yield('content')
 			<div class="container-button">
-				<a target="_blank" class="btnwpp" href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero%20más%20informaci%C3%B3n%20sobre%20el%20cr%C3%A9dito%20de%20Oportunidades!">  <img class="img-btnWpp" src= " {{ asset ('images/btnwpp.png')}}"> <span>¿Quieres más información?</span> <span class="textCl">(Click aquí)</span></a>
+				<a style="display: none; visibility: hidden" target="_blank" class="btnwpp" href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero%20más%20informaci%C3%B3n%20sobre%20el%20cr%C3%A9dito%20de%20Oportunidades!">  <img class="img-btnWpp" src= " {{ asset ('images/btnwpp.png')}}"> <span>¿Quieres más información?</span> <span class="textCl">(Click aquí)</span></a>
 			</div>
 		</div>	
 		<div id="footer">
