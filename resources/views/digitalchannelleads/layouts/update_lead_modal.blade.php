@@ -57,8 +57,8 @@
                 <div class="row">
                   <div class="col-12 col-sm-6 form-group">
                     <label for="name">Ciudad aledaña</label>
-                    <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity" cols="10"
-                      class="form-control">
+                  <input type="text" name="nearbyCity" id="nearbyCity" validation-pattern="text" placeholder="Ciudad Aledaña" class="form-control"
+                    value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}" required>
                   </div>
                 </div>
 
@@ -112,7 +112,7 @@
                       <label for="assessor_id">Asesor</label>
                       <select class="form-control  select2" id="assessor_id" name="assessor_id"
                         ng-model="lead.assessor_id" style="width: 100%;">
-                        <option disabled selected value> -- Selecciona Paso -- </option>
+                        <option disabled selected value> -- Selecciona Asesor-- </option>
                         <option value="13">Evelyn Correa</option>
                         <option value="18">Vanessa Parra</option>
                         <option value="85">Danitza Naranjo</option>
