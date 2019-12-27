@@ -48,15 +48,15 @@ class DigitalChannelLeadController extends Controller
         $listCount = $list->count();
 
         return view('digitalchannelleads.list', [
-            'digitalChannelLeads'            => $list,
-            'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['', 'Estado', 'Lead', 'Asesor', 'Cedula',  'Nombre',  'Correo', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
-            'listCount'            => $listCount,
-            'skip'                 => $skip,
-            'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
-            'channels' => $this->channelInterface->getAllChannelNames(),
-            'services' => $this->serviceInterface->getAllServiceNames(),
-            'campaigns' => $this->campaignInterface->getAllCampaignNames()
+            'digitalChannelLeads' => $list,
+            'optionsRoutes'       => (request()->segment(2)),
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Cedula',  'Nombre',  'Correo', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'listCount'           => $listCount,
+            'skip'                => $skip,
+            'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'channels'            => $this->channelInterface->getAllChannelNames(),
+            'services'            => $this->serviceInterface->getAllServiceNames(),
+            'campaigns'           => $this->campaignInterface->getAllCampaignNames()
         ]);
     }
 
@@ -115,8 +115,7 @@ class DigitalChannelLeadController extends Controller
 
     public function update(Request $request, $id)
     {
-        $nameCampaign = (string) $request->get('campaignName');
-        $lead = $this->leadInterface->findLeadById($request->get('id'));
+        $lead = $this->LeadInterface->findLeadById($id);
 
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];
@@ -124,16 +123,9 @@ class DigitalChannelLeadController extends Controller
         }
 
         $leadRerpo = new leadRepository($lead);
-
-        if ($nameCampaign) {
-            $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);
-            $idCampaign = $idCampaign->id;
-            $request['campaign'] = $idCampaign;
-        }
-
         $leadRerpo->updateLead($request->input());
         $request->session()->flash('message', 'Actualización Exitosa!');
-        return redirect()->route('admin.customers.show', $id);
+        return redirect()->route('digitalchannelleads.show', $id);
     }
 
     public function dashboard(Request $request)

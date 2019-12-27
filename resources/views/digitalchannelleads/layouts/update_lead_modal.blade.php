@@ -13,7 +13,8 @@
             <div class="col-12 form-group">
               <form action="{{ route('digitalchannelleads.update', $digitalChannelLead->id) }}" method="post"
                 class="form">
-                {{ csrf_field() }}
+                @csrf
+                @method('PUT')
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="name">Nombre <span class="text-danger">*</span></label>
@@ -102,8 +103,9 @@
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="product">Producto <span class="text-danger">*</span></label>
-                    <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product" cols="10"
-                      class="form-control" value="@{{lead.typeProduct}}">
+                    <input type="text" name="typeProduct" id="typeProduct" validation-pattern="text"
+                      placeholder="Producto" class="form-control"
+                      value="{!! $digitalChannelLead->typeProduct ?: old('typeProduct')  !!}" required>
                   </div>
                 </div>
                 <div class="row">
