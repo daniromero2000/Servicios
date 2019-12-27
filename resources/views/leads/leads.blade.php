@@ -1047,6 +1047,8 @@
                                                     <option value="5">Desistido</option>
                                                     <option value="6">Negado</option>
                                                     <option value="7">Cotizado</option>
+                                                    <option value="8">En Gestión</option>
+                                                    <option value="9">Cerrado</option>
                                                 </select>
                                             </div>
                                         </div>

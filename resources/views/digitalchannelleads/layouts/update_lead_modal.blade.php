@@ -11,30 +11,30 @@
         <div class="container">
           <div class="row resetRow ">
             <div class="col-12 form-group">
-              <form ng-submit="updateCommunityLeads()">
+              <form action="{{ route('digitalchannelleads.update', $digitalChannelLead->id) }}" method="post" class="form">
                 {{ csrf_field() }}
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="name">Nombre <span class="text-danger">*</span></label>
-                    <input type="text" validation-pattern="name" id="name" cols="10"
-                      class="form-control" value="" required>
+                   <input type="text" name="name" id="name" validation-pattern="name" placeholder="Nombre" class="form-control"
+                        value="{!! $digitalChannelLead->name ?: old('name')  !!}" required>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                    <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" cols="10"
-                      class="form-control" value="@{{lead.lastName}}" required>
+                  <input type="text" name="lastName" id="lastName" validation-pattern="name" placeholder="Apellido" class="form-control"
+                    value="{!! $digitalChannelLead->lastName ?: old('lastName')  !!}" required>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
                     <label for="email">email </label>
-                    <input type="text" ng-model="lead.email" validation-pattern="email" id="email" cols="10"
-                      class="form-control" value="@{{lead.email}}">
+                    <input type="text" name="email" id="email" validation-pattern="email" placeholder="Email" class="form-control"
+                      value="{!! $digitalChannelLead->email ?: old('email')  !!}" required>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="telephone">telefono <span class="text-danger">*</span></label>
-                    <input type="text" ng-model="lead.telephone" id="telephone" cols="10" class="form-control"
-                      value="@{{lead.telephone}}" required>
+                   <input type="text" name="telephone" id="telephone" validation-pattern="phone" placeholder="Nombre" class="form-control"
+                      value="{!! $digitalChannelLead->telephone ?: old('telephone')  !!}" required>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -102,6 +102,8 @@
                         <option value="5">Desistido</option>
                         <option value="6">Negado</option>
                         <option value="7">Cotizado</option>
+                        <option value="8">En Gestión</option>
+                        <option value="9">Cerrado</option>
                       </select>
                     </div>
                   </div>

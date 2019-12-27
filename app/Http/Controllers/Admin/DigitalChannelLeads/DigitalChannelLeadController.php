@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
-use App\Entities\LeadStatuses\LeadStatus;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
@@ -12,12 +12,12 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use PhpParser\Node\Stmt\Foreach_;
+use App\Entities\Leads\Repositories\LeadRepository;
 
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
-    private $channelInterface, $serviceInterface, $campaignInterface;
+    private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -25,7 +25,8 @@ class DigitalChannelLeadController extends Controller
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
-        CampaignRepositoryInterface $campaignRepositoryInterface
+        CampaignRepositoryInterface $campaignRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->LeadInterface = $LeadRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
@@ -33,6 +34,7 @@ class DigitalChannelLeadController extends Controller
         $this->channelInterface = $channelRepositoryInterface;
         $this->serviceInterface = $serviceRepositoryInterface;
         $this->campaignInterface = $campaignRepositoryInterface;
+        $this->customerInterface = $customerRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -62,17 +64,67 @@ class DigitalChannelLeadController extends Controller
     {
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
-        $this->LeadInterface->createLead($request->input());
+        $dataOportudata = [
+            'TIPO_DOC' => 1,
+            'CEDULA' => $request->input('identificationNumber'),
+            'APELLIDOS' => $request->input('lastName'),
+            'NOMBRES' => $request->input('name'),
+            'TIPOCLIENTE' => 'NUEVO',
+            'SUBTIPO' => 'WEB',
+            'CELULAR' => $request->input('telephone'),
+            'CIUD_UBI' => $request->input('city'),
+            'EMAIL' => $request->input('email'),
+            'MIGRADO' => 1,
+            'SUC' => 9999,
+            'ORIGEN' => 'Canal Digital',
+            'CLIENTE_WEB' => 1
+        ];
+        $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
+        if (empty($customer)) {
+            $this->customerInterface->updateOrCreateCustomer($dataOportudata);
+        }
+
+        $lead =  $this->LeadInterface->createLead($request->input());
+        $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+        if (!empty($request['assessor_id'])) {
+            $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
+            $lead['STATE'] = 3;
+            $lead->save();
+        }
+
         $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();
     }
 
     public function show(int $id)
     {
-
         return view('digitalchannelleads.show', [
             'digitalChannelLead' =>   $this->LeadInterface->findLeadByIdFull($id)
         ]);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $nameCampaign = (string) $request->get('campaignName');
+        $lead = $this->leadInterface->findLeadById($request->get('id'));
+
+        if ($lead->state != $request['state']) {
+            $lead->state = $request['state'];
+            $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
+        }
+
+        $leadRerpo = new leadRepository($lead);
+
+        if ($nameCampaign) {
+            $idCampaign =  $this->campaignInterface->findCampaignByName($nameCampaign);
+            $idCampaign = $idCampaign->id;
+            $request['campaign'] = $idCampaign;
+        }
+
+        $leadRerpo->updateLead($request->input());
+        $request->session()->flash('message', 'Actualización Exitosa!');
+        return redirect()->route('admin.customers.show', $id);
     }
 
     public function dashboard(Request $request)
@@ -117,7 +169,6 @@ class DigitalChannelLeadController extends Controller
             array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
             array_push($creditProfilesValues, trim($creditProfile['total']));
         }
-
 
         return view('Leads.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,

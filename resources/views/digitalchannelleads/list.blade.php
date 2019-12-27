@@ -75,7 +75,6 @@
     @endif
     @include('digitalchannelleads.layouts.create_lead_modal')
     @include('digitalchannelleads.layouts.delete_lead_modal')
-    @include('digitalchannelleads.layouts.update_lead_modal')
 </section>
 @endsection
 @section('scriptsJs')
