@@ -71,26 +71,28 @@ class UpToDateRealCifinRepository implements UpToDateRealCifinRepositoryInterfac
         $historialCrediticio = 0;
 
         foreach ($respQueryComporFinExt as $value) {
-            $fechaComporFin = $value->rdapert;
-            $fechaComporFin = explode('/', $fechaComporFin);
-            $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
-            $dateNow = date('Y-m-d');
-            $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
-            if (strtotime($fechaComporFin) > $dateNew) {
-                $paymentArray = explode('|', $value->rdcompor);
-                $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
-                $popArray = array_pop($paymentArray);
-                $paymentArray = array_reverse($paymentArray);
-                foreach ($paymentArray as $habit) {
-                    if ($totalVector >= 6) {
-                        $historialCrediticio = 1;
-                        break;
-                    }
+            if (!empty($value->rdapert)) {
+                $fechaComporFin = $value->rdapert;
+                $fechaComporFin = explode('/', $fechaComporFin);
+                $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
+                $dateNow = date('Y-m-d');
+                $dateNew = strtotime("- 24 MONTH", strtotime($dateNow));
+                if (strtotime($fechaComporFin) > $dateNew) {
+                    $paymentArray = explode('|', $value->rdcompor);
+                    $paymentArray = array_map(array($this, 'applyTrim'), $paymentArray);
+                    $popArray = array_pop($paymentArray);
+                    $paymentArray = array_reverse($paymentArray);
+                    foreach ($paymentArray as $habit) {
+                        if ($totalVector >= 6) {
+                            $historialCrediticio = 1;
+                            break;
+                        }
 
-                    if ($habit == 'N') {
-                        $totalVector++;
-                    } else {
-                        $totalVector = 0;
+                        if ($habit == 'N') {
+                            $totalVector++;
+                        } else {
+                            $totalVector = 0;
+                        }
                     }
                 }
             }
