@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Comments;
 
 use App\Entities\Comments\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -16,12 +17,11 @@ class CommentController extends Controller
         $this->middleware('auth');
     }
 
-    public function addLeadComent($lead, $comment)
+    public function store(Request $request)
     {
+        unset($request['state']);
         $request['idLogin'] = auth()->user()->id;
-        $request['idLead']  = $lead;
-        $request['comment'] = $comment;
-        $this->commentInterface->createComment($request);
+        return $this->commentInterface->createComment($request->input());
 
         return response()->json([true]);
     }

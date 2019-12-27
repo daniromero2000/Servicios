@@ -6,7 +6,7 @@ use App\Entities\Comments\Comment;
 
 interface CommentRepositoryInterface
 {
-    public function createComment(array $data);
+    public function createComment($data);
 
     public function updateComment(array $params): bool;
 

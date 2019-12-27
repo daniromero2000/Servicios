@@ -15,7 +15,7 @@ class CommentRepository implements CommentRepositoryInterface
         $this->model = $Comment;
     }
 
-    public function createComment(array $data)
+    public function createComment($data)
     {
         try {
             return $this->model->create($data);

@@ -175,7 +175,7 @@ Route::namespace('Admin')->group(function () {
 
 
     Route::namespace('Comments')->group(function () {
-        Route::get('/Admin/Comments/api/leads/addComent/{idLead}/{comment}', 'CommentController@addLeadComent');
+        Route::resource('Comments', 'CommentController');
     });
 
     Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');

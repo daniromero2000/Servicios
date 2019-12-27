@@ -528,8 +528,9 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.addComment = function () {
         $scope.comment.idLead = $scope.idLead;
         $http({
-            method: 'GET',
-            url: '/Admin/Comments/api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
+            method: 'POST',
+            data: $scope.comment,
+            url: '/Comments'
         }).then(function successCallback(response) {
             if (response.data != false) {
                 $scope.viewComments($scope.lead.name, $scope.lead.lastName, $scope.state, $scope.idLead, false);
