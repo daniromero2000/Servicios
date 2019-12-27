@@ -73,24 +73,31 @@
                       value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}" required>
                   </div>
                 </div>
-
                 <div class="form-group row">
-                  <label for="socialNetwork">Campaña</label>
-                  <select id="socialNetwork" class="form-control" ng-model="lead.campaign"
-                    ng-options="campaign.id as campaign.name for campaign in campaigns">
-                    <option ng-repeat="campaign in campaigns" value="@{{ campaigns.value}}"
-                      label="@{{ campaigns.label}}">
-                      @{{campaigns.value}}
+                  <label for="campaign">Campaña</label>
+                  <select name="campaign" id="campaign" class="form-control" enabled>
+                    @if(!empty($campaigns))
+                    @foreach($campaigns as $campaign)
+                    <option @if($leadCampaign==$campaign->id) selected="selected" @endif
+                      value="{{ $campaign->id }}">
+                      {{ $campaign->name }}
                     </option>
+                    @endforeach
+                    @endif
                   </select>
                 </div>
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
-                    <label for="service">Servicio <span class="text-danger">*</span></label>
-                    <select id="service" class="form-control" ng-model="lead.typeService">
-                      <option ng-repeat="service in typeServices" value="@{{service.value}}" label="@{{service.label}}">
-                        @{{service.value}}
+                    <label for="typeService">Servicio <span class="text-danger">*</span></label>
+                    <select name="typeService" id="typeService" class="form-control" enabled>
+                      @if(!empty($services))
+                      @foreach($services as $service)
+                      <option @if($leadService==$service->id) selected="selected" @endif
+                        value="{{ $service->id }}">
+                        {{ $service->service }}
                       </option>
+                      @endforeach
+                      @endif
                     </select>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">

@@ -104,13 +104,14 @@ class DigitalChannelLeadController extends Controller
             'digitalChannelLead' => $digitalChannelLead,
             'leadCity'           => $digitalChannelLead->city,
             'leadChannel'        => $digitalChannelLead->channel,
+            'leadCampaign'       => $digitalChannelLead->campaign,
+            'leadService'        => $digitalChannelLead->typeService,
             'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames()
         ]);
     }
-
 
     public function update(Request $request, $id)
     {
