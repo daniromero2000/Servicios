@@ -88,7 +88,7 @@
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8 ">
                                     <p>
-                                        <label for="">Sucursal: </label> @{{ infoLead.SUC }} 123132131
+                                        <label for="">Sucursal: </label> @{{ infoLead.SUC }}
                                     </p>
                                     <p>
                                         <label for="">Celular: </label> @{{ infoLead.CELULAR }}
