@@ -80,12 +80,15 @@
                                         <label for="">Ingresos: </label> <span> $
                                             @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span>
                                     </p>
+                                    <p>
+                                        <label for="">Perfil Crediticio: </label> <span>@{{ infoLead.latest_intention.PERFIL_CREDITICIO }}</span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
                                 <div class="col-sm-12 col-md-8 ">
                                     <p>
-                                        <label for="">Sucursal: </label> @{{ infoLead.SUC }}
+                                        <label for="">Sucursal: </label> @{{ infoLead.SUC }} 123132131
                                     </p>
                                     <p>
                                         <label for="">Celular: </label> @{{ infoLead.CELULAR }}
