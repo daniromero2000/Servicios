@@ -399,7 +399,7 @@ class OportuyaV2Controller extends Controller
 			$validateConsultaFosyga = 1;
 		}
 
-		// Registraduria8
+		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
 		if ($dateConsultaRegistraduria == "true") {
 			$infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $typeDocument, $dateDocument);
@@ -427,9 +427,9 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	public function checkIfExistNum($cellPhone)
+	public function checkIfExistNum($cellPhone, $identificationNumber)
 	{
-		return $this->customerCellPhoneInterface->checkIfExistNum($cellPhone);
+		return $this->customerCellPhoneInterface->checkIfExistNum($cellPhone, $identificationNumber);
 	}
 
 	public function getNumLead($identificationNumber, $typeResp = 'json')

@@ -42,10 +42,10 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
         }
     }
 
-    public function checkIfExistNum($num)
+    public function checkIfExistNum($num, $identificationNumber)
     {
         try {
-            return $this->model->where('NUM', $num)->count();
+            return $this->model->where('NUM', $num)->where('IDENTI', '!=', $identificationNumber)->count();
         } catch (QueryException $e) {
             //throw $th;
         }

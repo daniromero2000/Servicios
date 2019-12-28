@@ -13,7 +13,7 @@ interface CustomerCellPhoneRepositoryInterface
 
   public function checkIfExists($identificationNumber, $num);
 
-  public function checkIfExistNum($num);
+  public function checkIfExistNum($num, $identificationNumber);
 
   public function getCustomerCellPhoneVal($identificationNumber);
 

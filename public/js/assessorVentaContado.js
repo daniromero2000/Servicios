@@ -268,7 +268,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.checkIfExistNum = function(){
 		$http({
 			method: 'GET',
-			url: '/api/checkIfExistNum/'+$scope.lead.CELULAR,
+			url: '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
 			if(response.data >= 1){
 				alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
