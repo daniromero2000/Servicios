@@ -129,7 +129,7 @@
                     class="form-control">
                 </div>
               </div>
-              <div class="col-5 d-flex align-items-end">
+              <div class="col-7 d-flex align-items-end">
                 <div class="form-group w-100">
                   <label for="assessor_id">Asesor</label>
                   <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
