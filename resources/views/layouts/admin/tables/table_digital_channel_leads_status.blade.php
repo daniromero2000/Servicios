@@ -29,8 +29,8 @@ use Carbon\Carbon;
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
-                <td>{{ $data->typeService}}</td>
-                <td>{{ $data->typeProduct}}</td>
+                <td>{{ $data->leadService->service}}</td>
+                <td>{{ $data->leadProduct->lead_product}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
                     <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal"

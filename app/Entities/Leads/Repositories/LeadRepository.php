@@ -117,7 +117,8 @@ class LeadRepository implements LeadRepositoryInterface
                 'leadAssessor',
                 'leadService',
                 'leadCampaign',
-                'comments'
+                'comments',
+                'leadProduct'
             ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)

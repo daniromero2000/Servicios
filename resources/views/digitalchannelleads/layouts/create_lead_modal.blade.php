@@ -106,8 +106,15 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="product">Producto <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.typeProduct" validation-pattern="text" id="product"
-                    name="typeProduct" cols="10" class="form-control" required>
+                  <select id="lead_product" name="lead_product" class="form-control">
+                    @if(!empty($lead_products))
+                    @foreach($lead_products as $lead_product)
+                    <option value="{{ $lead_product->id }}">
+                      {{ $lead_product->lead_product }}
+                    </option>
+                    @endforeach
+                    @endif
+                  </select>
                 </div>
               </div>
               <div class="col-5 d-flex align-items-end">
