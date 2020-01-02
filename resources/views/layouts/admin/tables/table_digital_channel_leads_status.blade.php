@@ -17,7 +17,7 @@ use Carbon\Carbon;
                         @if($data->created_at->diffInDays(Carbon::now()) <= 1) green @endif
                         @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
                         @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
-                        @if($data->leadStatuses->status == 'Vendido') grey @endif
+                        @if($data->leadStatuses->status == 'Vendido') gray @endif
                         " class="btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
                 <td> @if($data->leadStatuses) <span class="text-center badge"
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
