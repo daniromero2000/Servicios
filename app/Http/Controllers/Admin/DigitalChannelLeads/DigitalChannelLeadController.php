@@ -18,7 +18,7 @@ use App\Entities\Leads\Repositories\LeadRepository;
 
 class DigitalChannelLeadController extends Controller
 {
-    private $LeadStatusesInterface, $LeadInterface, $toolsInterface, $subsidiaryInterface;
+    private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
     private $leadProductInterface;
 
@@ -33,7 +33,7 @@ class DigitalChannelLeadController extends Controller
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface
     ) {
-        $this->LeadInterface         = $LeadRepositoryInterface;
+        $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
         $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
         $this->channelInterface      = $channelRepositoryInterface;
@@ -48,9 +48,9 @@ class DigitalChannelLeadController extends Controller
     public function index(Request $request)
     {
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->LeadInterface->listLeads($skip * 30);
+        $list = $this->leadInterface->listLeads($skip * 30);
         if (request()->has('q')) {
-            $list = $this->LeadInterface->searchLeads(
+            $list = $this->leadInterface->searchLeads(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
@@ -100,7 +100,7 @@ class DigitalChannelLeadController extends Controller
             $this->customerInterface->updateOrCreateCustomer($dataOportudata);
         }
 
-        $lead =  $this->LeadInterface->createLead($request->input());
+        $lead =  $this->leadInterface->createLead($request->input());
         $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         if (!empty($request['assessor_id'])) {
             $lead->leadStatus()->attach(3, ['user_id' => auth()->user()->id]);
@@ -114,7 +114,7 @@ class DigitalChannelLeadController extends Controller
 
     public function show(int $id)
     {
-        $digitalChannelLead =  $this->LeadInterface->findLeadByIdFull($id);
+        $digitalChannelLead =  $this->leadInterface->findLeadByIdFull($id);
 
         return view('digitalchannelleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
@@ -135,7 +135,7 @@ class DigitalChannelLeadController extends Controller
 
     public function update(Request $request, $id)
     {
-        $lead = $this->LeadInterface->findLeadById($id);
+        $lead = $this->leadInterface->findLeadById($id);
 
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];
@@ -150,55 +150,63 @@ class DigitalChannelLeadController extends Controller
 
     public function dashboard(Request $request)
     {
-        $to   = Carbon::now();
+        $to = Carbon::now();
         $from = Carbon::now()->subMonth();
 
-        $creditProfiles    = $this->LeadInterface->countLeadsCreditProfiles($from, $to);
-        $creditCards       = $this->LeadInterface->countLeadsCreditCards($from, $to);
-        $LeadStatuses = $this->LeadInterface->countLeadsStatuses($from, $to);
+        $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
+        $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles    = $this->LeadInterface->countLeadsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards       = $this->LeadInterface->countLeadsCreditCards(request()->input('from'), request()->input('to'));
-            $LeadStatuses = $this->LeadInterface->countLeadsStatuses(request()->input('from'), request()->input('to'));
+            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
+            $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
         }
 
-        $LeadStatusesNames  = [];
-        $LeadStatusesValues = [];
-
-        foreach ($LeadStatuses as $LeadStatus) {
-            array_push($LeadStatusesNames, trim($LeadStatus->LeadStatus['NAME']));
-            array_push($LeadStatusesValues, trim($LeadStatus['total']));
+        foreach ($leadChannels as $key => $status) {
+            $leadChannels[] = ['channel' => $key, 'total' => count($leadChannels[$key])];
+            unset($leadChannels[$key]);
         }
 
-        $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
-
-        $statusPercentage = [];
-        $totalStatuses    = $creditCards->sum('total');
-        foreach ($LeadStatuses as $key => $value) {
-            $statusPercentage[$key]['status']     = $value->LeadStatus['NAME'];
-            $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+        foreach ($leadStatuses as $key => $status) {
+            $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            unset($leadStatuses[$key]);
         }
 
-        $creditProfiles = $this->toolsInterface->extractValuesToArray($creditProfiles);
-        $creditCards    = $this->toolsInterface->extractValuesToArray($creditCards);
+        $totalStatuses = $leadChannels->sum('total');
 
-        $creditProfilesNames  = [];
-        $creditProfilesValues = [];
-
-        foreach ($creditProfiles as $creditProfile) {
-            array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
-            array_push($creditProfilesValues, trim($creditProfile['total']));
+        foreach ($leadChannels as $key => $value) {
+            $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
         }
 
-        return view('Leads.dashboard', [
-            'creditProfilesNames'     => $creditProfilesNames,
-            'creditProfilesValues'    => $creditProfilesValues,
-            'LeadStatusesNames'  => $LeadStatusesNames,
-            'LeadStatusesValues' => $LeadStatusesValues,
-            'creditCards'             => $creditCards,
-            'statusPercentage'        => $statusPercentage,
-            'totalStatuses'           => array_sum($creditProfilesValues),
+        $leadChannels   = $leadChannels->toArray();
+        $leadChannels   = array_values($leadChannels);
+
+        $leadStatuses   = $leadStatuses->toArray();
+        $leadStatuses   = array_values($leadStatuses);
+
+        $leadChannelNames  = [];
+        $leadChannelValues  = [];
+
+        foreach ($leadChannels as $leadChannel) {
+            array_push($leadChannelNames, trim($leadChannel['channel']));
+            array_push($leadChannelValues, trim($leadChannel['total']));
+        }
+
+
+        $leadStatusesNames  = [];
+        $leadStatusesValues  = [];
+
+        foreach ($leadStatuses as $leadStatus) {
+            array_push($leadStatusesNames, trim($leadStatus['status']));
+            array_push($leadStatusesValues, trim($leadStatus['total']));
+        }
+
+        return view('communityLeads.dashboard', [
+            'leadChannelNames'  => $leadChannelNames,
+            'leadChannelValues' => $leadChannelValues,
+            'leadStatusesNames'  => $leadStatusesNames,
+            'leadStatusesValues' => $leadStatusesValues,
+            'creditCards'  => $creditCards,
+            'totalStatuses'  => $totalStatuses
         ]);
     }
 }
