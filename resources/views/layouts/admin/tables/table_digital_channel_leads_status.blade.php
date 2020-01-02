@@ -23,14 +23,14 @@ use Carbon\Carbon;
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
                 <td>{{ $data->leadChannel->channel}}</td>
                 <td>{{ $data->leadAssessor['name']}}</td>
-                              <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
+                <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
 
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
                 <td> @if($data->leadService){{ $data->leadService->service}} @endif {{ $data->typeService}}</td>
                 <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif {{ $data->typeProduct}}</td>
-                <td>{{ $data->created_at}}</td>
+                <td>{{ $data->created_at->format('M d, Y h:i a')}}</td>
                 <td>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
                         method="post" class="form-horizontal">

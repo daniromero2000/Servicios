@@ -3,8 +3,13 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4">
+            <div class="col-2">
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary">
+                    <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i class="far fa-plus-square"></i></a>
+                </button>
             </div>
             <div class="col-sm-8">
                 <ol class="breadcrumb float-sm-right">
@@ -55,4 +60,5 @@
         </div>
 </section>
 @include('digitalchannelleads.layouts.update_lead_modal')
+@include('digitalchannelleads.layouts.create_lead_modal')
 @endsection
