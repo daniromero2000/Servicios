@@ -13,7 +13,6 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-
 class Lead extends Model
 {
     use SearchableTrait;
@@ -49,8 +48,8 @@ class Lead extends Model
 
     protected $searchable = [
         'columns' => [
-            'leads.name'   => 10,
-            'leads.telephone'   => 10,
+            'leads.name'      => 10,
+            'leads.telephone' => 10,
         ],
     ];
 

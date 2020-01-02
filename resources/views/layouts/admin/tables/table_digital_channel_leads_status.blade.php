@@ -33,8 +33,6 @@ use Carbon\Carbon;
                 <td>{{ $data->leadProduct->lead_product}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
-                    <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal"
-                        data-target="#updateleadModal"></i>
                     <i class="fas fa-comment cursor"
                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"

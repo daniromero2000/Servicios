@@ -50,7 +50,14 @@ class DigitalChannelLeadController extends Controller
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->LeadInterface->listLeads($skip * 30);
         if (request()->has('q')) {
-            $list = $this->LeadInterface->searchLeads(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->LeadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id')
+            )->sortByDesc('created_at');
         }
         $listCount = $list->count();
 

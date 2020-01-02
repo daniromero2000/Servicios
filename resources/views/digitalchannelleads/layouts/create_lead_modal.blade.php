@@ -41,7 +41,7 @@
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="telephone">Teléfono <span class="text-danger">*</span></label>
                   <input type="text" ng-model="lead.telephone" id="telephone" name="telephone" cols="10"
-                    class="form-control" required>
+                    class="form-control">
                 </div>
               </div>
               <div class="row">
@@ -122,7 +122,7 @@
                   <label for="assessor_id">Asesor</label>
                   <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"
                     style="width: 100%;">
-                    <option disabled selected value> -- Selecciona Paso -- </option>
+                    <option disabled selected value> -- Selecciona Asesor -- </option>
                     <option value="13">Evelyn Correa</option>
                     <option value="18">Vanessa Parra</option>
                     <option value="85">Danitza Naranjo</option>

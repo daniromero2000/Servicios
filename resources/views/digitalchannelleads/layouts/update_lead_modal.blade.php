@@ -31,11 +31,11 @@
                   <div class="col-12 col-sm-6">
                     <label for="email">email </label>
                     <input type="text" name="email" id="email" validation-pattern="email" placeholder="Email"
-                      class="form-control" value="{!! $digitalChannelLead->email ?: old('email')  !!}" required>
+                      class="form-control" value="{!! $digitalChannelLead->email ?: old('email')  !!}">
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
-                    <label for="telephone">telefono <span class="text-danger">*</span></label>
-                    <input type="text" name="telephone" id="telephone" validation-pattern="phone" placeholder="Nombre"
+                    <label for="telephone">Teléfono <span class="text-danger">*</span></label>
+                    <input type="text" name="telephone" id="telephone" validation-pattern="phone" placeholder="Teléfono"
                       class="form-control" value="{!! $digitalChannelLead->telephone ?: old('telephone')  !!}" required>
                   </div>
                 </div>
@@ -71,7 +71,7 @@
                     <label for="name">Ciudad aledaña</label>
                     <input type="text" name="nearbyCity" id="nearbyCity" validation-pattern="text"
                       placeholder="Ciudad Aledaña" class="form-control"
-                      value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}" required>
+                      value="{!! $digitalChannelLead->nearbyCity ?: old('nearbyCity')  !!}">
                   </div>
                 </div>
                 <div class="form-group row">

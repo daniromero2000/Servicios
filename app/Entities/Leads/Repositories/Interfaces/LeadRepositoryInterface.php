@@ -4,6 +4,7 @@ namespace App\Entities\Leads\Repositories\Interfaces;
 
 use App\Entities\Leads\Lead;
 use Illuminate\Support\Collection as Support;
+use Illuminate\Database\Eloquent\Collection;
 
 interface LeadRepositoryInterface
 {
@@ -22,4 +23,6 @@ interface LeadRepositoryInterface
     public function listleads($totalView): Support;
 
     public function findLeadByIdFull(int $id): Lead;
+
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null): Collection;
 }
