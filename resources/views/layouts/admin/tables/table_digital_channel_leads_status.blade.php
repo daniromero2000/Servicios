@@ -29,8 +29,8 @@ use Carbon\Carbon;
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
-                <td>{{ $data->leadService->service}}</td>
-                <td>{{ $data->leadProduct->lead_product}}</td>
+                <td> @if($data->leadService){{ $data->leadService->service}} @endif</td>
+                <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
                     <i class="fas fa-comment cursor"
