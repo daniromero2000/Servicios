@@ -49,6 +49,7 @@
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
                   <select name="city" id="city" class="form-control" enabled>
                     @if(!empty($cities))
+                    <option disabled selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
                     <option value="{{ $city->CIUDAD }}">
                       {{ $city->CIUDAD }}
@@ -61,6 +62,7 @@
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
                   <select id="channel" name="channel" class="form-control">
                     @if(!empty($channels))
+                    <option disabled selected value> -- Selecciona Canal -- </option>
                     @foreach($channels as $channel)
                     <option value="{{ $channel->id }}">
                       {{ $channel->channel }}
@@ -97,6 +99,7 @@
                   <label for="typeService">Servicio <span class="text-danger">*</span></label>
                   <select id="typeService" name="typeService" class="form-control">
                     @if(!empty($services))
+                    <option disabled selected value> -- Selecciona Servicio -- </option>
                     @foreach($services as $service)
                     <option value="{{ $service->id }}">
                       {{ $service->service }}
@@ -109,6 +112,7 @@
                   <label for="product">Producto <span class="text-danger">*</span></label>
                   <select id="lead_product" name="lead_product" class="form-control">
                     @if(!empty($lead_products))
+                    <option disabled selected value> -- Selecciona Producto -- </option>
                     @foreach($lead_products as $lead_product)
                     <option value="{{ $lead_product->id }}">
                       {{ $lead_product->lead_product }}
