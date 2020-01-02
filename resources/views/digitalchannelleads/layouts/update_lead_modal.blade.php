@@ -93,7 +93,7 @@
                     <select name="typeService" id="typeService" class="form-control" enabled>
                       @if(!empty($services))
                       @foreach($services as $service)
-                      <option @if($leadService==$service->id) selected="selected" @endif
+                      <option @if($leadProduct==$service->id) selected="selected" @endif
                         value="{{ $service->id }}">
                         {{ $service->service }}
                       </option>
@@ -103,27 +103,31 @@
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="product">Producto <span class="text-danger">*</span></label>
-                    <input type="text" name="typeProduct" id="typeProduct" validation-pattern="text"
-                      placeholder="Producto" class="form-control"
-                      value="{!! $digitalChannelLead->typeProduct ?: old('typeProduct')  !!}" required>
+                    <select name="typeProduct" id="typeProduct" class="form-control" enabled>
+                      @if(!empty($lead_products))
+                      @foreach($lead_products as $lead_product)
+                      <option @if($leadService==$lead_product->id) selected="selected" @endif
+                        value="{{ $lead_product->id }}">
+                        {{ $lead_product->lead_product }}
+                      </option>
+                      @endforeach
+                      @endif
+                    </select>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6 d-flex align-items-end">
                     <div class="form-group w-100">
                       <label for="state">Estado</label>
-                      <select class="form-control  select2" id="state" name="state" ng-model="lead.state"
-                        style="width: 100%;">
-                        <option disabled selected value> -- Selecciona Estado -- </option>
-                        <option value="1">Contactado</option>
-                        <option value="2">Vendido</option>
-                        <option value="3">Asignado a:</option>
-                        <option value="4">Impactado</option>
-                        <option value="5">Desistido</option>
-                        <option value="6">Negado</option>
-                        <option value="7">Cotizado</option>
-                        <option value="8">En Gestión</option>
-                        <option value="9">Cerrado</option>
+                      <select name="state" id="state" class="form-control" enabled>
+                        @if(!empty($lead_statuses))
+                        @foreach($lead_statuses as $lead_status)
+                        <option @if($leadStatus==$lead_status->id) selected="selected" @endif
+                          value="{{ $lead_status->id }}">
+                          {{ $lead_status->status }}
+                        </option>
+                        @endforeach
+                        @endif
                       </select>
                     </div>
                   </div>

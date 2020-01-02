@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
+use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -29,16 +30,18 @@ class DigitalChannelLeadController extends Controller
         ServiceRepositoryInterface $serviceRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface,
-        LeadProductRepositoryInterface $leadProductRepositoryInterface
+        LeadProductRepositoryInterface $leadProductRepositoryInterface,
+        LeadStatusRepositoryInterface $leadStatusRepositoryInterface
     ) {
-        $this->LeadInterface        = $LeadRepositoryInterface;
-        $this->toolsInterface       = $toolRepositoryInterface;
-        $this->subsidiaryInterface  = $subsidiaryRepositoryInterface;
-        $this->channelInterface     = $channelRepositoryInterface;
-        $this->serviceInterface     = $serviceRepositoryInterface;
-        $this->campaignInterface    = $campaignRepositoryInterface;
-        $this->customerInterface    = $customerRepositoryInterface;
-        $this->leadProductInterface = $leadProductRepositoryInterface;
+        $this->LeadInterface         = $LeadRepositoryInterface;
+        $this->toolsInterface        = $toolRepositoryInterface;
+        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
+        $this->channelInterface      = $channelRepositoryInterface;
+        $this->serviceInterface      = $serviceRepositoryInterface;
+        $this->campaignInterface     = $campaignRepositoryInterface;
+        $this->customerInterface     = $customerRepositoryInterface;
+        $this->leadProductInterface  = $leadProductRepositoryInterface;
+        $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -61,7 +64,8 @@ class DigitalChannelLeadController extends Controller
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
-            'lead_products'       => $this->leadProductInterface->getAllLeadProductNames()
+            'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames()
         ]);
     }
 
@@ -111,10 +115,14 @@ class DigitalChannelLeadController extends Controller
             'leadChannel'        => $digitalChannelLead->channel,
             'leadCampaign'       => $digitalChannelLead->campaign,
             'leadService'        => $digitalChannelLead->typeService,
+            'leadProduct'        => $digitalChannelLead->typeProduct,
+            'leadStatus' =>  $digitalChannelLead->state,
             'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
-            'campaigns'          => $this->campaignInterface->getAllCampaignNames()
+            'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
+            'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames()
         ]);
     }
 
