@@ -115,6 +115,11 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-12 col-sm-12 no-padding-right">
+                    <label for="telephone">Observación <span class="text-danger">*</span></label>
+                    <input type="textarea" name="description" id="description" validation-pattern="text" placeholder="Observación"
+                      class="form-control" value="{!! $digitalChannelLead->description ?: old('description')  !!}">
+                  </div>
                 <div class="row">
                   <div class="col-6 d-flex align-items-end">
                     <div class="form-group w-100">

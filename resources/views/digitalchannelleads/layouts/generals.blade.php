@@ -23,6 +23,7 @@
           <th class="text-center" scope="col">Ciudad</th>
           <th class="text-center" scope="col">Servicio</th>
           <th class="text-center" scope="col">Producto</th>
+          <th class="text-center" scope="col">Observación</th>
           <th class="text-center" scope="col">Canal</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
             @endif</td>
           <td class="text-center">
             @if($digitalChannelLead->leadProduct){{ $digitalChannelLead->leadProduct->lead_product }} @endif</td>
+            <td class="text-center">{{ $digitalChannelLead->description }}</td>
           <td class="text-center">{{ $digitalChannelLead->leadChannel->channel }}</td>
         </tr>
       </tbody>

@@ -117,6 +117,13 @@
                   </select>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-12 col-sm-12 form-group">
+                  <label for="description">Observación</label>
+                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="description" name="description" cols="10"
+                    class="form-control">
+                </div>
+              </div>
               <div class="col-5 d-flex align-items-end">
                 <div class="form-group w-100">
                   <label for="assessor_id">Asesor</label>
