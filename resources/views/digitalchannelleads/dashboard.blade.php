@@ -18,7 +18,7 @@
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
                 <div class="text-right mr-2">
-                  <span class="info-box-text text-right"><a href="/Administrator/communityLeads"
+                  <span class="info-box-text text-right"><a href="/Administrator/digitalchannelleads"
                       style="color: white; !important">Ver
                       Mas</a></span>
                 </div>
@@ -154,7 +154,7 @@
           </div>
           <div class="card-body">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('community_dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('digitalchannelleads_dashboard')])
             </div>
             <div class="chart">
               <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
