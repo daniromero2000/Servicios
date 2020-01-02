@@ -24,8 +24,8 @@
 					<h3 class="modal-titleForm titleForm-motos">Motos</h3>
 					<form role=form method="POST" id="saveLeadmotos" action="{{ route('motos.store') }}">
 						{{ csrf_field() }}
-						<input type="hidden" name="typeProduct" value="Motos">
-						<input type="hidden" name="typeService" value="Motos">
+						<input type="hidden" name="typeProduct" value="26">
+						<input type="hidden" name="typeService" value="3">
 						<input type="hidden" name="channel" value="1">
 						<div class="form-group">
 							<label for="name" class="control-label">Nombres</label>

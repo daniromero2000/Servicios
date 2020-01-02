@@ -57,7 +57,7 @@
                     <select name="channel" id="channel" class="form-control" enabled>
                       @if(!empty($channels))
                       @foreach($channels as $channel)
-                      <option @if($leadChannel==$channel->channel) selected="selected" @endif
+                      <option @if($leadChannel==$channel->id) selected="selected" @endif
                         value="{{ $channel->id }}">
                         {{ $channel->channel }}
                       </option>
@@ -114,6 +114,12 @@
                       @endif
                     </select>
                   </div>
+                </div>
+                <div class="col-12 col-sm-12 no-padding-right">
+                  <label for="telephone">Observación <span class="text-danger">*</span></label>
+                  <input type="textarea" name="description" id="description" validation-pattern="text"
+                    placeholder="Observación" class="form-control"
+                    value="{!! $digitalChannelLead->description ?: old('description')  !!}">
                 </div>
                 <div class="row">
                   <div class="col-6 d-flex align-items-end">

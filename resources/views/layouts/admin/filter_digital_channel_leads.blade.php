@@ -8,7 +8,7 @@
             <div class="input-group">
                 <div class="row w-100 d-flex justify-content-center">
                     <div class="col-6 col-md-2">
-                        <label for="q">Buscar</label>
+                        <label for="q">Buscar (Cédula y Nombre)</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>

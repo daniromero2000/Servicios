@@ -15,8 +15,11 @@ class CreateLeadPricesTable extends Migration
     {
         Schema::create('lead_prices', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('lead_product_id');
+            $table->text('description');
             $table->integer('lead_price');
             $table->integer('lead_id');
+            $table->integer('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

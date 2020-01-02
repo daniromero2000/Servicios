@@ -47,8 +47,9 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                  <select name="city" id="city" class="form-control" enabled>
+                  <select name="city" id="city" class="form-control" enabled required>
                     @if(!empty($cities))
+                    <option disabled selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
                     <option value="{{ $city->CIUDAD }}">
                       {{ $city->CIUDAD }}
@@ -59,8 +60,9 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
-                  <select id="channel" name="channel" class="form-control">
+                  <select id="channel" name="channel" class="form-control" required>
                     @if(!empty($channels))
+                    <option disabled selected value> -- Selecciona Canal -- </option>
                     @foreach($channels as $channel)
                     <option value="{{ $channel->id }}">
                       {{ $channel->channel }}
@@ -82,6 +84,7 @@
                   <label for="socialNetwork">Campaña</label>
                   <select id="campaign" name="campaign" class="form-control">
                     @if(!empty($campaigns))
+                    <option disabled selected value> -- Selecciona Campaña -- </option>
                     @foreach($campaigns as $campaign)
                     <option value="{{ $campaign->id }}">
                       {{ $campaign->name }}
@@ -94,8 +97,9 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="typeService">Servicio <span class="text-danger">*</span></label>
-                  <select id="typeService" name="typeService" class="form-control">
+                  <select id="typeService" name="typeService" class="form-control" required>
                     @if(!empty($services))
+                    <option disabled selected value> -- Selecciona Servicio -- </option>
                     @foreach($services as $service)
                     <option value="{{ $service->id }}">
                       {{ $service->service }}
@@ -108,6 +112,7 @@
                   <label for="product">Producto <span class="text-danger">*</span></label>
                   <select id="lead_product" name="lead_product" class="form-control">
                     @if(!empty($lead_products))
+                    <option disabled selected value> -- Selecciona Producto -- </option>
                     @foreach($lead_products as $lead_product)
                     <option value="{{ $lead_product->id }}">
                       {{ $lead_product->lead_product }}
@@ -117,7 +122,14 @@
                   </select>
                 </div>
               </div>
-              <div class="col-5 d-flex align-items-end">
+              <div class="row">
+                <div class="col-12 col-sm-12 form-group">
+                  <label for="description">Observación</label>
+                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="description" name="description" cols="10"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-7 d-flex align-items-end">
                 <div class="form-group w-100">
                   <label for="assessor_id">Asesor</label>
                   <select class="form-control  select2" id="assessor_id" name="assessor_id" ng-model="lead.assessor_id"

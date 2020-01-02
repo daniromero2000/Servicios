@@ -173,9 +173,12 @@ Route::namespace('Admin')->group(function () {
     Route::resource('Administrator/assessors', 'assessorsController');
     Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors.dashboard');
 
-
     Route::namespace('Comments')->group(function () {
         Route::resource('Comments', 'CommentController');
+    });
+
+    Route::namespace('LeadPrices')->group(function () {
+        Route::resource('leadPrices', 'LeadPriceController');
     });
 
     Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');

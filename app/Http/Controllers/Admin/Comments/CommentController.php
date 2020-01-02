@@ -21,8 +21,8 @@ class CommentController extends Controller
     {
         unset($request['state']);
         $request['idLogin'] = auth()->user()->id;
-        return $this->commentInterface->createComment($request->input());
+        $this->commentInterface->createComment($request->input());
 
-        return response()->json([true]);
+        return redirect()->back();
     }
 }

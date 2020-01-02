@@ -18,23 +18,20 @@ use Carbon\Carbon;
                         @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
                         @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
                         " class="btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
-                <td><span class="text-center badge"
+                <td> @if($data->leadStatuses) <span class="text-center badge"
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
-                        class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span></td>
+                        class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
                 <td>{{ $data->leadChannel->channel}}</td>
                 <td>{{ $data->leadAssessor['name']}}</td>
-                <td>{{ $data->identificationNumber}}</td>
                 <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
-                <td>{{ $data->email}}</td>
+
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
                 <td> @if($data->leadService){{ $data->leadService->service}} @endif {{ $data->typeService}}</td>
                 <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif {{ $data->typeProduct}}</td>
-                <td>{{ $data->created_at}}</td>
+                <td>{{ $data->created_at->format('M d, Y h:i a')}}</td>
                 <td>
-                    <i class="fas fa-comment cursor"
-                        ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
                         method="post" class="form-horizontal">
                         <input type="hidden" name="_method" value="delete">

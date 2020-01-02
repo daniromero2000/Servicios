@@ -106,5 +106,9 @@ class LeadProductTableSeeder extends Seeder
         factory(LeadProduct::class)->create([
             'lead_product'  => 'Aire acondicionado',
         ]);
+
+        factory(LeadProduct::class)->create([
+            'lead_product'  => 'Moto',
+        ]);
     }
 }
