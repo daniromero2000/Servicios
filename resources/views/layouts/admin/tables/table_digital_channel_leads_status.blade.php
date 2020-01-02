@@ -30,8 +30,12 @@ use Carbon\Carbon;
 
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
-                <td> @if($data->leadService){{ $data->leadService->service}} @endif {{ $data->typeService}}</td>
-                <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif {{ $data->typeProduct}}</td>
+             <td> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service}} @else
+                    {{$digitalChannelLead->typeService}}
+                    @endif</td>
+                <td>
+                    @if($digitalChannelLead->leadProduct) {{ $digitalChannelLead->leadProduct->lead_product }} @else
+                    {{$digitalChannelLead->typeProduct}} @endif</td>
                 <td>{{ $data->created_at->format('M d, Y h:i a')}}</td>
                 <td>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
