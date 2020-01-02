@@ -7,12 +7,9 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qtipoTarjetaAprobados': '',
         'qOrigenAprobados' : '',
         'qcityAprobados': '',
-        'qleadChannel': '',
         'qfechaInicialAprobados': '',
         'qfechaFinalAprobados': '',
-        'qCM': '',
         'qRL': '',
-        'qGen': '',
         'qfechaInicialTR': '',
         'qfechaFinalTR': '',
         'qOrigenTR': '',
@@ -37,13 +34,10 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.totalLeads = 0;
     $scope.totalLeadsAnt = 0;
     $scope.totalLeadsRejected = 0;
-    $scope.totalLeadsCM = 0;
-    $scope.totalLeadsGen = 0;
     $scope.totalLeadsTR = 0;
     $scope.totalLeadsTRAnt = 0;
     $scope.cargando = true;
     $scope.cargandoAnt = true;
-    $scope.cargandoCM = true;
     $scope.cargandoRL = true;
     $scope.cargandoGen = true;
     $scope.cargandoTR = true;
@@ -77,7 +71,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.comments = [];
     $scope.leads = [];
     $scope.leadsAnt = [];
-    $scope.leadsCM = [];
     $scope.leadsGen = [];
     $scope.leadsRejected = [];
     $scope.leadsTR = [];
@@ -180,15 +173,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&qtipoTarjetaAprobados=' + $scope.q.qtipoTarjetaAprobados +
                 '&qOrigenAprobados=' + $scope.q.qOrigenAprobados +
                 '&qcityAprobados=' + $scope.q.qcityAprobados +
-                '&qleadChannel=' + $scope.q.qleadChannel +
                 '&qfechaInicialAprobados=' + $scope.q.qfechaInicialAprobados +
                 '&qfechaFinalAprobados=' + $scope.q.qfechaFinalAprobados + $scope.q.qcityAprobados +
                 '&qfechaInicialTR=' + $scope.q.qfechaInicialTR +
                 '&qfechaFinalTR=' + $scope.q.qfechaFinalTR +
                 '&qOrigenTR=' + $scope.q.qOrigenTR +
-                '&qCM=' + $scope.q.qCM +
                 '&qRL=' + $scope.q.qRL +
-                '&qGen=' + $scope.q.qGen +
                 '&initFrom=' + $scope.q.initFrom +
                 '&initFromAnt=' + $scope.q.initFromAnt +
                 '&initFromCM=' + $scope.q.initFromCM +
@@ -208,8 +198,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             $scope.totalLeads = response.data.totalLeads;
             $scope.totalLeadsAnt = response.data.totalLeadsAnt;
             $scope.totalLeadsRejected = response.data.totalLeadsRejected;
-            $scope.totalLeadsCM = response.data.totalLeadsCM;
-            $scope.totalLeadsGen = response.data.totalLeadsGen;
             $scope.totalLeadsTR = response.data.totalLeadsTR;
 
 
@@ -236,23 +224,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 });
                 $scope.cargandoTR = false;
             }
-
-            if (response.data.leadsGen != false) {
-                $scope.q.initFromGen += response.data.leadsGen.length;
-                angular.forEach(response.data.leadsGen, function (value, key) {
-                    $scope.leadsGen.push(value);
-                });
-                $scope.cargandoGen = false;
-            }
-
-            if (response.data.leadsCM != false) {
-                $scope.q.initFromCM += response.data.leadsCM.length;
-                angular.forEach(response.data.leadsCM, function (value, key) {
-                    $scope.leadsCM.push(value);
-                });
-                $scope.cargandoCM = false;
-            }
-
             hideLoader();
         }, function errorCallback(response) {
             console.log(response);
@@ -262,13 +233,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.searchLeads = function () {
         $scope.q.initFrom = 0;
         $scope.q.initFromAnt = 0;
-        $scope.q.initFromCM = 0;
         $scope.q.initFromGen = 0;
         $scope.q.initFromTR = 0;
         $scope.q.initFromTRAnt = 0;
         $scope.leads = [];
         $scope.leadsAnt = [];
-        $scope.leadsCM = [];
         $scope.leadsTR = [];
         $scope.leadsGen = [];
         $scope.leadsRejected = [];
@@ -278,7 +247,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.resetFiltros = function () {
         $scope.leads = [];
         $scope.leadsAnt = [];
-        $scope.leadsCM = [];
         $scope.leadsTR = [];
         $scope.leadsGen = [];
         $scope.q = {
@@ -286,7 +254,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qtipoTarjetaAprobados': '',
             'qOrigenAprobados' : '',
             'qcityAprobados': '',
-            'qleadChannel': '',
             'qfechaInicialAprobados': '',
             'qfechaFinalAprobados': '',
             'qCM': '',
@@ -475,31 +442,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             }
         }, function errorCallback(response) {
             console.log(response);
-
-        });
-    };
-
-    // get a comments for a community manager lead and show a modal
-    $scope.viewCommentsCM = function (name, lastName, state, idLead, init = true) {
-        $scope.comments = [];
-        $scope.idLead = idLead;
-        $http({
-            method: 'GET',
-            url: '/api/leads/getComentsLeads/' + idLead
-        }).then(function successCallback(response) {
-            if (response.data != false) {
-                angular.forEach(response.data, function (value, key) {
-                    $scope.comments.push(value);
-                });
-            }
-
-            if (init) {
-                $("#viewCommentsCM").modal("show");
-                $scope.nameLead = name;
-                $scope.lastNameLead = lastName;
-                $scope.state = state;
-            }
-        }, function errorCallback(response) {
 
         });
     };
