@@ -33,8 +33,8 @@
           <td class="text-center">{{ $digitalChannelLead->email }}</td>
           <td class="text-center">{{ $digitalChannelLead->telephone }}</td>
           <td class="text-center">{{ $digitalChannelLead->city }}</td>
-          <td class="text-center">{{ $digitalChannelLead->leadService->service }}</td>
-          <td class="text-center">{{ $digitalChannelLead->leadProduct->lead_product }}</td>
+          <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service }} @endif</td>
+          <td class="text-center"> @if($digitalChannelLead->leadProduct){{ $digitalChannelLead->leadProduct->lead_product }} @endif</td>
           <td class="text-center">{{ $digitalChannelLead->leadChannel->channel }}</td>
 
         </tr>
