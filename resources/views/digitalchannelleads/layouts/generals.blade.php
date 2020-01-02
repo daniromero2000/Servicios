@@ -11,7 +11,6 @@
           class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
         {{ $digitalChannelLead->leadAssessor['name']}}
       </div>
-
     </div>
   </div>
   <div class="card-body table-responsive pt-1">
@@ -33,10 +32,11 @@
           <td class="text-center">{{ $digitalChannelLead->email }}</td>
           <td class="text-center">{{ $digitalChannelLead->telephone }}</td>
           <td class="text-center">{{ $digitalChannelLead->city }}</td>
-          <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service }} @endif</td>
-          <td class="text-center"> @if($digitalChannelLead->leadProduct){{ $digitalChannelLead->leadProduct->lead_product }} @endif</td>
+          <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service }}
+            @endif</td>
+          <td class="text-center">
+            @if($digitalChannelLead->leadProduct){{ $digitalChannelLead->leadProduct->lead_product }} @endif</td>
           <td class="text-center">{{ $digitalChannelLead->leadChannel->channel }}</td>
-
         </tr>
       </tbody>
     </table>
