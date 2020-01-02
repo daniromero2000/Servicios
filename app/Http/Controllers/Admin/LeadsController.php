@@ -69,33 +69,12 @@ class LeadsController extends Controller
             'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
         ]);
 
-        $getLeadsCM = $this->getLeadsCM([
-            'q'        => $request->get('q'),
-            'initFromCM' => $request->get('initFromCM'),
-            'qcityAprobados'         => $request->get('qcityAprobados'),
-            'qleadChannel'         => $request->get('qleadChannel'),
-            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
-            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
-        ]);
-
-        $getLeadsGen = $this->getGenLeads([
-            'q'        => $request->get('q'),
-            'initFromGen' => $request->get('initFromGen'),
-            'qcityAprobados'         => $request->get('qcityAprobados'),
-            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
-            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
-        ]);
-
         return response()->json([
             'leadsDigitalAnt' => $getLeadsDigitalAnt['leadsDigitalAnt'],
             'leadsDigital'    => $getLeadsDigital['leadsDigital'],
-            'leadsCM'         => $getLeadsCM['leadsCM'],
             'totalLeads'      => $getLeadsDigital['totalLeads'],
             'totalLeadsAnt'   => $getLeadsDigitalAnt['totalLeadsAnt'],
-            'totalLeadsCM'    => $getLeadsCM['totalLeadsCM'],
             'codeAsesor'      => $this->codeAsessor,
-            'leadsGen'        => $getLeadsGen['leadsGen'],
-            'totalLeadsGen'   => $getLeadsGen['totalLeadsGen'],
             'leadsTR'         => $getLeadsTR['leadsTR'],
             'totalLeadsTR'    => $getLeadsTR['totalLeadsTR'],
         ]);
@@ -230,62 +209,6 @@ class LeadsController extends Controller
         ];
     }
 
-    private function getLeadsCM($request)
-    {
-        $queryCM = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`assessor_id`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`typeProduct`, lead.`state`, lead.`channel`, lead.`campaign`, cam.`name` as campaignName, lead.`nearbyCity`
-        FROM `leads` as lead
-        LEFT JOIN `campaigns` as cam ON cam.id = lead.campaign
-        WHERE (`channel` = 2 OR `channel` = 3 )";
-
-        if ($request['q'] != '') {
-            $queryCM .= sprintf(
-                " AND (lead.`name` LIKE '%s' OR lead.`lastName` LIKE '%s' OR lead.`identificationNumber` LIKE '%s' OR lead.`telephone` LIKE '%s' )",
-                '%' . $request['q'] . '%',
-                '%' . $request['q'] . '%',
-                '%' . $request['q'] . '%',
-                '%' . $request['q'] . '%'
-            );
-        }
-
-        if ($request['qcityAprobados'] != '') {
-            $queryCM .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
-        }
-
-        if ($request['qleadChannel'] != '') {
-            $queryCM .= sprintf(" AND (lead.`channel` = '%s') ", $request['qleadChannel']);
-        }
-
-        if ($request['qfechaInicialAprobados'] != '') {
-            $request['qfechaInicialAprobados'] .= " 00:00:00";
-            $queryCM .= sprintf(" AND (lead.`created_at` >= '%s') ", $request['qfechaInicialAprobados']);
-        }
-
-        if ($request['qfechaFinalAprobados'] != '') {
-            $request['qfechaFinalAprobados'] .= " 23:59:59";
-            $queryCM .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['qfechaFinalAprobados']);
-        }
-
-        $respTotalLeadsCM = DB::select($queryCM);
-        $queryCM .= "ORDER BY `created_at` DESC ";
-        $queryCM .= sprintf(" LIMIT %s,30", $request['initFromCM']);
-        $resp = DB::select($queryCM);
-
-
-        $leadsCM = [];
-
-        foreach ($resp as $key => $lead) {
-            if ($lead->assessor_id != '') {
-                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->assessor_id)->name;
-            }
-            $leadsCM[]      = $resp[$key];
-        }
-
-        return [
-            'leadsCM' =>  $leadsCM,
-            'totalLeadsCM' => count($respTotalLeadsCM)
-        ];
-    }
-
     private function getLeadsTradicional($request)
     {
         $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION
@@ -332,46 +255,6 @@ class LeadsController extends Controller
         return [
             'leadsTR' => DB::connection('oportudata')->select($queryTradicional),
             'totalLeadsTR' => count($respTotalLeadsTradicional)
-        ];
-    }
-
-    private function getGenLeads($request)
-    {
-        $queryGenLeads = "SELECT lead.`id`, lead.`name`, lead.`lastName`, CONCAT(lead.`name`,' ',lead.`lastName`) as nameLast, lead.`email`, lead.`telephone`, lead.`identificationNumber`, lead.`created_at`, lead.`city`, lead.`typeService`, lead.`state`, lead.`channel`, lead.`nearbyCity`
-        FROM `leads` as lead
-        WHERE `typeService` IN  ('Motos','Seguros')
-        AND lead.`state` !=  3 ";
-
-        if ($request['q'] != '') {
-            $queryGenLeads .= sprintf(
-                " AND (lead.`name` LIKE '%s' OR lead.`typeService` LIKE '%s' OR lead.`telephone` LIKE '%s' ) ",
-                '%' . $request['q'] . '%',
-                '%' . $request['q'] . '%',
-                '%' . $request['q'] . '%'
-            );
-        }
-
-        if ($request['qcityAprobados'] != '') {
-            $queryGenLeads .= sprintf(" AND (lead.`city` = '%s') ", $request['qcityAprobados']);
-        }
-
-        if ($request['qfechaInicialAprobados'] != '') {
-            $request['qfechaInicialAprobados'] .= " 00:00:00";
-            $queryGenLeads .= sprintf(" AND (lead.`created_at` >= '%s') ", $request['qfechaInicialAprobados']);
-        }
-
-        if ($request['qfechaFinalAprobados'] != '') {
-            $request['qfechaFinalAprobados'] .= " 23:59:59";
-            $queryGenLeads .= sprintf(" AND (lead.`created_at` <= '%s') ", $request['qfechaFinalAprobados']);
-        }
-
-        $respTotalLeadsGen = DB::select($queryGenLeads);
-        $queryGenLeads .= "ORDER BY `created_at` DESC ";
-        $queryGenLeads .= sprintf(" LIMIT %s,30", $request['initFromGen']);
-
-        return [
-            'leadsGen'      => DB::select($queryGenLeads),
-            'totalLeadsGen' => count($respTotalLeadsGen)
         ];
     }
 

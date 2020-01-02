@@ -17,12 +17,6 @@
             data-toggle="tab" role="tab" aria-controls="nav-general">Aprobados Ant</a>
         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }" ng-click="tabs = 2"
             data-toggle="tab" role="tab" aria-controls="nav-general">Tradicional</a>
-        <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
-            ng-class="{ 'active': tabs == 5 }" ng-click="tabs = 5" data-toggle="tab" role="tab"
-            aria-controls="nav-img">Intenciones</a>
-        <a ng-show="codeAsesor != '1088302947'" class="nav-item nav-link cursor" id="nav-img-tab"
-            ng-class="{ 'active': tabs == 6 }" ng-click="tabs = 6" data-toggle="tab" role="tab"
-            aria-controls="nav-img">Leads Seguros y Motos</a>
     </div>
 </nav>
 
