@@ -123,13 +123,13 @@ class DigitalChannelLeadController extends Controller
             'leadCampaign'       => $digitalChannelLead->campaign,
             'leadService'        => $digitalChannelLead->typeService,
             'leadProduct'        => $digitalChannelLead->typeProduct,
-            'leadStatus' =>  $digitalChannelLead->state,
+            'leadStatus'         => $digitalChannelLead->state,
             'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames()
+            'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames()
         ]);
     }
 

@@ -8,7 +8,8 @@
             </div>
             <div class="col-2">
                 <button class="btn btn-primary">
-                    <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i class="far fa-plus-square"></i></a>
+                    <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
+                            class="far fa-plus-square"></i></a>
                 </button>
             </div>
             <div class="col-sm-8">

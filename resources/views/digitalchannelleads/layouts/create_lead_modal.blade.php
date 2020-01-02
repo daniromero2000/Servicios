@@ -82,6 +82,7 @@
                   <label for="socialNetwork">Campaña</label>
                   <select id="campaign" name="campaign" class="form-control">
                     @if(!empty($campaigns))
+                    <option disabled selected value> -- Selecciona Asesor -- </option>
                     @foreach($campaigns as $campaign)
                     <option value="{{ $campaign->id }}">
                       {{ $campaign->name }}
