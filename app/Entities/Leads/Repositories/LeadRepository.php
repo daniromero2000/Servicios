@@ -148,8 +148,7 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('state', $status);
             })->when($assessor, function ($q, $assessor) {
                 return $q->where('assessor_id', $assessor);
-            })
-                ->orderBy('created_at', 'desc')
+            })->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
