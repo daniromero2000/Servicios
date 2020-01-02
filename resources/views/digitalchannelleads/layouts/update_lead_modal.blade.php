@@ -57,7 +57,7 @@
                     <select name="channel" id="channel" class="form-control" enabled>
                       @if(!empty($channels))
                       @foreach($channels as $channel)
-                      <option @if($leadChannel==$channel->channel) selected="selected" @endif
+                      <option @if($leadChannel==$channel->id) selected="selected" @endif
                         value="{{ $channel->id }}">
                         {{ $channel->channel }}
                       </option>
