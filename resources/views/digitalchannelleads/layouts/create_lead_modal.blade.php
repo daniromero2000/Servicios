@@ -47,7 +47,7 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                  <select name="city" id="city" class="form-control" enabled>
+                  <select name="city" id="city" class="form-control" enabled required>
                     @if(!empty($cities))
                     <option disabled selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
-                  <select id="channel" name="channel" class="form-control">
+                  <select id="channel" name="channel" class="form-control" required>
                     @if(!empty($channels))
                     <option disabled selected value> -- Selecciona Canal -- </option>
                     @foreach($channels as $channel)
@@ -97,7 +97,7 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="typeService">Servicio <span class="text-danger">*</span></label>
-                  <select id="typeService" name="typeService" class="form-control">
+                  <select id="typeService" name="typeService" class="form-control" required>
                     @if(!empty($services))
                     <option disabled selected value> -- Selecciona Servicio -- </option>
                     @foreach($services as $service)
