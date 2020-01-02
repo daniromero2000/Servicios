@@ -23,8 +23,7 @@ use Carbon\Carbon;
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
                 <td>{{ $data->leadChannel->channel}}</td>
                 <td>{{ $data->leadAssessor['name']}}</td>
-                <td>{{ $data->identificationNumber}}</td>
-                <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
+                              <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
@@ -33,8 +32,6 @@ use Carbon\Carbon;
                 <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif {{ $data->typeProduct}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
-                    <i class="fas fa-comment cursor"
-                        ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
                         method="post" class="form-horizontal">
                         <input type="hidden" name="_method" value="delete">

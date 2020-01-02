@@ -7,7 +7,7 @@
           </span>
         </h2>
         <span class="text-center badge" style="color: white ; background-color: {{$digitalChannelLead->leadStatuses->color }}"
-          class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
+          class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span> {{ $digitalChannelLead->leadAssessor['name']}}
       </div>
 
     </div>

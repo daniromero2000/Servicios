@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-7">
     <div class="card card-table-reset">
         <div class="card-body">
             <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
@@ -21,7 +21,7 @@
                     @foreach($datas as $data)
                     <tr>
                         <td class="text-center">
-                            {{ $data->created_at }}
+                            {{ $data->created_at->format('M d, Y h:i a') }}
                         </td>
                         <td class="text-center">
                             {{ $data->user->name }}

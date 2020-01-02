@@ -56,7 +56,7 @@
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($digitalChannelLeads)
                             @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
-                            $digitalChannelLeads ])
+                            $digitalChannelLeads  ])
                             @include('layouts.admin.pagination.pagination', [$skip])
                             @else
                             @include('layouts.admin.pagination.pagination_null', [$skip])
