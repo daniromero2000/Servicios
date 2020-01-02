@@ -125,8 +125,8 @@
               <div class="row">
                 <div class="col-12 col-sm-12 form-group">
                   <label for="description">Observación</label>
-                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="description" name="description" cols="10"
-                    class="form-control">
+                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="description"
+                    name="description" cols="10" class="form-control">
                 </div>
               </div>
               <div class="col-7 d-flex align-items-end">
