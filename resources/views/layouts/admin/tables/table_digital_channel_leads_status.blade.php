@@ -29,12 +29,10 @@ use Carbon\Carbon;
                 <td>{{ $data->email}}</td>
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}</td>
-                <td>{{ $data->typeService}}</td>
-                <td>{{ $data->typeProduct}}</td>
+                <td> @if($data->leadService){{ $data->leadService->service}} @endif {{ $data->typeService}}</td>
+                <td> @if($data->leadProduct){{ $data->leadProduct->lead_product}} @endif {{ $data->typeProduct}}</td>
                 <td>{{ $data->created_at}}</td>
                 <td>
-                    <i class="fas fa-edit cursor" title="Actualizar Lead" data-toggle="modal"
-                        data-target="#updateleadModal"></i>
                     <i class="fas fa-comment cursor"
                         ng-click="viewCommentsCM(leadCM.name, leadCM.lastName, leadCM.state, leadCM.id)"></i>
                     <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"

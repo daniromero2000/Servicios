@@ -5,13 +5,13 @@ namespace App\Entities\Leads;
 use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
+use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
-
 
 class Lead extends Model
 {
@@ -48,8 +48,8 @@ class Lead extends Model
 
     protected $searchable = [
         'columns' => [
-            'leads.name'   => 10,
-            'leads.telephone'   => 10,
+            'leads.name'      => 10,
+            'leads.telephone' => 10,
         ],
     ];
 
@@ -96,5 +96,10 @@ class Lead extends Model
     public function leadStatusesLogs()
     {
         return $this->hasMany(LeadStatusesLog::class, 'lead_id');
+    }
+
+    public function leadProduct()
+    {
+        return $this->belongsTo(LeadProduct::class, 'typeProduct');
     }
 }

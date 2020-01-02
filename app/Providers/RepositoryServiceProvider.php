@@ -78,11 +78,25 @@ use App\Entities\Services\Repositories\ServiceRepository;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\FactoryRequestStatusesLogRepository;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
+use App\Entities\LeadProducts\Repositories\LeadProductRepository;
+use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
+use App\Entities\LeadStatuses\Repositories\LeadStatusRepository;
+use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            LeadStatusRepositoryInterface::class,
+            LeadStatusRepository::class
+        );
+
+        $this->app->bind(
+            LeadProductRepositoryInterface::class,
+            LeadProductRepository::class
+        );
+
         $this->app->bind(
             FactoryRequestStatusesLogRepositoryInterface::class,
             FactoryRequestStatusesLogRepository::class
