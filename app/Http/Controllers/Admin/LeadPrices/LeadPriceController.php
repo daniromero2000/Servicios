@@ -3,25 +3,35 @@
 namespace App\Http\Controllers\Admin\LeadPrices;
 
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LeadPriceController extends Controller
 {
-    private $LeadPriceInterface;
+    private $LeadPriceInterface, $LeadInterface;
 
     public function __construct(
-        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface
+        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
+        LeadRepositoryInterface $leadRepositoryInterface
     ) {
         $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
+        $this->LeadInterface = $leadRepositoryInterface;
         $this->middleware('auth');
     }
 
     public function store(Request $request)
     {
         $request['user_id'] = auth()->user()->id;
-        return $this->LeadPriceInterface->createLeadPrice($request->input());
+        $this->LeadPriceInterface->createLeadPrice($request->input());
+        $lead = $this->LeadInterface->findLeadById($request->lead_id);
+        $lead->leadStatus()->attach(7, ['user_id' => $request['user_id']]);
+        $leadRerpo = new LeadRepository($lead);
+        $lead->state = 7;
+        $leadRerpo->updateLead($request->input());
 
-        return response()->json([true]);
+        $request->session()->flash('message', 'Cotización Exitosa!');
+        return redirect()->route('digitalchannelleads.show', $request->lead_id);
     }
 }

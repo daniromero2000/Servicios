@@ -34,6 +34,7 @@
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
+                @include('digitalchannelleads.layouts.lead_prices')
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">

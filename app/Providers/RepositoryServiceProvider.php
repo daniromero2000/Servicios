@@ -82,11 +82,18 @@ use App\Entities\LeadProducts\Repositories\LeadProductRepository;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\LeadStatusRepository;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
+use App\Entities\LeadPrices\Repositories\LeadPriceRepository;
+use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            LeadPriceRepositoryInterface::class,
+            LeadPriceRepository::class
+        );
+
         $this->app->bind(
             LeadStatusRepositoryInterface::class,
             LeadStatusRepository::class

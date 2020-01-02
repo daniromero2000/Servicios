@@ -5,6 +5,7 @@ namespace App\Entities\Leads;
 use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
+use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\LeadStatusesLogs\LeadStatusesLog;
@@ -101,5 +102,10 @@ class Lead extends Model
     public function leadProduct()
     {
         return $this->belongsTo(LeadProduct::class, 'typeProduct');
+    }
+
+    public function leadPrices()
+    {
+        return $this->hasMany(LeadPrice::class);
     }
 }

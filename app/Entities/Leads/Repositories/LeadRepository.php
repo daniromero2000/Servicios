@@ -51,7 +51,8 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return $this->model->with([
                 'comments',
-                'leadStatusesLogs'
+                'leadStatusesLogs',
+                'leadPrices'
             ])
                 ->findOrFail($id);
         } catch (ModelNotFoundException $e) {
