@@ -200,7 +200,7 @@ class DigitalChannelLeadController extends Controller
             array_push($leadStatusesValues, trim($leadStatus['total']));
         }
 
-        return view('communityLeads.dashboard', [
+        return view('digitalchannelleads.dashboard', [
             'leadChannelNames'  => $leadChannelNames,
             'leadChannelValues' => $leadChannelValues,
             'leadStatusesNames'  => $leadStatusesNames,

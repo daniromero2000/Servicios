@@ -4,15 +4,14 @@
     var estados = [];
         var values = [];
 
-        var estados = [<?php echo '"'.implode('","', $creditProfilesNames).'"' ?>];
-        var values = [<?php echo '"'.implode('","', $creditProfilesValues).'"' ?>];
+        var estados = [<?php echo '"'.implode('","', $leadStatusesNames).'"' ?>];
+        var values = [<?php echo '"'.implode('","', $leadStatusesValues).'"' ?>];
 
+        var channels = [];
+        var channelsValues = [];
 
-        var statuses = [];
-          var valores = [];
-
-          var statuses = [<?php echo '"'.implode('","', $intentionStatusesNames).'"' ?>];
-          var valores = [<?php echo '"'.implode('","', $intentionStatusesValues).'"' ?>];
+        var channels = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
+        var channelsValues = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -25,7 +24,7 @@
       labels  :estados,
       datasets: [
         {
-          label               : 'Perfil Crediticio',
+          label               : 'Estados',
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
@@ -67,10 +66,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: statuses,
+      labels: estados,
       datasets: [
         {
-          data: valores,
+          data: values,
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]
@@ -88,6 +87,32 @@
     })
 
     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+    var donutData2 = {
+    labels: channels,
+    datasets: [
+    {
+    data: channelsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+    }
+    ]
+    }
+    var donutOptions2 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart2 = new Chart(donutChartCanvas2, {
+    type: 'doughnut',
+    data: donutData2,
+    options: donutOptions2
+    })
+
+    //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
@@ -97,6 +122,17 @@
       maintainAspectRatio : false,
       responsive : true,
     }
+
+    //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+      var pieData = donutData2;
+      var pieOptions2 = {
+      maintainAspectRatio : false,
+      responsive : true,
+      }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     var pieChart = new Chart(pieChartCanvas, {
