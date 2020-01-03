@@ -109,6 +109,17 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function countLeadAssessors($from, $to)
+    {
+        try {
+            return  $this->model->with('user')
+                ->whereBetween('created_at', [$from, $to])
+                ->get(['assessor_id'])->groupBy('user.name');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function listleads($totalView): Support
     {
         try {

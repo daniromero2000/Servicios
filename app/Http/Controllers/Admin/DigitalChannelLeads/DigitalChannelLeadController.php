@@ -155,10 +155,12 @@ class DigitalChannelLeadController extends Controller
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
+        $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
+            $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
         }
 
         foreach ($leadChannels as $key => $status) {
@@ -173,9 +175,7 @@ class DigitalChannelLeadController extends Controller
 
         $totalStatuses = $leadChannels->sum('total');
 
-        foreach ($leadChannels as $key => $value) {
-            $creditCards[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
-        }
+        $creditCards = $this->toolsInterface->getDataPercentage($leadChannels);
 
         $leadChannels   = $leadChannels->toArray();
         $leadChannels   = array_values($leadChannels);
