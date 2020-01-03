@@ -30,7 +30,7 @@ use Carbon\Carbon;
 
                 <td>{{ $data->telephone}}</td>
                 <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
-             <td> @if($data->leadService) {{ $data->leadService->service}} @else
+                <td> @if($data->leadService) {{ $data->leadService->service}} @else
                     {{$data->typeService}}
                     @endif</td>
                 <td>
