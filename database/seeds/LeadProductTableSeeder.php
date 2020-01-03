@@ -114,5 +114,9 @@ class LeadProductTableSeeder extends Seeder
         factory(LeadProduct::class)->create([
             'lead_product'  => 'SOAT',
         ]);
+
+        factory(LeadProduct::class)->create([
+            'lead_product'  => 'Libranza',
+        ]);
     }
 }

@@ -109,8 +109,8 @@
                   </select>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
-                  <label for="product">Producto <span class="text-danger">*</span></label>
-                  <select id="lead_product" name="lead_product" class="form-control">
+                  <label for="typeProduct">Producto <span class="text-danger">*</span></label>
+                  <select id="typeProduct" name="typeProduct" class="form-control">
                     @if(!empty($lead_products))
                     <option disabled selected value> -- Selecciona Producto -- </option>
                     @foreach($lead_products as $lead_product)
