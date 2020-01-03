@@ -110,4 +110,9 @@ class Lead extends Model
     {
         return $this->hasMany(LeadPrice::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'assessor_id');
+    }
 }
