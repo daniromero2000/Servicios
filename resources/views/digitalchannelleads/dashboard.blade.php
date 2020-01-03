@@ -26,96 +26,12 @@
             </div>
           </div>
         </div>
-        <div class=" col-md-8 col-lg-12">
-          <!-- debe ir oculta -->
-          <div hidden class="card card-danger">
-            <div class="card-header">
-              <h3 class="card-title">Donut Chart</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
-            </div>
-          </div>
-          <!-- TORTA -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"> Canales de Adquisición</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <canvas id="pieChart" style="height:200px; min-height:auto"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class=" col-md-8 col-lg-12">
-          <!-- debe ir oculta -->
-          <div hidden class="card card-danger">
-            <div class="card-header">
-              <h3 class="card-title">Donut Chart</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
-            </div>
-          </div>
-          <!-- TORTA -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"> Resumen Estados Leads</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
-            </div>
-          </div>
-        </div>
+        @include('digitalchannelleads.layouts.pie_channels')
+        @include('digitalchannelleads.layouts.pie_statuses')
       </div>
-      <div class="col-md-8">
-        <!-- PORCENTAJES -->
-        <div class="card ">
-          <div class="card-header">
-            <h3 class="card-title">Estados Leads</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('digitalchannelleads_dashboard')])
-            </div>
-            <div class="chart">
-              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.col (LEFT) -->
+      @include('digitalchannelleads.layouts.bar_statuses')
     </div>
     <div class="row">
-      <!-- /.col (RIGTH) -->
       <div class="col-md-4">
         <!-- AREA CHART DEBE IR OCULTA-->
         <div hidden class="card card-primary">
