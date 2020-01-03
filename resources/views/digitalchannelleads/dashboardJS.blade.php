@@ -13,6 +13,12 @@
         var channels = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
         var channelsValues = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
 
+        var assessors = [];
+              var assessorsValues = [];
+
+              var assessors = [<?php echo '"'.implode('","', $leadAssessorsNames).'"' ?>];
+              var assessorsValues = [<?php echo '"'.implode('","', $leadAssessorsValues).'"' ?>];
+
     //--------------
     //- AREA CHART -
     //--------------
@@ -113,6 +119,51 @@
     })
 
     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d')
+    var donutData3 = {
+    labels: assessors,
+    datasets: [
+    {
+    data: assessorsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+    }
+    ]
+    }
+    var donutOptions3 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart3 = new Chart(donutChartCanvas3, {
+    type: 'doughnut',
+    data: donutData3,
+    options: donutOptions3
+    })
+
+
+
+    //- PIE CHART3 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart3').get(0).getContext('2d')
+        var pieData = donutData3;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+    //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
@@ -158,6 +209,7 @@
       data: pieData,
       options: pieOptions
     })
+
 
 
     //---------------------
