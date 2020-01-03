@@ -6,9 +6,12 @@ use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\Leads\Lead;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeadPrice extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'lead_product_id',
         'description',

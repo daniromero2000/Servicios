@@ -12,6 +12,7 @@ use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Lead extends Model
