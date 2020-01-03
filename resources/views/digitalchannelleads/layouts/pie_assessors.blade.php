@@ -1,4 +1,4 @@
-<div class=" col-md-8 col-lg-12">
+<div class="col-md-6 col-lg-5">
   <!-- debe ir oculta -->
   <div hidden class="card card-danger">
     <div class="card-header">

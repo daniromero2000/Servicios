@@ -2,8 +2,7 @@
 @section('content')
 <div class="container-fluid">
   <section class="content">
-    <div class="row mt-2">
-      <!-- /.col (RIGHT) -->
+    <div class="row">
       <div class="col-sm-12 col-md-5 col-lg-4">
         <div class="col-12 col-sm-12">
           <div class="row d-flex justify-content-center">
@@ -30,6 +29,7 @@
         @include('digitalchannelleads.layouts.pie_statuses')
       </div>
       @include('digitalchannelleads.layouts.bar_statuses')
+      @include('digitalchannelleads.layouts.pie_assessors')
     </div>
     <div class="row">
       <div class="col-md-4">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    @include('digitalchannelleads.layouts.pie_assessors')
+
 </div>
 @endsection
 @include('layouts.admin.dashboard_imports')
