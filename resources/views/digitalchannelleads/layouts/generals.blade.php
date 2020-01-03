@@ -32,7 +32,7 @@
           <td class="text-center">{{ $digitalChannelLead->created_at->format('M d, Y h:i a') }}</td>
           <td class="text-center">{{ $digitalChannelLead->email }}</td>
           <td class="text-center">{{ $digitalChannelLead->telephone }}</td>
-          <td class="text-center">{{ $digitalChannelLead->city }}</td>
+          <td class="text-center">{{ $digitalChannelLead->city }}/{{ $digitalChannelLead->nearbyCity }} </td>
           <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service}} @else {{$digitalChannelLead->typeService}}
             @endif</td>
           <td class="text-center">
