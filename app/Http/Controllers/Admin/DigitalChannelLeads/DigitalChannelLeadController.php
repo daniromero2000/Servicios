@@ -174,7 +174,7 @@ class DigitalChannelLeadController extends Controller
         }
 
         foreach ($leadAssessors as $key => $status) {
-            $leadAssessors[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            $leadAssessors[] = ['Assessor' => $key, 'total' => count($leadAssessors[$key])];
             unset($leadAssessors[$key]);
         }
 
