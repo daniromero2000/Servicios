@@ -174,7 +174,7 @@ class DigitalChannelLeadController extends Controller
         }
 
         foreach ($leadAssessors as $key => $status) {
-            $leadAssessors[] = ['Assessor' => $key, 'total' => count($leadAssessors[$key])];
+            $leadAssessors[] = ['assessor' => $key, 'total' => count($leadAssessors[$key])];
             unset($leadAssessors[$key]);
         }
 
@@ -182,8 +182,6 @@ class DigitalChannelLeadController extends Controller
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
         $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
         $leadAssessors    = $this->toolsInterface->extractValuesToArray($leadAssessors);
-
-        dd($leadAssessors);
 
         $leadChannelNames  = [];
         $leadChannelValues  = [];
@@ -199,11 +197,20 @@ class DigitalChannelLeadController extends Controller
             array_push($leadStatusesValues, trim($leadStatus['total']));
         }
 
+        $leadAssessorsNames  = [];
+        $leadAssessorsValues  = [];
+        foreach ($leadAssessors as $leadAssessor) {
+            array_push($leadAssessorsNames, trim($leadAssessor['assessor']));
+            array_push($leadAssessorsValues, trim($leadAssessor['total']));
+        }
+
         return view('digitalchannelleads.dashboard', [
             'leadChannelNames'  => $leadChannelNames,
             'leadChannelValues' => $leadChannelValues,
             'leadStatusesNames'  => $leadStatusesNames,
             'leadStatusesValues' => $leadStatusesValues,
+            'leadAssessorsNames'  => $leadAssessorsNames,
+            'leadAssessorsValues' => $leadAssessorsValues,
             'totalStatuses'  => $totalStatuses
         ]);
     }
