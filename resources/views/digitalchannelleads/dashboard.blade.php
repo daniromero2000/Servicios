@@ -90,56 +90,6 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          @foreach ($creditCards as $creditCard)
-          @if(!empty($creditCard['TARJETA']))
-          <div class="col-12 col-sm-6 col-md-12">
-            <!-- Card 1 -->
-            <div class="col-12">
-              <div class="info-box ">
-                <span class="info-box-icon"><i class="fas fa-credit-card"></i></span>
-                <div class="info-box-content">
-                  <div class="row">
-                    <div class="col-6">
-                      <span class="info-box-text"> {{ $creditCard['TARJETA'] }} </span>
-                      <span class="info-box-number">{{ $creditCard['total'] }}</span>
-                    </div>
-                    <div class="col-6">
-                      <span class="info-box-text text-right"><a href="{{ route('intentions.index') }}"
-                          style="color: black; !important">Ver
-                          Mas</a></span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width: 70%"></div>
-                  </div>
-                  <span class="progress-description">
-                    {{ number_format ($creditCard['percentage'])}}% es apto para {{ $creditCard['TARJETA'] }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          @endif
-          @endforeach
-          <!-- AREA CHART debe ir oculta -->
-          <div hidden class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Area Chart</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
-                    class="fas fa-times"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="col-md-8">
         <!-- PORCENTAJES -->
