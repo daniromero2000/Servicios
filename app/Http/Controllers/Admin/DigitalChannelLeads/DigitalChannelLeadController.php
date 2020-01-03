@@ -174,14 +174,9 @@ class DigitalChannelLeadController extends Controller
         }
 
         $totalStatuses = $leadChannels->sum('total');
-
         $creditCards = $this->toolsInterface->getDataPercentage($leadChannels);
-
-        $leadChannels   = $leadChannels->toArray();
-        $leadChannels   = array_values($leadChannels);
-
-        $leadStatuses   = $leadStatuses->toArray();
-        $leadStatuses   = array_values($leadStatuses);
+        $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
+        $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
 
         $leadChannelNames  = [];
         $leadChannelValues  = [];
