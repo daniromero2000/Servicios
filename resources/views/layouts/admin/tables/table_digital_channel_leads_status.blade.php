@@ -29,7 +29,7 @@ use Carbon\Carbon;
                         title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
 
                 <td>{{ $data->telephone}}</td>
-                <td>{{ $data->city}}</td>
+                <td>{{ $data->city}}/{{ $data->nearCity}}</td>
              <td> @if($data->leadService) {{ $data->leadService->service}} @else
                     {{$data->typeService}}
                     @endif</td>
