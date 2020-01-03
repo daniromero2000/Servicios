@@ -106,7 +106,7 @@
                     <select name="typeProduct" id="typeProduct" class="form-control" enabled>
                       @if(!empty($lead_products))
                       @foreach($lead_products as $lead_product)
-                      <option @if($leadService==$lead_product->id) selected="selected" @endif
+                      <option @if($leadProduct==$lead_product->id) selected="selected" @endif
                         value="{{ $lead_product->id }}">
                         {{ $lead_product->lead_product }}
                       </option>
