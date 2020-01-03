@@ -173,9 +173,17 @@ class DigitalChannelLeadController extends Controller
             unset($leadStatuses[$key]);
         }
 
+        foreach ($leadAssessors as $key => $status) {
+            $leadAssessors[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            unset($leadAssessors[$key]);
+        }
+
         $totalStatuses = $leadChannels->sum('total');
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
         $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
+        $leadAssessors    = $this->toolsInterface->extractValuesToArray($leadAssessors);
+
+        dd($leadAssessors);
 
         $leadChannelNames  = [];
         $leadChannelValues  = [];
