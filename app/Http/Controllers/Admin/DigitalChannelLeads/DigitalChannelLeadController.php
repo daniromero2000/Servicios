@@ -174,22 +174,18 @@ class DigitalChannelLeadController extends Controller
         }
 
         $totalStatuses = $leadChannels->sum('total');
-        $creditCards = $this->toolsInterface->getDataPercentage($leadChannels);
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
         $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
 
         $leadChannelNames  = [];
         $leadChannelValues  = [];
-
         foreach ($leadChannels as $leadChannel) {
             array_push($leadChannelNames, trim($leadChannel['channel']));
             array_push($leadChannelValues, trim($leadChannel['total']));
         }
 
-
         $leadStatusesNames  = [];
         $leadStatusesValues  = [];
-
         foreach ($leadStatuses as $leadStatus) {
             array_push($leadStatusesNames, trim($leadStatus['status']));
             array_push($leadStatusesValues, trim($leadStatus['total']));
@@ -200,7 +196,6 @@ class DigitalChannelLeadController extends Controller
             'leadChannelValues' => $leadChannelValues,
             'leadStatusesNames'  => $leadStatusesNames,
             'leadStatusesValues' => $leadStatusesValues,
-            'creditCards'  => $creditCards,
             'totalStatuses'  => $totalStatuses
         ]);
     }
