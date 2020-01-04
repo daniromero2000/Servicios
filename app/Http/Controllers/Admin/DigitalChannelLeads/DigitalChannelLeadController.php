@@ -115,7 +115,12 @@ class DigitalChannelLeadController extends Controller
     public function show(int $id)
     {
         $digitalChannelLead =  $this->leadInterface->findLeadByIdFull($id);
-
+        $pattern = ['/[\\+][0-9]{0,2}\s[0-9]{0,3}\s[0-9]{0,7}/', '/[\\[]/'];
+        //$pattern = '/[\\+][\\5][\\7]\s[0-9]{0,3}\s[0-9]{0,7}/';
+        $replace = ['Cliente', PHP_EOL . '['];
+        foreach ($digitalChannelLead->comments as $key => $value) {
+            $digitalChannelLead->comments[$key]->comment = preg_replace($pattern, $replace, $digitalChannelLead->comments[$key]->comment);
+        }
         return view('digitalchannelleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
             'leadCity'           => $digitalChannelLead->city,
