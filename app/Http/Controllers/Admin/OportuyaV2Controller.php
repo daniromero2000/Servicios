@@ -945,7 +945,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
-		if ($aprobado == false && $historialCrediticio == 0 && $perfilCrediticio == 'TIPO A') {
+		if ($aprobado == false && $perfilCrediticio == 'TIPO A') {
 			$customer->ESTADO           = 'PREAPROBADO';
 			$tarjeta                    = "Crédito Tradicional";
 			$customerIntention->TARJETA = $tarjeta;
