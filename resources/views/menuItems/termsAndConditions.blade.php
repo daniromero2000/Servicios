@@ -9,6 +9,21 @@
 	<div id="termsAndConditions">
 		<h1 class="menuItem-title text-center">CAMPAÑAS VIGENTES</h1>
 		<div class="container">
+			<h2 class="menuItem-subtitle">CAMPAÑA $1.000 PESITOS Y BONO DE $100.000 POR COMPRAS A CRÉDITO.</h2>
+			<li type="disc">Vigencia: del 01 al 31 de Enero de 2020</li>
+			<ol>
+				<li>Feria de Sincelejo:</li>
+				<ul>
+					<li type="disc"><p>34073551 VENTILADOR  ULTRAPOWER UNIVERSAL, solo aplica para venta en el centro comercial <br>Guacari por valor de $69.900- Existencia: 22 unidades <br> Garantía del producto : 1 año – características:  1.30 altura- 3 velocidades </p></li>
+					<li type="disc"><p>Súper combo de feria: 11007003- SONIDO L.G. OK-75 1000W + botella de whisky johnnie Walker 750 ml, solo aplica para la sucursal del centro comercial Guacari- Existencia : 10 unidades. <br> Garantía del producto : 1 año – características:  1000 w – conexión usb bluetooth.</p></li>
+				</ul>
+				<li>Bono de $100.000 en efectivo por compras a Crédito:</li>
+				<ul>
+					<li type="disc">Solo aplica para sucursales del resto del país, las compras deben ser a crédito y el bono de $100.000 se entregara en efectivo en los puntos de venta.</li>
+				</ul>
+			</ol>
+		</div>
+		<div class="container">
 			<h2 class="menuItem-subtitle">GRAN SORTEO MABE</h2>
 			<ul>
 				<li type="disc">Vigencia: del  19 al  31 de octubre</li>
