@@ -946,10 +946,18 @@ class OportuyaV2Controller extends Controller
 		}
 
 		if ($aprobado == false && $perfilCrediticio == 'TIPO A') {
+			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+				if ($historialCrediticio == 1) {
+					$customerIntention->ID_DEF  = '17';
+				} else {
+					$customerIntention->ID_DEF =  '18';
+				}
+			}else{
+				$customerIntention->ID_DEF  = '15';
+			}
 			$customer->ESTADO           = 'PREAPROBADO';
 			$tarjeta                    = "Crédito Tradicional";
 			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->ID_DEF  = '15';
 			$customerIntention->ESTADO_INTENCION  = '2';
 			$customer->save();
 			$customerIntention->save();
