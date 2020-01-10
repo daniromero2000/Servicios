@@ -18,7 +18,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
     {
         try {
             return $this->model->create($data);
-        } catch (\Throwable $th) {
+        } catch (QueryException $e) {
             //throw $th;
         }
     }
