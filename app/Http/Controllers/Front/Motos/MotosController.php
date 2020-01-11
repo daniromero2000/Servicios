@@ -30,7 +30,8 @@ class MotosController extends Controller
 
     public function store(Request $request)
     {
-        $this->leadInterface->createLead($request->input());
+        $lead = $this->leadInterface->createLead($request->input());
+        $lead->leadStatus()->attach(8, ['user_id' => 641]);
 
         return redirect()->route('thankYouPageMotos');
     }
