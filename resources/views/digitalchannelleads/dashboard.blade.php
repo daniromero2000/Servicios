@@ -11,7 +11,7 @@
               <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p style="margin-bottom: -4px !important;">Leads</p>
+                  <p style="margin-bottom: -4px !important;">Leads en los últimos 30 días</p>
                 </div>
                 <div class="icon mt-3">
                   <i class="ion ion-stats-bars" style="color: white;"></i>

@@ -26,7 +26,7 @@
               <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p>Intenciones</p>
+                  <p>Intenciones en los últimos 30 días</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars" style="color: white;"></i>

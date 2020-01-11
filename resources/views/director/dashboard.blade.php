@@ -23,7 +23,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito</p>
+                <p>Solicitudes Crédito en los últimos 30 días</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
