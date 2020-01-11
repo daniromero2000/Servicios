@@ -698,6 +698,8 @@ class OportuyaV2Controller extends Controller
 				$customerStatusDenied = true;
 				$idDef = '8';
 				$perfilCrediticio = 'TIPO NE';
+				return ['resp' => "false"];
+
 			}
 
 			if ($customerScore >= 1 && $customerScore <= 275) {

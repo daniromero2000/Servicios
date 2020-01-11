@@ -14,7 +14,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         $this->model = $customerVerificationCode;
     }
 
-    public function createCustomerVerificationCode($data)
+    public function createCustomerVerificationCode($data): CustomerVerificationCode
     {
         try {
             return $this->model->create($data);
