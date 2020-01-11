@@ -12,8 +12,6 @@ class CustomerVerificationCode extends Model
 
     protected $primaryKey = 'identificador';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'token',
         'identificationNumber',
@@ -22,4 +20,8 @@ class CustomerVerificationCode extends Model
         'state',
         'type'
     ];
+
+protected $dates = [
+    'created_at',
+];
 }
