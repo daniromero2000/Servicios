@@ -139,9 +139,9 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
-    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null): Collection
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {
             return $this->model->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -160,8 +160,10 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('state', $status);
             })->when($assessor, function ($q, $assessor) {
                 return $q->where('assessor_id', $assessor);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
             })->orderBy('created_at', 'desc')
-                ->skip($totalView)
+            ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }
@@ -178,6 +180,8 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('state', $status);
             })->when($assessor, function ($q, $assessor) {
                 return $q->where('assessor_id', $assessor);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
             })
             ->orderBy('created_at', 'desc')
             ->get($this->columns);

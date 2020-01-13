@@ -21,4 +21,5 @@ class LeadStatusRepository implements LeadStatusRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+    
 }

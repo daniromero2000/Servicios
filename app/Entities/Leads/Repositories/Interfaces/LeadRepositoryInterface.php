@@ -26,5 +26,5 @@ interface LeadRepositoryInterface
 
     public function findLeadByIdFull(int $id): Lead;
 
-    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null): Collection;
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $city = null): Collection;
 }

@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                    <button class="btn btn-primary">
+                                    <button class="btn btn-primary mt-2">
                                         <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
                                                 class="far fa-plus-square"></i></a>
                                     </button>

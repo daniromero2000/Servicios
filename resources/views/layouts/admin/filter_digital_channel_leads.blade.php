@@ -1,4 +1,4 @@
-<!-- search form -->
+<!-- search form -->    
 <div class="row">
     <div class="col-12 text-center">
         <h3 style="color: #007bff;">Filtrar</h3>
@@ -21,6 +21,21 @@
                                 @foreach($lead_statuses as $lead_status)
                                 <option value="{{ $lead_status->id }}">
                                     {{ $lead_status->status }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <div class="form-group">
+                            <label for="city">Estado </label>
+                            <select name="city" id="city" class="form-control" enabled>
+                                @if(!empty($cities))
+                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                @foreach($cities as $city)
+                                <option value="{{ $city->CIUDAD }}">
+                                    {{ $city->CIUDAD }}
                                 </option>
                                 @endforeach
                                 @endif

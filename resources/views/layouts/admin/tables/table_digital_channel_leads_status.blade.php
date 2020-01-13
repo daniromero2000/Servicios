@@ -1,6 +1,7 @@
 @php
 use Carbon\Carbon;
 @endphp
+
 <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
         <thead class="text-center header-table">
@@ -24,7 +25,7 @@ use Carbon\Carbon;
                         style="color: white ; background-color: {{$data->leadStatuses->color }}"
                         class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
                 <td>{{ $data->leadChannel->channel}}</td>
-                <td>{{ $data->leadAssessor['name']}}</td>
+                {{-- <td>{{ $data->leadAssessor['name']}}</td> --}}
                 <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
 
