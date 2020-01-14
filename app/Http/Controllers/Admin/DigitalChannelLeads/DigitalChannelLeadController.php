@@ -211,13 +211,13 @@ class DigitalChannelLeadController extends Controller
         }
 
         return view('digitalchannelleads.dashboard', [
-            'leadChannelNames'  => $leadChannelNames,
-            'leadChannelValues' => $leadChannelValues,
-            'leadStatusesNames'  => $leadStatusesNames,
-            'leadStatusesValues' => $leadStatusesValues,
+            'leadChannelNames'    => $leadChannelNames,
+            'leadChannelValues'   => $leadChannelValues,
+            'leadStatusesNames'   => $leadStatusesNames,
+            'leadStatusesValues'  => $leadStatusesValues,
             'leadAssessorsNames'  => $leadAssessorsNames,
             'leadAssessorsValues' => $leadAssessorsValues,
-            'totalStatuses'  => $totalStatuses
+            'totalStatuses'       => $totalStatuses
         ]);
     }
 }
