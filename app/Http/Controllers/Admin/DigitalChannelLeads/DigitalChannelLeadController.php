@@ -57,7 +57,7 @@ class DigitalChannelLeadController extends Controller
                 request()->input('to'),
                 request()->input('state'),
                 request()->input('assessor_id'),
-                request()->input('city'),
+                request()->input('city')
             );
         }
         $listCount = $list->count();
