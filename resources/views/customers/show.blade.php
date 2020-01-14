@@ -39,6 +39,10 @@
                     aria-controls="profile">Solicitudes Fábrica</a>
             </li>
             <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#warranties" role="tab"
+                    aria-controls="profile">Garantías</a>
+            </li>
+            <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                     aria-controls="profile">Seguimiento</a>
             </li>
@@ -71,6 +75,10 @@
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
+            </div>
+            <div role="tabpanel" class="tab-pane" id="warranties">
+                @include('customers.layouts.customer_warranties', ['warranties' =>
+                $customer->customersWarranties])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])

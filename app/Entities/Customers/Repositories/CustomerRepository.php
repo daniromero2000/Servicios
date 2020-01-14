@@ -77,6 +77,7 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'extintsCifinReals',
                 'extintsCifinFins',
                 'customerIntentions',
+                'customerWarranties'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
