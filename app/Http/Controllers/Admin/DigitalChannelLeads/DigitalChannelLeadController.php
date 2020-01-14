@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use App\Entities\Lºeads\Repositories\LeadRepository;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 
 class DigitalChannelLeadController extends Controller
@@ -174,35 +174,34 @@ class DigitalChannelLeadController extends Controller
             $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
-
         }
 
         foreach ($leadChannels as $key => $status) {
-            $option = ($key == '') ? 'Sin Canal' : $key ;
+            $option = ($key == '') ? 'Sin Canal' : $key;
             $leadChannels[] = ['channel' => $option, 'total' => count($leadChannels[$key])];
             unset($leadChannels[$key]);
         }
 
         foreach ($leadStatuses as $key => $status) {
-            $option = ($key == '') ? 'Sin Estado' : $key ;
+            $option = ($key == '') ? 'Sin Estado' : $key;
             $leadStatuses[] = ['status' => $option, 'total' => count($leadStatuses[$key])];
             unset($leadStatuses[$key]);
         }
 
         foreach ($leadAssessors as $key => $status) {
-            $option = ($key == '') ? 'Sin Asesor' : $key ;
+            $option = ($key == '') ? 'Sin Asesor' : $key;
             $leadAssessors[] = ['assessor' => $option, 'total' => count($leadAssessors[$key])];
             unset($leadAssessors[$key]);
         }
 
         foreach ($leadProducts as $key => $status) {
-            $option = ($key == '') ? 'Sin Producto' : $key ;
+            $option = ($key == '') ? 'Sin Producto' : $key;
             $leadProducts[] = ['product' => $option, 'total' => count($leadProducts[$key])];
             unset($leadProducts[$key]);
         }
 
         foreach ($leadServices as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key ;
+            $option = ($key == '') ? 'Sin Servicio' : $key;
             $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
             unset($leadServices[$key]);
         }
