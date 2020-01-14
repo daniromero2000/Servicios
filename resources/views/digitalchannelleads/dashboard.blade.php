@@ -28,18 +28,18 @@
         @include('digitalchannelleads.layouts.pie_channels')
         @include('digitalchannelleads.layouts.pie_statuses')
         @include('digitalchannelleads.layouts.pie_assessors')
+        @include('digitalchannelleads.layouts.pie_service')
+
       </div>
       <div class="col-md-8">
       @include('digitalchannelleads.layouts.bar_statuses')
       <div class="row">
 
-        <div class="col-6">
+        <div class="col-12 ">
           @include('digitalchannelleads.layouts.pie_products')
 
         </div>
-        <div class="col-6">
-          @include('digitalchannelleads.layouts.pie_service')
-        </div>
+        
         
       </div>
       

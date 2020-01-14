@@ -22,6 +22,6 @@
     </div>
   </div>
   <div class="card-body">
-    <canvas id="pieChart4" style="height:200px; min-height:auto"></canvas>
+    <canvas id="pieChart4" style="height:350px; min-height:auto"></canvas>
   </div>
 </div>
