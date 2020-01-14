@@ -102,6 +102,13 @@
       </div>
       <!-- TORTA -->
       <div class="card">
+        <div class="card-body">
+          <div class="col-12">
+            @include('layouts.admin.date_filter', ['route' => route('callCenter_dashboard')])
+          </div>
+        </div>
+      </div>
+      <div class="card">
         <div class="card-header">
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -111,11 +118,9 @@
         </div>
         <div class="card-body">
           <div class="row">
+            
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('callCenter_dashboard')])
-            </div>
-            <div class="col-12">
-              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
+              <canvas id="pieChart" style="height:310px; min-height:300px"></canvas>
             </div>
           </div>
         </div>
