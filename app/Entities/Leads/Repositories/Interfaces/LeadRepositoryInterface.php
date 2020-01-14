@@ -22,6 +22,8 @@ interface LeadRepositoryInterface
 
     public function countLeadAssessors($from, $to);
 
+    public function countLeadProducts($from, $to);
+
     public function listleads($totalView): Support;
 
     public function findLeadByIdFull(int $id): Lead;

@@ -29,10 +29,10 @@
                     </div>
                     <div class="col-6 col-md-2">
                         <div class="form-group">
-                            <label for="city">Estado </label>
+                            <label for="city">Ciudad </label>
                             <select name="city" id="city" class="form-control" enabled>
                                 @if(!empty($cities))
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option disabled selected value> -- Selecciona Ciudad -- </option>
                                 @foreach($cities as $city)
                                 <option value="{{ $city->CIUDAD }}">
                                     {{ $city->CIUDAD }}

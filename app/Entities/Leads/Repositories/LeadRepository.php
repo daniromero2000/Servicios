@@ -120,6 +120,17 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+     public function countLeadProducts($from, $to)
+    {
+        try {
+            return  $this->model->with('leadProduct')
+                ->whereBetween('created_at', [$from, $to])
+                ->get(['typeProduct'])->groupBy('leadProduct.lead_product');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function listleads($totalView): Support
     {
         try {
@@ -163,7 +174,7 @@ class LeadRepository implements LeadRepositoryInterface
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
             })->orderBy('created_at', 'desc')
-            ->skip($totalView)
+                ->skip($totalView)
                 ->take(100)
                 ->get($this->columns);
         }

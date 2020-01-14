@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
   <section class="content">
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-sm-12 col-md-5 col-lg-4">
         <div class="col-12 col-sm-12">
           <div class="row d-flex justify-content-center">
@@ -19,7 +19,7 @@
                 <div class="text-right mr-2">
                   <span class="info-box-text text-right"><a href="/Administrator/digitalchannelleads"
                       style="color: white; !important">Ver
-                      Mas</a></span>
+                      Más</a></span>
                 </div>
               </div>
             </div>
@@ -27,6 +27,8 @@
         </div>
         @include('digitalchannelleads.layouts.pie_channels')
         @include('digitalchannelleads.layouts.pie_statuses')
+        {{-- @include('digitalchannelleads.layouts.pie_products') --}}
+
       </div>
       <div class="col-md-8">
       @include('digitalchannelleads.layouts.bar_statuses')
