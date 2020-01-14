@@ -23,7 +23,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito en los últimos 30 días</p>
+                <p>Solicitudes Crédito <br> en los últimos 30 días</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -34,7 +34,8 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
-                <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                <br>
+                <p>${{ number_format ($factoryRequestsTotal) }} </p>
               </div>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -58,7 +59,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -85,7 +86,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -112,7 +113,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -139,7 +140,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -169,49 +170,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- /.col (LEFT) -->
-    <div class=" col-md-7 col-lg-8">
-      <!-- debe ir oculta -->
-      <div hidden class="card card-danger">
-        <div class="card-header">
-          <h3 class="card-title">Donut Chart</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
-        </div>
-      </div>
-      <!-- TORTA -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Estados Solicitudes</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('directors_dashboard')])
-            </div>
-            <div class="col-12">
-              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <!-- /.col (RIGTH) -->
-    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
@@ -242,11 +200,31 @@
         </div>
       </div>
     </div>
-    <!-- Card 1 -->
     <!-- /.col (LEFT) -->
-    <div class="col-md-8">
-      <!-- PORCENTAJES -->
-      <div class="card ">
+    <div class=" col-md-7 col-lg-8">
+      <!-- debe ir oculta -->
+      <div hidden class="card card-danger">
+        <div class="card-header">
+          <h3 class="card-title">Donut Chart</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
+        </div>
+      </div>
+      <!-- TORTA -->
+      <div class="card">
+        <div class="card-body">
+          <div class="col-12">
+            @include('layouts.admin.date_filter', ['route' => route('directors_dashboard')])
+          </div>  
+        </div>
+      </div>
+      <div class="card">
         <div class="card-header">
           <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
@@ -256,13 +234,40 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="chart">
+          <div class="row">
+            
+            <div class="col-12">
+              <canvas id="pieChart" style="height:310px; min-height:300px"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card ">
+        <div class="card-header">
+          <h3 class="card-title">Estados Solicitudes</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body row justify-content-center">
+          <div class="col-10">
+ <div class="chart">
             <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
           </div>
+          </div>
+         
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <!-- /.col (RIGTH) -->
+    <div class="col-md-4">
+      
+    </div>
+     </div>
 </div>
 @endsection
 @section('scriptsJs')

@@ -41,6 +41,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
+                <br>
                 <p>${{ number_format ($factoryAssessorsTotal) }}</p>
               </div>
               <div class="icon">
@@ -195,6 +196,14 @@
       </div>
       <!-- TORTA -->
       <div class="card">
+        <div class="card-body">
+          <div class="col-12">
+            @include('layouts.admin.date_filter', ['route' => route('assessors.dashboard')])
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
         <div class="card-header">
           <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
@@ -205,13 +214,32 @@
         </div>
         <div class="card-body">
           <div class="row">
+            
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('assessors.dashboard')])
-            </div>
-            <div class="col-12">
-              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
+              <canvas id="pieChart" style="height:310px; min-height:200px"></canvas>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="card ">
+       
+        <div class="card-header">
+          <h3 class="card-title">Estados Solicitudes</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body row justify-content-center">
+          <div class="col-md-10">
+            <!-- PORCENTAJES -->
+            <div class="chart">
+              <canvas id="barChart" style="height:200px; "></canvas>
+            </div>
+          </div>
+        
         </div>
       </div>
     </div>
@@ -251,24 +279,7 @@
     </div>
     <!-- Card 1 -->
     <!-- /.col (LEFT) -->
-    <div class="col-md-12">
-      <!-- PORCENTAJES -->
-      <div class="card ">
-        <div class="card-header">
-          <h3 class="card-title">Estados Solicitudes</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
+  
   </div>
 </div>
 @endsection
