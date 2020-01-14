@@ -78,7 +78,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="warranties">
                 @include('customers.layouts.customer_warranties', ['warranties' =>
-                $customer->customersWarranties])
+                $customer->customerWarranties])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
