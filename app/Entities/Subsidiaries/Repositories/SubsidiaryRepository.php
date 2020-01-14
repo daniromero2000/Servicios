@@ -56,16 +56,6 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
-
-    private function getNameCiudadExp($city)
-    {
-        $queryCity = sprintf("SELECT `NOMBRE` FROM `CIUDADES` WHERE `CODIGO` = %s ", $city);
-
-        $resp = DB::connection('oportudata')->select($queryCity);
-
-        return $resp;
-    }
-
     public function listSubsidiares($totalView): Support
     {
         try {
