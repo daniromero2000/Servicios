@@ -46,7 +46,7 @@
     <tbody class="body-table">
       <tr>
         <td>
-          No tiene Obligaciones en el sector Financiero
+          No tiene Garantías
         </td>
       </tr>
     </tbody>
