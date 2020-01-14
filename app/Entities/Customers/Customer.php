@@ -16,12 +16,12 @@ use App\Entities\Intentions\Intention;
 use App\Entities\Ubicas\Ubica;
 use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
 use App\Entities\UpToDateRealCifins\UpToDateRealCifin;
+use App\Entities\Warranties\Warranty;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Customer extends Model
 {
-
     use SearchableTrait;
 
     protected $table = 'CLIENTE_FAB';
@@ -33,13 +33,8 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'NOMBRES',
-        'APELLIDOS',
-        'EMAIL',
-        'CELULAR',
-        'termsAndConditions',
-        'TIPO_DOC',
-        'CEDULA',
+        'NOMBRES', 'APELLIDOS', 'EMAIL',  'CELULAR', 'termsAndConditions',
+        'TIPO_DOC', 'CEDULA',
         'PROFESION',
         'TIPOCLIENTE',
         'SUBTIPO',
@@ -323,5 +318,10 @@ class Customer extends Model
     public function customerIntentions()
     {
         return $this->hasMany(Intention::class, 'CEDULA')->with('definition');
+    }
+
+    public function customerWarranties()
+    {
+        return $this->hasMany(Warranty::class, 'CEDULA');
     }
 }

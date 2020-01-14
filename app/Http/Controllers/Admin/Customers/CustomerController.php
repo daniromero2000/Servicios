@@ -33,7 +33,7 @@ class CustomerController extends Controller
         $list = $this->customerInterface->listCustomers($skip * 30);
 
         if (request()->has('q')) {
-            $list = $this->customerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->customerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'));
         }
 
         return view('customers.list', [
@@ -52,7 +52,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function dashboard(Request $request)
+    public function dashboard()
     {
         $to   = Carbon::now();
         $from = Carbon::now()->subMonth();
