@@ -52,7 +52,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('customers.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -102,6 +102,13 @@
       </div>
       <!-- TORTA -->
       <div class="card">
+        <div class="card-body">
+          <div class="col-12">
+            @include('layouts.admin.date_filter', ['route' => route('customer_dashboard')])
+          </div>
+        </div>
+      </div>
+      <div class="card">
         <div class="card-header">
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -111,86 +118,86 @@
         </div>
         <div class="card-body">
           <div class="row">
+           
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('customer_dashboard')])
-            </div>
-            <div class="col-12">
-              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
+              <canvas id="pieChart" style="height:310; min-height:300px"></canvas>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div hidden class="card card-danger">
-        <div class="card-header">
-          <h3 class="card-title">Donut Chart</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"> <span class="badge badge-primary">{{ $totalFosygas}}</span> Consultas Fosyga<br>
-            ¿Falló Consulta?</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
-        </div>
-        <div class="col-12">
 
+      {{-- aqui --}}
+      <div class="row">
+<div class="col-6">
+   <div hidden class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Donut Chart</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="donutChart2" style="height:230px; min-height:230px"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> <span class="badge badge-primary">{{ $totalFosygas}}</span> Consultas Fosyga<br>
+              ¿Falló Consulta?</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+          </div>
+          <div class="col-12">
+  
+            <div class="row text-center">
+              @foreach ($customersFosygas as $customersFosyga)
+              <div class="col-6 header-table mt-2">
+  
+                <p> <span @if ($customersFosyga['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                    class="badge badge-primary" @endif> {{ number_format ($customersFosyga['percentage']) }} % </span>
+                  {{$customersFosyga['fuenteFallo']}} Falló</p>
+  
+              </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
+        <!-- AREA CHART DEBE IR OCULTA-->
+        <div hidden class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Area Chart</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="areaChart2" style="height:250px; min-height:250px"></canvas>
+            </div>
+          </div>
           <div class="row text-center">
-            @foreach ($customersFosygas as $customersFosyga)
-            <div class="col-6 header-table mt-2">
-
-              <p> <span @if ($customersFosyga['fuenteFallo']=='SI' ) class="badge badge-danger" @else
-                  class="badge badge-primary" @endif> {{ number_format ($customersFosyga['percentage']) }} % </span>
-                {{$customersFosyga['fuenteFallo']}} Falló</p>
-
+            <div class="col-12 d-flex justify-content-center">
+              @foreach ($customersFosygas as $customersFosyga)
+              <div class="col-3 header-table mt-2">
+              </div>
+              @endforeach
             </div>
-            @endforeach
           </div>
         </div>
       </div>
-      <!-- AREA CHART DEBE IR OCULTA-->
-      <div hidden class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Area Chart</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="areaChart2" style="height:250px; min-height:250px"></canvas>
-          </div>
-        </div>
-        <div class="row text-center">
-          <div class="col-12 d-flex justify-content-center">
-            @foreach ($customersFosygas as $customersFosyga)
-            <div class="col-3 header-table mt-2">
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-4">
-      <div hidden class="card card-danger">
+      <div class="col-md-6">
+ <div hidden class="card card-danger">
         <div class="card-header">
           <h3 class="card-title">Donut Chart</h3>
           <div class="card-tools">
@@ -230,7 +237,10 @@
           </div>
         </div>
       </div>
-      <!-- AREA CHART DEBE IR OCULTA-->
+      </div>
+</div>
+       
+            <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Area Chart</h3>
@@ -246,7 +256,9 @@
           </div>
         </div>
       </div>
+
     </div>
+    
   </div>
 </div>
 @endsection

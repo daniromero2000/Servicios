@@ -41,6 +41,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
+                <br>
                 <p>${{ number_format ($factoryAssessorsTotal) }}</p>
               </div>
               <div class="icon">
