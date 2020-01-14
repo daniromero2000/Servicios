@@ -27,12 +27,24 @@
         </div>
         @include('digitalchannelleads.layouts.pie_channels')
         @include('digitalchannelleads.layouts.pie_statuses')
-        {{-- @include('digitalchannelleads.layouts.pie_products') --}}
+        @include('digitalchannelleads.layouts.pie_assessors')
+        @include('digitalchannelleads.layouts.pie_service')
 
       </div>
       <div class="col-md-8">
       @include('digitalchannelleads.layouts.bar_statuses')
-      @include('digitalchannelleads.layouts.pie_assessors')
+      <div class="row">
+
+        <div class="col-12 ">
+          @include('digitalchannelleads.layouts.pie_products')
+
+        </div>
+        
+        
+      </div>
+      
+      
+
       </div>
     </div>
     <div class="row">

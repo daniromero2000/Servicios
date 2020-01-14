@@ -161,44 +161,60 @@ class DigitalChannelLeadController extends Controller
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
 
-
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
+        $leadServices = $this->leadInterface->countLeadServices($from, $to);
+
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
             $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
+            $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
         }
 
         foreach ($leadChannels as $key => $status) {
-            $leadChannels[] = ['channel' => $key, 'total' => count($leadChannels[$key])];
+            $option = ($key == '') ? 'Sin Canal' : $key;
+            $leadChannels[] = ['channel' => $option, 'total' => count($leadChannels[$key])];
             unset($leadChannels[$key]);
         }
 
         foreach ($leadStatuses as $key => $status) {
-            $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            $option = ($key == '') ? 'Sin Estado' : $key;
+            $leadStatuses[] = ['status' => $option, 'total' => count($leadStatuses[$key])];
             unset($leadStatuses[$key]);
         }
 
         foreach ($leadAssessors as $key => $status) {
-            $leadAssessors[] = ['assessor' => $key, 'total' => count($leadAssessors[$key])];
+            $option = ($key == '') ? 'Sin Asesor' : $key;
+            $leadAssessors[] = ['assessor' => $option, 'total' => count($leadAssessors[$key])];
             unset($leadAssessors[$key]);
         }
 
         foreach ($leadProducts as $key => $status) {
-            $leadProducts[] = ['channel' => $key, 'total' => count($leadProducts[$key])];
+            $option = ($key == '') ? 'Sin Producto' : $key;
+            $leadProducts[] = ['product' => $option, 'total' => count($leadProducts[$key])];
             unset($leadProducts[$key]);
         }
+
+        foreach ($leadServices as $key => $status) {
+            $option = ($key == '') ? 'Sin Servicio' : $key;
+            $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
+            unset($leadServices[$key]);
+        }
+
+
 
         $totalStatuses = $leadChannels->sum('total');
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
         $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
         $leadAssessors    = $this->toolsInterface->extractValuesToArray($leadAssessors);
         $leadProducts    = $this->toolsInterface->extractValuesToArray($leadProducts);
+        $leadServices    = $this->toolsInterface->extractValuesToArray($leadServices);
+
 
         // quede aqui
 
@@ -222,6 +238,19 @@ class DigitalChannelLeadController extends Controller
             array_push($leadAssessorsNames, trim($leadAssessor['assessor']));
             array_push($leadAssessorsValues, trim($leadAssessor['total']));
         }
+        $leadProductsNames  = [];
+        $leadProductsValues  = [];
+        foreach ($leadProducts as $leadProduct) {
+            array_push($leadProductsNames, trim($leadProduct['product']));
+            array_push($leadProductsValues, trim($leadProduct['total']));
+        }
+
+        $leadServicesNames  = [];
+        $leadServicesValues  = [];
+        foreach ($leadServices as $leadService) {
+            array_push($leadServicesNames, trim($leadService['service']));
+            array_push($leadServicesValues, trim($leadService['total']));
+        }
 
         return view('digitalchannelleads.dashboard', [
             'leadChannelNames'    => $leadChannelNames,
@@ -230,6 +259,10 @@ class DigitalChannelLeadController extends Controller
             'leadStatusesValues'  => $leadStatusesValues,
             'leadAssessorsNames'  => $leadAssessorsNames,
             'leadAssessorsValues' => $leadAssessorsValues,
+            'leadProductsNames'  => $leadProductsNames,
+            'leadProductsValues' => $leadProductsValues,
+            'leadServicesNames'  => $leadServicesNames,
+            'leadServicesValues' => $leadServicesValues,
             'totalStatuses'       => $totalStatuses
         ]);
     }

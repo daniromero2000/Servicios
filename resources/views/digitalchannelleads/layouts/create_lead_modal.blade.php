@@ -46,17 +46,19 @@
               </div>
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
+                  
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                  <select name="city" id="city" class="form-control" enabled required>
-                    @if(!empty($cities))
-                    <option disabled selected value> -- Selecciona Ciudad -- </option>
-                    @foreach($cities as $city)
-                    <option value="{{ $city->CIUDAD }}">
-                      {{ $city->CIUDAD }}
-                    </option>
-                    @endforeach
-                    @endif
-                  </select>
+                        <select  name="city" id="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select5-id="1" tabindex="-1" aria-hidden="true" enabled required>
+                          @if(!empty($cities))
+                          <option data-select5-id="" disabled selected value> -- Selecciona Ciudad -- </option>
+                          @foreach($cities as $city)
+                          <option data-select5-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
+                            {{ $city->CIUDAD }}
+                          </option>
+                          @endforeach
+                          @endif                        
+                        </select>
+                
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
