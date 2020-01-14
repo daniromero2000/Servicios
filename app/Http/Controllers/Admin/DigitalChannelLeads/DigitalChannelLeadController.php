@@ -178,27 +178,32 @@ class DigitalChannelLeadController extends Controller
         }
 
         foreach ($leadChannels as $key => $status) {
-            $leadChannels[] = ['channel' => $key, 'total' => count($leadChannels[$key])];
+            $option = ($key == '') ? 'Sin Canal' : $key ;
+            $leadChannels[] = ['channel' => $option, 'total' => count($leadChannels[$key])];
             unset($leadChannels[$key]);
         }
 
         foreach ($leadStatuses as $key => $status) {
-            $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
+            $option = ($key == '') ? 'Sin Estado' : $key ;
+            $leadStatuses[] = ['status' => $option, 'total' => count($leadStatuses[$key])];
             unset($leadStatuses[$key]);
         }
 
         foreach ($leadAssessors as $key => $status) {
-            $leadAssessors[] = ['assessor' => $key, 'total' => count($leadAssessors[$key])];
+            $option = ($key == '') ? 'Sin Asesor' : $key ;
+            $leadAssessors[] = ['assessor' => $option, 'total' => count($leadAssessors[$key])];
             unset($leadAssessors[$key]);
         }
 
         foreach ($leadProducts as $key => $status) {
-            $leadProducts[] = ['product' => $key, 'total' => count($leadProducts[$key])];
+            $option = ($key == '') ? 'Sin Producto' : $key ;
+            $leadProducts[] = ['product' => $option, 'total' => count($leadProducts[$key])];
             unset($leadProducts[$key]);
         }
 
         foreach ($leadServices as $key => $status) {
-            $leadServices[] = ['service' => $key, 'total' => count($leadServices[$key])];
+            $option = ($key == '') ? 'Sin Servicio' : $key ;
+            $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
             unset($leadServices[$key]);
         }
 
