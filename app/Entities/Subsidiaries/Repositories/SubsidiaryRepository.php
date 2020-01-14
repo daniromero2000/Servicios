@@ -4,6 +4,7 @@ namespace App\Entities\Subsidiaries\Repositories;
 
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 
@@ -18,7 +19,6 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         'CIUDAD'
     ];
 
-
     public function __construct(
         Subsidiary $Subsidiary
     ) {
@@ -28,7 +28,9 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
     public function getAllSubsidiaryCityNames()
     {
         try {
-            return $this->model->where('PRINCIPAL', 1)->orderBy('CIUDAD', 'asc')->get(['CIUDAD']);
+            return $this->model->where('PRINCIPAL', 1)
+                ->where('STATE',  'A')
+                ->orderBy('CIUDAD', 'asc')->get(['CIUDAD']);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -51,16 +53,6 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
-    }
-
-
-    private function getNameCiudadExp($city)
-    {
-        $queryCity = sprintf("SELECT `NOMBRE` FROM `CIUDADES` WHERE `CODIGO` = %s ", $city);
-
-        $resp = DB::connection('oportudata')->select($queryCity);
-
-        return $resp;
     }
 
     public function listSubsidiares($totalView): Support

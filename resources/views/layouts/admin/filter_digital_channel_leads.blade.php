@@ -1,4 +1,4 @@
-<!-- search form -->    
+<!-- search form -->
 <div class="row">
     <div class="col-12 text-center">
         <h3 style="color: #007bff;">Filtrar</h3>
@@ -8,7 +8,7 @@
             <div class="input-group">
                 <div class="row w-100 d-flex justify-content-center">
                     <div class="col-6 col-md-2">
-                        <label for="q">Buscar (Cédula y Nombre)</label>
+                        <label for="q">Buscar (Cédula, Nombre y Apellido)</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
