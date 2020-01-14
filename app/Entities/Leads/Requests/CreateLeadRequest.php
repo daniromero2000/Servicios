@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Leads\Request;
+namespace App\Entities\Leads\Requests;
 
 use App\Entities\Tools\Base\BaseFormRequest;
 

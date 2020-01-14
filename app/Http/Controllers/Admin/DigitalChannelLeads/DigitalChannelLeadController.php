@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Lºeads\Repositories\LeadRepository;
-use App\Entities\Leads\Request\CreateLeadRequest;
-      
+use App\Entities\Leads\Requests\CreateLeadRequest;
+
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
@@ -78,12 +78,8 @@ class DigitalChannelLeadController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateLeadRequest $request)
     {
-        $request = $request->validate([
-            'identificationNumber' => 'unique:leads',
-            'telephone' => 'unique:leads'
-        ]);
     
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
