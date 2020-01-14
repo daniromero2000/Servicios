@@ -4,6 +4,7 @@ namespace App\Entities\Subsidiaries\Repositories;
 
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 
@@ -28,7 +29,9 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
     public function getAllSubsidiaryCityNames()
     {
         try {
-            return $this->model->where('PRINCIPAL', 1)->orderBy('CIUDAD', 'asc')->get(['CIUDAD']);
+            return $this->model->where('PRINCIPAL', 1)
+                ->where('STATE',  'A')
+                ->orderBy('CIUDAD', 'asc')->get(['CIUDAD']);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
