@@ -55,10 +55,10 @@ class DigitalChannelLeadController extends Controller
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
-                                request()->input('state'),
+                request()->input('state'),
                 request()->input('assessor_id'),
                 request()->input('city'),
-            )->sortByDesc('created_at');
+            );
         }
         $listCount = $list->count();
 
