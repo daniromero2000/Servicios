@@ -44,11 +44,11 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="city">Ciudad </label>
-                            <select name="city" id="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                            <select name="city"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($cities))
                                 <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                                 @foreach($cities as $city)
