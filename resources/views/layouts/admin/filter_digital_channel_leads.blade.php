@@ -16,9 +16,9 @@
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="state">Estado </label>
-                            <select name="state" id="state" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                            <select name="state"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($lead_statuses))
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option data-select2-id="" disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach($lead_statuses as $lead_status)
                                 <option data-select2-id="{{ $lead_status->id }}" value="{{ $lead_status->id }}">
                                     {{ $lead_status->status }}
@@ -29,12 +29,28 @@
                             </select>
                           </div>
                     </div>
+                    <div class="col-6 col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="city">Ciudad </label>
+                            <select  id="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                                @if(!empty($cities))
+                                <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
+                                @foreach($cities as $city)
+                                <option  data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
+                                    {{ $city->CIUDAD }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="city">Ciudad </label>
                             <select name="city" id="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($cities))
-                                <option disabled selected value> -- Selecciona Ciudad -- </option>
+                                <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                                 @foreach($cities as $city)
                                 <option  data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
                                     {{ $city->CIUDAD }}
@@ -48,10 +64,10 @@
                         <div class="form-group">
                             <label for="assessor_id">Asesor</label>
                             <select name="assessor_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select4-id="1" tabindex="-1" aria-hidden="true">
-                            <option disabled selected value> -- Selecciona Ciudad -- </option>
+                            <option  data-select4-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                             <option  data-select4-id="13" value="13">Evelyn Correa</option>
-                            <option value="18">Vanessa Parra</option>
-                            <option value="85">Danitza Naranjo</option>                              
+                            <option  data-select4-id="" value="18">Vanessa Parra</option>
+                            <option  data-select4-id="" value="85">Danitza Naranjo</option>                              
                             </select>
                         </div>
                     </div>

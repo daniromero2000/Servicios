@@ -39,7 +39,7 @@
                     class="form-control">
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
-                  <label for="telephone">Teléfono <span class="text-danger">*</span></label>
+                  <label for="telephone">Teléfono </label>
                   <input type="text" ng-model="lead.telephone" id="telephone" name="telephone" cols="10"
                     class="form-control">
                 </div>
