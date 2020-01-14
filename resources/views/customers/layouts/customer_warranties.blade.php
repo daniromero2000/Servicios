@@ -1,4 +1,8 @@
 @if($warranties)
+
+@php
+    dd($warranties);
+@endphp
 <div class="container-fluid card card-table-reset pb-5">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-cart-arrow-down mr-2"></i></i> Garantiías
