@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use Carbon\Carbon;
-
 
 class CommunityController extends Controller
 {
