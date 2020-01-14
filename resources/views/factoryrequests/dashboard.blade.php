@@ -23,7 +23,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito en los últimos 30 días</p>
+                <p>Solicitudes Crédito <br> en los últimos 30 días</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -34,6 +34,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h2>Total</h2>
+                <br>
                 <p>${{ number_format ($factoryRequestsTotal) }}</p>
               </div>
               <div class="icon">
@@ -58,7 +59,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -85,7 +86,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="/factoryrequests"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -112,7 +113,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="/factoryrequests"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -139,7 +140,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="/factoryrequests"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -188,6 +189,13 @@
       </div>
       <!-- TORTA -->
       <div class="card">
+        <div class="card-body">
+          <div class="col-12">
+            @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
+          </div>
+        </div>
+      </div>
+      <div class="card">
         <div class="card-header">
           <h3 class="card-title">Estados Solicitudes</h3>
           <div class="card-tools">
@@ -198,11 +206,9 @@
         </div>
         <div class="card-body">
           <div class="row">
+           
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
-            </div>
-            <div class="col-12">
-              <canvas id="pieChart" style="height:370px; min-height:300px"></canvas>
+              <canvas id="pieChart" style="height:334px; min-height:300px"></canvas>
             </div>
           </div>
         </div>
@@ -253,10 +259,12 @@
             <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
           </div>
         </div>
-        <div class="card-body">
-          <div class="chart">
-            <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-          </div>
+        <div class="card-body row justify-content-center">
+          <div class="col-10">
+            <div class="chart">
+             <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+            </div>
+          </div> 
         </div>
       </div>
     </div>

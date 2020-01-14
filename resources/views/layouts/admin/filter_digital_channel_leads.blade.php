@@ -12,29 +12,31 @@
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
+                    
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="state">Estado </label>
-                            <select name="state" id="state" class="form-control" enabled>
+                            <select name="state" id="state" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($lead_statuses))
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach($lead_statuses as $lead_status)
-                                <option value="{{ $lead_status->id }}">
+                                <option data-select2-id="{{ $lead_status->id }}" value="{{ $lead_status->id }}">
                                     {{ $lead_status->status }}
                                 </option>
                                 @endforeach
                                 @endif
+                             
                             </select>
-                        </div>
+                          </div>
                     </div>
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="city">Ciudad </label>
-                            <select name="city" id="city" class="form-control" enabled>
+                            <select name="city" id="city" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($cities))
                                 <option disabled selected value> -- Selecciona Ciudad -- </option>
                                 @foreach($cities as $city)
-                                <option value="{{ $city->CIUDAD }}">
+                                <option  data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
                                     {{ $city->CIUDAD }}
                                 </option>
                                 @endforeach
@@ -45,12 +47,11 @@
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="assessor_id">Asesor</label>
-                            <select class="form-control  select2" id="assessor_id" name="assessor_id"
-                                ng-model="lead.assessor_id" style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Asesor -- </option>
-                                <option value="13">Evelyn Correa</option>
-                                <option value="18">Vanessa Parra</option>
-                                <option value="85">Danitza Naranjo</option>
+                            <select name="assessor_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select4-id="1" tabindex="-1" aria-hidden="true">
+                            <option disabled selected value> -- Selecciona Ciudad -- </option>
+                            <option  data-select4-id="13" value="13">Evelyn Correa</option>
+                            <option value="18">Vanessa Parra</option>
+                            <option value="85">Danitza Naranjo</option>                              
                             </select>
                         </div>
                     </div>
