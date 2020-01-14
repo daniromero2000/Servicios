@@ -52,7 +52,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('customers.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">

@@ -84,7 +84,7 @@
                     <div class="col-6">
                       <span class="info-box-text text-right"><a href="{{ route('intentions.index') }}"
                           style="color: black; !important">Ver
-                          Mas</a></span>
+                          Más</a></span>
                     </div>
                   </div>
                   <div class="progress">
@@ -122,6 +122,13 @@
         <div class="row">
           <div class="col-12">
             <!-- PORCENTAJES -->
+            <div class="card">
+              <div class="card-body">
+                <div class="col-12">
+                  @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+                </div>
+              </div>
+            </div>
             <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">Perfiles Crediticios</h3>
@@ -133,9 +140,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="col-12">
-                  @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
-                </div>
+               
                 <div class="chart">
                   <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
                 </div>
