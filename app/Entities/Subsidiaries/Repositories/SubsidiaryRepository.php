@@ -19,7 +19,6 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         'CIUDAD'
     ];
 
-
     public function __construct(
         Subsidiary $Subsidiary
     ) {
