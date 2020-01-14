@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class CommunityController extends Controller
 {
-    private $leadInterface, $toolsInterface, $userInterface;
+    private $leadInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -24,25 +24,13 @@ class CommunityController extends Controller
         $this->userInterface = $userRepositoryInterface;
     }
 
-    public function show(int $id)
-    {
-        $lead = $this->leadInterface->findLeadByIdFull($id);
-
-        return view('leads.show', [
-            'lead' => $lead,
-
-        ]);
-    }
-
-    public function dashboard(Request $request)
+    public function dashboard()
     {
         $to = Carbon::now();
         $from = Carbon::now()->subMonth();
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
-
-
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
