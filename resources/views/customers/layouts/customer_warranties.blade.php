@@ -41,4 +41,15 @@
     </table>
   </div>
 </div>
+@else
+<table class="table table-hover table-stripped leadTable">
+  <tbody class="body-table">
+    <tr>
+      <td>
+        No tiene garantías
+      </td>
+    </tr>
+  </tbody>
+</table>
 @endif
+</div>
