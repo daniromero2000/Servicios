@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use App\Entities\Lºeads\Repositories\LeadRepository;
+use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 
 class DigitalChannelLeadController extends Controller
@@ -80,7 +80,7 @@ class DigitalChannelLeadController extends Controller
 
     public function store(CreateLeadRequest $request)
     {
-    
+
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
         $dataOportudata = [
@@ -172,14 +172,13 @@ class DigitalChannelLeadController extends Controller
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
             $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
-
         }
 
         foreach ($leadChannels as $key => $status) {
             $leadChannels[] = ['channel' => $key, 'total' => count($leadChannels[$key])];
             unset($leadChannels[$key]);
         }
-    
+
         foreach ($leadStatuses as $key => $status) {
             $leadStatuses[] = ['status' => $key, 'total' => count($leadStatuses[$key])];
             unset($leadStatuses[$key]);
