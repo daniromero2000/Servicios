@@ -52,6 +52,7 @@ class Lead extends Model
     protected $searchable = [
         'columns' => [
             'leads.name'      => 10,
+            'leads.lastName'  => 10,
             'leads.telephone' => 10,
         ],
     ];
