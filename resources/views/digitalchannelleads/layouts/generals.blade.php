@@ -9,7 +9,9 @@
         <span class="text-center badge"
           style="color: white ; background-color: {{$digitalChannelLead->leadStatuses->color }}"
           class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
-        {{ $digitalChannelLead->leadAssessor['name']}}
+          @if($digitalChannelLead->leadAssessor)
+            {{ $digitalChannelLead->leadAssessor['name']}}
+          @endif
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-@if($warranties)
+@if($warranties->isNotEmpty())
 <div class="container-fluid card card-table-reset pb-5">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-cart-arrow-down mr-2"></i></i> Garantiías
@@ -42,14 +42,13 @@
   </div>
 </div>
 @else
-<table class="table table-hover table-stripped leadTable">
-  <tbody class="body-table">
-    <tr>
-      <td>
-        No tiene garantías
-      </td>
-    </tr>
-  </tbody>
-</table>
-@endif
-</div>
+  <table class="table table-hover table-stripped leadTable">
+    <tbody class="body-table">
+      <tr>
+        <td>
+          No tiene Garantías
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  @endif
