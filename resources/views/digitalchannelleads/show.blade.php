@@ -55,7 +55,8 @@
             </div>
             <div class="row row-reset border-0">
                 <a data-toggle="modal" data-target="#updateleadModal"
-                    class="btn btn-primary ml-auto mr-3 mb-2 ">Editar</a>
+                    class="btn btn-primary ml-auto mr-3 mb-2 " style="
+                    color: white;">Editar</a>
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
         </div>
