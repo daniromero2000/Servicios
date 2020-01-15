@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeadPriceStatusTable extends Migration
+class CreateLeadPriceStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateLeadPriceStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('lead_price_status', function (Blueprint $table) {
+        Schema::create('lead_price_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status');
             $table->string('color');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ class CreateLeadPriceStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lead_price_status');
+        Schema::dropIfExists('lead_price_statuses');
     }
 }

@@ -3,7 +3,7 @@
 use App\Entities\LeadPriceStatus\LeadPriceStatus;
 use Illuminate\Database\Seeder;
 
-class LeadPriceStatusTableSeeder extends Seeder
+class LeadPriceStatusesTableSeeder extends Seeder
 {
     public function run()
     {
