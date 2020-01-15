@@ -48,6 +48,7 @@ class FactoryRequestController extends Controller
         $listCount = $list->count();
         $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
+        // dd($list);
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,
             'optionsRoutes'        => (request()->segment(2)),

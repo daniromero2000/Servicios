@@ -151,8 +151,8 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 
 				@else
 
-				<div class="assesorLogin">
-					<a href="/login">Ingreso asesores</a>
+				<div class="assesorLogin ">
+					<a class="ingreso" href="/login">Ingreso asesores</a>
 					<p>{{Auth::user()}}</p>
 				</div>
 				@endif

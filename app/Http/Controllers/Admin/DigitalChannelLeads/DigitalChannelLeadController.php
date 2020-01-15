@@ -63,7 +63,14 @@ class DigitalChannelLeadController extends Controller
         }
         $listCount = $list->count();
 
+        $pricesTotal = 0;
+        foreach ($list as $key => $status) {
+            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+        }
+
+
         return view('digitalchannelleads.list', [
+            'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
@@ -74,7 +81,7 @@ class DigitalChannelLeadController extends Controller
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames()
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
         ]);
     }
 
