@@ -20,6 +20,7 @@ class CreateLeadPricesTable extends Migration
             $table->integer('lead_price');
             $table->integer('lead_id');
             $table->integer('user_id');
+            $table->integer('lead_price_status_id');
             $table->timestamps();
             $table->softDeletes();
         });

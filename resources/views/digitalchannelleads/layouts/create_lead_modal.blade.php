@@ -48,7 +48,7 @@
                 <div class="col-12 col-sm-6 form-group">
                   
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                                                <select id="channel" name="channel" class="form-control" required>
+                        <select id="city" name="city" class="form-control" required>
                           @if(!empty($cities))
                           <option  disabled selected value> -- Selecciona Ciudad -- </option>
                           @foreach($cities as $city)
