@@ -151,10 +151,23 @@ class LeadRepository implements LeadRepositoryInterface
                 'leadService',
                 'leadCampaign',
                 'comments',
-                'leadProduct'
+                'leadProduct',
+                'leadPrices'
             ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function getLeadPriceTotal($from, $to)
+    {
+        try {
+            return  $this->model->with([
+                'leadPrices'
+            ])->whereBetween('created_at', [$from, $to])
                 ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);

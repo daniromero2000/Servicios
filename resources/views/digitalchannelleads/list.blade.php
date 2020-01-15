@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
+
 <section>
     @include('layouts.errors-and-messages')
     @if(!is_null($digitalChannelLeads))
@@ -50,7 +51,13 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                    
+                                   <div class="inner">
+                                          <h4>Total de Cotizaciónes</h4>
+                                          <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
+                                  </div>
+                                  <div class="icon">
+                                          <i class="fas fa-shopping-cart"></i>
+                                  </div>
                                 </div>
                             </div>
                         </div>
