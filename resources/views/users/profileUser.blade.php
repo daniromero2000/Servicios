@@ -53,14 +53,7 @@
             <!-- /.col -->
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab"
-                                    style="color: white !important;">Configuración</a></li>
-
-                        </ul>
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
+                     <div class="card-body">
                         <div class="tab-content">
 
                             <div class="active tab-pane" id="activity">
@@ -70,13 +63,6 @@
 
                                     @method('PUT')
                                     {{ csrf_field() }}
-                                    <div class="form-group row justify-content-center">
-                                        <label for="name" class="col-sm-3 col-form-label">Nombre</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="name" id="name"
-                                                value="{{old('name', $user->name ?? '') }}" placeholder="Nombre">
-                                        </div>
-                                    </div>
                                     <div class="form-group row justify-content-center">
                                         <label for="mypassword" class="col-sm-3 col-form-label">Contraseña
                                             Actual</label>

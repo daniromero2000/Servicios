@@ -167,8 +167,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return  $this->model->with([
                 'leadPrices'
-            ])->orderBy('id', 'desc')
-                ->whereBetween('created_at', [$from, $to])
+            ])->whereBetween('created_at', [$from, $to])
                 ->get($this->columns);
         } catch (QueryException $e) {
             dd($e);
