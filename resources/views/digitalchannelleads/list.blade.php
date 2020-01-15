@@ -52,8 +52,8 @@
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 small-box inner">
                                    <div class="inner">
-                                          <h2>Total</h2>
-                                          <p>${{ number_format ($pricesTotal) }}</p>
+                                          <h4>Total de Cotizaciónes</h4>
+                                          <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
                                   </div>
                                   <div class="icon">
                                           <i class="fas fa-shopping-cart"></i>

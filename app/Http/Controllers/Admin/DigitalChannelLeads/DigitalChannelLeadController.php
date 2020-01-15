@@ -259,7 +259,15 @@ class DigitalChannelLeadController extends Controller
             array_push($leadServicesValues, trim($leadService['total']));
         }
 
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->leadInterface->listLeads($skip * 30);
+        $pricesTotal = 0;
+        foreach ($list as $key => $status) {
+            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+        }
+
         return view('digitalchannelleads.dashboard', [
+            'pricesTotal'         => $pricesTotal,
             'leadChannelNames'    => $leadChannelNames,
             'leadChannelValues'   => $leadChannelValues,
             'leadStatusesNames'   => $leadStatusesNames,
