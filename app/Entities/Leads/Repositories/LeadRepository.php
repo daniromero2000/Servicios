@@ -162,6 +162,19 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function getLeadPriceTotal($from, $to)
+    {
+        try {
+            return  $this->model->with([
+                'leadPrices'
+            ])->orderBy('id', 'desc')
+                ->whereBetween('created_at', [$from, $to])
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {

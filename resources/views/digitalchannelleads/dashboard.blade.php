@@ -10,7 +10,7 @@
               <div class="row">
               
               <!-- /.info-box -->
-              <div class="col-12 col-sm-6 col-md-6">
+              <div class="col-12 ">
                 <div class="small-box bg-primary">
                   <div class="inner">
                     <h2>{{ $totalStatuses }}</h2>
@@ -27,11 +27,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-sm-6 col-md-6">
+              <div class="col-12 ">
                 <div class="small-box bg-success">
                   <div class="inner">
                    <h4 class="mt-2">${{ number_format ($pricesTotal) }}</h3>
-                    <p style="margin-bottom: -4px !important;">Total de Cotizaciónes </p>
+                    <p style="margin-bottom: -4px !important;">Total Cotizado </p>
                   </div>
                   <br>
                   <div class="icon">

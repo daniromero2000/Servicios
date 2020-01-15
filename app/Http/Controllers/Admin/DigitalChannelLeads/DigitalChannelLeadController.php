@@ -173,6 +173,7 @@ class DigitalChannelLeadController extends Controller
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
+        $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
 
 
         if (request()->has('from')) {
@@ -181,6 +182,7 @@ class DigitalChannelLeadController extends Controller
             $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
+            $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
         }
 
         foreach ($leadChannels as $key => $status) {
@@ -222,9 +224,6 @@ class DigitalChannelLeadController extends Controller
         $leadProducts    = $this->toolsInterface->extractValuesToArray($leadProducts);
         $leadServices    = $this->toolsInterface->extractValuesToArray($leadServices);
 
-
-        // quede aqui
-
         $leadChannelNames  = [];
         $leadChannelValues  = [];
         foreach ($leadChannels as $leadChannel) {
@@ -261,9 +260,10 @@ class DigitalChannelLeadController extends Controller
 
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
+
         $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+        foreach ($leadPriceTotal as $key => $status) {
+            $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
         }
 
         return view('digitalchannelleads.dashboard', [
