@@ -197,6 +197,7 @@ Route::namespace('Front')->group(function () {
     });
 
     Route::namespace('Insurances')->group(function () {
+        Route::get('/api/seguros/credito/getInfoForm', 'SegurosController@getInfoForm');
         Route::resource('seguros', 'SegurosController', [
             'except' => ['show']
         ]);

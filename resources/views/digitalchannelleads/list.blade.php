@@ -13,8 +13,8 @@
                         <button class="btn btn-primary ml-auto mr-3 mb-2 ">
                             <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
                                     class="far fa-plus-square"></i></a>
-                        </button>   
-                    </div>                                
+                        </button>
+                    </div>
                     <div class="col-sm-8">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
@@ -51,20 +51,23 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                   <div class="inner">
-                                          <h4>Total de Cotizaciónes</h4>
-                                          <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
-                                  </div>
-                                  <div class="icon">
-                                          <i class="fas fa-shopping-cart"></i>
-                                  </div>
+                                    <div class="inner">
+                                        <h4>Total de Cotizaciónes</h4>
+                                        <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body text-center pt-0 pb-0 ">
+                        <div class="card-body pt-0 pb-0 ">
                             @if($digitalChannelLeads)
-                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' => $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services, 'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' => $lead_statuses ])
-                             @include('layouts.admin.pagination.pagination', [$skip])
+                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
+                            $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services,
+                            'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' =>
+                            $lead_statuses ])
+                            @include('layouts.admin.pagination.pagination', [$skip])
                             @else
                             @include('layouts.admin.pagination.pagination_null', [$skip])
                             @endif

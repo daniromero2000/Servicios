@@ -46,6 +46,9 @@
                 <div class="row">
                 </div>
             </div>
+            @php
+            dd($digitalChannelLead)
+            @endphp
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
                     @include('digitalchannelleads.layouts.commentaries', ['datas' => $digitalChannelLead->comments])
@@ -54,8 +57,7 @@
                 </div>
             </div>
             <div class="row row-reset border-0">
-                <a data-toggle="modal" data-target="#updateleadModal"
-                    class="btn btn-primary ml-auto mr-3 mb-2 " style="
+                <a data-toggle="modal" data-target="#updateleadModal" class="btn btn-primary ml-auto mr-3 mb-2 " style="
                     color: white;">Editar</a>
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>

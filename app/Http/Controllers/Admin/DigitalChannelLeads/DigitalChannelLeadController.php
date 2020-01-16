@@ -69,6 +69,8 @@ class DigitalChannelLeadController extends Controller
         }
 
 
+
+
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,

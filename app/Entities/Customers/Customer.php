@@ -208,11 +208,8 @@ class Customer extends Model
         'ID_CIUD_UBI',
         'VCON_DIR',
         'MIGRADO',
-        'CLIENTE_WEB',
-        'MIGRADO',
         'TRAT_DATOS',
         'USUARIO_ACTUALIZACION',
-        'USUARIO_CREACION',
         'FECHA_ACTUALIZACION'
     ];
 
