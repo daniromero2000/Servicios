@@ -150,7 +150,9 @@ class LeadsController extends Controller
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
     AND (`TB_INTENCIONES`.`ASESOR` = 998877
-        OR `TB_INTENCIONES`.`ASESOR` = 1024530584)
+        OR `TB_INTENCIONES`.`ASESOR` = 1024530584
+       OR `TB_INTENCIONES`.`ASESOR` =  1088302337
+        OR `TB_INTENCIONES`.`ASESOR` =  1004995477  )
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
