@@ -46,9 +46,6 @@
                 <div class="row">
                 </div>
             </div>
-            @php
-            dd($digitalChannelLead)
-            @endphp
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 <div class="row">
                     @include('digitalchannelleads.layouts.commentaries', ['datas' => $digitalChannelLead->comments])
