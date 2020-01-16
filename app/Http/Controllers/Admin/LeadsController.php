@@ -41,6 +41,7 @@ class LeadsController extends Controller
     {
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
+        $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
 
         $getLeadsTR = $this->getLeadsTradicional([
             'q'               => $request->get('q'),
@@ -62,8 +63,10 @@ class LeadsController extends Controller
         ]);
 
         return response()->json([
+
             'leadsDigital'    => $getLeadsDigital['leadsDigital'],
             'totalLeads'      => $getLeadsDigital['totalLeads'],
+
             'codeAsesor'      => $this->codeAsessor,
             'leadsTR'         => $getLeadsTR['leadsTR'],
             'totalLeadsTR'    => $getLeadsTR['totalLeadsTR'],
