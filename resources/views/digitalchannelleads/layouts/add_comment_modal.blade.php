@@ -1,15 +1,14 @@
-<!-- The Comment Modal -->
-<div id="commentmodal" class="modal fade">
-  <div class="modal-dialog modal-sm  modal-dialog-centered">
+<div class="modal fade" id="commentmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Ingresa el comentario</h4>
+        <h4 class="modal-title" id="myModalLabel">Actualizar Lead</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
         <div class="box">
-          <form action="{{ route('Comments.store') }}" method="post" class="form"
-            enctype="multipart/form-data">
+          <form action="{{ route('Comments.store') }}" method="post" class="form" enctype="multipart/form-data">
             <div class="box-body">
               @csrf
               <input name="idLead" id="idLead" hidden value="{{ $digitalChannelLead->id }}">
