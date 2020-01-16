@@ -1,6 +1,5 @@
 @php
 use Carbon\Carbon;
-
 @endphp
 
 <div class="table-responsive mb-3 p-0 height-table">
@@ -33,7 +32,6 @@ use Carbon\Carbon;
         </td>
         <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
-
         <td>{{ $data->telephone}}</td>
         <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
         <td> @if($data->leadService) {{ $data->leadService->service}} @else
@@ -53,6 +51,7 @@ use Carbon\Carbon;
                 class="fas fa-times cursor"></i></a>
           </form>
           <i class="fas fa-edit cursor" data-toggle="modal" data-target="#editLead{{$data->id}}"></i>
+          <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
         </td>
       </tr>
 
@@ -230,6 +229,40 @@ use Carbon\Carbon;
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="addComment{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Actualizar Lead</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+              <div class="box">
+                <form action="{{ route('Comments.store') }}" method="post" class="form" enctype="multipart/form-data">
+                  <div class="box-body">
+                    @csrf
+                    <input name="idLead" id="idLead" hidden value="{{ $data->id }}">
+                    <div class="form-group">
+
+                      <label for="comment">Comentario <span class="text-danger">*</span></label>
+                      <input type="text" name="comment" validation-pattern="text" id="comment" placeholder="Comentario"
+                        class="form-control" value="{{ old('comment') }}" required autofocus>
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                    <div class="btn-group">
+                      <button type="submit" class="btn btn-primary">Agregar</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       @endforeach
     <tbody>
   </table>
