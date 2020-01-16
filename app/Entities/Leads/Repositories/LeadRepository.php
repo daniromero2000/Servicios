@@ -21,6 +21,7 @@ class LeadRepository implements LeadRepositoryInterface
         'typeService',
         'typeProduct',
         'state',
+        'description',
         'channel',
         'created_at',
         'updated_at',
@@ -146,6 +147,7 @@ class LeadRepository implements LeadRepositoryInterface
     {
         try {
             return  $this->model->with([
+                'leadStatusesLogs',
                 'leadStatus',
                 'leadAssessor',
                 'leadService',
