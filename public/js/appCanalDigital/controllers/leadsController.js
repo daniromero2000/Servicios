@@ -5,7 +5,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.q = {
         'q': '',
         'qtipoTarjetaAprobados': '',
-        'qOrigenAprobados' : '',
+        'qOrigenAprobados': '',
         'qcityAprobados': '',
         'qfechaInicialAprobados': '',
         'qfechaFinalAprobados': '',
@@ -15,7 +15,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         'qOrigenTR': '',
         'qTRAnt': '',
         'initFrom': 0,
-        'initFromAnt': 0,
         'initFromCM': 0,
         'initFromRL': 0,
         'initFromGen': 0,
@@ -32,12 +31,9 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.codeAsesor = "";
     $scope.tabs = 1;
     $scope.totalLeads = 0;
-    $scope.totalLeadsAnt = 0;
     $scope.totalLeadsRejected = 0;
     $scope.totalLeadsTR = 0;
-    $scope.totalLeadsTRAnt = 0;
     $scope.cargando = true;
-    $scope.cargandoAnt = true;
     $scope.cargandoRL = true;
     $scope.cargandoGen = true;
     $scope.cargandoTR = true;
@@ -53,13 +49,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 
     $scope.leadsChannels = [{
-        label: 'FACEBOOK',
-        value: 2
-    },
-    {
-        label: 'WHATSAPP',
-        value: 3
-    }
+            label: 'FACEBOOK',
+            value: 2
+        },
+        {
+            label: 'WHATSAPP',
+            value: 3
+        }
     ];
 
     $scope.comment = {
@@ -70,78 +66,77 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.comments = [];
     $scope.leads = [];
-    $scope.leadsAnt = [];
     $scope.leadsGen = [];
     $scope.leadsRejected = [];
     $scope.leadsTR = [];
     $scope.cities = [];
 
     $scope.typeServices = [{
-        label: 'Crédito',
-        value: 'Crédito'
-    },
-    {
-        label: 'Crédito Motos',
-        value: 'Motos'
-    },
-    {
-        label: 'Crédito Libranza',
-        value: 'Credito libranza'
-    },
-    {
-        label: 'Seguros',
-        value: 'Seguros'
-    },
+            label: 'Crédito',
+            value: 'Crédito'
+        },
+        {
+            label: 'Crédito Motos',
+            value: 'Motos'
+        },
+        {
+            label: 'Crédito Libranza',
+            value: 'Credito libranza'
+        },
+        {
+            label: 'Seguros',
+            value: 'Seguros'
+        },
     ];
 
     $scope.typeStates = [{
-        label: 'Pendiente',
-        value: 0
-    },
-    {
-        label: 'En estudio',
-        value: 1
-    },
-    {
-        label: 'En espera',
-        value: 2
-    },
-    {
-        label: 'Aprobado',
-        value: 3
-    },
-    {
-        label: 'Negado',
-        value: 4
-    }
+            label: 'Pendiente',
+            value: 0
+        },
+        {
+            label: 'En estudio',
+            value: 1
+        },
+        {
+            label: 'En espera',
+            value: 2
+        },
+        {
+            label: 'Aprobado',
+            value: 3
+        },
+        {
+            label: 'Negado',
+            value: 4
+        }
     ];
 
     $scope.cardTypes = [{
-        label: 'Tarjeta Black',
-        value: 0
-    },
-    {
-        label: 'Tarjeta Gray',
-        value: 1
-    }
+            label: 'Tarjeta Black',
+            value: 0
+        },
+        {
+            label: 'Tarjeta Gray',
+            value: 1
+        }
     ];
 
     $scope.origenes = [{
-        label: 'Oportuya',
-        value: 'Oportuya'
-    },
-    {
-        label:'Avances',
-        value:'Avance'
-    },
-    {
-        label:'Seguros - SOAT',
-        value:'SEGUROS'
-    },
-    {
-        label:'ASESORES - CRÉDITO',
-        value:'ASESORES-CREDITO'
-    }
+            label: 'Oportuya',
+            value: 'Oportuya'
+        },
+        {
+            label: 'Avances',
+            value: 'Avance'
+        },
+        {
+            label: 'Seguros - SOAT',
+            value: 'SEGUROS'
+        },
+        {
+            label: 'ASESORES - CRÉDITO',
+            value: 'ASESORES-CREDITO'
+        }
     ];
 
     $scope.getCities = function () {
@@ -160,7 +155,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.getLeads = function () {
         showLoader();
         $scope.cargando = true;
-        $scope.cargandoAnt = true;
         $scope.cargandoCM = true;
         $scope.cargandoRL = true;
         $scope.cargandoGen = true;
@@ -180,7 +174,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 '&qOrigenTR=' + $scope.q.qOrigenTR +
                 '&qRL=' + $scope.q.qRL +
                 '&initFrom=' + $scope.q.initFrom +
-                '&initFromAnt=' + $scope.q.initFromAnt +
                 '&initFromCM=' + $scope.q.initFromCM +
                 '&initFromRL=' + $scope.q.initFromRL +
                 '&initFromGen=' + $scope.q.initFromGen +
@@ -196,7 +189,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         }).then(function successCallback(response) {
             $scope.codeAsesor = response.data.codeAsesor;
             $scope.totalLeads = response.data.totalLeads;
-            $scope.totalLeadsAnt = response.data.totalLeadsAnt;
             $scope.totalLeadsRejected = response.data.totalLeadsRejected;
             $scope.totalLeadsTR = response.data.totalLeadsTR;
 
@@ -207,14 +199,6 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                     $scope.leads.push(value);
                 });
                 $scope.cargando = false;
-            }
-
-            if (response.data.leadsDigitalAnt != false) {
-                $scope.q.initFromAnt += response.data.leadsDigitalAnt.length;
-                angular.forEach(response.data.leadsDigitalAnt, function (value, key) {
-                    $scope.leadsAnt.push(value);
-                });
-                $scope.cargandoAnt = false;
             }
 
             if (response.data.leadsTR != false) {
@@ -232,12 +216,9 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.searchLeads = function () {
         $scope.q.initFrom = 0;
-        $scope.q.initFromAnt = 0;
         $scope.q.initFromGen = 0;
         $scope.q.initFromTR = 0;
-        $scope.q.initFromTRAnt = 0;
         $scope.leads = [];
-        $scope.leadsAnt = [];
         $scope.leadsTR = [];
         $scope.leadsGen = [];
         $scope.leadsRejected = [];
@@ -246,13 +227,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.resetFiltros = function () {
         $scope.leads = [];
-        $scope.leadsAnt = [];
-        $scope.leadsTR = [];
+               $scope.leadsTR = [];
         $scope.leadsGen = [];
         $scope.q = {
             'q': '',
             'qtipoTarjetaAprobados': '',
-            'qOrigenAprobados' : '',
+            'qOrigenAprobados': '',
             'qcityAprobados': '',
             'qfechaInicialAprobados': '',
             'qfechaFinalAprobados': '',
@@ -264,8 +244,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qOrigenTR': '',
             'qTRAnt': '',
             'initFrom': 0,
-            'initFromAnt': 0,
-            'initFromCM': 0,
+                      'initFromCM': 0,
             'initFromRL': 0,
             'initFromGen': 0,
             'initFromTR': 0,
@@ -297,11 +276,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/communityLeads/viewCommunityLeads/' + idLead
         }).then(function successCallback(response) {
-            if (response.data != false) {
-                $scope.lead = response.data;
-            }
-        },
-            function errorCallback(response) { });
+                if (response.data != false) {
+                    $scope.lead = response.data;
+                }
+            },
+            function errorCallback(response) {});
     };
 
     $scope.updateCommunityLeads = function () {
@@ -393,7 +372,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             });
     }
 
-    $scope.viewCommentsFactoryRequest = function(name, lastName, solicitud, init = true){
+    $scope.viewCommentsFactoryRequest = function (name, lastName, solicitud, init = true) {
         $scope.comment = {};
         $scope.comments = [];
         $scope.solicitud = solicitud;
@@ -450,7 +429,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
         $scope.viewAddComent = !$scope.viewAddComent;
     };
 
-    $scope.addFactoryRequestComment = function(){
+    $scope.addFactoryRequestComment = function () {
         $scope.comment.solicitud = $scope.solicitud;
         $http({
             method: 'POST',
@@ -496,7 +475,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 $scope.comment.comment = "";
                 $scope.viewAddComent = false;
             }
-        }, function errorCallback(response) { });
+        }, function errorCallback(response) {});
     };
 
 
@@ -515,12 +494,12 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     }
 
     $scope.deleteCommunityLeads = function (idLead) {
-            $http({
+        $http({
             method: 'POST',
             url: '/communityLeads/deleteCommunityLeads/' + idLead
-                  }).then(function successCallback(response) {
-                      if (response.data != false) {
-                              $scope.searchLeads();
+        }).then(function successCallback(response) {
+            if (response.data != false) {
+                $scope.searchLeads();
                 $('#deleteCommunityModal').modal('hide');
             }
         }, function errorCallback(response) {
