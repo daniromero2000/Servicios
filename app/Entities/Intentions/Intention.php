@@ -36,7 +36,8 @@ class Intention extends Model
         'TIPO_5_ESPECIAL',
         'INSPECCION_OCULAR',
         'ESTADO_OBLIGACIONES',
-        'ESTADO_INTENCION'
+        'ESTADO_INTENCION',
+        'ASESOR'
     ];
 
     protected $searchable = [

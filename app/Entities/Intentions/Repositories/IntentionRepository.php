@@ -11,6 +11,7 @@ use Illuminate\Support\Collection as Support;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class IntentionRepository implements IntentionRepositoryInterface
 {
@@ -40,6 +41,12 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function createIntention($data): Intention
     {
+        $authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+        if (Auth::user()) {
+            $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+        }
+        $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+        $data['ASESOR'] = $assessorCode;
         try {
             $dataIntention = new DataIntentionsRequest();
             $intention = $this->model->create($data);
