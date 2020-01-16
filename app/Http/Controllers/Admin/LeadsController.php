@@ -87,9 +87,9 @@ class LeadsController extends Controller
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
          AND (`TB_INTENCIONES`.`ASESOR` = 998877
-        OR `TB_INTENCIONES`.`ASESOR` = 1024530584
-       OR `TB_INTENCIONES`.`ASESOR` =  1088302337
-        OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
+        OR `ti`.`ASESOR` = 1024530584
+       OR `ti`.`ASESOR` =  1088302337
+        OR `ti`.`ASESOR` =  1004995477)
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
