@@ -151,16 +151,14 @@ class DigitalChannelLeadController extends Controller
     public function update(Request $request, $id)
     {
         $lead = $this->leadInterface->findLeadById($id);
-
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];
             $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         }
-
         $leadRerpo = new leadRepository($lead);
         $leadRerpo->updateLead($request->input());
         $request->session()->flash('message', 'Actualización Exitosa!');
-        return redirect()->route('digitalchannelleads.show', $id);
+        return redirect()->back();
     }
 
     public function dashboard(Request $request)

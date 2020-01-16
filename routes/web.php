@@ -206,20 +206,20 @@ Route::resource('campaign', 'Admin\CampaignController');
 
 /*Community routes*/
 
-Route::get('community/viewCampaign/{lead}', 'Admin\CampaignController@show');
-Route::post('community/addCampaign', 'Admin\CampaignController@store')->middleware('cors');
-Route::post('community/deleteCampaign', 'Admin\CampaignController@deleteCampaign')->middleware('cors');
-Route::post('community/updateCampaign', 'Admin\CampaignController@update')->middleware('cors');
-Route::post('community/addImage', 'Admin\CampaignController@storeImage')->middleware('cors');
+Route::get('/Administrator/community/viewCampaign/{lead}', 'Admin\CampaignController@show');
+Route::post('/Administrator/community/addCampaign', 'Admin\CampaignController@store')->middleware('cors');
+Route::post('Administrator/community/deleteCampaign', 'Admin\CampaignController@deleteCampaign')->middleware('cors');
+Route::post('/Administrator/community/updateCampaign', 'Admin\CampaignController@update')->middleware('cors');
+Route::post('/Administrator/community/addImage', 'Admin\CampaignController@storeImage')->middleware('cors');
 
-Route::get('/community', function () {
+Route::get('Administrator/community', function () {
     if (Auth::guest()) {
         return view('auth.login');
     }
     return view('campaign.index');
 });
 
-Route::group(['prefix' => '/community/', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'Administrator/community/', 'middleware' => 'auth'], function () {
 
     Route::get('/campaigns', function () {
         return view('campaign.campaign');

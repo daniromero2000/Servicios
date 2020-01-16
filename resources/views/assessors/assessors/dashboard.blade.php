@@ -66,7 +66,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -93,7 +93,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -120,7 +120,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -147,7 +147,7 @@
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
                         style="color: black; !important">Ver
-                        Mas</a></span>
+                        Más</a></span>
                   </div>
                 </div>
                 <div class="progress">
@@ -161,6 +161,37 @@
           </div>
         </div>
         <!-- AREA CHART debe ir oculta -->
+        <div hidden class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Area Chart</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+          </div>
+        </div>
+        <!-- AREA CHART DEBE IR OCULTA-->
         <div hidden class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Area Chart</h3>
@@ -763,12 +794,12 @@ var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
     var barChartData = jQuery.extend(true, {}, areaChartData)
     var temp0 = areaChartData.datasets[0]
-    barChartData.datasets[1] = temp0
+    barChartData.datasets[0] = temp0
 
     var barChartOptions = {
       responsive              : true,
       maintainAspectRatio     : true,
-      datasetFill             : true
+      datasetFill             : false
     }
 
     var barChart = new Chart(barChartCanvas, {

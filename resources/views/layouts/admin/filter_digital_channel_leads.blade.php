@@ -12,8 +12,9 @@
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
-                    
+
                     <div class="col-6 col-md-2">
+
                         <div class="form-group">
                             <label for="state">Estado </label>
                             <select name="state"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" >
@@ -25,11 +26,11 @@
                                 </option>
                                 @endforeach
                                 @endif
-                             
+
                             </select>
                           </div>
                     </div>
-                   
+
 
                     <div class="col-6 col-md-2">
                         <div class="form-group">
@@ -53,7 +54,7 @@
                             <option  data-select4-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                             <option  data-select4-id="13" value="13">Evelyn Correa</option>
                             <option  data-select4-id="" value="18">Vanessa Parra</option>
-                            <option  data-select4-id="" value="85">Danitza Naranjo</option>                              
+                            <option  data-select4-id="" value="85">Danitza Naranjo</option>
                             </select>
                         </div>
                     </div>

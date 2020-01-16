@@ -368,6 +368,7 @@ class assessorsController extends Controller
             array_push($webValues, trim($webAssessorCount['total']));
         }
 
+
         return view('assessors.assessors.dashboard', [
             'statusesAssessors'       => $statusesAssessors,
             'statusesValues'          => $statusesValues,

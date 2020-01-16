@@ -1,10 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('linkStyleSheets')
     <link rel="stylesheet" href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
     
 @endsection
 @section('content')
+<div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-md-12">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-sm-right" style="background: white;">
+        <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="/Administrator/community">Campañas</a></li>
+      </ol>
+    </div>
+  </div>
     <div ng-app="campaignsApp" class="containerleads container">
+        
         <br>
         @if (Session::get('success'))
             <div class="alert alert-success">
