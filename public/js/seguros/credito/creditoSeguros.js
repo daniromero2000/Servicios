@@ -6,7 +6,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 	$scope.formConfronta         = {};
 	$scope.estadoCliente         = "";
 	$scope.datosCliente          = {};
-	$scope.validateNum           = 1;
+	$scope.validateNum           = 0;
 	$scope.tipoCliente           = "";
 	$scope.citiesUbi             = {};
 	$scope.cities                = {};
@@ -151,7 +151,7 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 		showLoader();
 		$http({
 		  method: 'GET',
-		  url: '/assessor/api/ventaContado/getInfoVentaContado',
+		  url: '/api/seguros/credito/getInfoForm',
 		}).then(function successCallback(response) {
 			hideLoader();
 			$scope.citiesUbi = response.data.ubicationsCities;
@@ -285,17 +285,10 @@ angular.module('insurancesCreditApp', ['moment-picker', 'ng-currency', 'ngSaniti
 	};
 
     $scope.execConsultasLead = function(identificationNumber){
-		/*setTimeout(() => {
-			showLoader();
-		}, 1000);*/
 		$http({
 			method: 'GET',
 			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.datosCliente.NOM_REFPER+'/'+$scope.datosCliente.TEL_REFPER+'/'+$scope.datosCliente.NOM_REFFAM+'/'+$scope.datosCliente.TEL_REFFAM,
 		}).then(function successCallback(response) {
-				/*setTimeout(() => {
-				hideLoader();
-			}, 2000);*/
-
 			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;

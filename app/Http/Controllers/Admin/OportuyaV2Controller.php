@@ -188,11 +188,9 @@ class OportuyaV2Controller extends Controller
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$usuarioCreacion      = (string) $assessorCode;
 
-			if (!empty($customer)) {
-				$clienteWeb = $customer->CLIENTE_WEB;
-				$usuarioCreacion = $customer->USUARIO_CREACION;
-				$usuarioActualizacion = (string) $assessorCode;
-			}
+			$clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1 ;
+			$usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode ;
+			$usuarioActualizacion = (string) $assessorCode;
 
 			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
 			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
