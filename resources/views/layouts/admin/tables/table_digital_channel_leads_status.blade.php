@@ -42,18 +42,37 @@ use Carbon\Carbon;
           {{$data->typeProduct}} @endif</td>
         <td>{{ $data->created_at->format('M d, Y h:i a')}}</td>
         <td>
-          <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
-            method="post" class="form-horizontal">
-            <input type="hidden" name="_method" value="delete">
-            @csrf
-            <input type="hidden" name="_method" value="delete">
-            <a href="#" title="Borrar Lead" onclick="return confirm('¿Estás Seguro?')" type="submit" class="iconList"><i
-                class="fas fa-times cursor"></i></a>
-          </form>
+          <i class="fas fa-trash-alt cursor" data-toggle="modal" data-target="#deleteLead{{$data->id}}"></i>
           <i class="fas fa-edit cursor" data-toggle="modal" data-target="#editLead{{$data->id}}"></i>
           <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
         </td>
       </tr>
+
+
+      <div class="modal fade" id="deleteLead{{$data->id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form style="display:inline-block" action="{{ route('digitalchannelleads.destroy', $data->id) }}"
+              method="post" class="form-horizontal">
+              <input type="hidden" name="_method" value="delete">
+              @csrf
+              <input type="hidden" name="_method" value="delete">
+              <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Estas Seguro ?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
       <div class="modal fade" id="editLead{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -70,7 +89,6 @@ use Carbon\Carbon;
                     <form action="{{ route('digitalchannelleads.update', $data->id) }}" method="post" class="form">
                       @csrf
                       @method('PUT')
-
                       <div class="form-group row">
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="lastName">Cédula </label>
@@ -103,8 +121,6 @@ use Carbon\Carbon;
                             value="{!! $data->telephone ?: old('telephone')  !!}">
                         </div>
                       </div>
-
-
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
                           <label for="city">Ciudad <span class="text-danger">*</span></label>

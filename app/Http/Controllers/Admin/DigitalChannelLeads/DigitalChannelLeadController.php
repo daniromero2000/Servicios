@@ -281,4 +281,11 @@ class DigitalChannelLeadController extends Controller
             'totalStatuses'       => $totalStatuses
         ]);
     }
+    public function destroy($id)
+    {
+        // $Campaign = Campaigns::findOrfail($id);
+        $digitalChannelLead =  $this->leadInterface->findLeadDelete($id);
+        $digitalChannelLead->delete();
+        return redirect()->back();
+    }
 }

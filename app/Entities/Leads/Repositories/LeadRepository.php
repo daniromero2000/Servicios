@@ -70,6 +70,15 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function findLeadDelete(int $id): Lead
+    {
+        try {
+            return $this->model->findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function findLeadById(int $id): Lead
     {
         try {
