@@ -63,9 +63,8 @@
                         </div>
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($digitalChannelLeads)
-                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
-                            $digitalChannelLeads  ])
-                            @include('layouts.admin.pagination.pagination', [$skip])
+                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' => $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services, 'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' => $lead_statuses ])
+                             @include('layouts.admin.pagination.pagination', [$skip])
                             @else
                             @include('layouts.admin.pagination.pagination_null', [$skip])
                             @endif

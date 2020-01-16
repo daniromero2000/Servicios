@@ -7,6 +7,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">×</span></button>
       </div>
+      {{-- @php
+          dd($digitalChannelLead)
+      @endphp --}}
       <div class="modal-body">
         <div class="container">
           <div class="row resetRow ">
