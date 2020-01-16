@@ -42,6 +42,14 @@ class LeadsController extends Controller
         $this->user = auth()->user();
         $this->codeAsessor = $this->user->codeOportudata;
 
+        $getLeadsDigitalAnt   = $this->getLeadsCanalDigitalAnt([
+            'q'              => $request->get('q'),
+            'initFromAnt'    => $request->get('initFromAnt'),
+            'qcityAprobados' => $request->get('qcityAprobados'),
+            'qfechaInicialAprobados' => $request->get('qfechaInicialAprobados'),
+            'qfechaFinalAprobados'   => $request->get('qfechaFinalAprobados')
+        ]);
+
         $getLeadsTR = $this->getLeadsTradicional([
             'q'               => $request->get('q'),
             'initFromTR'      => $request->get('initFromTR'),
@@ -62,12 +70,74 @@ class LeadsController extends Controller
         ]);
 
         return response()->json([
+            'leadsDigitalAnt' => $getLeadsDigitalAnt['leadsDigitalAnt'],
             'leadsDigital'    => $getLeadsDigital['leadsDigital'],
             'totalLeads'      => $getLeadsDigital['totalLeads'],
+            'totalLeadsAnt'   => $getLeadsDigitalAnt['totalLeadsAnt'],
             'codeAsesor'      => $this->codeAsessor,
             'leadsTR'         => $getLeadsTR['leadsTR'],
             'totalLeadsTR'    => $getLeadsTR['totalLeadsTR'],
         ]);
+    }
+
+    private function getLeadsCanalDigitalAnt($request)
+    {
+        $this->IdEmpresa = $this->assessorInterface->getAssessorCompany($this->codeAsessor);
+
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`,  sb.FECHASOL, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`
+        FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar
+        WHERE sb.`CLIENTE` = cf.`CEDULA`
+        AND tar.`CLIENTE` = cf.`CEDULA`
+        AND sb.`SOLICITUD_WEB` = 1
+        AND cf.`ESTADO` = 'PREAPROBADO'
+        AND sb.ESTADO = 'APROBADO'
+        AND sb.`GRAN_TOTAL` = 0
+        AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
+
+        if ($request['q'] != '') {
+            $query .= sprintf(
+                " AND (cf.`NOMBRES` LIKE '%s' OR cf.`CEDULA` LIKE '%s' OR sb.`SOLICITUD` LIKE '%s' OR cf.`CELULAR` LIKE '%s' ) ",
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%',
+                '%' . $request['q'] . '%'
+            );
+        }
+
+        if ($request['qcityAprobados'] != '') {
+            $query .= sprintf(" AND (cf.`CIUD_UBI` = '%s') ", $request['qcityAprobados']);
+        }
+
+        if ($request['qfechaInicialAprobados'] != '') {
+            $request['qfechaInicialAprobados'] .= " 00:00:00";
+            $query .= sprintf(" AND (sb.`FECHASOL` >= '%s') ", $request['qfechaInicialAprobados']);
+        }
+
+        if ($request['qfechaFinalAprobados'] != '') {
+            $request['qfechaFinalAprobados'] .= " 23:59:59";
+            $query .= sprintf(" AND (sb.`FECHASOL` <= '%s') ", $request['qfechaFinalAprobados']);
+        }
+
+        $respTotalLeads = DB::connection('oportudata')->select($query);
+        $query .= " ORDER BY sb.`ASESOR_DIG`, sb.`FECHASOL` DESC";
+        $query .= sprintf(" LIMIT %s,30", $request['initFromAnt']);
+
+        $resp         = DB::connection('oportudata')->select($query);
+        $leadsDigital = [];
+
+        foreach ($resp as $key => $lead) {
+            if ($lead->ASESOR_DIG != '') {
+                $resp[$key]->nameAsesor = $this->userInterface->getUserName($lead->ASESOR_DIG)->name;
+            }
+
+
+            $leadsDigital[]      = $resp[$key];
+        }
+
+        return [
+            'leadsDigitalAnt' => $leadsDigital,
+            'totalLeadsAnt'   => count($respTotalLeads)
+        ];
     }
 
 
