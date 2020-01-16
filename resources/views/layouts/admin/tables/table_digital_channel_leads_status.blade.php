@@ -51,7 +51,7 @@ use Carbon\Carbon;
                 class="fas fa-times cursor"></i></a>
           </form>
           <i class="fas fa-edit cursor" data-toggle="modal" data-target="#editLead{{$data->id}}"></i>
-          <i class="fas fa-edit cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
+          <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
         </td>
       </tr>
 
