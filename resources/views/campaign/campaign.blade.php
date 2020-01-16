@@ -1,124 +1,126 @@
-<div class="row form-group" ng-if="filtros">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <strong>Filtros</strong>
-            </div>
-            <div class="card-body">
-                <form ng-submit="searchCampaign()">
-                    <div class="row form-group">
-                        <div class="col-12 col-sm-4">
-                            <label for="name">Nombre</label>
-                            <input id="name" class="form-control" ng-model="q.q" >
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <label for="socialNetwork">red social</label>
-                            <select id="socialNetwork" class="form-control" ng-model="q.socialNetwork" ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks"></select>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <label for="budget">Presupuesto</label>
-                            <input name="budget" class="form-control" ng-model="q.budget">
-                        </div>
+
+<div class="card mb-4 border-0 shadow-lg">
+    <div class="card-body">
+        <div class="row form-group" ng-if="filtros">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Filtros</strong>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-sm-6">
-                            <label for="beginDate">Fecha Inicial</label>
-                            <div class="input-group"
-                                 moment-picker="q.beginDate"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.beginDate" id="beginDate">
-                                <span class="input-group-addon">
-                                    <i class="octicon octicon-calendar"></i>
-                                </span>
+                    <div class="card-body">
+                        <form ng-submit="searchCampaign()">
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-4">
+                                    <label for="name">Nombre</label>
+                                    <input id="name" class="form-control" ng-model="q.q" >
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="socialNetwork">red social</label>
+                                    <select id="socialNetwork" class="form-control" ng-model="q.socialNetwork" ng-options="socialNetwork.value as socialNetwork.label for socialNetwork in socialNetworks"></select>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="budget">Presupuesto</label>
+                                    <input name="budget" class="form-control" ng-model="q.budget">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <label for="endingDate">Fecha Final</label>
-                            <div class="input-group"
-                                 moment-picker="q.endingDate"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.endingDate">
-                                <span class="input-group-addon">
-                                    <i class="octicon octicon-calendar"></i>
-                                </span>
+                            <div class="row form-group">
+                                <div class="col-12 col-sm-6">
+                                    <label for="beginDate">Fecha Inicial</label>
+                                    <div class="input-group"
+                                         moment-picker="q.beginDate"
+                                         format="YYYY-MM-DD">
+                                        <input class="form-control"
+                                               ng-model="q.beginDate" id="beginDate">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="endingDate">Fecha Final</label>
+                                    <div class="input-group"
+                                         moment-picker="q.endingDate"
+                                         format="YYYY-MM-DD">
+                                        <input class="form-control"
+                                               ng-model="q.endingDate">
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>                     
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
+                                    <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
+                                </div>
                             </div>
-                        </div>
-                    </div>                     
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
-                            <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
-                        </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="row resetRow">
-    <div class="col-sm-12 col-md-4">
-         <button class="btn btn-primary">
-            <a ng-click="addCampaignForm()" >Agregar Campaña <i class="far fa-plus-square"></i></a>
-        </button>
-    </div>
-    <div class="col-sm-12 offset-md-3 col-md-4 text-right">
-        <div class="input-group mb-3">
-            <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
-            <div class="input-group-append">
-                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+        <div class="row resetRow">
+            <div class="col-sm-12 col-md-4">
+                 <button class="btn btn-primary">
+                    <a ng-click="addCampaignForm()" >Agregar Campaña <i class="far fa-plus-square"></i></a>
+                </button>
+            </div>
+            <div class="col-sm-12 offset-md-3 col-md-4 text-right">
+                <div class="input-group mb-3">
+                    <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-1 resetCol">
+                <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i class="fas fa-filter"></i></button>
             </div>
         </div>
-    </div>
-    <div class="col-sm-12 col-md-1 resetCol">
-        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i class="fas fa-filter"></i></button>
-    </div>
-</div>
-<div class="table table-responsive">
-    <table class="table table-hover table-stripped leadTable">
-        <thead class="headTableLeads">
-            <tr>
-                <th>Nombre de Campaña</th>
-                <th>Red Social</th>
-                <th>Fecha de inicio</th>
-                <th>Fecha de fin</th>
-                <th>Presupuesto</th>
-                <th>Presupuesto utilizado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="campaign in campaigns">
-                <td>@{{ campaign.name }}</td>
-                <td>@{{ campaign.socialNetwork }}</td>
-                <td>@{{ campaign.beginDate }}</td>
-                <td>@{{ campaign.endingDate }}</td>
-                <td>@{{ campaign.budget }}</td>
-                <td>@{{ campaign.usedBudget }}</td>
-                <td>
-                    <i class="fa fa-eye" title="Ver detalles" ng-click="viewDetails(campaign.id)"></i>                           
-                    <i class="fas fa-edit cursor" title="Actualizar campaña" ng-click="showUpdateDialog(campaign.id)"></i>
-                    <i class="fas fa-times cursor" ng-if="campaign.remove == 0" title="eliminar campaña" ng-click="showDialog(campaign.id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getCampaigns()">Cargar Más</button>
+        
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads">
+                    <tr>
+                        <th>Nombre de Campaña</th>
+                        <th>Red Social</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha de fin</th>
+                        <th>Presupuesto</th>
+                        <th>Presupuesto utilizado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="campaign in campaigns">
+                        <td>@{{ campaign.name }}</td>
+                        <td>@{{ campaign.socialNetwork }}</td>
+                        <td>@{{ campaign.beginDate }}</td>
+                        <td>@{{ campaign.endingDate }}</td>
+                        <td>@{{ campaign.budget }}</td>
+                        <td>@{{ campaign.usedBudget }}</td>
+                        <td>
+                            <i class="fa fa-eye" title="Ver detalles" ng-click="viewDetails(campaign.id)"></i>                           
+                            <i class="fas fa-edit cursor" title="Actualizar campaña" ng-click="showUpdateDialog(campaign.id)"></i>
+                            <i class="fas fa-times cursor" ng-if="campaign.remove == 0" title="eliminar campaña" ng-click="showDialog(campaign.id)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
         </div>
+        
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-secondary" ng-disabled="cargando" ng-click="getCampaigns()">Cargar Más</button>
+            </div>
+        </div>
+        
     </div>
 </div>
 
-<div class="row">
-    <div class="col-6 text-right">
-        <a href="/dashboard"><i class="fas fa-arrow-left"></i>  Dashboard</a>
-    </div>
-    <div class="col-6 text-left">
-        <a href="/communityLeads"><i class="fas fa-file-medical-alt"></i> Gestión de leads</a>
-    </div>
-</div>
+
 
 <!-- view modal-->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
