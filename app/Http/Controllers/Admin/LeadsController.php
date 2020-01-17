@@ -86,6 +86,10 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
+         AND (ti.ASESOR = 998877
+        OR ti.ASESOR = 1024530584
+       OR ti.ASESOR =  1088302337
+        OR ti.ASESOR =  1004995477)
         AND ti.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
         AND sb.`ID_EMPRESA` = %s ", $this->IdEmpresa[0]->ID_EMPRESA);
 
@@ -149,7 +153,10 @@ class LeadsController extends Controller
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
-
+    AND (`TB_INTENCIONES`.`ASESOR` = 998877
+        OR `TB_INTENCIONES`.`ASESOR` = 1024530584
+       OR `TB_INTENCIONES`.`ASESOR` =  1088302337
+        OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
