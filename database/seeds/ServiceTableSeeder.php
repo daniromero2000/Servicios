@@ -26,5 +26,9 @@ class ServiceTableSeeder extends Seeder
         factory(Service::class)->create([
             'service'  => 'Garantía Digital',
         ]);
+
+        factory(Service::class)->create([
+            'service'  => 'Tarjeta Oportuyá',
+        ]);
     }
 }
