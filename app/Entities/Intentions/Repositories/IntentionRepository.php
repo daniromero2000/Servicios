@@ -228,4 +228,43 @@ class IntentionRepository implements IntentionRepositoryInterface
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);
     }
+
+    public function countIntentionAssessorCreditProfiles($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->select('PERFIL_CREDITICIO', DB::raw('count(*) as total'))
+                ->where('ASESOR', $assessor)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('PERFIL_CREDITICIO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionAssessorCreditCards($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
+                ->where('ASESOR', $assessor)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('TARJETA')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionAssessorStatuses($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->with('intentionStatus')->select('ESTADO_INTENCION', DB::raw('count(*) as total'))
+                ->where('ASESOR', $assessor)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('ESTADO_INTENCION')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

@@ -57,7 +57,6 @@ class Intention extends Model
         return self::search($term);
     }
 
-
     public function definition()
     {
         return $this->belongsTo(Definition::class, 'ID_DEF');

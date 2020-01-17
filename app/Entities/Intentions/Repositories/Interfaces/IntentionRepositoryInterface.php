@@ -23,9 +23,15 @@ interface IntentionRepositoryInterface
 
   public function countIntentionsCreditProfiles($from, $to);
 
+  public function countIntentionAssessorCreditProfiles($from, $to, $assessor);
+
   public function countIntentionsCreditCards($from, $to);
 
+  public function countIntentionAssessorCreditCards($from, $to, $assessor);
+
   public function countIntentionsStatuses($from, $to);
+
+  public function countIntentionAssessorStatuses($from, $to, $assessor);
 
   public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection;
 

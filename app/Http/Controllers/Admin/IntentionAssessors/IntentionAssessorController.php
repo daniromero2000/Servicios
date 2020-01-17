@@ -71,15 +71,17 @@ class IntentionAssessorController extends Controller
     {
         $to   = Carbon::now();
         $from = Carbon::now()->subMonth();
+        $assessor = auth()->user()->email;
 
-        $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
-        $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
-        $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
+
+        $creditProfiles    = $this->intentionInterface->countIntentionAssessorCreditProfiles($from, $to, $assessor);
+        $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards($from, $to, $assessor);
+        $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses($from, $to, $assessor);
 
         if (request()->has('from')) {
-            $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards       = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
-            $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
+            $creditProfiles    = $this->intentionInterface->countIntentionAssessorCreditProfiles(request()->input('from'), request()->input('to'), $assessor);
+            $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards(request()->input('from'), request()->input('to'), $assessor);
+            $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses(request()->input('from'), request()->input('to'), $assessor);
         }
 
         $intentionStatusesNames  = [];
@@ -114,7 +116,7 @@ class IntentionAssessorController extends Controller
         }
 
 
-        return view('intentions.dashboard', [
+        return view('intentionAssessors.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,
             'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,
