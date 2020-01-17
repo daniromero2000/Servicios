@@ -14,7 +14,8 @@
                 <td><a href="{{ route('intentions.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Intención">{{ $data->id}}</a></td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-                <td><span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
+                <td><span @if ($data->intentionStatus)
+                        @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
                         class="badge badge-warning"
                         @endif
                         @if ($data->intentionStatus['NAME'] == "APROBADO")
@@ -25,17 +26,20 @@
                         @endif
                         @if ($data->intentionStatus['NAME'] == "NEGADO")
                         class="badge badge-danger"
-                        @endif style="font-size: 11px;"> {{ $data->intentionStatus['NAME']}}</span>
+                        @endif style="font-size: 11px;"> {{ $data->intentionStatus['NAME']}}
+                        @endif
+                    </span>
                 </td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->CEDULA}}</a></td>
-                <td>{{ $data->customer['ACTIVIDAD']}}</td>
+                <td>
+                    @if ($data->customer)
+                    {{ $data->customer['ACTIVIDAD']}}</td>
+                @endif
                 <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
                     @if ($data->ESTADO_OBLIGACIONES === 0)En Mora @endif
                     @if ($data->ESTADO_OBLIGACIONES === null)Sin Datos @endif
                 </td>
-                <td> @if($data->customer) @if ($data->customer->latestCifinScore['score'] == '')Sin Datos
-                    @endif{{ $data->customer->latestCifinScore['score']}} @endif</td>
                 <td>@if ($data->PERFIL_CREDITICIO == '')Sin Datos @endif{{ $data->PERFIL_CREDITICIO}}</td>
                 <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
                     @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
@@ -50,7 +54,11 @@
                 <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
                     @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
 
-                <td>{{ $data->definition['DESCRIPCION']}}</td>
+                <td>
+                    @if ($data->definition)
+                    {{ $data->definition['DESCRIPCION']}}</td>
+
+                @endif
             </tr>
             @endforeach
         <tbody>
