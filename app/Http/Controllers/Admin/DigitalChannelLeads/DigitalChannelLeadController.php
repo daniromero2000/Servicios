@@ -68,9 +68,7 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
-
-
-
+        // dd($list);
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,

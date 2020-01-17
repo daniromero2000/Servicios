@@ -31,6 +31,12 @@
                 <div class="icon">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
                 </div>
+
+                <div class="col-12 text-right">
+                  <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
+                      style="color: white; !important">Ver
+                      Más</a></span>
+                </div>
               </div>
             </div>
           </div>
@@ -82,7 +88,7 @@
                       <span class="info-box-number">{{ $creditCard['total'] }}</span>
                     </div>
                     <div class="col-6">
-                      <span class="info-box-text text-right"><a href="{{ route('intentions.index') }}"
+                      <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
                           style="color: black; !important">Ver
                           Más</a></span>
                     </div>
@@ -140,7 +146,7 @@
                 </div>
               </div>
               <div class="card-body">
-               
+
                 <div class="chart">
                   <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
                 </div>

@@ -163,7 +163,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'leadCampaign',
                 'comments',
                 'leadProduct',
-                'leadPrices'
+                'leadPrices',
             ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)

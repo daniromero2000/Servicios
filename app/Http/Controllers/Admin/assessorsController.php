@@ -42,7 +42,7 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
-        $assessor = auth()->user()->codeOportudata;
+        $assessor = auth()->user()->email;
         $skip     = $this->toolsInterface->getSkip($request->input('skip'));
         $list     = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 
@@ -333,7 +333,7 @@ class assessorsController extends Controller
 
     public function dashboard(Request $request)
     {
-        $assessor = auth()->user()->codeOportudata;
+        $assessor = auth()->user()->email;
         $to       = Carbon::now();
         $from     = Carbon::now()->subMonth();
 
