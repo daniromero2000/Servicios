@@ -7,13 +7,14 @@ use App\Entities\DataIntentionsRequest\DataIntentionsRequest;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\Definitions\Definition;
 use App\Entities\IntentionStatuses\IntentionStatus;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Support\Facades\DB;
 
 class Intention extends Model
 {
-    use SearchableTrait, SoftDeletes;
+    use Authenticatable, SearchableTrait, SoftDeletes;
 
     protected $table = 'TB_INTENCIONES';
 
@@ -50,6 +51,12 @@ class Intention extends Model
     {
         return self::search($term);
     }
+
+    public function searchIntentionAssessors($term)
+    {
+        return self::search($term);
+    }
+
 
     public function definition()
     {

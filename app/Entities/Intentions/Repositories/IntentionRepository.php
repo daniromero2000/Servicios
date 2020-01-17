@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 
 class IntentionRepository implements IntentionRepositoryInterface
 {
+    //Table TB_INTENCIONES
+
     private $columns = [
         'id',
         'CEDULA',
@@ -31,7 +33,6 @@ class IntentionRepository implements IntentionRepositoryInterface
         'INSPECCION_OCULAR',
         'ESTADO_INTENCION',
     ];
-
 
     public function __construct(
         Intention $intention
@@ -167,6 +168,63 @@ class IntentionRepository implements IntentionRepositoryInterface
             ->when($status, function ($q, $status) {
                 return $q->where('ESTADO_INTENCION', $status);
             })
+            ->orderBy('FECHA_INTENCION', 'desc')
+            ->get($this->columns);
+    }
+
+    //assessors
+
+    public function listIntentionAssessors($totalView, $assessor): Support
+    {
+
+        try {
+            return  $this->model->with(['customer', 'definition'])->where('ASESOR', $assessor)
+                ->orderBy('id', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {
+            return $this->model->orderBy('FECHA_INTENCION', 'desc')
+                ->skip($totalView)
+                ->where('ASESOR', $assessor)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchIntentionAssessors($text, null, true, true)->with(['customer', 'definition'])
+                ->where('ASESOR', $assessor)
+                ->when($creditprofile, function ($q, $creditprofile) {
+                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
+                })
+                ->where('ASESOR', $assessor)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO_INTENCION', $status);
+                })
+                ->where('ASESOR', $assessor)
+                ->orderBy('FECHA_INTENCION', 'desc')
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+        return $this->model->searchIntentionAssessors($text, null, true, true)->with(['customer', 'definition'])
+            ->whereBetween('FECHA_INTENCION', [$from, $to])
+            ->where('ASESOR', $assessor)
+            ->when($creditprofile, function ($q, $creditprofile) {
+                return $q->where('PERFIL_CREDITICIO', $creditprofile);
+            })
+            ->where('ASESOR', $assessor)
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO_INTENCION', $status);
+            })
+            ->where('ASESOR', $assessor)
             ->orderBy('FECHA_INTENCION', 'desc')
             ->get($this->columns);
     }

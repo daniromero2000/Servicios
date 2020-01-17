@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Intentions;
+namespace App\Http\Controllers\Admin\IntentionAssessors;
 
 use App\Entities\Intentions\Intention;
 use App\Entities\IntentionStatuses\IntentionStatus;
@@ -11,9 +11,10 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Foreach_;
 
-class IntentionController extends Controller
+class IntentionAssessorController extends Controller
 {
     private $intentionStatusesInterface, $intentionInterface, $toolsInterface;
 
@@ -30,19 +31,29 @@ class IntentionController extends Controller
 
     public function index(Request $request)
     {
+        $assessor = auth()->user()->email;
+
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->intentionInterface->listIntentions($skip * 30);
+        $list = $this->intentionInterface->listIntentionAssessors($skip * 30, $assessor);
         if (request()->has('q')) {
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+            $list = $this->intentionInterface->searchIntentionAssessors(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('creditprofile'),
+                request()->input('status'),
+                $assessor
+            )->sortByDesc('FECHA_INTENCION');
         }
         $listCount = $list->count();
 
 
-        return view('intentions.list', [
-            'intentions'            => $list,
+        return view('intentionAssessors.list', [
+            'intentionAssessors'   => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Score', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
+            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
@@ -91,7 +102,6 @@ class IntentionController extends Controller
                 $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
             }
         }
-
         $creditProfiles = $this->toolsInterface->extractValuesToArray($creditProfiles);
         $creditCards    = $this->toolsInterface->extractValuesToArray($creditCards);
 
