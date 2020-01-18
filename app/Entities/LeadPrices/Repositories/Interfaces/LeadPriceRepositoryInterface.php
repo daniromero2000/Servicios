@@ -8,7 +8,7 @@ interface LeadPriceRepositoryInterface
 {
     public function createLeadPrice($data);
 
-    public function updateLeadPrice(array $params): bool;
+    public function updateLeadPrice(array $params);
 
     public function findLeadPriceById(int $id): LeadPrice;
 

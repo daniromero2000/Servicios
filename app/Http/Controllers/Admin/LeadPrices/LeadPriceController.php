@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\LeadPrices;
 
+use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -31,6 +32,23 @@ class LeadPriceController extends Controller
 
 
         $request->session()->flash('message', 'Cotización Exitosa!');
-        return redirect()->route('digitalchannelleads.show', $request->lead_id);
+        return redirect()->back();
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        // $request['user_id'] = auth()->user()->id;
+        // $this->LeadPriceInterface->updateLeadPrice($request->input());
+        // $lead = $this->LeadInterface->findLeadById($request->lead_id);
+        // $lead->leadStatus()->attach(7, ['user_id' => $request['user_id']]);
+        // $lead->state = 7;
+        // $lead->update();
+
+        $lead = LeadPrice::findOrFail($id);
+        $lead->update($request->input());
+
+        $request->session()->flash('message', 'Cotización Exitosa!');
+        return redirect()->back();
     }
 }

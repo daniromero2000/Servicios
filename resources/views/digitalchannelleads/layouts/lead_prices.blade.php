@@ -22,7 +22,9 @@
         </tr>
       </thead>
       <tbody class="body-table">
+
         @foreach ($digitalChannelLead->leadPrices as $leadPrice)
+
         <tr>
           <td class="text-center">{{ $leadPrice->id }}</td>
           <td class="text-center">{{ $leadPrice->leadProduct->lead_product }}</td>
@@ -50,11 +52,12 @@
                 <div class="container">
                   <div class="row resetRow ">
                     <div class="col-12 form-group">
-                      <form action="{{ route('leadPrices.store') }}" method="post" class="form"
+                      <form action="{{ route('leadPrices.update', $leadPrice->id ) }}" method="post" class="form"
                         enctype="multipart/form-data">
                         <div class="box-body">
                           @csrf
-                          <input name="lead_id" id="lead_id" hidden value="{{ $leadPrice->id }}">
+                          @method('PUT')
+                          <input name="id" id="lead_id" hidden value="{{ $digitalChannelLead->id }}">
                           <div class="row">
                             <div class="col-12 col-sm-12 form-group no-padding-right">
                               <label for="lead_product_id">Producto <span class="text-danger">*</span></label>
@@ -80,7 +83,7 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="lead_price">Fecha de Expedición <span class="text-danger">*</span></label>
+                            <label for="lead_price">Precio <span class="text-danger">*</span></label>
                             <div class="input-group">
                               <input type="number" name="lead_price" validation-pattern="text" id="lead_price"
                                 placeholder="Precio" class="form-control" value="{{ $leadPrice->lead_price }}" required>
@@ -89,7 +92,7 @@
                           <div class="form-group">
                             <label for="lead_price_status_id">Estado <span class="text-danger">*</span></label>
                             <div class="input-group">
-                              <select id="lead_product_id" name="lead_product_id" class="form-control">
+                              <select id="lead_price_status_id" name="lead_price_status_id" class="form-control">
                                 @if ($leadPriceStatus)
                                 @foreach($leadPriceStatus as $leadPriceState)
                                 <option @if ($leadPrice->leadPriceStatus == $leadPriceState)
