@@ -44,6 +44,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
 
     public function updateLeadPrice(array $params)
     {
+
         try {
             return $this->model->update($params);
         } catch (QueryException $e) {
