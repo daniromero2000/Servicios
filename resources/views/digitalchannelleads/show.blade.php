@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row">
@@ -59,6 +60,7 @@
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
         </div>
+
 </section>
 @include('digitalchannelleads.layouts.update_lead_modal')
 @include('digitalchannelleads.layouts.create_lead_modal')

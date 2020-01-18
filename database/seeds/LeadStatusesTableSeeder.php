@@ -7,6 +7,7 @@ class LeadStatusesTableSeeder extends Seeder
 {
     public function run()
     {
+
         factory(LeadStatus::class)->create([
             'status'  => 'Contactado',
             'color' => 'blue'

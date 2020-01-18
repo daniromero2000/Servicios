@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
+use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
@@ -68,7 +70,6 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
-        // dd($list);
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
@@ -88,8 +89,8 @@ class DigitalChannelLeadController extends Controller
     public function store(CreateLeadRequest $request)
     {
 
-        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : 'N/A' ;
-        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A' ;
+        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : 'N/A';
+        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
 
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
@@ -134,6 +135,7 @@ class DigitalChannelLeadController extends Controller
         foreach ($digitalChannelLead->comments as $key => $value) {
             $digitalChannelLead->comments[$key]->comment = preg_replace($pattern, $replace, $digitalChannelLead->comments[$key]->comment);
         }
+        $leadPriceStatus = LeadPriceStatus::all();
         return view('digitalchannelleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
             'leadCity'           => $digitalChannelLead->city,
@@ -147,7 +149,8 @@ class DigitalChannelLeadController extends Controller
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames()
+            'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'leadPriceStatus'    => $leadPriceStatus
         ]);
     }
 
@@ -175,7 +178,6 @@ class DigitalChannelLeadController extends Controller
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
-
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
@@ -266,7 +268,6 @@ class DigitalChannelLeadController extends Controller
         foreach ($leadPriceTotal as $key => $status) {
             $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
         }
-
         return view('digitalchannelleads.dashboard', [
             'pricesTotal'         => $pricesTotal,
             'leadChannelNames'    => $leadChannelNames,

@@ -2,7 +2,7 @@
 
 namespace App\Entities\LeadPrices;
 
-use App\Entities\LeadPriceStatus\LeadPriceStatus;
+use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\Leads\Lead;
 use App\User;
@@ -19,7 +19,7 @@ class LeadPrice extends Model
         'lead_price',
         'lead_id',
         'user_id',
-        'lead_price_status'
+        'lead_price_status_id'
     ];
 
     public function user()
@@ -39,6 +39,6 @@ class LeadPrice extends Model
 
     public function leadPriceStatus()
     {
-        return $this->belongsTo(LeadPriceStatus::class);
+        return $this->belongsTo(LeadPriceStatus::class, 'lead_price_status_id');
     }
 }

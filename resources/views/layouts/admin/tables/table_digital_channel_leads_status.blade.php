@@ -45,8 +45,10 @@ use Carbon\Carbon;
           <i class="fas fa-trash-alt cursor" data-toggle="modal" data-target="#deleteLead{{$data->id}}"></i>
           <i class="fas fa-edit cursor" data-toggle="modal" data-target="#editLead{{$data->id}}"></i>
           <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
+
         </td>
       </tr>
+
 
 
       <div class="modal fade" id="deleteLead{{$data->id}}" tabindex="-1" role="dialog"

@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\LeadPriceStatus\LeadPriceStatus;
+use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use Illuminate\Database\Seeder;
 
 class LeadPriceStatusesTableSeeder extends Seeder

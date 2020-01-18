@@ -18,12 +18,13 @@
                 class="form">
                 @csrf
                 @method('PUT')
-                             
+
                 <div class="form-group row">
                   <div class="col-12 col-sm-6 no-padding-right">
                     <label for="lastName">Cédula <span class="text-danger">*</span></label>
-                    <input type="text" name="identificationNumber" id="identificationNumber" 
-                      class="form-control" validation-pattern="IdentificationNumber" value="{!! $digitalChannelLead->identificationNumber ?: old('lastName')  !!}" required>
+                    <input type="text" name="identificationNumber" id="identificationNumber" class="form-control"
+                      validation-pattern="IdentificationNumber"
+                      value="{!! $digitalChannelLead->identificationNumber ?: old('lastName')  !!}" required>
                   </div>
                   <div class="col-12 col-sm-6">
                     <label for="name">Nombre <span class="text-danger">*</span></label>
