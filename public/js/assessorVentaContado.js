@@ -1,6 +1,9 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
-	$scope.lead = {};
+	$timeout(function() {
+		$scope.lead.CIUD_EXP = 5002;
+		$scope.lead.CIUD_UBI = 144;
+	}, 1500);
 	$scope.code = {};
 	$scope.formConfronta = {};
 	$scope.citiesUbi = {};
