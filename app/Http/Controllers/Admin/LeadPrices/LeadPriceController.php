@@ -38,17 +38,19 @@ class LeadPriceController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $request['user_id'] = auth()->user()->id;
-        // $this->LeadPriceInterface->updateLeadPrice($request->input());
-        // $lead = $this->LeadInterface->findLeadById($request->lead_id);
-        // $lead->leadStatus()->attach(7, ['user_id' => $request['user_id']]);
-        // $lead->state = 7;
-        // $lead->update();
-
-        $lead = LeadPrice::findOrFail($id);
+        $lead = $this->LeadPriceInterface->findLeadPriceById($id);
         $lead->update($request->input());
 
-        $request->session()->flash('message', 'Cotización Exitosa!');
+        $request->session()->flash('message', 'Actalización Exitosa!');
+        return redirect()->back();
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        // $Campaign = Campaigns::findOrfail($id);
+        $digitalChannelLead =  $this->LeadPriceInterface->findLeadPriceById($id);
+        $digitalChannelLead->delete();
+        $request->session()->flash('message', 'Eliminado Exitosamente!');
         return redirect()->back();
     }
 }

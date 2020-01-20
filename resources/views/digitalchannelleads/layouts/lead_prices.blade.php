@@ -18,7 +18,9 @@
           <th class="text-center" scope="col">Descripción</th>
           <th class="text-center" scope="col">Precio</th>
           <th class="text-center" scope="col">Asesor</th>
+          <th class="text-center" scope="col">Estado</th>
           <th class="text-center" scope="col">Fecha</th>
+          <th class="text-center" scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -35,7 +37,9 @@
               {{$leadPrice->leadPriceStatus->status}}
             </span></td>
           <td class="text-center">{{ $leadPrice->created_at->format('M d, Y h:i a') }}</td>
-          <td> <i class="fas fa-edit cursor" data-toggle="modal" data-target="#leadPricemodal{{$leadPrice->id}}"></i>
+          <td class="text-center">
+            <i class="fas fa-edit cursor" data-toggle="modal" data-target="#leadPricemodal{{$leadPrice->id}}"></i>
+            <i class="fas fa-trash-alt cursor" data-toggle="modal" data-target="#deleteLead{{$leadPrice->id}}"></i>
           </td>
         </tr>
         <div class="modal fade" id="leadPricemodal{{$leadPrice->id}}" tabindex="-1" role="dialog"
@@ -120,6 +124,31 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="deleteLead{{$leadPrice->id}}" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form style="display:inline-block" action="{{ route('leadPrices.destroy', $leadPrice->id) }}"
+                method="post" class="form-horizontal">
+                <input type="hidden" name="_method" value="delete">
+                @csrf
+                <input type="hidden" name="_method" value="delete">
+                <div class="modal-body">
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  Estas Seguro ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
