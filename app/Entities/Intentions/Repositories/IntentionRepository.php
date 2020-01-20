@@ -22,6 +22,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         'CEDULA',
         'FECHA_INTENCION',
         'ID_DEF',
+        'TIPO_CLIENTE',
         'ESTADO_OBLIGACIONES',
         'PERFIL_CREDITICIO',
         'HISTORIAL_CREDITO',
