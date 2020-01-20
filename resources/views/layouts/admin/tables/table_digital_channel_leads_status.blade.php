@@ -16,9 +16,9 @@ use Carbon\Carbon;
       <tr>
         <td><span class="text-center badge"
             style="color: white ; background-color:
-                        @if($data->created_at->diffInDays(Carbon::now()) <= 1) green @endif
-                        @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) yellow @endif
-                        @if($data->created_at->diffInDays(Carbon::now()) >= 3) red @endif
+                        @if($data->created_at->diffInDays(Carbon::now()) <= 1) #0bb010 @endif
+                        @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) #ff9900 @endif
+                        @if($data->created_at->diffInDays(Carbon::now()) >= 3) #b0130b @endif
                         @if($data->state === 2 || $data->state === 5 || $data->state === 6 || $data->state === 9 || $data->state === 4 || $data->state === 7) gray @endif"
             class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
         <td> @if($data->leadStatuses) <span class="text-center badge"

@@ -1,10 +1,17 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-12">
+      <div class="col-8">
         <h2 class="title-table"><i class="fas fa-user mr-2"></i> Cotizaciones
           </span>
         </h2>
+      </div>
+
+
+      <div class="col-4 text-right">
+        <a href="#myModal" data-toggle="modal" data-target="#leadPricemodal" <i class="btn btn-primary btn-sm"><i
+            class="fa fa-edit"></i>
+          Agregar Cotizacion</a>
       </div>
     </div>
   </div>
@@ -168,13 +175,6 @@
     </table>
 
     @endif
-    <div class="row">
-      <div class="col">
-        <a href="#myModal" data-toggle="modal" data-target="#leadPricemodal" <i class="btn btn-primary btn-sm"><i
-            class="fa fa-edit"></i>
-          Agregar Cotizacion</a>
-      </div>
-    </div>
   </div>
 </div>
 

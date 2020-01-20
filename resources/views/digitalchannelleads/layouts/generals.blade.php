@@ -9,9 +9,17 @@
         <span class="text-center badge"
           style="color: white ; background-color: {{$digitalChannelLead->leadStatuses->color }}"
           class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
-          @if($digitalChannelLead->leadAssessor)
-            {{ $digitalChannelLead->leadAssessor['name']}}
-          @endif
+        @if($digitalChannelLead->leadAssessor)
+        {{ $digitalChannelLead->leadAssessor['name']}}
+        @endif
+      </div>
+      <div class="col-4 text-right">
+        <button class="btn btn-primary btn-sm">
+          <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i class="far fa-plus-square"></i></a>
+        </button>
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateleadModal">
+          Editar <i class="fas fa-edit    "></i>
+        </button>
       </div>
     </div>
   </div>
@@ -35,11 +43,13 @@
           <td class="text-center">{{ $digitalChannelLead->email }}</td>
           <td class="text-center">{{ $digitalChannelLead->telephone }}</td>
           <td class="text-center">{{ $digitalChannelLead->city }}/{{ $digitalChannelLead->nearbyCity }} </td>
-          <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service}} @else {{$digitalChannelLead->typeService}}
+          <td class="text-center"> @if($digitalChannelLead->leadService) {{ $digitalChannelLead->leadService->service}}
+            @else {{$digitalChannelLead->typeService}}
             @endif</td>
           <td class="text-center">
-            @if($digitalChannelLead->leadProduct) {{ $digitalChannelLead->leadProduct->lead_product }} @else {{$digitalChannelLead->typeProduct}} @endif</td>
-            <td class="text-center">{{ $digitalChannelLead->description }}</td>
+            @if($digitalChannelLead->leadProduct) {{ $digitalChannelLead->leadProduct->lead_product }} @else
+            {{$digitalChannelLead->typeProduct}} @endif</td>
+          <td class="text-center">{{ $digitalChannelLead->description }}</td>
           <td class="text-center">{{ $digitalChannelLead->leadChannel->channel }}</td>
         </tr>
       </tbody>
