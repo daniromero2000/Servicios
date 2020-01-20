@@ -12,5 +12,7 @@ interface LeadPriceRepositoryInterface
 
     public function findLeadPriceById(int $id): LeadPrice;
 
+    public function getPriceDigitalChanel($from, $to, $num);
+
     public function findLeadPriceByName($name): LeadPrice;
 }

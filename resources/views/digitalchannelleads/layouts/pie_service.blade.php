@@ -1,4 +1,4 @@
-<div hidden class="card card-danger">
+<div class="card card-danger">
   <div class="card-header">
     <h3 class="card-title">Donut Chart</h3>
     <div class="card-tools">
@@ -12,7 +12,7 @@
   </div>
 </div>
 <!-- TORTA -->
-<div class="card">
+<div hidden class="card">
   <div class="card-header">
     <h3 class="card-title">Resumen de Servicios</h3>
     <div class="card-tools">
