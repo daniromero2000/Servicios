@@ -37,7 +37,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="lead_price">Fecha de Expedición <span class="text-danger">*</span></label>
+                    <label for="lead_price">Precio <span class="text-danger">*</span></label>
                     <div class="input-group">
                       <input type="number" name="lead_price" validation-pattern="text" id="lead_price"
                         placeholder="Precio" class="form-control" value="{{ old('lead_price') }}" required>

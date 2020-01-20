@@ -35,8 +35,7 @@
               {{$leadPrice->leadPriceStatus->status}}
             </span></td>
           <td class="text-center">{{ $leadPrice->created_at->format('M d, Y h:i a') }}</td>
-          <td> <i class="fas fa-comments cursor" data-toggle="modal"
-              data-target="#leadPricemodal{{$leadPrice->id}}"></i>
+          <td> <i class="fas fa-edit cursor" data-toggle="modal" data-target="#leadPricemodal{{$leadPrice->id}}"></i>
           </td>
         </tr>
         <div class="modal fade" id="leadPricemodal{{$leadPrice->id}}" tabindex="-1" role="dialog"
