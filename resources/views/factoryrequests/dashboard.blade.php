@@ -206,7 +206,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-           
+
             <div class="col-12">
               <canvas id="pieChart" style="height:334px; min-height:300px"></canvas>
             </div>
@@ -216,6 +216,37 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> {{ $totalWeb }} Solicitudes Web</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
+        </div>
+      </div>
+      <!-- AREA CHART DEBE IR OCULTA-->
+      <div hidden class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Area Chart</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
@@ -262,9 +293,9 @@
         <div class="card-body row justify-content-center">
           <div class="col-10">
             <div class="chart">
-             <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
