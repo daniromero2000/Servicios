@@ -3,6 +3,7 @@
 namespace App\Entities\FactoryRequests\Repositories\Interfaces;
 
 use App\Entities\FactoryRequests\FactoryRequest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as Support;
 
 interface FactoryRequestRepositoryInterface
@@ -38,4 +39,8 @@ interface FactoryRequestRepositoryInterface
   public function listFactoryDirector($totalView, $Director): Support;
 
   public function getDirectorFactoryTotal($from, $to, $Director);
+
+  public function searchFactoryAseessors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $assessor): Collection;
+
+  public function countWebAssessorFactory($from, $to, $assessor);
 }

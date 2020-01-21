@@ -201,7 +201,7 @@ class assessorsController extends Controller
                 'SUELDOIND'             => trim($request->get('SUELDOIND')),
                 'BANCOP'                => trim($request->get('BANCOP')),
                 'SUC'                   => trim($request->get('CIUD_UBI')),
-                'TIPOCLIENTE'           => 'NUEVO',
+                'TIPOCLIENTE'           => 'OPORTUYA',
                 'SUBTIPO'               => 'WEB',
                 'MEDIO_PAGO'            => trim($request->get('MEDIO_PAGO')),
                 'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
