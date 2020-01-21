@@ -119,8 +119,9 @@ class FactoryRequestController extends Controller
 
         $devicesNames  = [];
         $devicesValues = [];
+
         foreach ($dataIntenciosForDevices as $dataIntenciosForDevice) {
-            array_push($devicesNames, trim($dataIntenciosForDevice['type_devices']));
+            array_push($devicesNames, trim($dataIntenciosForDevice['type_device']));
             array_push($devicesValues, trim($dataIntenciosForDevice['total']));
         }
 
@@ -131,13 +132,14 @@ class FactoryRequestController extends Controller
             array_push($browsersValues, trim($dataIntenciosForBrowser['total']));
         }
 
+
         return view('factoryrequests.dashboard', [
             'statusesNames'        => $statusesNames,
             'statusesValues'       => $statusesValues,
-            'devicesNames'         => $devicesNames,
-            'devicesValues'        => $devicesValues,
-            'browsersNames'        => $browsersNames,
-            'browsersValues'       => $browsersValues,
+            'deviceNames'          => $devicesNames,
+            'deviceValues'         => $devicesValues,
+            'browserNames'        => $browsersNames,
+            'browserValues'       => $browsersValues,
             'webValues'            => $webValues,
             'webNames'             => $webNames,
             'totalWeb'             => array_sum($webValues),
