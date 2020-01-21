@@ -7,6 +7,7 @@ use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
+use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,11 +21,13 @@ class IntentionController extends Controller
     public function __construct(
         IntentionRepositoryInterface $intentionRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
-        IntentionStatusRepositoryInterface $intentionStatusRepositoryInterface
+        IntentionStatusRepositoryInterface $intentionStatusRepositoryInterface,
+        DataIntentionsRequestRepository $DataIntentionsRequestRepositoryInterface
     ) {
         $this->intentionInterface = $intentionRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->intentionStatusesInterface = $intentionStatusRepositoryInterface;
+        $this->dataIntentionsRequest = $DataIntentionsRequestRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -64,11 +67,16 @@ class IntentionController extends Controller
         $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
         $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
+        $dataIntenciosForDevices = $this->dataIntentionsRequest->countDataIntentionsForTypedevice($from, $to);
+        $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser($from, $to);
+
 
         if (request()->has('from')) {
             $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
             $creditCards       = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
             $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
+            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
+            $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), request()->input('to'));
         }
 
         $intentionStatusesNames  = [];
@@ -103,12 +111,31 @@ class IntentionController extends Controller
             array_push($creditProfilesValues, trim($creditProfile['total']));
         }
 
+        $devicesNames  = [];
+        $devicesValues = [];
+
+        foreach ($dataIntenciosForDevices as $dataIntenciosForDevice) {
+            array_push($devicesNames, trim($dataIntenciosForDevice['type_device']));
+            array_push($devicesValues, trim($dataIntenciosForDevice['total']));
+        }
+
+        $browsersNames  = [];
+        $browsersValues = [];
+        foreach ($dataIntenciosForBrowsers as $dataIntenciosForBrowser) {
+            array_push($browsersNames, trim($dataIntenciosForBrowser['browser']));
+            array_push($browsersValues, trim($dataIntenciosForBrowser['total']));
+        }
+
 
         return view('intentions.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,
             'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,
             'intentionStatusesValues' => $intentionStatusesValues,
+            'deviceNames'             => $devicesNames,
+            'deviceValues'            => $devicesValues,
+            'browserNames'            => $browsersNames,
+            'browserValues'           => $browsersValues,
             'creditCards'             => $creditCards,
             'statusPercentage'        => $statusPercentage,
             'totalStatuses'           => array_sum($creditProfilesValues),

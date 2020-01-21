@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin\FactoryRequests;
 
-use App\Entities\DataIntentionsRequest\Repositories\Interfaces\DataIntentionsRequestRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
-use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Carbon\Carbon;
@@ -22,13 +20,11 @@ class FactoryRequestController extends Controller
     public function __construct(
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
-        FactoryRequestStatusesLogRepositoryInterface $factoryRequestStatusesLogRepositoryInterface,
-        DataIntentionsRequestRepository $DataIntentionsRequestRepositoryInterface
+        FactoryRequestStatusesLogRepositoryInterface $factoryRequestStatusesLogRepositoryInterface
     ) {
         $this->factoryRequestInterface = $factoryRequestRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->factoryRequestStatusesLogInterface = $factoryRequestStatusesLogRepositoryInterface;
-        $this->dataIntentionsRequest = $DataIntentionsRequestRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -88,14 +84,10 @@ class FactoryRequestController extends Controller
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
-        $dataIntenciosForDevices = $this->dataIntentionsRequest->countDataIntentionsForTypedevice($from, $to);
-        $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser($from, $to);
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
-            $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), request()->input('to'));
         }
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
@@ -117,29 +109,10 @@ class FactoryRequestController extends Controller
             array_push($webValues, trim($webCount['total']));
         }
 
-        $devicesNames  = [];
-        $devicesValues = [];
-
-        foreach ($dataIntenciosForDevices as $dataIntenciosForDevice) {
-            array_push($devicesNames, trim($dataIntenciosForDevice['type_device']));
-            array_push($devicesValues, trim($dataIntenciosForDevice['total']));
-        }
-
-        $browsersNames  = [];
-        $browsersValues = [];
-        foreach ($dataIntenciosForBrowsers as $dataIntenciosForBrowser) {
-            array_push($browsersNames, trim($dataIntenciosForBrowser['browser']));
-            array_push($browsersValues, trim($dataIntenciosForBrowser['total']));
-        }
-
 
         return view('factoryrequests.dashboard', [
             'statusesNames'        => $statusesNames,
             'statusesValues'       => $statusesValues,
-            'deviceNames'          => $devicesNames,
-            'deviceValues'         => $devicesValues,
-            'browserNames'        => $browsersNames,
-            'browserValues'       => $browsersValues,
             'webValues'            => $webValues,
             'webNames'             => $webNames,
             'totalWeb'             => array_sum($webValues),
