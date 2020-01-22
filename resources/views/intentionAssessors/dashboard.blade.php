@@ -190,5 +190,5 @@
 </div>
 @endsection
 @include('layouts.admin.dashboard_imports')
-@include('intentions.dashboardJS')
+@include('intentionAssessors.dashboardJS')
 @endsection
