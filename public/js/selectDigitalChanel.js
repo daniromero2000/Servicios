@@ -1,46 +1,46 @@
 
 $(function () {
-    $("#typeServiceSelected").on('change', ontypeServiceSelected)
+    $("#typeServiceSelectedCreate").on('change', ontypeServiceSelectedCreate)
 });
 
-function ontypeServiceSelected() {
-    var typeServiceSelected_id = $(this).val();
-    console.log(typeServiceSelected_id)
+function ontypeServiceSelectedCreate() {
+    var typeServiceCreateSelected_id = $(this).val();
 
-    if (!typeServiceSelected_id) {
+    if (!typeServiceCreateSelected_id) {
         $('#typeProductselect').html('<option value=""> -- Selecciona Producto -- </option>');
 
     }
 
-    $.get('/getproducts/' + typeServiceSelected_id + '', function (data) {
-        var html_select = '<option value=""> -- Selecciona Producto -- </option>';
+    $.get('/getproducts/' + typeServiceCreateSelected_id + '', function (data) {
+        console.log(data)
+
+        var html_selectCreate = '<option value=""> -- Selecciona Producto -- </option>';
         for (var i = 0; i < data.length; i++) {
-            html_select += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
-            $('#typeProductselect').html(html_select);
+            html_selectCreate += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
         }
+        $('#typeProductselect').html(html_selectCreate);
 
     })
 }
 
-
 $(function () {
-    $("#typeServiceSelected").on('change', ontypeServiceSelected)
+    $("#typeServiceSelectedEdit").on('change', ontypeServiceSelectedEdit)
 });
 
-function ontypeServiceSelected() {
-    var typeServiceSelected_id = $(this).val();
-    console.log(typeServiceSelected_id)
+function ontypeServiceSelectedEdit() {
+    var typeServiceEditSelected_id = $(this).val();
+    console.log(typeServiceEditSelected_id)
 
-    if (!typeServiceSelected_id) {
+    if (!typeServiceEditSelected_id) {
         $('#stateSelect').html('<option value=""> -- Selecciona Producto -- </option>');
 
     }
 
-    $.get('/getStatuses/' + typeServiceSelected_id + '', function (data) {
-        var html_select = '<option value=""> -- Selecciona Producto -- </option>';
+    $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = '<option value=""> -- Selecciona Producto -- </option>';
         for (var i = 0; i < data.length; i++) {
-            html_select += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
-            $('#stateSelect').html(html_select);
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
+            $('#stateSelect').html(html_selectEdit);
         }
 
     })

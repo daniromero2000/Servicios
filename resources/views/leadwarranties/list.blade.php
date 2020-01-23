@@ -91,6 +91,6 @@
 @endsection
 @section('scriptsJs')
 
-<script src="{{ asset('js/selectDigitalChanel.js') }}"></script>
+{{-- <script src="{{ asset('js/selectDigitalChanel.js') }}"></script> --}}
 
 @endsection

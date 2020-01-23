@@ -171,8 +171,8 @@ use Carbon\Carbon;
                       </div>
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
-                          <label for="typeService">Servicio </label>
-                          <select name="typeService" id="typeServiceSelected" class="form-control" enabled>
+                          <label for="typeServiceSelectedEdit">Servicio </label>
+                          <select name="typeService" id="typeServiceSelectedEdit" class="form-control" enabled>
                             @if(!empty($services))
                             @foreach($services as $service)
                             <option @if($data->typeService==$service->id) s elected="selected" @endif
@@ -185,7 +185,7 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="product">Producto </label>
-                          <select name="typeProduct" id="typeProductselect" class="form-control" enabled>
+                          <select name="typeProduct" id="typeProductselectDASDAS" class="form-control" enabled>
                             @if ($data->leadProduct)
                             <option value="{{ $data->typeProduct }}">
                               {{ $data->leadProduct['lead_product'] }}
@@ -203,7 +203,7 @@ use Carbon\Carbon;
                       <div class="row">
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
-                            <label for="state">Estado</label>
+                            <label for="stateSelect">Estado</label>
                             <select name="state" id="stateSelect" class="form-control" enabled>
                               @if($data->state)
                               <option value="{{ $data->state }}">-- Selecciona Estado --
