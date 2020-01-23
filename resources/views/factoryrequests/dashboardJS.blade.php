@@ -473,5 +473,6 @@
       data: barChartData,
       options: barChartOptions,
     })
+
   })
 </script>

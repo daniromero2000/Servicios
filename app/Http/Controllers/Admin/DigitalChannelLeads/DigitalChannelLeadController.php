@@ -19,6 +19,8 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 
+use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
@@ -34,7 +36,8 @@ class DigitalChannelLeadController extends Controller
         CampaignRepositoryInterface $campaignRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
-        LeadStatusRepositoryInterface $leadStatusRepositoryInterface
+        LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
+        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -45,6 +48,7 @@ class DigitalChannelLeadController extends Controller
         $this->customerInterface     = $customerRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
+        $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -178,6 +182,8 @@ class DigitalChannelLeadController extends Controller
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
+        $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
+
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
@@ -186,6 +192,7 @@ class DigitalChannelLeadController extends Controller
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
+            $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
         }
 
         foreach ($leadChannels as $key => $status) {
@@ -217,8 +224,6 @@ class DigitalChannelLeadController extends Controller
             $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
             unset($leadServices[$key]);
         }
-
-
 
         $totalStatuses = $leadChannels->sum('total');
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
@@ -261,13 +266,14 @@ class DigitalChannelLeadController extends Controller
             array_push($leadServicesValues, trim($leadService['total']));
         }
 
-        $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->listLeads($skip * 30);
+        $leadpriceTotal = $leadPrice->sum('lead_price');
 
         $pricesTotal = 0;
         foreach ($leadPriceTotal as $key => $status) {
             $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
         }
+
+
         return view('digitalchannelleads.dashboard', [
             'pricesTotal'         => $pricesTotal,
             'leadChannelNames'    => $leadChannelNames,
@@ -276,11 +282,12 @@ class DigitalChannelLeadController extends Controller
             'leadStatusesValues'  => $leadStatusesValues,
             'leadAssessorsNames'  => $leadAssessorsNames,
             'leadAssessorsValues' => $leadAssessorsValues,
-            'leadProductsNames'  => $leadProductsNames,
-            'leadProductsValues' => $leadProductsValues,
-            'leadServicesNames'  => $leadServicesNames,
-            'leadServicesValues' => $leadServicesValues,
-            'totalStatuses'       => $totalStatuses
+            'leadProductsNames'   => $leadProductsNames,
+            'leadProductsValues'  => $leadProductsValues,
+            'leadServicesNames'   => $leadServicesNames,
+            'leadServicesValues'  => $leadServicesValues,
+            'totalStatuses'       => $totalStatuses,
+            'leadpriceTotal'      =>  $leadpriceTotal
         ]);
     }
     public function destroy($id)

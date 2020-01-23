@@ -206,7 +206,6 @@
         </div>
         <div class="card-body">
           <div class="row">
-           
             <div class="col-12">
               <canvas id="pieChart" style="height:334px; min-height:300px"></canvas>
             </div>
@@ -231,6 +230,9 @@
         </div>
       </div>
       <!-- AREA CHART DEBE IR OCULTA-->
+
+
+
       <div hidden class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">Area Chart</h3>
@@ -247,8 +249,10 @@
         </div>
       </div>
     </div>
+
     <!-- Card 1 -->
     <div class="col-md-8">
+
       <!-- PORCENTAJES -->
       <div class="card ">
         <div class="card-header">
@@ -262,9 +266,9 @@
         <div class="card-body row justify-content-center">
           <div class="col-10">
             <div class="chart">
-             <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
+              <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

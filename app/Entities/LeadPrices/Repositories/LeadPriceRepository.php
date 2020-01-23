@@ -51,4 +51,16 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getPriceDigitalChanel($from, $to, $num)
+    {
+
+        try {
+            return $this->model->where('lead_price_status_id', $num)
+                ->whereBetween('created_at', [$from, $to])
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

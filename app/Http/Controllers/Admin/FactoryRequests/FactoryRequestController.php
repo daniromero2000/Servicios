@@ -10,6 +10,8 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+
+
 class FactoryRequestController extends Controller
 {
     private $factoryRequestInterface, $toolsInterface, $factoryRequestStatusesLogInterface;
@@ -86,7 +88,6 @@ class FactoryRequestController extends Controller
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
         }
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
@@ -99,6 +100,7 @@ class FactoryRequestController extends Controller
             array_push($statusesValues, trim($estadosName['total']));
         }
 
+
         $webValues      = [];
         $webNames       = [];
 
@@ -106,6 +108,7 @@ class FactoryRequestController extends Controller
             array_push($webNames, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
         }
+
 
         return view('factoryrequests.dashboard', [
             'statusesNames'        => $statusesNames,

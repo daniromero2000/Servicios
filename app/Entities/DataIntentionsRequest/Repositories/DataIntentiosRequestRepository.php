@@ -7,8 +7,10 @@ use App\Entities\DataIntentionsRequest\DataIntentionsRequest;
 use Illuminate\Http\Request;
 use App\Entities\DataIntentionsRequest\Repositories\Interfaces\DataIntentionsRequestRepositoryInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
-class DataIntentionsRequestRepository
+
+class DataIntentionsRequestRepository implements DataIntentionsRequestRepositoryInterface
 {
     public function __construct(
         DataIntentionsRequest $dataIntentionRequest
@@ -32,6 +34,8 @@ class DataIntentionsRequestRepository
             abort(503, $e->getMessage());
         }
     }
+
+
 
     private function getTypeDevice()
     {
@@ -145,5 +149,29 @@ class DataIntentionsRequestRepository
         $ipLocation = $geo->getCity(\Request::getClientIp(true));
 
         return $ipLocation->addressString;
+    }
+
+    public function countDataIntentionsForTypedevice($from, $to)
+    {
+        try {
+            return  $this->model->select('type_device', DB::raw('count(*) as total'))
+                ->whereBetween('created_at', [$from, $to])
+                ->groupBy('type_device')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countDataIntentionsForBrowser($from, $to)
+    {
+        try {
+            return  $this->model->select('browser', DB::raw('count(*) as total'))
+                ->whereBetween('created_at', [$from, $to])
+                ->groupBy('browser')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
     }
 }
