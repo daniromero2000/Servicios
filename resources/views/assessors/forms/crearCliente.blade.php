@@ -501,6 +501,60 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade hide modalThankYouPage-asessors" data-backdrop="static" data-keyboard="false" id="decisionCredit" tabindex="-1"
+        role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modalCode">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 0">
+                    <div class="row resetRow">
+                        <div class="col-12 text-center resetCol headThankYuoModal">
+                            <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-12" ng-if="resp.resp == 'true'">
+                            <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
+                            <div class="row my-4">
+                                <div class="col-12 col-sm-6 text-center my-4">
+                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)">
+                                        <p>@{{ resp.infoLead.TARJETA }}</p>
+                                        <i class="fas fa-credit-card decisionCredit-option-icon"></i>
+                                        <p>
+                                            Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
+                                            Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 text-center my-4">
+                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 2}" ng-click="changeDesicionCredit(2)">
+                                        <p>Crédito Tradicional</p>
+                                        <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()" ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" ng-if="resp.resp == '-2'">
+                            <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
+                            <div class="row my-4">
+                                <div class="col-12 text-center my-4">
+                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 2}" ng-click="changeDesicionCredit(2)">
+                                        <p>Crédito Tradicional</p>
+                                        <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()" ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade hide" data-backdrop="static" data-keyboard="false" id="confirmCodeVerification" tabindex="-1"
         role="dialog" aria-hidden="true">
         <div class="modal-dialog modalCode">
@@ -620,42 +674,39 @@
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                En este momento <b>no tienes acceso a nuestra tarjeta,</b> <br>
-                                pero <b>SI</b> estás <b>pre-aprobado</b> para crédito tradicional.
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada exitosamente, <br>
+                                procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
                             <img src="{{ asset('images/asessors/openIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
                                 <b>¡FELICIDADES!</b> <br>
-                                <b>Aprobado</b> para cliente Oportunidaes
+                                <b>Solicitud aprobada</b> para tarjeta
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong
-                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                <b>Estamos revisando tu crédito,</b> esta <br>
-                                operación puede tardar unos minutos.
+                                <b>La solicitud</b> está siendo revisada <br>
+                                por el área de fábrica de créditos.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong
-                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal"
                             ng-if="estadoCliente == 'SIN COMERCIAL'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                <b>Estamos revisando tu crédito,</b> esta <br>
-                                operación puede tardar unos minutos.
+                                <b>La solicitud</b> está siendo revisada <br>
+                                por el área de fábrica de créditos.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong
-                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">

@@ -15,7 +15,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData = false;
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 0;
+	$scope.validateNum = 1;
+	$scope.decisionCredit = "";
+	$scope.disabledDecisionCredit = false;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -331,16 +333,28 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
+
+	$scope.changeDesicionCredit = function(value){
+		$scope.decisionCredit = value;
+	}
+
 	$scope.execConsultasLead = function(identificationNumber){
 		$('#proccess').modal('show');
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/execConsultasLead/'+identificationNumber+'/'+$scope.lead.NOM_REFPER+'/'+$scope.lead.TEL_REFPER+'/'+$scope.lead.NOM_REFFAM+'/'+$scope.lead.TEL_REFFAM,
+			url: '/api/oportuya/execConsultasLead/'+identificationNumber,
 		}).then(function successCallback(response) {
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
-			if (response.data == "-3" || response.data == "-4" || response.data == "-1") {
+
+			$scope.resp = response.data;
+
+			if ($scope.resp.resp == "true" || $scope.resp.resp == "-2") {
+				$('#decisionCredit').modal('show');
+			}
+
+			if ($scope.resp.resp == -3 || $scope.resp.resp == -4 || $scope.resp.resp == -1) {
 				$scope.totalErrorData ++;
 				$scope.showWarningErrorData = true;
 				if($scope.totalErrorData >= 2){
@@ -348,12 +362,47 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}
 			}
 
-			if(response.data.resp == 'confronta'){
-				$scope.formConfronta = response.data.form;
-				$('#confronta').modal('show');
+			if(response.data.resp == 'false'){
+				$scope.estadoCliente = "NEGADO";
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
 			}
+		}, function errorCallback(response) {
+			console.log(response);
+			$('#proccess').modal('hide');
+		});
+	};
 
-			if(response.data.resp == 'true'){
+	$scope.sendDecisionCredit = function(){
+		$('#decisionCredit').modal('hide');
+		//$scope.disabledDecisionCredit = true;
+		if($scope.decisionCredit == 1){
+			$scope.creditCard();
+		}else if($scope.decisionCredit == 2){
+			$scope.traditionalCredit();
+		}
+	};
+
+	$scope.creditCard = function(){
+		showLoader();
+		$scope.creditDecisionData = {
+			lastName : $scope.lead.APELLIDOS,
+			dateExpIdentification: $scope.lead.FEC_EXP,
+			identificationNumber: $scope.lead.CEDULA,
+			quotaApprovedProduct: $scope.resp.quotaApprovedProduct,
+			quotaApprovedAdvance: $scope.resp.quotaApprovedAdvance,
+			NOM_REFPER: $scope.lead.NOM_REFPER,
+			TEL_REFPER: $scope.lead.TEL_REFPER,
+			NOM_REFFAM: $scope.lead.NOM_REFFAM,
+			TEL_REFFAM: $scope.lead.TEL_REFFAM
+		}
+		$http({
+			method: 'POST',
+			url: '/api/oportuya/decisionCreditCard/',
+			data: $scope.creditDecisionData,
+		}).then(function successCallback(response) {
+			if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;
 				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
 				$scope.numSolic = response.data.infoLead.numSolic;
@@ -366,22 +415,45 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 			}
 
-			if(response.data.resp.resp == 'false'){
-				$scope.estadoCliente = "NEGADO";
-				setTimeout(() => {
-					$('#congratulations').modal('show');
-				}, 1800);
+			if(response.data.resp == 'confronta'){
+				$scope.formConfronta = response.data.form;
+				$('#confronta').modal('show');
 			}
-
-			if(response.data.resp.resp == "-2"){
-				$scope.estadoCliente = "TRADICIONAL";
-				setTimeout(() => {
-					$('#congratulations').modal('show');
-				}, 1800);
-			}
-		}, function errorCallback(response) {
+			hideLoader();
 			console.log(response);
-			$('#proccess').modal('hide');
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+		});
+	};
+
+	$scope.traditionalCredit = function(){
+		$scope.creditDecisionData = {
+			lastName : $scope.lead.APELLIDOS,
+			dateExpIdentification: $scope.lead.FEC_EXP,
+			identificationNumber: $scope.lead.CEDULA,
+			quotaApprovedProduct: $scope.resp.quotaApprovedProduct,
+			quotaApprovedAdvance: $scope.resp.quotaApprovedAdvance,
+			NOM_REFPER: $scope.lead.NOM_REFPER,
+			TEL_REFPER: $scope.lead.TEL_REFPER,
+			NOM_REFFAM: $scope.lead.NOM_REFFAM,
+			TEL_REFFAM: $scope.lead.TEL_REFFAM
+		}
+		$http({
+			method: 'POST',
+			url: '/api/oportuya/decisionTraditionalCredit/',
+			data: $scope.creditDecisionData,
+		}).then(function successCallback(response) {
+			console.log(response);
+			$scope.numSolic = response.data.infoLead.numSolic;
+			$scope.estadoCliente = "TRADICIONAL";
+			setTimeout(() => {
+				$('#congratulations').modal('show');
+			}, 1500);
+			hideLoader();
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
 		});
 	};
 
