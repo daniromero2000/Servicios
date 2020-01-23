@@ -49,8 +49,6 @@ use Carbon\Carbon;
         </td>
       </tr>
 
-
-
       <div class="modal fade" id="deleteLead{{$data->id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -95,7 +93,6 @@ use Carbon\Carbon;
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="lastName">Cédula </label>
                           <input type="text" name="identificationNumber" id="identificationNumber" class="form-control"
-                            validation-pattern="IdentificationNumber"
                             value="{!! $data->identificationNumber ?: old('lastName')  !!}">
                         </div>
                         <div class="col-12 col-sm-6">
@@ -175,10 +172,10 @@ use Carbon\Carbon;
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
                           <label for="typeService">Servicio </label>
-                          <select name="typeService" id="typeService" class="form-control" enabled>
+                          <select name="typeService" id="typeServiceSelected" class="form-control" enabled>
                             @if(!empty($services))
                             @foreach($services as $service)
-                            <option @if($data->typeService==$service->id) selected="selected" @endif
+                            <option @if($data->typeService==$service->id) s elected="selected" @endif
                               value="{{ $service->id }}">
                               {{ $service->service }}
                             </option>
@@ -188,14 +185,11 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="product">Producto </label>
-                          <select name="typeProduct" id="typeProduct" class="form-control" enabled>
-                            @if(!empty($lead_products))
-                            @foreach($lead_products as $lead_product)
-                            <option @if($data->typeProduct==$lead_product->id) selected="selected" @endif
-                              value="{{ $lead_product->id }}">
-                              {{ $lead_product->lead_product }}
+                          <select name="typeProduct" id="typeProductselect" class="form-control" enabled>
+                            @if ($data->leadProduct)
+                            <option value="{{ $data->typeProduct }}">
+                              {{ $data->leadProduct['lead_product'] }}
                             </option>
-                            @endforeach
                             @endif
                           </select>
                         </div>
@@ -210,14 +204,10 @@ use Carbon\Carbon;
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="state">Estado</label>
-                            <select name="state" id="state" class="form-control" enabled>
-                              @if(!empty($lead_statuses))
-                              @foreach($lead_statuses as $lead_status)
-                              <option @if($data->state==$lead_status->id) selected="selected" @endif
-                                value="{{ $lead_status->id }}">
-                                {{ $lead_status->status }}
+                            <select name="state" id="stateSelect" class="form-control" enabled>
+                              @if($data->state)
+                              <option value="{{ $data->state }}">-- Selecciona Estado --
                               </option>
-                              @endforeach
                               @endif
                             </select>
                           </div>

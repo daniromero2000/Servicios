@@ -21,5 +21,13 @@ class LeadStatusRepository implements LeadStatusRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
-    
+
+    public function getLeadStatusesForServices($id)
+    {
+        try {
+            return $this->model->where('area_id', $id)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

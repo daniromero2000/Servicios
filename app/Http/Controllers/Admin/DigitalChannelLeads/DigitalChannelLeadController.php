@@ -21,6 +21,7 @@ use App\Entities\Leads\Requests\CreateLeadRequest;
 
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
+use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
 
 class DigitalChannelLeadController extends Controller
@@ -95,7 +96,7 @@ class DigitalChannelLeadController extends Controller
     public function store(CreateLeadRequest $request)
     {
 
-        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : 'N/A';
+        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
 
         $request['termsAndConditions'] = 2;
@@ -302,9 +303,13 @@ class DigitalChannelLeadController extends Controller
 
     public function byService(int $id)
     {
-        // $data = $this->leadProductInterface->getAllLeadProductNames();
+        $data = $this->leadProductInterface->getLeadProductForService($id);
+        return json_decode($data);
+    }
 
-        $data = LeadProduct::where('service_id', $id)->get();
+    public function byStatus(int $id)
+    {
+        $data = $this->LeadStatusesInterface->getLeadStatusesForServices($id);
         return json_decode($data);
     }
 }
