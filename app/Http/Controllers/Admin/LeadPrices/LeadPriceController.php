@@ -38,8 +38,16 @@ class LeadPriceController extends Controller
 
     public function update(Request $request, $id)
     {
-        $lead = $this->LeadPriceInterface->findLeadPriceById($id);
-        $lead->update($request->input());
+        $request['user_id'] = auth()->user()->id;
+        $leadprice = $this->LeadPriceInterface->findLeadPriceById($id);
+        $leadprice->update($request->input());
+
+        if ($request->lead_price_status_id == 1) {
+            $lead = $this->LeadInterface->findLeadById($request->lead_id);
+            $lead->leadStatus()->attach(2, ['user_id' => $request['user_id']]);
+            $lead->state = 2;
+            $lead->save();
+        }
 
         $request->session()->flash('message', 'Actalización Exitosa!');
         return redirect()->back();

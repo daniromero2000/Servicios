@@ -42,7 +42,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
         }
     }
 
-    public function updateLeadPrice(array $params)
+    public function updateLeadPrice($params)
     {
 
         try {

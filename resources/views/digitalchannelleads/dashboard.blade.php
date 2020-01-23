@@ -62,7 +62,7 @@
                   <span class="info-box-number"> ${{number_format($leadpriceTotal)}}</span>
                 </div>
                 <div class="col-6">
-                  <span class="info-box-text text-right"><a href="{{ route('assessors.index') }}"
+                  <span class="info-box-text text-right"><a href="/Administrator/digitalchannelleads"
                       style="color: black; !important">Ver
                       Más</a></span>
                 </div>
