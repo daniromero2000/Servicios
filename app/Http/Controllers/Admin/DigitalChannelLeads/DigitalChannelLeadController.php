@@ -20,6 +20,8 @@ use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\LeadProducts\LeadProduct;
+use App\Product;
 
 class DigitalChannelLeadController extends Controller
 {
@@ -296,5 +298,13 @@ class DigitalChannelLeadController extends Controller
         $digitalChannelLead =  $this->leadInterface->findLeadDelete($id);
         $digitalChannelLead->delete();
         return redirect()->back();
+    }
+
+    public function byService(int $id)
+    {
+        // $data = $this->leadProductInterface->getAllLeadProductNames();
+
+        $data = LeadProduct::where('service_id', $id)->get();
+        return json_decode($data);
     }
 }

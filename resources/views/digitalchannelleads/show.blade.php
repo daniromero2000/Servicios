@@ -35,7 +35,9 @@
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
+                @if (auth()->user()->idProfile == 2)
                 @include('digitalchannelleads.layouts.lead_prices')
+                @endif
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
