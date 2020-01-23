@@ -232,4 +232,78 @@ class LeadRepository implements LeadRepositoryInterface
             ->orderBy('created_at', 'desc')
             ->get($this->columns);
     }
+
+    // consultas personalizadas
+
+    public function customListleads($totalView, $service)
+    {
+        try {
+            return  $this->model->with([
+                'leadStatusesLogs',
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct',
+                'leadPrices',
+            ])->orderBy('id', 'desc')
+                ->where('typeService', $service)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $service): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {
+            return $this->model->orderBy('created_at', 'desc')
+                ->skip($totalView)
+                ->where('typeService', $service)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchCustomLeads($text, null, true, true)->with([
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct'
+            ])->when($status, function ($q, $status) {
+                return $q->where('state', $status);
+            })->when($assessor, function ($q, $assessor) {
+                return $q->where('assessor_id', $assessor);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
+            })->orderBy('created_at', 'desc')
+                ->skip($totalView)
+                ->take(100)
+                ->where('typeService', $service)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchCustomLeads($text, null, true, true)->with([
+            'leadStatus',
+            'leadAssessor',
+            'leadService',
+            'leadCampaign',
+            'comments',
+            'leadProduct'
+        ])->whereBetween('created_at', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('state', $status);
+            })->when($assessor, function ($q, $assessor) {
+                return $q->where('assessor_id', $assessor);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
+            })
+            ->where('typeService', $service)
+            ->orderBy('created_at', 'desc')
+            ->get($this->columns);
+    }
 }

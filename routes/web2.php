@@ -189,7 +189,16 @@ Route::namespace('Admin')->group(function () {
     });
 
     Route::get('/api/canalDigital/assignAssesorDigitalToLeadCM/{lead}', 'LeadsController@assignAssesorDigitalToLeadCM');
+
+    //Panel Garantias
+
+    Route::namespace('LeadWarranties')->group(function () {
+        Route::resource('Administrator/LeadWarranties', 'LeadWarrantyController');
+    });
 });
+
+
+
 
 /**
  * Frontend routes

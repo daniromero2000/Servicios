@@ -90,5 +90,7 @@
 </section>
 @endsection
 @section('scriptsJs')
+
 <script src="{{ asset('js/selectDigitalChanel.js') }}"></script>
+
 @endsection
