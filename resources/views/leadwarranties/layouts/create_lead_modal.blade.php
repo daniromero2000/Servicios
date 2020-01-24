@@ -97,8 +97,8 @@
               </div>
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
-                  <label for="typeServiceSelected">Servicio <span class="text-danger">*</span></label>
-                  <select id="typeServiceSelected" name="typeService" class="form-control" required>
+                  <label for="typeServiceSelectedCreate">Servicio <span class="text-danger">*</span></label>
+                  <select id="typeServiceSelectedCreate" name="typeService" class="form-control" required>
                     @if(!empty($services))
                     <option disabled selected value> -- Selecciona Producto -- </option>
                     @foreach($services as $service)

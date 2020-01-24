@@ -29,7 +29,6 @@ $(function () {
 
 function ontypeServiceSelectedEdit() {
     var typeServiceEditSelected_id = $(this).val();
-    console.log(typeServiceEditSelected_id)
 
     if (!typeServiceEditSelected_id) {
         $('#stateSelect').html('<option value=""> -- Selecciona Producto -- </option>');
@@ -40,8 +39,28 @@ function ontypeServiceSelectedEdit() {
         var html_selectEdit = '<option value=""> -- Selecciona Producto -- </option>';
         for (var i = 0; i < data.length; i++) {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
-            $('#stateSelect').html(html_selectEdit);
         }
+        $('#stateSelect').html(html_selectEdit);
+    })
+}
 
+$(function () {
+    $("#typeServiceSelectedEdit").on('change', ontypeServiceSelectedEditProduct)
+});
+
+function ontypeServiceSelectedEditProduct() {
+    var typeServiceEditSelected_id = $(this).val();
+
+    if (!typeServiceEditSelected_id) {
+        $('#typeProductselectedit').html('<option value=""> -- Selecciona Producto -- </option>');
+
+    }
+
+    $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = '<option value=""> -- Selecciona Producto -- </option>';
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
+        }
+        $('#typeProductselectedit').html(html_selectEdit);
     })
 }

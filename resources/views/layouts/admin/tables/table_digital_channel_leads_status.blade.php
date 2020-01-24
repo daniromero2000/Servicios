@@ -184,8 +184,8 @@ use Carbon\Carbon;
                           </select>
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
-                          <label for="product">Producto </label>
-                          <select name="typeProduct" id="typeProductselectDASDAS" class="form-control" enabled>
+                          <label for="typeProductselectedit">Producto </label>
+                          <select name="typeProduct" id="typeProductselectedit" class="form-control" enabled>
                             @if ($data->leadProduct)
                             <option value="{{ $data->typeProduct }}">
                               {{ $data->leadProduct['lead_product'] }}
