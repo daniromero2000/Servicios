@@ -201,6 +201,10 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('LeadWarranties')->group(function () {
         Route::resource('Administrator/LeadWarranties', 'LeadWarrantyController');
     });
+
+    Route::namespace('LeadWallets')->group(function () {
+        Route::resource('Administrator/LeadWallets', 'LeadWalletController');
+    });
 });
 
 /**
