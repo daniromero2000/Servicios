@@ -27,7 +27,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes de Clientes</p>
+                <p>Intenciones Web</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars " style="color: white;"></i>
@@ -110,6 +110,7 @@
       </div>
       <div class="card">
         <div class="card-header">
+          <h3 class="card-title">Pasos Formulario Intenciónes Web   </h3>
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -118,7 +119,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-           
+
             <div class="col-12">
               <canvas id="pieChart" style="height:310; min-height:300px"></canvas>
             </div>
@@ -156,15 +157,15 @@
             <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
           </div>
           <div class="col-12">
-  
+
             <div class="row text-center">
               @foreach ($customersFosygas as $customersFosyga)
               <div class="col-6 header-table mt-2">
-  
+
                 <p> <span @if ($customersFosyga['fuenteFallo']=='SI' ) class="badge badge-danger" @else
                     class="badge badge-primary" @endif> {{ number_format ($customersFosyga['percentage']) }} % </span>
                   {{$customersFosyga['fuenteFallo']}} Falló</p>
-  
+
               </div>
               @endforeach
             </div>
@@ -239,7 +240,7 @@
       </div>
       </div>
 </div>
-       
+
             <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
@@ -258,7 +259,7 @@
       </div>
 
     </div>
-    
+
   </div>
 </div>
 @endsection
