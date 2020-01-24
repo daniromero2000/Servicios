@@ -82,7 +82,7 @@ class LeadWarrantyController extends Controller
         }
 
         $listAssessors = 18;
-        return view('LeadWarranties.list', [
+        return view('leadwarranties.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
