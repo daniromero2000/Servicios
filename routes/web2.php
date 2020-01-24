@@ -159,6 +159,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
     });
 
+    Route::namespace('CallCenterLeads')->group(function () {
+        Route::resource('Administrator/callcenterleads', 'CallCenterLeadController');
+        Route::get('/Administrator/dashboard/CallCenterleads', 'CallCenterLeadController@dashboard')->name('CallCenterleads_dashboard');
+    });
+
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
