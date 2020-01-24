@@ -314,7 +314,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return  $this->model->with('user')
                 ->whereBetween('created_at', [$from, $to])
-                ->where('typeService', 4)
+                ->where('typeService', 7)
                 ->get(['assessor_id'])->groupBy('user.name');
         } catch (QueryException $e) {
             dd($e);
