@@ -181,7 +181,7 @@ class CallCenterLeadController extends Controller
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
-        $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
+        $leadAssessors = $this->leadInterface->countLeadAssessorsForCallCenter($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
@@ -191,7 +191,7 @@ class CallCenterLeadController extends Controller
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
-            $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
+            $leadAssessors = $this->leadInterface->countLeadAssessorsForCallCenter(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));

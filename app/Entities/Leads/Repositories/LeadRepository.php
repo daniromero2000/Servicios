@@ -306,4 +306,18 @@ class LeadRepository implements LeadRepositoryInterface
             ->orderBy('created_at', 'desc')
             ->get($this->columns);
     }
+
+    //CallCenter
+
+    public function countLeadAssessorsForCallCenter($from, $to)
+    {
+        try {
+            return  $this->model->with('user')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('typeService', 4)
+                ->get(['assessor_id'])->groupBy('user.name');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

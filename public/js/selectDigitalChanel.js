@@ -31,12 +31,12 @@ function ontypeServiceSelectedEdit() {
     var typeServiceEditSelected_id = $(this).val();
 
     if (!typeServiceEditSelected_id) {
-        $('#stateSelect').html('<option value=""> -- Selecciona Producto -- </option>');
+        $('#stateSelect').html('<option value=""> -- Selecciona Estado -- </option>');
 
     }
 
     $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
-        var html_selectEdit = '<option value=""> -- Selecciona Producto -- </option>';
+        var html_selectEdit = '<option value=""> -- Selecciona Estado -- </option>';
         for (var i = 0; i < data.length; i++) {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
         }

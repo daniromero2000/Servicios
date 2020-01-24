@@ -156,6 +156,7 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/digitalchannelleads', 'DigitalChannelLeadController');
         Route::get('/getproducts/{id}', 'DigitalChannelLeadController@byService');
         Route::get('/getStatuses/{id}', 'DigitalChannelLeadController@byStatus');
+        Route::get('/getAssessors/{id}', 'DigitalChannelLeadController@byAssessors');
         Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
     });
 
@@ -201,9 +202,6 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/LeadWarranties', 'LeadWarrantyController');
     });
 });
-
-
-
 
 /**
  * Frontend routes

@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
-
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
@@ -40,7 +40,8 @@ class LeadWarrantyController extends Controller
         CustomerRepositoryInterface $customerRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
-        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface
+        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
+        UserRepositoryInterface $UserRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -52,6 +53,7 @@ class LeadWarrantyController extends Controller
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
+        $this->UserInterface = $UserRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -79,6 +81,7 @@ class LeadWarrantyController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
+        $listAssessors = 18;
         return view('LeadWarranties.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
@@ -91,7 +94,8 @@ class LeadWarrantyController extends Controller
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'lead_statuses'       => $this->LeadStatusesInterface->getLeadStatusesForServices($service),
+            'listAssessors'       => $this->UserInterface->listUser($listAssessors)
         ]);
     }
 
