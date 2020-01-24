@@ -18,8 +18,8 @@
                     <div class="col-sm-8">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="/Administrator/LeadWarranties">Leads
-                                    Warranties</a>
+                            <li class="breadcrumb-item active"><a href="/Administrator/LeadWallets">Leads
+                                    Wallet</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
