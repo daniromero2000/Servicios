@@ -175,7 +175,7 @@ use Carbon\Carbon;
                           <select name="typeService" id="typeServiceSelectedEdit" class="form-control" enabled>
                             @if(!empty($services))
                             @foreach($services as $service)
-                            <option @if($data->typeService==$service->id) s elected="selected" @endif
+                            <option @if($data->typeService==$service->id) selected="selected" @endif
                               value="{{ $service->id }}">
                               {{ $service->service }}
                             </option>

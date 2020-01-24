@@ -64,3 +64,60 @@ function ontypeServiceSelectedEditProduct() {
         $('#typeProductselectedit').html(html_selectEdit);
     })
 }
+
+
+$(function () {
+    $("#typeServiceSelectedEditFilter").on('change', ontypeServiceSelectedEditFilter)
+});
+
+$(function () {
+    $(".fa-edit").click(ontypeServiceSelectedEditModal);
+});
+
+$(function () {
+    $(".fa-edit").click(ontypeServiceSelectedProductEditModal);
+});
+
+function ontypeServiceSelectedProductEditModal() {
+    var typeServiceEditSelected_id = $("#typeServiceSelectedEdit").val();
+    $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = $('#typeProductselectedit').html();
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
+        }
+        $('#typeProductselectedit').html(html_selectEdit);
+    });
+};
+
+function ontypeServiceSelectedEditModal() {
+    var typeServiceEditSelected_id = $("#typeServiceSelectedEdit").val();
+    if (!typeServiceEditSelected_id) {
+        $('#stateSelect').html('<option value=""> -- Selecciona Producto -- </option>');
+
+    }
+
+    $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = '<option value=""> -- Selecciona Estado -- </option>';
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
+        }
+        $('#stateSelect').html(html_selectEdit);
+    });
+};
+
+function ontypeServiceSelectedEditFilter() {
+    var typeServiceEditSelected_id = $(this).val();
+
+    if (!typeServiceEditSelected_id) {
+        $('#stateSelectFilter').html('<option value=""> -- Selecciona Producto -- </option>');
+
+    }
+
+    $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = '<option value=""> -- Selecciona Estado -- </option>';
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
+        }
+        $('#stateSelectFilter').html(html_selectEdit);
+    });
+};
