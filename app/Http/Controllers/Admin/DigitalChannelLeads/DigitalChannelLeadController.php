@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
-
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
@@ -28,7 +28,7 @@ class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface;
+    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -40,7 +40,8 @@ class DigitalChannelLeadController extends Controller
         CustomerRepositoryInterface $customerRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
-        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface
+        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
+        UserRepositoryInterface $UserRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -52,6 +53,7 @@ class DigitalChannelLeadController extends Controller
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
+        $this->UserInterface = $UserRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -77,6 +79,9 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
+
+        $profile = auth()->user()->idProfile;
+
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
@@ -90,6 +95,7 @@ class DigitalChannelLeadController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'listAssessors'       => $this->UserInterface->listUser($profile)
         ]);
     }
 
@@ -310,6 +316,12 @@ class DigitalChannelLeadController extends Controller
     public function byStatus(int $id)
     {
         $data = $this->LeadStatusesInterface->getLeadStatusesForServices($id);
+        return json_decode($data);
+    }
+
+    public function byAssessors(int $id)
+    {
+        $data = $this->UserInterface->listUser($id);
         return json_decode($data);
     }
 }

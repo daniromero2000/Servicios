@@ -8,8 +8,9 @@ interface UserRepositoryInterface
 {
     public function getUserName($assessor);
 
-    public function findUserById(int $id): User; 
+    public function findUserById(int $id): User;
 
     public function updateUser(array $params): bool;
-    
+
+    public function listUser($profile);
 }

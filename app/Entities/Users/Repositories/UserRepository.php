@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entities\Users\Repositories;
+
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -18,9 +19,17 @@ class UserRepository implements UserRepositoryInterface
     {
         try {
             return $this->model->where('id', $assessor)->first(['name']);
-        } catch (QueryException $e) { }
+        } catch (QueryException $e) {
+        }
     }
 
+    public function listUser($profile)
+    {
+        try {
+            return $this->model->where('idProfile', $profile)->get();
+        } catch (QueryException $e) {
+        }
+    }
 
     public function findUserById(int $id): User
     {
@@ -43,5 +52,4 @@ class UserRepository implements UserRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
-
 }

@@ -34,7 +34,7 @@
                     <div class="col-12">
                         <div class="card-header">
                             @include('layouts.admin.filter_digital_channel_leads', ['route' =>
-                            route('LeadWarranties.index')])
+                            route('digitalchannelleads.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">
@@ -50,15 +50,22 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-12 col-sm-12 col-md-6 small-box inner">
+                                    <div class="inner">
+                                        <h4>Total de Cotizaciónes</h4>
+                                        <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @php
                         @endphp
                         <div class="card-body pt-0 pb-0 ">
                             @if($digitalChannelLeads)
-                            @include('layouts.admin.tables.table_digital_channel_leads_status_generals', [$headers,
-                            'datas' =>
+                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
                             $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services,
                             'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' =>
                             $lead_statuses, ])

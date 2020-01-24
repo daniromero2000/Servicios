@@ -59,3 +59,6 @@
 @include('digitalchannelleads.layouts.update_lead_modal')
 @include('digitalchannelleads.layouts.create_lead_modal')
 @endsection
+@section('scriptsJs')
+<script src="{{ asset('js/selectDigitalChanel.js') }}"></script>
+@endsection
