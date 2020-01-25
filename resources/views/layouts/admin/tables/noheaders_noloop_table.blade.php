@@ -1,9 +1,40 @@
-<tbody>
+<tbody class="body-table">
     <tr>
-        @foreach($data->toArray() as $key => $value)
         <td class="text-center">
-            {{ $data[$key] }}
+            {{ $data->NUMERO }}
         </td>
-        @endforeach
+        <td class="text-center">
+            {{ $data->SOLICITUD }}
+        </td>
+        <td class="text-center">
+            {{ $data->CUP_INICIA }}
+        </td>
+        <td class="text-center">
+            {{ $data->CUP_COMPRA }}
+        </td>
+        <td class="text-center">
+            {{ $data->COMPRA_ACT }}
+        </td>
+        <td class="text-center">
+            {{ $data->CUPO_EFEC }}
+        </td>
+        <td class="text-center">
+            {{ $data->CUPO_ACTUAL }}
+        </td>
+        <td class="text-center">
+            {{ $data->CUPOMAX }}
+        </td>
+        <td class="text-center">
+            {{ $data->SUC }}
+        </td>
+        <td class="text-center">
+            {{ $data->ESTADO }}
+        </td>
+        <td class="text-center">
+            {{ $data->FEC_ACTIV }}
+        </td>
+        <td class="text-center">
+            {{ $data->TIPO_TAR }}
+        </td>
     </tr>
 <tbody>

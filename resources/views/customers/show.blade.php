@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="card border-0 mt-5">
+    <div class="card border-0 m-2">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
@@ -78,6 +78,7 @@
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
                 $customer->customersfactoryRequests])
             </div>
+
             <div role="tabpanel" class="tab-pane" id="warranties">
                 @include('customers.layouts.customer_warranties', ['warranties' =>
                 $customer->customerWarranties])

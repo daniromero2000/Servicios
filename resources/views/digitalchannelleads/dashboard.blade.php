@@ -8,8 +8,6 @@
           <div class="row d-flex justify-content-center">
             <div class="col-12 ">
               <div class="row">
-
-                <!-- /.info-box -->
                 <div class="col-12 ">
                   @include('digitalchannelleads.layouts.card_total_leads')
                 </div>
@@ -44,25 +42,22 @@
             </div>
           </div>
         </div>
-        @include('digitalchannelleads.layouts.pie_channels')
+        <div>
+          @include('digitalchannelleads.layouts.pie_channels')
+        </div>
+
+
         @include('digitalchannelleads.layouts.pie_statuses')
         @include('digitalchannelleads.layouts.pie_assessors')
-
       </div>
       <div class="col-md-8">
         @include('digitalchannelleads.layouts.bar_statuses')
         <div class="row">
-
           <div class="col-12 ">
             @include('digitalchannelleads.layouts.pie_products')
             @include('digitalchannelleads.layouts.pie_service')
           </div>
-
-
         </div>
-
-
-
       </div>
     </div>
     <div class="row">
@@ -85,7 +80,6 @@
         </div>
       </div>
     </div>
-
 </div>
 @endsection
 @include('layouts.admin.dashboard_imports')

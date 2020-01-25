@@ -1,4 +1,7 @@
 <div class="col-md-7">
+    <div class="card-body">
+
+    </div>
     <div class="card card-table-reset">
         <div class="card-body">
             <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
@@ -8,10 +11,14 @@
                         Agregar Comentario</a>
                 </div>
             </h2>
+            {{-- @php
+            dd($datas[0]->user);
+            @endphp --}}
             @if($datas->isNotEmpty())
             <table class="table table-hover table-stripped leadTable">
                 <thead class="header-table">
                     <tr>
+                        <th class="text-center" scope="col"></th>
                         <th class="text-center" scope="col">Fecha</th>
                         <th class="text-center" scope="col">Asesor</th>
                         <th class="text-center" scope="col">Comentario</th>
@@ -20,6 +27,14 @@
                 <tbody class="body-table">
                     @foreach($datas as $data)
                     <tr>
+                        <td>
+                            @if ($data->user->master == 1)
+
+                            <span class="text-center badge" style="color: white ; background-color:
+                            #0bb010"><i class="fa fa-bell-o"></i> </span>
+                            @endif
+                        </td>
+
                         <td class="text-center">
                             {{ $data->created_at->format('M d, Y h:i a') }}
                         </td>
