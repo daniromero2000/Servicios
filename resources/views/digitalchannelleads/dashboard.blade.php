@@ -11,47 +11,15 @@
 
                 <!-- /.info-box -->
                 <div class="col-12 ">
-                  <div class="small-box bg-primary">
-                    <div class="inner">
-                      <h2>{{ $totalStatuses }}</h2>
-                      <p style="margin-bottom: -4px !important;">Leads en los últimos 30 días</p>
-                    </div>
-                    <div class="icon mt-3">
-                      <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <div class="text-right mr-2">
-                      <span class="info-box-text text-right">
-                        <a href="/Administrator/digitalchannelleads" style="color: white; !important">Ver
-                          Más</a></span>
-                    </div>
-                  </div>
+                  @include('digitalchannelleads.layouts.card_total_leads')
                 </div>
                 <div class="col-12 ">
-                  <div class="small-box bg-success">
-                    <div class="inner">
-                      <h4 class="mt-2">${{ number_format ($pricesTotal) }}</h3>
-                        <p style="margin-bottom: -4px !important;">Total Cotizado </p>
-                    </div>
-                    <br>
-                    <div class="icon">
-                      <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div style="margin-top: -5px;" class="text-right mr-2">
-                      <span class="info-box-text text-right">
-                        <a href="/Administrator/digitalchannelleads" style="color: white; !important">Ver
-                          Más</a></span>
-                    </div>
-                  </div>
+                  @include('digitalchannelleads.layouts.card_total_quotes')
                 </div>
               </div>
-
-
             </div>
-
           </div>
-
         </div>
-
         <div class="col-12">
           <div class="info-box ">
             <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
