@@ -20,7 +20,7 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
-<section class="content border-0">
+<section class="content border-0 m-2">
     @include('layouts.errors-and-messages')
     <div class="card border-0 ">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">

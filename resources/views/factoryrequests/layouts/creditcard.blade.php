@@ -5,14 +5,27 @@
   <div class="card-body table-responsive pt-0 header-table-responsive">
     @if(!empty($factoryRequest->creditCard))
     <table class="table table-head-fixed table-hover table-stripped leadTable">
-      <thead class="header-table">
+      <thead class="text-center header-table">
         <tr>
           <th class="text-center" scope="col">Número</th>
+          <th class="text-center" scope="col">Solicitud</th>
+          <th class="text-center" scope="col">Cupo Inicial</th>
+          <th class="text-center" scope="col">Cupo Compra</th>
+          <th class="text-center" scope="col">Cupo Compra Actual</th>
+          <th class="text-center" scope="col">Cupo Efectivo</th>
+          <th class="text-center" scope="col">Cupo Actual</th>
+          <th class="text-center" scope="col">Cupo Maximo</th>
+          <th class="text-center" scope="col">Sucursal</th>
           <th class="text-center" scope="col">Estado</th>
+          <th class="text-center" scope="col">Activación</th>
+          <th class="text-center" scope="col">Tipo de Tarjeta</th>
         </tr>
       </thead>
       <tbody class="body-table">
         @include('layouts.admin.tables.noheaders_noloop_table', ['data' => $factoryRequest->creditCard])
+        {{-- @php
+        dd($factoryRequest->creditCard)
+        @endphp --}}
       </tbody>
     </table>
     @else
