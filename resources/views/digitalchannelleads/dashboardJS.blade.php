@@ -25,6 +25,11 @@
         var service = [<?php echo '"'.implode('","', $leadServicesNames).'"' ?>];
         var serviceValues = [<?php echo '"'.implode('","', $leadServicesValues).'"' ?>];
 
+        var productWarranties = [<?php echo '"'.implode('","', $leadWarrantiesNames).'"' ?>];
+        var productWarrantiesValues = [<?php echo '"'.implode('","', $leadWarrantiesValues).'"' ?>];
+
+        var productWallets = [<?php echo '"'.implode('","', $leadProductWalletNames).'"' ?>];
+        var productWalletsValues = [<?php echo '"'.implode('","', $leadProductWalletValues).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -205,6 +210,60 @@
     options: donutOptions5
     })
 
+        //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas6 = $('#donutChart6').get(0).getContext('2d')
+    var donutData6 = {
+    labels: productWarranties,
+    datasets: [
+    {
+    data: productWarrantiesValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions6 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart6 = new Chart(donutChartCanvas6, {
+    type: 'doughnut',
+    data: donutData6,
+    options: donutOptions6
+    })
+
+
+        //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas7 = $('#donutChart7').get(0).getContext('2d')
+    var donutData7 = {
+    labels: productWallets,
+    datasets: [
+    {
+    data: productWalletsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions7 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart7 = new Chart(donutChartCanvas7, {
+    type: 'doughnut',
+    data: donutData7,
+    options: donutOptions7
+    })
+
+
 
 
 
@@ -249,6 +308,42 @@
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart5').get(0).getContext('2d')
         var pieData = donutData5;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+
+        
+         //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart6').get(0).getContext('2d')
+        var pieData = donutData6;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+          //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart7').get(0).getContext('2d')
+        var pieData = donutData7;
         var pieOptions = {
         maintainAspectRatio : false,
         responsive : true,
