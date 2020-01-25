@@ -189,6 +189,14 @@ class DigitalChannelLeadController extends Controller
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
+        $leadProductInsurance = $this->leadInterface->countLeadProductGenerals($from, $to, 4);
+        $leadProductWarranties = $this->leadInterface->countLeadProductGenerals($from, $to, 5);
+        $leadProductOportuya = $this->leadInterface->countLeadProductGenerals($from, $to, 6);
+        $leadProductCallCenter = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
+        $leadProductAdvancedUnit = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
+        $leadProductWallets = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
+        $leadProductJuridical = $this->leadInterface->countLeadProductGenerals($from, $to, 10);
+        $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals($from, $to, 11);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
@@ -202,7 +210,17 @@ class DigitalChannelLeadController extends Controller
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
+            $leadProductInsurance = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadProductWarranties = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadProductOportuya = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 6);
+            $leadProductCallCenter = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadProductAdvancedUnit = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
+            $leadProductWallets = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadProductJuridical = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 11);
         }
+
+
 
         foreach ($leadChannels as $key => $status) {
             $option = ($key == '') ? 'Sin Canal' : $key;
@@ -233,6 +251,19 @@ class DigitalChannelLeadController extends Controller
             $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
             unset($leadServices[$key]);
         }
+
+        foreach ($leadProductWarranties as $key => $status) {
+            $option = ($key == '') ? 'Sin Servicio' : $key;
+            $leadProductWarranties[] = ['service' => $option, 'total' => count($leadProductWarranties[$key])];
+            unset($leadProductWarranties[$key]);
+        }
+        foreach ($leadProductWallets as $key => $status) {
+            $option = ($key == '') ? 'Sin Servicio' : $key;
+            $leadProductWallets[] = ['service' => $option, 'total' => count($leadProductWallets[$key])];
+            unset($leadProductWallets[$key]);
+        }
+
+
 
         $totalStatuses = $leadChannels->sum('total');
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
@@ -275,6 +306,20 @@ class DigitalChannelLeadController extends Controller
             array_push($leadServicesValues, trim($leadService['total']));
         }
 
+        $leadWarrantiesNames  = [];
+        $leadWarrantiesValues  = [];
+        foreach ($leadProductWarranties as $leadProductWarranty) {
+            array_push($leadWarrantiesNames, trim($leadProductWarranty['service']));
+            array_push($leadWarrantiesValues, trim($leadProductWarranty['total']));
+        }
+
+        $leadProductWalletNames  = [];
+        $leadProductWalletValues  = [];
+        foreach ($leadProductWallets as $leadProductWallet) {
+            array_push($leadProductWalletNames, trim($leadProductWallet['service']));
+            array_push($leadProductWalletValues, trim($leadProductWallet['total']));
+        }
+
         $leadpriceTotal = $leadPrice->sum('lead_price');
 
         $pricesTotal = 0;
@@ -289,6 +334,10 @@ class DigitalChannelLeadController extends Controller
             'leadChannelValues'   => $leadChannelValues,
             'leadStatusesNames'   => $leadStatusesNames,
             'leadStatusesValues'  => $leadStatusesValues,
+            'leadWarrantiesNames' => $leadWarrantiesNames,
+            'leadWarrantiesValues' => $leadWarrantiesValues,
+            'leadProductWalletNames' => $leadProductWalletNames,
+            'leadProductWalletValues' => $leadProductWalletValues,
             'leadAssessorsNames'  => $leadAssessorsNames,
             'leadAssessorsValues' => $leadAssessorsValues,
             'leadProductsNames'   => $leadProductsNames,

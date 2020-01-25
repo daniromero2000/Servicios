@@ -141,6 +141,19 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function countLeadProductGenerals($from, $to, $service)
+    {
+        try {
+            return  $this->model->with('leadProduct')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('typeService', $service)
+                ->get(['typeProduct'])->groupBy('leadProduct.lead_product');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+
     public function countLeadServices($from, $to)
     {
         try {
