@@ -1,4 +1,5 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
+.constant("CSRF_TOKEN", xhReq.responseText)
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$timeout(function() {
 		$scope.lead.CIUD_EXP = 5002;
@@ -401,6 +402,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'POST',
 			url: '/api/oportuya/decisionCreditCard/',
 			data: $scope.creditDecisionData,
+			headers: {
+				'X-CSRF-TOKEN': CSRF_TOKEN
+			  },
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;
@@ -443,6 +447,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'POST',
 			url: '/api/oportuya/decisionTraditionalCredit/',
 			data: $scope.creditDecisionData,
+			method: 'POST',
+			url: '/api/oportuya/decisionCreditCard/',
+			data: $scope.creditDecisionData,
+			headers: {
+				'X-CSRF-TOKEN': CSRF_TOKEN
+			},
 		}).then(function successCallback(response) {
 			console.log(response);
 			$scope.numSolic = response.data.infoLead.numSolic;
