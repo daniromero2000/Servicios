@@ -1475,22 +1475,22 @@ class OportuyaV2Controller extends Controller
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
 	}
 
-	public function decisionCreditCard(Request $request){
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($request->identificationNumber);
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
 		$tipoDoc = 1;
-		$lastName = explode(" ", $request->lastName);
+		$lastName = explode(" ", $lastName);
 		$lastName = $lastName[0];
-		$fechaExpIdentification = explode("-", $request->dateExpIdentification);
+		$fechaExpIdentification = explode("-", $dateExpIdentification);
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
 		$estadoSolic = 'ANALISIS';
-		$this->execConsultaUbicaLead($request->identificationNumber, $tipoDoc, $lastName);
-		$resultUbica = $this->validateConsultaUbica($request->identificationNumber);
+		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+		$resultUbica = $this->validateConsultaUbica($identificationNumber);
 		if ($resultUbica == 0) {
-			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $request->identificationNumber, $fechaExpIdentification, $lastName);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
-				$form = $this->getFormConfronta($request->identificationNumber);
+				$form = $this->getFormConfronta($identificationNumber);
 				if (empty($form)) {
 					$estadoSolic = "ANALISIS";
 				} else {
@@ -1506,21 +1506,21 @@ class OportuyaV2Controller extends Controller
 			$estadoSolic = 'APROBADO';
 		}
 		$policyCredit = [
-			'quotaApprovedProduct' => $request->quotaApprovedProduct,
-			'quotaApprovedAdvance' => $request->quotaApprovedAdvance,
+			'quotaApprovedProduct' => $quotaApprovedProduct,
+			'quotaApprovedAdvance' => $quotaApprovedAdvance,
 			'resp' => 'true'
 		];
 		$data = [
-			'NOM_REFPER' => $request->NOM_REFPER,
-			'TEL_REFPER' => $request->TEL_REFPER,
-			'NOM_REFFAM' => $request->NOM_REFFAM,
-			'TEL_REFFAM' => $request->TEL_REFFAM
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
 		];
-		return $this->addSolicCredit($request->identificationNumber, $policyCredit, $estadoSolic, "", $data);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
-	public function decisionTraditionalCredit(Request $request){
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($request->identificationNumber);
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
 		$estadoSolic = 'ANALISIS';
@@ -1530,13 +1530,13 @@ class OportuyaV2Controller extends Controller
 			'resp' => 'true'
 		];
 		$data = [
-			'NOM_REFPER' => $request->NOM_REFPER,
-			'TEL_REFPER' => $request->TEL_REFPER,
-			'NOM_REFFAM' => $request->NOM_REFFAM,
-			'TEL_REFFAM' => $request->TEL_REFFAM
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
 		];
 
-		return $this->addSolicCredit($request->identificationNumber, $policyCredit, $estadoSolic, "", $data);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)

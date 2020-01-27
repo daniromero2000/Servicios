@@ -183,8 +183,8 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}', 'Admin\OportuyaV2Controller@execConsultasleadAsesores');
-    Route::post('oportuya/decisionCreditCard/', 'Admin\OportuyaV2Controller@decisionCreditCard');
-    Route::post('oportuya/decisionTraditionalCredit/', 'Admin\OportuyaV2Controller@decisionTraditionalCredit');
+    Route::get('oportuya/decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionCreditCard');
+    Route::get('oportuya/decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionTraditionalCredit');
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');

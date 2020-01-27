@@ -386,25 +386,18 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.creditCard = function(){
 		showLoader();
-		$scope.creditDecisionData = {
-			lastName : $scope.lead.APELLIDOS,
-			dateExpIdentification: $scope.lead.FEC_EXP,
-			identificationNumber: $scope.lead.CEDULA,
-			quotaApprovedProduct: $scope.resp.quotaApprovedProduct,
-			quotaApprovedAdvance: $scope.resp.quotaApprovedAdvance,
-			NOM_REFPER: $scope.lead.NOM_REFPER,
-			TEL_REFPER: $scope.lead.TEL_REFPER,
-			NOM_REFFAM: $scope.lead.NOM_REFFAM,
-			TEL_REFFAM: $scope.lead.TEL_REFFAM
-		}
-		var csrftoken = document.getElementById('token').value;
 		$http({
-			method: 'POST',
-			url: '/api/oportuya/decisionCreditCard/',
-			data: $scope.creditDecisionData,
-			headers: {
-				'X-CSRF-TOKEN': csrftoken
-			  },
+			method: 'GET',
+			url: '/api/oportuya/decisionCreditCard/'
+			+$scope.lead.APELLIDOS+'/'
+			+$scope.lead.CEDULA+'/'
+			+$scope.resp.quotaApprovedProduct+'/'
+			+$scope.resp.quotaApprovedAdvance+'/'
+			+$scope.lead.FEC_EXP+'/'
+			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.NOM_REFFAM+'/'
+			+$scope.lead.TEL_REFFAM+'/',
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;
@@ -432,31 +425,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.traditionalCredit = function(){
-		$scope.creditDecisionData = {
-			lastName : $scope.lead.APELLIDOS,
-			dateExpIdentification: $scope.lead.FEC_EXP,
-			identificationNumber: $scope.lead.CEDULA,
-			quotaApprovedProduct: $scope.resp.quotaApprovedProduct,
-			quotaApprovedAdvance: $scope.resp.quotaApprovedAdvance,
-			NOM_REFPER: $scope.lead.NOM_REFPER,
-			TEL_REFPER: $scope.lead.TEL_REFPER,
-			NOM_REFFAM: $scope.lead.NOM_REFFAM,
-			TEL_REFFAM: $scope.lead.TEL_REFFAM
-		}
-		var csrftoken = document.getElementById('token').value;
-		console.log(csrftoken);
 		$http({
-			method: 'POST',
-			url: '/api/oportuya/decisionTraditionalCredit/',
-			data: $scope.creditDecisionData,
-			method: 'POST',
-			url: '/api/oportuya/decisionCreditCard/',
-			data: $scope.creditDecisionData,
-			headers: {
-				'X-CSRF-TOKEN': csrftoken
-			},
+			method: 'GET',
+			url: '/api/oportuya/decisionTraditionalCredit/'
+			+$scope.lead.CEDULA+'/'
+			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.NOM_REFFAM+'/'
+			+$scope.lead.TEL_REFFAM+'/',
 		}).then(function successCallback(response) {
-			console.log(response);
 			$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
 			setTimeout(() => {
