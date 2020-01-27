@@ -444,6 +444,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			TEL_REFFAM: $scope.lead.TEL_REFFAM
 		}
 		var csrftoken = document.getElementById('token').value;
+		console.log(csrftoken);
 		$http({
 			method: 'POST',
 			url: '/api/oportuya/decisionTraditionalCredit/',
