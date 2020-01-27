@@ -53,9 +53,16 @@
         <div class="row">
           <div class="col-12 ">
             @include('digitalchannelleads.layouts.pie_products')
-            @include('digitalchannelleads.layouts.pie_products_warranties')
-            @include('digitalchannelleads.layouts.pie_products_wallets')
             @include('digitalchannelleads.layouts.pie_service')
+            <div hidden>
+              @include('digitalchannelleads.layouts.pie_products_warranties')
+              @include('digitalchannelleads.layouts.pie_products_wallets')
+              @include('digitalchannelleads.layouts.pie_products_Insurance')
+              @include('digitalchannelleads.layouts.pie_products_oportuya')
+              @include('digitalchannelleads.layouts.pie_products_callCenter')
+              {{-- @include('digitalchannelleads.layouts.pie_products_advanceUnit') --}}
+            </div>
+
           </div>
         </div>
       </div>
