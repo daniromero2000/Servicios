@@ -2,6 +2,7 @@
 
 namespace App\Entities\LeadStatusesLogs;
 
+use App\Entities\LeadAreas\LeadArea;
 use App\Entities\Leads\Lead;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\User;

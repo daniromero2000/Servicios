@@ -47,6 +47,20 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
 
+                  <label for="city">Area <span class="text-danger">*</span></label>
+                  <select id="area_id" name="area_i" class="form-control" required>
+                    @if(!empty($cities))
+                    <option value="1"> prueba </option>
+                    @foreach($cities as $city)
+                    <option value="{{ $city->CIUDAD }}">
+                      {{ $city->CIUDAD }}
+                    </option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+                <div class="col-12 col-sm-6 form-group">
+
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
                   <select id="city" name="city" class="form-control" required>
                     @if(!empty($cities))

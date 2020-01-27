@@ -79,6 +79,9 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
+        // $r = LeadStatus::all();
+
+        // dd($r[0]->pivot);
 
         $profile = auth()->user()->idProfile;
 
@@ -149,6 +152,8 @@ class DigitalChannelLeadController extends Controller
             $digitalChannelLead->comments[$key]->comment = preg_replace($pattern, $replace, $digitalChannelLead->comments[$key]->comment);
         }
         $leadPriceStatus = LeadPriceStatus::all();
+
+
         return view('digitalchannelleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
             'leadCity'           => $digitalChannelLead->city,

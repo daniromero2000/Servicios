@@ -29,6 +29,7 @@ class LeadRepository implements LeadRepositoryInterface
         'campaign',
         'assessor_id',
         'identificationNumber',
+        'area_id'
     ];
 
 
@@ -177,6 +178,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'comments',
                 'leadProduct',
                 'leadPrices',
+                'areas'
             ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -248,7 +250,7 @@ class LeadRepository implements LeadRepositoryInterface
 
     // consultas personalizadas
 
-    public function customListleads($totalView, $service)
+    public function customListleads($totalView, $area)
     {
         try {
             return  $this->model->with([
@@ -261,7 +263,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'leadProduct',
                 'leadPrices',
             ])->orderBy('id', 'desc')
-                ->where('typeService', $service)
+                ->where('area_id', $area)
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -269,12 +271,12 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
-    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $service): Collection
+    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {
             return $this->model->orderBy('created_at', 'desc')
                 ->skip($totalView)
-                ->where('typeService', $service)
+                ->where('area_id', $area)
                 ->take(30)
                 ->get($this->columns);
         }
@@ -296,7 +298,7 @@ class LeadRepository implements LeadRepositoryInterface
             })->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(100)
-                ->where('typeService', $service)
+                ->where('area_id', $area)
                 ->get($this->columns);
         }
 
@@ -315,7 +317,7 @@ class LeadRepository implements LeadRepositoryInterface
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
             })
-            ->where('typeService', $service)
+            ->where('area_id', $area)
             ->orderBy('created_at', 'desc')
             ->get($this->columns);
     }
@@ -327,7 +329,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             return  $this->model->with('user')
                 ->whereBetween('created_at', [$from, $to])
-                ->where('typeService', 7)
+                // ->where('area_id', 7)
                 ->get(['assessor_id'])->groupBy('user.name');
         } catch (QueryException $e) {
             dd($e);

@@ -5,6 +5,7 @@ namespace App\Entities\Leads;
 use App\Entities\Campaigns\Campaign;
 use App\Entities\Channels\Channel;
 use App\Entities\Comments\Comment;
+use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
@@ -122,5 +123,10 @@ class Lead extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'assessor_id');
+    }
+
+    public function areas()
+    {
+        return $this->belongsTo(LeadArea::class, 'area_id');
     }
 }
