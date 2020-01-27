@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DigitalChannelLeads;
+namespace App\Http\Controllers\Admin\LeadWallets;
 
 use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
@@ -24,11 +24,11 @@ use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
 
-class DigitalChannelLeadController extends Controller
+class LeadWalletController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
+    private $leadProductInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -59,17 +59,19 @@ class DigitalChannelLeadController extends Controller
 
     public function index(Request $request)
     {
+        $service = 9;
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->listLeads($skip * 30);
+        $list = $this->leadInterface->customListleads($skip * 30, $service);
         if (request()->has('q')) {
-            $list = $this->leadInterface->searchLeads(
+            $list = $this->leadInterface->searchCustomLeads(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
                 request()->input('state'),
                 request()->input('assessor_id'),
-                request()->input('city')
+                request()->input('city'),
+                $service
             );
         }
         $listCount = $list->count();
@@ -79,10 +81,8 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
-
-        $profile = auth()->user()->idProfile;
-
-        return view('digitalchannelleads.list', [
+        $listAssessors = 1;
+        return view('leadwallet.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
@@ -94,8 +94,8 @@ class DigitalChannelLeadController extends Controller
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($profile)
+            'lead_statuses'       => $this->LeadStatusesInterface->getLeadStatusesForServices($service),
+            'listAssessors'       => $this->UserInterface->listUser($listAssessors)
         ]);
     }
 
@@ -180,125 +180,7 @@ class DigitalChannelLeadController extends Controller
         return redirect()->back();
     }
 
-    public function dashboard(Request $request)
-    {
-        $to = Carbon::now();
-        $from = Carbon::now()->subMonth();
 
-        $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
-        $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
-        $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
-        $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
-        $leadServices = $this->leadInterface->countLeadServices($from, $to);
-        $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
-        $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
-
-
-        if (request()->has('from')) {
-            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
-            $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
-            $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
-            $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
-            $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
-            $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
-            $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
-        }
-
-        foreach ($leadChannels as $key => $status) {
-            $option = ($key == '') ? 'Sin Canal' : $key;
-            $leadChannels[] = ['channel' => $option, 'total' => count($leadChannels[$key])];
-            unset($leadChannels[$key]);
-        }
-
-        foreach ($leadStatuses as $key => $status) {
-            $option = ($key == '') ? 'Sin Estado' : $key;
-            $leadStatuses[] = ['status' => $option, 'total' => count($leadStatuses[$key])];
-            unset($leadStatuses[$key]);
-        }
-
-        foreach ($leadAssessors as $key => $status) {
-            $option = ($key == '') ? 'Sin Asesor' : $key;
-            $leadAssessors[] = ['assessor' => $option, 'total' => count($leadAssessors[$key])];
-            unset($leadAssessors[$key]);
-        }
-
-        foreach ($leadProducts as $key => $status) {
-            $option = ($key == '') ? 'Sin Producto' : $key;
-            $leadProducts[] = ['product' => $option, 'total' => count($leadProducts[$key])];
-            unset($leadProducts[$key]);
-        }
-
-        foreach ($leadServices as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadServices[] = ['service' => $option, 'total' => count($leadServices[$key])];
-            unset($leadServices[$key]);
-        }
-
-        $totalStatuses = $leadChannels->sum('total');
-        $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
-        $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
-        $leadAssessors    = $this->toolsInterface->extractValuesToArray($leadAssessors);
-        $leadProducts    = $this->toolsInterface->extractValuesToArray($leadProducts);
-        $leadServices    = $this->toolsInterface->extractValuesToArray($leadServices);
-
-        $leadChannelNames  = [];
-        $leadChannelValues  = [];
-        foreach ($leadChannels as $leadChannel) {
-            array_push($leadChannelNames, trim($leadChannel['channel']));
-            array_push($leadChannelValues, trim($leadChannel['total']));
-        }
-
-        $leadStatusesNames  = [];
-        $leadStatusesValues  = [];
-        foreach ($leadStatuses as $leadStatus) {
-            array_push($leadStatusesNames, trim($leadStatus['status']));
-            array_push($leadStatusesValues, trim($leadStatus['total']));
-        }
-
-        $leadAssessorsNames  = [];
-        $leadAssessorsValues  = [];
-        foreach ($leadAssessors as $leadAssessor) {
-            array_push($leadAssessorsNames, trim($leadAssessor['assessor']));
-            array_push($leadAssessorsValues, trim($leadAssessor['total']));
-        }
-        $leadProductsNames  = [];
-        $leadProductsValues  = [];
-        foreach ($leadProducts as $leadProduct) {
-            array_push($leadProductsNames, trim($leadProduct['product']));
-            array_push($leadProductsValues, trim($leadProduct['total']));
-        }
-
-        $leadServicesNames  = [];
-        $leadServicesValues  = [];
-        foreach ($leadServices as $leadService) {
-            array_push($leadServicesNames, trim($leadService['service']));
-            array_push($leadServicesValues, trim($leadService['total']));
-        }
-
-        $leadpriceTotal = $leadPrice->sum('lead_price');
-
-        $pricesTotal = 0;
-        foreach ($leadPriceTotal as $key => $status) {
-            $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
-        }
-
-
-        return view('digitalchannelleads.dashboard', [
-            'pricesTotal'         => $pricesTotal,
-            'leadChannelNames'    => $leadChannelNames,
-            'leadChannelValues'   => $leadChannelValues,
-            'leadStatusesNames'   => $leadStatusesNames,
-            'leadStatusesValues'  => $leadStatusesValues,
-            'leadAssessorsNames'  => $leadAssessorsNames,
-            'leadAssessorsValues' => $leadAssessorsValues,
-            'leadProductsNames'   => $leadProductsNames,
-            'leadProductsValues'  => $leadProductsValues,
-            'leadServicesNames'   => $leadServicesNames,
-            'leadServicesValues'  => $leadServicesValues,
-            'totalStatuses'       => $totalStatuses,
-            'leadpriceTotal'      =>  $leadpriceTotal
-        ]);
-    }
     public function destroy($id)
     {
         // $Campaign = Campaigns::findOrfail($id);
@@ -316,12 +198,6 @@ class DigitalChannelLeadController extends Controller
     public function byStatus(int $id)
     {
         $data = $this->LeadStatusesInterface->getLeadStatusesForServices($id);
-        return json_decode($data);
-    }
-
-    public function byAssessors(int $id)
-    {
-        $data = $this->UserInterface->listUser($id);
         return json_decode($data);
     }
 }

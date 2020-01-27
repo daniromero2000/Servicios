@@ -22,4 +22,13 @@ class LeadProductRepository implements LeadProductRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getLeadProductForService($id)
+    {
+        try {
+            return $this->model->where('service_id', $id)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

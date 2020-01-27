@@ -11,36 +11,22 @@
 
                 <!-- /.info-box -->
                 <div class="col-12 ">
-                  @include('digitalchannelleads.layouts.card_total_leads')
-                </div>
-                <div class="col-12 ">
-                  @include('digitalchannelleads.layouts.card_total_quotes')
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="info-box ">
-            <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
-            <div class="info-box-content">
-              <div class="row">
-                <div class="col-6">
-                  <span class="info-box-text">Vendidos</span>
-                  <span class="info-box-number"> ${{number_format($leadpriceTotal)}}</span>
-                </div>
-                <div class="col-6">
-                  <span class="info-box-text text-right"><a href="/Administrator/digitalchannelleads"
-                      style="color: black; !important">Ver
-                      Más</a></span>
+                  <div class="small-box bg-primary">
+                    <div class="inner">
+                      <h2>{{ $totalStatuses }}</h2>
+                      <p style="margin-bottom: -4px !important;">Leads en los últimos 30 días</p>
+                    </div>
+                    <div class="icon mt-3">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <div class="text-right mr-2">
+                      <span class="info-box-text text-right">
+                        <a href="/Administrator/digitalchannelleads" style="color: white; !important">Ver
+                          Más</a></span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="progress">
-                <div class="progress-bar" style="width: 70%"></div>
-              </div>
-              <span class="progress-description">
-                70% Increase in 30 Days
-              </span>
             </div>
           </div>
         </div>

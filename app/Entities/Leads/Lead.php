@@ -58,7 +58,13 @@ class Lead extends Model
         ],
     ];
 
+
     public function searchLeads($term)
+    {
+        return self::search($term);
+    }
+
+    public function searchCustomLeads($term)
     {
         return self::search($term);
     }

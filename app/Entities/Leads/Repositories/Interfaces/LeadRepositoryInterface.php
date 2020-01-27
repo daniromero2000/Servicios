@@ -24,15 +24,21 @@ interface LeadRepositoryInterface
 
     public function countLeadAssessors($from, $to);
 
+    public function countLeadAssessorsForCallCenter($from, $to);
+
     public function countLeadProducts($from, $to);
 
     public function countLeadServices($from, $to);
 
     public function listleads($totalView): Support;
 
+    public function customListleads($totalView, $service);
+
     public function getLeadPriceTotal($from, $to);
 
     public function findLeadByIdFull(int $id): Lead;
 
     public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $city = null): Collection;
+
+    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $service): Collection;
 }

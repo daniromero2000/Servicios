@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\DigitalChannelLeads;
+namespace App\Http\Controllers\Admin\CallCenterLeads;
 
 use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
@@ -18,17 +18,17 @@ use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
-use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
 
-class DigitalChannelLeadController extends Controller
+class CallCenterLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
+    private $leadProductInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -40,8 +40,7 @@ class DigitalChannelLeadController extends Controller
         CustomerRepositoryInterface $customerRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
-        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
-        UserRepositoryInterface $UserRepositoryInterface
+        LeadPriceRepositoryInterface $LeadPriceRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -53,7 +52,6 @@ class DigitalChannelLeadController extends Controller
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
-        $this->UserInterface = $UserRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -79,10 +77,7 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
-
-        $profile = auth()->user()->idProfile;
-
-        return view('digitalchannelleads.list', [
+        return view('callcenterleads.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
@@ -95,7 +90,6 @@ class DigitalChannelLeadController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($profile)
         ]);
     }
 
@@ -149,7 +143,7 @@ class DigitalChannelLeadController extends Controller
             $digitalChannelLead->comments[$key]->comment = preg_replace($pattern, $replace, $digitalChannelLead->comments[$key]->comment);
         }
         $leadPriceStatus = LeadPriceStatus::all();
-        return view('digitalchannelleads.show', [
+        return view('callcenterleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
             'leadCity'           => $digitalChannelLead->city,
             'leadChannel'        => $digitalChannelLead->channel,
@@ -187,7 +181,7 @@ class DigitalChannelLeadController extends Controller
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
-        $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
+        $leadAssessors = $this->leadInterface->countLeadAssessorsForCallCenter($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
@@ -197,7 +191,7 @@ class DigitalChannelLeadController extends Controller
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
-            $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
+            $leadAssessors = $this->leadInterface->countLeadAssessorsForCallCenter(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
@@ -283,7 +277,7 @@ class DigitalChannelLeadController extends Controller
         }
 
 
-        return view('digitalchannelleads.dashboard', [
+        return view('callcenterleads.dashboard', [
             'pricesTotal'         => $pricesTotal,
             'leadChannelNames'    => $leadChannelNames,
             'leadChannelValues'   => $leadChannelValues,
@@ -301,27 +295,8 @@ class DigitalChannelLeadController extends Controller
     }
     public function destroy($id)
     {
-        // $Campaign = Campaigns::findOrfail($id);
         $digitalChannelLead =  $this->leadInterface->findLeadDelete($id);
         $digitalChannelLead->delete();
         return redirect()->back();
-    }
-
-    public function byService(int $id)
-    {
-        $data = $this->leadProductInterface->getLeadProductForService($id);
-        return json_decode($data);
-    }
-
-    public function byStatus(int $id)
-    {
-        $data = $this->LeadStatusesInterface->getLeadStatusesForServices($id);
-        return json_decode($data);
-    }
-
-    public function byAssessors(int $id)
-    {
-        $data = $this->UserInterface->listUser($id);
-        return json_decode($data);
     }
 }

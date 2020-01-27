@@ -49,8 +49,6 @@ use Carbon\Carbon;
         </td>
       </tr>
 
-
-
       <div class="modal fade" id="deleteLead{{$data->id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -95,7 +93,6 @@ use Carbon\Carbon;
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="lastName">Cédula </label>
                           <input type="text" name="identificationNumber" id="identificationNumber" class="form-control"
-                            validation-pattern="IdentificationNumber"
                             value="{!! $data->identificationNumber ?: old('lastName')  !!}">
                         </div>
                         <div class="col-12 col-sm-6">
@@ -139,7 +136,8 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="channel">Canal de adquisición <span class="text-danger">*</span></label>
-                          <select name="channel" id="channel" class="form-control" enabled>
+                          <select name="channel" id="channel" class="form-control select2 select2-hidden-accessible"
+                            enabled>
                             @if(!empty($channels))
                             @foreach($channels as $channel)
                             <option @if($data->channel==$channel->id) selected="selected" @endif
@@ -161,7 +159,8 @@ use Carbon\Carbon;
                       </div>
                       <div class="form-group ">
                         <label for="campaign">Campaña</label>
-                        <select name="campaign" id="campaign" class="form-control" enabled>
+                        <select name="campaign" id="campaign" class="form-control select2 select2-hidden-accessible"
+                          enabled>
                           @if(!empty($campaigns))
                           @foreach($campaigns as $campaign)
                           <option @if($data->campaing==$campaign->id) selected="selected" @endif
@@ -174,8 +173,9 @@ use Carbon\Carbon;
                       </div>
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
-                          <label for="typeService">Servicio </label>
-                          <select name="typeService" id="typeService" class="form-control" enabled>
+                          <label for="typeServiceSelectedEdit">Servicio </label>
+                          <select name="typeService" id="typeServiceSelectedEdit"
+                            class="form-control  select2 select2-hidden-accessible" enabled>
                             @if(!empty($services))
                             @foreach($services as $service)
                             <option @if($data->typeService==$service->id) selected="selected" @endif
@@ -187,15 +187,13 @@ use Carbon\Carbon;
                           </select>
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
-                          <label for="product">Producto </label>
-                          <select name="typeProduct" id="typeProduct" class="form-control" enabled>
-                            @if(!empty($lead_products))
-                            @foreach($lead_products as $lead_product)
-                            <option @if($data->typeProduct==$lead_product->id) selected="selected" @endif
-                              value="{{ $lead_product->id }}">
-                              {{ $lead_product->lead_product }}
+                          <label for="typeProductselectedit">Producto </label>
+                          <select name="typeProduct" id="typeProductselectedit"
+                            class="form-control select2 select2-hidden-accessible" enabled>
+                            @if ($data->leadProduct)
+                            <option value="{{ $data->typeProduct }}">
+                              {{ $data->leadProduct['lead_product'] }}
                             </option>
-                            @endforeach
                             @endif
                           </select>
                         </div>
@@ -209,15 +207,12 @@ use Carbon\Carbon;
                       <div class="row">
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
-                            <label for="state">Estado</label>
-                            <select name="state" id="state" class="form-control" enabled>
-                              @if(!empty($lead_statuses))
-                              @foreach($lead_statuses as $lead_status)
-                              <option @if($data->state==$lead_status->id) selected="selected" @endif
-                                value="{{ $lead_status->id }}">
-                                {{ $lead_status->status }}
+                            <label for="stateSelect">Estado</label>
+                            <select name="state" id="stateSelect" class="form-control select2 select2-hidden-accessible"
+                              enabled>
+                              @if($data->state)
+                              <option value="{{ $data->state }}">-- Selecciona Estado --
                               </option>
-                              @endforeach
                               @endif
                             </select>
                           </div>
@@ -225,8 +220,8 @@ use Carbon\Carbon;
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="assessor_id">Asesor</label>
-                            <select class="form-control  select2" id="assessor_id" name="assessor_id"
-                              ng-model="lead.assessor_id" style="width: 100%;">
+                            <select class="form-control  select2 select2-hidden-accessible" id="assessor_id"
+                              name="assessor_id" ng-model="lead.assessor_id" style="width: 100%;">
                               <option disabled selected value> -- Selecciona Asesor-- </option>
                               <option value="13">Evelyn Correa</option>
                               <option value="18">Vanessa Parra</option>

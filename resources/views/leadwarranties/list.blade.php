@@ -18,10 +18,8 @@
                     <div class="col-sm-8">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a
-                                    href="/Administrator/dashboard/communitymanager">Dashboard
-                                    Leads Canal Digital</a>
-                            <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads</a>
+                            <li class="breadcrumb-item active"><a href="/Administrator/LeadWarranties">Leads
+                                    Warranties</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -34,7 +32,7 @@
                     <div class="col-12">
                         <div class="card-header">
                             @include('layouts.admin.filter_digital_channel_leads', ['route' =>
-                            route('digitalchannelleads.index')])
+                            route('LeadWarranties.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">
@@ -50,22 +48,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                    <div class="inner">
-                                        <h4>Total de Cotizaciónes</h4>
-                                        <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         @php
                         @endphp
                         <div class="card-body pt-0 pb-0 ">
                             @if($digitalChannelLeads)
-                            @include('layouts.admin.tables.table_digital_channel_leads_status', [$headers, 'datas' =>
+                            @include('layouts.admin.tables.table_digital_channel_leads_status_generals', [$headers,
+                            'datas' =>
                             $digitalChannelLeads, 'cities' => $cities, 'channels' => $channels, 'services' => $services,
                             'campaigns' => $campaigns, 'lead_products' => $lead_products, 'lead_statuses' =>
                             $lead_statuses, ])

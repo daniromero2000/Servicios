@@ -67,7 +67,7 @@
                         <div class="box-body">
                           @csrf
                           @method('PUT')
-                          <input name="id" id="lead_id" hidden value="{{ $digitalChannelLead->id }}">
+
                           <div class="row">
                             <div class="col-12 col-sm-12 form-group no-padding-right">
                               <label for="lead_product_id">Producto <span class="text-danger">*</span></label>
@@ -84,6 +84,7 @@
                               </select>
                             </div>
                           </div>
+                          <input name="lead_id" id="lead_id" hidden value="{{ $digitalChannelLead->id }}">
                           <div class="form-group">
                             <label for="description">Descripción<span class="text-danger">*</span></label>
                             <div class="input-group">
