@@ -1354,7 +1354,7 @@ class OportuyaV2Controller extends Controller
 		return $aprobo;
 	}
 
-	public function execConsultasleadAsesores($identificationNumber, $nomRefPer, $telRefPer, $nomRefFam, $telRefFam)
+	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
 		FROM `CLIENTE_FAB`
@@ -1362,15 +1362,8 @@ class OportuyaV2Controller extends Controller
 
 		$lastName = explode(" ", $oportudataLead[0]->APELLIDOS);
 
-		$fechaExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
-		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-
-		$data = [
-			'NOM_REFPER' => $nomRefPer,
-			'TEL_REFPER' => $telRefPer,
-			'NOM_REFFAM' => $nomRefFam,
-			'TEL_REFFAM' => $telRefFam
-		];
+		$dateExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
+		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
 		$consultasFosyga = $this->execConsultaFosygaLead(
 			$identificationNumber,
@@ -1380,15 +1373,43 @@ class OportuyaV2Controller extends Controller
 			$oportudataLead[0]->APELLIDOS
 		);
 
-		if ($consultasFosyga == "-1") {
-			return "-1";
+		if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
+			return ['resp' => $consultasFosyga];
 		}
-		if ($consultasFosyga == "-3") {
-			return "-3";
-		}
-		$consultasLead = $this->execConsultasLead($oportudataLead[0]->CEDULA, $oportudataLead[0]->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $data);
 
-		return $consultasLead;
+		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead[0]->TIPO_DOC);
+		if ($consultaComercial == 0) {
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer->ESTADO = "SIN COMERCIAL";
+			$customer->save();
+
+			$dataIntention = [
+				'CEDULA' => $identificationNumber,
+				'ESTADO_INTENCION' => 3
+			];
+
+			$this->intentionInterface->createIntention($dataIntention);
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0,
+				'resp' => 'true'
+			];
+		} else {
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0
+			];
+
+			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			$infoLead     = [];
+			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
+			return [
+				'resp'     => $policyCredit['resp'],
+				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0 ,
+				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0 ,
+				'infoLead' => $infoLead
+			];
+		}
 	}
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
@@ -1452,6 +1473,70 @@ class OportuyaV2Controller extends Controller
 			}
 		}
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
+	}
+
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$intention->save();
+		$tipoDoc = 1;
+		$lastName = explode(" ", $lastName);
+		$lastName = $lastName[0];
+		$fechaExpIdentification = explode("-", $dateExpIdentification);
+		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+		$estadoSolic = 'ANALISIS';
+		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+		$resultUbica = $this->validateConsultaUbica($identificationNumber);
+		if ($resultUbica == 0) {
+			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
+			if ($confronta == 1) {
+				$form = $this->getFormConfronta($identificationNumber);
+				if (empty($form)) {
+					$estadoSolic = "ANALISIS";
+				} else {
+					return [
+						'form' => $form,
+						'resp' => 'confronta'
+					];
+				}
+			} else {
+				$estadoSolic = 'ANALISIS';
+			}
+		} else {
+			$estadoSolic = 'APROBADO';
+		}
+		$policyCredit = [
+			'quotaApprovedProduct' => $quotaApprovedProduct,
+			'quotaApprovedAdvance' => $quotaApprovedAdvance,
+			'resp' => 'true'
+		];
+		$data = [
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
+		];
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+	}
+
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tradicional';
+		$intention->save();
+		$estadoSolic = 'ANALISIS';
+		$policyCredit = [
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
+			'resp' => 'true'
+		];
+		$data = [
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
+		];
+
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)

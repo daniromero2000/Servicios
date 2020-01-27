@@ -38,6 +38,7 @@ class Intention extends Model
         'INSPECCION_OCULAR',
         'ESTADO_OBLIGACIONES',
         'ESTADO_INTENCION',
+        'CREDIT_DECISION',
         'ASESOR'
     ];
 
