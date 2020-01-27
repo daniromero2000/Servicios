@@ -1,5 +1,4 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
-.constant("CSRF_TOKEN", xhReq.responseText)
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$timeout(function() {
 		$scope.lead.CIUD_EXP = 5002;
@@ -398,12 +397,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			NOM_REFFAM: $scope.lead.NOM_REFFAM,
 			TEL_REFFAM: $scope.lead.TEL_REFFAM
 		}
+		var csrftoken = document.getElementById('token').value;
 		$http({
 			method: 'POST',
 			url: '/api/oportuya/decisionCreditCard/',
 			data: $scope.creditDecisionData,
 			headers: {
-				'X-CSRF-TOKEN': CSRF_TOKEN
+				'X-CSRF-TOKEN': csrftoken
 			  },
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
@@ -443,6 +443,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			NOM_REFFAM: $scope.lead.NOM_REFFAM,
 			TEL_REFFAM: $scope.lead.TEL_REFFAM
 		}
+		var csrftoken = document.getElementById('token').value;
 		$http({
 			method: 'POST',
 			url: '/api/oportuya/decisionTraditionalCredit/',
@@ -451,7 +452,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/api/oportuya/decisionCreditCard/',
 			data: $scope.creditDecisionData,
 			headers: {
-				'X-CSRF-TOKEN': CSRF_TOKEN
+				'X-CSRF-TOKEN': csrftoken
 			},
 		}).then(function successCallback(response) {
 			console.log(response);

@@ -36,6 +36,7 @@
                 </div>
             </div>
             <form name="clienteCredito" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CREDITO'">
+                <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
                 <div class="row container-form">
                     <div class="col-12 col-sm-12 col-md-12 type-client">
                         <div class="forms-descStep forms-descStep-avances">
