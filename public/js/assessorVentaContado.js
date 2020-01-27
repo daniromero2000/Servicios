@@ -15,7 +15,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData = false;
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 1;
+	$scope.validateNum = 0;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
     $scope.typesDocuments = [
