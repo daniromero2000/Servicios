@@ -78,6 +78,14 @@ $(function () {
     $(".fa-edit").click(ontypeServiceSelectedProductEditModal);
 });
 
+$(function () {
+    $("#edit_show").click(ontypeServiceSelectedEditModal);
+});
+
+$(function () {
+    $("#edit_show").click(ontypeServiceSelectedProductEditModal);
+});
+
 function ontypeServiceSelectedProductEditModal() {
     var typeServiceEditSelected_id = $("#typeServiceSelectedEdit").val();
     $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
