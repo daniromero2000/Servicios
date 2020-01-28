@@ -7,6 +7,7 @@ use App\DatosCliente;
 use App\Intenciones;
 use App\ResultadoPolitica;
 use App\Entities\CreditCards\CreditCard;
+use App\Turnos;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
@@ -1520,10 +1521,13 @@ class OportuyaV2Controller extends Controller
 	}
 
 	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->TIPOCLIENTE = "NUEVO";
+		$customer->TIPOCLIENTE = "SUBTIPO";
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 'ANALISIS';
+		$estadoSolic = 'EN SUCURSAL';
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
@@ -1594,9 +1598,12 @@ class OportuyaV2Controller extends Controller
 
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
-		} else {
+		}elseif($estadoSolic == "EN SUCURSAL"){
 			$estadoResult = "PREAPROBADO";
 			$turnos = $this->addTurnos($identificationNumber, $numSolic);
+		} else {
+			$estadoResult = "PREAPROBADO";
+			$turnos = $this->addTurnosOportuya($identificationNumber, $numSolic);
 		}
 		$dataLead = [
 			'ESTADO' => $estadoResult,
@@ -1788,7 +1795,43 @@ class OportuyaV2Controller extends Controller
 		$analisis->save();
 	}
 
-	private function addTurnos($identificationNumber, $numSolic)
+	private function addTurnos($identificationNumber, $numSolic){
+		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+		$scoreLead = 0;
+		if (!empty($respScoreLead)) {
+			$scoreLead = $respScoreLead[0]->score;
+		}
+
+		$turnosOportuya            = new Turnos;
+		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
+		$turnosOportuya->CEDULA    = $identificationNumber;
+		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
+		$turnosOportuya->SUC       = 9999;
+		$turnosOportuya->USUARIO   = '';
+		$turnosOportuya->PRIORIDAD = '2';
+		$turnosOportuya->ESTADO    = 'EN SUCURSAL';
+		$turnosOportuya->TIPO      = 'NUEVO';
+		$turnosOportuya->SUB_TIPO  = 'NUEVO';
+		$turnosOportuya->FEC_RET   = '1994-09-30 00:00:00';
+		$turnosOportuya->FEC_FIN   = '1994-09-30 00:00:00';
+		$turnosOportuya->VALOR     = '0';
+		$turnosOportuya->FEC_ASIG  = '1994-09-30 00:00:00';
+		$turnosOportuya->SCORE     = $scoreLead;
+		$turnosOportuya->TIPO_CLI  = '';
+		$turnosOportuya->CED_COD1  = '';
+		$turnosOportuya->SCO_COD1  = '0';
+		$turnosOportuya->TIPO_COD1 = '';
+		$turnosOportuya->CED_COD2  = '';
+		$turnosOportuya->SCO_COD2  = '0';
+		$turnosOportuya->TIPO_COD2 = '';
+		$turnosOportuya->STATE     = 'A';
+		$turnosOportuya->save();
+
+		return "true";
+	}
+
+	private function addTurnosOportuya($identificationNumber, $numSolic)
 	{
 		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
