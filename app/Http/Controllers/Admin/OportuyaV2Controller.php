@@ -1523,7 +1523,8 @@ class OportuyaV2Controller extends Controller
 	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->TIPOCLIENTE = "SUBTIPO";
+		$customer->SUBTIPO = "NUEVO";
+		$customer->save();
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
