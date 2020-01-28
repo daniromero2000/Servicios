@@ -66,9 +66,7 @@ function ontypeServiceSelectedEditProduct() {
 }
 
 
-$(function () {
-    $("#typeServiceSelectedEditFilter").on('change', ontypeServiceSelectedEditFilter)
-});
+
 
 $(function () {
     $(".fa-edit").click(ontypeServiceSelectedEditModal);
@@ -113,9 +111,14 @@ function ontypeServiceSelectedEditModal() {
     });
 };
 
+$(function () {
+    $("#typeServiceSelectedEditFilter").on('change', ontypeServiceSelectedEditFilter)
+});
+
 function ontypeServiceSelectedEditFilter() {
     var typeServiceEditSelected_id = $(this).val();
 
+    console.log(typeServiceEditSelected_id);
     if (!typeServiceEditSelected_id) {
         $('#stateSelectFilter').html('<option value=""> -- Selecciona Producto -- </option>');
 
@@ -125,7 +128,7 @@ function ontypeServiceSelectedEditFilter() {
         var html_selectEdit = '<option value=""> -- Selecciona Estado -- </option>';
         for (var i = 0; i < data.length; i++) {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
-        } git
+        }
         $('#stateSelectFilter').html(html_selectEdit);
     });
 };

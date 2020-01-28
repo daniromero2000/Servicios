@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-6 col-md-2">
                         <div class="form-group">
-                            <label for="typeServiceSelectedEditFilter">Selecciona Estado </label>
+                            <label for="stateSelectFilter">Selecciona Estado </label>
                             <select name="state" id="stateSelectFilter"
                                 class="form-control select2  mt-2 select2-hidden-accessible" style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
