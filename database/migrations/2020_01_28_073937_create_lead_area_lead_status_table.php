@@ -15,9 +15,12 @@ class CreateLeadAreaLeadStatusTable extends Migration
     {
         Schema::create('lead_area_lead_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('area_id');
-            $table->integer('status_id');
+            $table->integer('lead_area_id')->unsigned();
+            $table->integer('lead_status_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('lead_area_id')->references('id')->on('lead_areas');
+            $table->foreign('lead_status_id')->references('id')->on('lead_statuses');
         });
     }
 

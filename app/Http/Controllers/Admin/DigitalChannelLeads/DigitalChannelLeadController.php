@@ -7,6 +7,7 @@ use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -78,10 +79,9 @@ class DigitalChannelLeadController extends Controller
         foreach ($list as $key => $status) {
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
+        $r = LeadArea::all();
 
-        // $r = LeadStatus::all();
-
-        // dd($r[0]->pivot);
+        dd($r);
 
         $profile = auth()->user()->idProfile;
 
