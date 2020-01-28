@@ -125,7 +125,7 @@ class DigitalChannelLeadController extends Controller
             'MIGRADO' => 1,
             'SUC' => 9999,
             'ORIGEN' => 'Canal Digital',
-            'CLIENTE_WEB' => 1
+            'CLIENTE_WEB' => 1,
         ];
         $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
         if (empty($customer)) {
@@ -164,6 +164,7 @@ class DigitalChannelLeadController extends Controller
             'leadService'        => $digitalChannelLead->typeService,
             'leadProduct'        => $digitalChannelLead->typeProduct,
             'leadStatus'         => $digitalChannelLead->state,
+            'areas'              => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
             'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
@@ -181,6 +182,8 @@ class DigitalChannelLeadController extends Controller
             $lead->state = $request['state'];
             $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         }
+        // dd($request->input());
+
         $leadRerpo = new leadRepository($lead);
         $leadRerpo->updateLead($request->input());
         $request->session()->flash('message', 'Actualización Exitosa!');

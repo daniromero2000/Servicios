@@ -1,7 +1,7 @@
-function cargar(){
+function cargar() {
 	document.body.style.animationName = "elim";
-	setTimeout(()=>{
+	setTimeout(() => {
 		document.getElementsByClassName('loader')[0].style.display = "none";
-		document.getElementById('link').href = "estilo.css"
+		document.getElementById('link').href = "/css/estilo.css"
 	})
 }

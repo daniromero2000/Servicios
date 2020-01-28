@@ -97,25 +97,42 @@
                     @endif
                   </select>
                 </div>
+                <div class="form-group">
+                  <label for="typeAreaSelectEdit{{$digitalChannelLead->id}}">Selecciona Area </label>
+                  <select onchange="ontypeServiceSelectedProductEditModal({{$digitalChannelLead->id}})"
+                    name="lead_area_id" id="typeAreaSelectEdit{{$digitalChannelLead->id}}"
+                    class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                    <option disabled selected value=""> -- Selecciona Area -- </option>
+                    @if(!empty($areas))
+                    @foreach($areas as $area)
+                    <option @if($digitalChannelLead->lead_area_id==$area->id) selected="selected" @endif
+                      value="{{ $area->id }}">
+                      {{ $area->name }}
+                    </option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
                 <div class="form-group row">
                   <div class="col-12 col-sm-6">
-                    <label for="typeServiceSelectedEdit">Servicio <span class="text-danger">*</span></label>
-                    <select name="typeService" id="typeServiceSelectedEdit" class="form-control" enabled>
-                      @if(!empty($services))
-                      @foreach($services as $service)
-                      <option @if($leadService==$service->id) selected="selected" @endif
-                        value="{{ $service->id }}">
-                        {{ $service->service }}
+                    <label for="typeServiceSelectedEdit{{$digitalChannelLead->id}}">Servicio <span
+                        class="text-danger">*</span></label>
+                    <select name="typeService" id="typeServiceSelectedEdit{{$digitalChannelLead->id}}"
+                      class="form-control" enabled>
+                      @if(!empty($digitalChannelLead->leadService))
+                      <option value="{{ $digitalChannelLead->leadService['id'] }}">
+                        {{$digitalChannelLead->leadService['service']}}
                       </option>
-                      @endforeach
                       @endif
                     </select>
                   </div>
                   <div class="col-12 col-sm-6 no-padding-right">
-                    <label for="typeProductselectedit">Producto <span class="text-danger">*</span></label>
-                    <select name="typeProduct" id="typeProductselectedit" class="form-control" enabled>
+                    <label for="typeProductselectedit{{$digitalChannelLead->id}}">Producto <span
+                        class="text-danger">*</span></label>
+                    <select name="typeProduct" id="typeProductselectedit{{$digitalChannelLead->id}}"
+                      class="form-control" enabled>
                       @if(!empty($digitalChannelLead->leadProduct))
-                      <option value="{{ $digitalChannelLead->typeProduct }}">
+                      <option value="{{ $digitalChannelLead->leadProduct['id'] }}">
                         {{$digitalChannelLead->leadProduct['lead_product']}}
                       </option>
                       @endif
@@ -131,8 +148,8 @@
                 <div class="row">
                   <div class="col-6 d-flex align-items-end">
                     <div class="form-group w-100">
-                      <label for="stateSelect">Estado</label>
-                      <select name="state" id="stateSelect" class="form-control" enabled>
+                      <label for="stateSelectEdit{{$digitalChannelLead->id}}">Estado</label>
+                      <select name="state" id="stateSelectEdit{{$digitalChannelLead->id}}" class="form-control" enabled>
                         @if($digitalChannelLead->state)
                         <option value="{{ $digitalChannelLead->state }}">
                           -- Selecciona Estado --

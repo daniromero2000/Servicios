@@ -17,7 +17,8 @@
         <button class="btn btn-primary btn-sm">
           <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i class="far fa-plus-square"></i></a>
         </button>
-        <button id="edit_show" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateleadModal">
+        <button id="edit_show" class="btn btn-primary btn-sm" onclick="dataLead({{$digitalChannelLead->id}})"
+          data-toggle="modal" data-target="#updateleadModal">
           Editar <i class="fas fa-edit    "></i>
         </button>
       </div>
