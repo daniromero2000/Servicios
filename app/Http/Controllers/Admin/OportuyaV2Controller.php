@@ -1649,7 +1649,7 @@ class OportuyaV2Controller extends Controller
 		$solic_fab->SUCURSAL      = $sucursal;
 		$solic_fab->ESTADO        = $estado;
 		$solic_fab->FTP           = 0;
-		$solic_fab->STATE         = $estado;
+		$solic_fab->STATE         = "A";
 		$solic_fab->GRAN_TOTAL    = 0;
 		$solic_fab->SOLICITUD_WEB = 1;
 		$solic_fab->save();
