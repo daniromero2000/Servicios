@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Entities\LeadPrices\Repositories\Interfaces;
+namespace App\Entities\LeadAreas\Repositories\Interfaces;
 
-use App\Entities\LeadPrices\LeadPrice;
+use App\Entities\LeadAreas\LeadArea;
 
-interface LeadPriceRepositoryInterface
+
+interface LeadAreaRepositoryInterface
 {
     public function createLeadPrice($data);
 
     public function updateLeadPrice($params);
 
-    public function findLeadPriceById(int $id): LeadPrice;
+    public function findLeadPriceById(int $id): LeadArea;
 
     public function getPriceDigitalChanel($from, $to, $num);
 
-    public function findLeadPriceByName($name): LeadPrice;
+    public function findLeadPriceByName($name): LeadArea;
 }

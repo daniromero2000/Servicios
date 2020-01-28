@@ -200,9 +200,9 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
-    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null): Collection
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product)) {
             return $this->model->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -223,6 +223,12 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('assessor_id', $assessor);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', $area);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
             })->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(100)

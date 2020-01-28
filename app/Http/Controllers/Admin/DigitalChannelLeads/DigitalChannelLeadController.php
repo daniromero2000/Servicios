@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\DigitalChannelLeads;
 
-use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\LeadAreas\LeadArea;
+use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -21,8 +21,6 @@ use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
-use App\Entities\LeadProducts\LeadProduct;
-use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
 
 class DigitalChannelLeadController extends Controller
@@ -42,7 +40,8 @@ class DigitalChannelLeadController extends Controller
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
-        UserRepositoryInterface $UserRepositoryInterface
+        UserRepositoryInterface $UserRepositoryInterface,
+        LeadAreaRepository $LeadAreaRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -55,6 +54,7 @@ class DigitalChannelLeadController extends Controller
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
         $this->UserInterface = $UserRepositoryInterface;
+        $this->LeadAreaInterface = $LeadAreaRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -70,7 +70,11 @@ class DigitalChannelLeadController extends Controller
                 request()->input('to'),
                 request()->input('state'),
                 request()->input('assessor_id'),
-                request()->input('city')
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
+
             );
         }
         $listCount = $list->count();
@@ -79,9 +83,6 @@ class DigitalChannelLeadController extends Controller
         foreach ($list as $key => $status) {
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
-
-
-        dd($list[0]->LeadArea);
 
         $profile = auth()->user()->idProfile;
 
@@ -92,6 +93,7 @@ class DigitalChannelLeadController extends Controller
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'           => $listCount,
             'skip'                => $skip,
+            'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
             'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
@@ -459,16 +461,44 @@ class DigitalChannelLeadController extends Controller
         return redirect()->back();
     }
 
-    public function byService(int $id)
+    public function byProducts(int $id)
     {
-        $data = $this->leadProductInterface->getLeadProductForService($id);
-        return json_decode($data);
+        $data = LeadArea::with('leadProduct')->where('id', $id)->get();
+        $array = [];
+        foreach ($data as $area) {
+            foreach ($area->leadProduct as $product) {
+                $array[] = $product;
+            }
+        }
+        return ($array);
+        // $data = $this->leadProductInterface->getLeadProductForService($id);
+        // return json_decode($data);
     }
 
     public function byStatus(int $id)
     {
-        $data = $this->LeadStatusesInterface->getLeadStatusesForServices($id);
-        return json_decode($data);
+
+        $data = LeadArea::with('leadStatuses')->where('id', $id)->get();
+        $array = [];
+        foreach ($data as $area) {
+            foreach ($area->leadStatuses as $statuses) {
+                $array[] = $statuses;
+            }
+        }
+        return ($array);
+    }
+
+    public function byService(int $id)
+    {
+
+        $data = LeadArea::with('Services')->where('id', $id)->get();
+        $array = [];
+        foreach ($data as $area) {
+            foreach ($area->Services as $statuses) {
+                $array[] = $statuses;
+            }
+        }
+        return ($array);
     }
 
     public function byAssessors(int $id)

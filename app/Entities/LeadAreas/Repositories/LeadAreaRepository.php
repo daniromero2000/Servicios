@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Entities\LeadPrices\Repositories;
+namespace App\Entities\LeadAreas\Repositories;
 
-use App\Entities\LeadPrices\LeadPrice;
-use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\LeadAreas\LeadArea;
+use App\Entities\LeadAreas\Repositories\Interfaces\LeadAreaRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
-class LeadPriceRepository implements LeadPriceRepositoryInterface
+class LeadAreaRepository
 {
     public function __construct(
-        LeadPrice $LeadPrice
+        LeadArea $leadArea
     ) {
-        $this->model = $LeadPrice;
+        $this->model = $leadArea;
     }
 
     public function createLeadPrice($data)
@@ -24,7 +24,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
         }
     }
 
-    public function findLeadPriceById(int $id): LeadPrice
+    public function findLeadPriceById(int $id): LeadArea
     {
         try {
             return $this->model->findOrFail($id);
@@ -33,7 +33,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
         }
     }
 
-    public function findLeadPriceByName($name): LeadPrice
+    public function findLeadPriceByName($name): LeadArea
     {
         try {
             return $this->model->findOrFail($name);
@@ -52,13 +52,11 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
         }
     }
 
-    public function getPriceDigitalChanel($from, $to, $num)
+    public function getLeadAreaDigitalChanel()
     {
 
         try {
-            return $this->model->where('lead_price_status_id', $num)
-                ->whereBetween('created_at', [$from, $to])
-                ->get();
+            return $this->model->orderBy('name', 'asc')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

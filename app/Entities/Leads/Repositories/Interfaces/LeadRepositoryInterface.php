@@ -40,7 +40,7 @@ interface LeadRepositoryInterface
 
     public function findLeadByIdFull(int $id): Lead;
 
-    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $city = null): Collection;
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection;
 
     public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $service): Collection;
 }
