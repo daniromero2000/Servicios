@@ -29,7 +29,7 @@ class LeadRepository implements LeadRepositoryInterface
         'campaign',
         'assessor_id',
         'identificationNumber',
-        'area_id'
+        'lead_area_id'
     ];
 
 
@@ -178,7 +178,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'comments',
                 'leadProduct',
                 'leadPrices',
-                'areas'
+                'LeadArea'
             ])->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)

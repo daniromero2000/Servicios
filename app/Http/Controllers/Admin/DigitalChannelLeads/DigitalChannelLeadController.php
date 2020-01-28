@@ -79,9 +79,9 @@ class DigitalChannelLeadController extends Controller
         foreach ($list as $key => $status) {
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
-        $r = LeadArea::all();
 
-        dd($r);
+
+        dd($list[0]->LeadArea);
 
         $profile = auth()->user()->idProfile;
 

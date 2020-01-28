@@ -120,13 +120,12 @@ class Lead extends Model
         return $this->hasMany(LeadPrice::class);
     }
 
+    public function LeadArea()
+    {
+        return $this->belongsTo(LeadArea::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'assessor_id');
-    }
-
-    public function areas()
-    {
-        return $this->belongsTo(LeadArea::class, 'area_id');
     }
 }

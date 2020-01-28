@@ -2,6 +2,7 @@
 
 namespace App\Entities\LeadProducts;
 
+use App\Entities\LeadAreas\LeadArea;
 use Illuminate\Database\Eloquent\Model;
 
 class LeadProduct extends Model
@@ -23,4 +24,9 @@ class LeadProduct extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function leadArea()
+    {
+        return $this->belongsToMany(LeadArea::class)->withTimestamps();
+    }
 }

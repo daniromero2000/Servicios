@@ -25,8 +25,8 @@ class LeadStatus extends Model
         return $this->hasMany(Lead::class);
     }
 
-    public function areas()
+    public function leadArea()
     {
-        return $this->belongsToMany(LeadArea::class)->using('App\Entities\LeadAreaLeadStatuses\LeadAreaLeadStatus');
+        return $this->belongsToMany(LeadArea::class)->withTimestamps();
     }
 }
