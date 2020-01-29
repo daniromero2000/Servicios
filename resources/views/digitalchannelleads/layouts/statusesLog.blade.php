@@ -12,7 +12,7 @@
                         style="color: white ; background-color: {{$data->status->color }}"
                         class="btn btn-info btn-block">{{ $data->status->status}}</span> </h3>
                 <div class="timeline-body">
-                    <i class="fa fa-user"></i> {{$data->user->name}}
+                    <i class="fa fa-user"></i> @if ($data->user) {{$data->user->name}} @endif
                 </div>
                 <div class="timeline-body">
                     {{$data->created_at->format('M d, Y h:i a')}}
