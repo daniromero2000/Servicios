@@ -52,9 +52,9 @@ class DigitalChannelLeadController extends Controller
         $this->customerInterface     = $customerRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
-        $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
-        $this->UserInterface = $UserRepositoryInterface;
-        $this->LeadAreaInterface = $LeadAreaRepositoryInterface;
+        $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
+        $this->UserInterface         = $UserRepositoryInterface;
+        $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
         $this->middleware('auth');
     }
 
