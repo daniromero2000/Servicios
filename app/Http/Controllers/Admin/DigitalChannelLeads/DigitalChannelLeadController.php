@@ -199,18 +199,18 @@ class DigitalChannelLeadController extends Controller
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
-        $leadProductInsurances = $this->leadInterface->countLeadProductGenerals($from, $to, 4);
-        $leadProductWarranties = $this->leadInterface->countLeadProductGenerals($from, $to, 5);
+        $leadProductInsurances = $this->leadInterface->countLeadProductGenerals($from, $to, 2);
+        $leadProductWarranties = $this->leadInterface->countLeadProductGenerals($from, $to, 3);
         $leadProductOportuyas = $this->leadInterface->countLeadProductGenerals($from, $to, 6);
-        $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
-        $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
-        $leadProductWallets = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
-        $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals($from, $to, 10);
-        $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals($from, $to, 11);
+        $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals($from, $to, 10);
+        $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals($from, $to, 5);
+        $leadProductWallets = $this->leadInterface->countLeadProductGenerals($from, $to, 4);
+        $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
+        $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
+        $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
-
 
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
@@ -220,17 +220,16 @@ class DigitalChannelLeadController extends Controller
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
-            $leadProductInsurances = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 4);
-            $leadProductWarranties = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadProductInsurances = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 2);
+            $leadProductWarranties = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 3);
             $leadProductOportuyas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 6);
-            $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
-            $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
-            $leadProductWallets = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
-            $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 10);
-            $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 11);
+            $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadProductWallets = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
         }
-
-
 
         foreach ($leadChannels as $key => $status) {
             $option = ($key == '') ? 'Sin Canal' : $key;
@@ -262,71 +261,12 @@ class DigitalChannelLeadController extends Controller
             unset($leadServices[$key]);
         }
 
-        foreach ($leadProductInsurances as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductInsurances[] = ['service' => $option, 'total' => count($leadProductInsurances[$key])];
-            unset($leadProductInsurances[$key]);
-        }
-
-        foreach ($leadProductWarranties as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductWarranties[] = ['service' => $option, 'total' => count($leadProductWarranties[$key])];
-            unset($leadProductWarranties[$key]);
-        }
-
-        foreach ($leadProductOportuyas as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductOportuyas[] = ['service' => $option, 'total' => count($leadProductOportuyas[$key])];
-            unset($leadProductOportuyas[$key]);
-        }
-
-        foreach ($leadProductsCallCenter as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductsCallCenter[] = ['service' => $option, 'total' => count($leadProductsCallCenter[$key])];
-            unset($leadProductsCallCenter[$key]);
-        }
-
-        foreach ($leadProductsAdvancedUnit as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductsAdvancedUnit[] = ['service' => $option, 'total' => count($leadProductsAdvancedUnit[$key])];
-            unset($leadProductsAdvancedUnit[$key]);
-        }
-        foreach ($leadProductWallets as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductWallets[] = ['service' => $option, 'total' => count($leadProductWallets[$key])];
-            unset($leadProductWallets[$key]);
-        }
-
-        foreach ($leadProductJuridicales as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductJuridicales[] = ['service' => $option, 'total' => count($leadProductJuridicales[$key])];
-            unset($leadProductJuridicales[$key]);
-        }
-        foreach ($leadProductLibranzas as $key => $status) {
-            $option = ($key == '') ? 'Sin Servicio' : $key;
-            $leadProductLibranzas[] = ['service' => $option, 'total' => count($leadProductLibranzas[$key])];
-            unset($leadProductLibranzas[$key]);
-        }
-
-
-
         $totalStatuses = $leadChannels->sum('total');
         $leadChannels = $this->toolsInterface->extractValuesToArray($leadChannels);
         $leadStatuses    = $this->toolsInterface->extractValuesToArray($leadStatuses);
         $leadAssessors    = $this->toolsInterface->extractValuesToArray($leadAssessors);
         $leadProducts    = $this->toolsInterface->extractValuesToArray($leadProducts);
         $leadServices    = $this->toolsInterface->extractValuesToArray($leadServices);
-        $leadProductInsurances    = $this->toolsInterface->extractValuesToArray($leadProductInsurances);
-        $leadProductWarranties    = $this->toolsInterface->extractValuesToArray($leadProductWarranties);
-        $leadProductOportuyas    = $this->toolsInterface->extractValuesToArray($leadProductOportuyas);
-        $leadProductsCallCenter    = $this->toolsInterface->extractValuesToArray($leadProductsCallCenter);
-        $leadProductsAdvancedUnit    = $this->toolsInterface->extractValuesToArray($leadProductsAdvancedUnit);
-        $leadProductWallets    = $this->toolsInterface->extractValuesToArray($leadProductWallets);
-        $leadProductJuridicales    = $this->toolsInterface->extractValuesToArray($leadProductJuridicales);
-        $leadProductLibranzas    = $this->toolsInterface->extractValuesToArray($leadProductLibranzas);
-
-
-
 
         $leadChannelNames  = [];
         $leadChannelValues  = [];
@@ -361,61 +301,6 @@ class DigitalChannelLeadController extends Controller
             array_push($leadServicesNames, trim($leadService['service']));
             array_push($leadServicesValues, trim($leadService['total']));
         }
-        $leadInsuranceNames  = [];
-        $leadInsuranceValues  = [];
-        foreach ($leadProductInsurances as $leadProductInsurance) {
-            array_push($leadInsuranceNames, trim($leadProductInsurance['service']));
-            array_push($leadInsuranceValues, trim($leadProductInsurance['total']));
-        }
-
-        $leadWarrantiesNames  = [];
-        $leadWarrantiesValues  = [];
-        foreach ($leadProductWarranties as $leadProductWarranty) {
-            array_push($leadWarrantiesNames, trim($leadProductWarranty['service']));
-            array_push($leadWarrantiesValues, trim($leadProductWarranty['total']));
-        }
-        $leadOportuyaNames  = [];
-        $leadOportuyaValues  = [];
-        foreach ($leadProductOportuyas as $leadProductOportuya) {
-            array_push($leadOportuyaNames, trim($leadProductOportuya['service']));
-            array_push($leadOportuyaValues, trim($leadProductOportuya['total']));
-        }
-
-        $leadCallCenterNames  = [];
-        $leadCallCenterValues  = [];
-        foreach ($leadProductsCallCenter as $leadProductCallCenter) {
-            array_push($leadCallCenterNames, trim($leadProductCallCenter['service']));
-            array_push($leadCallCenterValues, trim($leadProductCallCenter['total']));
-        }
-
-        $leadAdvancedUnitNames  = [];
-        $leadAdvancedUnitValues  = [];
-        foreach ($leadProductsAdvancedUnit as $leadProductAdvancedUnit) {
-            array_push($leadAdvancedUnitNames, trim($leadProductAdvancedUnit['service']));
-            array_push($leadAdvancedUnitValues, trim($leadProductAdvancedUnit['total']));
-        }
-        $leadProductWalletNames  = [];
-        $leadProductWalletValues  = [];
-        foreach ($leadProductWallets as $leadProductWallet) {
-            array_push($leadProductWalletNames, trim($leadProductWallet['service']));
-            array_push($leadProductWalletValues, trim($leadProductWallet['total']));
-        }
-
-        $leadJuridicalNames  = [];
-        $leadJuridicalValues  = [];
-        foreach ($leadProductJuridicales as $leadProductJuridical) {
-            array_push($leadJuridicalNames, trim($leadProductJuridical['service']));
-            array_push($leadJuridicalValues, trim($leadProductJuridical['total']));
-        }
-
-        $leadLibranzasNames  = [];
-        $leadLibranzasValues  = [];
-        foreach ($leadProductLibranzas as $leadProductLibranza) {
-            array_push($leadLibranzasNames, trim($leadProductLibranza['service']));
-            array_push($leadLibranzasValues, trim($leadProductLibranza['total']));
-        }
-
-
         $leadpriceTotal = $leadPrice->sum('lead_price');
 
         $pricesTotal = 0;
@@ -430,22 +315,15 @@ class DigitalChannelLeadController extends Controller
             'leadChannelValues'         => $leadChannelValues,
             'leadStatusesNames'         => $leadStatusesNames,
             'leadStatusesValues'        => $leadStatusesValues,
-            'leadInsuranceNames'        => $leadInsuranceNames,
-            'leadInsuranceValues'       => $leadInsuranceValues,
-            'leadWarrantiesNames'       => $leadWarrantiesNames,
-            'leadWarrantiesValues'      => $leadWarrantiesValues,
-            'leadOportuyaNames'         => $leadOportuyaNames,
-            'leadOportuyaValues'        => $leadOportuyaValues,
-            'leadCallCenterNames'       => $leadCallCenterNames,
-            'leadCallCenterValues'      => $leadCallCenterValues,
-            'leadAdvancedUnitNames'     => $leadAdvancedUnitNames,
-            'leadAdvancedUnitValues'    => $leadAdvancedUnitValues,
-            'leadProductWalletNames'    => $leadProductWalletNames,
-            'leadProductWalletValues'   => $leadProductWalletValues,
-            'leadJuridicalNames'        => $leadJuridicalNames,
-            'leadJuridicalValues'       => $leadJuridicalValues,
-            'leadLibranzasNames'        => $leadLibranzasNames,
-            'leadLibranzasValues'       => $leadLibranzasValues,
+            'leadProductInsurances'     => $leadProductInsurances,
+            'leadProductWarranties'     => $leadProductWarranties,
+            'leadProductOportuyas'      => $leadProductOportuyas,
+            'leadProductsCallCenter'    => $leadProductsCallCenter,
+            'leadProductsAdvancedUnit'  => $leadProductsAdvancedUnit,
+            'leadProductWallets'        => $leadProductWallets,
+            'leadProductJuridicales'    => $leadProductJuridicales,
+            'leadProductLibranzas'      => $leadProductLibranzas,
+            'leadProductEcommerces'     => $leadProductEcommerces,
             'leadAssessorsNames'        => $leadAssessorsNames,
             'leadAssessorsValues'       => $leadAssessorsValues,
             'leadProductsNames'         => $leadProductsNames,
@@ -453,7 +331,7 @@ class DigitalChannelLeadController extends Controller
             'leadServicesNames'         => $leadServicesNames,
             'leadServicesValues'        => $leadServicesValues,
             'totalStatuses'             => $totalStatuses,
-            'leadpriceTotal'            =>  $leadpriceTotal
+            'leadpriceTotal'            => $leadpriceTotal
         ]);
     }
     public function destroy($id)

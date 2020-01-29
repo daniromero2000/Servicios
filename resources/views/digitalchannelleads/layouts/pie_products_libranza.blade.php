@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body">
-        <canvas id="donutChart11" style="height:230px; min-height:230px"></canvas>
+        <canvas id="donutChart13" style="height:230px; min-height:230px"></canvas>
     </div>
 </div>
 <!-- TORTA -->
@@ -22,6 +22,6 @@
         </div>
     </div>
     <div class="card-body">
-        <canvas id="pieChart11" style="height:350px; min-height:auto"></canvas>
+        <canvas id="pieChart13" style="height:350px; min-height:auto"></canvas>
     </div>
 </div>

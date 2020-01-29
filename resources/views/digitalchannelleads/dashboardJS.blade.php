@@ -19,35 +19,41 @@
         var assessors = [<?php echo '"'.implode('","', $leadAssessorsNames).'"' ?>];
         var assessorsValues = [<?php echo '"'.implode('","', $leadAssessorsValues).'"' ?>];
 
+        var assessors = [<?php echo '"'.implode('","', $leadAssessorsNames).'"' ?>];
+        var assessorsValues = [<?php echo '"'.implode('","', $leadAssessorsValues).'"' ?>];
+
         var products = [<?php echo '"'.implode('","', $leadProductsNames).'"' ?>];
         var productsValues = [<?php echo '"'.implode('","', $leadProductsValues).'"' ?>];
 
         var service = [<?php echo '"'.implode('","', $leadServicesNames).'"' ?>];
         var serviceValues = [<?php echo '"'.implode('","', $leadServicesValues).'"' ?>];
 
-        var productWarranties = [<?php echo '"'.implode('","', $leadWarrantiesNames).'"' ?>];
-        var productWarrantiesValues = [<?php echo '"'.implode('","', $leadWarrantiesValues).'"' ?>];
+        var leadInsurance = [<?php echo '"'.implode('","', $leadProductInsurances[0]).'"' ?>];
+        var productInsuranceValues = [<?php echo '"'.implode('","', $leadProductInsurances[1]).'"' ?>];
 
-        var leadInsurance = [<?php echo '"'.implode('","', $leadInsuranceNames).'"' ?>];
-        var productInsuranceValues = [<?php echo '"'.implode('","', $leadInsuranceValues).'"' ?>];
+        var productWarranties = [<?php echo '"'.implode('","', $leadProductWarranties[0]).'"' ?>];
+        var productWarrantiesValues = [<?php echo '"'.implode('","', $leadProductWarranties[1]).'"' ?>];
+   
+        var leadOportuya = [<?php echo '"'.implode('","', $leadProductOportuyas[0]).'"' ?>];
+        var productOportuyaValues = [<?php echo '"'.implode('","', $leadProductOportuyas[1]).'"' ?>];
 
-        var productWallets = [<?php echo '"'.implode('","', $leadProductWalletNames).'"' ?>];
-        var productWalletsValues = [<?php echo '"'.implode('","', $leadProductWalletValues).'"' ?>];
+        var leadCallCenter = [<?php echo '"'.implode('","', $leadProductsCallCenter[0]).'"' ?>];
+        var productCallCenterValues = [<?php echo '"'.implode('","', $leadProductsCallCenter[1]).'"' ?>];
 
-        var leadOportuya = [<?php echo '"'.implode('","', $leadOportuyaNames).'"' ?>];
-        var productOportuyaValues = [<?php echo '"'.implode('","', $leadOportuyaValues).'"' ?>];
-
-        var leadCallCenter = [<?php echo '"'.implode('","', $leadCallCenterNames).'"' ?>];
-        var productCallCenterValues = [<?php echo '"'.implode('","', $leadCallCenterValues).'"' ?>];
-
-        var leadAdvancedUnit = [<?php echo '"'.implode('","', $leadAdvancedUnitNames).'"' ?>];
-        var productAdvancedUnitValues = [<?php echo '"'.implode('","', $leadAdvancedUnitValues).'"' ?>];
+        var leadAdvancedUnit = [<?php echo '"'.implode('","', $leadProductsAdvancedUnit[0]).'"' ?>];
+        var productAdvancedUnitValues = [<?php echo '"'.implode('","', $leadProductsAdvancedUnit[1]).'"' ?>];
         
-        var leadJuridical = [<?php echo '"'.implode('","', $leadJuridicalNames).'"' ?>];
-        var productJuridicalValues = [<?php echo '"'.implode('","', $leadJuridicalValues).'"' ?>];
+        var productWallets = [<?php echo '"'.implode('","', $leadProductWallets[0]).'"' ?>];
+        var productWalletsValues = [<?php echo '"'.implode('","', $leadProductWallets[1]).'"' ?>];
+
+        var leadJuridical = [<?php echo '"'.implode('","', $leadProductJuridicales[0]).'"' ?>];
+        var productJuridicalValues = [<?php echo '"'.implode('","', $leadProductJuridicales[1]).'"' ?>];
         
-        var leadLibranzas = [<?php echo '"'.implode('","', $leadLibranzasNames).'"' ?>];
-        var productLibranzasValues = [<?php echo '"'.implode('","', $leadLibranzasValues).'"' ?>];
+        var leadLibranzas = [<?php echo '"'.implode('","', $leadProductLibranzas[0]).'"' ?>];
+        var productLibranzasValues = [<?php echo '"'.implode('","', $leadProductLibranzas[1]).'"' ?>];
+
+        var leadEcommerces = [<?php echo '"'.implode('","', $leadProductEcommerces[0]).'"' ?>];
+        var productEcommercesValues = [<?php echo '"'.implode('","', $leadProductEcommerces[1]).'"' ?>];
         
 
     //--------------
@@ -360,35 +366,111 @@
     options: donutOptions10
     })
 
-    // //-------------
-    // //- DONUT CHART -
-    // //-------------
-    // // Get context with jQuery - using jQuery's .get() method.
-    // var donutChartCanvas11 = $('#donutChart11').get(0).getContext('2d')
-    // var donutData11 = {
-    // labels: leadAdvancedUnit,
-    // datasets: [
-    // {
-    // data: productAdvancedUnitValues,
-    // backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
-    // }
-    // ]
-    // }
-    // var donutOptions11 = {
-    // maintainAspectRatio : false,
-    // responsive : true,
-    // }
-    // //Create pie or douhnut chart
-    // // You can switch between pie and douhnut using the method below.
-    // var donutChart11 = new Chart(donutChartCanvas11, {
-    // type: 'doughnut',
-    // data: donutData11,
-    // options: donutOptions11
-    // })
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas11 = $('#donutChart11').get(0).getContext('2d')
+    var donutData11 = {
+    labels: leadAdvancedUnit,
+    datasets: [
+    {
+    data: productAdvancedUnitValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions11 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart11 = new Chart(donutChartCanvas11, {
+    type: 'doughnut',
+    data: donutData11,
+    options: donutOptions11
+    })
 
+      //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas12 = $('#donutChart12').get(0).getContext('2d')
+    var donutData12 = {
+    labels: leadJuridical,
+    datasets: [
+    {
+    data: productJuridicalValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions12 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart12 = new Chart(donutChartCanvas12, {
+    type: 'doughnut',
+    data: donutData12,
+    options: donutOptions12
+    });
 
+     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas13 = $('#donutChart13').get(0).getContext('2d')
+    var donutData13 = {
+    labels: leadLibranzas,
+    datasets: [
+    {
+    data: productLibranzasValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions13 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart13 = new Chart(donutChartCanvas13, {
+    type: 'doughnut',
+    data: donutData13,
+    options: donutOptions13
+    });
 
-    //- PIE CHART3 -
+     //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas14 = $('#donutChart14').get(0).getContext('2d')
+    var donutData14 = {
+    labels: leadEcommerces,
+    datasets: [
+    {
+    data: productEcommercesValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions14 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart14 = new Chart(donutChartCanvas14, {
+    type: 'doughnut',
+    data: donutData14,
+    options: donutOptions14
+    });
+
+        //- PIE CHART3 -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart3').get(0).getContext('2d')
@@ -460,7 +542,7 @@
         options: pieOptions
         })
 
-          //- PIE CHART5 -
+        //- PIE CHART5 -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart7').get(0).getContext('2d')
@@ -477,7 +559,7 @@
         options: pieOptions
         })
 
-          //- PIE CHART5 -
+        //- PIE CHART5 -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart8').get(0).getContext('2d')
@@ -528,24 +610,75 @@
         options: pieOptions
         })
 
-        //   //- PIE CHART5 -
-        // //-------------
-        // // Get context with jQuery - using jQuery's .get() method.
-        // var pieChartCanvas = $('#pieChart11').get(0).getContext('2d')
-        // var pieData = donutData11;
-        // var pieOptions = {
-        // maintainAspectRatio : false,
-        // responsive : true,
-        // }
-        // //Create pie or douhnut chart
-        // // You can switch between pie and douhnut using the method below.
-        // var pieChart = new Chart(pieChartCanvas, {
-        // type: 'pie',
-        // data: pieData,
-        // options: pieOptions
-        // })
+          //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart11').get(0).getContext('2d')
+        var pieData = donutData11;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
 
 
+        //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart12').get(0).getContext('2d')
+        var pieData = donutData12;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart13').get(0).getContext('2d')
+        var pieData = donutData13;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        
+        //- PIE CHART5 -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart14').get(0).getContext('2d')
+        var pieData = donutData14;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
 
     //-------------
     //- PIE CHART -
