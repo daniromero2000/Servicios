@@ -2,6 +2,14 @@
     max-width: 700px;
 }
 
+.resetCol {
+    padding: 0 !important;
+}
+
+.resetRow {
+    margin: 0 !important;
+}
+
 .modalThankYouPage-asessors > .modal-dialog{
     max-width: 1000px;
 }
@@ -9,6 +17,28 @@
 .headThankYuoModal{
     background: url(../../../images/asessors/barratop.jpg) center center no-repeat;
     background-size: 100%;
+}
+
+.decisionCredit-option{
+    cursor:pointer;
+    display: block;
+    width: 240px;
+    height: 150px;
+    margin: auto;
+}
+
+.decisionCredit-selected{
+    background: #007bff;
+    color: white;
+    border-radius: 15px;
+}
+
+.decisionCredit-selected:hover, .decisionCredit-selected:active, .decisionCredit-selected:focus, .decisionCredit-selected:visited{
+    color: white;
+}
+
+.decisionCredit-option-icon{
+    font-size: 60px;
 }
 
 .iconThankYouModal{
@@ -28,7 +58,7 @@
     max-width: 260px;
 }
 
-.confronta-title{
+.confronta-title, .decisionCredit-title{
     color: #167efa;
     margin: 20px 0;
 }

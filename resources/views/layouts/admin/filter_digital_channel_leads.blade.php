@@ -12,7 +12,8 @@
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+
+                    <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="city">Ciudad </label>
                             <select name="city" class="form-control select2 select2-hidden-accessible"
