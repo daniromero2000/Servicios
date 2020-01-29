@@ -125,8 +125,7 @@ use Carbon\Carbon;
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
                           <label for="city{{$data->id}}">Ciudad <span class="text-danger">*</span></label>
-                          <select name="city" id="city{{$data->id}}"
-                            class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                          <select name="city" id="city{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($cities))
                             @foreach($cities as $city)
                             <option @if($data->city==$city->CIUDAD) selected="selected" @endif
@@ -140,8 +139,7 @@ use Carbon\Carbon;
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="channel{{$data->id}}">Canal de adquisición <span
                               class="text-danger">*</span></label>
-                          <select name="channel" id="channel{{$data->id}}"
-                            class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                          <select name="channel" id="channel{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($channels))
                             @foreach($channels as $channel)
                             <option @if($data->channel==$channel->id) selected="selected" @endif
@@ -163,8 +161,7 @@ use Carbon\Carbon;
                       </div>
                       <div class="form-group ">
                         <label for="campaign{{$data->id}}">Campaña</label>
-                        <select name="campaign" id="campaign{{$data->id}}"
-                          class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                        <select name="campaign" id="campaign{{$data->id}}" class="form-control " style="width: 100%;">
                           @if(!empty($campaigns))
                           @foreach($campaigns as $campaign)
                           <option @if($data->campaing==$campaign->id) selected="selected" @endif
@@ -178,8 +175,7 @@ use Carbon\Carbon;
                       <div class="form-group">
                         <label for="typeAreaSelectEdit{{$data->id}}">Selecciona Area </label>
                         <select onchange="ontypeServiceSelectedProductEditModal({{$data->id}})" name="lead_area_id"
-                          id="typeAreaSelectEdit{{$data->id}}" class="form-control select2 select2-hidden-accessible"
-                          style="width: 100%;">
+                          id="typeAreaSelectEdit{{$data->id}}" class="form-control " style="width: 100%;">
                           <option disabled selected value=""> -- Selecciona Area -- </option>
                           @if(!empty($areas))
                           @foreach($areas as $area)
@@ -194,8 +190,8 @@ use Carbon\Carbon;
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
                           <label for="typeServiceSelectedEdit{{$data->id}}">Servicio </label>
-                          <select name="typeService" id="typeServiceSelectedEdit{{$data->id}}"
-                            class="form-control select2  mt-2 select2-hidden-accessible" style="width: 100%;">
+                          <select name="typeService" id="typeServiceSelectedEdit{{$data->id}}" class="form-control "
+                            style="width: 100%;">
                             @if ($data->leadService)
                             <option value="{{ $data->leadService['id'] }}">
                               {{ $data->leadService['service'] }}
@@ -205,11 +201,11 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
                           <label for="typeProductselectedit{{$data->id}}">Producto </label>
-                          <select name="typeProduct" id="typeProductselectedit{{$data->id}}"
-                            class="form-control select2  mt-2 select2-hidden-accessible" style="width: 100%;">
+                          <select name="typeProduct" id="typeProductselectedit{{$data->id}}" class="form-control "
+                            style="width: 100%;">
                             @if ($data->leadProduct)
-                            <option value="{{ $data->typeProduct }}">
-                              {{ $data->leadProduct['lead_product'] }}
+                            <option value="{{ $data->leadProduct->id }}">
+                              {{ $data->leadProduct->lead_product }}
                             </option>
                             @endif
                           </select>
@@ -225,8 +221,8 @@ use Carbon\Carbon;
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group">
                             <label for="stateSelectEdit{{$data->id}}">Selecciona Estado </label>
-                            <select name="state" id="stateSelectEdit{{$data->id}}"
-                              class="form-control select2  mt-2 select2-hidden-accessible" style="width: 100%;">
+                            <select name="state" id="stateSelectEdit{{$data->id}}" class="form-control "
+                              style="width: 100%;">
                               @if($data->state)
                               <option disabled selected value> -- Selecciona Estado -- </option>
                               @endif
@@ -236,9 +232,8 @@ use Carbon\Carbon;
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="assessor_id{{$data->id}}">Asesor</label>
-                            <select class="form-control  select2 select2-hidden-accessible"
-                              id="assessor_id {{$data->id}}" name="assessor_id" ng-model="lead.assessor_id"
-                              style="width: 100%;">
+                            <select class="form-control  " id="assessor_id {{$data->id}}" name="assessor_id"
+                              ng-model="lead.assessor_id" style="width: 100%;">
                               <option disabled selected value> -- Selecciona Asesor-- </option>
                               <option value="13">Evelyn Correa</option>
                               <option value="18">Vanessa Parra</option>

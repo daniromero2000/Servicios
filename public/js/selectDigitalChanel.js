@@ -91,7 +91,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
     $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
         var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
-            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
+            html_selectEdit += '<option value="' + data[i].id + '" selected="selected">' + data[i].lead_product + '</option>';
         }
         $('#typeProductselectedit' + dataId).html(html_selectEdit);
     });
@@ -99,7 +99,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
     $.get('/getServices/' + typeServiceEditSelected_id + '', function (data) {
         var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
-            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].service + '</option>';
+            html_selectEdit += '<option value="' + data[i].id + '" selected="selected">' + data[i].service + '</option>';
         }
         $('#typeServiceSelectedEdit' + dataId).html(html_selectEdit);
     });
@@ -107,7 +107,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
     $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
         var html_selectEdit = '<option value=""> -- Selecciona Estado -- </option>';
         for (var i = 0; i < data.length; i++) {
-            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].status + '</option>';
+            html_selectEdit += '<option value="' + data[i].id + '" selected="selected">' + data[i].status + '</option>';
         }
         $('#stateSelectEdit' + dataId).html(html_selectEdit);
     });

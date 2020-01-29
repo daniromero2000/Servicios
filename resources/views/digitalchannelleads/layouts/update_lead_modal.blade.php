@@ -100,8 +100,8 @@
                 <div class="form-group">
                   <label for="typeAreaSelectEdit{{$digitalChannelLead->id}}">Selecciona Area </label>
                   <select onchange="ontypeServiceSelectedProductEditModal({{$digitalChannelLead->id}})"
-                    name="lead_area_id" id="typeAreaSelectEdit{{$digitalChannelLead->id}}"
-                    class="form-control select2 select2-hidden-accessible" style="width: 100%;">
+                    name="lead_area_id" id="typeAreaSelectEdit{{$digitalChannelLead->id}}" class="form-control"
+                    style="width: 100%;">
                     <option disabled selected value=""> -- Selecciona Area -- </option>
                     @if(!empty($areas))
                     @foreach($areas as $area)
@@ -119,8 +119,8 @@
                         class="text-danger">*</span></label>
                     <select name="typeService" id="typeServiceSelectedEdit{{$digitalChannelLead->id}}"
                       class="form-control" enabled>
-                      @if(!empty($digitalChannelLead->leadService))
-                      <option value="{{ $digitalChannelLead->leadService['id'] }}">
+                      @if($digitalChannelLead->leadService)
+                      <option value="{{ $digitalChannelLead->leadService['id'] }}" selected="selected">
                         {{$digitalChannelLead->leadService['service']}}
                       </option>
                       @endif
@@ -132,7 +132,7 @@
                     <select name="typeProduct" id="typeProductselectedit{{$digitalChannelLead->id}}"
                       class="form-control" enabled>
                       @if(!empty($digitalChannelLead->leadProduct))
-                      <option value="{{ $digitalChannelLead->leadProduct['id'] }}">
+                      <option value="{{ $digitalChannelLead->leadProduct['id'] }}" selected="selected">
                         {{$digitalChannelLead->leadProduct['lead_product']}}
                       </option>
                       @endif
