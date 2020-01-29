@@ -417,7 +417,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$('#confronta').modal('show');
 			}
 			hideLoader();
-			console.log(response);
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
