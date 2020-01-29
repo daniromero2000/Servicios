@@ -84,7 +84,7 @@ class DigitalChannelLeadController extends Controller
             $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
         }
 
-        $profile = auth()->user()->idProfile;
+        $profile = 2;
 
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,

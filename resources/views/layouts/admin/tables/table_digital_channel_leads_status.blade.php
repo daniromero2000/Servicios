@@ -233,11 +233,14 @@ use Carbon\Carbon;
                           <div class="form-group w-100">
                             <label for="assessor_id{{$data->id}}">Asesor</label>
                             <select class="form-control  " id="assessor_id {{$data->id}}" name="assessor_id"
-                              ng-model="lead.assessor_id" style="width: 100%;">
-                              <option disabled selected value> -- Selecciona Asesor-- </option>
-                              <option value="13">Evelyn Correa</option>
-                              <option value="18">Vanessa Parra</option>
-                              <option value="85">Danitza Naranjo</option>
+                              ng-model="lead.assessor_id" style="width: 100%;"> @if(!empty($listAssessors))
+                              <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
+                              @foreach($listAssessors as $listAssessor)
+                              <option data-select3-id="{{ $listAssessor->id }}" value="{{ $listAssessor->id }}">
+                                {{ $listAssessor->name }}
+                              </option>
+                              @endforeach
+                              @endif
                             </select>
                           </div>
                         </div>
