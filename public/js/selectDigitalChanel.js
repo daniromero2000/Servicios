@@ -1,31 +1,47 @@
 
 $(function () {
-    $("#typeServiceSelectedCreate").on('change', ontypeServiceSelectedCreate)
+    $("#typeAreaSelectCreate").on('change', ontypeAreaSelectCreate)
 });
 
-function ontypeServiceSelectedCreate() {
+function ontypeAreaSelectCreate() {
     var typeServiceCreateSelected_id = $(this).val();
 
     if (!typeServiceCreateSelected_id) {
-        $('#typeProductselect').html('<option value=""> -- Selecciona Producto -- </option>');
+        $('#typeProductCreate').html('<option value=""> -- Selecciona Producto -- </option>');
 
     }
 
     $.get('/getproducts/' + typeServiceCreateSelected_id + '', function (data) {
-        console.log(data)
-
-        var html_selectCreate = '<option value=""> -- Selecciona Producto -- </option>';
+        var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
-            html_selectCreate += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
         }
-        $('#typeProductselect').html(html_selectCreate);
-
+        $('#typeProductCreate').html(html_selectEdit);
     })
+
+    $.get('/getServices/' + typeServiceCreateSelected_id + '', function (data) {
+        var html_selectEdit = "";
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].service + '</option>';
+        }
+        $('#typeServiceSelectedCreate').html(html_selectEdit);
+    })
+    // $.get('/getproducts/' + typeServiceCreateSelected_id + '', function (data) {
+    //     var html_selectCreate = "";
+    //     for (var i = 0; i < data.length; i++) {
+    //         html_selectCreate += '<option value="' + data[i].id + '>' + data[i].lead_product + '</option>';
+    //     }
+    //     $('#typeProductCreate').html(html_selectCreate);
+    // });
+
+
+
+
 }
 
-$(function () {
-    $("#typeServiceSelectedEdit").on('change', ontypeServiceSelectedEdit)
-});
+// $(function () {
+//     $("#typeServiceSelectedEdit").on('change', ontypeServiceSelectedEdit)
+// });
 
 // function ontypeServiceSelectedEdit() {
 //     var typeServiceEditSelected_id = $(this).val();

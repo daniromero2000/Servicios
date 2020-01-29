@@ -37,7 +37,8 @@ class Lead extends Model
         'assessor',
         'nearbyCity',
         'assessor_id',
-        'description'
+        'description',
+        'lead_area_id'
     ];
 
     protected $guarded = [

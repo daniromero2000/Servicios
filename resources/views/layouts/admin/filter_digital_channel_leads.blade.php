@@ -34,7 +34,7 @@
                             <select name="assessor_id" class="form-control select2 select2-hidden-accessible"
                                 style="width: 100%;" data-select4-id="1" tabindex="-1" aria-hidden="true">
                                 @if(!empty($listAssessors))
-                                <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
+                                <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
                                 @foreach($listAssessors as $listAssessor)
                                 <option data-select3-id="{{ $listAssessor->id }}" value="{{ $listAssessor->id }}">
                                     {{ $listAssessor->name }}

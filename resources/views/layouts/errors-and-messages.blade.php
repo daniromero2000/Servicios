@@ -17,9 +17,9 @@
 @endforeach
 @elseif(session()->has('message'))
 <div class="row justify-content-end">
-  <div class="col-12 col-md-4 ">
-    <div class="card alert alert-success  alert-dismissible fade show" style="position: absolute;z-index: 999;"
-      role="alert">
+  <div class="col-12 col-md-3 ">
+    <div class="card alert alert-success  alert-dismissible fade show"
+      style="position: absolute;z-index: 999;width: 94%;" role="alert">
 
       <p><i class="far fa-check-circle mr-2" style="font-size: 24px;"></i>
         {{ session()->get('message') }}</p>
