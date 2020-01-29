@@ -120,6 +120,34 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+
+    public function countLeadStatusGenerals($from, $to, $area)
+    {
+        try {
+            $datas =  $this->model->with('leadStatuses')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', $area)
+                ->get(['state'])->groupBy('leadStatuses.status');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin Estado' : $key;
+                $datas[] = ['state' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $leadDatalNames  = [];
+            $leadDatalValues  = [];
+            foreach ($datas as $leadDatal) {
+                array_push($leadDatalNames, trim($leadDatal['state']));
+                array_push($leadDatalValues, trim($leadDatal['total']));
+            }
+
+            return [$leadDatalNames, $leadDatalValues];
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function countLeadAssessors($from, $to)
     {
         try {

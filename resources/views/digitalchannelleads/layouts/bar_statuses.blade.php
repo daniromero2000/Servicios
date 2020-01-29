@@ -6,7 +6,7 @@
     </div>
   </div>
 </div>
-<div class="card ">  
+<div class="card ">
   <div class="card-header">
     <h3 class="card-title">Estados Leads</h3>
     <div class="card-tools">
@@ -15,9 +15,9 @@
       <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
     </div>
   </div>
-  
+
   <div class="card-body">
-    
+
     <div class="chart">
       <canvas id="barChart" style="height:290px; min-height:230px"></canvas>
     </div>

@@ -1,6 +1,6 @@
-<div hidden class="card card-danger">
+<div class="card card-danger">
     <div class="card-header">
-        <h3 class="card-title">Donut Chart</h3>
+        <h3 class="card-title">Resumen de Productos Leads Unidad Avanzada</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -8,13 +8,12 @@
         </div>
     </div>
     <div class="card-body">
-        <canvas id="donutChart10" style="height:230px; min-height:230px"></canvas>
+        <canvas id="donutChart11" style="height:230px; min-height:230px"></canvas>
     </div>
 </div>
 <!-- TORTA -->
-<div class="card">
+<div hidden class="card">
     <div class="card-header">
-        <h3 class="card-title">Resumen de Productos Leads Call Center</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
             </button>
@@ -22,6 +21,6 @@
         </div>
     </div>
     <div class="card-body">
-        <canvas id="pieChart10" style="height:350px; min-height:auto"></canvas>
+        <canvas id="pieChart11" style="height:350px; min-height:250px"></canvas>
     </div>
 </div>

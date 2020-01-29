@@ -22,6 +22,8 @@ interface LeadRepositoryInterface
 
     public function countLeadStatuses($from, $to);
 
+    public function countLeadStatusGenerals($from, $to, $area);
+
     public function countLeadAssessors($from, $to);
 
     public function countLeadAssessorsForCallCenter($from, $to);

@@ -220,6 +220,17 @@ class DigitalChannelLeadController extends Controller
         $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
         $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
 
+        $leadStatusInsurances = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
+        $leadStatusWarranties = $this->leadInterface->countLeadStatusGenerals($from, $to, 3);
+        $leadStatusOportuyas = $this->leadInterface->countLeadStatusGenerals($from, $to, 6);
+        $leadStatusCallCenter = $this->leadInterface->countLeadStatusGenerals($from, $to, 10);
+        $leadStatusAdvancedUnit = $this->leadInterface->countLeadStatusGenerals($from, $to, 5);
+        $leadStatusWallets = $this->leadInterface->countLeadStatusGenerals($from, $to, 4);
+        $leadStatusJuridicales = $this->leadInterface->countLeadStatusGenerals($from, $to, 9);
+        $leadStatusLibranzas = $this->leadInterface->countLeadStatusGenerals($from, $to, 7);
+        $leadStatusEcommerces = $this->leadInterface->countLeadStatusGenerals($from, $to, 8);
+
+
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
@@ -361,7 +372,15 @@ class DigitalChannelLeadController extends Controller
             'leadServiceJuridicales'    => $leadServiceJuridicales,
             'leadServiceLibranzas'      => $leadServiceLibranzas,
             'leadServiceEcommerces'     => $leadServiceEcommerces,
-
+            'leadStatusInsurances'      => $leadStatusInsurances,
+            'leadStatusWarranties'      => $leadStatusWarranties,
+            'leadStatusOportuyas'       => $leadStatusOportuyas,
+            'leadStatusCallCenter'      => $leadStatusCallCenter,
+            'leadStatusAdvancedUnit'    => $leadStatusAdvancedUnit,
+            'leadStatusWallets'         => $leadStatusWallets,
+            'leadStatusJuridicales'     => $leadStatusJuridicales,
+            'leadStatusLibranzas'       => $leadStatusLibranzas,
+            'leadStatusEcommerces'      => $leadStatusEcommerces,
             'totalStatuses'             => $totalStatuses,
             'leadpriceTotal'            => $leadpriceTotal
         ]);
