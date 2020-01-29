@@ -199,6 +199,7 @@ class DigitalChannelLeadController extends Controller
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
         $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
+
         $leadProductInsurances = $this->leadInterface->countLeadProductGenerals($from, $to, 2);
         $leadProductWarranties = $this->leadInterface->countLeadProductGenerals($from, $to, 3);
         $leadProductOportuyas = $this->leadInterface->countLeadProductGenerals($from, $to, 6);
@@ -208,6 +209,17 @@ class DigitalChannelLeadController extends Controller
         $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
         $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
         $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
+
+        $leadServiceInsurances = $this->leadInterface->countLeadServicesGenerals($from, $to, 2);
+        $leadServiceWarranties = $this->leadInterface->countLeadServicesGenerals($from, $to, 3);
+        $leadServiceOportuyas = $this->leadInterface->countLeadServicesGenerals($from, $to, 6);
+        $leadServicesCallCenter = $this->leadInterface->countLeadServicesGenerals($from, $to, 10);
+        $leadServicesAdvancedUnit = $this->leadInterface->countLeadServicesGenerals($from, $to, 5);
+        $leadServiceWallets = $this->leadInterface->countLeadServicesGenerals($from, $to, 4);
+        $leadServiceJuridicales = $this->leadInterface->countLeadServicesGenerals($from, $to, 9);
+        $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
+        $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
+
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
@@ -229,6 +241,16 @@ class DigitalChannelLeadController extends Controller
             $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
             $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
             $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
+
+            $leadServiceInsurances = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
+            $leadServiceWarranties = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
+            $leadServiceOportuyas = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 6);
+            $leadServicesCallCenter = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadServicesAdvancedUnit = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadServiceWallets = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadServiceJuridicales = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 8);
         }
 
         foreach ($leadChannels as $key => $status) {
@@ -330,6 +352,16 @@ class DigitalChannelLeadController extends Controller
             'leadProductsValues'        => $leadProductsValues,
             'leadServicesNames'         => $leadServicesNames,
             'leadServicesValues'        => $leadServicesValues,
+            'leadServiceInsurances'     => $leadServiceInsurances,
+            'leadServiceWarranties'     => $leadServiceWarranties,
+            'leadServiceOportuyas'      => $leadServiceOportuyas,
+            'leadServicesCallCenter'    => $leadServicesCallCenter,
+            'leadServicesAdvancedUnit'  => $leadServicesAdvancedUnit,
+            'leadServiceWallets'        => $leadServiceWallets,
+            'leadServiceJuridicales'    => $leadServiceJuridicales,
+            'leadServiceLibranzas'      => $leadServiceLibranzas,
+            'leadServiceEcommerces'     => $leadServiceEcommerces,
+
             'totalStatuses'             => $totalStatuses,
             'leadpriceTotal'            => $leadpriceTotal
         ]);

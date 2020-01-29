@@ -169,14 +169,39 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
-
-
     public function countLeadServices($from, $to)
     {
         try {
             return  $this->model->with('leadService')
                 ->whereBetween('created_at', [$from, $to])
                 ->get(['typeService'])->groupBy('leadService.service');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countLeadServicesGenerals($from, $to, $area)
+    {
+        try {
+            $datas =  $this->model->with('leadService')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', $area)
+                ->get(['typeService'])->groupBy('leadService.service');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin Servicio' : $key;
+                $datas[] = ['Service' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $leadDatalNames  = [];
+            $leadDatalValues  = [];
+            foreach ($datas as $leadDatal) {
+                array_push($leadDatalNames, trim($leadDatal['Service']));
+                array_push($leadDatalValues, trim($leadDatal['total']));
+            }
+
+            return [$leadDatalNames, $leadDatalValues];
         } catch (QueryException $e) {
             dd($e);
         }

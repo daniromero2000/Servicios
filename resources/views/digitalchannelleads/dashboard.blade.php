@@ -54,6 +54,10 @@
           <div class="col-12 ">
             @include('digitalchannelleads.layouts.pie_products')
             @include('digitalchannelleads.layouts.pie_service')
+            @include('digitalchannelleads.layouts.pie_serviceInsurances')
+            @include('digitalchannelleads.layouts.pie_serviceWarranties')
+
+
             <div>
               @include('digitalchannelleads.layouts.pie_products_warranties')
               @include('digitalchannelleads.layouts.pie_products_wallets')

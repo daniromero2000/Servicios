@@ -32,6 +32,8 @@ interface LeadRepositoryInterface
 
     public function countLeadServices($from, $to);
 
+    public function countLeadServicesGenerals($from, $to, $area);
+
     public function listleads($totalView): Support;
 
     public function customListleads($totalView, $service);
