@@ -9,6 +9,6 @@
         </div>
     </div>
     <div class="card-body">
-        <canvas id="pieChart34" style="height:200px; min-height:250px"></canvas>
+        <canvas id="pieChart33" style="height:300px; min-height:250px"></canvas>
     </div>
 </div>
