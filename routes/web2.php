@@ -220,15 +220,18 @@ Route::namespace('Admin')->group(function () {
     });
 
     //Panel Juridica
-
     Route::namespace('LeadJuridicals')->group(function () {
         Route::resource('Administrator/LeadsJuridical', 'LeadJuridicalController');
     });
 
     // Panel AdvancedUnit
-
     Route::namespace('LeadAdvancedUnits')->group(function () {
         Route::resource('Administrator/LeadsAdvancedUnit', 'LeadAdvancedUnitController');
+    });
+
+    // Panel Ecommerce
+    Route::namespace('LeadEcommerces')->group(function () {
+        Route::resource('Administrator/LeadsEcommerce', 'LeadEcommerceController');
     });
 });
 

@@ -1,7 +1,6 @@
 @php
 use Carbon\Carbon;
 @endphp
-<div class="lds-hourglass"></div>
 <div class="table-responsive mb-3 p-0 height-table">
   <table class="table table-head-fixed text-center ">
     <thead class="text-center header-table">
