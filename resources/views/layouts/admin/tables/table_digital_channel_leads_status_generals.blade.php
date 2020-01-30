@@ -1,7 +1,7 @@
 @php
 use Carbon\Carbon;
 @endphp
-
+<div class="lds-hourglass"></div>
 <div class="table-responsive mb-3 p-0 height-table">
   <table class="table table-head-fixed text-center ">
     <thead class="text-center header-table">
@@ -34,6 +34,8 @@ use Carbon\Carbon;
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
         <td>{{ $data->telephone}}</td>
         <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
+        <td> {{$data->leadArea->name}}
+        </td>
         <td> @if($data->leadService) {{ $data->leadService->service}} @else
           {{$data->typeService}}
           @endif</td>
@@ -43,7 +45,8 @@ use Carbon\Carbon;
         <td>{{ $data->created_at->format('M d, Y h:i a')}}</td>
         <td>
           <i class="fas fa-trash-alt cursor" data-toggle="modal" data-target="#deleteLead{{$data->id}}"></i>
-          <i class="fas fa-edit cursor" data-toggle="modal" data-target="#editLead{{$data->id}}"></i>
+          <i class="fas fa-edit cursor" data-toggle="modal" onclick="dataLead({{$data->id}})"
+            data-target="#editLead{{$data->id}}"></i>
           <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
 
         </td>
@@ -95,6 +98,7 @@ use Carbon\Carbon;
                           <input type="text" name="identificationNumber" id="identificationNumber" class="form-control"
                             value="{!! $data->identificationNumber ?: old('lastName')  !!}">
                         </div>
+                        <input hidden type="text" id="valueModal" value="{{$data->id}}">
                         <div class="col-12 col-sm-6">
                           <label for="name">Nombre <span class="text-danger">*</span></label>
                           <input type="text" name="name" id="name" validation-pattern="name" placeholder="Nombre"
@@ -122,8 +126,8 @@ use Carbon\Carbon;
                       </div>
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
-                          <label for="city">Ciudad <span class="text-danger">*</span></label>
-                          <select name="city" id="city" class="form-control" enabled>
+                          <label for="city{{$data->id}}">Ciudad <span class="text-danger">*</span></label>
+                          <select name="city" id="city{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($cities))
                             @foreach($cities as $city)
                             <option @if($data->city==$city->CIUDAD) selected="selected" @endif
@@ -135,8 +139,9 @@ use Carbon\Carbon;
                           </select>
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
-                          <label for="channel">Canal de adquisición <span class="text-danger">*</span></label>
-                          <select name="channel" id="channel" class="form-control" enabled>
+                          <label for="channel{{$data->id}}">Canal de adquisición <span
+                              class="text-danger">*</span></label>
+                          <select name="channel" id="channel{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($channels))
                             @foreach($channels as $channel)
                             <option @if($data->channel==$channel->id) selected="selected" @endif
@@ -157,8 +162,8 @@ use Carbon\Carbon;
                         </div>
                       </div>
                       <div class="form-group ">
-                        <label for="campaign">Campaña</label>
-                        <select name="campaign" id="campaign" class="form-control" enabled>
+                        <label for="campaign{{$data->id}}">Campaña</label>
+                        <select name="campaign" id="campaign{{$data->id}}" class="form-control " style="width: 100%;">
                           @if(!empty($campaigns))
                           @foreach($campaigns as $campaign)
                           <option @if($data->campaing==$campaign->id) selected="selected" @endif
@@ -169,26 +174,41 @@ use Carbon\Carbon;
                           @endif
                         </select>
                       </div>
+
+                      <div class="form-group">
+                        <label for="typeAreaSelectEdit{{$data->id}}">Selecciona Area </label>
+                        <select onchange="ontypeServiceSelectedProductEditModal({{$data->id}})" name="lead_area_id"
+                          id="typeAreaSelectEdit{{$data->id}}" class="form-control " style="width: 100%;">
+                          <option disabled selected value=""> -- Selecciona Area -- </option>
+                          @if(!empty($areas))
+                          @foreach($areas as $area)
+                          <option @if($data->lead_area_id==$area->id) selected="selected" @endif
+                            value="{{ $area->id }}">
+                            {{ $area->name }}
+                          </option>
+                          @endforeach
+                          @endif
+                        </select>
+                      </div>
                       <div class="form-group row">
                         <div class="col-12 col-sm-6">
-                          <label for="typeServiceSelectedEdit">Servicio </label>
-                          <select name="typeService" id="typeServiceSelectedEdit" class="form-control" enabled>
-                            @if(!empty($services))
-                            @foreach($services as $service)
-                            <option @if($data->typeService==$service->id) selected="selected" @endif
-                              value="{{ $service->id }}">
-                              {{ $service->service }}
+                          <label for="typeServiceSelectedEdit{{$data->id}}">Servicio </label>
+                          <select name="typeService" id="typeServiceSelectedEdit{{$data->id}}" class="form-control "
+                            style="width: 100%;">
+                            @if ($data->leadService)
+                            <option value="{{ $data->leadService['id'] }}">
+                              {{ $data->leadService['service'] }}
                             </option>
-                            @endforeach
                             @endif
                           </select>
                         </div>
                         <div class="col-12 col-sm-6 no-padding-right">
-                          <label for="typeProductselectedit">Producto </label>
-                          <select name="typeProduct" id="typeProductselectedit" class="form-control" enabled>
+                          <label for="typeProductselectedit{{$data->id}}">Producto </label>
+                          <select name="typeProduct" id="typeProductselectedit{{$data->id}}" class="form-control "
+                            style="width: 100%;">
                             @if ($data->leadProduct)
-                            <option value="{{ $data->typeProduct }}">
-                              {{ $data->leadProduct['lead_product'] }}
+                            <option value="{{ $data->leadProduct->id }}">
+                              {{ $data->leadProduct->lead_product }}
                             </option>
                             @endif
                           </select>
@@ -202,23 +222,22 @@ use Carbon\Carbon;
                       </div>
                       <div class="row">
                         <div class="col-6 d-flex align-items-end">
-                          <div class="form-group w-100">
-                            <label for="stateSelect">Estado</label>
-                            <select name="state" id="stateSelect" class="form-control" enabled>
+                          <div class="form-group">
+                            <label for="stateSelectEdit{{$data->id}}">Selecciona Estado </label>
+                            <select name="state" id="stateSelectEdit{{$data->id}}" class="form-control "
+                              style="width: 100%;">
                               @if($data->state)
-                              <option value="{{ $data->state }}">-- Selecciona Estado --
-                              </option>
+                              <option disabled selected value> -- Selecciona Estado -- </option>
                               @endif
                             </select>
                           </div>
                         </div>
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
-                            <label for="assessor_id">Asesor</label>
-                            <select class="form-control  select2" id="assessor_id" name="assessor_id"
-                              ng-model="lead.assessor_id" style="width: 100%;">
-                              @if(!empty($listAssessors))
-                              <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
+                            <label for="assessor_id{{$data->id}}">Asesor</label>
+                            <select class="form-control  " id="assessor_id {{$data->id}}" name="assessor_id"
+                              ng-model="lead.assessor_id" style="width: 100%;"> @if(!empty($listAssessors))
+                              <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
                               @foreach($listAssessors as $listAssessor)
                               <option data-select3-id="{{ $listAssessor->id }}" value="{{ $listAssessor->id }}">
                                 {{ $listAssessor->name }}

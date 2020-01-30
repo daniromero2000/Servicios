@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\LeadWarranties;
+namespace App\Http\Controllers\Admin\LeadOportuyas;
 
 use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
@@ -25,7 +25,7 @@ use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
 
-class LeadWarrantyController extends Controller
+class LeadOportuyaController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
@@ -64,7 +64,7 @@ class LeadWarrantyController extends Controller
 
     public function index(Request $request)
     {
-        $area = 3;
+        $area = 6;
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->customListleads($skip * 30, $area);
         if (request()->has('q')) {
@@ -89,7 +89,7 @@ class LeadWarrantyController extends Controller
         }
 
         $listAssessors = 18;
-        return view('leadwarranties.list', [
+        return view('leadoportuya.list', [
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),

@@ -203,8 +203,32 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/LeadWarranties', 'LeadWarrantyController');
     });
 
+    //Panel Cartera
+
     Route::namespace('LeadWallets')->group(function () {
         Route::resource('Administrator/LeadWallets', 'LeadWalletController');
+    });
+
+    //Panel Oportuya
+    Route::namespace('LeadOportuyas')->group(function () {
+        Route::resource('Administrator/LeadsOportuya', 'LeadOportuyaController');
+    });
+
+    //Panel Libranza
+    Route::namespace('LeadLibranzas')->group(function () {
+        Route::resource('Administrator/LeadsLibranzas', 'LeadLibranzaController');
+    });
+
+    //Panel Juridica
+
+    Route::namespace('LeadJuridicals')->group(function () {
+        Route::resource('Administrator/LeadsJuridical', 'LeadJuridicalController');
+    });
+
+    // Panel AdvancedUnit
+
+    Route::namespace('LeadAdvancedUnits')->group(function () {
+        Route::resource('Administrator/LeadsAdvancedUnit', 'LeadAdvancedUnitController');
     });
 });
 

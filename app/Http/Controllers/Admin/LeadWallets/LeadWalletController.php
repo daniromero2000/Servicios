@@ -13,6 +13,7 @@ use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
+use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
@@ -41,7 +42,9 @@ class LeadWalletController extends Controller
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
-        UserRepositoryInterface $UserRepositoryInterface
+        UserRepositoryInterface $UserRepositoryInterface,
+        LeadAreaRepository $LeadAreaRepositoryInterface
+
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -52,16 +55,19 @@ class LeadWalletController extends Controller
         $this->customerInterface     = $customerRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
-        $this->LeadPriceInterface = $LeadPriceRepositoryInterface;
-        $this->UserInterface = $UserRepositoryInterface;
+        $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
+        $this->UserInterface         = $UserRepositoryInterface;
+        $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
+
         $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
-        $service = 9;
+
+        $area = 4;
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->customListleads($skip * 30, $service);
+        $list = $this->leadInterface->customListleads($skip * 30, $area);
         if (request()->has('q')) {
             $list = $this->leadInterface->searchCustomLeads(
                 request()->input('q'),
@@ -71,7 +77,9 @@ class LeadWalletController extends Controller
                 request()->input('state'),
                 request()->input('assessor_id'),
                 request()->input('city'),
-                $service
+                $area,
+                request()->input('typeService'),
+                request()->input('typeProduct')
             );
         }
         $listCount = $list->count();
@@ -86,15 +94,16 @@ class LeadWalletController extends Controller
             'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
-            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'           => $listCount,
             'skip'                => $skip,
+            'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
             'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
-            'lead_statuses'       => $this->LeadStatusesInterface->getLeadStatusesForServices($service),
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
             'listAssessors'       => $this->UserInterface->listUser($listAssessors)
         ]);
     }

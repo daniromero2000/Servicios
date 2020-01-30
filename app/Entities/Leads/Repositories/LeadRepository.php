@@ -319,6 +319,12 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('assessor_id', $assessor);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', $area);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
             })
             ->orderBy('created_at', 'desc')
             ->get($this->columns);
@@ -339,7 +345,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'leadProduct',
                 'leadPrices',
             ])->orderBy('id', 'desc')
-                ->where('area_id', $area)
+                ->where('lead_area_id', $area)
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
@@ -347,18 +353,19 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
-    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area): Collection
+
+    public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product)) {
             return $this->model->orderBy('created_at', 'desc')
                 ->skip($totalView)
-                ->where('area_id', $area)
                 ->take(30)
+                ->where('lead_area_id', $area)
                 ->get($this->columns);
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchCustomLeads($text, null, true, true)->with([
+            return $this->model->searchLeads($text, null, true, true)->with([
                 'leadStatus',
                 'leadAssessor',
                 'leadService',
@@ -371,10 +378,16 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('assessor_id', $assessor);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', $area);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
             })->orderBy('created_at', 'desc')
                 ->skip($totalView)
+                ->where('lead_area_id', $area)
                 ->take(100)
-                ->where('area_id', $area)
                 ->get($this->columns);
         }
 
@@ -392,9 +405,15 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('assessor_id', $assessor);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', $area);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
             })
-            ->where('area_id', $area)
             ->orderBy('created_at', 'desc')
+            ->where('lead_area_id', $area)
             ->get($this->columns);
     }
 

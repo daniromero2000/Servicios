@@ -34,6 +34,8 @@ use Carbon\Carbon;
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
         <td>{{ $data->telephone}}</td>
         <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
+        <td> {{$data->leadArea->name}}
+        </td>
         <td> @if($data->leadService) {{ $data->leadService->service}} @else
           {{$data->typeService}}
           @endif</td>
@@ -172,6 +174,7 @@ use Carbon\Carbon;
                           @endif
                         </select>
                       </div>
+
                       <div class="form-group">
                         <label for="typeAreaSelectEdit{{$data->id}}">Selecciona Area </label>
                         <select onchange="ontypeServiceSelectedProductEditModal({{$data->id}})" name="lead_area_id"
