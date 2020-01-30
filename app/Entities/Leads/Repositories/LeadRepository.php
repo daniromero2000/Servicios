@@ -135,14 +135,15 @@ class LeadRepository implements LeadRepositoryInterface
                 unset($datas[$key]);
             }
 
+            $totalStatusesGenerals = $datas->sum('total');
+
             $leadDatalNames  = [];
             $leadDatalValues  = [];
             foreach ($datas as $leadDatal) {
                 array_push($leadDatalNames, trim($leadDatal['state']));
                 array_push($leadDatalValues, trim($leadDatal['total']));
             }
-
-            return [$leadDatalNames, $leadDatalValues];
+            return [$leadDatalNames, $leadDatalValues, $totalStatusesGenerals];
         } catch (QueryException $e) {
             dd($e);
         }

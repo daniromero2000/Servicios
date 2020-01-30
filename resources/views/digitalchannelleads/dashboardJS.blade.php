@@ -20,6 +20,9 @@
         var serviceValues = [<?php echo '"'.implode('","', $leadServicesValues).'"' ?>];
 
 
+        var leadDigitalChanel = [<?php echo '"'.implode('","', $leadProductDigitalChanels[0]).'"' ?>];
+        var productDigitalChanelValues = [<?php echo '"'.implode('","', $leadProductDigitalChanels[1]).'"' ?>];
+
         var leadInsurance = [<?php echo '"'.implode('","', $leadProductInsurances[0]).'"' ?>];
         var productInsuranceValues = [<?php echo '"'.implode('","', $leadProductInsurances[1]).'"' ?>];
 
@@ -46,7 +49,10 @@
 
         var leadEcommerces = [<?php echo '"'.implode('","', $leadProductEcommerces[0]).'"' ?>];
         var productEcommercesValues = [<?php echo '"'.implode('","', $leadProductEcommerces[1]).'"' ?>];
+
         
+        var serviceDigitalChanels = [<?php echo '"'.implode('","', $leadServiceDigitalChanels[0]).'"' ?>];
+        var serviceDigitalChanelsValues = [<?php echo '"'.implode('","', $leadServiceDigitalChanels[1]).'"' ?>];
 
         var serviceInsurances = [<?php echo '"'.implode('","', $leadServiceInsurances[0]).'"' ?>];
         var serviceInsurancesValues = [<?php echo '"'.implode('","', $leadServiceInsurances[1]).'"' ?>];
@@ -74,8 +80,10 @@
         
         var serviceEcommerces = [<?php echo '"'.implode('","', $leadServiceEcommerces[0]).'"' ?>];
         var serviceEcommercesValues = [<?php echo '"'.implode('","', $leadServiceEcommerces[1]).'"' ?>];
- 
 
+        
+        var statusDigitalChanels = [<?php echo '"'.implode('","', $leadStatusDigitalChanels[0]).'"' ?>];
+        var statusDigitalChanelsValues = [<?php echo '"'.implode('","', $leadStatusDigitalChanels[1]).'"' ?>];
         
         var statusInsurances = [<?php echo '"'.implode('","', $leadStatusInsurances[0]).'"' ?>];
         var statusInsurancesValues = [<?php echo '"'.implode('","', $leadStatusInsurances[1]).'"' ?>];
@@ -517,6 +525,33 @@
     data: donutData14,
     options: donutOptions14
     });
+
+    //-------------
+    //- DONUT CHART - leadEcommerces
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas15 = $('#donutChart15').get(0).getContext('2d')
+    var donutData15 = {
+    labels: serviceDigitalChanels,
+    datasets: [
+    {
+    data: serviceDigitalChanelsValues,
+    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    }
+    ]
+    }
+    var donutOptions15 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart15 = new Chart(donutChartCanvas15, {
+    type: 'doughnut',
+    data: donutData15,
+    options: donutOptions15
+    });
+
 
         //- PIE CHART3 -
         //-------------
@@ -1168,6 +1203,56 @@
         datasets: [
         {
         data: statusEcommercesValues,
+        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 33
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart33').get(0).getContext('2d')
+        var pieData = donutData33 = {
+        labels: leadDigitalChanel,
+        datasets: [
+        {
+        data: productDigitalChanelValues,
+        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 34
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart34').get(0).getContext('2d')
+        var pieData = donutData34 = {
+        labels: statusDigitalChanels,
+        datasets: [
+        {
+        data: statusDigitalChanelsValues,
         backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
         }
         ]

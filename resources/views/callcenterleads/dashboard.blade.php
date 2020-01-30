@@ -91,10 +91,41 @@
               </div>
               <div class="tab-pane fade active show" id="digitalChanels" role="tabpanel"
                 aria-labelledby="digitalChanels-tab">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_digitalChanel')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_digitalChanel')
+                  </div>
+                  <div class="col-12 col-md-8">
+                    @include('digitalchannelleads.layouts.pie_services.pie_service_digitalChanel')
+                    @include('digitalchannelleads.layouts.pie_products.pie_products_digitalChanel')
+                  </div>
+                </div>
               </div>
               <div class="tab-pane fade" id="insurances" role="tabpanel" aria-labelledby="insurances-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_insurances')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_insurances')
                   </div>
                   <div class="col-12 col-md-8">
@@ -106,6 +137,17 @@
               <div class="tab-pane fade" id="warranties" role="tabpanel" aria-labelledby="warranties-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_warranties')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_warranties')
                   </div>
                   <div class="col-12 col-md-8">
@@ -117,6 +159,17 @@
               <div class="tab-pane fade" id="ecommerce" role="tabpanel" aria-labelledby="ecommerce-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_ecommerce')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_Ecommerces')
                   </div>
                   <div class="col-12 col-md-8">
@@ -128,6 +181,17 @@
               <div class="tab-pane fade" id="callCenter" role="tabpanel" aria-labelledby="callCenter-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_callCenter')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_callCenter')
                   </div>
                   <div class="col-12 col-md-8">
@@ -139,6 +203,17 @@
               <div class="tab-pane fade" id="oportuyas" role="tabpanel" aria-labelledby="oportuyas-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_oportuyas')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_oportuyas')
                   </div>
                   <div class="col-12 col-md-8">
@@ -150,6 +225,17 @@
               <div class="tab-pane fade" id="advancedUnit" role="tabpanel" aria-labelledby="advancedUnit-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_AdvancedUnit')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_AdvancedUnit')
                   </div>
                   <div class="col-12 col-md-8">
@@ -161,6 +247,17 @@
               <div class="tab-pane fade" id="wallets" role="tabpanel" aria-labelledby="wallets-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_Wallets')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_Wallets')
                   </div>
                   <div class="col-12 col-md-8">
@@ -172,6 +269,17 @@
               <div class="tab-pane fade" id="juridicales" role="tabpanel" aria-labelledby="juridicales-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_Juridicales')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_Juridicales')
                   </div>
                   <div class="col-12 col-md-8">
@@ -183,6 +291,17 @@
               <div class="tab-pane fade" id="libranzas" role="tabpanel" aria-labelledby="libranzas-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('digitalchannelleads.layouts.card_total_leads_Libranzas')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_Libranzas')
                   </div>
                   <div class="col-12 col-md-8">
@@ -197,11 +316,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <div class="row">
       <div class="col-md-4">
         <!-- AREA CHART DEBE IR OCULTA-->
