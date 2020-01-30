@@ -233,6 +233,11 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('LeadEcommerces')->group(function () {
         Route::resource('Administrator/LeadsEcommerce', 'LeadEcommerceController');
     });
+
+    // Panel Insurance
+    Route::namespace('LeadInsurances')->group(function () {
+        Route::resource('Administrator/LeadsInsurance', 'LeadInsuranceController');
+    });
 });
 
 /**
