@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Entities\Comment;
+use App\Entities\LeadAreas\LeadArea;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -31,5 +32,10 @@ class User extends Authenticatable
     public function hasIdProfile(string $profileId, $user): bool
     {
         return $this->where('id', $user)->where('idProfile', $profileId)->exists();
+    }
+
+    public function leadArea()
+    {
+        return $this->belongsTo(LeadArea::class);
     }
 }

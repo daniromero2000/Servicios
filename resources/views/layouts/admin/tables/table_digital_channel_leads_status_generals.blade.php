@@ -233,16 +233,10 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
-                            <label for="assessor_id{{$data->id}}">Asesor</label>
-                            <select class="form-control  " id="assessor_id {{$data->id}}" name="assessor_id"
-                              ng-model="lead.assessor_id" style="width: 100%;"> @if(!empty($listAssessors))
+                            <label for="selectAssessorEdit{{$data->id}}">Asesor</label>
+                            <select class="form-control  " id="selectAssessorEdit{{$data->id}}" name="assessor_id"
+                              ng-model="lead.assessor_id" style="width: 100%;">
                               <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
-                              @foreach($listAssessors as $listAssessor)
-                              <option data-select3-id="{{ $listAssessor->id }}" value="{{ $listAssessor->id }}">
-                                {{ $listAssessor->name }}
-                              </option>
-                              @endforeach
-                              @endif
                             </select>
                           </div>
                         </div>
@@ -259,7 +253,6 @@ use Carbon\Carbon;
           </div>
         </div>
       </div>
-
       <div class="modal fade" id="addComment{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

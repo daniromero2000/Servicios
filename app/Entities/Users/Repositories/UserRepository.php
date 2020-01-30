@@ -23,10 +23,10 @@ class UserRepository implements UserRepositoryInterface
         }
     }
 
-    public function listUser($profile)
+    public function listUser($area)
     {
         try {
-            return $this->model->where('idProfile', $profile)->get();
+            return $this->model->where('lead_area_id', $area)->get();
         } catch (QueryException $e) {
         }
     }

@@ -7,6 +7,7 @@ use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -24,6 +25,7 @@ use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Product;
+use App\User;
 
 class LeadEcommerceController extends Controller
 {
@@ -191,7 +193,6 @@ class LeadEcommerceController extends Controller
 
     public function destroy($id)
     {
-        // $Campaign = Campaigns::findOrfail($id);
         $digitalChannelLead =  $this->leadInterface->findLeadDelete($id);
         $digitalChannelLead->delete();
         return redirect()->back();

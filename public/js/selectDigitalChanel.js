@@ -7,18 +7,26 @@ function ontypeAreaSelectCreate() {
         $('#typeProductCreate').html('<option value=""> -- Selecciona Producto -- </option>');
     }
     $.get('/getproducts/' + typeServiceCreateSelected_id + '', function (data) {
-        var html_selectEdit = "";
+        var html_selectEdit = '<option disabled selected value> -- Selecciona Producto -- </option>';
         for (var i = 0; i < data.length; i++) {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
         }
         $('#typeProductCreate').html(html_selectEdit);
     });
     $.get('/getServices/' + typeServiceCreateSelected_id + '', function (data) {
-        var html_selectEdit = "";
+        var html_selectEdit = '<option disabled selected value> -- Selecciona Servicio -- </option>';
         for (var i = 0; i < data.length; i++) {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].service + '</option>';
         }
         $('#typeServiceSelectedCreate').html(html_selectEdit);
+    });
+    $.get('/getAssessors/' + typeServiceCreateSelected_id + '', function (data) {
+        var html_selectEdit = '<option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>'
+
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        }
+        $('#selectAssessorCreate').html(html_selectEdit);
     });
 }
 $(function () {
@@ -53,6 +61,13 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         }
         $('#stateSelectEdit' + dataId).html(html_selectEdit);
     });
+    $.get('/getAssessors/' + typeServiceEditSelected_id + '', function (data) {
+        var html_selectEdit = '<option disabled selected value> -- Selecciona Asesor -- </option>'
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '" selected="selected">' + data[i].name + '</option>';
+        }
+        $('#selectAssessorEdit' + dataId).html(html_selectEdit);
+    });
 };
 $(function () {
     $("#typeAreaSelectFilter").on('change', ontypeAreaSelectFilter)
@@ -82,5 +97,13 @@ function ontypeAreaSelectFilter() {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
         }
         $('#typeProductFilter').html(html_selectEdit);
+    });
+
+    $.get('/getAssessors/' + typeAreaSelectFilter_id + '', function (data) {
+        var html_selectEdit = '<option disabled selected value> -- Selecciona Asesor -- </option>';
+        for (var i = 0; i < data.length; i++) {
+            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        }
+        $('#assessorSelectFilter').html(html_selectEdit);
     });
 };

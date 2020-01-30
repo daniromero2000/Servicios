@@ -24,7 +24,7 @@ class LeadArea extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasMany(User::class, 'lead_area_id');
     }
     public function leadStatuses()
     {
