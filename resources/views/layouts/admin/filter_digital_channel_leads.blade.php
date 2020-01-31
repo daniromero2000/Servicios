@@ -62,8 +62,14 @@
                                     class="form-control w-100 select2 select2-hidden-accessible" style="width: 100%;"
                                     enabled>
                                     <option disabled selected value> -- Selecciona Servicio -- </option>
+                                    @if(!empty($services))
+                                    @foreach ($services as $service)
+                                    <option value="{{ $service->id }}">
+                                        {{ $service->service }}
+                                    </option>
+                                    @endforeach
+                                    @endif
                                 </select>
-
                             </div>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 col-xl-2">
@@ -73,8 +79,14 @@
                                     class="form-control w-100 select2 select2-hidden-accessible" style="width: 100%;"
                                     enabled>
                                     <option disabled selected value> -- Selecciona Producto -- </option>
+                                    @if(!empty($lead_products))
+                                    @foreach ($lead_products as $lead_product)
+                                    <option value="{{ $lead_product->id }}">
+                                        {{ $lead_product->lead_product }}
+                                    </option>
+                                    @endforeach
+                                    @endif
                                 </select>
-
                             </div>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 col-xl-2">
@@ -83,7 +95,13 @@
                                 <select name="state" id="stateSelectFilter"
                                     class="form-control select2  mt-2 select2-hidden-accessible" style="width: 100%;">
                                     <option disabled selected value> -- Selecciona Estado -- </option>
-
+                                    @if(!empty($lead_statuses))
+                                    @foreach ($lead_statuses as $lead_status)
+                                    <option value="{{ $lead_status->id }}">
+                                        {{ $lead_status->status }}
+                                    </option>
+                                    @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -94,7 +112,6 @@
                                     class="form-control select2 select2-hidden-accessible" style="width: 100%;"
                                     data-select4-id="1" tabindex="-1" aria-hidden="true">
                                     <option disabled selected value> -- Selecciona Asesor -- </option>
-
                                 </select>
                             </div>
                         </div>

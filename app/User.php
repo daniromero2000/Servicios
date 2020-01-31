@@ -16,7 +16,9 @@ class User extends Authenticatable
         'email',
         'password',
         'idProfile',
-        'codeOportudata'
+        'codeOportudata',
+        'master',
+        'lead_area_id'
     ];
 
     protected $hidden = [

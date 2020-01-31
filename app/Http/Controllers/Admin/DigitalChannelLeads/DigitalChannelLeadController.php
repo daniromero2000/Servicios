@@ -103,7 +103,6 @@ class DigitalChannelLeadController extends Controller
             'listAssessors'       => $this->UserInterface->listUser($profile)
         ]);
     }
-
     public function store(CreateLeadRequest $request)
     {
 
