@@ -90,8 +90,10 @@ class FactoryRequestController extends Controller
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
         }
 
+
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
         $webCounts    = $this->toolsInterface->extractValuesToArray($webCounts);
+
 
         $statusesNames  = [];
         $statusesValues = [];
