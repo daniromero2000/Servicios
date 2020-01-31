@@ -340,12 +340,26 @@ class assessorsController extends Controller
         $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
         $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
+        $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "APROBADO");
+        $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
+        $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
+        $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "PENDIENTE");
 
         if (request()->has('from')) {
             $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
             $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory(request()->input('from'), request()->input('to'), $assessor);
             $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal(request()->input('from'), request()->input('to'), $assessor);
+            $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "APROBADO");
+            $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
+            $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
+            $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "PENDIENTE");
         }
+
+
+        $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+        $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+        $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+        $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
 
         $estadosAssessors     = $estadosAssessors->toArray();
         $webAssessorsCounts   = $webAssessorsCounts->toArray();
@@ -354,6 +368,30 @@ class assessorsController extends Controller
         $statusesAssessors    = [];
         $statusesValues       = [];
         $statusesColors       = [];
+
+
+        $statusesAprobadosValues = [];
+        foreach ($estadosAprobados as $estadosAprobado) {
+            array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+        }
+
+
+        $statusesNegadoValues = [];
+        foreach ($estadosNegados as $estadosNegado) {
+            array_push($statusesNegadoValues, trim($estadosNegado['total']));
+        }
+
+
+        $statusesDesistidosValues = [];
+        foreach ($estadosDesistidos as $estadosDesistido) {
+            array_push($statusesDesistidosValues, trim($estadosDesistido['total']));
+        }
+
+
+        $statusesPendientesValues = [];
+        foreach ($estadosPendientes as $estadosPendiente) {
+            array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+        }
 
         foreach ($estadosAssessors as $estadosName) {
             array_push($statusesAssessors, trim($estadosName['ESTADO']));
@@ -378,6 +416,10 @@ class assessorsController extends Controller
             'totalStatuses'           => array_sum($statusesValues),
             'totalWeb'                => array_sum($webValues),
             'factoryAssessorsTotal'   => $factoryAssessorsTotal,
+            'statusesAprobadosValues'  => $statusesAprobadosValues,
+            'statusesNegadoValues'     => $statusesNegadoValues,
+            'statusesPendientesValues' => $statusesPendientesValues,
+            'statusesDesistidosValues' => $statusesDesistidosValues
         ]);
     }
 }

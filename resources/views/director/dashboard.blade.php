@@ -65,7 +65,10 @@
                 <div class="row">
                   <div class="col-6">
                     <span class="info-box-text">Aprobados</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-number">@if (empty($statusesAprobadosValues))
+                      0 @else
+                      {{ number_format($statusesAprobadosValues[0]) }}
+                      @endif</span>
                   </div>
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
@@ -76,9 +79,6 @@
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
               </div>
             </div>
           </div>
@@ -92,7 +92,10 @@
                 <div class="row">
                   <div class="col-6">
                     <span class="info-box-text">Pendientes</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-number">@if (empty($statusesPendientesValues))
+                      0 @else
+                      {{ number_format($statusesPendientesValues[0]) }}
+                      @endif</span>
                   </div>
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
@@ -103,9 +106,6 @@
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
               </div>
             </div>
           </div>
@@ -119,7 +119,10 @@
                 <div class="row">
                   <div class="col-6">
                     <span class="info-box-text">Desistidos</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-number"> @if (empty($statusesDesistidosValues))
+                      0 @else
+                      {{ number_format($statusesDesistidosValues[0]) }}
+                      @endif</span>
                   </div>
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
@@ -130,9 +133,6 @@
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
               </div>
             </div>
           </div>
@@ -146,7 +146,10 @@
                 <div class="row">
                   <div class="col-6">
                     <span class="info-box-text">Negados</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-number">@if (empty($statusesNegadoValues))
+                      0 @else
+                      {{ number_format($statusesNegadoValues[0]) }}
+                      @endif</span>
                   </div>
                   <div class="col-6">
                     <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
@@ -157,9 +160,6 @@
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
-                <span class="progress-description">
-                  70% Increase in 30 Days
-                </span>
               </div>
             </div>
           </div>

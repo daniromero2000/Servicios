@@ -323,6 +323,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->where('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     //Hasta aqui Asesores
 
     //Directores
@@ -408,6 +423,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $director)
+                ->where('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
         } catch (QueryException $e) {
             dd($e);
         }
