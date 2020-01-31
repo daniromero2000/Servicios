@@ -50,7 +50,6 @@ class FactoryRequestController extends Controller
         $listCount = $list->count();
         $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
-        // dd($list);
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
@@ -84,15 +83,50 @@ class FactoryRequestController extends Controller
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
+        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "APROBADO");
+        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "NEGADO");
+        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "DESISTIDO");
+        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "PENDIENTE");
 
         if (request()->has('from')) {
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "APROBADO");
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "NEGADO");
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "DESISTIDO");
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "PENDIENTE");
         }
 
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
         $webCounts    = $this->toolsInterface->extractValuesToArray($webCounts);
+        $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+        $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+        $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+        $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+        $statusesAprobadosValues = [];
+        foreach ($estadosAprobados as $estadosAprobado) {
+            array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+        }
+
+
+        $statusesNegadoValues = [];
+        foreach ($estadosNegados as $estadosNegado) {
+            array_push($statusesNegadoValues, trim($estadosNegado['total']));
+        }
+
+
+        $statusesDesistidosValues = [];
+        foreach ($estadosDesistidos as $estadosDesistido) {
+            array_push($statusesDesistidosValues, trim($estadosDesistido['total']));
+        }
+
+
+        $statusesPendientesValues = [];
+        foreach ($estadosPendientes as $estadosPendiente) {
+            array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+        }
 
 
         $statusesNames  = [];
@@ -110,16 +144,18 @@ class FactoryRequestController extends Controller
             array_push($webNames, trim($webCount['ESTADO']));
             array_push($webValues, trim($webCount['total']));
         }
-
-
         return view('factoryrequests.dashboard', [
-            'statusesNames'        => $statusesNames,
-            'statusesValues'       => $statusesValues,
-            'webValues'            => $webValues,
-            'webNames'             => $webNames,
-            'totalWeb'             => array_sum($webValues),
-            'totalStatuses'        => array_sum($statusesValues),
-            'factoryRequestsTotal' => $factoryRequestsTotal,
+            'statusesNames'            => $statusesNames,
+            'statusesValues'           => $statusesValues,
+            'webValues'                => $webValues,
+            'webNames'                 => $webNames,
+            'totalWeb'                 => array_sum($webValues),
+            'totalStatuses'            => array_sum($statusesValues),
+            'factoryRequestsTotal'     => $factoryRequestsTotal,
+            'statusesAprobadosValues'  => $statusesAprobadosValues,
+            'statusesNegadoValues'     => $statusesNegadoValues,
+            'statusesPendientesValues' => $statusesPendientesValues,
+            'statusesDesistidosValues' => $statusesDesistidosValues
         ]);
     }
 }
