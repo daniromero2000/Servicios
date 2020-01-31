@@ -40,7 +40,7 @@
               <div class="inner">
                 <h4 class="mt-2">${{ number_format ($factoryRequestsTotal) }}
                 </h4>
-                <p style="margin-bottom: -4px !important;">Total Cotizado </p>
+                <p style="margin-bottom: -4px !important;">Total</p>
               </div>
               <br>
               <div class="icon">

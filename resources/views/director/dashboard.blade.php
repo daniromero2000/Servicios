@@ -19,26 +19,37 @@
     <div class="col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-6 ">
+          <div class="col-12 ">
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Solicitudes Crédito <br> en los últimos 30 días</p>
+                <p style="margin-bottom: -4px !important;">Solicitudes Crédito en los últimos 30 días</p>
               </div>
-              <div class="icon">
+              <div class="icon mt-3">
                 <i class="ion ion-stats-bars"></i>
+              </div>
+              <div class="text-right mr-2">
+                <span class="info-box-text text-right">
+                  <a href="Administrator/director" style="color: white; !important">Ver
+                    Más</a></span>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6">
+          <div class="col-12">
             <div class="small-box bg-success">
               <div class="inner">
-                <h2>Total</h2>
-                <br>
-                <p>${{ number_format ($factoryRequestsTotal) }} </p>
+                <h4 class="mt-2">${{ number_format ($factoryRequestsTotal) }}
+                </h4>
+                <p style="margin-bottom: -4px !important;">Total</p>
               </div>
+              <br>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
+              </div>
+              <div style="margin-top: -5px;" class="text-right mr-2">
+                <span class="info-box-text text-right">
+                  <a href="Administrator/director" style="color: white; !important">Ver
+                    Más</a></span>
               </div>
             </div>
           </div>
