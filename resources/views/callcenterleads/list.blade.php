@@ -19,9 +19,9 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
-                                    href="/Administrator/dashboard/communitymanager">Dashboard
-                                    Leads Canal Digital</a>
-                            <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads</a>
+                                    href="/Administrator/dashboard/CallCenterleads">Dashboard
+                                    Leads Call Center</a>
+                            <li class="breadcrumb-item active"><a href="/Administrator/callcenterleads">Leads</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -50,15 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                    <div class="inner">
-                                        <h4>Total de Cotizaciónes</h4>
-                                        <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         @php

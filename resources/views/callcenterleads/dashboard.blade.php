@@ -68,7 +68,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads')
+                              @include('callcenterleads.layouts.card_total_leads')
                             </div>
                           </div>
                         </div>
