@@ -1,4 +1,4 @@
-<div class="container-fluid card mt-4 card-table-reset">
+<div class="container-fluid card mt-2 card-table-reset">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-credit-card mr-3"></i> Productos</h2>
   </div>

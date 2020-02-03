@@ -16,7 +16,7 @@
                         <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
                     </ol>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mt-2">
                     <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                 </div>
             </div>
