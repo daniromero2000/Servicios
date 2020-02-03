@@ -192,7 +192,8 @@ class DigitalChannelLeadController extends Controller
     public function dashboard(Request $request)
     {
         $to = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $from = Carbon::now()->startOfMonth();
+        // $from = Carbon::now()->subMonth();
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);

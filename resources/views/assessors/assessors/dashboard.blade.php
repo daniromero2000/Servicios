@@ -37,7 +37,7 @@
               </div>
               <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="/Administrator/assessors" style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -55,7 +55,7 @@
               </div>
               <div style="margin-top: -5px;" class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="/Administrator/assessors" style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -720,8 +720,8 @@ var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
       datasets: [
         {
           data: values,
-          backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc',  '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-        }
+          backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+          }
       ]
     }
     var donutOptions     = {
@@ -746,8 +746,7 @@ var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
       datasets: [
       {
       data: webValues,
-      backgroundColor : ['#f86954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef',
-      '#3c8dbc', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+      backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
       }
       ]
       }

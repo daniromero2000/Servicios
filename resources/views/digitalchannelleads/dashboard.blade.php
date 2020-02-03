@@ -116,8 +116,7 @@
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade active show" id="digitalChanels" role="tabpanel"
-                aria-labelledby="digitalChanels-tab">
+              <div class="tab-pane fade" id="digitalChanels" role="tabpanel" aria-labelledby="digitalChanels-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <div class="col-12 col-sm-12">
