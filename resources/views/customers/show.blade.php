@@ -6,10 +6,8 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-4">
-                    <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
-                </div>
-                <div class="col-sm-8">
+
+                <div class="col-12">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a>
@@ -17,6 +15,9 @@
                         <li class="breadcrumb-item active"><a href="/Administrator/customers">Clientes</a></li>
                         <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
                     </ol>
+                </div>
+                <div class="col-12">
+                    <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                 </div>
             </div>
         </div>

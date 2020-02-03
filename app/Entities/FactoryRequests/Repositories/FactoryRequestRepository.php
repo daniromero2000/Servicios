@@ -237,6 +237,17 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function listFactoryAssessorsTotal($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->whereBetween('FECHASOL', [$from, $to])->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function listFactoryAssessors($totalView, $assessor): Support
     {
         try {

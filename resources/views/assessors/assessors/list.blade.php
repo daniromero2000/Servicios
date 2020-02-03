@@ -27,25 +27,26 @@
             <div class="card-header">
               @include('layouts.admin.filter_assessors', ['route' => route('assessors.index')])
             </div>
-            <div class=" mt-2 col-12 col-sm-6 col-md-12">
+            <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
-                <div class="col-12 col-sm-6 col-md-6">
+                <div class="col-12 col-sm-12 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
                       <h2>{{ $listCount }}</h2>
-                      <p>Solicitudes</p>
+                      <p>Solicitudes en este mes</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-stats-bars"></i>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-6">
+                <div class="col-12 col-sm-12 col-md-6">
+                  <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
-                      <h2>Total</h2>
-                      <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                      <h4>${{ number_format ($factoryRequestsTotal) }}</h4>
+                      <p class="mt-3">Total en este mes</p>
                     </div>
                     <div class="icon">
                       <i class="fas fa-shopping-cart"></i>

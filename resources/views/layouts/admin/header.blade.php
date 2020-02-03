@@ -24,24 +24,24 @@
           <ul class="dropdown-menu">
             <!-- Default box -->
             <div class="row d-flex align-items-stretch">
-              <div class="col-12 col-sm-6 col-md-12 align-items-stretch">
-                <div class="card bg-light" style="margin: 0px;">
-                  <div class="card-header text-muted border-bottom-0">
+              <div class="col-12 col-sm-12 col-md-12 align-items-stretch">
+                <div class="card bg-light w-100" style="margin: 0px;">
+                  <div class="card-header w-100 text-muted border-bottom-0">
                     Asesor
                   </div>
-                  <div class="card-body pt-0">
-                    <div class="row ">
-                      <div class="col-7 d-flex m-auto">
+                  <div class="card-body w-100 pt-0">
+                    <div class="row w-100 ">
+                      <div class="col-7 w-100 d-flex m-auto">
                         <h2 class="lead"><b>{{ auth()->user()->name }}</b></h2>
 
                       </div>
-                      <div class="col-5 text-center">
+                      <div class="col-5 w-100 text-center">
                         <img src="{{ asset('images/analista1.png') }}" alt="" class="img-circle img-fluid">
                       </div>
                     </div>
-                    <div class="row mt-2">
-                      <div class="col-12">
-                        <p class="text-muted small text-sm" style="margin-bottom: 0px;"><i
+                    <div class="row w-100 mt-2">
+                      <div class="col-12 w-100">
+                        <p class="text-muted  small text-sm" style="margin-bottom: 0px;"><i
                             class="fas fa-md fa-envelope"> </i> {{ auth()->user()->email }}</p>
                         <ul class="ml-4 mb-0 fa-ul text-muted">
                           <li class="small"><span class="fa-li"><i class="fas fa-lg fa-code"></i></span>
@@ -50,19 +50,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer">
-                    <div class="row">
-                      <div class="col-4">
+                  <div class="card-footer w-100">
+                    <div class="row w-100">
+                      <div class="col-4 w-100">
                         <a href="/Administrator/profile/users" class="btn btn-sm btn-primary">
                           <i class="far fa-user"></i> Perfil
                         </a>
                       </div>
-                      <div class="col-5 text-right">
+                      <div class="col-5 w-100 text-right">
                         <a href="#" class="btn btn-sm bg-teal " style="height: 100%;">
                           <i class="fas fa-comments mt-1"></i>
                         </a>
                       </div>
-                      <div class="col-3">
+                      <div class="col-3 w-100">
                         <a href=" {{ route('logout') }}" class="btn btn-sm btn-danger">
                           <i class="fas fa-power-off"></i> Salir
                         </a>

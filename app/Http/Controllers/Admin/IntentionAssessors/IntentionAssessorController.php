@@ -69,8 +69,8 @@ class IntentionAssessorController extends Controller
 
     public function dashboard(Request $request)
     {
-        $to   = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
         $assessor = auth()->user()->email;
 
 

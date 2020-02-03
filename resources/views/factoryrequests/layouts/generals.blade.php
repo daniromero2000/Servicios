@@ -1,12 +1,12 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-8">
-        <h2 class="title-table"><i class="fas fa-user mr-2"></i> Solicitud {{ $factoryRequest->SOLICITUD }}
+      <div class="col-12 col-sm-8">
+        <h4 class="title-table"><i class="fas fa-user mr-2"></i> Solicitud {{ $factoryRequest->SOLICITUD }}
           Sucursal {{ $factoryRequest->SUCURSAL }} </span>
-        </h2>
+        </h4>
       </div>
-      <div class="col-4 text-right"><span class="badge title-table-status badge-primary">
+      <div class="col-12 col-sm-4 text-right"><span class="badge title-table-status badge-primary">
           {{ $factoryRequest->ESTADO }}
       </div>
     </div>
@@ -29,8 +29,9 @@
         <tr>
           <td class="text-center">{{ $factoryRequest->FECHASOL }}</td>
           <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
-                  href="{{ route('customers.show', $factoryRequest->CLIENTE) }}"> {{ str_replace(' ', '', $factoryRequest->CLIENTE) }} </a>
-              </td>
+              href="{{ route('customers.show', $factoryRequest->CLIENTE) }}">
+              {{ str_replace(' ', '', $factoryRequest->CLIENTE) }} </a>
+          </td>
           <td class="text-center">
             {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
           <td class="text-center">{{ $factoryRequest->CODASESOR }}</td>

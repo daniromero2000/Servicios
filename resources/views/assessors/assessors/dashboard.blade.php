@@ -30,7 +30,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p style="margin-bottom: -4px !important;">Solicitudes Crédito en los últimos 30 días</p>
+                <p style="margin-bottom: -4px !important;">Solicitudes Crédito en este mes</p>
               </div>
               <div class="icon mt-3">
                 <i class="ion ion-stats-bars"></i>
@@ -47,7 +47,7 @@
               <div class="inner">
                 <h4 class="mt-2">${{ number_format ($factoryAssessorsTotal) }}
                 </h4>
-                <p style="margin-bottom: -4px !important;">Total</p>
+                <p style="margin-bottom: -4px !important;">Total en este mes</p>
               </div>
               <br>
               <div class="icon">

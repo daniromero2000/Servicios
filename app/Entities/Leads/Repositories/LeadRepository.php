@@ -105,38 +105,6 @@ class LeadRepository implements LeadRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
-
-        // try {
-        //     $datas =   $this->model->whereBetween('created_at', [$from, $to])->get();
-
-        //     // foreach ($datas as $key => $status) {
-        //     //     $option = ($key == '') ? 'Sin Estado' : $key;
-        //     //     $datas[] = ['state' => $option, 'total' => count($datas[$key])];
-        //     //     unset($datas[$key]);
-        //     // }
-
-        //     // dd($datas);
-
-        //     $totalStatusesGenerals = $datas->count();
-        //     $totalStatusesGenerals = $datas->sum();
-
-
-        //     $leadDatalNames  = [];
-        //     $leadDatalValues  = [];
-        //     foreach ($datas as $leadDatal) {
-        //         array_push($leadDatalNames, trim($leadDatal['state']));
-        //         array_push($leadDatalValues, trim($leadDatal['total']));
-        //     }
-        //     return [$leadDatalNames, $leadDatalValues, $totalStatusesGenerals];
-        // } catch (QueryException $e) {
-        //     dd($e);
-        // }
-
-        // // try {
-        // //     return  $this->model->whereBetween('created_at', [$from, $to])->get();
-        // // } catch (QueryException $e) {
-        // //     dd($e);
-        // // }
     }
 
     public function countLeadChannels($from, $to)

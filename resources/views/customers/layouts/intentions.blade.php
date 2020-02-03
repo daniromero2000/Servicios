@@ -28,7 +28,8 @@
           <td>{{ $data->FECHA_INTENCION}}</td>
           <td>{{ $data->id}}</td>
           <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
-          <td><span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
+          <td>@if ($data->intentionStatus)
+            <span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
               class="badge badge-warning"
               @endif
               @if ($data->intentionStatus['NAME'] == "APROBADO")
@@ -40,6 +41,7 @@
               @if ($data->intentionStatus['NAME'] == "NEGADO")
               class="badge badge-danger"
               @endif style="font-size: 11px;"> {{ $data->intentionStatus['NAME']}}</span>
+            @endif
           </td>
           <td>{{ $data->customer['ACTIVIDAD']}}</td>
           <td>@if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
@@ -61,7 +63,11 @@
             @if ($data->TIPO_5_ESPECIAL == 0)NO @endif</td>
           <td>@if ($data->INSPECCION_OCULAR == 1)SI @endif
             @if ($data->INSPECCION_OCULAR == 0)NO @endif</td>
-          <td>{{ $data->definition['DESCRIPCION']}}</td>
+          <td>
+            @if ($data->definition )
+            {{ $data->definition['DESCRIPCION']}}
+            @endif
+          </td>
         </tr>
         @endforeach
       <tbody>

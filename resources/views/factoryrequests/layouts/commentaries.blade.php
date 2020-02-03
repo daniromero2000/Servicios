@@ -1,6 +1,6 @@
 <div class="col-md-4">
     <div class="card card-table-reset">
-        <div class="card-body">
+        <div class="card-body table-responsive pt-1">
             <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
                 Canal Digital
             </h2>

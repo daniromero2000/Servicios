@@ -42,9 +42,13 @@ class assessorsController extends Controller
      */
     public function index(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
         $assessor = auth()->user()->email;
-        $skip     = $this->toolsInterface->getSkip($request->input('skip'));
-        $list     = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
+        $skip         = $this->toolsInterface->getSkip($request->input('skip'));
+        $list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
+        $listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
+        $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 
         if (request()->has('q')) {
             $list = $this->factoryInterface->searchFactoryAseessors(
@@ -58,8 +62,7 @@ class assessorsController extends Controller
             )->sortByDesc('FECHASOL');
         }
 
-        $listCount            = $list->count();
-        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+        $listCount = $listCount->count();
 
         return view('assessors.assessors.list', [
             'factoryRequests'      => $list,
@@ -334,8 +337,8 @@ class assessorsController extends Controller
     public function dashboard(Request $request)
     {
         $assessor = auth()->user()->email;
-        $to       = Carbon::now();
-        $from     = Carbon::now()->subMonth();
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
 
         $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);

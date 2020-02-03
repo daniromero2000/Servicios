@@ -1,17 +1,19 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-8">
-        <h2 class="title-table"><i class="fas fa-user mr-2"></i> {{ $customer->NOMBRES }}
+      <div class="col-12 col-lg-7">
+        <h2 class="title-table mt-2"><i class="fas fa-user mr-2"></i> {{ $customer->NOMBRES }}
           {{ $customer->APELLIDOS }} </span>
         </h2>
       </div>
-      <div class="col-1 text-right"><span
-          class="badge title-table-status badge-primary"> Score {{ $customer->latestCifinScore['score'] }}
+      <div class="col-12 col-sm-2 col-lg-2 text-right"><span class="mt-2 badge title-table-status badge-primary"> Score
+          {{ $customer->latestCifinScore['score'] }}
       </div>
-      <div class="col-1 text-right"><span class="badge title-table-status badge-primary"> @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
+      <div class="col-12 col-sm-2 col-lg-1 text-right"><span class="mt-2 badge title-table-status badge-primary">
+          @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
       </div>
-      <div class="col-1 text-right"><span class="badge title-table-status badge-primary">{{ $customer->ESTADO }}
+      <div class="col-12 col-sm-2 col-lg-1 text-right"><span
+          class="mt-2 badge title-table-status badge-primary">{{ $customer->ESTADO }}
       </div>
     </div>
   </div>

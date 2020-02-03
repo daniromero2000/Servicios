@@ -1,15 +1,15 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-8">
-        <h2 class="title-table"><i class="fas fa-user mr-2"></i> 
+      <div class="col-12 col-md-8">
+        <h2 class="title-table"><i class="fas fa-user mr-2"></i>
           <span>
-            Intención {{ $intention->id }} - <a href="{{ route('customers.show', $intention->CEDULA) }}" data-toggle="tooltip"
-              title="Ver Cliente">{{ $intention->CEDULA}}</a>
+            Intención {{ $intention->id }} - <a href="{{ route('customers.show', $intention->CEDULA) }}"
+              data-toggle="tooltip" title="Ver Cliente">{{ $intention->CEDULA}}</a>
           </span>
         </h2>
       </div>
-      <div class="col-4 text-right"><span class="badge title-table-status badge-primary">
+      <div class="col-12 col-md-4 text-right"><span class="badge mt-2 title-table-status badge-primary">
           {{ $intention->intentionStatus->NAME }}
       </div>
     </div>
