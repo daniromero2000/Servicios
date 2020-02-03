@@ -1,26 +1,23 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-8">
-        <h2 class="title-table"><i class="fas fa-user mr-2"></i>{{ $digitalChannelLead->name }}
+      <div class="col-12 text-right">
+        <button id="edit_show" class="btn btn-primary btn-sm" onclick="dataLead({{$digitalChannelLead->id}})"
+          data-toggle="modal" data-target="#updateleadModal">
+          Editar <i class="fas fa-edit    "></i>
+        </button>
+      </div>
+      <div class="col-12 mt-2">
+        <h5 class="title-table"><i class="fas fa-user mr-2"></i>{{ $digitalChannelLead->name }}
           {{ $digitalChannelLead->lastName }} ({{ $digitalChannelLead->identificationNumber }})
           </span>
-        </h2>
+        </h5>
         <span class="text-center badge"
           style="color: white ; background-color: {{$digitalChannelLead->leadStatuses->color }}"
           class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
         @if($digitalChannelLead->leadAssessor)
         {{ $digitalChannelLead->leadAssessor['name']}}
         @endif
-      </div>
-      <div class="col-4 text-right">
-        <button class="btn btn-primary btn-sm">
-          <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i class="far fa-plus-square"></i></a>
-        </button>
-        <button id="edit_show" class="btn btn-primary btn-sm" onclick="dataLead({{$digitalChannelLead->id}})"
-          data-toggle="modal" data-target="#updateleadModal">
-          Editar <i class="fas fa-edit    "></i>
-        </button>
       </div>
     </div>
   </div>

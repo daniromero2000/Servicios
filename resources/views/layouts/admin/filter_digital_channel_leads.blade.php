@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="col-12">
-                    <div class="row d-flex w-100 justify-content-center">
+                    <div class="row d-flex w-102 justify-content-center">
                         <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                             <div class="form-group">
                                 <label for="typeAreaSelectFilter">Selecciona Area </label>

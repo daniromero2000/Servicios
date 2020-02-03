@@ -8,12 +8,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-4">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
-                        <button class="btn btn-primary ml-auto mr-3 mb-2 ">
-                            <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
-                                    class="far fa-plus-square"></i></a>
-                        </button>
+                    <div class="col-sm-4">
                     </div>
                     <div class="col-sm-8">
                         <ol class="breadcrumb float-sm-right">
@@ -24,6 +19,13 @@
                             <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads</a>
                             </li>
                         </ol>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                        <button class="btn btn-primary ml-auto mr-3 mb-2 ">
+                            <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
+                                    class="far fa-plus-square"></i></a>
+                        </button>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -42,21 +44,24 @@
                                     <!-- /.info-box -->
                                     <div class="small-box ">
                                         <div class="inner">
-                                            <h2>{{ $listCount }}</h2>
-                                            <p>Solicitudes</p>
+                                            <h2>{{ $leadsOfMonth }}</h2>
+                                            <p>Solicitudes en este mes</p>
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 small-box inner">
-                                    <div class="inner">
-                                        <h4>Total de Cotizaciónes</h4>
-                                        <p class="mt-3">${{ number_format ($pricesTotal) }}</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-shopping-cart"></i>
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <!-- /.info-box -->
+                                    <div class="small-box ">
+                                        <div class="inner">
+                                            <h4>${{ number_format ($leadsOfMonthTotal) }}</h4>
+                                            <p class="mt-3">Total de Cotizaciónes en este mes</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

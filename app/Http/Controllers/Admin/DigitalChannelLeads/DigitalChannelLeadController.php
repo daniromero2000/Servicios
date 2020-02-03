@@ -60,6 +60,17 @@ class DigitalChannelLeadController extends Controller
 
     public function index(Request $request)
     {
+
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+        $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
+
+        $leadsOfMonthTotal = 0;
+        foreach ($leadsOfMonth as $key => $status) {
+            $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
+        }
+
+        $leadsOfMonth = $leadsOfMonth->count();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
         if (request()->has('q')) {
@@ -88,6 +99,8 @@ class DigitalChannelLeadController extends Controller
 
         return view('digitalchannelleads.list', [
             'pricesTotal'         => $pricesTotal,
+            'leadsOfMonthTotal'   => $leadsOfMonthTotal,
+            'leadsOfMonth'        => $leadsOfMonth,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
@@ -193,8 +206,6 @@ class DigitalChannelLeadController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        // $from = Carbon::now()->subMonth();
-
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);

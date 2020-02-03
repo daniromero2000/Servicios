@@ -5,9 +5,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-4">
-                <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto btn-sm mr-3 mb-2 ">Regresar</a>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-12 text-right">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                     <li class="breadcrumb-item active"><a href="/Administrator/dashboard/comunitymanager">Dashboard
@@ -16,7 +15,14 @@
                             Digital</a></li>
                     <li class="breadcrumb-item active"><a href="">Detalle Intención</a></li>
                 </ol>
-            </div><!-- /.col -->
+            </div>
+            <div class="col-12 mt-3">
+                <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto btn-sm ">Regresar</a>
+                <button class="btn btn-primary btn-sm">
+                    <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
+                            class="far fa-plus-square"></i></a>
+                </button>
+            </div>
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
@@ -32,7 +38,7 @@
                     aria-controls="profile">Seguimiento</a>
             </li>
         </ul>
-        <div class="tab-content mt-4" id="tabcontent">
+        <div class="tab-content" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
                 @if (auth()->user()->idProfile == 2)
