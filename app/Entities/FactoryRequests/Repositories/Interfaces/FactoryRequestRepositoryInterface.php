@@ -32,6 +32,10 @@ interface FactoryRequestRepositoryInterface
 
   public function countAssessorFactoryRequestStatuses($from, $to, $assessor);
 
+  public function countFactoryRequestsStatusesPendientes($from, $to, $status);
+
+  public function countFactoryRequestsStatusesAprobados($from, $to, $status);
+
   public function listFactoryAssessors($totalView, $assessor): Support;
 
   public function listFactoryAssessorsTotal($from, $to, $assessor);
