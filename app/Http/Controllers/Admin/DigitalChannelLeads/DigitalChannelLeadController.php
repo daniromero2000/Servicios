@@ -63,7 +63,11 @@ class DigitalChannelLeadController extends Controller
 
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
+
         $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
+        $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
+        $leadsOfMonthTotal = 0;
+        $leadsOfMonthTotal = $leadPriceTotalSold->sum('lead_price');
 
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
@@ -93,12 +97,10 @@ class DigitalChannelLeadController extends Controller
                 request()->input('typeProduct')
 
             );
+            foreach ($leadsOfMonth as $key => $status) {
+                $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
+            }
         }
-        $leadsOfMonthTotal = 0;
-        foreach ($leadsOfMonth as $key => $status) {
-            $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
-        }
-
 
         $listCount = $list->count();
         $leadsOfMonth = $leadsOfMonth->count();
