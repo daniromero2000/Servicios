@@ -30,6 +30,12 @@ class FactoryRequestController extends Controller
 
     public function index(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+        $factoryRequestsTotals = $this->factoryRequestInterface->getFactoryRequestsTotals($from, $to);
+        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
+        $listCount = $factoryRequestsTotals->count();
+
 
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
@@ -47,8 +53,9 @@ class FactoryRequestController extends Controller
             )->sortByDesc('FECHASOL');
         }
 
-        $listCount = $list->count();
-        $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+        // $listCount = $list->count();
+
+        // $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
 
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,
@@ -78,7 +85,7 @@ class FactoryRequestController extends Controller
     public function dashboard(Request $request)
     {
         $to = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $from = Carbon::now()->startOfMonth();
 
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
@@ -89,6 +96,7 @@ class FactoryRequestController extends Controller
         $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 
         if (request()->has('from')) {
+            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
             $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array('APROBADO', 'EN FACTURACION'));
@@ -96,7 +104,6 @@ class FactoryRequestController extends Controller
             $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "DESISTIDO");
             $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'), array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
         }
-
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
         $webCounts    = $this->toolsInterface->extractValuesToArray($webCounts);
@@ -143,7 +150,6 @@ class FactoryRequestController extends Controller
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));
         }
-
 
         $webValues      = [];
         $webNames       = [];

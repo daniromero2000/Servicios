@@ -238,6 +238,16 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
+    public function getFactoryRequestsTotals($from, $to)
+    {
+        try {
+            return $this->model->where('state', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 
     public function getFactoryRequestsTotal($from, $to)
     {
