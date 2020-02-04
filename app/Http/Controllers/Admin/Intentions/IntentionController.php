@@ -33,15 +33,20 @@ class IntentionController extends Controller
 
     public function index(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $leadsOfMonth = $this->intentionInterface->listIntentionsTotal($from, $to);
+
+
         $list = $this->intentionInterface->listIntentions($skip * 30);
         if (request()->has('q')) {
             $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+            $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
         }
-        $listCount = $list->count();
 
-
+        $listCount = $leadsOfMonth->count();
         return view('intentions.list', [
             'intentions'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
@@ -62,7 +67,7 @@ class IntentionController extends Controller
     public function dashboard(Request $request)
     {
         $to   = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $from = Carbon::now()->startOfMonth();
 
         $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
         $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
@@ -75,7 +80,6 @@ class IntentionController extends Controller
             $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
             $creditCards       = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
             $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
-            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
             $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), request()->input('to'));
         }
 

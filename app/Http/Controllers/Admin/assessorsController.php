@@ -48,7 +48,6 @@ class assessorsController extends Controller
         $skip         = $this->toolsInterface->getSkip($request->input('skip'));
         $list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
         $listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-        $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 
         if (request()->has('q')) {
             $list = $this->factoryInterface->searchFactoryAseessors(
@@ -60,8 +59,18 @@ class assessorsController extends Controller
                 request()->input('subsidiary'),
                 $assessor
             )->sortByDesc('FECHASOL');
+            $listCount = $this->factoryInterface->searchFactoryAseessors(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary'),
+                $assessor
+            )->sortByDesc('FECHASOL');
         }
 
+        $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
         $listCount = $listCount->count();
 
         return view('assessors.assessors.list', [

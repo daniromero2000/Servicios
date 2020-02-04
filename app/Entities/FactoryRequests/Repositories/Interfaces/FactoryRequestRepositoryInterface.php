@@ -46,6 +46,8 @@ interface FactoryRequestRepositoryInterface
 
   public function countDirectorFactoryRequestStatuses($from, $to, $Director);
 
+  public function listFactoryDirectorTotal($from, $to, $director);
+
   public function listFactoryDirector($totalView, $Director): Support;
 
   public function countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, $status);

@@ -51,11 +51,20 @@ class FactoryRequestController extends Controller
                 request()->input('subsidiary'),
                 request()->input('soliWeb')
             )->sortByDesc('FECHASOL');
+            $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequest(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary'),
+                request()->input('soliWeb')
+            )->sortByDesc('FECHASOL');
+
+            $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
         }
 
-        // $listCount = $list->count();
-
-        // $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+        $listCount = $factoryRequestsTotals->count();
 
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,

@@ -25,10 +25,15 @@
               <div class="small-box bg-primary">
                 <div class="inner">
                   <h2>{{ $totalStatuses }}</h2>
-                  <p>Intenciones en los últimos 30 días</p>
+                  <p>Intenciones en este mes</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars" style="color: white;"></i>
+                </div>
+                <div class="text-right mr-2">
+                  <span class="info-box-text text-right">
+                    <a href="{{ route('intentions.index') }}" style="color: white; !important">Ver
+                      Más</a></span>
                 </div>
               </div>
             </div>

@@ -25,9 +25,12 @@ class DirectorController extends Controller
 
   public function index(Request $request)
   {
+    $to = Carbon::now();
+    $from = Carbon::now()->startOfMonth();
     $director = auth()->user()->codeOportudata;
     $skip     = $this->toolsInterface->getSkip($request->input('skip'));
     $list     = $this->factoryInterface->listFactoryDirector($skip * 30, $director);
+    $listCount = $this->factoryInterface->listFactoryDirectorTotal($from, $to, $director);
 
     if (request()->has('q')) {
       $list = $this->factoryInterface->searchFactoryDirectors(
@@ -39,10 +42,19 @@ class DirectorController extends Controller
         request()->input('assessor'),
         $director
       )->sortByDesc('FECHASOL');
+      $listCount = $this->factoryInterface->searchFactoryDirectors(
+        request()->input('q'),
+        $skip,
+        request()->input('from'),
+        request()->input('to'),
+        request()->input('status'),
+        request()->input('assessor'),
+        $director
+      )->sortByDesc('FECHASOL');
     }
 
-    $listCount            = $list->count();
-    $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
+    $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
+    $listCount            = $listCount->count();
 
     return view('director.list', [
       'factoryRequests'      => $list,
@@ -62,7 +74,7 @@ class DirectorController extends Controller
     $director = auth()->user()->codeOportudata;
 
     $to   = Carbon::now();
-    $from = Carbon::now()->subMonth();
+    $from = Carbon::now()->startOfMonth();
 
     $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
     $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];

@@ -420,6 +420,19 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function listFactoryDirectorTotal($from, $to, $director)
+    {
+        try {
+            return  $this->model->where('state', 'A')
+                ->orderBy('SOLICITUD', 'desc')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->where('SUCURSAL', $director)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function searchFactoryDirectors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $assessor = null, $director): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {

@@ -90,6 +90,17 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+    public function listIntentionsTotal($from, $to)
+    {
+        try {
+            return  $this->model->with(['customer', 'definition'])
+                ->orderBy('id', 'desc')
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
     public function listIntentions($totalView): Support
     {
         try {

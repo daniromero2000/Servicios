@@ -65,12 +65,6 @@ class DigitalChannelLeadController extends Controller
         $from = Carbon::now()->startOfMonth();
         $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
 
-        $leadsOfMonthTotal = 0;
-        foreach ($leadsOfMonth as $key => $status) {
-            $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
-        }
-
-        $leadsOfMonth = $leadsOfMonth->count();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
         if (request()->has('q')) {
@@ -85,20 +79,35 @@ class DigitalChannelLeadController extends Controller
                 request()->input('lead_area_id'),
                 request()->input('typeService'),
                 request()->input('typeProduct')
+            );
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
 
             );
         }
-        $listCount = $list->count();
-
-        $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+        $leadsOfMonthTotal = 0;
+        foreach ($leadsOfMonth as $key => $status) {
+            $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
         }
+
+
+        $listCount = $list->count();
+        $leadsOfMonth = $leadsOfMonth->count();
+
+
 
         $profile = 2;
 
         return view('digitalchannelleads.list', [
-            'pricesTotal'         => $pricesTotal,
             'leadsOfMonthTotal'   => $leadsOfMonthTotal,
             'leadsOfMonth'        => $leadsOfMonth,
             'digitalChannelLeads' => $list,
