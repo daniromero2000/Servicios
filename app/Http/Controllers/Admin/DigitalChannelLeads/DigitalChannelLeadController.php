@@ -256,6 +256,7 @@ class DigitalChannelLeadController extends Controller
 
         $leadServices = $this->leadInterface->countLeadServices($from, $to);
         $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
+        $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
 
         if (request()->has('from')) {
@@ -264,6 +265,7 @@ class DigitalChannelLeadController extends Controller
             $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
             $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
             $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
+            $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
             $leadProductInsurances = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 2);
@@ -371,12 +373,19 @@ class DigitalChannelLeadController extends Controller
             array_push($leadServicesNames, trim($leadService['service']));
             array_push($leadServicesValues, trim($leadService['total']));
         }
-        $leadpriceTotal = $leadPrice->sum('lead_price');
+        $pricesTotal = $leadPriceTotalSold->sum('lead_price');
 
-        $pricesTotal = 0;
-        foreach ($leadPriceTotal as $key => $status) {
-            $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
-        }
+
+
+        $leadpriceTotals = $leadPrice->sum('lead_price');
+
+
+        // $leadpriceTotal = $leadPrice->sum('lead_price');
+
+        // $pricesTotal = 0;
+        // foreach ($leadPriceTotal as $key => $status) {
+        //     $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
+        // }
 
 
         return view('digitalchannelleads.dashboard', [
@@ -422,7 +431,7 @@ class DigitalChannelLeadController extends Controller
             'leadStatusLibranzas'       => $leadStatusLibranzas,
             'leadStatusEcommerces'      => $leadStatusEcommerces,
             'totalStatuses'             => $totalStatuses,
-            'leadpriceTotal'            => $leadpriceTotal
+            'leadpriceTotal'            => $leadpriceTotals
         ]);
     }
     public function destroy($id)

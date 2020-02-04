@@ -23,6 +23,15 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+    public function getLeadPriceTotal($from, $to)
+    {
+        try {
+            return  $this->model->whereBetween('created_at', [$from, $to])
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 
     public function findLeadPriceById(int $id): LeadPrice
     {
