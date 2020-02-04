@@ -5,7 +5,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 col-sm-8">
+                    <div class="col-12 ">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active"><a href="">Detalle Solicitud</a></li>
                         </ol>
                     </div>
-                    <div class="col-12 col-sm-4 mt-2">
+                    <div class="col-12 mt-2">
                         <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                     </div>
                 </div><!-- /.row -->

@@ -89,8 +89,8 @@
                             <div class="col-12 col-md-4">
                                 <div ng-hide="lead.CEL_VAL">
                                     <label class="ventaContado-label">Celular</label>
-                                    <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR" validation-pattern="telephone"
-                                        required />
+                                    <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
+                                        validation-pattern="telephone" required />
                                 </div>
                                 <div ng-show="lead.CEL_VAL">
                                     <label class="ventaContado-label">Celular</label>
@@ -143,7 +143,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-4">
-                                <label class="labels" for="antiquity">Antigüedad en vivienda <small>(Meses)</small>*</label>
+                                <label class="labels" for="antiquity">Antigüedad en vivienda
+                                    <small>(Meses)</small>*</label>
                                 <input class="inputs" id="antiquity" validation-pattern="number" type="number"
                                     ng-model="lead.TIEMPO_VIV" required />
                             </div>
@@ -502,8 +503,8 @@
         </div>
     </div>
 
-    <div class="modal fade hide modalThankYouPage-asessors" data-backdrop="static" data-keyboard="false" id="decisionCredit" tabindex="-1"
-        role="dialog" aria-hidden="true">
+    <div class="modal fade hide modalThankYouPage-asessors" data-backdrop="static" data-keyboard="false"
+        id="decisionCredit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modalCode">
             <div class="modal-content">
                 <div class="modal-body" style="padding: 0">
@@ -516,7 +517,9 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
                             <div class="row my-4">
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 1}" ng-click="changeDesicionCredit(1)">
+                                    <div class="decisionCredit-option"
+                                        ng-class="{'decisionCredit-selected': decisionCredit == 1}"
+                                        ng-click="changeDesicionCredit(1)">
                                         <p>@{{ resp.infoLead.TARJETA }}</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
                                         <p>
@@ -526,13 +529,16 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 2}" ng-click="changeDesicionCredit(2)">
+                                    <div class="decisionCredit-option"
+                                        ng-class="{'decisionCredit-selected': decisionCredit == 2}"
+                                        ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()" ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()"
+                                        ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
                                 </div>
                             </div>
                         </div>
@@ -540,13 +546,16 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
                             <div class="row my-4">
                                 <div class="col-12 text-center my-4">
-                                    <div class="decisionCredit-option" ng-class="{'decisionCredit-selected': decisionCredit == 2}" ng-click="changeDesicionCredit(2)">
+                                    <div class="decisionCredit-option"
+                                        ng-class="{'decisionCredit-selected': decisionCredit == 2}"
+                                        ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()" ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                    <button class="btn btn-primary" ng-click="sendDecisionCredit()"
+                                        ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
                                 </div>
                             </div>
                         </div>
@@ -569,7 +578,8 @@
                             </div>
                             <div class="col-12 text-center form-group">
                                 <button class="btn btn-primary">Confirmar Código</button>
-                                <button type="button" ng-show="reNewToken" class="btn btn-warning" ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
+                                <button type="button" ng-show="reNewToken" class="btn btn-warning"
+                                    ng-click="getCodeVerification(true)">Generar Nuevo Código</button>
                             </div>
                             <div class="col-12 text-center" ng-show="showAlertCode">
                                 <div class="alert alert-danger" role="alert">
@@ -594,7 +604,7 @@
         tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content modalCardContent">
-                <div class="modal-body modalStepsBody" style="padding: 0">
+                <div class="modal-body modalStepsBody " style="padding: 0">
                     <div class="row resetRow">
                         <div class="col-12 text-center containerLogoModalStep">
                             <img src="{{ asset('images/logoOportuyaModalStep.png') }}" alt="" class="img-fluid">
@@ -608,7 +618,7 @@
                             <br>
                             <br>
                             <div class="row">
-                                <div class="offset-sm-5 col-7">
+                                <div class="offset-4 offset-sm-4 col-sm-8 mt-5 offset-ld-1 col-8 text-center">
                                     <p ng-bind-html="messageValidationLead">
                                     </p>
                                     <div class="text-center">
@@ -675,7 +685,8 @@
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada exitosamente, <br>
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada exitosamente,
+                                <br>
                                 procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
                             </p>
                         </div>
@@ -686,7 +697,8 @@
                                 <b>Solicitud aprobada</b> para tarjeta
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong
+                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'PREAPROBADO'">
@@ -696,7 +708,8 @@
                                 por el área de fábrica de créditos.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong
+                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal"
@@ -707,7 +720,8 @@
                                 por el área de fábrica de créditos.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                El número de solicitud es <strong
+                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">
@@ -728,7 +742,8 @@
             </div>
         </div>
     </div>
-    <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modalSteps fade hide" data-backdrop="static" data-keyboard="false" id="proccess" tabindex="-1"
+        role="dialog" aria-hidden="true">
         <div class="modal-dialog modalPrincipal" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -736,7 +751,8 @@
                         <img src="{{ asset('images/gif-load.gif') }}" alt="">
                         <p class="text-procces">
                             Procesando Solicitud...<br>
-                            <span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se están realizando las consultas necesarias, esto
+                            <span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se
+                                están realizando las consultas necesarias, esto
                                 puede tomar un tiempo de aproximadamente 2 minutos</span>
                         </p>
                     </div>

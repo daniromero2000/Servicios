@@ -6,8 +6,12 @@
           {{ $customer->APELLIDOS }} </span>
         </h2>
       </div>
-      <div class="col-12 col-sm-2 col-lg-2 text-right"><span class="mt-2 badge title-table-status badge-primary"> Score
+      <div class="col-12 col-sm-2 col-lg-2 text-right">
+        @if (auth()->user()->idProfile == 5)
+        <span class="mt-2 badge title-table-status badge-primary"> Score
           {{ $customer->latestCifinScore['score'] }}
+          @endif
+
       </div>
       <div class="col-12 col-sm-2 col-lg-1 text-right"><span class="mt-2 badge title-table-status badge-primary">
           @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
