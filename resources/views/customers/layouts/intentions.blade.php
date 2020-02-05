@@ -51,9 +51,8 @@
             @if ($data->ESTADO_OBLIGACIONES === null)Sin Datos @endif
           </td>
           @if (auth()->user()->idProfile == 5)
-          <td> @if($data->customer) @if ($data->customer->latestCifinScore['score'] == '')Sin Datos
+          <td> @if ($data->customer->latestCifinScore['score'] == '')Sin Datos
             @endif{{ $data->customer->latestCifinScore['score']}} @endif</td>
-          @endif
           <td>@if ($data->PERFIL_CREDITICIO == '')Sin Datos @endif{{ $data->PERFIL_CREDITICIO}}</td>
           <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
             @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
