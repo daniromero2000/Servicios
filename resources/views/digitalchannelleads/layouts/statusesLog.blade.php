@@ -9,8 +9,8 @@
                 <span class="time"><i class="fa fa-clock-o"></i>
                     {{ $data->created_at->diffForHumans($digitalChannelLead->created_at) }}</span>
                 <h3 class="timeline-header"><span class="text-center badge"
-                        style="color: white ; background-color: {{$data->status->color }}"
-                        class="btn btn-info btn-block">{{ $data->status->status}}</span> </h3>
+                        style="color: white ; background-color: @if($data->status){{$data->status->color }} @endif"
+                        class="btn btn-info btn-block">@if($data->status){{ $data->status->status}} @endif</span> </h3>
                 <div class="timeline-body">
                     <i class="fa fa-user"></i> @if ($data->user) {{$data->user->name}} @endif
                 </div>
