@@ -169,7 +169,7 @@
       datasets: [
         {
           data: values,
-          backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+          backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
       ]
     }
@@ -195,7 +195,7 @@
     datasets: [
     {
     data: channelsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -221,7 +221,7 @@
     datasets: [
     {
     data: assessorsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -248,7 +248,7 @@
     datasets: [
     {
     data: productsValues,
-    backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -275,7 +275,7 @@
     datasets: [
     {
     data: serviceValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -301,7 +301,7 @@
     datasets: [
     {
     data: productWarrantiesValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -328,7 +328,7 @@
     datasets: [
     {
     data: productWalletsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -354,7 +354,7 @@
     datasets: [
     {
     data: productInsuranceValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -380,7 +380,7 @@
     datasets: [
     {
     data: productOportuyaValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -406,7 +406,7 @@
     datasets: [
     {
     data: productCallCenterValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -432,7 +432,7 @@
     datasets: [
     {
     data: productAdvancedUnitValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -458,7 +458,7 @@
     datasets: [
     {
     data: productJuridicalValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -484,7 +484,7 @@
     datasets: [
     {
     data: productLibranzasValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -510,7 +510,7 @@
     datasets: [
     {
     data: productEcommercesValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -527,7 +527,7 @@
     });
 
     //-------------
-    //- DONUT CHART - leadEcommerces
+    //- DONUT CHART - serviceDigitalChanels
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas15 = $('#donutChart15').get(0).getContext('2d')
@@ -536,7 +536,7 @@
     datasets: [
     {
     data: serviceDigitalChanelsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -770,7 +770,7 @@
         datasets: [
         {
         data: serviceInsurancesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -796,7 +796,7 @@
         datasets: [
         {
         data: serviceWarrantiesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -822,7 +822,7 @@
         datasets: [
         {
         data: serviceOportuyasValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -847,7 +847,7 @@
         datasets: [
         {
         data: serviceCallCenterValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -872,7 +872,7 @@
         datasets: [
         {
         data: serviceAdvancedUnitValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -897,7 +897,7 @@
         datasets: [
         {
         data: serviceWalletsValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -922,7 +922,7 @@
         datasets: [
         {
         data: serviceJuridicalesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -947,7 +947,7 @@
         datasets: [
         {
         data: serviceLibranzasValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -972,7 +972,7 @@
         datasets: [
         {
         data: serviceEcommercesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -998,7 +998,7 @@
         datasets: [
         {
         data: statusInsurancesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1024,7 +1024,7 @@
         datasets: [
         {
         data: statusWarrantiesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1049,7 +1049,7 @@
         datasets: [
         {
         data: statusOportuyasValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1074,7 +1074,7 @@
         datasets: [
         {
         data: statusCallCenterValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1100,7 +1100,7 @@
         datasets: [
         {
         data: statusAdvancedUnitValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1126,7 +1126,7 @@
         datasets: [
         {
         data: statusWalletsValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1151,7 +1151,7 @@
         datasets: [
         {
         data: statusJuridicalesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1177,7 +1177,7 @@
         datasets: [
         {
         data: statusLibranzasValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1203,7 +1203,7 @@
         datasets: [
         {
         data: statusEcommercesValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1224,11 +1224,11 @@
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart33').get(0).getContext('2d')
         var pieData = donutData33 = {
-        labels: leadDigitalChanel,
+        labels: serviceDigitalChanels,
         datasets: [
         {
-        data: productDigitalChanelValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        data: serviceDigitalChanelsValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };
@@ -1253,7 +1253,7 @@
         datasets: [
         {
         data: statusDigitalChanelsValues,
-        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
         ]
         };

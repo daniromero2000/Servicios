@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-12 col-sm-6 col-md-3 d-flex align-items-end">
                         <div class="form-group w-100">
-                            <label for="step">Sucursal</label>
+                            <label for="step">Paso</label>
                             <select class="form-control  select2" id="step" name="step" {!! request()->input('step')!!}
                                 style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Paso -- </option>

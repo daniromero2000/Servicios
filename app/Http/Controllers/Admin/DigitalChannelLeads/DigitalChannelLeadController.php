@@ -244,6 +244,7 @@ class DigitalChannelLeadController extends Controller
         $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
         $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
 
+
         $leadStatusDigitalChanels = $this->leadInterface->countLeadStatusGenerals($from, $to, 1);
         $leadStatusInsurances = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
         $leadStatusWarranties = $this->leadInterface->countLeadStatusGenerals($from, $to, 3);
@@ -291,7 +292,7 @@ class DigitalChannelLeadController extends Controller
             $leadServiceJuridicales = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 9);
             $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 7);
             $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 8);
-            $leadServiceDigitalChanels = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 1);
+            $leadServiceDigitalChanels = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 1);
 
             $leadStatusDigitalChanels = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 1);
             $leadStatusInsurances = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 2);

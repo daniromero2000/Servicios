@@ -14,7 +14,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
-                                    href="/Administrator/dashboard/communitymanager">Dashboard
+                                    href="/Administrator/dashboard/digitalChannelLead">Dashboard
                                     Leads Canal Digital</a>
                             <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads</a>
                             </li>
