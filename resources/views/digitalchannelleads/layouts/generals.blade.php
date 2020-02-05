@@ -13,8 +13,9 @@
           </span>
         </h5>
         <span class="text-center badge"
-          style="color: white ; background-color: {{$digitalChannelLead->leadStatuses->color }}"
-          class="btn btn-info btn-block">{{ $digitalChannelLead->leadStatuses->status}}</span>
+          style="color: white ; background-color: @if($digitalChannelLead->leadStatuses) {{$digitalChannelLead->leadStatuses->color }} @endif"
+          class="btn btn-info btn-block">@if($digitalChannelLead->leadStatuses){{ $digitalChannelLead->leadStatuses->status}}@endif
+        </span>
         @if($digitalChannelLead->leadAssessor)
         {{ $digitalChannelLead->leadAssessor['name']}}
         @endif

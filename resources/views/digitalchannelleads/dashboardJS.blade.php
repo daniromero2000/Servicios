@@ -532,10 +532,10 @@
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas15 = $('#donutChart15').get(0).getContext('2d')
     var donutData15 = {
-    labels: serviceDigitalChanels,
+    labels: leadDigitalChanel,
     datasets: [
     {
-    data: serviceDigitalChanelsValues,
+    data: productDigitalChanelValues,
     backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
