@@ -50,7 +50,6 @@ use Carbon\Carbon;
 
         </td>
       </tr>
-
       <div class="modal fade" id="deleteLead{{$data->id}}" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -75,7 +74,6 @@ use Carbon\Carbon;
           </div>
         </div>
       </div>
-
       <div class="modal fade" id="editLead{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -233,9 +231,6 @@ use Carbon\Carbon;
                             </select>
                           </div>
                         </div>
-                        {{-- @php
-                        dd();
-                        @endphp --}}
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="selectAssessorEdit{{$data->id}}">Asesor</label>
@@ -255,7 +250,6 @@ use Carbon\Carbon;
                         <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset({{$data->id}})"
                           aria-label="Close"><span aria-hidden="true">Cerrar</span></button>
                       </div>
-
                     </form>
                   </div>
                   <hr>
@@ -265,7 +259,6 @@ use Carbon\Carbon;
           </div>
         </div>
       </div>
-
       <div class="modal fade" id="addComment{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

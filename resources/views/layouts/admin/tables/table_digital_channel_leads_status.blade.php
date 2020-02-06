@@ -233,9 +233,6 @@ use Carbon\Carbon;
                             </select>
                           </div>
                         </div>
-                        {{-- @php
-                        dd();
-                        @endphp --}}
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="selectAssessorEdit{{$data->id}}">Asesor</label>
