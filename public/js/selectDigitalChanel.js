@@ -37,13 +37,6 @@ function dataLead(dataId) {
 
 }
 
-function reset(dataId) {
-    // $('#typeProductselectedit' + dataId).empty();
-    // $('#typeProductselectedit' + dataId).html();
-    // $('#typeServiceSelectedEdit' + dataId).empty();
-    // $('#stateSelectEdit' + dataId).empty();
-}
-
 function ontypeServiceSelectedProductEditModal(dataId) {
     var typeServiceEditSelected_id = $("#typeAreaSelectEdit" + dataId).val();
     $('#editLead' + dataId).modal({ backdrop: 'static', keyboard: false })
@@ -53,7 +46,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         var html_selectEdit = ""
         for (var i = 0; i < data.length; i++) {
             if ($('#typeProductselectedit' + dataId).val() == data[i].id) {
-                html_selectEdit = '<option value="' + data[i].id + '" selected="selected">' + data[i].lead_product + '</option>';
+                html_selectEdit = '<option value="' + data[i].id + '" disabled selected="selected">' + data[i].lead_product + '</option>';
             }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].lead_product + '</option>';
         }
@@ -63,7 +56,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
             if ($('#typeServiceSelectedEdit' + dataId).val() == data[i].id) {
-                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].service + '</option>';
+                html_selectEdit += '<option value="' + data[i].id + '" disabled selected="selected" ">' + data[i].service + '</option>';
             }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].service + '</option>';
         }
@@ -73,7 +66,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
             if ($('#stateSelectEdit' + dataId).val() == data[i].id) {
-                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].status + '</option>';
+                html_selectEdit += '<option value="' + data[i].id + '" disabled selected="selected" ">' + data[i].status + '</option>';
             }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].status + '</option>';
         }
@@ -84,7 +77,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         for (var i = 0; i < data.length; i++) {
 
             if ($('#selectAssessorEdit' + dataId).val() == data[i].id) {
-                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].name + '</option>';
+                html_selectEdit += '<option value="' + data[i].id + '" disabled selected="selected" ">' + data[i].name + '</option>';
             }
             html_selectEdit += '<option value="' + data[i].id + '"  ">' + data[i].name + '</option>';
         }
