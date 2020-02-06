@@ -81,8 +81,8 @@ use Carbon\Carbon;
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title" id="myModalLabel">Actualizar Lead</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                  aria-hidden="true">×</span></button>
+              <button type="button" class="close" data-dismiss="modal" onclick="reset({{$data->id}})"
+                aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
               <div class="container">
@@ -195,7 +195,7 @@ use Carbon\Carbon;
                           <select name="typeService" id="typeServiceSelectedEdit{{$data->id}}" class="form-control "
                             style="width: 100%;">
                             @if ($data->leadService)
-                            <option value="{{ $data->leadService['id'] }}">
+                            <option value="{{ $data->leadService['id'] }}" selected="selected">
                               {{ $data->leadService['service'] }}
                             </option>
                             @endif
@@ -206,7 +206,7 @@ use Carbon\Carbon;
                           <select name="typeProduct" id="typeProductselectedit{{$data->id}}" class="form-control "
                             style="width: 100%;">
                             @if ($data->leadProduct)
-                            <option value="{{ $data->leadProduct->id }}">
+                            <option value="{{ $data->leadProduct->id }}" selected="selected">
                               {{ $data->leadProduct->lead_product }}
                             </option>
                             @endif
@@ -221,29 +221,41 @@ use Carbon\Carbon;
                       </div>
                       <div class="row">
                         <div class="col-6 d-flex align-items-end">
-                          <div class="form-group">
+                          <div class="form-group" style="width: 100%;">
                             <label for="stateSelectEdit{{$data->id}}">Selecciona Estado </label>
                             <select name="state" id="stateSelectEdit{{$data->id}}" class="form-control "
                               style="width: 100%;">
-                              @if($data->state)
-                              <option disabled selected value> -- Selecciona Estado -- </option>
+                              @if($data->leadStatuses)
+                              <option value="{{ $data->leadStatuses->id }}" selected="selected" style="width: 100%;">
+                                {{ $data->leadStatuses->status }}
+                              </option>
                               @endif
                             </select>
                           </div>
                         </div>
+                        {{-- @php
+                        dd();
+                        @endphp --}}
                         <div class="col-6 d-flex align-items-end">
                           <div class="form-group w-100">
                             <label for="selectAssessorEdit{{$data->id}}">Asesor</label>
                             <select class="form-control  " id="selectAssessorEdit{{$data->id}}" name="assessor_id"
                               ng-model="lead.assessor_id" style="width: 100%;">
-                              <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
+                              @if($data->leadAssessor)
+                              <option value="{{ $data->leadAssessor->id }}" selected="selected" style="width: 100%;">
+                                {{ $data->leadAssessor->name }}
+                              </option>
+                              @endif
                             </select>
                           </div>
                         </div>
                       </div>
-                      <div class="form-group mt-3 text-left">
+                      <div class="form-group mt-3 text-right">
                         <button class="btn btn-primary">Actualizar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset({{$data->id}})"
+                          aria-label="Close"><span aria-hidden="true">Cerrar</span></button>
                       </div>
+
                     </form>
                   </div>
                   <hr>
