@@ -1,3 +1,4 @@
+x
 <!--AddCommunityLead modal-->
 <div class="modal fade" id="addleadmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -49,7 +50,7 @@
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
                   <select id="city" name="city" class="form-control" required>
                     @if(!empty($cities))
-                    <option disabled selected value> -- Selecciona Ciudad -- </option>
+                    <option selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
                     <option value="{{ $city->CIUDAD }}">
                       {{ $city->CIUDAD }}
@@ -62,7 +63,7 @@
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
                   <select id="channel" name="channel" class="form-control" required>
                     @if(!empty($channels))
-                    <option disabled selected value> -- Selecciona Canal -- </option>
+                    <option selected value> -- Selecciona Canal -- </option>
                     @foreach($channels as $channel)
                     <option value="{{ $channel->id }}">
                       {{ $channel->channel }}
@@ -84,7 +85,7 @@
                   <label for="socialNetwork">Campaña</label>
                   <select id="campaign" name="campaign" class="form-control">
                     @if(!empty($campaigns))
-                    <option disabled selected value> -- Selecciona Campaña -- </option>
+                    <option selected value> -- Selecciona Campaña -- </option>
                     @foreach($campaigns as $campaign)
                     <option value="{{ $campaign->id }}">
                       {{ $campaign->name }}
@@ -99,7 +100,7 @@
                   <div class="form-group">
                     <label for="typeAreaSelectCreate">Selecciona Area </label>
                     <select name="lead_area_id" id="typeAreaSelectCreate" class="form-control " style="width: 100%;">
-                      <option disabled selected value=""> -- Selecciona Area -- </option>
+                      <option selected value=""> -- Selecciona Area -- </option>
                       @if(!empty($areas))
                       @foreach($areas as $area)
                       <option value="{{ $area->id }}">
@@ -113,20 +114,20 @@
                 <div class="col-12 col-sm-6 form-group">
                   <label for="typeServiceSelectedCreate">Servicio <span class="text-danger">*</span></label>
                   <select id="typeServiceSelectedCreate" name="typeService" class="form-control" required>
-                    <option disabled selected value> -- Selecciona Servicio -- </option>
+                    <option selected value> -- Selecciona Servicio -- </option>
                   </select>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="typeProductCreate">Producto <span class="text-danger">*</span></label>
                   <select id="typeProductCreate" name="typeProduct" class="form-control">
-                    <option disabled selected value> -- Selecciona Producto -- </option>
+                    <option selected value> -- Selecciona Producto -- </option>
                   </select>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="selectAssessorCreate">Asesor</label>
                   <select class="form-control  select2" id="selectAssessorCreate" name="assessor_id"
                     ng-model="lead.assessor_id" style="width: 100%;">
-                    <option data-select3-id="" disabled selected value> -- Selecciona Asesor -- </option>
+                    <option data-select3-id="" selected value> -- Selecciona Asesor -- </option>
                   </select>
                 </div>
               </div>

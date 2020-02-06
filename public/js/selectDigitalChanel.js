@@ -38,10 +38,10 @@ function dataLead(dataId) {
 }
 
 function reset(dataId) {
-    $('#typeProductselectedit' + dataId).empty();
-    $('#typeProductselectedit' + dataId).html();
-    $('#typeServiceSelectedEdit' + dataId).empty();
-    $('#stateSelectEdit' + dataId).empty();
+    // $('#typeProductselectedit' + dataId).empty();
+    // $('#typeProductselectedit' + dataId).html();
+    // $('#typeServiceSelectedEdit' + dataId).empty();
+    // $('#stateSelectEdit' + dataId).empty();
 }
 
 function ontypeServiceSelectedProductEditModal(dataId) {
@@ -49,30 +49,44 @@ function ontypeServiceSelectedProductEditModal(dataId) {
     $('#editLead' + dataId).modal({ backdrop: 'static', keyboard: false })
 
     $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
-        var html_selectEdit = $('#typeProductselectedit' + dataId).html();
+
+        var html_selectEdit = ""
         for (var i = 0; i < data.length; i++) {
+            if ($('#typeProductselectedit' + dataId).val() == data[i].id) {
+                html_selectEdit = '<option value="' + data[i].id + '" selected="selected">' + data[i].lead_product + '</option>';
+            }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].lead_product + '</option>';
         }
         $('#typeProductselectedit' + dataId).html(html_selectEdit);
     });
     $.get('/getServices/' + typeServiceEditSelected_id + '', function (data) {
-        var html_selectEdit = $('#typeServiceSelectedEdit' + dataId).html();
+        var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
+            if ($('#typeServiceSelectedEdit' + dataId).val() == data[i].id) {
+                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].service + '</option>';
+            }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].service + '</option>';
         }
         $('#typeServiceSelectedEdit' + dataId).html(html_selectEdit);
     });
     $.get('/getStatuses/' + typeServiceEditSelected_id + '', function (data) {
-        var html_selectEdit = $('#stateSelectEdit' + dataId).html();
+        var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
+            if ($('#stateSelectEdit' + dataId).val() == data[i].id) {
+                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].status + '</option>';
+            }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].status + '</option>';
         }
         $('#stateSelectEdit' + dataId).html(html_selectEdit);
     });
     $.get('/getAssessors/' + typeServiceEditSelected_id + '', function (data) {
-        var html_selectEdit = $('#selectAssessorEdit' + dataId).html();
+        var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
-            html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].name + '</option>';
+
+            if ($('#selectAssessorEdit' + dataId).val() == data[i].id) {
+                html_selectEdit += '<option value="' + data[i].id + '" selected="selected" ">' + data[i].name + '</option>';
+            }
+            html_selectEdit += '<option value="' + data[i].id + '"  ">' + data[i].name + '</option>';
         }
         $('#selectAssessorEdit' + dataId).html(html_selectEdit);
     });
