@@ -19,7 +19,8 @@ class LeadPrice extends Model
         'lead_price',
         'lead_id',
         'user_id',
-        'lead_price_status_id'
+        'lead_price_status_id',
+        'updated_at'
     ];
 
     public function user()

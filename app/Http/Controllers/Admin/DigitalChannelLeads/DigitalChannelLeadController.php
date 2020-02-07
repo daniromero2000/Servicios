@@ -265,6 +265,7 @@ class DigitalChannelLeadController extends Controller
         $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
         $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
 
+
         if (request()->has('from')) {
             $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
             $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
@@ -385,7 +386,7 @@ class DigitalChannelLeadController extends Controller
 
         $leadpriceTotals = $leadPrice->sum('lead_price');
 
-
+        // dd($leadPrice);
         // $leadpriceTotal = $leadPrice->sum('lead_price');
 
         // $pricesTotal = 0;

@@ -26,7 +26,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
     public function getLeadPriceTotal($from, $to)
     {
         try {
-            return  $this->model->whereBetween('created_at', [$from, $to])
+            return  $this->model->whereBetween('updated_at', [$from, $to])
                 ->get();
         } catch (QueryException $e) {
             dd($e);
@@ -66,7 +66,7 @@ class LeadPriceRepository implements LeadPriceRepositoryInterface
 
         try {
             return $this->model->where('lead_price_status_id', $num)
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('updated_at', [$from, $to])
                 ->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
