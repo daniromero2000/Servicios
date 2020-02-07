@@ -2,6 +2,7 @@
 
 namespace App\Entities\Assessors;
 
+use App\Entities\Intentions\Intention;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 
@@ -31,6 +32,11 @@ class Assessor extends \Eloquent implements AuthenticatableContract
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')
             ->where('ESTADO', 'APROBADO');
+    }
+
+    public function intentions()
+    {
+        return $this->hasMany(Intention::class, 'ASESOR');
     }
 
     public function customer()

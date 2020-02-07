@@ -35,7 +35,7 @@
           <td class="text-center">
             {{ $factoryRequest->CODEUDOR1 }}/{{ $factoryRequest->CODEUDOR2 }}/{{ $factoryRequest->CODEUDOR3 }}</td>
           <td class="text-center">{{ $factoryRequest->CODASESOR }}</td>
-          <td class="text-center">{{ $factoryRequest->GRAN_TOTAL }}</td>
+          <td class="text-center">$ {{  number_format($factoryRequest->GRAN_TOTAL) }}</td>
           <td class="text-center">{{ $factoryRequest->PRODUC_W }}</td>
           <td class="text-center">{{ $factoryRequest->AVANCE_W }}</td>
         </tr>

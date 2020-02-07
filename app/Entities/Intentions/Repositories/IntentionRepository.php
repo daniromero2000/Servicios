@@ -33,6 +33,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         'TIPO_5_ESPECIAL',
         'INSPECCION_OCULAR',
         'ESTADO_INTENCION',
+        'ASESOR',
     ];
 
     public function __construct(
@@ -104,7 +105,7 @@ class IntentionRepository implements IntentionRepositoryInterface
     public function listIntentions($totalView): Support
     {
         try {
-            return  $this->model->with(['customer', 'definition'])
+            return  $this->model->with(['customer', 'definition', 'assessor'])
                 ->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)

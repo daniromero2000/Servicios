@@ -314,7 +314,7 @@ class Customer extends Model
 
     public function customerIntentions()
     {
-        return $this->hasMany(Intention::class, 'CEDULA')->with('definition');
+        return $this->hasMany(Intention::class, 'CEDULA')->with('definition', 'assessor');
     }
 
     public function customerWarranties()

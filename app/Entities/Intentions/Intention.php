@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Entities\Definitions\Definition;
 use App\Entities\IntentionStatuses\IntentionStatus;
 use Illuminate\Auth\Authenticatable;
+use App\Entities\Assessors\Assessor;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Support\Facades\DB;
@@ -66,6 +67,11 @@ class Intention extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'CEDULA');
+    }
+
+    public function assessor()
+    {
+        return $this->belongsTo(Assessor::class, 'ASESOR');
     }
 
     public function intentionStatus()

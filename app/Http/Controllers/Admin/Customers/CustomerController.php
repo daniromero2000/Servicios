@@ -29,6 +29,11 @@ class CustomerController extends Controller
 
     public function index(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+
+        $leadsOfMonth = $this->customerInterface->listCustomersTotal($from, $to);
+
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->customerInterface->listCustomers($skip * 30);
 
@@ -40,7 +45,7 @@ class CustomerController extends Controller
             'customers'            => $list,
             'optionsRoutes'        => (request()->segment(2)),
             'headers'              => ['Fecha', 'Cedula', 'Apellido', 'Nombre', 'Tipo Cliente', 'Subtipo', 'Origen', 'Celular', 'Paso', 'Estado'],
-            'listCount'            => $list->count(),
+            'listCount'            => $leadsOfMonth->count(),
             'skip'                 => $skip,
         ]);
     }
@@ -55,7 +60,7 @@ class CustomerController extends Controller
     public function dashboard()
     {
         $to   = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $from = Carbon::now()->startOfMonth();
         $customerSteps          = $this->customerInterface->countCustomersSteps($from, $to);
         $customersFosygas       = $this->fosygaInterface->countCustomersfosygasConsultatios($from, $to);
         $customerRegistradurias = $this->registraduriaInterface->countCustomersRegistraduriaConsultations($from, $to);

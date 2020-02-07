@@ -105,6 +105,17 @@ class CustomerRepository implements CustomerRepositoryInterface
             dd($e);
         }
     }
+    public function listCustomersTotal($from, $to)
+    {
+        try {
+            return  $this->model->with([])
+                ->orderBy('CREACION', 'desc')
+                ->whereBetween('CREACION', [$from, $to])
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 
     public function countCustomersSteps($from, $to)
     {

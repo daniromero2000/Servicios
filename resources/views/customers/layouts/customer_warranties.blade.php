@@ -27,7 +27,7 @@
           <td class="text-center">{{ $warranty->COD_SUC }}</td>
           <td class="text-center">{{ $warranty->FACTURA }}</td>
           <td class="text-center">{{ $warranty->FECHAFAC }}</td>
-          <td class="text-center">{{ $warranty->VALOR }}</td>
+          <td class="text-center">$ {{  number_format ($warranty->VALOR) }}</td>
           <td class="text-center">{{ $warranty->COD_ARTIC }} / {{ $warranty->NOM_ARTIC }}</td>
           <td class="text-center">{{ $warranty->MARCA }}</td>
           <td class="text-center">{{ $warranty->DIAGNOSTIC }}</td>
@@ -42,13 +42,13 @@
   </div>
 </div>
 @else
-  <table class="table table-hover table-stripped leadTable">
-    <tbody class="body-table">
-      <tr>
-        <td>
-          No tiene Garantías
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  @endif
+<table class="table table-hover table-stripped leadTable">
+  <tbody class="body-table">
+    <tr>
+      <td>
+        No tiene Garantías
+      </td>
+    </tr>
+  </tbody>
+</table>
+@endif

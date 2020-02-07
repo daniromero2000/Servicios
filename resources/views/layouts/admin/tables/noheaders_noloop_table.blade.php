@@ -7,22 +7,22 @@
             {{ $data->SOLICITUD }}
         </td>
         <td class="text-center">
-            {{ $data->CUP_INICIA }}
+            $ {{  number_format ($data->CUP_INICIA) }}
         </td>
         <td class="text-center">
-            {{ $data->CUP_COMPRA }}
+            $ {{  number_format ($data->CUP_COMPRA) }}
         </td>
         <td class="text-center">
-            {{ $data->COMPRA_ACT }}
+            $ {{  number_format ($data->COMPRA_ACT) }}
         </td>
         <td class="text-center">
-            {{ $data->CUPO_EFEC }}
+            $ {{  number_format ($data->CUPO_EFEC) }}
         </td>
         <td class="text-center">
-            {{ $data->CUPO_ACTUAL }}
+            $ {{  number_format ($data->CUPO_ACTUAL) }}
         </td>
         <td class="text-center">
-            {{ $data->CUPOMAX }}
+            $ {{  number_format ($data->CUPOMAX) }}
         </td>
         <td class="text-center">
             {{ $data->SUC }}

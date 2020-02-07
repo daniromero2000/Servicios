@@ -15,7 +15,7 @@
         @foreach ($factoryRequest->factoryRequestProducts2 as $factoryRequestProduct)
         <tr>
           <td class="text-center">{{ $factoryRequestProduct->ARTICULO}}</td>
-          <td class="text-center">${{ number_format($factoryRequestProduct->PRECIO_P)}}</td>
+          <td class="text-center">$ {{ number_format($factoryRequestProduct->PRECIO_P)}}</td>
         </tr>
         @endforeach
       </tbody>

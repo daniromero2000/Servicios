@@ -27,7 +27,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <h2>{{ $totalStatuses }}</h2>
-                <p>Intenciones Web</p>
+                <p>Intenciónes web en este mes</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars " style="color: white;"></i>

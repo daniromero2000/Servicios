@@ -19,11 +19,12 @@
         @foreach ($factory_requests as $factory_request )
         <tr>
           <td class="text-center">{{ date('M d, Y h:i a', strtotime($factory_request->FECHASOL)) }}</td>
-          <td class="text-center"><a data-toggle="tooltip" title="Ver Solicitud" href="{{ route('factoryrequests.show', $factory_request->SOLICITUD) }}">{{ $factory_request->SOLICITUD }}</a>
+          <td class="text-center"><a data-toggle="tooltip" title="Ver Solicitud"
+              href="{{ route('factoryrequests.show', $factory_request->SOLICITUD) }}">{{ $factory_request->SOLICITUD }}</a>
           </td>
           <td class="text-center">{{ $factory_request->SUCURSAL }}</td>
           <td class="text-center">{{ $factory_request->ESTADO }}</td>
-          <td class="text-center">{{ $factory_request->GRAN_TOTAL }}</td>
+          <td class="text-center">$ {{  number_format ($factory_request->GRAN_TOTAL) }}</td>
         </tr>
         @endforeach
       </tbody>

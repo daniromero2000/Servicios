@@ -1,4 +1,5 @@
 @if($customer->customerIntentions->isNotEmpty())
+
 <div class="card-body text-center pt-0 pb-0 ">
   <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
@@ -7,6 +8,7 @@
           <th scope="col">Fecha</th>
           <th scope="col">Intención</th>
           <th scope="col">Origen</th>
+          <th scope="col">Asesor</th>
           <th scope="col">Estado</th>
           <th scope="col">Actividad</th>
           <th scope="col">Estado Obligaciones</th>
@@ -30,6 +32,7 @@
           <td>{{ $data->FECHA_INTENCION}}</td>
           <td>{{ $data->id}}</td>
           <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
+          <td>@if($data->assessor){{($data->assessor->NOMBRE)}} @endif</td>
           <td>@if ($data->intentionStatus)
             <span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
               class="badge badge-warning"
