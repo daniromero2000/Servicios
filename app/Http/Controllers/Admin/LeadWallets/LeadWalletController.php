@@ -64,8 +64,11 @@ class LeadWalletController extends Controller
 
     public function index(Request $request)
     {
-
         $area = 4;
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+
+        $leadsOfMonth = $this->leadInterface->customListleadsTotal($from, $to, $area);
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->customListleads($skip * 30, $area);
         if (request()->has('q')) {
@@ -81,17 +84,25 @@ class LeadWalletController extends Controller
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
-        }
-        $listCount = $list->count();
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id'),
+                request()->input('city'),
+                $area,
+                request()->input('typeService'),
+                request()->input('typeProduct')
 
-        $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+            );
         }
+        $listCount = $leadsOfMonth->count();
+
 
         $listAssessors = 1;
         return view('leadwallet.list', [
-            'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],

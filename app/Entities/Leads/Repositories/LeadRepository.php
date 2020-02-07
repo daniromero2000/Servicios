@@ -363,6 +363,17 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function customListleadsTotal($from, $to, $area)
+    {
+        try {
+            return  $this->model->where('lead_area_id', $area)
+                ->whereBetween('created_at', [$from, $to])
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product)) {

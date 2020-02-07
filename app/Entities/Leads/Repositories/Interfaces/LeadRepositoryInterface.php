@@ -42,6 +42,8 @@ interface LeadRepositoryInterface
 
     public function customListleads($totalView, $service);
 
+    public function customListleadsTotal($from, $to, $area);
+
     public function getLeadPriceTotal($from, $to);
 
     public function findLeadByIdFull(int $id): Lead;

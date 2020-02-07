@@ -63,6 +63,12 @@ class CallCenterLeadController extends Controller
 
     public function index(Request $request)
     {
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+
+        $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
+        $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
+
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
         if (request()->has('q')) {
@@ -78,22 +84,31 @@ class CallCenterLeadController extends Controller
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
-        }
-        $listCount = $list->count();
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
 
-        $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+            );
         }
+
+
+        $leadsOfMonth = $leadsOfMonth->count();
 
         $profile = 16;
 
         return view('callcenterleads.list', [
-            'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
-            'listCount'           => $listCount,
+            'listCount'           => $leadsOfMonth,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
             'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
