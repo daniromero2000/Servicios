@@ -98,7 +98,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_digitalChanel')
+                              @include('callcenterleads.layouts.card_total_leads_digitalChanel')
                             </div>
                           </div>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_insurances')
+                              @include('callcenterleads.layouts.card_total_leads_insurances')
                             </div>
                           </div>
                         </div>
@@ -142,7 +142,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_warranties')
+                              @include('callcenterleads.layouts.card_total_leads_warranties')
                             </div>
                           </div>
                         </div>
@@ -164,7 +164,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_ecommerce')
+                              @include('callcenterleads.layouts.card_total_leads_ecommerce')
                             </div>
                           </div>
                         </div>
@@ -186,7 +186,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_callCenter')
+                              @include('callcenterleads.layouts.card_total_leads_callCenter')
                             </div>
                           </div>
                         </div>
@@ -208,7 +208,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_oportuyas')
+                              @include('callcenterleads.layouts.card_total_leads_oportuyas')
                             </div>
                           </div>
                         </div>
@@ -230,7 +230,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_AdvancedUnit')
+                              @include('callcenterleads.layouts.card_total_leads_AdvancedUnit')
                             </div>
                           </div>
                         </div>
@@ -252,7 +252,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_Wallets')
+                              @include('callcenterleads.layouts.card_total_leads_Wallets')
                             </div>
                           </div>
                         </div>
@@ -274,7 +274,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_Juridicales')
+                              @include('callcenterleads.layouts.card_total_leads_Juridicales')
                             </div>
                           </div>
                         </div>
@@ -296,7 +296,7 @@
                         <div class="col-12 ">
                           <div class="row">
                             <div class="col-12 ">
-                              @include('digitalchannelleads.layouts.card_total_leads_Libranzas')
+                              @include('callcenterleads.layouts.card_total_leads_Libranzas')
                             </div>
                           </div>
                         </div>
