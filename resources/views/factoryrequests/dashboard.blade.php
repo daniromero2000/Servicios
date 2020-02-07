@@ -71,7 +71,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('factoryrequests.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -99,7 +99,7 @@
                     </span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -127,7 +127,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -154,7 +154,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="/factoryrequests"
+                    <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
