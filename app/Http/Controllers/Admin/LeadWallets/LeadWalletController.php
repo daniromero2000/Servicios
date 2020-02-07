@@ -189,6 +189,9 @@ class LeadWalletController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
+        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
+
         $lead = $this->leadInterface->findLeadById($id);
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];

@@ -200,6 +200,7 @@ class DigitalChannelLeadController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->input());
         $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
 

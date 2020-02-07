@@ -65,6 +65,11 @@ class LeadWarrantyController extends Controller
     public function index(Request $request)
     {
         $area = 3;
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+        $leadsOfMonth = $this->leadInterface->customListleadsTotal($from, $to, $area);
+
+
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->customListleads($skip * 30, $area);
         if (request()->has('q')) {
@@ -80,13 +85,24 @@ class LeadWarrantyController extends Controller
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id'),
+                request()->input('city'),
+                $area,
+                request()->input('typeService'),
+                request()->input('typeProduct')
+
+            );
         }
-        $listCount = $list->count();
+        $listCount = $leadsOfMonth->count();
 
         $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
-        }
+
 
         $listAssessors = 18;
         return view('leadwarranties.list', [
@@ -177,6 +193,9 @@ class LeadWarrantyController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
+        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
+
         $lead = $this->leadInterface->findLeadById($id);
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];

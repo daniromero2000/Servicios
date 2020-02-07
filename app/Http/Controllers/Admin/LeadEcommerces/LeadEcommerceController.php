@@ -67,6 +67,10 @@ class LeadEcommerceController extends Controller
     public function index(Request $request)
     {
         $area = 8;
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+
+        $leadsOfMonth = $this->leadInterface->customListleadsTotal($from, $to, $area);
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->customListleads($skip * 30, $area);
         if (request()->has('q')) {
@@ -82,17 +86,24 @@ class LeadEcommerceController extends Controller
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
-        }
-        $listCount = $list->count();
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('state'),
+                request()->input('assessor_id'),
+                request()->input('city'),
+                $area,
+                request()->input('typeService'),
+                request()->input('typeProduct')
 
-        $pricesTotal = 0;
-        foreach ($list as $key => $status) {
-            $pricesTotal +=  $list[$key]->leadPrices->sum('lead_price');
+            );
         }
+        $listCount = $leadsOfMonth->count();
 
         $listAssessors = 18;
         return view('leadecommerce.list', [
-            'pricesTotal'         => $pricesTotal,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
             'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
@@ -179,6 +190,9 @@ class LeadEcommerceController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
+        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
+
         $lead = $this->leadInterface->findLeadById($id);
         if ($lead->state != $request['state']) {
             $lead->state = $request['state'];

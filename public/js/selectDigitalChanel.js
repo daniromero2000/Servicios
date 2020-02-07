@@ -66,7 +66,7 @@ function ontypeServiceSelectedProductEditModal(dataId) {
         var html_selectEdit = "";
         for (var i = 0; i < data.length; i++) {
             if ($('#stateSelectEdit' + dataId).val() == data[i].id) {
-                html_selectEdit += '<option value="' + data[i].id + '" disabled selected="selected" ">' + data[i].status + '</option>';
+                html_selectEdit += '<option value="' + data[i].id + '"  selected="selected" ">' + data[i].status + '</option>';
             }
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].status + '</option>';
         }
