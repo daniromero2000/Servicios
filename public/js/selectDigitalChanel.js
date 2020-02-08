@@ -120,8 +120,7 @@ function ontypeAreaSelectFilter() {
     });
 };
 
-$(function loadLead() {
-
+function loadLead() {
     var leadTelephone = $("#telephoneCreate").val();
     $.get('/getLead/' + leadTelephone + '', function (data) {
         if (data != 'false') {
@@ -134,6 +133,6 @@ $(function loadLead() {
             $("#nameCreate").val("");
             $("#lastNameCreate").val("");
             $("#emailCreate").val("");
-        }
+        };
     });
-});
+};
