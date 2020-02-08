@@ -127,12 +127,8 @@ class DigitalChannelLeadController extends Controller
             'listAssessors'       => $this->UserInterface->listUser($profile)
         ]);
     }
-    public function store(CreateLeadRequest $request)
+    public function store(Request $request)
     {
-
-        $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
-        $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
-
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
         $dataOportudata = [
