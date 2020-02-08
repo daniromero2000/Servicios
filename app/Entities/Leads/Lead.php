@@ -57,6 +57,7 @@ class Lead extends Model
             'leads.name'      => 10,
             'leads.lastName'  => 10,
             'leads.telephone' => 10,
+            'leads.identificationNumber' => 10,
         ],
     ];
 

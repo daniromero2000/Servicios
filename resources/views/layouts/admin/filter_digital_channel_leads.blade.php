@@ -7,7 +7,7 @@
         <form action="{{$route}}" method="get" id="admin-search">
             <div class="row d-flex justify-content-center">
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <label for="q">Buscar (Cédula, Nombre y Apellido)</label>
+                    <label for="q">Buscar (Cédula, Teléfono, Nombre y Apellido)</label>
                     <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                         value="{!! request()->input('q') !!}">
                 </div>

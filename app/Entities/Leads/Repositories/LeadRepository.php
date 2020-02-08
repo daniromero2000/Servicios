@@ -385,7 +385,7 @@ class LeadRepository implements LeadRepositoryInterface
         }
 
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchLeads($text, null, true, true)->with([
+            return $this->model->searchCustomLeads($text, null, true, true)->with([
                 'leadStatus',
                 'leadAssessor',
                 'leadService',
