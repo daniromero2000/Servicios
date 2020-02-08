@@ -173,7 +173,6 @@
 <!-- Validador de campos formulario -->
 <script src="{{ asset('js/validateV2.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
-<script src="{{ asset('js/digitalChanelModal.js') }}"></script>
 <script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 <script>
