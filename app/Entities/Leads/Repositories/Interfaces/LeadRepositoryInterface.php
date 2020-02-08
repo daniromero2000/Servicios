@@ -14,6 +14,8 @@ interface LeadRepositoryInterface
 
     public function findLeadById(int $id): Lead;
 
+    public function findLeadByTelephone(int $telephone);
+
     public function findLeadDelete(int $id): Lead;
 
     public function updateLead(array $params): bool;

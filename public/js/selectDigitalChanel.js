@@ -39,8 +39,6 @@ function dataLead(dataId) {
 
 function ontypeServiceSelectedProductEditModal(dataId) {
     var typeServiceEditSelected_id = $("#typeAreaSelectEdit" + dataId).val();
-    $('#editLead' + dataId).modal({ backdrop: 'static', keyboard: false })
-
     $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
         var html_selectEdit = ""
         for (var i = 0; i < data.length; i++) {

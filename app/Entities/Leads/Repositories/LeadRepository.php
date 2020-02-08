@@ -89,6 +89,24 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function findLeadByTelephone(int $telephone)
+    {
+        try {
+
+            $data = $this->model->where('telephone', $telephone)
+                ->orderBy('updated_at', 'desc')->get()->first();
+
+            if (isset($data)) {
+                return $data;
+            } else {
+                return "false";
+            }
+        } catch (ModelNotFoundException $e) {
+            return "false";
+        }
+    }
+
+
     public function updateLead(array $params): bool
     {
         try {

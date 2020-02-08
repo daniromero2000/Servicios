@@ -495,4 +495,10 @@ class DigitalChannelLeadController extends Controller
         $data = $this->UserInterface->listUser($id);
         return json_decode($data);
     }
+
+    public function getLead(int $telephone)
+    {
+        $data = $this->leadInterface->findLeadByTelephone($telephone);
+        return $data;
+    }
 }

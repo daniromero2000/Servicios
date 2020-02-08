@@ -155,6 +155,7 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('DigitalChannelLeads')->group(function () {
         Route::resource('Administrator/digitalchannelleads', 'DigitalChannelLeadController');
         Route::get('/getproducts/{id}', 'DigitalChannelLeadController@byProducts');
+        Route::get('/getLead/{telephone}', 'DigitalChannelLeadController@getLead');
         Route::get('/getStatuses/{id}', 'DigitalChannelLeadController@byStatus');
         Route::get('/getAssessors/{id}', 'DigitalChannelLeadController@byAssessors');
         Route::get('/getServices/{id}', 'DigitalChannelLeadController@byService');

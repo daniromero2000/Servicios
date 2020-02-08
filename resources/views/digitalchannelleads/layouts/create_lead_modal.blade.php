@@ -13,41 +13,39 @@
             <form action="{{ route('digitalchannelleads.store') }}" method="post" class="form"
               enctype="multipart/form-data">
               {{ csrf_field() }}
+
               <div class="row">
-                <div class="col-12 form-group">
+                <div class="col-12  form-group no-padding-right">
+                  <label for="telephone">Teléfono </label>
+                  <input type="text" onblur=loadLead() id="telephoneCreate" name="telephone" cols="10"
+                    class="form-control">
+                </div>
+                <div class="col-12 col-sm-6 form-group">
                   <label for="identificationNumber">Cédula</label>
                   <input type="text" class="form-control" validation-pattern="IdentificationNumber"
-                    id="identificationNumber" name="identificationNumber">
+                    id="identificationNumberCreate" name="identificationNumber">
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="name">Nombre <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.name" validation-pattern="name" id="name" name="name" cols="10"
-                    class="form-control" required>
+                  <input type="text" ng-model="lead.name" validation-pattern="name" id="nameCreate" name="name"
+                    cols="10" class="form-control" required>
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                  <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastName" name="lastName"
-                    cols="10" class="form-control" required>
+                  <input type="text" ng-model="lead.lastName" validation-pattern="name" id="lastNameCreate"
+                    name="lastName" cols="10" class="form-control" required>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="email">Email</label>
-                  <input type="text" ng-model="lead.email" validation-pattern="email" id="email" name="email" cols="10"
-                    class="form-control">
-                </div>
-                <div class="col-12 col-sm-6 form-group no-padding-right">
-                  <label for="telephone">Teléfono </label>
-                  <input type="text" ng-model="lead.telephone" id="telephone" name="telephone" cols="10"
-                    class="form-control">
+                  <input type="text" ng-model="lead.email" validation-pattern="email" id="emailCreate" name="email"
+                    cols="10" class="form-control">
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="city">Ciudad <span class="text-danger">*</span></label>
-                  <select id="city" name="city" class="form-control" required>
+                  <select id="cityCreate" name="city" class="form-control" required>
                     @if(!empty($cities))
                     <option selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
@@ -60,7 +58,7 @@
                 </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="channel">Canal de Adquisición <span class="text-danger">*</span></label>
-                  <select id="channel" name="channel" class="form-control" required>
+                  <select id="channelCreate" name="channel" class="form-control" required>
                     @if(!empty($channels))
                     <option selected value> -- Selecciona Canal -- </option>
                     @foreach($channels as $channel)
@@ -75,14 +73,14 @@
               <div class="row">
                 <div class="col-12 col-sm-6 form-group">
                   <label for="name">Ciudad aledaña</label>
-                  <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCity"
+                  <input type="text" ng-model="lead.nearbyCity" validation-pattern="name" id="nearbyCityCreate"
                     name="nearbyCity" cols="10" class="form-control">
                 </div>
               </div>
               <div class="row">
                 <div class="col-12 form-group">
                   <label for="socialNetwork">Campaña</label>
-                  <select id="campaign" name="campaign" class="form-control">
+                  <select id="campaignCreate" name="campaign" class="form-control">
                     @if(!empty($campaigns))
                     <option selected value> -- Selecciona Campaña -- </option>
                     @foreach($campaigns as $campaign)
@@ -133,7 +131,7 @@
               <div class="row">
                 <div class="col-12 col-sm-12 form-group">
                   <label for="description">Observación</label>
-                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="description"
+                  <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="descriptionCreate"
                     name="description" cols="10" class="form-control">
                 </div>
               </div>
