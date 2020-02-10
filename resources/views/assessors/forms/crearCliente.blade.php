@@ -41,7 +41,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>
@@ -113,7 +113,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Cuentanos más de ti</strong><br>
                             <span class="forms-descText">Ingresa tu información personal</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">2</span>
                         </div>
@@ -193,7 +193,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información laboral</strong><br>
                             <span class="forms-descText">Ingresa tus datos laborales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">3</span>
                         </div>
@@ -348,7 +348,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Referencias</strong><br>
                             <span class="forms-descText">Ingresa los datos de tus referencias</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">4</span>
                         </div>
@@ -397,7 +397,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>
