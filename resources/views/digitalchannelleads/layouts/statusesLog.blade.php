@@ -1,10 +1,11 @@
-<div class="col-md-3">
+<div class="col-md-4">
     <h2 class="text-center">Historial</h2>
     <ul class="timeline">
         @if(!Empty($datas))
         @foreach($datas as $data)
         <li>
-            <i class="fa fa-clock-o bg-blue"></i>
+            <i class="fa fa-clock-o"
+                style="color: white ; background-color: @if($data->status){{$data->status->color }} @endif"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i>
                     {{ $data->created_at->diffForHumans($digitalChannelLead->created_at) }}</span>
