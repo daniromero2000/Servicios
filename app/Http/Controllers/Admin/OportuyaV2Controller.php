@@ -11,6 +11,7 @@ use App\Turnos;
 use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
+use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
@@ -56,6 +57,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface;
+	private $assessorInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -82,7 +84,8 @@ class OportuyaV2Controller extends Controller
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
-		UbicaRepositoryInterface $ubicaRepositoryInterface
+		UbicaRepositoryInterface $ubicaRepositoryInterface,
+		AssessorRepositoryInterface $AssessorRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -109,6 +112,7 @@ class OportuyaV2Controller extends Controller
 		$this->extinctRealCifinInterface         = $extintRealCifinRepositoryInterface;
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
+		$this->assessorInterface = $AssessorRepositoryInterface;
 	}
 
 	public function index()
@@ -1305,7 +1309,7 @@ class OportuyaV2Controller extends Controller
 
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
-			return $aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
 			$aprobo = 0;
 		}
@@ -1638,6 +1642,10 @@ class OportuyaV2Controller extends Controller
 		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
 		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
 		$sucursal = $sucursal[0]->CODIGO;
+		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
 
 		$solic_fab                = new FactoryRequest;
 		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
@@ -1800,6 +1808,19 @@ class OportuyaV2Controller extends Controller
 		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 		$scoreLead = 0;
+
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
+		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
+		$sucursal = $sucursal[0]->CODIGO;
+		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
 		if (!empty($respScoreLead)) {
 			$scoreLead = $respScoreLead[0]->score;
 		}
@@ -1808,7 +1829,7 @@ class OportuyaV2Controller extends Controller
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
 		$turnosOportuya->CEDULA    = $identificationNumber;
 		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
-		$turnosOportuya->SUC       = 9999;
+		$turnosOportuya->SUC       = $sucursal;
 		$turnosOportuya->USUARIO   = '';
 		$turnosOportuya->PRIORIDAD = '2';
 		$turnosOportuya->ESTADO    = 'EN SUCURSAL';
@@ -1841,11 +1862,24 @@ class OportuyaV2Controller extends Controller
 			$scoreLead = $respScoreLead[0]->score;
 		}
 
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
+		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
+		$sucursal = $sucursal[0]->CODIGO;
+		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
+
 		$turnosOportuya            = new TurnosOportuya;
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
 		$turnosOportuya->CEDULA    = $identificationNumber;
 		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
-		$turnosOportuya->SUC       = 9999;
+		$turnosOportuya->SUC       = $sucursal;
 		$turnosOportuya->USUARIO   = '';
 		$turnosOportuya->PRIORIDAD = '2';
 		$turnosOportuya->ESTADO    = 'ANALISIS';
@@ -1923,6 +1957,7 @@ class OportuyaV2Controller extends Controller
 		$tarjeta->TOKEN_CE   = "";
 		$tarjeta->CELULAR_CE = "";
 		$tarjeta->STATE      = "A";
+		$tarjeta->ANALISTA   = "SI";
 
 		$tarjeta->save();
 

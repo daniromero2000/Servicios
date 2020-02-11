@@ -57,7 +57,8 @@ class CreditCard extends Model
         'RECEPCCLI',
         'OBSTARCLI',
         'FEC_RECCLI',
-        'STATE'
+        'STATE',
+        'ANALISTA'
     ];
 
 
