@@ -2,6 +2,7 @@
 
 namespace App\Entities\Fosygas;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class Fosyga extends Model
@@ -34,4 +35,9 @@ class Fosyga extends Model
         'fechaConsulta',
         'fuenteFallo'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'cedula');
+    }
 }
