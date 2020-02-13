@@ -1,6 +1,5 @@
 @extends('layouts.admin.app')
 @section('content')
-
 <section class="content border-0">
     @include('layouts.errors-and-messages')
     <div class="content-header">
@@ -35,6 +34,9 @@
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#comercial" role="tab" aria-controls="arrears">Historia
                     Comercial</a>
+            </li>
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#queries" role="tab" aria-controls="arrears"> Consultas</a>
             </li>
             @endif
             <li class="active" role="presentation">
@@ -74,6 +76,14 @@
                 $customer->extintsCifinReals])
                 @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
                 $customer->extintsCifinFins])
+            </div>
+            <div role="tabpanel" class="tab-pane container-fluid" id="queries">
+                @include('customers.layouts.customer_fosyga', ['fosygas' =>
+                $customer->customerFosygas])
+                @include('customers.layouts.customer_registraduria', ['registradurias' =>
+                $customer->customerRegistraduria])
+                {{-- @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
+                $customer->customerConfronta]) --}}
             </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>

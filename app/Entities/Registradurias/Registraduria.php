@@ -2,6 +2,7 @@
 
 namespace App\Entities\Registradurias;
 
+use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class Registraduria extends Model
@@ -30,4 +31,8 @@ class Registraduria extends Model
         'fechaConsulta',
         'fuenteFallo'
     ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'cedula');
+    }
 }

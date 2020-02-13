@@ -7,12 +7,14 @@ use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
+use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
 use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
+use App\Entities\Registradurias\Registraduria;
 use App\Entities\Ubicas\Ubica;
 use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
 use App\Entities\UpToDateRealCifins\UpToDateRealCifin;
@@ -275,6 +277,16 @@ class Customer extends Model
     public function customerFosygas()
     {
         return $this->hasMany(Fosyga::class, 'cedula');
+    }
+
+    public function customerRegistraduria()
+    {
+        return $this->hasMany(Registraduria::class, 'cedula');
+    }
+
+    public function customerConfronta()
+    {
+        return $this->hasMany(Confronta::class, 'cedula')->with('confrontaResult');
     }
 
     public function cliCell()
