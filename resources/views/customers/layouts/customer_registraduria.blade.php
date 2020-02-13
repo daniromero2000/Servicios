@@ -38,7 +38,7 @@
         <tbody class="body-table">
             <tr>
                 <td>
-                    No tiene Moras en el sector Real
+                    No tiene Consultas
                 </td>
             </tr>
         </tbody>
