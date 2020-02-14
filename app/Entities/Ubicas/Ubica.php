@@ -2,6 +2,7 @@
 
 namespace App\Entities\Ubicas;
 
+use App\Entities\UbicaAddresses\UbicaAddress;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\UbicaCellPhones\UbicaCellPhone;
 use App\Entities\UbicaPhones\UbicaPhone;
@@ -32,5 +33,10 @@ class Ubica extends Model
     public function ubicaLastPhone()
     {
         return $this->hasOne(UbicaPhone::class, 'ubiconsul')->where('ubitipoubi', 'like', '%LAB%');
+    }
+
+    public function ubicAddress()
+    {
+        return $this->hasOne(UbicaAddress::class, 'ubiconsul');
     }
 }

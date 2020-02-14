@@ -7,6 +7,7 @@ use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
+use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
@@ -261,7 +262,7 @@ class Customer extends Model
 
     public function ubicaConsultations()
     {
-        return $this->hasMany(Ubica::class, 'cedula');
+        return $this->hasMany(Ubica::class, 'cedula')->with(['ubicaLastCellPhone', 'ubicaLastPhone', 'ubicAddress']);
     }
 
     public function lastUbicaConsultation()
@@ -286,7 +287,7 @@ class Customer extends Model
 
     public function customerConfronta()
     {
-        return $this->hasMany(Confronta::class, 'cedula')->with('confrontaResult');
+        return $this->hasMany(ConfrontaResult::class, 'cedula');
     }
 
     public function cliCell()

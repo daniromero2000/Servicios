@@ -8,19 +8,15 @@
         <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
                 <tr>
-                    <th class="text-center" scope="col">Fecha de Consulta</th>
-                    <th class="text-center" scope="col">Secuencia</th>
+                    <th class="text-center" scope="col">Aciertos</th>
                     <th class="text-center" scope="col">Respuesta</th>
-                    <th class="text-center" scope="col">Estado</th>
                 </tr>
             </thead>
             <tbody class="body-table">
                 @foreach ($confrontaCustomers as $confronta )
                 <tr>
-                    <td class="text-center">{{ $confronta->fecha }}</td>
-                    <td class="text-center">{{ $confronta->secuencia }}</td>
+                    <td class="text-center">{{ $confronta->aciertos }}</td>
                     <td class="text-center">{{ $confronta->respuesta }}</td>
-                    <td class="text-center">{{ $confronta->estadoid }}</td>
                 </tr>
                 @endforeach
             </tbody class="body-table">

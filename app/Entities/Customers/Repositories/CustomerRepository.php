@@ -80,7 +80,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'customerWarranties',
                 'customerFosygas',
                 'customerRegistraduria',
-                'customerConfronta'
+                'customerConfronta',
+                'ubicaConsultations'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

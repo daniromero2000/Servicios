@@ -25,8 +25,8 @@ class ConfrontaResult extends Model
         'score'
     ];
 
-    public function confronta()
+    public function customer()
     {
-        return $this->hasOne(Confronta::class, 'cedula');
+        return $this->belongsTo(Customer::class, 'cedula');
     }
 }

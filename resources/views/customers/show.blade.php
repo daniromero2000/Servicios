@@ -82,8 +82,8 @@
                 $customer->customerFosygas])
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
-                {{-- @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
-                $customer->customerConfronta]) --}}
+                @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
+                $customer->customerConfronta])
             </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>
