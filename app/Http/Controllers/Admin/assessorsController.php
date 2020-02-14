@@ -285,9 +285,11 @@ class assessorsController extends Controller
         if (empty($resp)) {
             return "false";
         }
-        
+
         foreach ($resp[0] as $key => $value) {
-            $resp[0]->$key = trim($value);
+            if($key != 'CIUD_UBI' && $key != 'CIUD_EXP'){
+                $resp[0]->$key = trim($value);
+            }
         }
 
         return $resp;

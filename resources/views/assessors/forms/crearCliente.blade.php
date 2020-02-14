@@ -145,7 +145,7 @@
                             <div class="col-12 col-md-4">
                                 <label class="labels" for="antiquity">Antigüedad en vivienda
                                     <small>(Meses)</small>*</label>
-                                <input class="inputs" id="antiquity" validation-pattern="number" type="number"
+                                <input class="inputs" id="antiquity" validation-pattern="number" type="text"
                                     ng-model="lead.TIEMPO_VIV" required />
                             </div>
                             <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">
@@ -392,7 +392,7 @@
                     </div>
                 </div>
             </form>
-            <form name="clienteContado" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CONTADO'">
+            <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 type-client">
                         <div class="forms-descStep forms-descStep-avances">
