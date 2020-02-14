@@ -205,7 +205,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA,
 		}).then(function successCallback(response) {
-						if(response.data == false){
+			if(response.data == false){
 				var cedula = angular.extend({}, $scope.lead);
 				$scope.resetInfo();
 				$scope.lead.CEDULA = cedula.CEDULA;
@@ -319,9 +319,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			$('#proccess').modal('hide');
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
+					$('#proccess').modal('hide');
 					$scope.showConfirm();
 				}, 1000);
 			}

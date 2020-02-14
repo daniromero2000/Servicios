@@ -41,7 +41,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>
@@ -113,7 +113,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Cuentanos más de ti</strong><br>
                             <span class="forms-descText">Ingresa tu información personal</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">2</span>
                         </div>
@@ -145,7 +145,7 @@
                             <div class="col-12 col-md-4">
                                 <label class="labels" for="antiquity">Antigüedad en vivienda
                                     <small>(Meses)</small>*</label>
-                                <input class="inputs" id="antiquity" validation-pattern="number" type="number"
+                                <input class="inputs" id="antiquity" validation-pattern="number" type="text"
                                     ng-model="lead.TIEMPO_VIV" required />
                             </div>
                             <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">
@@ -194,7 +194,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información laboral</strong><br>
                             <span class="forms-descText">Ingresa tus datos laborales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">3</span>
                         </div>
@@ -349,7 +349,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Referencias</strong><br>
                             <span class="forms-descText">Ingresa los datos de tus referencias</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">4</span>
                         </div>
@@ -392,13 +392,13 @@
                     </div>
                 </div>
             </form>
-            <form name="clienteContado" ng-submit="getCodeVerification()" ng-show="tipoCliente == 'CONTADO'">
+            <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 type-client">
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="http://192.168.200.60:8081/images/datosPersonales.png"
+                            <img src="{{ asset('images/datosPersonales.png') }}"
                                 class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>

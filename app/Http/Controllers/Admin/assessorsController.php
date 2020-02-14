@@ -91,6 +91,12 @@ class assessorsController extends Controller
             $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
         }
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+        $assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        $sucursal = trim($request->get('CIUD_UBI'));
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
+        
         $leadOportudata  = new Customer;
         $usuarioCreacion = $assessorCode;
         $clienteCelular  = new CliCel;
@@ -278,6 +284,12 @@ class assessorsController extends Controller
 
         if (empty($resp)) {
             return "false";
+        }
+
+        foreach ($resp[0] as $key => $value) {
+            if($key != 'CIUD_UBI' && $key != 'CIUD_EXP'){
+                $resp[0]->$key = trim($value);
+            }
         }
 
         return $resp;
