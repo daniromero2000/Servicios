@@ -10,7 +10,7 @@ class UpToDateFinancialCifin extends Model
 
     protected $connection = 'oportudata';
 
-    // protected $primaryKey =  'fdconsul';
+    protected $primaryKey =  'fdconsul';
 
     public $timestamps = false;
 }

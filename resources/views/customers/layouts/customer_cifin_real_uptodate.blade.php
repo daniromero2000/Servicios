@@ -3,7 +3,7 @@
     <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Al Día Sector Real
     </h2>
   </div>
-  @if($customer->UpToDateCifinReals->isNotEmpty())
+  @if($cifin_uptodate_reals->isNotEmpty())
   <div class="card-body table-responsive pt-0">
     <table class="table table-head-fixed table-hover  table-stripped leadTable">
       <thead class="header-table">

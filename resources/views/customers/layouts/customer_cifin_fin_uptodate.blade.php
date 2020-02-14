@@ -3,9 +3,9 @@
     <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Al Día Sector Financiero
     </h2>
   </div>
-  @if($customer->UpToDateCifinFins->isNotEmpty())
+  @if($cifin_uptodate_fins->isNotEmpty())
   <div class="card-body table-responsive pt-0 header-table-responsive">
-    <table class="table table-head-fixed table-hover table-stripped leadTable" >
+    <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>

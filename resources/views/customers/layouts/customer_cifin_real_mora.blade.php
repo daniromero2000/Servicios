@@ -3,7 +3,7 @@
     <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Moras Sector Real
     </h2>
   </div>
-  @if($customer->cifinReals->isNotEmpty())
+  @if($cifin_reals->isNotEmpty())
   <div class="card-body table-responsive pt-1">
     <table class="table table-hover table-stripped leadTable">
       <thead class="header-table">
@@ -35,7 +35,8 @@
         @endforeach
       </tbody class="body-table">
     </table>
-  </div>@else
+  </div>
+  @else
   <table class="table table-hover table-stripped leadTable">
     <tbody class="body-table">
       <tr>

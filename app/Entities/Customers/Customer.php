@@ -3,10 +3,12 @@
 namespace App\Entities\Customers;
 
 use App\cliCel;
+use App\Entities\CifinBasicDatas\CifinBasicData;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CifinScores\CifinScore;
+use App\Entities\CifinWebServices\CifinWebService;
 use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\ConfrontaWebServices\Confronta;
@@ -309,6 +311,11 @@ class Customer extends Model
     public function cifinFins()
     {
         return $this->hasMany(CifinFinancialArrear::class, 'fincedula')->where('finestcon', '!=', '');
+    }
+
+    public function cifinWebService()
+    {
+        return $this->hasMany(CifinWebService::class, 'cedula')->with('cifinRealArrear', 'cifinFinancialArrear', 'upToDateFinancialCifin', 'upToDateRealCifin');
     }
 
     public function UpToDateCifinFins()
