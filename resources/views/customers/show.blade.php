@@ -1,8 +1,5 @@
 @extends('layouts.admin.app')
 @section('content')
-{{-- @php
-dd($customer->ubicaConsultations[0])
-@endphp --}}
 <section class="content border-0">
     @include('layouts.errors-and-messages')
     <div class="content-header">
@@ -86,7 +83,7 @@ dd($customer->ubicaConsultations[0])
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
-                $customer->customerConfronta])
+                $customer->customerConfronta, 'confrontaFootprint'=> $customer->confrontaFootprint])
                 @include('customers.layouts.customer_ubica', ['ubicaCustomers' =>
                 $customer->ubicaConsultations])
             </div>

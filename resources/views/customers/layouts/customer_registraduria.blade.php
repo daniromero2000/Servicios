@@ -10,8 +10,8 @@
                 <tr>
                     <th class="text-center" scope="col">Tipo de Documento</th>
                     <th class="text-center" scope="col">Pais</th>
-                    <th class="text-center" scope="col">Lugar de Expedición</th>
                     <th class="text-center" scope="col">Fecha de Expedición</th>
+                    <th class="text-center" scope="col">Lugar de Expedición</th>
                     <th class="text-center" scope="col">Estado</th>
                     <th class="text-center" scope="col">Fecha de Consulta</th>
                     <th class="text-center" scope="col">Fuente de fallo?</th>
@@ -24,8 +24,8 @@
                         Cédula
                         @endif</td>
                     <td class="text-center">{{ $registraduria->pais }}</td>
-                    <td class="text-center">{{ $registraduria->lugarExpedicion }}</td>
                     <td class="text-center">{{ $registraduria->fechaExpedicion }}</td>
+                    <td class="text-center">{{ $registraduria->lugarExpedicion }}</td>
                     <td class="text-center">{{ $registraduria->estado }}</td>
                     <td class="text-center">{{ $registraduria->fechaConsulta }}</td>
                     <td class="text-center">{{ $registraduria->fuenteFallo }}</td>

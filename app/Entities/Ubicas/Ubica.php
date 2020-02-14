@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Entities\UbicaCellPhones\UbicaCellPhone;
 use App\Entities\UbicaEmails\UbicaEmail;
 use App\Entities\UbicaPhones\UbicaPhone;
+use App\Entities\UbicaPrincipals\UbicaPrincipal;
 
 class Ubica extends Model
 {
@@ -43,5 +44,9 @@ class Ubica extends Model
     public function ubicEmails()
     {
         return $this->hasOne(UbicaEmail::class, 'ubiconsul');
+    }
+    public function ubicPrincipal()
+    {
+        return $this->hasOne(UbicaPrincipal::class, 'ubiconsul');
     }
 }
