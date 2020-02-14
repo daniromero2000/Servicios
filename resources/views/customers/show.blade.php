@@ -84,6 +84,8 @@
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
                 $customer->customerConfronta])
+                @include('customers.layouts.customer_ubica', ['ubicaCustomers' =>
+                $customer->ubicaConsultations])
             </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>

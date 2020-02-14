@@ -17,6 +17,7 @@ class UbicaAddress extends Model
 
     protected $fillable = [
         'ubiconsul',
-
+        'ubiposicion',
+        ''
     ];
 }

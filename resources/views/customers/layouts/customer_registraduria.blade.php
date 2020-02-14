@@ -3,7 +3,7 @@
         <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Resultado Registraduría
         </h2>
     </div>
-    @if($customer->customerRegistraduria->isNotEmpty())
+    @if($registradurias->isNotEmpty())
     <div class="card-body table-responsive pt-1">
         <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
