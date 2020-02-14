@@ -1,5 +1,8 @@
 @extends('layouts.admin.app')
 @section('content')
+{{-- @php
+dd($customer->ubicaConsultations[0])
+@endphp --}}
 <section class="content border-0">
     @include('layouts.errors-and-messages')
     <div class="content-header">

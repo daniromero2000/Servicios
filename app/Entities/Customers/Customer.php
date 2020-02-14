@@ -262,7 +262,7 @@ class Customer extends Model
 
     public function ubicaConsultations()
     {
-        return $this->hasMany(Ubica::class, 'cedula')->with(['ubicaLastCellPhone', 'ubicaLastPhone', 'ubicAddress']);
+        return $this->hasMany(Ubica::class, 'cedula')->with(['ubicaLastCellPhone', 'ubicaLastPhone', 'ubicAddress', 'ubicEmails']);
     }
 
     public function lastUbicaConsultation()

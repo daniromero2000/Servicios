@@ -5,6 +5,7 @@ namespace App\Entities\Ubicas;
 use App\Entities\UbicaAddresses\UbicaAddress;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities\UbicaCellPhones\UbicaCellPhone;
+use App\Entities\UbicaEmails\UbicaEmail;
 use App\Entities\UbicaPhones\UbicaPhone;
 
 class Ubica extends Model
@@ -37,5 +38,10 @@ class Ubica extends Model
     public function ubicAddress()
     {
         return $this->hasOne(UbicaAddress::class, 'ubiconsul');
+    }
+
+    public function ubicEmails()
+    {
+        return $this->hasOne(UbicaEmail::class, 'ubiconsul');
     }
 }
