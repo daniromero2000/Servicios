@@ -83,7 +83,9 @@
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
-                $customer->customerConfronta])
+                $customer->customerConfronta, 'confrontaFootprint'=> $customer->confrontaFootprint])
+                @include('customers.layouts.customer_ubica', ['ubicaCustomers' =>
+                $customer->ubicaConsultations])
             </div>
             <div role="tabpanel" class="tab-pane" id="factoryrequests">
                 @include('customers.layouts.customer_factory_requests', ['factory_requests' =>

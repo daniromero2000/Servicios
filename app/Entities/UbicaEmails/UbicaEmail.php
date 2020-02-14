@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Entities\UbicaAddresses;
+namespace App\Entities\UbicaEmails;
 
-use App\Entities\Ubicas\Ubica;
 use Illuminate\Database\Eloquent\Model;
 
-class UbicaAddress extends Model
+class UbicaEmail extends Model
 {
-    protected $table = 'ubica_direccion';
+    protected $table = 'ubica_mail';
 
     protected $connection = 'oportudata';
 
@@ -18,6 +17,9 @@ class UbicaAddress extends Model
     protected $fillable = [
         'ubiconsul',
         'ubiposicion',
-        ''
+        'ubinoreporte',
+        'ubiprimerrep',
+        'ubiultimorep',
+        'ubicorreo'
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entities\ConfrontaResults;
 
+use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\Confronta;
 use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
