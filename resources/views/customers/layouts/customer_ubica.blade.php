@@ -76,10 +76,22 @@
                                 @foreach ($ubicaCustomers as $ubica )
                                 <tr>
                                     @if ($ubica->ubicaLastCellPhone)
-                                    <td class="text-center">{{ $ubica->ubicaLastCellPhone->ubicelular }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastCellPhone->ubiprodactivo }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastCellPhone->ubiprimerrep }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastCellPhone->ubiultimorep }}</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastCellPhone->ubicelular)
+                                        {{ $ubica->ubicaLastCellPhone->ubicelular }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastCellPhone->ubiprodactivo)
+                                        {{ $ubica->ubicaLastCellPhone->ubiprodactivo }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastCellPhone->ubiprimerrep)
+                                        {{ $ubica->ubicaLastCellPhone->ubiprimerrep }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastCellPhone->ubiultimorep)
+                                        {{ $ubica->ubicaLastCellPhone->ubiultimorep }}
+                                        @else NA
+                                        @endif</td>
                                     @else
                                     <td>
                                         No tiene Consultas
@@ -115,11 +127,26 @@
                                 @foreach ($ubicaCustomers as $ubica )
                                 <tr>
                                     @if ($ubica->ubicaLastPhone)
-                                    <td class="text-center">{{ $ubica->ubicaLastPhone->ubitelefono }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastPhone->ubiciudad }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastPhone->ubiprodactivo }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastPhone->ubiprimerrep }}</td>
-                                    <td class="text-center">{{ $ubica->ubicaLastPhone->ubiultimorep }}</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastPhone->ubitelefono)
+                                        {{ $ubica->ubicaLastPhone->ubitelefono }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastPhone->ubiciudad)
+                                        {{ $ubica->ubicaLastPhone->ubiciudad }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastPhone->ubiprodactivo)
+                                        {{ $ubica->ubicaLastPhone->ubiprodactivo }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastPhone->ubiprimerrep)
+                                        {{ $ubica->ubicaLastPhone->ubiprimerrep }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicaLastPhone->ubiultimorep)
+                                        {{ $ubica->ubicaLastPhone->ubiultimorep }}
+                                        @else NA
+                                        @endif</td>
                                     @else
                                     <td>
                                         No tiene Consultas
@@ -154,12 +181,30 @@
                                 @foreach ($ubicaCustomers as $ubica )
                                 <tr>
                                     @if ($ubica->ubicAddress)
-                                    <td class="text-center">{{ $ubica->cedula }}</td>
-                                    <td class="text-center">{{ $ubica->ubicAddress->ubidireccion }}</td>
-                                    <td class="text-center">{{ $ubica->ubicAddress->ubiciudad }}</td>
-                                    <td class="text-center">{{ $ubica->ubicAddress->ubiprodactivo }}</td>
-                                    <td class="text-center">{{ $ubica->ubicAddress->ubiprimerrep }}</td>
-                                    <td class="text-center">{{ $ubica->ubicAddress->ubiultimorep }}</td>
+                                    <td class="text-center"> @if ($ubica->cedula)
+                                        {{ $ubica->cedula }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubidireccion )
+                                        {{ $ubica->ubicAddress->ubidireccion  }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiciudad )
+                                        {{ $ubica->ubicAddress->ubiciudad  }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiprodactivo )
+                                        {{ $ubica->ubicAddress->ubiprodactivo  }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiprimerrep )
+                                        {{ $ubica->ubicAddress->ubiprimerrep  }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiultimorep )
+                                        {{ $ubica->ubicAddress->ubiultimorep  }}
+                                        @else NA
+                                        @endif</td>
                                     @else
                                     <td>
                                         No tiene Consultas
