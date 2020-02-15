@@ -14,21 +14,26 @@
                     <th class="text-center" scope="col">Lugar de Expedición</th>
                     <th class="text-center" scope="col">Estado</th>
                     <th class="text-center" scope="col">Fecha de Consulta</th>
-                    <th class="text-center" scope="col">Fuente de fallo?</th>
+                    <th class="text-center" scope="col">Falló?</th>
                 </tr>
             </thead>
             <tbody class="body-table">
                 @foreach ($registradurias as $registraduria )
                 <tr>
-                    <td class="text-center">@if ($registraduria->tipoDocumento == 01)
-                        Cédula
-                        @endif</td>
-                    <td class="text-center">{{ $registraduria->pais }}</td>
-                    <td class="text-center">{{ $registraduria->fechaExpedicion }}</td>
-                    <td class="text-center">{{ $registraduria->lugarExpedicion }}</td>
-                    <td class="text-center">{{ $registraduria->estado }}</td>
-                    <td class="text-center">{{ $registraduria->fechaConsulta }}</td>
-                    <td class="text-center">{{ $registraduria->fuenteFallo }}</td>
+                    <td class="text-center"> @if ($registraduria->tipoDocumento)
+                        @if ($registraduria->tipoDocumento == 01) Cédula @endif @else NA @endif
+                    </td>
+                    <td class="text-center"> @if ($registraduria->pais) {{ $registraduria->pais }} @else NA @endif</td>
+                    <td class="text-center"> @if ($registraduria->fechaExpedicion) {{ $registraduria->fechaExpedicion }}
+                        @else NA @endif</td>
+                    <td class="text-center"> @if ($registraduria->lugarExpedicion) {{ $registraduria->lugarExpedicion }}
+                        @else NA @endif</td>
+                    <td class="text-center"> @if ($registraduria->estado) {{ $registraduria->estado }} @else NA @endif
+                    </td>
+                    <td class="text-center"> @if ($registraduria->fechaConsulta) {{ $registraduria->fechaConsulta }}
+                        @else NA @endif</td>
+                    <td class="text-center"> @if ($registraduria->fuenteFallo) {{ $registraduria->fuenteFallo }} @else
+                        NA @endif</td>
                 </tr>
                 @endforeach
             </tbody class="body-table">

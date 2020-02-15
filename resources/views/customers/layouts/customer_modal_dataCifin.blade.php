@@ -1,10 +1,9 @@
-<!-- Modal -->
 <div class="modal fade bd-example-modal-xl" id="customerDataCifin{{$cifinWebService->consec}}" tabindex="-1"
     role="dialog" aria-labelledby="customerDataCifinTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerDataCifinTitle">Modal title</h5>
+                <h5 class="modal-title" id="customerDataCifinTitle">Consultas Cifin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -27,12 +26,22 @@
                         @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
                         $cifinWebService->upToDateRealCifin])
                     </div>
-
+                    <div class="col-12">
+                        @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
+                        $cifinWebService->extintRealCifin])
+                    </div>
+                    <div class="col-12">
+                        @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
+                        $cifinWebService->extintFinancialCifin])
+                    </div>
+                    <div class="col-12">
+                        @include('customers.layouts.customer_cifin_footprints', ['cifin_footprints' =>
+                        $cifinWebService->cifinFrootprint])
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn  btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

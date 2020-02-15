@@ -10,7 +10,7 @@ class ExtintRealCifin extends Model
 
     protected $connection = 'oportudata';
 
-    // protected $primaryKey =  'fdconsul';
+    protected $primaryKey =  'rexconsul';
 
     public $timestamps = false;
 }

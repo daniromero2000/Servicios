@@ -1,4 +1,4 @@
-<div class="container-fluid card card-table-reset pb-5">
+<div class="container-fluid card mt-2 card-table-reset pb-5">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Al Día Sector Financiero
     </h2>

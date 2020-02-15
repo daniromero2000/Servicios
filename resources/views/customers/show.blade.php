@@ -20,9 +20,6 @@
             </div>
         </div>
     </div>
-    {{-- @php
-    dd($customer->cifinWebService);
-    @endphp --}}
     <div class="card border-0 m-2">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
@@ -68,10 +65,6 @@
             <div role="tabpanel" class="tab-pane container-fluid" id="comercial">
                 @include('customers.layouts.customer_cifin_data', ['cifinWebServices' =>
                 $customer->cifinWebService])
-                @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
-                $customer->extintsCifinReals])
-                @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
-                $customer->extintsCifinFins])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="queries">
                 @include('customers.layouts.customer_fosyga', ['fosygas' =>

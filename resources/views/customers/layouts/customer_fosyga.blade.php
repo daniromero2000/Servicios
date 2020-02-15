@@ -22,15 +22,15 @@
       <tbody class="body-table">
         @foreach ($fosygas as $fosyga )
         <tr>
-          <td class="text-center">{{ $fosyga->entidad }}</td>
-          <td class="text-center">{{ $fosyga->regimen }}</td>
-          <td class="text-center">{{ $fosyga->estado }}</td>
-          <td class="text-center">{{ $fosyga->tipoAfiliado }}</td>
-          <td class="text-center">{{ $fosyga->fechaAfiliacion }}</td>
-          <td class="text-center">{{ $fosyga->departamento }}</td>
-          <td class="text-center">{{ $fosyga->ciudad }}</td>
-          <td class="text-center">{{ $fosyga->created_at }}</td>
-          <td class="text-center">{{ $fosyga->fuenteFallo }}</td>
+          <td class="text-center"> @if ($fosyga->entidad) {{ $fosyga->entidad }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->regimen) {{ $fosyga->regimen }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->estado) {{ $fosyga->estado }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->tipoAfiliado) {{ $fosyga->tipoAfiliado }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->fechaAfiliacion) {{ $fosyga->fechaAfiliacion }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->departamento) {{ $fosyga->departamento }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->ciudad) {{ $fosyga->ciudad }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->created_at) {{ $fosyga->created_at }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->fuenteFallo) {{ $fosyga->fuenteFallo }} @else NA @endif</td>
         </tr>
         @endforeach
       </tbody class="body-table">

@@ -26,10 +26,22 @@
                                 @foreach ($ubicaCustomers as $ubica )
                                 <tr>
                                     @if ($ubica->ubicPrincipal)
-                                    <td class="text-center">{{ $ubica->ubicPrincipal->ubicedula }}</td>
-                                    <td class="text-center">{{ $ubica->ubicPrincipal->ubinombre }}</td>
-                                    <td class="text-center">{{ $ubica->ubicPrincipal->genero }}</td>
-                                    <td class="text-center">{{ $ubica->ubicPrincipal->ubifeccons }}</td>
+                                    <td class="text-center"> @if ($ubica->ubicPrincipal->ubicedula)
+                                        {{ $ubica->ubicPrincipal->ubicedula }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicPrincipal->ubinombre)
+                                        {{ $ubica->ubicPrincipal->ubinombre }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicPrincipal->genero)
+                                        {{ $ubica->ubicPrincipal->genero }}
+                                        @else NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($ubica->ubicPrincipal->ubifeccons)
+                                        {{ $ubica->ubicPrincipal->ubifeccons }}
+                                        @else NA
+                                        @endif</td>
                                     @else
                                     <td>
                                         No tiene Consultas

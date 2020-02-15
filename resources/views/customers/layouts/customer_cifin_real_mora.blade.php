@@ -1,4 +1,4 @@
-<div class="container-fluid card card-table-reset">
+<div class="container-fluid card mt-2 card-table-reset">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Moras Sector Real
     </h2>

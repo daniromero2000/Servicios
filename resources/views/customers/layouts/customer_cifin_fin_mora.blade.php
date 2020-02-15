@@ -1,4 +1,4 @@
-<div class="container-fluid mt-5 card card-table-reset">
+<div class="container-fluid mt-2 card card-table-reset">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i> Moras Sector Financiero
     </h2>

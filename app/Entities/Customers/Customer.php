@@ -315,7 +315,7 @@ class Customer extends Model
 
     public function cifinWebService()
     {
-        return $this->hasMany(CifinWebService::class, 'cedula')->with('cifinRealArrear', 'cifinFinancialArrear', 'upToDateFinancialCifin', 'upToDateRealCifin');
+        return $this->hasMany(CifinWebService::class, 'cedula')->with('cifinRealArrear', 'cifinFinancialArrear', 'upToDateFinancialCifin', 'upToDateRealCifin', 'extintRealCifin', 'extintFinancialCifin', 'cifinFrootprint');
     }
 
     public function UpToDateCifinFins()
