@@ -32,8 +32,11 @@
                     </td>
                     <td class="text-center"> @if ($registraduria->fechaConsulta) {{ $registraduria->fechaConsulta }}
                         @else NA @endif</td>
-                    <td class="text-center"> @if ($registraduria->fuenteFallo) {{ $registraduria->fuenteFallo }} @else
-                        NA @endif</td>
+                    <td class="text-center"> @if ($registraduria->fuenteFallo) <span
+                            class="badge @if($registraduria->fuenteFallo == 'NO') badge-success @else badge-danger  @endif">{{ $registraduria->fuenteFallo }}</span>
+                        @else
+                        NA
+                        @endif</td>
                 </tr>
                 @endforeach
             </tbody class="body-table">

@@ -16,7 +16,7 @@
           <th class="text-center" scope="col">Departamento</th>
           <th class="text-center" scope="col">Ciudad</th>
           <th class="text-center" scope="col">Fecha de Consulta</th>
-          <th class="text-center" scope="col">Fuente de fallo?</th>
+          <th class="text-center" scope="col">Falló??</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -30,7 +30,11 @@
           <td class="text-center"> @if ($fosyga->departamento) {{ $fosyga->departamento }} @else NA @endif</td>
           <td class="text-center"> @if ($fosyga->ciudad) {{ $fosyga->ciudad }} @else NA @endif</td>
           <td class="text-center"> @if ($fosyga->created_at) {{ $fosyga->created_at }} @else NA @endif</td>
-          <td class="text-center"> @if ($fosyga->fuenteFallo) {{ $fosyga->fuenteFallo }} @else NA @endif</td>
+          <td class="text-center"> @if ($fosyga->fuenteFallo) <span
+              class="badge @if($fosyga->fuenteFallo == 'NO') badge-success @else badge-danger  @endif">{{ $fosyga->fuenteFallo }}</span>
+            @else
+            NA
+            @endif</td>
         </tr>
         @endforeach
       </tbody class="body-table">
