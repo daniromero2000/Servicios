@@ -26,10 +26,14 @@
           <td class="text-center">{{ $cifin_real->rmcalid }}</td>
           <td class="text-center">{{ $cifin_real->rmnoment }}</td>
           <td class="text-center">{{ $cifin_real->rmestob }}</td>
-          <td class="text-center">{{ number_format (($cifin_real->rmvrinic*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real->rmsaldob*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real->rmvrmora*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_real->rmvrcuot*1000)) }}</td>
+          <td class="text-center"> @if (!empty($cifin_real->rmvrinic))
+            {{ number_format (($cifin_real->rmvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real->rmsaldob))
+            {{ number_format (($cifin_real->rmsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real->rmvrmora))
+            {{ number_format (($cifin_real->rmvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_real->rmvrcuot))
+            {{ number_format (($cifin_real->rmvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_real->rmcompor }}</td>
         </tr>
         @endforeach

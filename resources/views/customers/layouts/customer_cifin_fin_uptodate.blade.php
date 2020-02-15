@@ -26,10 +26,14 @@
           <td class="text-center">{{ $cifin_uptodate_fin->fdcalid }}</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdnoment }}</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdestob }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrinic*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdsaldob*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrmora*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }}</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrinic))
+            {{ number_format (($cifin_uptodate_fin->fdvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdsaldob))
+            {{ number_format (($cifin_uptodate_fin->fdsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrmora))
+            {{ number_format (($cifin_uptodate_fin->fdvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrcuot))
+            {{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdcompor }}</td>
         </tr>
         @endforeach

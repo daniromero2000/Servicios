@@ -12,6 +12,7 @@ use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRep
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class SegurosController extends Controller
 {
     private $customerInterface, $subsidiaryInterface, $customerCellPhoneInterface, $cityInterface;
@@ -48,8 +49,8 @@ class SegurosController extends Controller
         $usuarioActualizacion = "";
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 
-        $clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1 ;
-        $usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode ;
+        $clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1;
+        $usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode;
         $usuarioActualizacion = (string) $assessorCode;
 
         $cityExp            = $this->cityInterface->getCityByCode($request->input('CIUD_EXP'));
@@ -61,8 +62,8 @@ class SegurosController extends Controller
 
         $request['CIUD_EXP']              = $cityExp->NOMBRE;
         $request['ID_CIUD_EXP']           = $cityExp->ID_DIAN;
-        $request['FEC_ING']               = $request->input('FEC_ING')."-01";
-        $request['FEC_CONST']             = $request->input('FEC_CONST')."-01";
+        $request['FEC_ING']               = $request->input('FEC_ING') . "-01";
+        $request['FEC_CONST']             = $request->input('FEC_CONST') . "-01";
         $request['EDAD_INDP']             = $antig_ind->diffInYears(Carbon::now());
         $request['ANTIG']                 = $antig->diffInMonths(Carbon::now());
         $request['EDAD']                  = $birthday->diffInYears(Carbon::now());
