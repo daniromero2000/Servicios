@@ -88,7 +88,17 @@
 				<img class="img-fluid" src="{{ asset('images/seguros/seguros oportunidades.png')}}" class="imgproduct">
 </div>
 <div class="container-first-sector-text">
-	<h4>Pensar en ti, es pensar en cuidar tu patrimonio</h4>
+	<h4 class="title-first-sector">Pensar en ti, es pensar en cuidar tu patrimonio</h4>
+	<br>
+	<p class="text-center text-first-sector mt-4">Te damos <span class="first-span-first-sector">crédito</span> para tu
+		<span class="second-span-first-sector">SOAT</span>
+		<br> hasta <span class="third-span-first-sector">11
+			meses</span>
+		de plazo</p>
+	<div class="text-center mt-4">
+		<a href="" class="btn btn-first-sector mt-2">Pregunta Aquí</a>
+
+	</div>
 </div>
 </div>
 </div>

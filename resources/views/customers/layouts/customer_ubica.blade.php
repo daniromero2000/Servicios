@@ -236,7 +236,7 @@
                             <tbody class="body-table">
                                 @foreach ($ubicaCustomers as $ubica )
                                 <tr>
-                                    @if ($ubica->ubicAddress)
+                                    @if ($ubica->ubicEmails)
                                     <td class="text-center">{{ $ubica->ubicEmails->ubicorreo }}</td>
                                     <td class="text-center">{{ $ubica->ubicEmails->ubiprimerrep }}</td>
                                     <td class="text-center">{{ $ubica->ubicEmails->ubiultimorep }}</td>
