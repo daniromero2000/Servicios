@@ -18,6 +18,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.validateNum = 0;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
+	$scope.disabledButton = false;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -164,6 +165,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.getCodeVerification = function(renew = false){
 		$scope.reNewToken = false;
+		$scope.disabledButton = true;
 		if($scope.validateNum > 0){
 			$scope.addCliente('CREDITO');
 		}else{
@@ -376,7 +378,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.sendDecisionCredit = function(){
 		$('#decisionCredit').modal('hide');
-		//$scope.disabledDecisionCredit = true;
+		$('#proccess').modal('show');
+		$scope.disabledDecisionCredit = true;
 		if($scope.decisionCredit == 1){
 			$scope.creditCard();
 		}else if($scope.decisionCredit == 2){
@@ -408,6 +411,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$('#confronta').modal('hide');
 				}, 800);
 				setTimeout(() => {
+					$('#proccess').modal('hide');
 					$('#congratulations').modal('show');
 				}, 1800);
 			}
@@ -415,7 +419,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			if(response.data.resp == 'confronta'){
 				$scope.formConfronta = response.data.form;
 				$('#confronta').modal('show');
+				$('#proccess').modal('hide');
 			}
+			setTimeout(() => {
+				$('#proccess').modal('hide');
+			}, 1000);
 			hideLoader();
 		}, function errorCallback(response) {
 			hideLoader();
@@ -436,6 +444,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
 			setTimeout(() => {
+				$('#proccess').modal('hide');
 				$('#congratulations').modal('show');
 			}, 1500);
 			hideLoader();
