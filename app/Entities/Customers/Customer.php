@@ -270,7 +270,7 @@ class Customer extends Model
 
     public function lastUbicaConsultation()
     {
-        return $this->hasOne(Ubica::class, 'cedula');
+        return $this->hasOne(Ubica::class, 'cedula')->latest('fecha');
     }
 
     public function checkedPhone()

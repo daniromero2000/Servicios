@@ -386,7 +386,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-center form-group">
-                                <button type="submit" class="btn btn-primary">Continuar</button>
+                                <button type="submit" ng-disabled="disabledButton" class="btn btn-primary">Continuar</button>
                             </div>
                         </div>
                     </div>
