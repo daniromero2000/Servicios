@@ -112,7 +112,7 @@ class OportuyaV2Controller extends Controller
 		$this->extinctRealCifinInterface         = $extintRealCifinRepositoryInterface;
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
-		$this->assessorInterface = $AssessorRepositoryInterface;
+		$this->assessorInterface                 = $AssessorRepositoryInterface;
 	}
 
 	public function index()

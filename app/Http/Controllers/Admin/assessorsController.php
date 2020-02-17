@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\cliCel;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
@@ -13,11 +14,45 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
+use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
+use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
+use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
+use App\Exports\ExportToExcel;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
+use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
+use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
+use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
+use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
+use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
+use App\Entities\FactoryRequests\FactoryRequest;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
+use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
+use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
+use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
+use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
+use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 
 
 class assessorsController extends Controller
 {
-    private $customerInterface, $assessorInterface, $toolsInterface, $factoryInterface;
+    private $customerInterface, $toolsInterface, $factoryInterface;
+    private $daysToIncrement, $consultationValidityInterface;
+    private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
+	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
+	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
+	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
+	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
+	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
+	private $ubicaInterface;
+	private $assessorInterface;
     /**
      * Create a new controller instance.
      *
@@ -27,13 +62,59 @@ class assessorsController extends Controller
         AssessorRepositoryInterface $AssessorRepositoryInterface,
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
-        CustomerRepositoryInterface $customerRepositoryInterface
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        ConsultationValidityRepositoryInterface $consultationValidityRepositoryInterface,
+        ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
+		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+		CityRepositoryInterface $cityRepositoryInterface,
+		CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface,
+		FosygaRepositoryInterface $fosygaRepositoryInterface,
+		WebServiceRepositoryInterface $WebServiceRepositoryInterface,
+		RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
+		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface,
+		CreditCardRepositoryInterface $creditCardRepositoryInterface,
+		EmployeeRepositoryInterface $employeeRepositoryInterface,
+		PunishmentRepositoryInterface $punishmentRepositoryInterface,
+		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
+		UpToDateFinancialCifinRepositoryInterface $UpToDateFinancialCifinRepositoryInterface,
+		CifinFinancialArrearRepositoryInterface $CifinFinancialArrearRepositoryInterface,
+		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
+		CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
+		IntentionRepositoryInterface $intentionRepositoryInterface,
+		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
+		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
+		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
+		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
+		UbicaRepositoryInterface $ubicaRepositoryInterface
     ) {
-        $this->assessorInterface = $AssessorRepositoryInterface;
-        $this->factoryInterface = $factoryRequestRepositoryInterface;
-        $this->toolsInterface = $toolRepositoryInterface;
+        $this->assessorInterface             = $AssessorRepositoryInterface;
+        $this->factoryInterface              = $factoryRequestRepositoryInterface;
+        $this->toolsInterface                = $toolRepositoryInterface;
+        $this->consultationValidityInterface = $consultationValidityRepositoryInterface;
+        $this->customerInterface             = $customerRepositoryInterface;
+        $this->confirmationMessageInterface  = $confirmationMessageRepositoryInterface;
+		$this->subsidiaryInterface                 = $subsidiaryRepositoryInterface;
+		$this->cityInterface                       = $cityRepositoryInterface;
+		$this->customerCellPhoneInterface          = $customerCellPhoneRepositoryInterface;
+		$this->fosygaInterface                     = $fosygaRepositoryInterface;
+		$this->webServiceInterface                 = $WebServiceRepositoryInterface;
+		$this->registraduriaInterface              = $registraduriaRepositoryInterface;
+		$this->commercialConsultationInterface     = $commercialConsultationRepositoryInterface;
+		$this->creditCardInterface                 = $creditCardRepositoryInterface;
+		$this->employeeInterface                   = $employeeRepositoryInterface;
+		$this->punishmentInterface                 = $punishmentRepositoryInterface;
+		$this->customerVerificationCodeInterface   = $customerVerificationCodeRepositoryInterface;
+		$this->UpToDateFinancialCifinInterface     = $UpToDateFinancialCifinRepositoryInterface;
+		$this->CifinFinancialArrearsInterface      = $CifinFinancialArrearRepositoryInterface;
+		$this->cifinRealArrearsInterface           = $cifinRealArrearRepositoryInterface;
+		$this->cifinScoreInterface                 = $cifinScoreRepositoryInterface;
+		$this->intentionInterface                  = $intentionRepositoryInterface;
+		$this->extintFinancialCifinInterface       = $extintFinancialCifinRepositoryInterface;
+		$this->UpToDateRealCifinInterface          = $upToDateRealCifinsRepositoryInterface;
+		$this->extinctRealCifinInterface           = $extintRealCifinRepositoryInterface;
+		$this->cifinBasicDataInterface             = $cifinBasicDataRepositoryInterface;
+		$this->ubicaInterface                      = $ubicaRepositoryInterface;
         $this->middleware('auth');
-        $this->customerInterface = $customerRepositoryInterface;
     }
     /**
      * Show the application dashboard.
@@ -256,6 +337,633 @@ class assessorsController extends Controller
             return ['identificationNumber' => trim($request->get('CEDULA')), 'tipoDoc' => trim($request->get('TIPO_DOC')), 'tipoCreacion' => $request->tipoCliente, 'lastName' => $lastName[0], 'dateExpIdentification' => $fechaExpIdentification];
         }
     }
+
+    public function execConsultasleadAsesores($identificationNumber)
+	{
+		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
+		FROM `CLIENTE_FAB`
+		WHERE `CEDULA` = :cedula", ['cedula' => $identificationNumber]);
+
+		$lastName = explode(" ", $oportudataLead[0]->APELLIDOS);
+
+		$dateExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
+		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
+
+		$consultasFosyga = $this->execConsultaFosygaLead(
+			$identificationNumber,
+			$oportudataLead[0]->TIPO_DOC,
+			$oportudataLead[0]->FEC_EXP,
+			$oportudataLead[0]->NOMBRES,
+			$oportudataLead[0]->APELLIDOS
+		);
+
+		if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
+			return ['resp' => $consultasFosyga];
+		}
+
+		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead[0]->TIPO_DOC);
+		if ($consultaComercial == 0) {
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer->ESTADO = "SIN COMERCIAL";
+			$customer->save();
+
+			$dataIntention = [
+				'CEDULA' => $identificationNumber,
+				'ESTADO_INTENCION' => 3
+			];
+
+			$this->intentionInterface->createIntention($dataIntention);
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0,
+				'resp'                 => 'true'
+			];
+		} else {
+			$policyCredit = [
+				'quotaApprovedProduct' => 0,
+				'quotaApprovedAdvance' => 0
+			];
+
+			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			$infoLead     = [];
+			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
+			return [
+				'resp'                 => $policyCredit['resp'],
+				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0 ,
+				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0 ,
+				'infoLead'             => $infoLead
+			];
+		}
+    }
+
+    private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	{
+		// Fosyga
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaFosyga == "true") {
+			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
+			$infoBdua = (array) $infoBdua;
+			$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
+		} else {
+			$consultaFosyga = 1;
+		}
+
+		$validateConsultaFosyga = 0;
+		if ($consultaFosyga > 0) {
+			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
+		} else {
+			$validateConsultaFosyga = 1;
+		}
+
+		// Registraduria
+		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
+		if ($dateConsultaRegistraduria == "true") {
+			$infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $typeDocument, $dateDocument);
+			$infoEstadoCedula = (array) $infoEstadoCedula;
+			$consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
+		} else {
+			$consultaRegistraduria = 1;
+		}
+
+		$validateConsultaRegistraduria = 0;
+		if ($consultaRegistraduria > 0) {
+			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
+		} else {
+			$validateConsultaRegistraduria = 1;
+		}
+
+		if ($validateConsultaRegistraduria == -1) {
+			return -1;
+		}
+
+		if ($validateConsultaRegistraduria < 0 || $validateConsultaFosyga < 0) {
+			return "-3";
+		}
+
+		return "true";
+	}
+
+    private function execConsultaComercialLead($identificationNumber, $tipoDoc)
+	{
+		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaComercial == 'true') {
+			$consultaComercial = $this->webServiceInterface->execConsultaComercial($identificationNumber, $tipoDoc);
+		} else {
+			$consultaComercial = 1;
+		}
+
+		return $consultaComercial;
+	}
+
+    private function validatePolicyCredit_new($identificationNumber)
+	{
+		// 5	Puntaje y 3.4 Calificacion Score
+		$customerStatusDenied = false;
+		$idDef = "";
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$data = ['CEDULA' => $identificationNumber];
+		$customerIntention =  $this->intentionInterface->createIntention($data);
+
+		if (empty($customer)) {
+			return ['resp' => "false"];
+		} else {
+			if ($customerScore <= -8) {
+				$customerStatusDenied = true;
+				$idDef = '8';
+				$perfilCrediticio = 'TIPO NE';
+				return ['resp' => "false"];
+
+			}
+
+			if ($customerScore >= 1 && $customerScore <= 275) {
+				$customerStatusDenied = true;
+				$idDef = '5';
+				$perfilCrediticio = 'TIPO D';
+			}
+
+			if ($customerScore >= -7 && $customerScore <= 0) {
+				$perfilCrediticio = 'TIPO 5';
+			}
+
+			if ($customerScore >= 275 && $customerScore <= 527) {
+				$perfilCrediticio = 'TIPO D';
+			}
+
+			if ($customerScore >= 528 && $customerScore <= 624) {
+				$perfilCrediticio = 'TIPO C';
+			}
+
+			if ($customerScore >= 625 && $customerScore <= 674) {
+				$perfilCrediticio = 'TIPO B';
+			}
+
+			if ($customerScore >= 675 && $customerScore <= 1000) {
+				$perfilCrediticio = 'TIPO A';
+			}
+
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+			$customerIntention->save();
+		}
+
+		// 3.3 Estado de obligaciones
+		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber)->sum('finvrmora');
+		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
+		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
+
+		if ($totalValorMora > 100) {
+			if ($customerStatusDenied == false && empty($idDef)) {
+				$customerStatusDenied = true;
+				$idDef = "6";
+			}
+			$customerIntention->ESTADO_OBLIGACIONES = 0;
+			$customerIntention->save();
+		} else {
+			$customerIntention->ESTADO_OBLIGACIONES = 1;
+			$customerIntention->save();
+		}
+
+		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
+		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		if ($customerRealDoubtful->isNotEmpty()) {
+			if ($customerRealDoubtful[0]->rmsaldob > 0) {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "6";
+				}
+				$customerIntention->ESTADO_OBLIGACIONES = 0;
+				$customerIntention->save();
+			}
+		}
+
+		if ($customerFinDoubtful->isNotEmpty()) {
+			if ($customerFinDoubtful[0]->finsaldob > 0) {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "6";
+				}
+				$customerIntention->ESTADO_OBLIGACIONES = 0;
+				$customerIntention->save();
+			}
+		}
+
+		//3.5 Historial de Crédito
+		$historialCrediticio = 0;
+		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+
+		if ($historialCrediticio == 0) {
+			$historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+		}
+
+		if ($historialCrediticio == 0) {
+			$historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+		}
+
+		if ($historialCrediticio == 0) {
+			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+		}
+
+		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+		//4.1 Zona de riesgo
+		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
+		// 4.2 Tipo de cliente
+		$tipoCliente = '';
+		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
+		FROM TB_CLIENTES_ACTIVOS
+		WHERE `CEDULA` = %s AND FECHA >= date_add(NOW(), INTERVAL -24 MONTH)", $identificationNumber);
+
+		$respClienteActivo = DB::connection('oportudata')->select($queryGetClienteActivo);
+		if ($respClienteActivo[0]->tipoCliente == 1) {
+			$tipoCliente = 'OPORTUNIDADES';
+		} else {
+			$tipoCliente = 'NUEVO';
+		}
+
+		$customerIntention->TIPO_CLIENTE = $tipoCliente;
+		$customerIntention->save();
+
+		// 4.3 Edad.
+		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
+		if ($queryEdad == false || empty($queryEdad)) {
+			if ($customerStatusDenied == false && empty($idDef)) {
+				$customerStatusDenied = true;
+				$idDef = "9";
+			}
+			$customerIntention->EDAD = 0;
+			$customerIntention->save();
+		}
+
+		if ($queryEdad == 'Mas 75') {
+			if ($customerStatusDenied == false && empty($idDef)) {
+				$customerStatusDenied = true;
+				$idDef = "9";
+			}
+			$customerIntention->EDAD = 0;
+			$customerIntention->save();
+		}
+
+		$queryEdad = explode('-', $queryEdad);
+		$edadMin = $queryEdad[0];
+		$edadMax = $queryEdad[1];
+
+		$validateTipoCliente = TRUE;
+		if ($customer->ACTIVIDAD == 'PENSIONADO') {
+			$validateTipoCliente = FALSE;
+			if ($edadMin >= 18 && $edadMax <= 80) {
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
+			} else {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
+				$customerIntention->EDAD = 0;
+				$customerIntention->save();
+			}
+		}
+
+		if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
+			if ($edadMin >= 18 && $edadMax <= 75) {
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
+			} else {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
+				$customerIntention->EDAD = 0;
+				$customerIntention->save();
+			}
+		}
+
+		if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
+			if ($edadMin >= 18 && $edadMax <= 70) {
+				$customerIntention->EDAD = 1;
+				$customerIntention->save();
+			} else {
+				if ($customerStatusDenied == false && empty($idDef)) {
+					$customerStatusDenied = true;
+					$idDef = "9";
+				}
+				$customerIntention->EDAD = 0;
+				$customerIntention->save();
+			}
+		}
+
+		// 4.5 Tiempo en Labor
+		if ($customer->ACTIVIDAD == 'PENSIONADO') {
+			$customerIntention->TIEMPO_LABOR = 1;
+			$customerIntention->save();
+		} else {
+			if ($customer->ACTIVIDAD == 'RENTISTA' || $customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+				if ($customer->EDAD_INDP >= 4) {
+					$customerIntention->TIEMPO_LABOR = 1;
+					$customerIntention->save();
+				} else {
+					if ($customerStatusDenied == false && empty($idDef)) {
+						$customerStatusDenied = true;
+						$idDef = "10";
+					}
+					$customerIntention->TIEMPO_LABOR = 0;
+					$customerIntention->save();
+				}
+			} else {
+				if ($customer->ANTIG >= 4) {
+					$customerIntention->TIEMPO_LABOR = 1;
+					$customerIntention->save();
+				} else {
+					if ($customerStatusDenied == false && empty($idDef)) {
+						$customerStatusDenied = true;
+						$idDef = "10";
+					}
+					$customerIntention->TIEMPO_LABOR = 0;
+					$customerIntention->save();
+				}
+			}
+		}
+
+		// 4.7 Inspecciones Oculares
+		if ($tipoCliente == 'NUEVO') {
+			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+				if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
+					$customerIntention->INSPECCION_OCULAR = 1;
+					$customerIntention->save();
+				}
+			}
+		}
+
+		// 3.6 Tarjeta Black
+		$tarjeta = '';
+		$aprobado = false;
+		$quotaApprovedProduct = 0;
+		$quotaApprovedAdvance = 0;
+		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
+			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($identificationNumber);
+			if ($aprobado == true) {
+				$tarjeta = "Tarjeta Black";
+				$quotaApprovedProduct = 1900000;
+				$quotaApprovedAdvance = 500000;
+			}
+		}
+
+		// 3.7 Tarjeta Gray
+		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false) {
+			if ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO') {
+				$aprobado = true;
+				$tarjeta = "Tarjeta Gray";
+				$quotaApprovedProduct = 1600000;
+				$quotaApprovedAdvance = 200000;
+			}
+		}
+
+		if ($aprobado == true) {
+			$customerIntention->TARJETA = $tarjeta;
+			$customerIntention->save();
+		}
+
+		if ($aprobado == false && $perfilCrediticio == 'TIPO A') {
+			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+				if ($historialCrediticio == 1) {
+					$customerIntention->ID_DEF  = '17';
+				} else {
+					$customerIntention->ID_DEF =  '18';
+				}
+			}else{
+				$customerIntention->ID_DEF  = '15';
+			}
+			$customer->ESTADO           = 'PREAPROBADO';
+			$tarjeta                    = "Crédito Tradicional";
+			$customerIntention->TARJETA = $tarjeta;
+			$customerIntention->ESTADO_INTENCION  = '2';
+			$customer->save();
+			$customerIntention->save();
+			return ['resp' => "-2"];
+		}
+
+		// 2. WS Fosyga
+		$estadoCliente = "PREAPROBADO";
+		$statusAfiliationCustomer = true;
+		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
+		if (!empty($getDataFosyga)) {
+			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+				return ['resp' => "false"];
+			} else {
+				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
+					$statusAfiliationCustomer = false;
+				}
+			}
+		} else {
+			$estadoCliente = "PREAPROBADO";
+		}
+
+		// 4.6 Tipo 5 Especial
+		$tipo5Especial = 0;
+		if ($perfilCrediticio == 'TIPO 5' && ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PENSIONADO') && $statusAfiliationCustomer == true) {
+			$tipo5Especial = 1;
+		}
+
+		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
+		$customerIntention->save();
+
+		//3.1 Estado de documento
+		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
+		if (!empty($getDataRegistraduria)) {
+			if (!empty($getDataRegistraduria->estado)) {
+				if ($getDataRegistraduria->estado != 'VIGENTE') {
+					$customer->ESTADO                     = 'NEGADO';
+					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+					$customerIntention->ID_DEF            =  '4';
+					$customerIntention->ESTADO_INTENCION  = '1';
+					$customer->save();
+					$customerIntention->save();
+					return ['resp' => "false"];
+				}
+			} else {
+				return ['resp' => "false"];
+			}
+		} else {
+			$estadoCliente = "PREAPROBADO";
+		}
+
+		if ($customerStatusDenied == true) {
+			$customer->ESTADO          = 'NEGADO';
+			$customerIntention->ID_DEF =  $idDef;
+			$customerIntention->ESTADO_INTENCION  = '1';
+			$customer->save();
+			$customerIntention->save();
+			return ['resp' => "false"];
+		}
+
+		// 5 Definiciones cliente
+		if ($perfilCrediticio == 'TIPO A') {
+			if ($statusAfiliationCustomer == true) {
+				if ($tipoCliente == 'OPORTUNIDADES') {
+					$customer->ESTADO = 'PREAPROBADO';
+					$customer->save();
+					$customerIntention->TARJETA =  $tarjeta;
+					$customerIntention->ID_DEF =  '14';
+					$customerIntention->ESTADO_INTENCION  = '2';
+					$customerIntention->save();
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+				}
+
+				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
+					$customer->ESTADO           = 'PREAPROBADO';
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->ID_DEF  = '15';
+					$customerIntention->ESTADO_INTENCION  = '2';
+					$customer->save();
+					$customerIntention->save();
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+				}
+
+				if ($customer->ACTIVIDAD == 'PENSIONADO') {
+					$customer->ESTADO           = 'PREAPROBADO';
+					$customerIntention->TARJETA = $tarjeta;
+					$customerIntention->ID_DEF  = '16';
+					$customerIntention->ESTADO_INTENCION  = '2';
+					$customer->save();
+					$customerIntention->save();
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+				}
+
+				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+					if ($historialCrediticio == 1) {
+						$customer->ESTADO           = 'PREAPROBADO';
+						$customerIntention->TARJETA = $tarjeta;
+						$customerIntention->ID_DEF  = '17';
+						$customerIntention->ESTADO_INTENCION  = '2';
+						$customer->save();
+						$customerIntention->save();
+						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					} else {
+						$customer->ESTADO = 'PREAPROBADO';
+						$customer->save();
+						$customerIntention->TARJETA = 'Crédito Tradicional';
+						$customerIntention->ID_DEF =  '18';
+						$customerIntention->ESTADO_INTENCION  = '2';
+						$customerIntention->save();
+						return ['resp' => "-2"];
+					}
+				}
+			} else {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '18';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			}
+		}
+
+		if ($perfilCrediticio == 'TIPO B') {
+			if ($tipoCliente == 'OPORTUNIDADES') {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '19';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			} else {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '20';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			}
+		}
+
+		if ($perfilCrediticio == 'TIPO C') {
+			if ($tipoCliente == 'OPORTUNIDADES') {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '21';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			} else {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '22';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			}
+		}
+
+		if ($perfilCrediticio == 'TIPO D') {
+			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '23';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' => "-2"];
+			} else {
+				$customer->ESTADO = 'NEGADO';
+				$customer->save();
+				$customerIntention->TARJETA = '';
+				$customerIntention->ID_DEF =  '24';
+				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->save();
+				return ['resp' => "false"];
+			}
+		}
+
+		if ($perfilCrediticio == 'TIPO 5') {
+			if ($tipo5Especial == 1) {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '12';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' =>  "-2"];
+			}
+			if ($tipoCliente == 'OPORTUNIDADES') {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '11';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' =>  "-2"];
+			} else {
+				$customer->ESTADO = 'PREAPROBADO';
+				$customer->save();
+				$customerIntention->TARJETA = 'Crédito Tradicional';
+				$customerIntention->ID_DEF =  '13';
+				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->save();
+				return ['resp' =>  "-2"];
+			}
+		}
+
+		return ['resp' => "true"];
+    }
+
+    private function getInfoLeadCreate($identificationNumber)
+	{
+		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
+		FROM `CLIENTE_FAB` as cf
+		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
+		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
+		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
+		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
+		ORDER BY FECHA_INTENCION DESC
+		LIMIT 1', ['cedula' => $identificationNumber, 'cedulaScore' => $identificationNumber]);
+
+		return $queryDataLead[0];
+	}
+
 
     public function getInfoVentaContado()
     {
