@@ -386,7 +386,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			return $policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -746,7 +746,7 @@ class assessorsController extends Controller
 		// 2. WS Fosyga
 		$estadoCliente = "PREAPROBADO";
 		$statusAfiliationCustomer = true;
-		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
+		return $getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
 			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				return ['resp' => "false"];

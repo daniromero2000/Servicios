@@ -101,6 +101,9 @@ Route::group(['prefix' => '/assessor/'], function () {
         Route::get('ventaContado/getInfoVentaContado', 'Admin\assessorsController@getInfoVentaContado');
         Route::get('ventaContado/getinfoLeadVentaContado/{CEDULA}', 'Admin\assessorsController@getinfoLeadVentaContado');
         Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
+        Route::get('execConsultasLead/{identificationNumber}', 'Admin\assessorsController@execConsultasleadAsesores');
+        Route::get('decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionCreditCard');
+        Route::get('decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionTraditionalCredit');
     });
     Route::get('/LaPipa/assesor', function () {
         return view('assessors.convenios.pipa');
@@ -183,8 +186,6 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/getDataStep2/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep2');
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}', 'Admin\OportuyaV2Controller@execConsultasleadAsesores');
-    Route::get('oportuya/decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionCreditCard');
-    Route::get('oportuya/decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionTraditionalCredit');
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
