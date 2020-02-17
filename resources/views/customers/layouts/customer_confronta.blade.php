@@ -23,8 +23,13 @@
                             <tbody class="body-table">
                                 @foreach ($confrontaCustomers as $confronta )
                                 <tr>
-                                    <td class="text-center">{{ $confronta->aciertos }}</td>
-                                    <td class="text-center">{{ $confronta->respuesta }}</td>
+                                    <td class="text-center"> @if ($confronta->aciertos) {{ $confronta->aciertos }} @else
+                                        NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($confronta->respuesta) {{ $confronta->respuesta }}
+                                        @else
+                                        NA
+                                        @endif</td>
                                 </tr>
                                 @endforeach
                             </tbody class="body-table">
@@ -50,9 +55,21 @@
                             <tbody class="body-table">
                                 @foreach ($confrontaFootprint as $footprint )
                                 <tr>
-                                    <td class="text-center">{{ $footprint->fechaconsulta }}</td>
-                                    <td class="text-center">{{ $footprint->entidad }}</td>
-                                    <td class="text-center">{{ $footprint->resultado }}</td>
+                                    <td class="text-center"> @if ($footprint->fechaconsulta)
+                                        {{ $footprint->fechaconsulta }}
+                                        @else
+                                        NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($footprint->entidad)
+                                        {{ $footprint->entidad }}
+                                        @else
+                                        NA
+                                        @endif</td>
+                                    <td class="text-center"> @if ($footprint->resultado)
+                                        {{ $footprint->resultado }}
+                                        @else
+                                        NA
+                                        @endif</td>
                                 </tr>
                                 @endforeach
                             </tbody class="body-table">

@@ -34,6 +34,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         'INSPECCION_OCULAR',
         'ESTADO_INTENCION',
         'ASESOR',
+        'CREDIT_DECISION'
     ];
 
     public function __construct(

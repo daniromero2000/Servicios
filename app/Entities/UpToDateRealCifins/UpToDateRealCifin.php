@@ -10,7 +10,7 @@ class UpToDateRealCifin extends Model
 
     protected $connection = 'oportudata';
 
-    // protected $primaryKey =  'fdconsul';
+    protected $primaryKey = 'rdconsul';
 
     public $timestamps = false;
 }

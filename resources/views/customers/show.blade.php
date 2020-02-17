@@ -5,7 +5,6 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-12">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
@@ -64,18 +63,8 @@
                 $customer->customerIntentions])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="comercial">
-                @include('customers.layouts.customer_cifin_real_mora', ['cifin_reals' =>
-                $customer->cifinReals])
-                @include('customers.layouts.customer_cifin_fin_mora', ['cifin_fins' =>
-                $customer->cifinFins])
-                @include('customers.layouts.customer_cifin_fin_uptodate', ['cifin_uptodate_fins' =>
-                $customer->UpToDateCifinFins])
-                @include('customers.layouts.customer_cifin_real_uptodate', ['cifin_uptodate_reals' =>
-                $customer->UpToDateCifinReals])
-                @include('customers.layouts.customer_cifin_real_ext', ['cifin_real_extints' =>
-                $customer->extintsCifinReals])
-                @include('customers.layouts.customer_cifin_fin_ext', ['cifin_fin_extints' =>
-                $customer->extintsCifinFins])
+                @include('customers.layouts.customer_cifin_data', ['cifinWebServices' =>
+                $customer->cifinWebService])
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="queries">
                 @include('customers.layouts.customer_fosyga', ['fosygas' =>

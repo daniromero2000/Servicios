@@ -47,6 +47,7 @@
                         </div>
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($intentions)
+
                             @include('layouts.admin.tables.table_intention_status', [$headers, 'datas' => $intentions ])
                             @include('layouts.admin.pagination.pagination', [$skip])
                             @else

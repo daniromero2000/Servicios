@@ -13,4 +13,10 @@ class CifinRealArrear extends Model
     protected $primaryKey =  'rmconsul';
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'rmconsul',
+        'rmcedula',
+        'rmpaqinf'
+    ];
 }

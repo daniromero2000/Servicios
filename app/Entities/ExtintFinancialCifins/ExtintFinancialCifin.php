@@ -10,7 +10,7 @@ class ExtintFinancialCifin extends Model
 
     protected $connection = 'oportudata';
 
-    // protected $primaryKey =  'fdconsul';
+    protected $primaryKey =  'extconsul';
 
     public $timestamps = false;
 }

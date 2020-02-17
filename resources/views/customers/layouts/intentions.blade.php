@@ -1,5 +1,4 @@
 @if($customer->customerIntentions->isNotEmpty())
-
 <div class="card-body text-center pt-0 pb-0 ">
   <div class="table-responsive mb-3 p-0 height-table">
     <table class="table table-head-fixed">
@@ -18,6 +17,7 @@
           <th scope="col">Perfil Crediticio</th>
           <th scope="col">Historial Crediticio</th>
           <th scope="col">Crédito</th>
+          <th scope="col">Decisión</th>
           <th scope="col">Riesgo Zona</th>
           <th scope="col">Edad</th>
           <th scope="col">Tiempo en Labor</th>
@@ -60,6 +60,7 @@
           <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
             @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
           <td>@if ($data->TARJETA) {{ $data->TARJETA}} @else No Aplica @endif </td>
+          <td>@if ($data->CREDIT_DECISION) {{ $data->CREDIT_DECISION}} @else NA @endif </td>
           <td>{{ $data->ZONA_RIESGO}}</td>
           <td>@if ($data->EDAD == 1)Cumple @endif
             @if ($data->EDAD == 0)NO Cumple @endif</td>

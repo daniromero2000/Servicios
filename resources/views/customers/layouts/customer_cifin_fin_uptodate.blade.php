@@ -1,11 +1,11 @@
-<div class="container-fluid card card-table-reset pb-5">
+<div class="container-fluid card mt-2 card-table-reset pb-5">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Al Día Sector Financiero
     </h2>
   </div>
-  @if($customer->UpToDateCifinFins->isNotEmpty())
+  @if($cifin_uptodate_fins->isNotEmpty())
   <div class="card-body table-responsive pt-0 header-table-responsive">
-    <table class="table table-head-fixed table-hover table-stripped leadTable" >
+    <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
         <tr>
           <th class="text-center" scope="col">Código</th>
@@ -26,10 +26,14 @@
           <td class="text-center">{{ $cifin_uptodate_fin->fdcalid }}</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdnoment }}</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdestob }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrinic*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdsaldob*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrmora*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }}</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrinic))
+            {{ number_format (($cifin_uptodate_fin->fdvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdsaldob))
+            {{ number_format (($cifin_uptodate_fin->fdsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrmora))
+            {{ number_format (($cifin_uptodate_fin->fdvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrcuot))
+            {{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdcompor }}</td>
         </tr>
         @endforeach

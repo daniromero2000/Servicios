@@ -1,9 +1,9 @@
-<div class="container-fluid card card-table-reset ">
+<div class="container-fluid card mt-2 card-table-reset ">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-external-link-alt mr-2"></i> Obligaciones Extintas Sector Real
     </h2>
   </div>
-  @if($customer->extintsCifinReals->isNotEmpty())
+  @if($cifin_real_extints->isNotEmpty())
   <div class="card-body table-responsive header-table-responsive pt-0">
     <table class="table table-head-fixed table-hover table-stripped leadTable">
       <thead class="header-table">
@@ -26,7 +26,10 @@
           <td class="text-center">{{ $cifin_real_extint->rexcalid }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexnoment }}</td>
           <td class="text-center">{{ $cifin_real_extint->rexestob }}</td>
-          <td class="text-center"> @if (!empty($cifin_real_extint->rexvrinic)){{ number_format (($cifin_real_extint->rexvrinic*1000)) }} @endif 0</td>
+          <td class="text-center">
+            @if (!empty($cifin_real_extint->rexvrinic)){{ number_format (($cifin_real_extint->rexvrinic*1000)) }} @endif
+            0
+          </td>
           <td class="text-center"> @if (!empty($cifin_real_extint->rexsaldob))
             {{ number_format (($cifin_real_extint->rexsaldob*1000)) }} @endif 0</td>
           <td class="text-center"> @if (!empty($cifin_real_extint->rexvrmora))

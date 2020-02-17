@@ -1,9 +1,9 @@
-<div class="container-fluid mt-5 card card-table-reset">
+<div class="container-fluid mt-2 card card-table-reset">
   <div class="card-header">
     <h2 class="title-table"><i class="fas fa-hand-holding-usd mr-3"></i> Obligaciones Al Día Sector Real
     </h2>
   </div>
-  @if($customer->UpToDateCifinReals->isNotEmpty())
+  @if($cifin_uptodate_reals->isNotEmpty())
   <div class="card-body table-responsive pt-0">
     <table class="table table-head-fixed table-hover  table-stripped leadTable">
       <thead class="header-table">
@@ -26,10 +26,14 @@
           <td class="text-center">{{ $cifin_uptodate_real->rdcalid }}</td>
           <td class="text-center">{{ $cifin_uptodate_real->rdnoment }}</td>
           <td class="text-center">{{ $cifin_uptodate_real->rdestob }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrinic*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_real->rdsaldob*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrmora*1000)) }}</td>
-          <td class="text-center">{{ number_format (($cifin_uptodate_real->rdvrcuot*1000)) }}</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_real->rdvrinic))
+            {{ number_format (($cifin_uptodate_real->rdvrinic*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_real->rdsaldob))
+            {{ number_format (($cifin_uptodate_real->rdsaldob*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_real->rdvrmora))
+            {{ number_format (($cifin_uptodate_real->rdvrmora*1000)) }} @endif 0</td>
+          <td class="text-center"> @if (!empty($cifin_uptodate_real->rdvrcuot))
+            {{ number_format (($cifin_uptodate_real->rdvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_uptodate_real->rdcompor }}</td>
         </tr>
         @endforeach
