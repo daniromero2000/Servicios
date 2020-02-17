@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Analisis;
 use App\cliCel;
+use App\DatosCliente;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -38,7 +40,7 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-
+use App\TurnosOportuya;
 
 class assessorsController extends Controller
 {
@@ -1002,7 +1004,469 @@ class assessorsController extends Controller
         }
 
         return $resp;
-    }
+	}
+
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$intention->save();
+		$tipoDoc = 1;
+		$lastName = explode(" ", $lastName);
+		$lastName = $lastName[0];
+		$fechaExpIdentification = explode("-", $dateExpIdentification);
+		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+		$estadoSolic = 'ANALISIS';
+		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+		$resultUbica = $this->validateConsultaUbica($identificationNumber);
+		if ($resultUbica == 0) {
+			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
+			if ($confronta == 1) {
+				$form = $this->getFormConfronta($identificationNumber);
+				if (empty($form)) {
+					$estadoSolic = "ANALISIS";
+				} else {
+					return [
+						'form' => $form,
+						'resp' => 'confronta'
+					];
+				}
+			} else {
+				$estadoSolic = 'ANALISIS';
+			}
+		} else {
+			$estadoSolic = 'APROBADO';
+		}
+		$policyCredit = [
+			'quotaApprovedProduct' => $quotaApprovedProduct,
+			'quotaApprovedAdvance' => $quotaApprovedAdvance,
+			'resp' => 'true'
+		];
+		$data = [
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
+		];
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+	}
+
+
+	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
+	{
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaUbica == 'true') {
+			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
+		} else {
+			$consultaUbica = 1;
+		}
+
+		return $consultaUbica;
+	}
+
+	public function getFormConfronta($identificationNumber)
+	{
+		$queryForm = DB::connection('oportudata')->select("SELECT cws.consec, preg.secuencia_cuest, preg.secuencia_preg, preg.texto_preg, opcion.secuencia_resp, opcion.texto_resp
+		FROM confronta_ws as cws, confronta_preg as preg, confronta_opcion as opcion
+		WHERE cws.cedula = :cedula AND cws.consec = (SELECT MAX(consec) FROM confronta_ws WHERE cedula = :cedula2 )
+		AND preg.consec = cws.consec AND opcion.consec=cws.consec
+		AND preg.secuencia_preg = opcion.secuencia_preg", ['cedula' => $identificationNumber, 'cedula2' => $identificationNumber]);
+		$form = [];
+		foreach ($queryForm as $value) {
+			$form[$value->secuencia_preg]['secuencia'] = $value->secuencia_preg;
+			$form[$value->secuencia_preg]['pregunta'] = $value->texto_preg;
+			$form[$value->secuencia_preg]['cuestionario'] = $value->secuencia_cuest;
+			$form[$value->secuencia_preg]['cedula'] = $identificationNumber;
+			$form[$value->secuencia_preg]['consec'] = $value->consec;
+			$form[$value->secuencia_preg]['opciones'][] = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
+		}
+
+		return $form;
+	}
+
+	public function validateFormConfronta(Request $request)
+	{
+		$leadInfo = $request->leadInfo;
+		$confronta = $request->confronta;
+		$cedula = "";
+		$cuestionario = "";
+		$consec = "";
+		foreach ($confronta as $pregunta) {
+			$insertSelec = DB::connection('oportudata')->select(
+				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
+			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
+				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
+			);
+			$cedula = $pregunta['cedula'];
+			$cuestionario = $pregunta['cuestionario'];
+			$consec = $pregunta['consec'];
+		}
+
+		$this->execEvaluarConfronta($cedula, $cuestionario);
+
+		$getResultConfronta = DB::connection('oportudata')->select("SELECT `cod_resp`
+		FROM `confronta_result`
+		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
+
+		if ($getResultConfronta[0]->cod_resp == 1) {
+			$estadoSolic = "APROBADO";
+		} else {
+			$estadoSolic = "ANALISIS";
+		}
+		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
+		if ($customerIntention->TARJETA == 'Tarjeta Black') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1900000,
+				'quotaApprovedAdvance' => 500000,
+				'resp' => 'true'
+			];
+		} elseif ($customerIntention->TARJETA == 'Tarjeta Gray') {
+			$policyCredit = [
+				'quotaApprovedProduct' => 1600000,
+				'quotaApprovedAdvance' => 200000,
+				'resp' => 'true'
+			];
+		}
+
+		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
+
+		$estado = ($estadoSolic == "APROBADO") ? "APROBADO" : "PREAPROBADO";
+		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
+		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
+		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
+	}
+
+	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
+	{
+
+		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		if (!empty($data)) {
+			$dataDatosCliente = [
+				'identificationNumber' => $identificationNumber,
+				'numSolic'             => $numSolic,
+				'NOM_REFPER'           => $data['NOM_REFPER'],
+				'TEL_REFPER'           => $data['TEL_REFPER'],
+				'NOM_REFFAM'           => $data['NOM_REFFAM'],
+				'TEL_REFFAM'           => $data['TEL_REFFAM']
+			];
+		} else {
+			$dataDatosCliente = [
+				'identificationNumber' => $identificationNumber,
+				'numSolic'             => $numSolic,
+				'NOM_REFPER'           => 'NA',
+				'TEL_REFPER'           => 'NA',
+				'NOM_REFFAM'           => 'NA',
+				'TEL_REFFAM'           => 'NA'
+			];
+		}
+
+		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
+		$addAnalisis        = $this->addAnalisis($numSolic, $identificationNumber);
+		$infoLead           = (object) [];
+		if ($estadoSolic != 'ANALISIS') {
+			$infoLead = $this->getInfoLeadCreate($identificationNumber);
+		}
+		$infoLead->numSolic = $numSolic->SOLICITUD;
+		if ($estadoSolic == "APROBADO") {
+			$customer = $this->customerInterface->findCustomerById($identificationNumber);
+			$customer->ESTADO = "APROBADO";
+			$customer->save();
+
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ESTADO_INTENCION = 4;
+			$customerIntention->save();
+
+			$estadoResult = "APROBADO";
+			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+		}elseif($estadoSolic == "EN SUCURSAL"){
+			$estadoResult = "PREAPROBADO";
+		} else {
+			$estadoResult = "PREAPROBADO";
+			$turnos = $this->addTurnosOportuya($identificationNumber, $numSolic);
+		}
+		$dataLead = [
+			'ESTADO' => $estadoResult,
+		];
+		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', ' = ', $identificationNumber)->update($dataLead);
+		$infoLead = (object) [];
+		if ($estadoSolic != 'ANALISIS') {
+			$infoLead = $this->getInfoLeadCreate($identificationNumber);
+		}
+		$infoLead->numSolic = $numSolic->SOLICITUD;
+
+		return [
+			'estadoCliente'        => $estadoResult,
+			'resp'                 => $policyCredit['resp'],
+			'infoLead'             => $infoLead,
+			'quotaApprovedProduct' => $policyCredit['quotaApprovedProduct'],
+			'quotaApprovedAdvance' => $policyCredit['quotaApprovedAdvance']
+		];
+	}
+
+	private function addSolicFab($identificationNumber, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
+	{
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $assessorCode);
+		$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
+
+		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
+		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
+		$sucursal = $sucursal[0]->CODIGO;
+		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
+
+		$solic_fab                = new FactoryRequest;
+		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
+		$solic_fab->PRODUC_W      = $quotaApprovedProduct;
+		$solic_fab->CLIENTE       = $identificationNumber;
+		$solic_fab->CODASESOR     = $assessorCode;
+		$solic_fab->id_asesor     = $assessorCode;
+		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
+		$solic_fab->FECHASOL      = date("Y-m-d H:i:s");
+		$solic_fab->SUCURSAL      = $sucursal;
+		$solic_fab->ESTADO        = $estado;
+		$solic_fab->FTP           = 0;
+		$solic_fab->STATE         = "A";
+		$solic_fab->GRAN_TOTAL    = 0;
+		$solic_fab->SOLICITUD_WEB = 1;
+		$solic_fab->save();
+		$numSolic = $this->factoryInterface->getCustomerFactoryRequest($identificationNumber);
+
+		return $numSolic;
+	}
+
+	private function addDatosCliente($data = [])
+	{
+		$datosCliente             = new DatosCliente();
+
+		$datosCliente->CEDULA     = $data['identificationNumber'];
+		$datosCliente->SOLICITUD  = $data['numSolic']->SOLICITUD;
+		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
+		$datosCliente->DIR_REFPER = 'NA';
+		$datosCliente->BAR_REFPER = 'NA';
+		$datosCliente->TEL_REFPER = trim($data['TEL_REFPER']);
+		$datosCliente->CIU_REFPER = 'NA';
+		$datosCliente->NOM_REFPE2 = 'NA';
+		$datosCliente->DIR_REFPE2 = 'NA';
+		$datosCliente->BAR_REFPE2 = 'NA';
+		$datosCliente->TEL_REFPE2 = 0;
+		$datosCliente->CIU_REFPE2 = " ";
+		$datosCliente->NOM_REFFAM = trim($data['NOM_REFFAM']);
+		$datosCliente->DIR_REFFAM = 'NA';
+		$datosCliente->BAR_REFFAM = 'NA';
+		$datosCliente->TEL_REFFAM = trim($data['TEL_REFFAM']);
+		$datosCliente->PARENTESCO = " ";
+		$datosCliente->NOM_REFFA2 = 'NA';
+		$datosCliente->DIR_REFFA2 = 'NA';
+		$datosCliente->BAR_REFFA2 = 'NA';
+		$datosCliente->TEL_REFFA2 = 0;
+		$datosCliente->PARENTESC2 = " ";
+		$datosCliente->NOM_REFCOM = 'NA';
+		$datosCliente->TEL_REFCOM = 'NA';
+		$datosCliente->NOM_REFCO2 = 'NA';
+		$datosCliente->TEL_REFCO2 = 'NA';
+		$datosCliente->NOM_CONYUG = 'NA';
+		$datosCliente->CED_CONYUG = 'NA';
+		$datosCliente->DIR_CONYUG = 'NA';
+		$datosCliente->PROF_CONYU = " ";
+		$datosCliente->EMP_CONYUG = 'NA';
+		$datosCliente->CARGO_CONY = 'NA';
+		$datosCliente->EPS_CONYUG = 'NA';
+		$datosCliente->TEL_CONYUG = 'NA';
+		$datosCliente->ING_CONYUG = 0;
+		$datosCliente->CON_CLI1   = " ";
+		$datosCliente->CON_CLI2   = " ";
+		$datosCliente->CON_CLI3   = " ";
+		$datosCliente->CON_CLI4   = " ";
+		$datosCliente->EDIT_RFCLI = " ";
+		$datosCliente->EDIT_RFCL2 = " ";
+		$datosCliente->EDIT_RFCL3 = " ";
+		$datosCliente->INFORMA1   = 'NA';
+		$datosCliente->CARGO_INF1 = 'NA';
+		$datosCliente->FEC_COM1   = 'NA';
+		$datosCliente->FEC_COM2   = 'NA';
+		$datosCliente->ART_COM1   = 'NA';
+		$datosCliente->ART_COM2   = 'NA';
+		$datosCliente->CUOT_COM1  = 'NA';
+		$datosCliente->CUOT_COM2  = "Al Dia";
+		$datosCliente->HABITO1    = "Al Dia";
+		$datosCliente->HABITO2    = "Al Dia";
+		$datosCliente->STATE      = "A";
+		$createData = $datosCliente->save();
+
+		return "true";
+	}
+
+	private function addAnalisis($numSolic, $identificationNumber)
+	{
+		$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
+		$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
+
+		$analisis               = new Analisis;
+		$analisis->solicitud    = $numSolic->SOLICITUD;
+		$analisis->ini_analis   = date("Y-m-d H:i:s");
+		$analisis->fec_datacli  = "1900-01-01 00:00:00";
+		$analisis->fec_datacod1 = "1900-01-01 00:00:00";
+		$analisis->fec_datacod2 = "1900-01-01 00:00:00";
+		$analisis->ini_ref      = "1900-01-01 00:00:00";
+		$analisis->valor        = "0";
+		$analisis->rf_fpago     = "1900-01-01 00:00:00";
+		$analisis->fin_analis   = "1900-01-01 00:00:00";
+		$analisis->fin_analis   = "1900-01-01 00:00:00";
+		$analisis->Fin_ref      = "1900-01-01 00:00:00";
+		$analisis->autoriz      = "0";
+		$analisis->fact_aur     = "0";
+		$analisis->ini_def      = "1900-01-01 00:00:00";
+		$analisis->fin_def      = "1900-01-01 00:00:00";
+		$analisis->fec_aur      = "1900-01-01 00:00:00";
+		$analisis->aurfe_cli1   = "1900-01-01 00:00:00";
+		$analisis->aurfe_cli3   = "1900-01-01 00:00:00";
+		$analisis->aurfe_cli3   = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod1   = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod12  = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod13  = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod2   = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod21  = "1900-01-01 00:00:00";
+		$analisis->aurfe_cod22  = "1900-01-01 00:00:00";
+		$analisis->aurcu_cli1   = "0";
+		$analisis->aurcu_cli2   = "0";
+		$analisis->aurcu_cli3   = "0";
+		$analisis->aurcu_cod1   = "0";
+		$analisis->aurcu_cod12  = "0";
+		$analisis->aurcu_cod13  = "0";
+		$analisis->aurcu_cod2   = "0";
+		$analisis->scor_cli     = "0";
+		$analisis->scor_cod1    = "0";
+		$analisis->scor_cod2    = "0";
+		$analisis->data_cli     = "0";
+		$analisis->data_cod1    = "0";
+		$analisis->data_cod2    = "0";
+		$analisis->rec_cod1     = "0";
+		$analisis->rec_cod2     = "0";
+		$analisis->io_cod1      = "0";
+		$analisis->io_cod2      = "0";
+		$analisis->aurcu_cod21  = "0";
+		$analisis->aurcu_cod22  = "0";
+		$analisis->vcu_cli1     = "0";
+		$analisis->vcu_cli2     = "0";
+		$analisis->vcu_cli3     = "0";
+		$analisis->vcu_cod1     = "0";
+		$analisis->vcu_cod12    = "0";
+		$analisis->vcu_cod13    = "0";
+		$analisis->vcu_cod2     = "0";
+		$analisis->vcu_cod21    = "0";
+		$analisis->vcu_cod22    = "0";
+		$analisis->aurcre_cli1  = "0";
+		$analisis->aurcre_cli2  = "0";
+		$analisis->aurcre_cli3  = "0";
+		$analisis->aurcre_cod1  = "0";
+		$analisis->aurcre_cod12 = "0";
+		$analisis->aurcre_cod13 = "0";
+		$analisis->aurcre_cod2  = "0";
+		$analisis->aurcre_cod21 = "0";
+		$analisis->aurcre_cod22 = "0";
+		if (count($respQueryTemp) > 0) {
+			$analisis->paz_cli     = $respQueryTemp[0]->paz_cli;
+			$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;
+		}
+		$analisis->save();
+	}
+
+	private function addTurnosOportuya($identificationNumber, $numSolic)
+	{
+		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
+		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+		$scoreLead = 0;
+		if (!empty($respScoreLead)) {
+			$scoreLead = $respScoreLead[0]->score;
+		}
+
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
+		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
+		$sucursal = $sucursal[0]->CODIGO;
+		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+        if($assessorData->SUCURSAL != 1){
+            $sucursal = trim($assessorData->SUCURSAL);
+        }
+
+		$turnosOportuya            = new TurnosOportuya;
+		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
+		$turnosOportuya->CEDULA    = $identificationNumber;
+		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
+		$turnosOportuya->SUC       = $sucursal;
+		$turnosOportuya->USUARIO   = '';
+		$turnosOportuya->PRIORIDAD = '2';
+		$turnosOportuya->ESTADO    = 'ANALISIS';
+		$turnosOportuya->TIPO      = 'OPORTUYA';
+		$turnosOportuya->SUB_TIPO  = 'WEB';
+		$turnosOportuya->FEC_RET   = '1994-09-30 00:00:00';
+		$turnosOportuya->FEC_FIN   = '1994-09-30 00:00:00';
+		$turnosOportuya->VALOR     = '0';
+		$turnosOportuya->FEC_ASIG  = '1994-09-30 00:00:00';
+		$turnosOportuya->SCORE     = $scoreLead;
+		$turnosOportuya->TIPO_CLI  = '';
+		$turnosOportuya->CED_COD1  = '';
+		$turnosOportuya->SCO_COD1  = '0';
+		$turnosOportuya->TIPO_COD1 = '';
+		$turnosOportuya->CED_COD2  = '';
+		$turnosOportuya->SCO_COD2  = '0';
+		$turnosOportuya->TIPO_COD2 = '';
+		$turnosOportuya->STATE     = 'A';
+		$turnosOportuya->save();
+
+		return "true";
+	}
+
+	private function execEvaluarConfronta($cedula, $cuestionario)
+	{
+		$dataEvaluar = DB::connection('oportudata')->select("SELECT * FROM `confronta_selec` WHERE `cedula` = :cedula AND `secuencia_cuest` = :cuestionario", ['cedula' => $cedula, 'cuestionario' => $cuestionario]);
+		try {
+			// 2050 Confronta Pruebas
+			$port = config('portsWs.confronta');
+			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl"); //correcta
+			$result = $ws->evaluarCuestionario(['Code' => 7081, 'question1' => $dataEvaluar[0]->secuencia_preg, 'answer1' => $dataEvaluar[0]->secuencia_resp, 'question2' => $dataEvaluar[1]->secuencia_preg, 'answer2' => $dataEvaluar[1]->secuencia_resp, 'question3' => $dataEvaluar[2]->secuencia_preg, 'answer3' => $dataEvaluar[2]->secuencia_resp, 'question4' => $dataEvaluar[3]->secuencia_preg, 'answer4' => $dataEvaluar[3]->secuencia_resp, 'secuence' => $cuestionario]);  // correcta
+			return 1;
+		} catch (\Throwable $th) {
+			return 0;
+		}
+	}
+
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->TIPOCLIENTE = "NUEVO";
+		$customer->SUBTIPO = "NUEVO";
+		$customer->save();
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tradicional';
+		$intention->save();
+		$estadoSolic = 'EN SUCURSAL';
+		$policyCredit = [
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
+			'resp' => 'true'
+		];
+		$data = [
+			'NOM_REFPER' => $nom_refper,
+			'TEL_REFPER' => $tel_refper,
+			'NOM_REFFAM' => $nom_reffam,
+			'TEL_REFFAM' => $tel_reffam
+		];
+
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+	}
 
     public function getFormVentaContado()
     {
