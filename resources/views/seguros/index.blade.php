@@ -80,33 +80,58 @@
 	</div>
 </div>
 
-{{-- 
-<div class="row row-reset mt-4">
+
+{{-- <div class="row row-reset mt-4">
 	<div class="col-12 col-reset">
 		<div class="container-first-sector">
 			<div>
-				<img class="img-fluid" src="{{ asset('images/seguros/seguros oportunidades.png')}}" class="imgproduct">
+				<img class="img-fluid" src="{{ asset('images/seguros/seguros oportunidades.png')}}"
+style="width: 100%;">
 </div>
-<div class="container-first-sector-text">
+<div class="container-first-sector-text text-center">
 	<h4 class="title-first-sector">Pensar en ti, es pensar en cuidar tu patrimonio</h4>
-	<br>
-	<p class="text-center text-first-sector mt-4">Te damos <span class="first-span-first-sector">crédito</span> para tu
-		<span class="second-span-first-sector">SOAT</span>
+	<div>
+		<img class="logo-fist-sector" src="{{ asset('images/seguros/linelogo.png')}}" alt="">
+	</div>
+	<p class="text-center text-first-sector">Te damos <span class="first-span-first-sector">crédito</span>
+		para tu <span class="second-span-first-sector">SOAT</span>
 		<br> hasta <span class="third-span-first-sector">11
 			meses</span>
 		de plazo</p>
 	<div class="text-center mt-4">
-		<a href="" class="btn btn-first-sector mt-2">Pregunta Aquí</a>
+		<a href="" class="btn btn-first-sector mt-1">Pregunta Aquí</a>
 
 	</div>
 </div>
 </div>
 </div>
 <div class="col-12">
-
+	<div>
+		<img class="img-fluid" src="{{ asset('images/seguros/seguros oportunidades2.png')}}" style="width: 100%;">
+	</div>
+	<div class="container-second-sector-text text-left">
+		<h4 class="title-second-sector">Solicita Tu <br> <span style="color: #0F399E;"> <span
+					style="font-weight: 500;">Crédito</span>
+				para</span> <br> <span class="first-span-second-sector">SOAT</span></h4>
+		<div class="text-center content-button-second-sector">
+			<a href="" class="btn btn-second-sector mt-1">Solicita Aquí</a>
+		</div>
+	</div>
 </div>
 <div class="col-12">
+	<div class="row">
+		<div class="col-12 col-md-6  rr-left">
+			<div class="rr-text">
 
+			</div>
+		</div>
+		<div class="col-12 col-md-6 rr-right">
+			<div class="rr-text">
+
+			</div>
+		</div>
+
+	</div>
 </div>
 <div class="col-12">
 
