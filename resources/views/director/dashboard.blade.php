@@ -67,7 +67,7 @@
                     <span class="info-box-text">Aprobados</span>
                     <span class="info-box-number">@if (empty($statusesAprobadosValues))
                       0 @else
-                      {{ number_format($statusesAprobadosValues[0]) }}
+                      {{ number_format($statusesAprobadosValues) }}
                       @endif</span>
                   </div>
                   <div class="col-6">
@@ -94,7 +94,7 @@
                     <span class="info-box-text">Pendientes</span>
                     <span class="info-box-number">@if (empty($statusesPendientesValues))
                       0 @else
-                      {{ number_format($statusesPendientesValues[0]) }}
+                      {{ number_format($statusesPendientesValues) }}
                       @endif</span>
                   </div>
                   <div class="col-6">

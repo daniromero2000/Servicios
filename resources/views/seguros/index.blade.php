@@ -80,8 +80,8 @@
 	</div>
 </div>
 
-
-{{-- <div class="row row-reset mt-4">
+{{-- 
+<div class="row row-reset mt-4">
 	<div class="col-12 col-reset">
 		<div class="container-first-sector">
 			<div>

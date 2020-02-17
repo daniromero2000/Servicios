@@ -395,9 +395,13 @@ class assessorsController extends Controller
         $statusesColors       = [];
 
 
-        $statusesAprobadosValues = [];
+        $statusesAprobadosValue = [];
         foreach ($estadosAprobados as $estadosAprobado) {
-            array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+            array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
+        }
+        $statusesAprobadosValues = 0;
+        foreach ($statusesAprobadosValue as $key => $status) {
+            $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
         }
 
 
@@ -413,9 +417,14 @@ class assessorsController extends Controller
         }
 
 
-        $statusesPendientesValues = [];
+        $statusesPendientesValue = [];
         foreach ($estadosPendientes as $estadosPendiente) {
-            array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+            array_push($statusesPendientesValue, trim($estadosPendiente['total']));
+        }
+
+        $statusesPendientesValues = 0;
+        foreach ($statusesPendientesValue as $key => $status) {
+            $statusesPendientesValues +=  $statusesPendientesValue[$key];
         }
 
         foreach ($estadosAssessors as $estadosName) {

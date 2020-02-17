@@ -97,7 +97,6 @@ class DirectorController extends Controller
       $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector(request()->input('from'), request()->input('to'), $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
     }
 
-    // dd($estadosAprobados);
     $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
     $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
     $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
@@ -122,12 +121,14 @@ class DirectorController extends Controller
     $webNames    = [];
     $webColors   = [];
 
-    $statusesAprobadosValues = [];
+    $statusesAprobadosValue = [];
     foreach ($estadosAprobados as $estadosAprobado) {
-      array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+      array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
     }
-
-
+    $statusesAprobadosValues = 0;
+    foreach ($statusesAprobadosValue as $key => $status) {
+      $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
+    }
     $statusesNegadoValues = [];
     foreach ($estadosNegados as $estadosNegado) {
       array_push($statusesNegadoValues, trim($estadosNegado['total']));
@@ -140,11 +141,15 @@ class DirectorController extends Controller
     }
 
 
-    $statusesPendientesValues = [];
+    $statusesPendientesValue = [];
     foreach ($estadosPendientes as $estadosPendiente) {
-      array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+      array_push($statusesPendientesValue, trim($estadosPendiente['total']));
     }
 
+    $statusesPendientesValues = 0;
+    foreach ($statusesPendientesValue as $key => $status) {
+      $statusesPendientesValues +=  $statusesPendientesValue[$key];
+    }
 
     foreach ($webDirectorCounts as $webCount) {
       array_push($webNames, trim($webCount['ESTADO']));
