@@ -386,13 +386,14 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			return $policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
+				'policy'               => $policyCredit,
 				'resp'                 => $policyCredit['resp'],
-				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0 ,
-				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0 ,
+				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct']: 0 ,
+				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance']: 0 ,
 				'infoLead'             => $infoLead
 			];
 		}
@@ -417,6 +418,8 @@ class assessorsController extends Controller
 		} else {
 			$validateConsultaFosyga = 1;
 		}
+
+		$validateConsultaFosyga = 1;
 
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
@@ -746,18 +749,7 @@ class assessorsController extends Controller
 		// 2. WS Fosyga
 		$estadoCliente = "PREAPROBADO";
 		$statusAfiliationCustomer = true;
-		return $getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
-		if (!empty($getDataFosyga)) {
-			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
-				return ['resp' => "false"];
-			} else {
-				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
-					$statusAfiliationCustomer = false;
-				}
-			}
-		} else {
-			$estadoCliente = "PREAPROBADO";
-		}
+		$fuenteFallo = "false";
 
 		// 4.6 Tipo 5 Especial
 		$tipo5Especial = 0;
@@ -769,9 +761,11 @@ class assessorsController extends Controller
 		$customerIntention->save();
 
 		//3.1 Estado de documento
-		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
+		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($identificationNumber);
 		if (!empty($getDataRegistraduria)) {
-			if (!empty($getDataRegistraduria->estado)) {
+			if ($getDataRegistraduria->fuenteFallo == 'SI') {
+				$fuenteFallo = "true";
+			}elseif(!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO                     = 'NEGADO';
 					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
@@ -782,7 +776,7 @@ class assessorsController extends Controller
 					return ['resp' => "false"];
 				}
 			} else {
-				return ['resp' => "false"];
+				$fuenteFallo = "true";
 			}
 		} else {
 			$estadoCliente = "PREAPROBADO";
@@ -807,7 +801,7 @@ class assessorsController extends Controller
 					$customerIntention->ID_DEF =  '14';
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
@@ -817,7 +811,7 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
@@ -827,7 +821,7 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
 				}
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -838,7 +832,7 @@ class assessorsController extends Controller
 						$customerIntention->ESTADO_INTENCION  = '2';
 						$customer->save();
 						$customerIntention->save();
-						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
 						$customer->save();
@@ -957,7 +951,7 @@ class assessorsController extends Controller
 		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
 		FROM `CLIENTE_FAB` as cf
 		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
-		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
+		LEFT JOIN `TB_DEFINICIONES` as def ON def.id = inten.`ID_DEF`
 		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
 		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
 		ORDER BY FECHA_INTENCION DESC
@@ -1006,7 +1000,7 @@ class assessorsController extends Controller
         return $resp;
 	}
 
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam, $fuenteFallo){
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
@@ -1047,6 +1041,9 @@ class assessorsController extends Controller
 			'NOM_REFFAM' => $nom_reffam,
 			'TEL_REFFAM' => $tel_reffam
 		];
+
+		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic ;
+
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
@@ -1062,6 +1059,71 @@ class assessorsController extends Controller
 		}
 
 		return $consultaUbica;
+	}
+
+	public function validateConsultaUbica($identificationNumber)
+	{
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerUbicaConsultation = $customer->lastUbicaConsultation;
+		$consec = $customerUbicaConsultation->consec;
+		$aprobo = 0;
+		$celLead = 0;
+
+		$customerPhone =  $customer->checkedPhone;
+		if (!empty($customerPhone)) {
+			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
+		}
+
+		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
+		if (!empty($telConsultaUbica)) {
+			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+		} else {
+			$aprobo = 0;
+		}
+
+		if ($aprobo == 0) {
+			// Validacion Telefono empresarial
+			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
+				if (!empty($telEmpConsultaUbica)) {
+					$aprobo = $this->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
+				} else {
+					$aprobo = 0;
+				}
+			} else {
+				$aprobo = 0;
+			}
+		}
+
+		if ($aprobo == 0) {
+			// Validacion Correo
+			if ($customer->EMAIL != '') {
+				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $customer->EMAIL]);
+				if (!empty($emailConsultaUbica)) {
+					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
+				}
+			} else {
+				$aprobo = 0;
+			}
+		}
+		return $aprobo;
+	}
+
+	private function validateDateUbica($fecha)
+	{
+		$fechaTelConsultaUbica = explode("/", $fecha);
+		$fechaTelConsultaUbica = "20" . $fechaTelConsultaUbica[2] . "-" . $fechaTelConsultaUbica[1] . "-" . $fechaTelConsultaUbica[0];
+		$fechaTelConsultaUbica = strtotime($fechaTelConsultaUbica);
+		$dateNow = date('Y-m-d');
+		$dateNew = strtotime("- 12 month", strtotime($dateNow));
+		$dateNew = date('Y-m-d', $dateNew);
+		if ($fechaTelConsultaUbica < strtotime($dateNew)) {
+			$aprobo = 1;
+		} else {
+			$aprobo = 0;
+		}
+
+		return $aprobo;
 	}
 
 	public function getFormConfronta($identificationNumber)

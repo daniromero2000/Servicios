@@ -27,6 +27,17 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         }
     }
 
+    public function getLastRegistraduriaConsultationPolicy($identificationNumber)
+    {
+        try {
+            return $this->model->where('cedula', $identificationNumber)
+                ->orderBy('idEstadoCedula', 'desc')->get()
+                ->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function validateDateConsultaRegistraduria($identificationNumber,  $daysToIncrement)
     {
         $dateNow = date('Y-m-d');

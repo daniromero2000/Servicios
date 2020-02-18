@@ -534,6 +534,9 @@
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
+                                        <p style="font-style:italic; margin-top: 11px">
+                                            * Aprobado sin codeudor
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
@@ -551,6 +554,10 @@
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
+                                        <p>
+                                            Preaprobado <br>
+                                            * <span style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">

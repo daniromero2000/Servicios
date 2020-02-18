@@ -31,8 +31,8 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
 
         $options = [
-            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', 'M', 'm', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', 'H', 'h', 'J', 'j', 'K', 'k', 'M', 'm', 'N', 'n', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's', 'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z']
         ];
 
         $code = '';
@@ -41,9 +41,9 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
             for ($i = 0; $i < 6; $i++) {
                 $randomOption = rand(0, 1);
                 if ($randomOption == 0) {
-                    $randomNumChar = rand(0, 9);
+                    $randomNumChar = rand(0, 8);
                 } else {
-                    $randomNumChar = rand(0, 51);
+                    $randomNumChar = rand(0, 45);
                 }
                 $code = $code . $options[$randomOption][$randomNumChar];
             }

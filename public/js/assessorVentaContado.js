@@ -15,7 +15,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData = false;
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 1;
+	$scope.validateNum = 0;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
 	$scope.disabledButton = false;
@@ -165,7 +165,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.getCodeVerification = function(renew = false){
 		$scope.reNewToken = false;
-		//$scope.disabledButton = true;
+		$scope.disabledButton = true;
 		if($scope.validateNum > 0){
 			$scope.addCliente('CREDITO');
 		}else{
@@ -349,9 +349,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
-			console.log(response);
-			/*$scope.resp = response.data;
 
+			$scope.resp = response.data;
 			if ($scope.resp.resp == "true" || $scope.resp.resp == "-2") {
 				$('#decisionCredit').modal('show');
 			}
@@ -370,7 +369,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				setTimeout(() => {
 					$('#congratulations').modal('show');
 				}, 1800);
-			}*/
+			}
 		}, function errorCallback(response) {
 			console.log(response);
 			$('#proccess').modal('hide');
@@ -401,7 +400,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
 			+$scope.lead.NOM_REFFAM+'/'
-			+$scope.lead.TEL_REFFAM+'/',
+			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.resp.policy.fuenteFallo+'/',
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;

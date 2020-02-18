@@ -102,8 +102,8 @@ Route::group(['prefix' => '/assessor/'], function () {
         Route::get('ventaContado/getinfoLeadVentaContado/{CEDULA}', 'Admin\assessorsController@getinfoLeadVentaContado');
         Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
         Route::get('execConsultasLead/{identificationNumber}', 'Admin\assessorsController@execConsultasleadAsesores');
-        Route::get('decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionCreditCard');
-        Route::get('decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\OportuyaV2Controller@decisionTraditionalCredit');
+        Route::get('decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}/{fuenteFallo}', 'Admin\assessorsController@decisionCreditCard');
+        Route::get('decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{tel_refper}/{nom_reffam}/{tel_reffam}', 'Admin\assessorsController@decisionTraditionalCredit');
     });
     Route::get('/LaPipa/assesor', function () {
         return view('assessors.convenios.pipa');
