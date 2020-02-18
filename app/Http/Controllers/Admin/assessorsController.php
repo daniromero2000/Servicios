@@ -176,10 +176,10 @@ class assessorsController extends Controller
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
         $assessorData = $this->assessorInterface->findAssessorById($assessorCode);
         $sucursal = trim($request->get('CIUD_UBI'));
-        if($assessorData->SUCURSAL != 1){
+        if ($assessorData->SUCURSAL != 1) {
             $sucursal = trim($assessorData->SUCURSAL);
         }
-        
+
         $leadOportudata  = new Customer;
         $usuarioCreacion = $assessorCode;
         $clienteCelular  = new CliCel;
@@ -205,9 +205,9 @@ class assessorsController extends Controller
                 'VCON_NOM1'   => trim($request->get('VCON_NOM1')),
                 'VCON_CED1'   => trim($request->get('VCON_CED1')),
                 'VCON_TEL1'   => trim($request->get('VCON_TEL1')),
-                'VCON_NOM2'   => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')): 'NA',
-                'VCON_CED2'   => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')): 'NA',
-                'VCON_TEL2'   => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')): 'NA',
+                'VCON_NOM2'   => ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')) : 'NA',
+                'VCON_CED2'   => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
+                'VCON_TEL2'   => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
                 'VCON_DIR'    => trim($request->get('VCON_DIR')),
                 'TRAT_DATOS'  => trim($request->get('TRAT_DATOS')),
                 'TIPOCLIENTE' => 'NUEVO',
@@ -992,7 +992,7 @@ class assessorsController extends Controller
         }
 
         foreach ($resp[0] as $key => $value) {
-            if($key != 'CIUD_UBI' && $key != 'CIUD_EXP'){
+            if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
                 $resp[0]->$key = trim($value);
             }
         }
@@ -1599,19 +1599,19 @@ class assessorsController extends Controller
         $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
         $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
         $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
-        $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "APROBADO");
+        $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
         $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
         $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
-        $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "PENDIENTE");
+        $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 
         if (request()->has('from')) {
             $estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
             $webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory(request()->input('from'), request()->input('to'), $assessor);
             $factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal(request()->input('from'), request()->input('to'), $assessor);
-            $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "APROBADO");
+            $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
             $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
             $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
-            $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "PENDIENTE");
+            $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
         }
 
 
@@ -1629,9 +1629,13 @@ class assessorsController extends Controller
         $statusesColors       = [];
 
 
-        $statusesAprobadosValues = [];
+        $statusesAprobadosValue = [];
         foreach ($estadosAprobados as $estadosAprobado) {
-            array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+            array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
+        }
+        $statusesAprobadosValues = 0;
+        foreach ($statusesAprobadosValue as $key => $status) {
+            $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
         }
 
 
@@ -1647,9 +1651,14 @@ class assessorsController extends Controller
         }
 
 
-        $statusesPendientesValues = [];
+        $statusesPendientesValue = [];
         foreach ($estadosPendientes as $estadosPendiente) {
-            array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+            array_push($statusesPendientesValue, trim($estadosPendiente['total']));
+        }
+
+        $statusesPendientesValues = 0;
+        foreach ($statusesPendientesValue as $key => $status) {
+            $statusesPendientesValues +=  $statusesPendientesValue[$key];
         }
 
         foreach ($estadosAssessors as $estadosName) {

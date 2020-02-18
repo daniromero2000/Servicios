@@ -388,6 +388,37 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+
+    public function countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->whereNotIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     //Hasta aqui Asesores
 
     //Directores
@@ -496,8 +527,38 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
-                ->where('CODASESOR', $director)
+                ->where('SUCURSAL', $director)
                 ->where('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsStatusesAprobadosDirector($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('SUCURSAL', $director)
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsStatusesPendientesDirector($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->where('SUCURSAL', $director)
+                ->whereNotIn('ESTADO', $status)
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();

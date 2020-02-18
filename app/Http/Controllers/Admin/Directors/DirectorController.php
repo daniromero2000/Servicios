@@ -82,21 +82,20 @@ class DirectorController extends Controller
     $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
     $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory($from, $to, $director);
     $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal($from, $to, $director);
-    $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "APROBADO");
+    $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector($from, $to, $director, array('APROBADO', 'EN FACTURACION'));
     $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "NEGADO");
     $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "DESISTIDO");
-    $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "PENDIENTE");
+    $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector($from, $to, $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 
     if (request()->has('from')) {
       $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);
       $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory(request()->input('from'), request()->input('to'), $director);
       $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal(request()->input('from'), request()->input('to'), $director);
-      $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "APROBADO");
+      $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector(request()->input('from'), request()->input('to'), $director, array('APROBADO', 'EN FACTURACION'));
       $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "NEGADO");
       $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "DESISTIDO");
-      $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "PENDIENTE");
+      $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector(request()->input('from'), request()->input('to'), $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
     }
-
 
     $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
     $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
@@ -122,12 +121,14 @@ class DirectorController extends Controller
     $webNames    = [];
     $webColors   = [];
 
-    $statusesAprobadosValues = [];
+    $statusesAprobadosValue = [];
     foreach ($estadosAprobados as $estadosAprobado) {
-      array_push($statusesAprobadosValues, trim($estadosAprobado['total']));
+      array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
     }
-
-
+    $statusesAprobadosValues = 0;
+    foreach ($statusesAprobadosValue as $key => $status) {
+      $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
+    }
     $statusesNegadoValues = [];
     foreach ($estadosNegados as $estadosNegado) {
       array_push($statusesNegadoValues, trim($estadosNegado['total']));
@@ -140,11 +141,15 @@ class DirectorController extends Controller
     }
 
 
-    $statusesPendientesValues = [];
+    $statusesPendientesValue = [];
     foreach ($estadosPendientes as $estadosPendiente) {
-      array_push($statusesPendientesValues, trim($estadosPendiente['total']));
+      array_push($statusesPendientesValue, trim($estadosPendiente['total']));
     }
 
+    $statusesPendientesValues = 0;
+    foreach ($statusesPendientesValue as $key => $status) {
+      $statusesPendientesValues +=  $statusesPendientesValue[$key];
+    }
 
     foreach ($webDirectorCounts as $webCount) {
       array_push($webNames, trim($webCount['ESTADO']));
