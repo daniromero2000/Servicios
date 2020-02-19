@@ -100,7 +100,6 @@ class FactoryRequestController extends Controller
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
         $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array('APROBADO', 'EN FACTURACION'));
-        dd(array('APROBADO', 'EN FACTURACION'));
         $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "NEGADO");
         $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "DESISTIDO");
         $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
