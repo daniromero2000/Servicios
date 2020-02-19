@@ -84,71 +84,57 @@ class IntentionDirectorController extends Controller
         $from = Carbon::now()->startOfMonth();
         $assessor = auth()->user()->codeOportudata;
 
+        $listAssessors = $this->assessorInterface->listIntentionDirector($assessor);
+        $creditProfiles    = $this->intentionInterface->countIntentionDirectorCreditProfiles($from, $to, $listAssessors);
+        $creditCards       = $this->intentionInterface->countIntentionDirectorCreditCards($from, $to, $listAssessors);
+        $intentionStatuses = $this->intentionInterface->countIntentionDirectorStatuses($from, $to, $listAssessors);
 
-        $creditProfiles    = $this->assessorInterface->listIntentionDirector($from, $to, $assessor);
+        if (request()->has('from')) {
+            $creditProfiles    = $this->intentionInterface->countIntentionDirectorCreditProfiles(request()->input('from'), request()->input('to'), $listAssessors);
+            $creditCards       = $this->intentionInterface->countIntentionDirectorCreditCards(request()->input('from'), request()->input('to'), $listAssessors);
+            $intentionStatuses = $this->intentionInterface->countIntentionDirectorStatuses(request()->input('from'), request()->input('to'), $listAssessors);
+        }
 
-        // dd($creditProfiles);
+        $intentionStatusesNames  = [];
+        $intentionStatusesValues = [];
 
-        // foreach ($creditProfiless as $key2 => $status) {
-        //     if ($creditProfiless[$key2]->isNotNull()) {
-        //         $creditProfilesss[] = $creditProfiless[$key2];
-        //         unset($creditProfiles[$key2]);
-        //     }
-        // }
+        foreach ($intentionStatuses as $intentionStatus) {
+            if ($intentionStatus->intentionStatus) {
+                array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
+                array_push($intentionStatusesValues, trim($intentionStatus['total']));
+            }
+        }
 
+        $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
 
+        $statusPercentage = [];
+        $totalStatuses    = $creditCards->sum('total');
+        foreach ($intentionStatuses as $key => $value) {
+            if ($value->intentionStatus) {
+                $statusPercentage[$key]['status']     = $value->intentionStatus['NAME'];
+                $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
+            }
+        }
+        $creditProfiles = $this->toolsInterface->extractValuesToArray($creditProfiles);
+        $creditCards    = $this->toolsInterface->extractValuesToArray($creditCards);
 
+        $creditProfilesNames  = [];
+        $creditProfilesValues = [];
 
-
-        // $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards($from, $to, $assessor);
-        // $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses($from, $to, $assessor);
-
-        // if (request()->has('from')) {
-        //     $creditProfiles    = $this->intentionInterface->countIntentionAssessorCreditProfiles(request()->input('from'), request()->input('to'), $assessor);
-        //     $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards(request()->input('from'), request()->input('to'), $assessor);
-        //     $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses(request()->input('from'), request()->input('to'), $assessor);
-        // }
-
-        // $intentionStatusesNames  = [];
-        // $intentionStatusesValues = [];
-
-        // foreach ($intentionStatuses as $intentionStatus) {
-        //     if ($intentionStatus->intentionStatus) {
-        //         array_push($intentionStatusesNames, trim($intentionStatus->intentionStatus['NAME']));
-        //         array_push($intentionStatusesValues, trim($intentionStatus['total']));
-        //     }
-        // }
-
-        // $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
-
-        // $statusPercentage = [];
-        // $totalStatuses    = $creditCards->sum('total');
-        // foreach ($intentionStatuses as $key => $value) {
-        //     if ($value->intentionStatus) {
-        //         $statusPercentage[$key]['status']     = $value->intentionStatus['NAME'];
-        //         $statusPercentage[$key]['percentage'] = ($value['total'] / $totalStatuses) * 100;
-        //     }
-        // }
-        // $creditProfiles = $this->toolsInterface->extractValuesToArray($creditProfiles);
-        // $creditCards    = $this->toolsInterface->extractValuesToArray($creditCards);
-
-        // $creditProfilesNames  = [];
-        // $creditProfilesValues = [];
-
-        // foreach ($creditProfiles as $creditProfile) {
-        //     array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
-        //     array_push($creditProfilesValues, trim($creditProfile['total']));
-        // }
+        foreach ($creditProfiles as $creditProfile) {
+            array_push($creditProfilesNames, trim($creditProfile['PERFIL_CREDITICIO']));
+            array_push($creditProfilesValues, trim($creditProfile['total']));
+        }
 
 
-        // return view('intentionAssessors.dashboard', [
-        //     'creditProfilesNames'     => $creditProfilesNames,
-        //     'creditProfilesValues'    => $creditProfilesValues,
-        //     'intentionStatusesNames'  => $intentionStatusesNames,
-        //     'intentionStatusesValues' => $intentionStatusesValues,
-        //     'creditCards'             => $creditCards,
-        //     'statusPercentage'        => $statusPercentage,
-        //     'totalStatuses'           => array_sum($creditProfilesValues),
-        // ]);
+        return view('intentionAssessors.dashboard', [
+            'creditProfilesNames'     => $creditProfilesNames,
+            'creditProfilesValues'    => $creditProfilesValues,
+            'intentionStatusesNames'  => $intentionStatusesNames,
+            'intentionStatusesValues' => $intentionStatusesValues,
+            'creditCards'             => $creditCards,
+            'statusPercentage'        => $statusPercentage,
+            'totalStatuses'           => array_sum($creditProfilesValues),
+        ]);
     }
 }
