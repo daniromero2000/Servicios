@@ -6,6 +6,8 @@ interface RegistraduriaRepositoryInterface
 {
     public function getLastRegistraduriaConsultation($identificationNumber);
 
+    public function getLastRegistraduriaConsultationPolicy($identificationNumber);
+
     public function createConsultaRegistraduria($infoBdua, $identificationNumber);
 
     public function validateConsultaRegistraduria($identificationNumber, $names, $lastName, $dateExpedition);

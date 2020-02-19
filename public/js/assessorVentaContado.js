@@ -344,14 +344,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$('#proccess').modal('show');
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/execConsultasLead/'+identificationNumber,
+			url: '/assessor/api/execConsultasLead/'+identificationNumber,
 		}).then(function successCallback(response) {
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
 
 			$scope.resp = response.data;
-
 			if ($scope.resp.resp == "true" || $scope.resp.resp == "-2") {
 				$('#decisionCredit').modal('show');
 			}
@@ -392,7 +391,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		showLoader();
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/decisionCreditCard/'
+			url: '/assessor/api/decisionCreditCard/'
 			+$scope.lead.APELLIDOS+'/'
 			+$scope.lead.CEDULA+'/'
 			+$scope.resp.quotaApprovedProduct+'/'
@@ -401,7 +400,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
 			+$scope.lead.NOM_REFFAM+'/'
-			+$scope.lead.TEL_REFFAM+'/',
+			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.resp.policy.fuenteFallo+'/',
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;
@@ -435,7 +435,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.traditionalCredit = function(){
 		$http({
 			method: 'GET',
-			url: '/api/oportuya/decisionTraditionalCredit/'
+			url: '/assessor/api/decisionTraditionalCredit/'
 			+$scope.lead.CEDULA+'/'
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
@@ -462,7 +462,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 		$http({
 			method: 'POST',
-			url: '/api/oportuya/validateFormConfronta',
+			url: '/assessor/api/validateFormConfronta',
 			data: $scope.infoConfronta,
 		}).then(function successCallback(response) {
 			if (response.data.data == true) {

@@ -26,6 +26,15 @@ class FosygaRepository implements FosygaRepositoryInterface
         }
     }
 
+    public function getLastFosygaConsultationPolicy($identificationNumber){
+        try {
+            return $this->model->where('cedula', $identificationNumber)
+                ->orderBy('idBdua', 'desc')->get()->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function validateDateConsultaFosyga($identificationNumber, $daysToIncrement)
     {
         $dateNow = date('Y-m-d');

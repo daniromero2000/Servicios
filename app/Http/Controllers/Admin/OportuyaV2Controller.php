@@ -112,7 +112,7 @@ class OportuyaV2Controller extends Controller
 		$this->extinctRealCifinInterface         = $extintRealCifinRepositoryInterface;
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
-		$this->assessorInterface = $AssessorRepositoryInterface;
+		$this->assessorInterface                 = $AssessorRepositoryInterface;
 	}
 
 	public function index()
@@ -1602,7 +1602,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 
 			$estadoResult = "APROBADO";
-			$tarjeta = $this->addTarjeta($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		}elseif($estadoSolic == "EN SUCURSAL"){
 			$estadoResult = "PREAPROBADO";
 		} else {
@@ -1902,73 +1902,12 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function addTarjeta($numSolic, $identificationNumber, $cupoCompra, $cupoAvance, $sucursal, $tipoTarjetaAprobada)
-	{
-		$tipoTarjeta = "";
-		if ($tipoTarjetaAprobada == 'Tarjeta Black') {
-			$tipoTarjeta = 'BLACK';
-		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
-			$tipoTarjeta = 'GRAY';
-		}
-		$tarjeta             = new CreditCard;
-		$tarjeta->NUMERO     = "8712760999999";
-		$tarjeta->SOLICITUD  = $numSolic;
-		$tarjeta->CLIENTE    = $identificationNumber;
-		$tarjeta->APROBACION = "0";
-		$tarjeta->DESPACHO   = "0000-00-00";
-		$tarjeta->LOTE       = "0";
-		$tarjeta->FEC_APROB  = "0000-00-00";
-		$tarjeta->CUOTA_MAN  = "9900";
-		$tarjeta->CARGO      = "9300";
-		$tarjeta->CUP_INICIA = $cupoCompra;
-		$tarjeta->CUP_COMPRA = $cupoCompra;
-		$tarjeta->COMPRA_ACT = $cupoCompra;
-		$tarjeta->COMPRA_EFE = "0";
-		$tarjeta->CUPO_EFEC  = $cupoAvance;
-		$tarjeta->CUP_ACTUAL = $cupoAvance;
-		$tarjeta->CUPOMAX    = 480000;
-		$tarjeta->SUC        = $sucursal;
-		$tarjeta->ESTADO     = "I";
-		$tarjeta->FEC_ACTIV  = "0000-00-00";
-		$tarjeta->CONS       = "0";
-		$tarjeta->OPORTUNID  = "0";
-		$tarjeta->EXTRACUPO  = "0";
-		$tarjeta->EXTRA_ACT  = "0";
-		$tarjeta->RECEPC1    = "";
-		$tarjeta->RECEPC2    = "";
-		$tarjeta->RECEPC3    = "";
-		$tarjeta->FEC_REC    = "0000-00-00";
-		$tarjeta->OBSTAR1    = "";
-		$tarjeta->OBSTAR2    = "";
-		$tarjeta->OBSTAR3    = "";
-		$tarjeta->TIPO_TAR   = $tipoTarjeta;
-		$tarjeta->RESPUEST   = "";
-		$tarjeta->RECEPCOFI  = "";
-		$tarjeta->OBSTAROFI  = "";
-		$tarjeta->FEC_RECOFI = "0000-00-00";
-		$tarjeta->RECEPCSUC  = "";
-		$tarjeta->OBSTARSUC  = "";
-		$tarjeta->FEC_RECSUC = "0000-00-00";
-		$tarjeta->RECEPCCLI  = "";
-		$tarjeta->OBSTARCLI  = "";
-		$tarjeta->FEC_RECCLI = "0000-00-00";
-		$tarjeta->FTP        = 0;
-		$tarjeta->TOKEN_CE   = "";
-		$tarjeta->CELULAR_CE = "";
-		$tarjeta->STATE      = "A";
-		$tarjeta->ANALISTA   = "SI";
-
-		$tarjeta->save();
-
-		return true;
-	}
-
 	private function getInfoLeadCreate($identificationNumber)
 	{
 		$queryDataLead = DB::connection('oportudata')->select('SELECT cf.`TIPO_DOC`, cf.`CEDULA`, inten.`TIPO_CLIENTE`, cf.`FEC_NAC`, cf.`TIPOV`, cf.`ACTIVIDAD`, cf.`ACT_IND`, inten.`TIEMPO_LABOR`, cf.`SUELDO`, cf.`OTROS_ING`, cf.`SUELDOIND`, cf.`SUC`, cf.`DIRECCION`, cf.`CELULAR`, cf.`CREACION`, cfs.`score`, inten.`TARJETA`, cf.`ESTADO`, inten.`ID_DEF`, def.`DESCRIPCION`, def.`CARACTERISTICA`
 		FROM `CLIENTE_FAB` as cf
 		LEFT JOIN `TB_INTENCIONES` as inten ON inten.`CEDULA` = cf.`CEDULA`
-		LEFT JOIN `TB_DEFINICIONES` as def ON def.ID_DEF = inten.`ID_DEF`
+		LEFT JOIN `TB_DEFINICIONES` as def ON def.id = inten.`ID_DEF`
 		LEFT JOIN `cifin_score` as cfs ON cf.`CEDULA` = cfs.`scocedula`
 		WHERE inten.`CEDULA` = :cedula AND cfs.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = :cedulaScore )
 		ORDER BY FECHA_INTENCION DESC
