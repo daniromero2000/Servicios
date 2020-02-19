@@ -23,6 +23,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         'CELULAR',
         'PASO',
         'ESTADO',
+        'SUC'
     ];
 
 

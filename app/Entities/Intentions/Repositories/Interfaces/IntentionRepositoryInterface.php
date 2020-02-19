@@ -38,4 +38,10 @@ interface IntentionRepositoryInterface
   public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection;
 
   public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
+
+  public function listIntentionDirectors($totalView, $from, $to, $status);
+
+  public function countListIntentionDirectors($from, $to, $subsidiaris);
+
+  public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
 }

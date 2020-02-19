@@ -29,10 +29,11 @@ class AssessorRepository implements AssessorRepositoryInterface
     {
         try {
             return $this->model->where('Codigo', $codeAssessor)->get(['ID_EMPRESA']);
-        } catch (QueryBuilder $e) { }
+        } catch (QueryBuilder $e) {
+        }
     }
 
-    
+
     public function findAssessorById(int $id): Assessor
     {
         try {
@@ -64,23 +65,23 @@ class AssessorRepository implements AssessorRepositoryInterface
         }
     }
 
-        // public function listAssessorsDigitalChannel()
-        // {
-        //     try {
-        //         return $this->model->with([
-        //             'customer',
-        //             'creditCard'
-        //         ])->has('hasCustomer')
-        //             ->has('creditCard')
-        //             ->where('ESTADO', 'APROBADO')
-        //             ->where('GRAN_TOTAL', 0)
-        //             ->where('SOLICITUD_WEB', 1)
-        //             ->latest('SOLICITUD')
-        //             ->get(['SOLICITUD', 'ASESOR_DIG', 'FECHASOL']);
-        //     } catch (\Throwable $th) {
-        //         //throw $th;
-        //     }
-        // }
+    // public function listAssessorsDigitalChannel()
+    // {
+    //     try {
+    //         return $this->model->with([
+    //             'customer',
+    //             'creditCard'
+    //         ])->has('hasCustomer')
+    //             ->has('creditCard')
+    //             ->where('ESTADO', 'APROBADO')
+    //             ->where('GRAN_TOTAL', 0)
+    //             ->where('SOLICITUD_WEB', 1)
+    //             ->latest('SOLICITUD')
+    //             ->get(['SOLICITUD', 'ASESOR_DIG', 'FECHASOL']);
+    //     } catch (\Throwable $th) {
+    //         //throw $th;
+    //     }
+    // }
 
     public function checkCustomerHasAssessor($identificationNumber, $timeRejectedVigency)
     {
@@ -136,7 +137,7 @@ class AssessorRepository implements AssessorRepositoryInterface
         }
     }
 
-      public function countWebAssessors($from, $to)
+    public function countWebAssessors($from, $to)
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
@@ -191,6 +192,23 @@ class AssessorRepository implements AssessorRepositoryInterface
             return $this->model
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    //Director
+
+    public function listIntentionDirector($director)
+    {
+        $dataIntentions = [];
+        try {
+            $datas = $this->model
+                ->where('SUCURSAL', $director)
+                ->get();
+            foreach ($datas as $key => $status) {
+                $dataIntentions[] = $datas[$key]->CODIGO;
+            }
+            return  $dataIntentions;
         } catch (QueryException $e) {
             dd($e);
         }

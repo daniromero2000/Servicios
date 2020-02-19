@@ -148,6 +148,12 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/intentions/assessors', 'IntentionAssessorController@dashboard');
     });
 
+    Route::namespace('IntentionDirectors')->group(function () {
+        Route::resource('Administrator/intentions/directors/web', 'IntentionDirectorController');
+        Route::get('/Administrator/dashboard/intentions/directors', 'IntentionDirectorController@dashboard');
+    });
+
+
     /*Community Leads Resource*/
     Route::resource('communityleads', 'CommunityController');
     Route::get('/Administrator/dashboard/communitymanager', 'CommunityController@dashboard')->name('community_dashboard');
