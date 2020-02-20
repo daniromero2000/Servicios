@@ -10,11 +10,11 @@
       </div>
       <div class="col-1 text-center" data-toggle="tooltip" data-placement="top" title="Consultar">
         @if ($fosygas[0]->fuenteFallo == 'SI')
-        <i class="fas fa-search-plus" style="
-        font-size: 22px;
-        margin: auto;
-        color: #007bff;
-    "></i>
+        <a href="{{route('customer_registraduriaConsult', $customer->CEDULA) }}"> <i class="fas fa-search-plus" style="
+          font-size: 22px;
+          margin: auto;
+          color: #007bff;
+      "></i></a>
         @endif
       </div>
     </div>

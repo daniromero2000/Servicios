@@ -20,20 +20,24 @@
                             <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                         </div>
                         <div class="col-6 text-right">
+                            @if ( auth()->user()->idProfile == 5 )
                             @if ($customer->customerIntentions)
                             @if ($customer->customerIntentions[0]->ESTADO_INTENCION == '1')
                             @if ($customer->customerFosygas[0]->fuenteFallo == 'NO' &&
                             $customer->customerRegistraduria[0]->fuenteFallo == 'NO')
-                            <button class="btn btn-primary" type="button">Ejecutar Politica</button> @endif
+                            <a class="btn btn-primary" style="
+                            color: white">Ejecutar Politica</a> @endif
                             @endif
                             @endif
+                            @endif
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card border-0 m-2">
+    <div class=" card border-0 m-2">
         <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
@@ -85,7 +89,8 @@
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
-                $customer->customerConfronta, 'confrontaFootprint'=> $customer->confrontaFootprint])
+                $customer->customerConfronta, 'confrontaFootprint'=>
+                $customer->confrontaFootprint])
                 @include('customers.layouts.customer_ubica', ['ubicaCustomers' =>
                 $customer->ubicaConsultations])
             </div>
@@ -99,8 +104,10 @@
                 $customer->customerWarranties])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
-                @include('customers.layouts.commentaries', ['datas' => $customer->customerCommentaries])
-                @include('customers.layouts.statusesLog', ['datas' => $customer->customerStatusesLog])
+                @include('customers.layouts.commentaries', ['datas' =>
+                $customer->customerCommentaries])
+                @include('customers.layouts.statusesLog', ['datas' =>
+                $customer->customerStatusesLog])
             </div>
             <div class="row row-reset border-0">
                 <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
