@@ -3,7 +3,6 @@
 <section class="content border-0">
     @include('layouts.errors-and-messages')
     <div class="content-header">
-    <a href="/Administrator/customer/execFosygaConsultation/1088019814">Ir alla</a>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">

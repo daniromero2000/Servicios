@@ -85,6 +85,29 @@ class CustomerController extends Controller
 
     }
 
+    public function execRegistraduriaConsultation($identificationNumber){
+        $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
+
+        $infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $customer->TIPO_DOC, $customer->FEC_EXP);
+        $infoEstadoCedula = (array) $infoEstadoCedula;
+        $consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
+
+        if($infoEstadoCedula['original']['fuenteFallo'] == 'SI'){
+            $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
+            return redirect()->back();
+        }else{
+            $validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($customer->NOMBRES)), strtolower(trim($customer->APELLIDOS)), $customer->FEC_EXP);
+            if($validateConsultaRegistraduria < 0){
+                $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
+                return redirect()->back();
+            }else{
+                $this->request->session()->flash('message', 'Consulta registraduría realizada correctamente');
+                return redirect()->back();
+            }
+        }
+
+    }
+
     public function dashboard()
     {
         $to   = Carbon::now();
