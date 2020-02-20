@@ -10,9 +10,11 @@
                     <div class="col-12">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard
-                                    Intenciones Web</a>
-                            <li class="breadcrumb-item active"><a href="/Administrator/intentions">Intenciones</a></li>
+                            <li class="breadcrumb-item active"><a
+                                    href="/Administrator/dashboard/intentions/directors">Dashboard
+                                    Intenciones Directores </a>
+                            <li class="breadcrumb-item active"><a
+                                    href="/Administrator/intentions/directors/web">Intenciones</a></li>
                         </ol>
                     </div>
                     <div class="col-12 mt-2">
@@ -26,8 +28,8 @@
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
                         <div class="card-header">
-                            @include('layouts.admin.filter_intention', ['datas' => $status,'route' =>
-                            route('web.index')])
+                            @include('layouts.admin.filter_intention', ['datas' => $status,'route'
+                            =>'/Administrator/intentions/directors/web'])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">

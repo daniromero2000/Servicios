@@ -17,6 +17,9 @@
                 <td><a href="{{ route('intentions.show', $data->id) }}" data-toggle="tooltip"
                         title="Ver Intención">{{ $data->id}}</a></td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
+                <td> @if ($data->assessor)
+                    {{$data->assessor->NOMBRE}}
+                    @endif</td>
                 <td><span @if ($data->intentionStatus)
                         @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
                         class="badge badge-warning"
