@@ -20,7 +20,6 @@ use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositor
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
-use App\Exports\ExportToExcel;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
@@ -46,10 +45,10 @@ class assessorsController extends Controller
 {
     private $customerInterface, $toolsInterface, $factoryInterface;
     private $daysToIncrement, $consultationValidityInterface;
-    private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
+    private $subsidiaryInterface;
 	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
-	private $timeRejectedVigency, $factoryRequestInterface, $commercialConsultationInterface;
-	private $creditCardInterface, $employeeInterface, $punishmentInterface, $customerVerificationCodeInterface;
+	private $commercialConsultationInterface;
+	private $creditCardInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
@@ -66,18 +65,13 @@ class assessorsController extends Controller
         ToolRepositoryInterface $toolRepositoryInterface,
         CustomerRepositoryInterface $customerRepositoryInterface,
         ConsultationValidityRepositoryInterface $consultationValidityRepositoryInterface,
-        ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
 		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-		CityRepositoryInterface $cityRepositoryInterface,
 		CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface,
 		FosygaRepositoryInterface $fosygaRepositoryInterface,
 		WebServiceRepositoryInterface $WebServiceRepositoryInterface,
 		RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
 		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface,
 		CreditCardRepositoryInterface $creditCardRepositoryInterface,
-		EmployeeRepositoryInterface $employeeRepositoryInterface,
-		PunishmentRepositoryInterface $punishmentRepositoryInterface,
-		CustomerVerificationCodeRepositoryInterface $customerVerificationCodeRepositoryInterface,
 		UpToDateFinancialCifinRepositoryInterface $UpToDateFinancialCifinRepositoryInterface,
 		CifinFinancialArrearRepositoryInterface $CifinFinancialArrearRepositoryInterface,
 		CifinRealArrearRepositoryInterface $cifinRealArrearRepositoryInterface,
@@ -94,18 +88,13 @@ class assessorsController extends Controller
         $this->toolsInterface                = $toolRepositoryInterface;
         $this->consultationValidityInterface = $consultationValidityRepositoryInterface;
         $this->customerInterface             = $customerRepositoryInterface;
-        $this->confirmationMessageInterface  = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface                 = $subsidiaryRepositoryInterface;
-		$this->cityInterface                       = $cityRepositoryInterface;
 		$this->customerCellPhoneInterface          = $customerCellPhoneRepositoryInterface;
 		$this->fosygaInterface                     = $fosygaRepositoryInterface;
 		$this->webServiceInterface                 = $WebServiceRepositoryInterface;
 		$this->registraduriaInterface              = $registraduriaRepositoryInterface;
 		$this->commercialConsultationInterface     = $commercialConsultationRepositoryInterface;
 		$this->creditCardInterface                 = $creditCardRepositoryInterface;
-		$this->employeeInterface                   = $employeeRepositoryInterface;
-		$this->punishmentInterface                 = $punishmentRepositoryInterface;
-		$this->customerVerificationCodeInterface   = $customerVerificationCodeRepositoryInterface;
 		$this->UpToDateFinancialCifinInterface     = $UpToDateFinancialCifinRepositoryInterface;
 		$this->CifinFinancialArrearsInterface      = $CifinFinancialArrearRepositoryInterface;
 		$this->cifinRealArrearsInterface           = $cifinRealArrearRepositoryInterface;
@@ -411,7 +400,6 @@ class assessorsController extends Controller
 		} else {
 			$consultaFosyga = 1;
 		}
-
 		$validateConsultaFosyga = 0;
 		if ($consultaFosyga > 0) {
 			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);

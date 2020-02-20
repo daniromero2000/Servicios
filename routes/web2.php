@@ -170,6 +170,9 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
+        Route::get('/Administrator/customer/execFosygaConsultation/{identificationNumber}', 'CustomerController@execFosygaConsultation')->name('customer_fosygaConsult');
+
+
     });
 
     Route::namespace('CallCenter')->group(function () {

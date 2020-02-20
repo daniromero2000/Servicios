@@ -21,6 +21,8 @@ interface CustomerRepositoryInterface
 
   public function updateOrCreateCustomer($data);
 
+  public function searchCustomers(string $text = null, $totalView,  $from = null,  $to = null,  $step = null): Support;
+
   public function countCustomersSteps($from, $to);
 
   public function listCustomersForCall($totalView): Support;

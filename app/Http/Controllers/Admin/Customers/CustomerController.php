@@ -9,21 +9,26 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 
 class CustomerController extends Controller
 {
-    private $customerInterface, $toolsInterface, $fosygaInterface, $registraduriaInterface;
+    private $customerInterface, $toolsInterface, $fosygaInterface, $registraduriaInterface, $request;
 
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         FosygaRepositoryInterface $fosygaRepositoryInterface,
-        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface
+        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
+        WebServiceRepositoryInterface $WebServiceRepositoryInterface,
+        Request $request
     ) {
         $this->customerInterface      = $customerRepositoryInterface;
         $this->toolsInterface         = $toolRepositoryInterface;
         $this->fosygaInterface        = $fosygaRepositoryInterface;
         $this->registraduriaInterface = $registraduriaRepositoryInterface;
+        $this->request                = $request;
+        $this->webServiceInterface    = $WebServiceRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -55,6 +60,29 @@ class CustomerController extends Controller
         return view('customers.show', [
             'customer' =>  $this->customerInterface->findCustomerByIdFull($id)
         ]);
+    }
+
+    public function execFosygaConsultation($identificationNumber){
+        $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
+
+        $infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $customer->TIPO_DOC, "");
+        $infoBdua = (array) $infoBdua;
+        $consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
+        if($infoBdua['original']['fuenteFallo'] == 'SI'){
+            $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
+            return redirect()->back();
+
+        }else{
+            $validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($customer->NOMBRES), trim($customer->APELLIDOS), $customer->FEC_EXP);
+            if($validateConsultaFosyga < 0){
+                $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
+                return redirect()->back();
+            }else{
+                $this->request->session()->flash('message', 'Consulta fosyga realizada correctamente');
+                return redirect()->back();
+            }
+        }
+
     }
 
     public function dashboard()
