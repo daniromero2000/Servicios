@@ -20,16 +20,17 @@
                             <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                         </div>
                         <div class="col-6 text-right">
-                            @if ( auth()->user()->idProfile == 5 )
+                            {{-- @if ( auth()->user()->idProfile == 5 )
                             @if ($customer->customerIntentions)
                             @if ($customer->customerIntentions[0]->ESTADO_INTENCION == '1')
                             @if ($customer->customerFosygas[0]->fuenteFallo == 'NO' &&
                             $customer->customerRegistraduria[0]->fuenteFallo == 'NO')
                             <a class="btn btn-primary" style="
-                            color: white">Ejecutar Politica</a> @endif
+                            color: white">Ejecutar Politica</a>
                             @endif
                             @endif
                             @endif
+                            @endif --}}
 
                         </div>
                     </div>
