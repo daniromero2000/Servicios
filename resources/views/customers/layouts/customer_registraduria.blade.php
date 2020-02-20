@@ -8,7 +8,8 @@
             </div>
             <div class="col-1 text-center" data-toggle="tooltip" data-placement="top" title="Consultar">
                 @if ($registradurias[0]->fuenteFallo == 'SI')
-                <a href="{{route('customer_fosygaConsult', $customer->CEDULA) }}"> <i class="fas fa-search-plus" style="
+                <a href="{{route('customer_registraduriaConsult', $customer->CEDULA) }}"> <i class="fas fa-search-plus"
+                        data-toggle="modal" data-target="#proccessConsult" style="
                     font-size: 22px;
                     margin: auto;
                     color: #007bff;
