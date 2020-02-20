@@ -41,7 +41,7 @@ class IntentionDirectorController extends Controller
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $listAssessors = $this->assessorInterface->listIntentionDirector($assessor);
-        $list = $this->intentionInterface->listIntentionDirectors($skip * 30, $from, $to, $listAssessors);
+        $list = $this->intentionInterface->listIntentionDirectors($skip * 30, $from, $to, $listAssessors)->sortByDesc('FECHA_INTENCION');
         $listCount =  $this->intentionInterface->countListIntentionDirectors($from, $to, $listAssessors);
 
         if (request()->has('q')) {
@@ -63,7 +63,7 @@ class IntentionDirectorController extends Controller
         return view('intentionDirectors.list', [
             'intentionAssessors'   => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Decisión', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
+            'headers'              => ['Fecha', 'Intención', 'Origen', 'Asesor', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Decisión', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
