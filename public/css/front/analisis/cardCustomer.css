@@ -1,0 +1,32 @@
+.customerCardAnaliticsResponsive{
+    display: none;
+}
+@media (max-width:990px){
+    .customerAnaliticsResponsive{ 
+        display: none;
+    }
+    .customerCardAnaliticsResponsive{
+        display: flex;
+    }
+    .customerNameCardAnalicts{
+        font-family: arial;
+        font-size: 16px;
+        font-weight: 300;
+    }
+    .containerCardCustomer{
+        width: 85% !important;
+        border-radius: 16px !important;
+    }
+    .badge-reset{
+        font-family: arial;
+        font-size: 9px;
+        font-weight: bold;
+    }
+}
+
+@media (max-width:570px){
+        .containerCardCustomer{
+        width: 100% !important;
+        border-radius: 16px !important;
+    }
+}

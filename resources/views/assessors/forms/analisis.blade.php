@@ -41,45 +41,103 @@
         Verifica la cédula ingresada, el cliente no presenta registro en nuestra base de datos.
     </div>
     <div ng-show="showResp">
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center mt-4">
+            <div class="container-fluid justify-content-center customerCardAnaliticsResponsive">
+                <div class="col-12 col-sm-12 col-md-10 d-flex justify-content-center align-items-stretch">
+                    <div class="card bg-light containerCardCustomer shadow-lg">
+                        <div class="card-header border-bottom-0 " style="
+                    color: #007bff;
+                ">
+                            Resultado Politica
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h2 class="customerNameCardAnalicts"><b>@{{ infoLead.NOMBRES }}
+                                            @{{ infoLead.APELLIDOS }}</b></h2>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-address-card ml-1 mr-1"></i></i></span>
+                                            Numero
+                                            de
+                                            Documento: <span>@{{ infoLead.CEDULA }}</span> </li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-warehouse"></i></span>
+                                            Sucursal:
+                                            <span>
+                                                @{{ infoLead.SUC }}</span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-lg fa-phone"></i></span>
+                                            Celular:
+                                            <span>
+                                                @{{ infoLead.CELULAR }}</span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-dollar-sign"></i></span>
+                                            Ingresos:
+                                            <span> $
+                                                @{{ infoLead.SUELDOIND + infoLead.OTROS_ING | number:0}}</span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="far fa-id-badge"></i></span>
+                                            Perfil Crediticio:
+                                            <span>
+                                                @{{ infoLead.latest_intention.PERFIL_CREDITICIO }}</span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-credit-card"></i></span>
+                                            Tarjeta:
+                                            <span>
+                                                @{{ infoLead.latest_intention.TARJETA }}</span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-question"></i></span>
+                                            Estado:
+                                            <span>
+                                                <span ng-if="infoLead.ESTADO == 'PREAPROBADO'">
+                                                    <span
+                                                        class="badge badge-warning badge-reset">@{{ infoLead.ESTADO }}</span>
+                                                </span> <span ng-if="infoLead.ESTADO == 'NEGADO'">
+                                                    <span
+                                                        class="badge badge-danger badge-reset">@{{ infoLead.ESTADO }}</span>
 
-            {{-- <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
-                <div class="card bg-light">
-                    <div class="card-header text-muted border-bottom-0">
-                        Digital Strategist
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="lead"><b>Nicole Pearson</b></h2>
-                                <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee
-                                    Lover </p>
-                                <ul class="ml-4 mb-0 fa-ul text-muted">
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
-                                        Address: Demo Street 123, Demo City 04312, NJ</li>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
-                                        Phone #:
-                                        + 800 - 12 12 23 52</li>
-                                </ul>
-                            </div>
-                            <div class="col-5 text-center">
-                                <img src="../../dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                                                </span>
+                                                <span ng-if="infoLead.ESTADO == 'APROVADO'">
+                                                    <span
+                                                        class="badge badge-danger badge-success">@{{ infoLead.ESTADO }}</span>
+                                                </span>
+                                            </span></li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-chart-line"></i></span>
+                                            Actividad: @{{ infoLead.ACTIVIDAD }}</li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-chart-line"></i></span>
+                                            Actividad independiente:
+                                            @{{ infoLead.ACT_IND }}</li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-business-time"></i></span>
+                                            Tiempo Labor:<span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 1"> Si
+                                                cumple</span> <span ng-if="infoLead.latest_intention.TIEMPO_LABOR == 0">
+                                                No
+                                                cumple</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <img src="{{ asset('images/analisis/user.png')}}" alt=""
+                                        class="img-circle img-fluid">
+                                </div>
+
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="text-right">
-                            <a href="#" class="btn btn-sm bg-teal">
-                                <i class="fas fa-comments"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user"></i> View Profile
-                            </a>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="/Administrator/customers/@{{ infoLead.CEDULA }}"
+                                    class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Ver Cliente
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
-            <div class="col-sm-12 col-md-12 col-lg-10">
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-10 customerAnaliticsResponsive">
                 <div class="card mt-4 mb-4 shadow" style="border-radius: 22px;">
                     <div class="card-header border-bottom-0">
                         <div class="row">
