@@ -15,8 +15,21 @@
                         <li class="breadcrumb-item active"><a href="">Detalle Cliente</a></li>
                     </ol>
                 </div>
-                <div class="col-12 mt-2">
-                    <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                <div class="col-12 mt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                        </div>
+                        <div class="col-6 text-right">
+                            @if ($customer->customerIntentions)
+                            @if ($customer->customerIntentions[0]->ESTADO_INTENCION == '1')
+                            @if ($customer->customerFosygas[0]->fuenteFallo == 'NO' &&
+                            $customer->customerRegistraduria[0]->fuenteFallo == 'NO')
+                            <button class="btn btn-primary" type="button">Ejecutar Politica</button> @endif
+                            @endif
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,7 +82,7 @@
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="queries">
                 @include('customers.layouts.customer_fosyga', ['fosygas' =>
-                $customer->customerFosygas])
+                $customer->customerFosygas , 'intentions'=> $customer->customerIntentions])
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>

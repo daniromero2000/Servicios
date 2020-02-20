@@ -40,7 +40,8 @@ class Intention extends Model
         'ESTADO_OBLIGACIONES',
         'ESTADO_INTENCION',
         'CREDIT_DECISION',
-        'ASESOR'
+        'ASESOR',
+        'FECHA_INTENCION'
     ];
 
     protected $searchable = [
@@ -55,6 +56,11 @@ class Intention extends Model
     }
 
     public function searchIntentionAssessors($term)
+    {
+        return self::search($term);
+    }
+
+    public function searchIntentionDirector($term)
     {
         return self::search($term);
     }

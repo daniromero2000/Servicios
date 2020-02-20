@@ -80,8 +80,8 @@
 	</div>
 </div>
 
-{{-- 
-<div class="row row-reset mt-4">
+
+{{-- <div class="row row-reset mt-4">
 	<div class="col-12 col-reset">
 		<div class="container-first-sector">
 			<div>
@@ -119,22 +119,153 @@ style="width: 100%;">
 	</div>
 </div>
 <div class="col-12">
-	<div class="row">
-		<div class="col-12 col-md-6  rr-left">
-			<div class="rr-text">
+	<div class="row margin-md">
+		<div class="col-12 col-lg-6 col-reset">
+			<img class="img-fluid" src="{{ asset('images/seguros/texto_banner_formulario.jpg')}}" style="width: 100%;">
+		</div>
+		<div class="col-12 col-lg-6 img-fondo col-reset">
+			<div>
+				<img class="img-fluid img-bacgraund" src="{{ asset('images/seguros/seguros oportunidades3.png')}}"
+					style="width: 100%;">
+			</div>
+			<div class="container-third-sector-text ">
+				<h4 class="title-third-sector">Déjanos tus <span style="
+						color: #103a9ede;
+					"> Datos</span></h4>
+				<form>
+					<div class="row">
+						<div class="col-6 col-xl-12">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-12 col-xl-5"><label class="title-form-third-sector"
+											for="exampleInputEmail1">Nombre</label></div>
+									<div class="col-12 col-xl-7">
+										<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+											aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-xl-12">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-12 col-xl-5"><label class="title-form-third-sector"
+											for="exampleInputEmail1">Email</label></div>
+									<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
+											id="exampleInputEmail1" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-xl-12">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-12 col-xl-5"><label class="title-form-third-sector"
+											for="exampleInputEmail1">Tipo
+											de Vehículo</label></div>
+									<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
+											id="exampleInputEmail1" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-xl-12">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-12 col-xl-5"><label class="title-form-third-sector"
+											for="exampleInputEmail1">Telefono</label></div>
+									<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
+											id="exampleInputEmail1" aria-describedby="emailHelp">
+									</div>
+								</div>
+							</div>
+						</div>
 
+					</div>
+
+
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-third-sector">Enviar</button>
+					</div>
+				</form>
 			</div>
 		</div>
-		<div class="col-12 col-md-6 rr-right">
-			<div class="rr-text">
-
-			</div>
-		</div>
-
 	</div>
 </div>
-<div class="col-12">
-
+<div class="col-12 ">
+	<div class="row d-flex justify-content-center container-custom ml-auto mr-auto mb-4">
+		<div class="col-12 col-md-12 col-lg-12 col-xl-11">
+			<div class="row d-flex justify-content-center">
+				<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('images/seguros/imagen_iconovida.jpg
+							')}}" class="card-img-top" alt="...">
+						<div>
+							<img class="img-four-sector" src="{{ asset('images/seguros/iconovida.png
+							')}}" alt="...">
+						</div>
+						<div class="card-body card-body-four-sector text-center">
+							<h5 class="card-title-four-sector">VIDA</h5>
+							<p class="card-text text-center">Some quick example text to build on the card title and
+								make up the
+								bulk of
+								the card's content.</p>
+							<a href="#" class="btn btn-four-sector">Conozca Más</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('images/seguros/imagen_iconomotos.jpg
+							')}}" class="card-img-top" alt="...">
+						<img class="img-four-sector" src="{{ asset('images/seguros/iconomoto.png
+								')}}" alt="...">
+						<div class="card-body card-body-four-sector text-center">
+							<h5 class="card-title-four-sector">MOTOS</h5>
+							<p class="card-text text-center">Some quick example text to build on the card title and
+								make up the
+								bulk of
+								the card's content.</p>
+							<a href="#" class="btn btn-four-sector">Conozca Más</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('images/seguros/imagen_iconoauto.jpg
+							')}}" class="card-img-top" alt="...">
+						<img class="img-four-sector" src="{{ asset('images/seguros/iconoauto.png
+								')}}" alt="...">
+						<div class="card-body card-body-four-sector text-center">
+							<h5 class="card-title-four-sector">AUTOS</h5>
+							<p class="card-text text-center">Some quick example text to build on the card title and
+								make up the
+								bulk of
+								the card's content.</p>
+							<a href="#" class="btn btn-four-sector">Conozca Más</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('images/seguros/imagen_iconohogar.jpg
+							')}}" class="card-img-top" alt="...">
+						<img class="img-four-sector" src="{{ asset('images/seguros/iconohogar.png
+								')}}" alt="...">
+						<div class="card-body card-body-four-sector text-center">
+							<h5 class="card-title-four-sector">HOGAR</h5>
+							<p class="card-text text-center">Some quick example text to build on the card title and
+								make up the
+								bulk of
+								the card's content.</p>
+							<a href="#" class="btn btn-four-sector">Conozca Más</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div> --}}
 @endsection

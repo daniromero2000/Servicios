@@ -263,6 +263,11 @@ class Customer extends Model
         return $this->hasOne(Intention::class, 'CEDULA')->with('definition')->latest('FECHA_INTENCION');
     }
 
+    public function Intentions()
+    {
+        return $this->hasMany(Intention::class, 'CEDULA')->with('definition');
+    }
+
     public function ubicaConsultations()
     {
         return $this->hasMany(Ubica::class, 'cedula')->with(['ubicaLastCellPhone', 'ubicaLastPhone', 'ubicAddress', 'ubicEmails', 'ubicPrincipal']);
@@ -280,12 +285,12 @@ class Customer extends Model
 
     public function customerFosygas()
     {
-        return $this->hasMany(Fosyga::class, 'cedula');
+        return $this->hasMany(Fosyga::class, 'cedula')->orderBy('fechaConsulta', 'DESC');
     }
 
     public function customerRegistraduria()
     {
-        return $this->hasMany(Registraduria::class, 'cedula');
+        return $this->hasMany(Registraduria::class, 'cedula')->orderBy('fechaConsulta', 'DESC');
     }
 
     public function customerConfronta()
@@ -340,7 +345,7 @@ class Customer extends Model
 
     public function customerIntentions()
     {
-        return $this->hasMany(Intention::class, 'CEDULA')->with('definition', 'assessor');
+        return $this->hasMany(Intention::class, 'CEDULA')->with('definition', 'assessor')->orderBy('FECHA_INTENCION', 'DESC');
     }
 
     public function customerWarranties()

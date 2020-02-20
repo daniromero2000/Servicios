@@ -1,9 +1,25 @@
 <div class="container-fluid card card-table-reset">
-  <div class="card-header">
-    <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Resultado Fosyga
-    </h2>
-  </div>
+
   @if($fosygas->isNotEmpty())
+  <div class="card-header">
+    <div class="row">
+
+      <div class="col-11">
+        <h2 class="title-table"><i class="fas fa-user-clock mr-3"></i>Resultado Fosyga
+        </h2>
+      </div>
+      <div class="col-1 text-center" data-toggle="tooltip" data-placement="top" title="Consultar">
+        @if ($fosygas[0]->fuenteFallo == 'SI')
+        <i class="fas fa-search-plus" style="
+        font-size: 22px;
+        margin: auto;
+        color: #007bff;
+    "></i>
+        @endif
+      </div>
+    </div>
+
+  </div>
   <div class="card-body table-responsive pt-1">
     <table class="table table-hover table-stripped leadTable">
       <thead class="header-table">

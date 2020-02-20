@@ -281,4 +281,109 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
+
+    public function listIntentionDirectors($totalView, $from, $to, $subsidiaris)
+    {
+        try {
+            return  $this->model
+                ->whereIn('ASESOR', $subsidiaris)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->skip($totalView)
+                ->take(30)
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function countListIntentionDirectors($from, $to, $subsidiaris)
+    {
+        try {
+            return  $this->model
+                ->whereIn('ASESOR', $subsidiaris)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $subsidiaris): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {
+            return $this->model->orderBy('FECHA_INTENCION', 'desc')
+                ->skip($totalView)
+                ->whereIn('ASESOR', $subsidiaris)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchIntentionDirector($text, null, true, true)->with(['customer', 'definition'])
+                ->whereIn('ASESOR', $subsidiaris)
+                ->when($creditprofile, function ($q, $creditprofile) {
+                    return $q->where('PERFIL_CREDITICIO', $creditprofile);
+                })
+                ->whereIn('ASESOR', $subsidiaris)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO_INTENCION', $status);
+                })
+                ->whereIn('ASESOR', $subsidiaris)
+                ->orderBy('FECHA_INTENCION', 'desc')
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+        return $this->model->searchIntentionDirector($text, null, true, true)->with(['customer', 'definition'])
+            ->whereBetween('FECHA_INTENCION', [$from, $to])
+            ->whereIn('ASESOR', $subsidiaris)
+            ->when($creditprofile, function ($q, $creditprofile) {
+                return $q->where('PERFIL_CREDITICIO', $creditprofile);
+            })
+            ->whereIn('ASESOR', $subsidiaris)
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO_INTENCION', $status);
+            })
+            ->whereIn('ASESOR', $subsidiaris)
+            ->orderBy('FECHA_INTENCION', 'desc')
+            ->get($this->columns);
+    }
+
+    public function countIntentionDirectorCreditProfiles($from, $to, $subsidiaris)
+    {
+        try {
+            return  $this->model->select('PERFIL_CREDITICIO', DB::raw('count(*) as total'))
+                ->whereIn('ASESOR', $subsidiaris)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('PERFIL_CREDITICIO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionDirectorCreditCards($from, $to, $subsidiaris)
+    {
+        try {
+            return  $this->model->select('TARJETA', DB::raw('count(*) as total'))
+                ->whereIn('ASESOR', $subsidiaris)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('TARJETA')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countIntentionDirectorStatuses($from, $to, $subsidiaris)
+    {
+        try {
+            return  $this->model->with('intentionStatus')->select('ESTADO_INTENCION', DB::raw('count(*) as total'))
+                ->whereIn('ASESOR', $subsidiaris)
+                ->whereBetween('FECHA_INTENCION', [$from, $to])
+                ->groupBy('ESTADO_INTENCION')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }
