@@ -6,7 +6,8 @@
       <div class="col-sm-12">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
-          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard Intenciones Web</a>
+          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions/directors">Dashboard
+              Intenciones Web</a>
           </li>
         </ol>
       </div>
@@ -33,7 +34,7 @@
                 </div>
 
                 <div class="col-12 text-right">
-                  <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
+                  <span class="info-box-text text-right"><a href="/Administrator/intentions/directors/web"
                       style="color: white; !important">Ver
                       Más</a></span>
                 </div>
@@ -88,7 +89,7 @@
                       <span class="info-box-number">{{ $creditCard['total'] }}</span>
                     </div>
                     <div class="col-6">
-                      <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
+                      <span class="info-box-text text-right"><a href="/Administrator/intentions/directors/web"
                           style="color: black; !important">Ver
                           Más</a></span>
                     </div>
@@ -131,7 +132,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="col-12">
-                  @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+                  @include('layouts.admin.date_filter', ['route' => route('intentions_director_dashboard')])
                 </div>
               </div>
             </div>

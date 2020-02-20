@@ -150,7 +150,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('IntentionDirectors')->group(function () {
         Route::resource('Administrator/intentions/directors/web', 'IntentionDirectorController');
-        Route::get('/Administrator/dashboard/intentions/directors', 'IntentionDirectorController@dashboard');
+        Route::get('/Administrator/dashboard/intentions/directors', 'IntentionDirectorController@dashboard')->name('intentions_director_dashboard');
     });
 
 

@@ -54,8 +54,7 @@ class IntentionDirectorController extends Controller
                 request()->input('status'),
                 $listAssessors
             )->sortByDesc('FECHA_INTENCION');
-
-            $listCount =  $this->intentionInterface->countListIntentionDirectors(request()->input('from'), request()->input('to'), $listAssessors);
+            $listCount = $list;
         }
 
         $listCount = count($listCount);
@@ -127,7 +126,7 @@ class IntentionDirectorController extends Controller
         }
 
 
-        return view('intentionAssessors.dashboard', [
+        return view('intentionDirectors.dashboard', [
             'creditProfilesNames'     => $creditProfilesNames,
             'creditProfilesValues'    => $creditProfilesValues,
             'intentionStatusesNames'  => $intentionStatusesNames,
