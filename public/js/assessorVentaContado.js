@@ -15,7 +15,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData = false;
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 0;
+	$scope.validateNum = 1;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
 	$scope.disabledButton = false;
@@ -374,6 +374,19 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 			$('#proccess').modal('hide');
 		});
+	};
+
+	$scope.desistCredit = function(){
+		var opcion = confirm("Desea desistir la solicitud de crédito ?");
+		if(opcion == true){
+			$('#decisionCredit').modal('hide');
+			$http({
+				method: 'GET',
+				url: '/assessor/api/desistCredit/'+$scope.lead.CEDULA,
+			}).then(function successCallback(response) {
+				location.reload(); 
+			});
+		}
 	};
 
 	$scope.sendDecisionCredit = function(){
