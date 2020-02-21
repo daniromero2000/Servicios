@@ -56,6 +56,7 @@ class DirectorController extends Controller
     $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
     $listCount            = $listCount->count();
 
+    // dd($list);
     return view('director.list', [
       'factoryRequests'      => $list,
       'optionsRoutes'        => (request()->segment(2)),
@@ -79,13 +80,13 @@ class DirectorController extends Controller
     $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
     $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
 
-    $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
-    $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory($from, $to, $director);
-    $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal($from, $to, $director);
-    $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector($from, $to, $director, array('APROBADO', 'EN FACTURACION'));
-    $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "NEGADO");
-    $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "DESISTIDO");
-    $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector($from, $to, $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+    $estadosNamesDirector   = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
+    $webDirectorCounts      = $this->factoryInterface->countWebDirectorFactory($from, $to, $director);
+    $factoryRequestsTotal   = $this->factoryInterface->getDirectorFactoryTotal($from, $to, $director);
+    $estadosAprobados       = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector($from, $to, $director, array('APROBADO', 'EN FACTURACION'));
+    $estadosNegados         = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "NEGADO");
+    $estadosDesistidos      = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector($from, $to, $director, "DESISTIDO");
+    $estadosPendientes      = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector($from, $to, $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 
     if (request()->has('from')) {
       $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);

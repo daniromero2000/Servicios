@@ -56,7 +56,7 @@
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
                     <div class="col-6 col-md-3">
-                        <label for="q">Buscar: Asesor</label>
+                        <label for="q">Buscar por Código de Asesor</label>
                         <input type="text" name="assessor" class="form-control" placeholder=" Buscar por Asesor..."
                             value="{!! request()->input('assessor') !!}">
                     </div>
