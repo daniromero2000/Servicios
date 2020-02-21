@@ -290,10 +290,18 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-12 text-center">
+                        <div class="col-10 text-center">
                             <p class="caracteristicaPolitica">
                                 <i>* @{{ infoLead.latest_intention.definition.CARACTERISTICA }}</i>
                             </p>
+                        </div>
+                        <div class="col-2text-right">
+                            <div class="">
+                                <a href="/Administrator/customers/@{{ infoLead.CEDULA }}"
+                                    class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Ver Cliente
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
