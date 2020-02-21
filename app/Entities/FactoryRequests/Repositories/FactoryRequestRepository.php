@@ -581,4 +581,160 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
+    public function listFactoryForDirectorZonaUp($from, $to, $director)
+    {
+        try {
+            return  $this->model->where('state', 'A')
+                ->orderBy('SOLICITUD', 'desc')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->whereIn('SUCURSAL', $director)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function searchFactoryDirectorsZona(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $assessor = null, $director): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
+                ->where('state', 'A')
+                ->skip($totalView)
+                ->take(30)
+                ->whereIn('SUCURSAL', $director)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryDirectorsZona($text, null, true, true)
+                ->whereIn('SUCURSAL', $director)
+                ->when($status, function ($q, $status) {
+                    return $q->where('ESTADO', $status);
+                })
+                ->whereIn('SUCURSAL', $director)
+                ->when($assessor, function ($q, $assessor) {
+                    return $q->where('CODASESOR', $assessor);
+                })
+                ->where('state', 'A')
+                ->orderBy('FECHASOL', 'desc')
+                ->whereIn('SUCURSAL', $director)
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryDirectorsZona($text, null, true, true)
+            ->whereIn('SUCURSAL', $director)
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('ESTADO', $status);
+            })
+            ->whereIn('SUCURSAL', $director)
+            ->when($assessor, function ($q, $assessor) {
+                return $q->where('CODASESOR', $assessor);
+            })
+            ->where('state', 'A')
+            ->whereIn('SUCURSAL', $director)
+            ->orderBy('FECHASOL', 'desc')
+            ->get($this->columns);
+    }
+    public function listFactoryDirectorZona($totalView, $director): Support
+    {
+        try {
+            return  $this->model->where('state', 'A')
+                ->orderBy('SOLICITUD', 'desc')
+                ->whereIn('SUCURSAL', $director)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
+    public function countFactoryRequestsStatusesAprobadosDirectorZona($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->whereIn('SUCURSAL', $director)
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function countFactoryRequestsStatusesGeneralsDirectorZona($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->whereIn('SUCURSAL', $director)->whereIn('SUCURSAL', $director)
+
+                ->where('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsStatusesPendientesDirectorZona($from, $to, $director, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->where('state', 'A')
+                ->whereIn('SUCURSAL', $director)
+                ->whereNotIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function countDirectorZonaFactoryRequestStatuses($from, $to, $director)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->whereIn('SUCURSAL', $director)
+                ->where('state', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function countWebDirectorZonaFactory($from, $to, $director)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+                ->whereIn('SUCURSAL', $director)
+                ->where('SOLICITUD_WEB', 1)
+                ->where('STATE', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function getDirectorZonaFactoryTotal($from, $to,  $director)
+    {
+        try {
+            return $this->model
+                ->whereIn('SUCURSAL', $director)
+                ->where('state', 'A')
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->sum('GRAN_TOTAL');
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }
