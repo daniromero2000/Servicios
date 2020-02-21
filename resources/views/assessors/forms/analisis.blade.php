@@ -52,7 +52,7 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-7">
                                     <h2 class="customerNameCardAnalicts"><b>@{{ infoLead.NOMBRES }}
                                             @{{ infoLead.APELLIDOS }}</b></h2>
                                     <ul class="ml-4 mb-0 fa-ul text-muted">
@@ -83,7 +83,7 @@
                                                 @{{ infoLead.latest_intention.PERFIL_CREDITICIO }}</span></li>
                                         <li class="small mt-2"><span class="fa-li"><i
                                                     class="fas fa-credit-card"></i></span>
-                                            Tarjeta:
+                                            Linea:
                                             <span>
                                                 @{{ infoLead.latest_intention.TARJETA }}</span></li>
                                         <li class="small mt-2"><span class="fa-li"><i
@@ -93,14 +93,18 @@
                                                 <span ng-if="infoLead.ESTADO == 'PREAPROBADO'">
                                                     <span
                                                         class="badge badge-warning badge-reset">@{{ infoLead.ESTADO }}</span>
-                                                </span> <span ng-if="infoLead.ESTADO == 'NEGADO'">
+                                                </span>
+                                                <span ng-if="infoLead.ESTADO == 'NEGADO'">
                                                     <span
                                                         class="badge badge-danger badge-reset">@{{ infoLead.ESTADO }}</span>
-
                                                 </span>
                                                 <span ng-if="infoLead.ESTADO == 'APROVADO'">
                                                     <span
                                                         class="badge badge-danger badge-success">@{{ infoLead.ESTADO }}</span>
+                                                </span>
+                                                <span ng-if="infoLead.ESTADO == 'EN ANALISIS'">
+                                                    <span
+                                                        class="badge badge-warning badge-reset">@{{ infoLead.ESTADO }}</span>
                                                 </span>
                                             </span></li>
                                         <li class="small mt-2"><span class="fa-li"><i
@@ -117,11 +121,50 @@
                                                 No
                                                 cumple</span>
                                         </li>
+                                        <li class="small mt-2"><span class="fa-li"><i class="fas fa-eye"></i></span>
+                                            Inspección Ocular:<span
+                                                ng-if="infoLead.latest_intention.INSPECCION_OCULAR == 1">
+                                                Si
+                                            </span> <span ng-if="infoLead.latest_intention.INSPECCION_OCULAR == 0">
+                                                No</span>
+                                        </li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-business-time"></i></span>
+                                            Tipo 5 Especial:<span
+                                                ng-if="infoLead.latest_intention.TIPO_5_ESPECIAL == 1">
+                                                Si
+                                            </span> <span ng-if="infoLead.latest_intention.TIPO_5_ESPECIAL == 0">
+                                                No</span>
+                                        </li>
+                                        <li class="small mt-2"><span class="fa-li"><i
+                                                    class="fas fa-business-time"></i></span>
+                                            Edad:<span ng-if="infoLead.latest_intention.EDAD == 1">
+                                                Si
+                                                Cumple</span> <span ng-if="infoLead.latest_intention.EDAD == 0">
+                                                No Cumple</span>
+                                        </li>
+                                        <li class="small mt-2"><span class="fa-li"><i class="fas fa-history"></i></span>
+                                            Historial Crediticio :<span
+                                                ng-if="infoLead.latest_intention.HISTORIAL_CREDITO == 1">
+                                                Con Historial</span> <span
+                                                ng-if="infoLead.latest_intention.HISTORIAL_CREDITO == 0">
+                                                Sin Historial</span>
+                                        </li>
+
                                     </ul>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-5 text-center">
                                     <img src="{{ asset('images/analisis/user.png')}}" alt=""
                                         class="img-circle img-fluid">
+                                    <ul class="ml-4 mb-0 fa-ul text-muted text-left mt-2">
+                                        <li class="small mt-2 " style="
+                                        color: #007bff;
+                                    "><span class="fa-li"> </span> *
+                                            @{{ infoLead.latest_intention.definition.CARACTERISTICA }}</li>
+                                        <li class="small mt-2"><span class="fa-li"> </span> Definición: <br>
+                                            @{{ infoLead.latest_intention.definition.DESCRIPCION + " / " + infoLead.latest_intention.definition.ID_DEF }}
+                                        </li>
+                                    </ul>
                                 </div>
 
                             </div>
