@@ -223,6 +223,20 @@
                                         <label for="">Perfil Crediticio: </label>
                                         <span>@{{ infoLead.latest_intention.PERFIL_CREDITICIO }}</span>
                                     </p>
+                                    <p>
+                                        <label for="">Edad: </label> <span ng-if="infoLead.latest_intention.EDAD == 1">
+                                            Si
+                                            Cumple</span> <span ng-if="infoLead.latest_intention.EDAD == 0">
+                                            No Cumple</span>
+                                    </p>
+                                    <p>
+                                        <label for="">Historial Crediticio: </label> <span
+                                            ng-if="infoLead.latest_intention.HISTORIAL_CREDITO == 1">
+                                            Con Historial</span> <span
+                                            ng-if="infoLead.latest_intention.HISTORIAL_CREDITO == 0">
+                                            Sin Historial</span>
+                                    </p>
+
                                 </div>
                             </div>
                             <div class="col-sm-7 col-md-6 d-flex justify-content-center">
@@ -234,11 +248,43 @@
                                         <label for="">Celular: </label> @{{ infoLead.CELULAR }}
                                     </p>
                                     <p>
-                                        <label for="">Tarjeta: </label> @{{ infoLead.latest_intention.TARJETA }}
+                                        <label for="">Línea: </label> @{{ infoLead.latest_intention.TARJETA }}
                                     </p>
                                     <p>
-                                        <label for="">Estado: </label> @{{ infoLead.ESTADO }}
+                                        <label for="">Estado: </label> <span>
+                                            <span ng-if="infoLead.ESTADO == 'PREAPROBADO'">
+                                                <span
+                                                    class="badge badge-warning badge-reset">@{{ infoLead.ESTADO }}</span>
+                                            </span>
+                                            <span ng-if="infoLead.ESTADO == 'NEGADO'">
+                                                <span
+                                                    class="badge badge-danger badge-reset">@{{ infoLead.ESTADO }}</span>
+                                            </span>
+                                            <span ng-if="infoLead.ESTADO == 'APROVADO'">
+                                                <span
+                                                    class="badge badge-danger badge-success">@{{ infoLead.ESTADO }}</span>
+                                            </span>
+                                            <span ng-if="infoLead.ESTADO == 'EN ANALISIS'">
+                                                <span
+                                                    class="badge badge-warning badge-reset">@{{ infoLead.ESTADO }}</span>
+                                            </span>
+                                        </span>
                                     </p>
+                                    <p>
+                                        <label for="">Inspección Ocular: </label> <span
+                                            ng-if="infoLead.latest_intention.INSPECCION_OCULAR == 1">
+                                            Si
+                                        </span> <span ng-if="infoLead.latest_intention.INSPECCION_OCULAR == 0">
+                                            No</span>
+                                    </p>
+                                    <p>
+                                        <label for="">Tipo 5 Especial: </label> <span
+                                            ng-if="infoLead.latest_intention.TIPO_5_ESPECIAL == 1">
+                                            Si
+                                        </span> <span ng-if="infoLead.latest_intention.TIPO_5_ESPECIAL == 0">
+                                            No</span>
+                                    </p>
+
                                 </div>
                             </div>
                         </div>

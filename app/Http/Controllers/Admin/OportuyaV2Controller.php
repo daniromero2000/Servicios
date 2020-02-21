@@ -193,8 +193,8 @@ class OportuyaV2Controller extends Controller
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$usuarioCreacion      = (string) $assessorCode;
 
-			$clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1 ;
-			$usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode ;
+			$clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1;
+			$usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode;
 			$usuarioActualizacion = (string) $assessorCode;
 
 			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
@@ -702,7 +702,6 @@ class OportuyaV2Controller extends Controller
 				$idDef = '8';
 				$perfilCrediticio = 'TIPO NE';
 				return ['resp' => "false"];
-
 			}
 
 			if ($customerScore >= 1 && $customerScore <= 275) {
@@ -957,7 +956,7 @@ class OportuyaV2Controller extends Controller
 				} else {
 					$customerIntention->ID_DEF =  '18';
 				}
-			}else{
+			} else {
 				$customerIntention->ID_DEF  = '15';
 			}
 			$customer->ESTADO           = 'PREAPROBADO';
@@ -1410,8 +1409,8 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
 				'resp'     => $policyCredit['resp'],
-				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0 ,
-				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0 ,
+				'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0,
+				'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0,
 				'infoLead' => $infoLead
 			];
 		}
@@ -1480,7 +1479,8 @@ class OportuyaV2Controller extends Controller
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
 	}
 
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam)
+	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
@@ -1524,7 +1524,8 @@ class OportuyaV2Controller extends Controller
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
-	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam){
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam)
+	{
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->TIPOCLIENTE = "NUEVO";
 		$customer->SUBTIPO = "NUEVO";
@@ -1603,7 +1604,7 @@ class OportuyaV2Controller extends Controller
 
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
-		}elseif($estadoSolic == "EN SUCURSAL"){
+		} elseif ($estadoSolic == "EN SUCURSAL") {
 			$estadoResult = "PREAPROBADO";
 		} else {
 			$estadoResult = "PREAPROBADO";
@@ -1642,9 +1643,9 @@ class OportuyaV2Controller extends Controller
 		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
 		$sucursal = $sucursal[0]->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-        if($assessorData->SUCURSAL != 1){
-            $sucursal = trim($assessorData->SUCURSAL);
-        }
+		if ($assessorData->SUCURSAL != 1) {
+			$sucursal = trim($assessorData->SUCURSAL);
+		}
 
 		$solic_fab                = new FactoryRequest;
 		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
@@ -1803,7 +1804,8 @@ class OportuyaV2Controller extends Controller
 		$analisis->save();
 	}
 
-	private function addTurnos($identificationNumber, $numSolic){
+	private function addTurnos($identificationNumber, $numSolic)
+	{
 		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
 		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
 		$scoreLead = 0;
@@ -1817,9 +1819,9 @@ class OportuyaV2Controller extends Controller
 		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
 		$sucursal = $sucursal[0]->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-        if($assessorData->SUCURSAL != 1){
-            $sucursal = trim($assessorData->SUCURSAL);
-        }
+		if ($assessorData->SUCURSAL != 1) {
+			$sucursal = trim($assessorData->SUCURSAL);
+		}
 		if (!empty($respScoreLead)) {
 			$scoreLead = $respScoreLead[0]->score;
 		}
@@ -1870,9 +1872,9 @@ class OportuyaV2Controller extends Controller
 		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
 		$sucursal = $sucursal[0]->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-        if($assessorData->SUCURSAL != 1){
-            $sucursal = trim($assessorData->SUCURSAL);
-        }
+		if ($assessorData->SUCURSAL != 1) {
+			$sucursal = trim($assessorData->SUCURSAL);
+		}
 
 		$turnosOportuya            = new TurnosOportuya;
 		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
