@@ -145,7 +145,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('IntentionAssessors')->group(function () {
         Route::resource('Administrator/intentions/assessors/web', 'IntentionAssessorController');
-        Route::get('/Administrator/dashboard/intentions/assessors', 'IntentionAssessorController@dashboard');
+        Route::get('/Administrator/dashboard/intentions/assessors', 'IntentionAssessorController@dashboard')->name('intention_assessor_dashboard');
     });
 
     Route::namespace('IntentionDirectors')->group(function () {
@@ -194,7 +194,7 @@ Route::namespace('Admin')->group(function () {
     });
     //asesores
     Route::resource('Administrator/assessors', 'assessorsController');
-    Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors.dashboard');
+    Route::get('/Administrator/dashboard/assessors', 'assessorsController@dashboard')->name('assessors_dashboard');
 
     Route::namespace('Comments')->group(function () {
         Route::resource('Comments', 'CommentController');
