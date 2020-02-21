@@ -23,6 +23,8 @@
         <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
                 <tr>
+
+                    <th class="text-center" scope="col">Nombre</th>
                     <th class="text-center" scope="col">Tipo de Documento</th>
                     <th class="text-center" scope="col">Pais</th>
                     <th class="text-center" scope="col">Fecha de Expedición</th>
@@ -35,6 +37,9 @@
             <tbody class="body-table">
                 @foreach ($registradurias as $registraduria )
                 <tr>
+                    <td class="text-center">
+                        {{$registraduria->primerNombre}}
+                    </td>
                     <td class="text-center"> @if ($registraduria->tipoDocumento)
                         @if ($registraduria->tipoDocumento == 01) Cédula @endif @else NA @endif
                     </td>
