@@ -18,7 +18,9 @@
           <td class="text-center">
             <a data-toggle="tooltip" title="Ver Solicitud"
               href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a></td>
-          <td class="text-center">{{ $data->CODASESOR }} </td>
+          <td class="text-center">@if ($data->factoryRequestaAssessors)
+            {{ $data->factoryRequestaAssessors->NOMBRE }}
+            @endif </td>
           <td class="text-center">{{ $data->SUCURSAL }}</td>
           <td class="text-center">{{ $data->FECHASOL }} </td>
           <td class="text-center"> {{ $data->ESTADO }} </td>
