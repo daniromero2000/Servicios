@@ -44,7 +44,10 @@ class FactoryRequest extends Model
     {
         return self::search($term);
     }
-
+    public function searchFactoryDirectorsZona($term)
+    {
+        return self::search($term);
+    }
     public function searchFactoryAseessors($term)
     {
         return self::search($term);
