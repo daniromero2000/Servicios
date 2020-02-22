@@ -8,7 +8,8 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
-          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Dashboard Directores</a></li>
+          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/directorZona1">Dashboard Directores</a>
+          </li>
         </ol>
       </div>
     </div>
@@ -30,7 +31,7 @@
               </div>
               <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('director.index') }}" style="color: white; !important">Ver
+                  <a href="/Administrator/director/zona/1" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -48,7 +49,7 @@
               </div>
               <div style="margin-top: -5px;" class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('director.index') }}" style="color: white; !important">Ver
+                  <a href="/Administrator/director/zona/1" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -71,7 +72,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/director/zona/1"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -98,7 +99,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/director/zona/1"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -125,7 +126,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/director/zona/1"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
@@ -152,7 +153,7 @@
                       @endif</span>
                   </div>
                   <div class="col-6">
-                    <span class="info-box-text text-right"><a href="{{ route('director.index') }}"
+                    <span class="info-box-text text-right"><a href="/Administrator/director/zona/1"
                         style="color: black; !important">Ver
                         Más</a></span>
                   </div>
