@@ -13,6 +13,7 @@ use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
+use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
 use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
@@ -216,7 +217,7 @@ class Customer extends Model
         'MIGRADO',
         'TRAT_DATOS',
         'USUARIO_ACTUALIZACION',
-        'FECHA_ACTUALIZACION'
+
     ];
 
 
@@ -302,7 +303,10 @@ class Customer extends Model
     {
         return $this->hasMany(ConfrontaFootprint::class, 'cedula');
     }
-
+    public function DebtorInsurance()
+    {
+        return $this->hasMany(DebtorInsurance::class, 'CEDULA')->orderBy('FECHA', 'DESC');
+    }
     public function cliCell()
     {
         return $this->hasOne(cliCel::class, 'IDENTI');

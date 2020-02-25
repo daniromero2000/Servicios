@@ -243,6 +243,7 @@ class assessorsController extends Controller
 				'BANCOP'                => '0',
 				'USUARIO_CREACION'      => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $assessorCode,
+				'FECHA_ACTUALIZACION'   => date("Y-m-d H: i: s"),
 				'EPS_CONYU' 			=> 'NA',
 				'CEDULA_C' 				=> '0',
 				'TRABAJO_CONYU' 		=> 'NA',
@@ -252,6 +253,7 @@ class assessorsController extends Controller
 				'SALARIO_CONYU' 		=> '0',
 				'CELULAR_CONYU' 		=> '0'
 			];
+
 			unset($dataOportudata['tipoCliente']);
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
@@ -349,8 +351,7 @@ class assessorsController extends Controller
 				'NOMBRE_CONYU' 			=> 'NA',
 				'PROFESION_CONYU'		=> 'NA',
 				'SALARIO_CONYU' 		=> '0',
-				'CELULAR_CONYU' 		=> '0',
-
+				'CELULAR_CONYU' 		=> '0'
 			];
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);

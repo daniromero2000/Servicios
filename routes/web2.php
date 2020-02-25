@@ -165,17 +165,27 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
     });
 
+
     Route::namespace('CallCenterLeads')->group(function () {
         Route::resource('Administrator/callcenterleads', 'CallCenterLeadController');
         Route::get('/Administrator/dashboard/CallCenterleads', 'CallCenterLeadController@dashboard')->name('CallCenterleads_dashboard');
     });
 
+    Route::namespace('DebtorInsurances')->group(function () {
+        Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
+    });
+
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
+        Route::get('/Administrator/Insurance/Policy/Debtors', 'CustomerController@updatePoliceDebtors');
         Route::get('/Administrator/customer/execFosygaConsultation/{identificationNumber}', 'CustomerController@execFosygaConsultation')->name('customer_fosygaConsult');
         Route::get('/Administrator/customer/execRegistraduriaConsultation/{identificationNumber}', 'CustomerController@execRegistraduriaConsultation')->name('customer_registraduriaConsult');
+        Route::get('/getPoliceDebtors/{id}', 'CustomerController@getPoliceDebtors');
+        Route::get('/getPoliceDebtorOportuyas/{id}', 'CustomerController@getPoliceDebtorOportuyas');
     });
+
+
 
     Route::namespace('CallCenter')->group(function () {
         Route::resource('/Administrator/callCenter', 'CallCenterController');
