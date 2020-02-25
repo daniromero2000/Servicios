@@ -62,50 +62,49 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function execFosygaConsultation($identificationNumber){
+    public function execFosygaConsultation($identificationNumber)
+    {
         $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
 
         $infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $customer->TIPO_DOC, "");
         $infoBdua = (array) $infoBdua;
         $consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
-        if($infoBdua['original']['fuenteFallo'] == 'SI'){
+        if ($infoBdua['original']['fuenteFallo'] == 'SI') {
             $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
             return redirect()->back();
-
-        }else{
+        } else {
             $validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($customer->NOMBRES), trim($customer->APELLIDOS), $customer->FEC_EXP);
-            if($validateConsultaFosyga < 0){
+            if ($validateConsultaFosyga < 0) {
                 $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
                 return redirect()->back();
-            }else{
+            } else {
                 $this->request->session()->flash('message', 'Consulta fosyga realizada correctamente');
                 return redirect()->back();
             }
         }
-
     }
 
-    public function execRegistraduriaConsultation($identificationNumber){
+    public function execRegistraduriaConsultation($identificationNumber)
+    {
         $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
 
         $infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $customer->TIPO_DOC, $customer->FEC_EXP);
         $infoEstadoCedula = (array) $infoEstadoCedula;
         $consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
 
-        if($infoEstadoCedula['original']['fuenteFallo'] == 'SI'){
+        if ($infoEstadoCedula['original']['fuenteFallo'] == 'SI') {
             $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
             return redirect()->back();
-        }else{
+        } else {
             $validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($customer->NOMBRES)), strtolower(trim($customer->APELLIDOS)), $customer->FEC_EXP);
-            if($validateConsultaRegistraduria < 0){
+            if ($validateConsultaRegistraduria < 0) {
                 $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
                 return redirect()->back();
-            }else{
+            } else {
                 $this->request->session()->flash('message', 'Consulta registraduría realizada correctamente');
                 return redirect()->back();
             }
         }
-
     }
 
     public function dashboard()
@@ -164,5 +163,21 @@ class CustomerController extends Controller
             'totalFosygas'                => $totalFosygas,
             'totalRegistradurias'         => $totalRegistradurias,
         ]);
+    }
+
+    public function updatePoliceDebtors()
+    {
+        $customer = "";
+        if (request()->has('identification')) {
+            $customer = $this->customerInterface->findCustomerByIdFull(request()->input('identification'));
+        }
+        return view('customers.updatePolicyDebtor', ['customer' => $customer]);
+    }
+
+    public function getPoliceDebtors($identificationNumber)
+    {
+        $customer = $this->customerInterface->findCustomerById($identificationNumber);
+        // return $customer;
+        return $customer->DebtorInsurance->first();
     }
 }
