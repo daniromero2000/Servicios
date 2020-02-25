@@ -215,7 +215,6 @@ class assessorsController extends Controller
 				'ID_CIUD_UBI' 			=> trim($getIdcityUbi[0]->ID_DIAN),
 				'MEDIO_PAGO'  			=> 1,
 				'CIUD_EXP'    			=> 'NA',
-				'ID_CIUD_EXP' 			=> '0',
 				'ORIGEN'      			=> 'ASESORES-CONTADO',
 				'CLIENTE_WEB' 			=> $clienteWeb,
 				'SUC'         			=> $sucursal,
