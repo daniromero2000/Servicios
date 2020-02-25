@@ -164,7 +164,9 @@ Route::namespace('Admin')->group(function () {
         Route::get('/getServices/{id}', 'DigitalChannelLeadController@byService');
         Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
     });
-
+    Route::namespace('LandingInsurances')->group(function () {
+        Route::resource('Insurancesleads', 'InsurancesleadController');
+    });
 
     Route::namespace('CallCenterLeads')->group(function () {
         Route::resource('Administrator/callcenterleads', 'CallCenterLeadController');
