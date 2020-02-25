@@ -136,7 +136,16 @@
 					<h4 class="title-third-sector">Déjanos tus <span style="
 						color: #103a9ede;
 					"> Datos</span></h4>
-					<form>
+					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
+							value="1" aria-describedby="emailHelp" hidden>
+
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
+							value="1" aria-describedby="emailHelp" hidden>
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
+							value="4" aria-describedby="emailHelp" hidden>
+
 						<div class="row">
 							<div class="col-6 col-xl-12">
 								<div class="form-group">
@@ -145,7 +154,8 @@
 												for="exampleInputEmail1">Nombre</label></div>
 										<div class="col-12 col-xl-7">
 											<input class="form-control input-form-third-sector" id="exampleInputEmail1"
-												aria-describedby="emailHelp">
+												validation-pattern="name" id="nameCreate" name="name"
+												aria-describedby="emailHelp" required>
 										</div>
 									</div>
 								</div>
@@ -156,7 +166,8 @@
 										<div class="col-12 col-xl-5"><label class="title-form-third-sector"
 												for="exampleInputEmail1">Email</label></div>
 										<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
-												id="exampleInputEmail1" aria-describedby="emailHelp">
+												validation-pattern="email" name="email" id="exampleInputEmail1"
+												aria-describedby="emailHelp">
 										</div>
 									</div>
 								</div>
@@ -168,7 +179,7 @@
 												for="exampleInputEmail1">Tipo
 												de Vehículo</label></div>
 										<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
-												id="exampleInputEmail1" aria-describedby="emailHelp">
+												id="exampleInputEmail1" name="description" aria-describedby="emailHelp">
 										</div>
 									</div>
 								</div>
@@ -177,9 +188,10 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-12 col-xl-5"><label class="title-form-third-sector"
-												for="exampleInputEmail1">Telefono</label></div>
+												for="exampleInputEmail1">Télefono</label></div>
 										<div class="col-12 col-xl-7"><input class="form-control input-form-third-sector"
-												id="exampleInputEmail1" aria-describedby="emailHelp">
+												id="exampleInputEmail1" name="telephone" aria-describedby="emailHelp"
+												required>
 										</div>
 									</div>
 								</div>
@@ -209,20 +221,19 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">VIDA</h5>
-									<p class="card-text text-center">Some quick example text to build on the
-										card title and
-										make up the
-										bulk of
-										the card's content.</p>
+									<p class="card-text text-center">Amamos la vida y por eso queremos ayudarte a
+										valorar lo importante para tu familia.</p>
 									<button class="btn btn-four-sector btn-rotate-second">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card card-back-second border-0 shadow-lg text-center">
 								<div class="card-body mt-4" style="position: relative">
-									<h4>VIDA</h4>
-									<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
-										faucibus diam. Praesent consectetur, nisl ut semper imperdiet, tortor
-										metus ultrices lorem, non luctus massa risus at urna.</p>
+									<h4>Cobertura pólizas de vida</h4>
+									<p class="mb-5">Muerte por cualquier causa
+										- Muerte accidental
+										- Incapacidad total y permanente
+										- Auxilio funerario.
+									</p>
 
 									<div class="text-center mt-5">
 										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
@@ -258,20 +269,27 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">MOTOS</h5>
-									<p class="card-text text-center">Some quick example text to build on the
-										card title and
-										make up the
-										bulk of
-										the card's content.</p>
+									<p class="card-text text-center">No solo es proteger tu motocicleta, es proteger
+										todo el riesgo que tienes al conducirla.</p>
 									<button class="btn btn-four-sector btn-rotate">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card card-back text-center border-0 shadow-lg">
 								<div class="card-body mt-4" style="position: relative">
-									<h4>MOTOS</h4>
-									<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
-										faucibus diam. Praesent consectetur, nisl ut semper imperdiet, tortor
-										metus ultrices lorem, non luctus massa risus at urna.</p>
+									<h4>Pólizas todo riesgo motos</h4>
+									<p class="mb-5">- Responsabilidad civil extracontractual
+										Daños a terceros
+										Muerte o lesión a una o más personas.
+										- Asistencia jurídica
+										- Pérdida Total Y/o Destrucción total
+										- Daños parciales de mayor cuantía
+										- Protección patrimonial
+										- Daños parciales de menor cuantía
+										- Hurto de mayor y menor cuantía
+										- Terrorismo
+										- Terremoto y eventos de la naturaleza
+										- Grúa por avería
+									</p>
 
 									<div class="text-center mt-5">
 										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
@@ -308,11 +326,8 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">AUTOS</h5>
-									<p class="card-text text-center">Some quick example text to build on the
-										card title and
-										make up the
-										bulk of
-										the card's content.</p>
+									<p class="card-text text-center">Disfruta de un buen viaje en tu vehículo, con las
+										coberturas adecuadas para tu patrimonio.</p>
 									<button class="btn btn-four-sector btn-rotate-third">Conozca Más</button>
 								</div>
 							</div>
@@ -357,20 +372,30 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">HOGAR</h5>
-									<p class="card-text text-center">Some quick example text to build on the
-										card title and
-										make up the
-										bulk of
-										the card's content.</p>
+									<p class="card-text text-center">Protegemos eso que tanto cuidas, tu familia, tu
+										hogar y sus contenidos.</p>
 									<button class="btn btn-four-sector btn-rotate-four">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card border-0 shadow-lg card-back-four text-center">
 								<div class="card-body mt-4" style="position: relative">
-									<h4>HOGAR</h4>
-									<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
-										faucibus diam. Praesent consectetur, nisl ut semper imperdiet, tortor
-										metus ultrices lorem, non luctus massa risus at urna.</p>
+									<h4>Póliza de hogar</h4>
+									<p class="mb-5">- Incendio
+										- Rayo
+										- Explosión
+										- Daños por agua y Anegación
+										- Extensión de cobertura (caida de naves o aeronaves, vientos fuertes,
+										- impactos de vehículos, daños por granizados daños por humo)
+										- Daños en equipos eléctricos y electrónicos
+										- Actos malintencionados de terceros y huelga, motín, asonada, conmoción civil,
+										popular (AMIT Y HMACCP).
+										- Responsabilidad civil extracontractual
+										- Responsabilidad civil extracontractual
+										- Hurto con violencia.
+										- Asistencia al hogar.
+
+										Se puede asegurar 1. La edificación 2.Los contenidos 3. edificación y contenidos
+									</p>
 
 									<div class="text-center mt-5">
 										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
