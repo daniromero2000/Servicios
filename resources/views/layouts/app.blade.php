@@ -368,6 +368,26 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 </body>
 
 <script type="text/javascript">
+	$(function() {
+   // For card rotation
+   $(".btn-rotate").click(function() {
+      $(".card-front").toggleClass(" rotate-card-front");
+      $(".card-back").toggleClass(" rotate-card-back");
+   });
+   $(".btn-rotate-second").click(function() {
+      $(".card-front-second").toggleClass(" rotate-card-front-second");
+      $(".card-back-second").toggleClass(" rotate-card-back-second");
+   });
+   $(".btn-rotate-third").click(function() {
+      $(".card-front-third").toggleClass(" rotate-card-front-third");
+      $(".card-back-third").toggleClass(" rotate-card-back-third");
+   });
+   $(".btn-rotate-four").click(function() {
+      $(".card-front-four").toggleClass(" rotate-card-front-four");
+      $(".card-back-four").toggleClass(" rotate-card-back-four");
+   });
+});
+
 	$('#oportuyaSlider').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,
