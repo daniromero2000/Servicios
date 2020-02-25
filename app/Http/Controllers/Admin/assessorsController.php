@@ -210,11 +210,12 @@ class assessorsController extends Controller
 				'TRAT_DATOS'  			=> trim($request->get('TRAT_DATOS')),
 				'TIPOCLIENTE' 			=> 'NUEVO',
 				'SUBTIPO'     			=> 'NUEVO',
-				'FEC_NAC'	  			=> trim($request->get('FEC_NAC')),
-				'EDAD'        			=> $this->calculateAge($request->get('FEC_NAC')),
+				'FEC_NAC'	  			=> '1900-01-01',
+				'EDAD'        			=> 0,
 				'CIUD_UBI'    			=> trim($cityName[0]->CIUDAD),
 				'DEPTO'       			=> trim(strtoupper($cityName[0]->DEPARTAMENTO)),
 				'ID_CIUD_UBI' 			=> trim($getIdcityUbi[0]->ID_DIAN),
+				'ID_CIUD_EXP' 			=> '',
 				'MEDIO_PAGO'  			=> 00,
 				'CIUD_EXP'    			=> '',
 				'ORIGEN'      			=> 'ASESORES-CONTADO',
@@ -251,7 +252,9 @@ class assessorsController extends Controller
 				'NOMBRE_CONYU' 			=> '',
 				'PROFESION_CONYU'		=> '',
 				'SALARIO_CONYU' 		=> '',
-				'CELULAR_CONYU' 		=> ''
+				'CELULAR_CONYU' 		=> '',
+				'STATE' 				=> 'A'
+
 			];
 
 			unset($dataOportudata['tipoCliente']);
