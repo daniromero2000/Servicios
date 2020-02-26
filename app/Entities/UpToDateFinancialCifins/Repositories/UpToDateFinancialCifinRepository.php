@@ -34,6 +34,12 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
             return  $this->model->where('fdcedula', $identificationNumber)
                 ->where('fdconsul', $this->model->where('fdcedula', $identificationNumber)->max('fdconsul'))
                 ->where('fdcalid',  'PRIN')
+                ->where('fdlincre', '!=', 'TELC')
+                ->where('fdlincre', '!=', 'FEQM')
+                ->where('fdlincre', '!=', 'TCEL')
+                ->where('fdlincre', '!=', 'STEL')
+                ->where('fdlincre', '!=', 'SPUB')
+                ->where('fdlincre', '!=', 'FITC')
                 ->get(['fdcompor', 'fdapert']);
         } catch (QueryException $e) {
             dd($e);
