@@ -206,7 +206,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-12 ">
+	<div class="col-12" id="cardsInsurance">
 		<div class="row d-flex justify-content-center container-custom ml-auto mr-auto mb-4">
 			<div class="col-12 col-md-12 col-lg-12 col-xl-11">
 				<div class="row d-flex justify-content-center">
@@ -226,21 +226,26 @@
 									<button class="btn btn-four-sector btn-rotate-second">Conozca Más</button>
 								</div>
 							</div>
-							<div class="card card-back-second border-0 shadow-lg text-center">
-								<div class="card-body mt-4" style="position: relative">
+							<div class="card card-back-second border-0 shadow-lg text-left">
+								<div class="card-body mt-3" style="position: relative">
 									<h4>Cobertura pólizas de vida</h4>
-									<p class="mb-5">Muerte por cualquier causa
-										- Muerte accidental
-										- Incapacidad total y permanente
-										- Auxilio funerario.
+									<p>
+										<div class="bd-example">
+											<ul style="
+											font-size: 14px;
+											text-align: left;
+										">
+												<li>Muerte por cualquier causa. </li>
+												<li>Muerte accidental. </li>
+												<li>Incapacidad total y permanente.</li>
+												<li>Auxilio funerario.</li>
+											</ul>
+										</div>
 									</p>
-
 									<div class="text-center mt-5">
 										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
 											Aquí</a>
-
 									</div>
-
 									<h4 class="mt-5">Contactos:</h4>
 									<ul class="social-links list-unstyled d-flex justify-content-center">
 										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -275,29 +280,40 @@
 								</div>
 							</div>
 							<div class="card card-back text-center border-0 shadow-lg">
-								<div class="card-body mt-4" style="position: relative">
+								<div class="card-body mt-3" style="position: relative">
 									<h4>Pólizas todo riesgo motos</h4>
-									<p class="mb-5">- Responsabilidad civil extracontractual
-										Daños a terceros
-										Muerte o lesión a una o más personas.
-										- Asistencia jurídica
-										- Pérdida Total Y/o Destrucción total
-										- Daños parciales de mayor cuantía
-										- Protección patrimonial
-										- Daños parciales de menor cuantía
-										- Hurto de mayor y menor cuantía
-										- Terrorismo
-										- Terremoto y eventos de la naturaleza
-										- Grúa por avería
+									<p class="text-small">
+										<div class="bd-example">
+											<ul style="
+											font-size: 14px;
+											text-align: left;
+										">
+												<li>Responsabilidad civil extracontractual.
+													<ul>
+														<li>Daños a terceros. </li>
+														<li>Muerte o lesión a una o más personas.</li>
+													</ul>
+												</li>
+												<li>Asistencia jurídica.</li>
+												<li>Pérdida Total Y/o Destrucción total.</li>
+												<li>Daños parciales de mayor cuantía.</li>
+												<li>Protección patrimonial.</li>
+												<li>Daños parciales de menor cuantía.</li>
+												<li>Hurto de mayor y menor cuantía.</li>
+												<li>Terrorismo.</li>
+												<li>Terremoto y eventos de la naturaleza.</li>
+												<li>Grúa por avería.</li>
+											</ul>
+										</div>
 									</p>
 
-									<div class="text-center mt-5">
+									<div class="text-center mt-2">
 										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
 											Aquí</a>
 
 									</div>
 
-									<h4 class="mt-5">Contactos:</h4>
+									<h4 class="mt-2">Contactos:</h4>
 
 									<ul class="social-links list-unstyled d-flex justify-content-center">
 										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
