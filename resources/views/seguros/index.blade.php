@@ -128,7 +128,7 @@
 				</div>
 			</div>
 			<div class="col-12 col-lg-6 img-fondo col-reset">
-				<div>
+				<div class="container-third-sector-img">
 					<img class="img-fluid img-bacgraund" src="{{ asset('images/seguros/seguros oportunidades3.png')}}"
 						style="width: 100%;">
 				</div>
@@ -210,7 +210,7 @@
 		<div class="row d-flex justify-content-center container-custom ml-auto mr-auto mb-4">
 			<div class="col-12 col-md-12 col-lg-12 col-xl-11">
 				<div class="row d-flex justify-content-center">
-					<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex justify-content-center mt-4">
 						<div class="rotate-container-second">
 							<div class="card card-front-second border-0 shadow-lg">
 								<img src="{{ asset('images/seguros/imagen_iconovida.jpg
@@ -221,20 +221,17 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">VIDA</h5>
-									<p class="card-text text-center">Amamos la vida y por eso queremos ayudarte a
+									<p class="card-text text-center ">Amamos la vida y por eso queremos ayudarte a
 										valorar lo importante para tu familia.</p>
 									<button class="btn btn-four-sector btn-rotate-second">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card card-back-second border-0 shadow-lg text-left">
-								<div class="card-body mt-3" style="position: relative">
-									<h4>Cobertura pólizas de vida</h4>
+								<div class="card-body mt-2 card-body-reset" style="position: relative">
+									<h4 class="text-center" w>Cobertura pólizas de vida</h4>
 									<p>
 										<div class="bd-example">
-											<ul style="
-											font-size: 14px;
-											text-align: left;
-										">
+											<ul class="font-size-card-rever">
 												<li>Muerte por cualquier causa. </li>
 												<li>Muerte accidental. </li>
 												<li>Incapacidad total y permanente.</li>
@@ -242,28 +239,19 @@
 											</ul>
 										</div>
 									</p>
-									<div class="text-center mt-5">
-										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
+									<div class="text-center mt-2">
+										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
 											Aquí</a>
 									</div>
-									<h4 class="mt-5">Contactos:</h4>
-									<ul class="social-links list-unstyled d-flex justify-content-center">
-										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-										</li>
-										<li><a class="hover"
-												href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
-												target="_blank" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-									</ul>
-									<button class="btn btn-primary btn-rotate-second" style="
-									position: absolute;
-									top: 91%;
-									left: 62%;
-								"> &nbsp; Vover <i class="fas fa-arrow-right ml-1"></i> </button>
+									<button class="btn btn-primary btn-sm btn-rotate-second position-button-card-rever">
+										&nbsp;
+										Vover
+										<i class="fas fa-arrow-right ml-1"></i> </button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex justify-content-center mt-4">
 						<div class="rotate-container-first">
 							<div class="card card-front border-0 shadow-lg">
 								<img src="{{ asset('images/seguros/imagen_iconomotos.jpg
@@ -274,20 +262,17 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">MOTOS</h5>
-									<p class="card-text text-center">No solo es proteger tu motocicleta, es proteger
+									<p class="card-text text-center ">No solo es proteger tu motocicleta, es proteger
 										todo el riesgo que tienes al conducirla.</p>
 									<button class="btn btn-four-sector btn-rotate">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card card-back text-center border-0 shadow-lg">
-								<div class="card-body mt-3" style="position: relative">
+								<div class="card-body mt-2 card-body-reset" style="position: relative">
 									<h4>Pólizas todo riesgo motos</h4>
 									<p class="text-small">
 										<div class="bd-example">
-											<ul style="
-											font-size: 14px;
-											text-align: left;
-										">
+											<ul class="font-size-card-rever">
 												<li>Responsabilidad civil extracontractual.
 													<ul>
 														<li>Daños a terceros. </li>
@@ -308,30 +293,18 @@
 									</p>
 
 									<div class="text-center mt-2">
-										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
+										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
 											Aquí</a>
 
 									</div>
-
-									<h4 class="mt-2">Contactos:</h4>
-
-									<ul class="social-links list-unstyled d-flex justify-content-center">
-										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-										</li>
-										<li><a class="hover"
-												href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
-												target="_blank" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-									</ul>
-									<button class="btn btn-primary btn-rotate" style="
-									position: absolute;
-									top: 91%;
-									left: 62%;
-								"> &nbsp; Vover <i class="fas fa-arrow-right ml-1"></i> </button>
+									<button class="btn btn-primary btn-sm btn-rotate position-button-card-rever"> &nbsp;
+										Vover
+										<i class="fas fa-arrow-right ml-1"></i> </button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex justify-content-center mt-4">
 						<div class="rotate-container-third">
 							<div class="card card-front-third border-0 shadow-lg">
 								<img src="{{ asset('images/seguros/imagen_iconoauto.jpg
@@ -342,42 +315,42 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">AUTOS</h5>
-									<p class="card-text text-center">Disfruta de un buen viaje en tu vehículo, con las
+									<p class="card-text text-center ">Disfruta de un buen viaje en tu vehículo, con las
 										coberturas adecuadas para tu patrimonio.</p>
 									<button class="btn btn-four-sector btn-rotate-third">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card card-back-third  border-0 shadow-lg text-center">
-								<div class="card-body mt-4" style="position: relative">
-									<h4>AUTOS</h4>
-									<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
-										faucibus diam. Praesent consectetur, nisl ut semper imperdiet, tortor
-										metus ultrices lorem, non luctus massa risus at urna.</p>
-
-									<div class="text-center mt-5">
-										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
+								<div class="card-body mt-2 card-body-reset" style="position: relative">
+									<h4>Póliza Todo Riesgo Automóviles</h4>
+									<div class="bd-example">
+										<ul class="font-size-card-rever">
+											<li>Responsabilidad civil extracontractual. </li>
+											<li>Daños a bienes de terceros.</li>
+											<li>Pérdidas parciales y totales por daños o hurtos.</li>
+											<li>Asistencia jurídica en proceso penal y civil. </li>
+											<li>Asistencia en viajes (grúa, carro taller, conductor elegido, etc).
+											</li>
+											<li>Vehículo de reemplazo.</li>
+											<li>Revisión Tecnicomecanica.</li>
+											<li>Terrorismo.</li>
+											<li>Hurto con violencia.</li>
+										</ul>
+									</div>
+									<div class="text-center">
+										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
 											Aquí</a>
 
 									</div>
-
-									<h4 class="mt-5">Contactos:</h4>
-									<ul class="social-links list-unstyled d-flex justify-content-center">
-										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-										</li>
-										<li><a class="hover"
-												href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
-												target="_blank" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-									</ul>
-									<button class="btn btn-primary btn-rotate-third" style="
-									position: absolute;
-									top: 91%;
-									left: 62%;
-								"> &nbsp; Vover <i class="fas fa-arrow-right ml-1"></i> </button>
+									<button class="btn btn-primary btn-sm btn-rotate-third position-button-card-rever">
+										&nbsp;
+										Vover
+										<i class="fas fa-arrow-right ml-1"></i> </button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mt-4">
+					<div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex justify-content-center mt-4">
 						<div class="rotate-container-four">
 							<div class="card border-0 shadow-lg card-front-four">
 								<img src="{{ asset('images/seguros/imagen_iconohogar.jpg
@@ -388,50 +361,43 @@
 								</div>
 								<div class="card-body card-body-four-sector text-center">
 									<h5 class="card-title-four-sector">HOGAR</h5>
-									<p class="card-text text-center">Protegemos eso que tanto cuidas, tu familia, tu
+									<p class="card-text text-center ">Protegemos eso que tanto cuidas, tu familia, tu
 										hogar y sus contenidos.</p>
-									<button class="btn btn-four-sector btn-rotate-four">Conozca Más</button>
+									<button class="btn btn-four-sector btn-rotate-four mt-4">Conozca Más</button>
 								</div>
 							</div>
 							<div class="card border-0 shadow-lg card-back-four text-center">
-								<div class="card-body mt-4" style="position: relative">
+								<div class="card-body mt-2 card-body-reset" style="position: relative">
 									<h4>Póliza de hogar</h4>
-									<p class="mb-5">- Incendio
-										- Rayo
-										- Explosión
-										- Daños por agua y Anegación
-										- Extensión de cobertura (caida de naves o aeronaves, vientos fuertes,
-										- impactos de vehículos, daños por granizados daños por humo)
-										- Daños en equipos eléctricos y electrónicos
-										- Actos malintencionados de terceros y huelga, motín, asonada, conmoción civil,
-										popular (AMIT Y HMACCP).
-										- Responsabilidad civil extracontractual
-										- Responsabilidad civil extracontractual
-										- Hurto con violencia.
-										- Asistencia al hogar.
+									<p class="">
 
-										Se puede asegurar 1. La edificación 2.Los contenidos 3. edificación y contenidos
+										<div class="bd-example">
+											<ul class="font-size-card-rever">
+												<li>Incendio. </li>
+												<li>Explosión.</li>
+												<li>Daños por agua y Anegación.</li>
+												<li>Extensión de cobertura (caida de naves o aeronaves, vientos fuertes,
+													impactos de vehículos, daños por granizados daños por humo). </li>
+												<li>Daños en equipos eléctricos y electrónicos.</li>
+												<li>Actos malintencionados de terceros y huelga, motín, asonada,
+													conmoción civil,
+													popular (AMIT Y HMACCP).</li>
+												<li>Responsabilidad civil extracontractual.</li>
+												<li>Terremoto y eventos de la naturaleza.</li>
+												<li>Hurto con violencia.</li>
+											</ul>
+										</div>
 									</p>
 
-									<div class="text-center mt-5">
-										<a href="/step1" target="_blank" class="btn btn-first-sector mt-1">Solicita
+									<div class="text-center mt-2">
+										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
 											Aquí</a>
 
 									</div>
-
-									<h4 class="mt-5"> Contactos:</h4>
-									<ul class="social-links list-unstyled d-flex justify-content-center">
-										<li><a class="hover" href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-										</li>
-										<li><a class="hover"
-												href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
-												target="_blank" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-									</ul>
-									<button class="btn btn-primary btn-rotate-four" style="
-									position: absolute;
-									top: 91%;
-									left: 62%;
-								"> &nbsp; Vover <i class="fas fa-arrow-right ml-1"></i> </button>
+									<button class="btn btn-primary btn-sm btn-rotate-four position-button-card-rever">
+										&nbsp;
+										Vover
+										<i class="fas fa-arrow-right ml-1"></i> </button>
 								</div>
 							</div>
 						</div>
