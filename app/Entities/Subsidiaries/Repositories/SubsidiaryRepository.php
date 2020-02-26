@@ -78,4 +78,19 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+    public function listSubsidiaryForDirector()
+    {
+        $dataIntentions = [];
+        try {
+            $datas = $this->model
+                ->where('ZONA', 'ALTA')
+                ->get();
+            foreach ($datas as $key => $status) {
+                $dataIntentions[] = $datas[$key]->CODIGO;
+            }
+            return  $dataIntentions;
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

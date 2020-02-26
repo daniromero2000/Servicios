@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="col-12 text-right">
-                  <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
+                  <span class="info-box-text text-right"><a href="/Administrator/intentions/assessors/web"
                       style="color: white; !important">Ver
                       Más</a></span>
                 </div>
@@ -88,7 +88,7 @@
                       <span class="info-box-number">{{ $creditCard['total'] }}</span>
                     </div>
                     <div class="col-6">
-                      <span class="info-box-text text-right"><a href="{{ route('web.index') }}"
+                      <span class="info-box-text text-right"><a href="/Administrator/intentions/assessors/web"
                           style="color: black; !important">Ver
                           Más</a></span>
                     </div>
@@ -131,7 +131,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="col-12">
-                  @include('layouts.admin.date_filter', ['route' => route('intention_dashboard')])
+                  @include('layouts.admin.date_filter', ['route' => route('intention_assessor_dashboard')])
                 </div>
               </div>
             </div>

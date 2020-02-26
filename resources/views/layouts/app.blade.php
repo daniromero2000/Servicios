@@ -80,6 +80,8 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-animate.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-aria.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-messages.min.js"></script>
+	<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
 
 	<!-- Angular Material Library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
@@ -248,9 +250,12 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		<div id="container">
 			@yield('content')
 			<div class="container-button">
-				<a style="display: none; visibility: hidden" target="_blank" class="btnwpp" href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero%20más%20informaci%C3%B3n%20sobre%20el%20cr%C3%A9dito%20de%20Oportunidades!">  <img class="img-btnWpp" src= " {{ asset ('images/btnwpp.png')}}"> <span>¿Quieres más información?</span> <span class="textCl">(Click aquí)</span></a>
+				<a style="display: none; visibility: hidden" target="_blank" class="btnwpp"
+					href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero%20más%20informaci%C3%B3n%20sobre%20el%20cr%C3%A9dito%20de%20Oportunidades!">
+					<img class="img-btnWpp" src=" {{ asset ('images/btnwpp.png')}}"> <span>¿Quieres más
+						información?</span> <span class="textCl">(Click aquí)</span></a>
 			</div>
-		</div>	
+		</div>
 		<div id="footer">
 			<div class="row resetRow">
 				<div class="col-12 col-md-12 col-lg-3 resetCol footer-containMenu">
@@ -362,11 +367,63 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 			 }
 	</script>
 
-
-
 </body>
-
 <script type="text/javascript">
+	$(function() {
+   // For card rotation
+   $(".btn-rotate").click(function() {
+      $(".card-front").toggleClass(" rotate-card-front");
+      $(".card-back").toggleClass(" rotate-card-back");
+   });
+   $(".btn-rotate-second").click(function() {
+      $(".card-front-second").toggleClass(" rotate-card-front-second");
+      $(".card-back-second").toggleClass(" rotate-card-back-second");
+   });
+   $(".btn-rotate-third").click(function() {
+      $(".card-front-third").toggleClass(" rotate-card-front-third");
+      $(".card-back-third").toggleClass(" rotate-card-back-third");
+   });
+   $(".btn-rotate-four").click(function() {
+      $(".card-front-four").toggleClass(" rotate-card-front-four");
+      $(".card-back-four").toggleClass(" rotate-card-back-four");
+   });
+});
+
+window.sr = ScrollReveal();
+
+    sr.reveal('.container-first-sector-text', {
+      duration: 2000,
+	  origin: 'right',
+	  distance: '30%',
+ 	  delay: 1000,
+    });
+
+    sr.reveal('.container-second-sector-text', {
+      duration: 2000,
+      origin: 'right',
+	  distance: '30%',
+ 	  delay: 1000,
+    });
+
+    sr.reveal('.header-content-right', {
+      duration: 2000,
+      origin: 'right',
+      distance: '300px'
+    });
+
+    sr.reveal('.header-btn', {
+      duration: 2000,
+      delay: 1000, 
+      origin: 'bottom'
+    });
+
+    sr.reveal('#cardsInsurance', {
+      duration: 1000,
+      origin: 'left',
+      distance: '300px',
+      viewFactor: 0.2
+    });
+
 	$('#oportuyaSlider').slick({
 			autoplay: true,
 			autoplaySpeed: 15000,

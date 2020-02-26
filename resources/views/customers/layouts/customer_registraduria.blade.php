@@ -8,7 +8,8 @@
             </div>
             <div class="col-1 text-center" data-toggle="tooltip" data-placement="top" title="Consultar">
                 @if ($registradurias[0]->fuenteFallo == 'SI')
-                <a href="{{route('customer_fosygaConsult', $customer->CEDULA) }}"> <i class="fas fa-search-plus" style="
+                <a href="{{route('customer_registraduriaConsult', $customer->CEDULA) }}"> <i class="fas fa-search-plus"
+                        data-toggle="modal" data-target="#proccessConsult" style="
                     font-size: 22px;
                     margin: auto;
                     color: #007bff;
@@ -22,6 +23,8 @@
         <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
                 <tr>
+
+                    <th class="text-center" scope="col">Nombre</th>
                     <th class="text-center" scope="col">Tipo de Documento</th>
                     <th class="text-center" scope="col">Pais</th>
                     <th class="text-center" scope="col">Fecha de Expedición</th>
@@ -34,6 +37,9 @@
             <tbody class="body-table">
                 @foreach ($registradurias as $registraduria )
                 <tr>
+                    <td class="text-center">
+                        {{$registraduria->primerNombre}}
+                    </td>
                     <td class="text-center"> @if ($registraduria->tipoDocumento)
                         @if ($registraduria->tipoDocumento == 01) Cédula @endif @else NA @endif
                     </td>

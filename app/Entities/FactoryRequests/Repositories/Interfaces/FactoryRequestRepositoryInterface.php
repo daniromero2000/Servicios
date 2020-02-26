@@ -67,4 +67,20 @@ interface FactoryRequestRepositoryInterface
   public function searchFactoryAseessors(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $assessor): Collection;
 
   public function countWebAssessorFactory($from, $to, $assessor);
+
+  public function listFactoryForDirectorZonaUp($from, $to, $director);
+
+  public function listFactoryDirectorZona($totalView, $director): Support;
+
+  public function countFactoryRequestsStatusesAprobadosDirectorZona($from, $to, $director, $status);
+
+  public function countFactoryRequestsStatusesGeneralsDirectorZona($from, $to, $director, $status);
+
+  public function countFactoryRequestsStatusesPendientesDirectorZona($from, $to, $director, $status);
+
+  public function countDirectorZonaFactoryRequestStatuses($from, $to, $director);
+
+  public function countWebDirectorZonaFactory($from, $to, $director);
+
+  public function getDirectorZonaFactoryTotal($from, $to,  $director);
 }

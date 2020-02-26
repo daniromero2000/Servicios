@@ -124,9 +124,6 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
  * Admin routes
  */
 Route::namespace('Admin')->group(function () {
-    // Route::namespace('Directors')->group(function () {
-    //     Route::resource('director', 'DirectorController');
-    // });
 
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
@@ -145,7 +142,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('IntentionAssessors')->group(function () {
         Route::resource('Administrator/intentions/assessors/web', 'IntentionAssessorController');
-        Route::get('/Administrator/dashboard/intentions/assessors', 'IntentionAssessorController@dashboard');
+        Route::get('/Administrator/dashboard/intentions/assessors', 'IntentionAssessorController@dashboard')->name('intention_assessor_dashboard');
     });
 
     Route::namespace('IntentionDirectors')->group(function () {
@@ -167,18 +164,30 @@ Route::namespace('Admin')->group(function () {
         Route::get('/getServices/{id}', 'DigitalChannelLeadController@byService');
         Route::get('/Administrator/dashboard/digitalChannelLead', 'DigitalChannelLeadController@dashboard')->name('digitalchannelleads_dashboard');
     });
+    Route::namespace('LandingInsurances')->group(function () {
+        Route::resource('Insurancesleads', 'InsurancesleadController');
+    });
 
     Route::namespace('CallCenterLeads')->group(function () {
         Route::resource('Administrator/callcenterleads', 'CallCenterLeadController');
         Route::get('/Administrator/dashboard/CallCenterleads', 'CallCenterLeadController@dashboard')->name('CallCenterleads_dashboard');
     });
 
+    Route::namespace('DebtorInsurances')->group(function () {
+        Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
+    });
+
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');
+        Route::get('/Administrator/Insurance/Policy/Debtors', 'CustomerController@updatePoliceDebtors');
         Route::get('/Administrator/customer/execFosygaConsultation/{identificationNumber}', 'CustomerController@execFosygaConsultation')->name('customer_fosygaConsult');
         Route::get('/Administrator/customer/execRegistraduriaConsultation/{identificationNumber}', 'CustomerController@execRegistraduriaConsultation')->name('customer_registraduriaConsult');
+        Route::get('/getPoliceDebtors/{id}', 'CustomerController@getPoliceDebtors');
+        Route::get('/getPoliceDebtorOportuyas/{id}', 'CustomerController@getPoliceDebtorOportuyas');
     });
+
+
 
     Route::namespace('CallCenter')->group(function () {
         Route::resource('/Administrator/callCenter', 'CallCenterController');
@@ -191,6 +200,8 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Directors')->group(function () {
         Route::resource('/Administrator/director', 'DirectorController');
         Route::get('/Administrator/dashboard/director', 'DirectorController@dashboard')->name('directors_dashboard');
+        Route::get('/Administrator/dashboard/directorZona1', 'DirectorController@dashboardZona1')->name('directors_dashboardZona1');
+        Route::get('/Administrator/director/zona/1', 'DirectorController@directorZona1');
     });
     //asesores
     Route::resource('Administrator/assessors', 'assessorsController');

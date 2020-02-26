@@ -2,6 +2,7 @@
 
 namespace App\Entities\FactoryRequests;
 
+use App\Assessor;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
@@ -43,7 +44,10 @@ class FactoryRequest extends Model
     {
         return self::search($term);
     }
-
+    public function searchFactoryDirectorsZona($term)
+    {
+        return self::search($term);
+    }
     public function searchFactoryAseessors($term)
     {
         return self::search($term);
@@ -103,5 +107,9 @@ class FactoryRequest extends Model
     public function factoryRequestStatusesLogs()
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');
+    }
+    public function factoryRequestaAssessors()
+    {
+        return $this->belongsTo(Assessor::class, 'CODASESOR', 'CODIGO');
     }
 }

@@ -16,4 +16,6 @@ interface SubsidiaryRepositoryInterface
     public function listSubsidiares($totalView): Support;
 
     public function findSubsidiaryByIdFull(int $id): Subsidiary;
+
+    public function listSubsidiaryForDirector();
 }

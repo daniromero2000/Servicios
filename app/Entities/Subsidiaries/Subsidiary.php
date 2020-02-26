@@ -4,6 +4,7 @@ namespace App\Entities\Subsidiaries;
 
 use App\Entities\FactoryRequests\FactoryRequest;
 use Illuminate\Database\Eloquent\Model;
+use App\Assessor;
 
 class Subsidiary extends Model
 {
@@ -36,5 +37,9 @@ class Subsidiary extends Model
   public function factoryRequests()
   {
     return $this->hasMany(FactoryRequest::class, 'SUCURSAL');
+  }
+  public function Assessors()
+  {
+    return $this->hasMany(Assessor::class, 'CODIGO', 'SUCURSAL');
   }
 }
