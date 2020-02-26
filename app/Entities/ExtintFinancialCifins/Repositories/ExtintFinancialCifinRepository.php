@@ -34,6 +34,12 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
             return  $this->model->where('extcedula', $identificationNumber)
                 ->where('extconsul', $this->model->where('extcedula', $identificationNumber)->max('extconsul'))
                 ->where('extcalid',  'PRIN')
+                ->where('extlincre', '!=', 'TELC')
+                ->where('extlincre', '!=', 'FEQM')
+                ->where('extlincre', '!=', 'TCEL')
+                ->where('extlincre', '!=', 'STEL')
+                ->where('extlincre', '!=', 'SPUB')
+                ->where('extlincre', '!=', 'FITC')
                 ->get(['extcompor', 'exttermin', 'extapert']);
         } catch (QueryException $e) {
             dd($e);

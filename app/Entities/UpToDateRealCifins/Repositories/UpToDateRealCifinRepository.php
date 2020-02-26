@@ -34,6 +34,12 @@ class UpToDateRealCifinRepository implements UpToDateRealCifinRepositoryInterfac
             return  $this->model->where('rdcedula', $identificationNumber)
                 ->where('rdconsul', $this->model->where('rdcedula', $identificationNumber)->max('rdconsul'))
                 ->where('rdcalid',  'PRIN')
+                ->where('rdlincre', '!=', 'TELC')
+                ->where('rdlincre', '!=', 'FEQM')
+                ->where('rdlincre', '!=', 'TCEL')
+                ->where('rdlincre', '!=', 'STEL')
+                ->where('rdlincre', '!=', 'SPUB')
+                ->where('rdlincre', '!=', 'FITC')
                 ->get(['rdcompor', 'rdapert']);
         } catch (QueryException $e) {
             dd($e);
