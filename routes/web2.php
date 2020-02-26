@@ -177,6 +177,10 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
     });
 
+    Route::namespace('DebtorInsurancesOportuya')->group(function () {
+        Route::resource('Administrator/DebtorInsuranceOportuya', 'DebtorOportuyaController');
+    });
+
     Route::namespace('Customers')->group(function () {
         Route::resource('Administrator/customers', 'CustomerController');
         Route::get('/Administrator/dashboard/customers', 'CustomerController@dashboard')->name('customer_dashboard');

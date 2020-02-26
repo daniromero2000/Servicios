@@ -13,6 +13,7 @@ use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
 use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
+use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
 use App\Entities\ExtintRealCifins\ExtintRealCifin;
@@ -306,6 +307,10 @@ class Customer extends Model
     public function DebtorInsurance()
     {
         return $this->hasMany(DebtorInsurance::class, 'CEDULA')->orderBy('FECHA', 'DESC');
+    }
+    public function DebtorInsuranceOportuya()
+    {
+        return $this->hasMany(DebtorInsuranceOportuya::class, 'CEDULA')->orderBy('FECHA', 'DESC');
     }
     public function cliCell()
     {
