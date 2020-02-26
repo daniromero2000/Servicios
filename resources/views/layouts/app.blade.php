@@ -392,7 +392,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 window.sr = ScrollReveal();
 
     sr.reveal('.container-first-sector-text', {
-      duration: 2000,
+      duration: 1000,
 	  origin: 'right',
 	  distance: '30%',
  	  delay: 1000,
@@ -402,19 +402,7 @@ window.sr = ScrollReveal();
       duration: 2000,
       origin: 'right',
 	  distance: '30%',
- 	  delay: 1000,
-    });
-
-    sr.reveal('.header-content-right', {
-      duration: 2000,
-      origin: 'right',
-      distance: '300px'
-    });
-
-    sr.reveal('.header-btn', {
-      duration: 2000,
-      delay: 1000, 
-      origin: 'bottom'
+ 	  delay: 2000,
     });
 
     sr.reveal('#cardsInsurance', {
