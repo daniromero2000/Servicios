@@ -80,6 +80,8 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-animate.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-aria.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-messages.min.js"></script>
+	<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
 
 	<!-- Angular Material Library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
@@ -366,7 +368,6 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	</script>
 
 </body>
-
 <script type="text/javascript">
 	$(function() {
    // For card rotation
@@ -387,6 +388,41 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
       $(".card-back-four").toggleClass(" rotate-card-back-four");
    });
 });
+
+window.sr = ScrollReveal();
+
+    sr.reveal('.container-first-sector-text', {
+      duration: 2000,
+	  origin: 'right',
+	  distance: '30%',
+ 	  delay: 1000,
+    });
+
+    sr.reveal('.container-second-sector-text', {
+      duration: 2000,
+      origin: 'right',
+	  distance: '30%',
+ 	  delay: 1000,
+    });
+
+    sr.reveal('.header-content-right', {
+      duration: 2000,
+      origin: 'right',
+      distance: '300px'
+    });
+
+    sr.reveal('.header-btn', {
+      duration: 2000,
+      delay: 1000, 
+      origin: 'bottom'
+    });
+
+    sr.reveal('#cardsInsurance', {
+      duration: 1000,
+      origin: 'left',
+      distance: '300px',
+      viewFactor: 0.2
+    });
 
 	$('#oportuyaSlider').slick({
 			autoplay: true,
