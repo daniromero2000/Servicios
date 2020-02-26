@@ -160,8 +160,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
-  	};
+	  };
+	  
+	$scope.addError = function(response, cedula = ''){
+		response.cedula = cedula;
+		var response = angular.toJson(response);
+
+	};
 
 	$scope.getCodeVerification = function(renew = false){
 		$scope.reNewToken = false;
