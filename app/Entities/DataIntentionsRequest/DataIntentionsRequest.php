@@ -18,7 +18,4 @@ class DataIntentionsRequest extends Model
         'os',
         'ip'
     ];
-
-
-    public $timestamps = false;
 }
