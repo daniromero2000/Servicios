@@ -34,6 +34,12 @@ class ExtintRealCifinRepository implements ExtintRealCifinRepositoryInterface
             return  $this->model->where('rexcedula', $identificationNumber)
                 ->where('rexconsul', $this->model->where('rexcedula', $identificationNumber)->max('rexconsul'))
                 ->where('rexcalid',  'PRIN')
+                ->where('rexlincre', '!=', 'TELC')
+                ->where('rexlincre', '!=', 'FEQM')
+                ->where('rexlincre', '!=', 'TCEL')
+                ->where('rexlincre', '!=', 'STEL')
+                ->where('rexlincre', '!=', 'SPUB')
+                ->where('rexlincre', '!=', 'FITC')
                 ->get(['rexcompor', 'rexcorte']);
         } catch (QueryException $e) {
             dd($e);

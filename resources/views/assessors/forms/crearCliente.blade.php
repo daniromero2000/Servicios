@@ -542,6 +542,7 @@
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" ng-click="sendDecisionCredit()"
                                         ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                    <button class="btn btn-danger" ng-click="desistCredit()" ng-disabled="disabledDecisionCredit">Desistir</button>
                                 </div>
                             </div>
                         </div>
@@ -563,6 +564,7 @@
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" ng-click="sendDecisionCredit()"
                                         ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
+                                    <button class="btn btn-danger" ng-click="desistCredit()" ng-disabled="disabledDecisionCredit">Desistir</button>
                                 </div>
                             </div>
                         </div>
