@@ -180,4 +180,11 @@ class CustomerController extends Controller
         // return $customer;
         return $customer->DebtorInsurance->first();
     }
+
+    public function getPoliceDebtorOportuyas($identificationNumber)
+    {
+        $customer = $this->customerInterface->findCustomerById($identificationNumber);
+        // return $customer;
+        return $customer->DebtorInsuranceOportuya->first();
+    }
 }
