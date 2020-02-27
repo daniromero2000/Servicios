@@ -10,6 +10,9 @@
 .container-first-sector {
     position: relative
 }
+.margin-card{
+    margin-top: -19px;
+}
 .container-custom {
     max-width: 1600px
 }
@@ -963,6 +966,12 @@
     font-size: 14px;
     text-align: left;
   }
+
+  .button-return{
+    position: absolute;
+    top: 85%;
+    left: 90%;
+  }
  
   .btn-card-reverse {
     background-color: #fdc214;
@@ -978,6 +987,18 @@
 .bd-example{
     height: 73%;
 }
+@media (min-width: 2399px) {
+      
+    .font-size-card-rever{
+        font-size: 16px;
+    } 
+} 
+@media (min-width: 1799px) {
+      
+    .font-size-card-rever{
+        font-size: 15px;
+    } 
+}  
 
 @media (max-width: 1511px) {
     .bd-example{
@@ -1061,7 +1082,11 @@
         font-size: 13px;
         text-align: left;
       }
-     
+      .button-return{
+        position: absolute;
+        top: 76%;
+        left: 87%;
+      }
       .btn-card-reverse {
         background-color: #fdc214;
         border-color: #fdc214;
@@ -1124,6 +1149,12 @@
     .card-body-reset {
         padding: 1.25rem !important;
     }  
+    .button-return{
+        position: absolute;
+        top: 71%;
+        left: 84%;
+        font-size: 12px;
+      }
 }  
 
 
@@ -1168,5 +1199,11 @@
     .card-body-reset {
         padding: 1rem !important;
     }  
+    .button-return{
+        position: absolute;
+        top: 71%;
+        left: 84%;
+        font-size: 9px;
+      }
 }  
 

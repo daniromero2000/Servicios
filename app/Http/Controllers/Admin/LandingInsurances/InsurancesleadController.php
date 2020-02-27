@@ -57,7 +57,7 @@ class InsurancesleadController extends Controller
             $lead->save();
         }
 
-        $request->session()->flash('message', 'Creación de Lead Exitosa!');
-        return redirect()->back();
+
+        return redirect('/SG_gracias_FRM');
     }
 }
