@@ -403,7 +403,15 @@ window.sr = ScrollReveal();
       origin: 'right',
 	  distance: '30%',
  	  delay: 2000,
+	});
+	
+	sr.reveal('#thankPageInsurances', {
+      duration: 2000,
+      origin: 'right',
+	  distance: '30%',
+ 	  delay: 1000,
     });
+
 
     sr.reveal('#cardsInsurance', {
       duration: 1000,
