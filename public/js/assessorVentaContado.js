@@ -16,6 +16,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
 	$scope.validateNum = 0;
+	$scope.numError = 0;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
 	$scope.disabledButton = false;
@@ -159,15 +160,39 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.banks = response.data.banks;
 		}, function errorCallback(response) {
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
-	  };
-	  
-	$scope.addError = function(response, cedula = ''){
-		response.cedula = cedula;
-		var response = angular.toJson(response);
+	};
 
+	$scope.addError = function(response, cedula = ''){
+		var arrayData = {
+			mensaje: response.data.message,
+			archivo: response.data.file,
+			linea: response.data.line,
+			cedula: cedula
+		}
+
+		var data = {
+			status : response.status,
+			data: angular.toJson(arrayData)
+		}
+		$http({
+			method: 'POST',
+			url: '/Administrator/appError',
+			data: data,
+		}).then(function successCallback(response) {
+			setTimeout(() => {
+				$('#congratulations').modal('hide');
+				$('#proccess').modal('hide');
+				$('#confirmCodeVerification').modal('hide');
+				$('#validationLead').modal('hide');
+				$('#decisionCredit').modal('hide');
+				$('#error').modal('show');
+			}, 1800);
+			$scope.numError = response.data.id;
+		}, function errorCallback(response) {
+			console.log(response);
+		});
 	};
 
 	$scope.getCodeVerification = function(renew = false){
@@ -198,6 +223,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}, function errorCallback(response) {
 				hideLoader();
 				console.log(response);
+				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		}
 	};
@@ -227,6 +253,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -256,6 +283,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	}
 
@@ -276,6 +304,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -292,6 +321,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -316,6 +346,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -340,6 +371,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -380,6 +412,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			console.log(response);
 			$('#proccess').modal('hide');
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -449,6 +482,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -472,6 +506,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -497,6 +532,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$('#congratulations').modal('show');
 				}, 1800);
 			}
+		}, function errorCallback(response) {
+			hideLoader();
+			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -537,6 +576,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			console.log(response);
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -560,6 +600,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		  }, function errorCallback(response) {
 			  hideLoader();
 			  console.log(response);
+			  $scope.addError(response, $scope.lead.CEDULA);
 		  });
 	};
 })

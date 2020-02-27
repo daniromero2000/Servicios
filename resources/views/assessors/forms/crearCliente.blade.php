@@ -503,6 +503,8 @@
         </div>
     </div>
 
+
+
     <div class="modal fade hide modalThankYouPage-asessors" data-backdrop="static" data-keyboard="false"
         id="decisionCredit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modalCode">
@@ -670,6 +672,38 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade modalThankYouPage-asessors hide" data-backdrop="static" data-keyboard="false"
+        id="error" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body " style="padding: 0">
+                    <div class="row resetRow">
+                        <div class="col-12 text-center resetCol headThankYuoModal">
+                            <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="row resetRow">
+                        <div class="col-12">
+                            <p class="textTnakYouModal text-center" style="font-size: 22px; margin-top:25px">
+                                El aplicativo a presentado un error
+                            </p>
+                            <p class="textModalNumSolic text-center">
+                                Comunícate al área de desarrollo con este número de error <strong
+                                    style="font-size:16px; color: #1b8acc">@{{ numError }}</strong>
+                            </p>
+                        </div>
+                        <div class="col-12 form-group">
+                            <div class="text-center">
+                                <a class="btn btn-danger buttonBackCardExist"
+                                    href="/Administrator/crearCliente">Regresar</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

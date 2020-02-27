@@ -14,10 +14,10 @@ class AppErrorRepository implements AppErrorRepositoryInterface
         $this->model = $appError;
     }
 
-    public function updateOrCreateAppError($data)
+    public function createAppError($data)
     {
         try {
-            return $this->model->updateOrCreate(['id' => $data['id']], $data);
+            return $this->model->create($data);
         } catch (QueryException $e) {
             return $e;
         }

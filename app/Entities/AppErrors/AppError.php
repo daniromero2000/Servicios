@@ -10,5 +10,6 @@ class AppError extends Model
 
     protected $fillable = [
         'data',
+        'status'
     ];
 }
