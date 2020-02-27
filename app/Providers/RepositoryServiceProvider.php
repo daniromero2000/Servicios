@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Entities\AppErrors\Repositories\Interfaces\AppErrorRepositoryInterface;
+use App\Entities\AppErrors\Repositories\AppErrorRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
@@ -89,6 +91,11 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            AppErrorRepositoryInterface::class,
+            AppErrorRepository::class
+        );
+
         $this->app->bind(
             LeadPriceRepositoryInterface::class,
             LeadPriceRepository::class
