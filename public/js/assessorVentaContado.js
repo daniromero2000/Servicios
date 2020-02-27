@@ -20,6 +20,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
 	$scope.disabledButton = false;
+	$scope.disabledButtonCode = false;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -199,6 +200,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.getCodeVerification = function(renew = false){
+		$scope.disabledButtonCode = false;
 		$scope.reNewToken = false;
 		$scope.disabledButton = true;
 		if($scope.validateNum > 0){
@@ -334,6 +336,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.verificationCode = function(){
+		$scope.disabledButtonCode = true;
 		showLoader();
 		$http({
 			method: 'GET',
@@ -344,9 +347,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$('#confirmCodeVerification').modal('hide');
 				$scope.addCliente($scope.tipoCliente);
 			}else if(response.data == -1){
+				$scope.disabledButtonCode = false;
+
 				// En caso de que el codigo sea erroneo
 				$scope.showAlertCode = true;
 			}else if(response.data == -2){
+				$scope.disabledButtonCode = false;
 				// en caso de que el codigo ya expiro
 				$scope.showWarningCode = true;
 			}
