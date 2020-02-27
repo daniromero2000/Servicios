@@ -14,6 +14,18 @@ class AppErrorRepository implements AppErrorRepositoryInterface
         $this->model = $appError;
     }
 
+    public function listAppErrors($totalView)
+    {
+        try {
+            return  $this->model->orderBy('created_at', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function createAppError($data)
     {
         try {
