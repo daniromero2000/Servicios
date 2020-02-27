@@ -148,8 +148,7 @@
                             </div>
                             <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">
                                 <label class="labels" for="PROPIETARIO">Propietario de la vivienda</label>
-                                <input class="inputs" id="PROPIETARIO" validation-pattern="name" type="text"
-                                    ng-model="lead.PROPIETARIO" />
+                                <input class="inputs" id="PROPIETARIO" type="text" ng-model="lead.PROPIETARIO" />
                             </div>
                             <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO'">
                                 <label class="labels" for="VRARRIENDO">Valor del arriendo</label>
@@ -200,29 +199,29 @@
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="empresaNombre">Nombre de la empresa*</label>
-                                    <input class="inputs" type="text" validation-pattern="text" id="empresaNombre"
+                                    <input class="inputs" type="text" id="empresaNombre"
                                         ng-model="lead.RAZON_SOC" required />
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="dirEmpresa">Dirección de la empresa*</label>
-                                    <input class="inputs" type="text" validation-pattern="text" id="dirEmpresa"
+                                    <input class="inputs" type="text" id="dirEmpresa"
                                         ng-model="lead.DIR_EMP" required />
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="telEmpresa">Teléfono de la empresa*</label>
-                                    <input class="inputs" id="telEmpresa" validation-pattern="telephone" type="text"
+                                    <input class="inputs" id="telEmpresa" type="text"
                                         ng-model="lead.TEL_EMP" required />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="eps">E.P.S*</label>
-                                    <input class="inputs" id="eps" validation-pattern="text" type="text"
+                                    <input class="inputs" id="eps" type="text"
                                         ng-model="lead.ACT_ECO" required />
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="cargo">Cargo*</label>
-                                    <input class="inputs" id="cargo" validation-pattern="text" type="text"
+                                    <input class="inputs" id="cargo" type="text"
                                         ng-model="lead.CARGO" required />
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -261,21 +260,18 @@
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa *</label>
-                                    <input class="form-control inputs" type="text" validation-pattern="text"
-                                        id="RAZON_IND" ng-model="lead.RAZON_IND" required />
+                                    <input class="form-control inputs" type="text" id="RAZON_IND" ng-model="lead.RAZON_IND" required />
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label class="ventaContado-label" for="ACT_IND">Qué vendes o comercializas?
                                         *</label>
-                                    <input class="form-control inputs" type="text" id="ACT_IND"
-                                        validation-pattern="text" ng-model="lead.ACT_IND" required />
+                                    <input class="form-control inputs" type="text" id="ACT_IND" ng-model="lead.ACT_IND" required />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-4">
                                     <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
-                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO"
-                                        validation-pattern="textOnly" required />
+                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" required />
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
                                     <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución*</label>
@@ -309,8 +305,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <label class="ventaContado-label" for="RAZON_SOC">Nombre de la empresa*</label>
-                                    <input class="form-control inputs" type="text" validation-pattern="text"
-                                        ng-model="lead.RAZON_SOC" id="RAZON_SOC" required />
+                                    <input class="form-control inputs" type="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC" required />
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <label class="ventaContado-label">Fecha de Pensión*</label>
@@ -331,8 +326,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
-                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO"
-                                        validation-pattern="textOnly" required />
+                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" required />
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <label class="ventaContado-label" for="BANCOP">Banco*</label>
