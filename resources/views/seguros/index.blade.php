@@ -99,7 +99,7 @@
 						meses</span>
 					de plazo</p>
 				<div class="text-center mt-4">
-					<a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
+					<a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito fácil de SOAT."
 						target="_blank" class="btn btn-first-sector mt-1">Pregunta Aquí</a>
 
 				</div>
@@ -228,7 +228,7 @@
 							</div>
 							<div class="card card-back-second border-0 shadow-lg text-left">
 								<div class="card-body mt-2 card-body-reset" style="position: relative">
-									<h4 class="text-center" w>Cobertura pólizas de vida</h4>
+									<h4 class="text-center">Cobertura pólizas de vida</h4>
 									<p>
 										<div class="bd-example">
 											<ul class="font-size-card-rever">
@@ -240,7 +240,8 @@
 										</div>
 									</p>
 									<div class="text-center mt-2">
-										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
+										<a class="btn btn-card-reverse mt-1" data-toggle="modal"
+											data-target="#modalVida">Solicita
 											Aquí</a>
 									</div>
 									<button class="btn btn-primary btn-sm btn-rotate-second position-button-card-rever">
@@ -293,7 +294,8 @@
 									</p>
 
 									<div class="text-center mt-2">
-										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
+										<a class="btn btn-card-reverse mt-1" data-toggle="modal"
+											data-target="#modalMotos">Solicita
 											Aquí</a>
 
 									</div>
@@ -337,8 +339,10 @@
 											<li>Hurto con violencia.</li>
 										</ul>
 									</div>
-									<div class="text-center">
-										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
+
+									<div class="text-center margin-card">
+										<a class="btn btn-card-reverse mt-1" data-toggle="modal"
+											data-target="#modalAutos">Solicita
 											Aquí</a>
 
 									</div>
@@ -390,7 +394,8 @@
 									</p>
 
 									<div class="text-center mt-2">
-										<a href="/step1" class="btn btn-card-reverse mt-1">Solicita
+										<a class="btn btn-card-reverse mt-1" data-toggle="modal"
+											data-target="#modalHogar">Solicita
 											Aquí</a>
 
 									</div>
@@ -406,5 +411,265 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalVida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="exampleModalLabel">Póliza de Vida</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
+							value="1" aria-describedby="emailHelp" hidden>
+
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
+							value="1" aria-describedby="emailHelp" hidden>
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
+							value="4" aria-describedby="emailHelp" hidden>
+
+						<div class="row">
+
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="name">Nombre *</label>
+									<input type="text" class="form-control" id="name" name="name"
+										aria-describedby="emailHelp" required>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="email">Email *</label>
+									<input type="email" class="form-control" id="email" name="email"
+										validation-pattern="email" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="description">Tipo de Vehículo</label>
+									<input type="text" class="form-control" id="description" name="description"
+										aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="telephone">Télefono *</label>
+									<input type="text" class="form-control" id="telephone" name="telephone"
+										validation-pattern="telephone" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<input type="text" class="form-control" hidden id="typeProduct" value="32"
+								name="typeProduct">
+						</div>
+						<div class="mt-4 text-right">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalMotos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="exampleModalLabel">Póliza de Motos</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
+							value="1" aria-describedby="emailHelp" hidden>
+
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
+							value="1" aria-describedby="emailHelp" hidden>
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
+							value="4" aria-describedby="emailHelp" hidden>
+
+						<div class="row">
+
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="name">Nombre *</label>
+									<input type="text" class="form-control" id="name" name="name"
+										aria-describedby="emailHelp" required>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="email">Email *</label>
+									<input type="email" class="form-control" id="email" name="email"
+										validation-pattern="email" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="description">Tipo de Vehículo</label>
+									<input type="text" class="form-control" id="description" name="description"
+										aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="telephone">Télefono *</label>
+									<input type="text" class="form-control" id="telephone" name="telephone"
+										validation-pattern="telephone" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<input type="text" class="form-control" hidden id="typeProduct" value="26"
+								name="typeProduct">
+						</div>
+						<div class="mt-4 text-right">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalAutos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="exampleModalLabel">Póliza Autos</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
+							value="1" aria-describedby="emailHelp" hidden>
+
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
+							value="1" aria-describedby="emailHelp" hidden>
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
+							value="4" aria-describedby="emailHelp" hidden>
+
+						<div class="row">
+
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="name">Nombre *</label>
+									<input type="text" class="form-control" id="name" name="name"
+										aria-describedby="emailHelp" required>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="email">Email *</label>
+									<input type="email" class="form-control" id="email" name="email"
+										validation-pattern="email" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="description">Tipo de Vehículo</label>
+									<input type="text" class="form-control" id="description" name="description"
+										aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="telephone">Télefono *</label>
+									<input type="text" class="form-control" id="telephone" name="telephone"
+										validation-pattern="telephone" aria-describedby="emailHelp">
+								</div>
+							</div>
+
+							<input type="text" class="form-control" hidden id="typeProduct" value="31"
+								name="typeProduct">
+						</div>
+						<div class="mt-4 text-right">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalHogar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="exampleModalLabel">Póliza Hogar</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
+							value="1" aria-describedby="emailHelp" hidden>
+
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
+							value="1" aria-describedby="emailHelp" hidden>
+						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
+							value="4" aria-describedby="emailHelp" hidden>
+
+						<div class="row">
+
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="name">Nombre *</label>
+									<input type="text" class="form-control" id="name" name="name"
+										aria-describedby="emailHelp" required>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="email">Email *</label>
+									<input type="email" class="form-control" id="email" name="email"
+										validation-pattern="email" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="description">Tipo de Vehículo</label>
+									<input type="text" class="form-control" id="description" name="description"
+										aria-describedby="emailHelp">
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="form-group">
+									<label for="telephone">Télefono *</label>
+									<input type="text" class="form-control" id="telephone" name="telephone"
+										validation-pattern="telephone" aria-describedby="emailHelp">
+								</div>
+							</div>
+							<input type="text" class="form-control" hidden id="typeProduct" value="55"
+								name="typeProduct">
+						</div>
+						<div class="mt-4 text-right">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 @endsection
