@@ -152,7 +152,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		showLoader();
 		$http({
 		  method: 'GET',
-		  url: '/assessor/api/ventaContado/getInfoVentaContdado',
+		  url: '/assessor/api/ventaContado/getInfoVentaContado',
 		}).then(function successCallback(response) {
 			hideLoader();
 			$scope.citiesUbi = response.data.ubicationsCities;
