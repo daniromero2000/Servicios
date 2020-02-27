@@ -41,8 +41,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}"
-                                class="img-fluid forms-descImg">
+                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>
                         <div class="row">
@@ -113,8 +112,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Cuentanos más de ti</strong><br>
                             <span class="forms-descText">Ingresa tu información personal</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}"
-                                class="img-fluid forms-descImg">
+                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">2</span>
                         </div>
                         <div class="row">
@@ -194,8 +192,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información laboral</strong><br>
                             <span class="forms-descText">Ingresa tus datos laborales</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}"
-                                class="img-fluid forms-descImg">
+                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">3</span>
                         </div>
                         <div
@@ -349,8 +346,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Referencias</strong><br>
                             <span class="forms-descText">Ingresa los datos de tus referencias</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}"
-                                class="img-fluid forms-descImg">
+                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">4</span>
                         </div>
                         <div class="row">
@@ -386,7 +382,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-center form-group">
-                                <button type="submit" ng-disabled="disabledButton" class="btn btn-primary">Continuar</button>
+                                <button type="submit" ng-disabled="disabledButton"
+                                    class="btn btn-primary">Continuar</button>
                             </div>
                         </div>
                     </div>
@@ -398,8 +395,7 @@
                         <div class="forms-descStep forms-descStep-avances">
                             <strong>Información básica</strong><br>
                             <span class="forms-descText">Ingresa tus datos personales</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}"
-                                class="img-fluid forms-descImg">
+                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
                             <span class="forms-descStepNum">1</span>
                         </div>
                     </div>
@@ -544,7 +540,8 @@
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" ng-click="sendDecisionCredit()"
                                         ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
-                                    <button class="btn btn-danger" ng-click="desistCredit()" ng-disabled="disabledDecisionCredit">Desistir</button>
+                                    <button class="btn btn-danger" ng-click="desistCredit()"
+                                        ng-disabled="disabledDecisionCredit">Desistir</button>
                                 </div>
                             </div>
                         </div>
@@ -559,14 +556,16 @@
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
                                         <p>
                                             Preaprobado <br>
-                                            * <span style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                            * <span
+                                                style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" ng-click="sendDecisionCredit()"
                                         ng-disabled="decisionCredit == '' || disabledDecisionCredit">Continuar</button>
-                                    <button class="btn btn-danger" ng-click="desistCredit()" ng-disabled="disabledDecisionCredit">Desistir</button>
+                                    <button class="btn btn-danger" ng-click="desistCredit()"
+                                        ng-disabled="disabledDecisionCredit">Desistir</button>
                                 </div>
                             </div>
                         </div>
@@ -676,31 +675,35 @@
             </div>
         </div>
     </div>
-    
-    <div class="modal fade modalThankYouPage-asessors hide" data-backdrop="static" data-keyboard="false"
-        id="error" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+
+    <div class="modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog" id="error"
+        data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body " style="padding: 0">
-                    <div class="row resetRow">
-                        <div class="col-12 text-center resetCol headThankYuoModal">
-                            <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-4">
+                            <div>
+                                <img src="{{ asset('images/error.gif')}}" class="img-fluid">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row resetRow">
-                        <div class="col-12">
-                            <p class="textTnakYouModal text-center" style="font-size: 22px; margin-top:25px">
-                                El aplicativo a presentado un error
-                            </p>
-                            <p class="textModalNumSolic text-center">
-                                Comunícate al área de desarrollo con este número de error <strong
-                                    style="font-size:16px; color: #1b8acc">@{{ numError }}</strong>
-                            </p>
-                        </div>
-                        <div class="col-12 form-group">
-                            <div class="text-center">
-                                <a class="btn btn-danger buttonBackCardExist"
-                                    href="/Administrator/crearCliente">Regresar</a>
+                        <div class="col-12 col-lg-8">
+                            <div class="error-content p-3">
+                                <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! El aplicativo a
+                                    presentado un
+                                    error.</h3>
+                                <div>
+                                    <p style="margin: 0px;">
+                                        Puedes comunicate con el area de desarrollo y darle este <strong
+                                            style="font-size:16px; color: #1b8acc">@{{ numError }}</strong> número de
+                                        error.
+                                    </p>
+                                    <p class="text-right m-0">
+                                        <a href="/Administrator/crearCliente"
+                                            class="btn  btn-primary btn-sm">Regresar</a>
+
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -728,7 +731,8 @@
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada exitosamente,
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                                exitosamente,
                                 <br>
                                 procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
                             </p>
@@ -794,7 +798,8 @@
                         <img src="{{ asset('images/gif-load.gif') }}" alt="">
                         <p class="text-procces">
                             Procesando Solicitud...<br>
-                            <span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes, se
+                            <span style="font-size: 15px; font-style:italic; font-weight:normal">*No te desesperes,
+                                se
                                 están realizando las consultas necesarias, esto
                                 puede tomar un tiempo de aproximadamente 2 minutos</span>
                         </p>
