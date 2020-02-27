@@ -29,10 +29,13 @@
                             <h3>Lista de errores</h3>
                         </div>
                         <div class="card-body">
-                            <table class="table table-light">
-                                <thead class="thead-light">
+                            <table class="table table-hover">
+                                <thead class="text-center">
                                     <tr>
                                         <th>#</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,8 +44,41 @@
                                         <td> {{ $error->id }}</td>
                                         <td>{{ $error->created_at }}</td>
                                         <td>{{ $error->status }}</td>
-
+                                        <td><i class="fas fa-eye cursor" data-toggle="modal"
+                                                data-target="#modelId{{$error->id}}"></i>
+                                        </td>
                                     </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modelId{{$error->id}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"> Error details</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Error: </h5>
+                                                            <p class="card-text"> @if ($error->data)
+                                                                {{ $error->data}}
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -55,5 +91,11 @@
 </section>
 @endsection
 @section('scriptsJs')
-
+{"mensaje":"
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CODIGOd' in 'field list' (SQL: SELECT CODIGOd as
+value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC)","
+archivo":"E:\\MIS
+DATOS\\Documents\\proyectos\\dev1.serviciosoportunidades\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
+"linea":664,
+"cedula":""}
 @endsection
