@@ -695,7 +695,7 @@
                                 <div>
                                     <p style="margin: 0px;">
                                         Puedes comunicate con el area de desarrollo y darle este <strong
-                                            style="font-size:16px; color: #1b8acc">@{{ numError }}</strong> número de
+                                            style="font-size:20px; color: #1b8acc">@{{ numError }}</strong> número de
                                         error.
                                     </p>
                                     <p class="text-right m-0">

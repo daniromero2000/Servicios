@@ -30,23 +30,21 @@
                                 <div class="card-body">
 
                                     <div class="form-group">
-                                        <form action="/Administrator/Insurance/Policy/Debtors">
-                                            <div class="row d-flex justify-content-center ">
-                                                <div class="col-6">
-                                                    <label for="my-input">Cédula</label>
-                                                    <input id="identification" class="form-control" type="text"
-                                                        name="identification">
-                                                </div>
-                                                <div class="col-4 mt-4">
-                                                    <div class="mt-1" id="ButtonCustomerSearch">
-                                                        <button type="button" id="debtor" data-toggle="modal"
-                                                            data-target="#exampleModal" class="btn btn-primary">
-                                                            Buscar
-                                                        </button>
-                                                    </div>
+
+                                        <div class="row d-flex justify-content-center ">
+                                            <div class="col-6">
+                                                <label for="my-input">Solicitud</label>
+                                                <input id="soliDebtor" class="form-control" type="text">
+                                            </div>
+                                            <div class="col-4 mt-4">
+                                                <div class="mt-1" id="ButtonCustomerSearch">
+                                                    <button type="button" id="debtor" data-toggle="modal"
+                                                        data-target="#exampleModal" class="btn btn-primary">
+                                                        Buscar
+                                                    </button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -67,36 +65,33 @@
                                                         {{ csrf_field() }}
 
                                                         <div class="form-group">
-                                                            <input type="text" hidden id="customer"
-                                                                name="identificationNumberCustomer">
+                                                            <input type="text" hidden id="solic" name="SOLIC">
                                                             <input type="text" hidden id="sucursalCustomer"
                                                                 name="sucursalCustomer">
-                                                            <div class="row d-flex justify-content-center ">
-                                                                <div class="col-6">
-                                                                    <label for="my-input">Solicitud</label>
-                                                                    <input id="solicDebtor" class="form-control"
-                                                                        type="text" name="SOLIC">
+                                                            <div class="row">
+                                                                <div class="col-6" hidden>
+                                                                    <label for="my-input">Cedula</label>
+                                                                    <input id="identification" class="form-control"
+                                                                        type="text" name="identificationNumberCustomer">
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-12 col-md-6">
                                                                     <label for="my-input">Cédula Beneficiario</label>
                                                                     <input id="identificationNumberDebtor"
                                                                         class="form-control" type="text"
                                                                         name="CEDULA_BEN">
                                                                 </div>
-                                                                <div class="col-6">
-                                                                    <label for="my-input">Beneficiario</label>
-                                                                    <input id="nameDebtor" class="form-control"
-                                                                        type="text" name="BENEFI">
-                                                                </div>
-                                                                <div class="col-6">
+                                                                <div class="col-12 col-md-6">
                                                                     <label for="my-input">Parentesco</label>
                                                                     <select name="PARENTESCO" class="form-control"
                                                                         id="parenterDebtor">
                                                                         <option value="" disabled selected>Selecione
                                                                         </option>
-                                                                        <option value="Tradicional">Tradicional</option>
-                                                                        <option value="Oportuya">Oportuya</option>
                                                                     </select>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label for="my-input">Beneficiario</label>
+                                                                    <input id="nameDebtor" class="form-control"
+                                                                        type="text" name="BENEFI">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -166,24 +161,24 @@
                                                             <input type="text" hidden id="sucursalCustomerOportuya"
                                                                 name="sucursalCustomer">
                                                             <div class="row">
-                                                                <div class="col-6">
+                                                                <div class="col-12 col-md-6">
                                                                     <label for="my-input">Cédula Beneficiario</label>
                                                                     <input id="identificationNumberDebtorOportuya"
                                                                         class="form-control" type="text"
                                                                         name="CEDULA_BEN">
                                                                 </div>
-                                                                <div class="col-6">
-                                                                    <label for="my-input">Beneficiario</label>
-                                                                    <input id="nameDebtorOportuya" class="form-control"
-                                                                        type="text" name="BENEFI">
-                                                                </div>
-                                                                <div class="col-6">
+                                                                <div class="col-12 col-md-6">
                                                                     <label for="my-input">Parentesco</label>
                                                                     <select name="PARENTESCO" class="form-control"
                                                                         id="parenterDebtorOportuya">
                                                                         <option value="" disabled selected>Selecione
                                                                         </option>
                                                                     </select>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label for="my-input">Beneficiario</label>
+                                                                    <input id="nameDebtorOportuya" class="form-control"
+                                                                        type="text" name="BENEFI">
                                                                 </div>
                                                             </div>
                                                         </div>

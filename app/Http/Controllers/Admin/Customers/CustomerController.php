@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Customers;
 
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -176,9 +177,9 @@ class CustomerController extends Controller
 
     public function getPoliceDebtors($identificationNumber)
     {
-        $customer = $this->customerInterface->findCustomerById($identificationNumber);
+        $customer = DebtorInsurance::where('SOLIC', $identificationNumber)->get()->first();
         // return $customer;
-        return $customer->DebtorInsurance->first();
+        return $customer;
     }
 
     public function getPoliceDebtorOportuyas($identificationNumber)

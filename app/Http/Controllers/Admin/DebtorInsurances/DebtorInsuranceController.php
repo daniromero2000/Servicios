@@ -33,6 +33,7 @@ class DebtorInsuranceController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->input());
         $dataOportudata = [
             'CEDULA' => $request->input('identificationNumberCustomer'),
             'VRCREDITO' => 0,
@@ -48,8 +49,14 @@ class DebtorInsuranceController extends Controller
             'CEDULA_BEN' =>  $request->input('CEDULA_BEN'),
         ];
 
-        $save = DebtorInsurance::updateOrCreate($dataOportudata);
-        $request->session()->flash('message', 'Creación de Lead Exitosa!');
+
+        $save = DebtorInsurance::where('SOLIC', $dataOportudata['SOLIC'])->get()->first();
+        if (!empty($save)) {
+            $save = $save->update($dataOportudata);
+            $request->session()->flash('message', 'Creación de Lead Exitosa!');
+        } else {
+            $request->session()->flash('error', 'No existe benefeciario para esta Solicitud');
+        };
         return redirect()->back();
     }
 }

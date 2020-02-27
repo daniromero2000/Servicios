@@ -7,14 +7,14 @@ $(function () {
 });
 
 function ontypeServiceSelectedProductEditModal() {
-    var typeServiceCreateSelected_id = $('#identification').val();
+    var typeServiceCreateSelected_id = $('#soliDebtor').val();
     console.log(typeServiceCreateSelected_id);
     $.get('/getPoliceDebtors/' + typeServiceCreateSelected_id + '', function (data) {
         console.log(data)
         html_selectEdit = [];
 
-        $('#customer').val(typeServiceCreateSelected_id);
-        $('#solicDebtor').val(data.SOLIC);
+        $('#solic').val(typeServiceCreateSelected_id);
+        $('#identification').val(data.CEDULA);
         $('#sucursalCustomer').val(data.SUCURSAL);
         $('#identificationNumberDebtor').val(data.CEDULA_BEN);
         $('#nameDebtor').val(data.BENEFIC);

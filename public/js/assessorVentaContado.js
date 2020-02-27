@@ -194,7 +194,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				console.log(response);
 			});
 		};
-
 		$scope.getCodeVerification = function (renew = false) {
 			$scope.reNewToken = false;
 			$scope.disabledButton = true;
