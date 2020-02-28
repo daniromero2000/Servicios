@@ -66,13 +66,10 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title">Error</h5>
                                                             <p class="card-text"> @if ($error->data)
-                                                                @php
+                                                                {{-- @php
                                                                 $error = json_decode($error->data,true );
-                                                                @endphp
-                                                                {{-- {{$error['archivo']}}
-                                                                {{$error['linea']}}
-                                                                {{$error['cedula']}} --}}
-
+                                                                @endphp --}}
+                                                                {{ $error->data}}
                                                                 @endif
                                                             </p>
                                                         </div>
