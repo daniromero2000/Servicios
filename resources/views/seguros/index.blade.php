@@ -437,7 +437,7 @@
 							font-size: 13px;
 							font-style: italic;
 							font-weight: 400;
-						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+						"><span class="text-primary">*</span> Déjanos tus datos y pronto uno de nuestros asesores se comunicará
 								contigo</p>
 						</div>
 						<div class="col-12 mt-1">
@@ -530,7 +530,7 @@
 							font-size: 13px;
 							font-style: italic;
 							font-weight: 400;
-						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+						"><span class="text-primary">*</span> Déjanos tus datos y pronto uno de nuestros asesores se comunicará
 								contigo</p>
 						</div>
 						<div class="col-12 mt-1">
@@ -625,7 +625,7 @@
 							font-size: 13px;
 							font-style: italic;
 							font-weight: 400;
-						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+						"><span class="text-primary">*</span> Déjanos tus datos y pronto uno de nuestros asesores se comunicará
 								contigo</p>
 						</div>
 						<div class="col-12 mt-1">
@@ -721,7 +721,7 @@
 							font-size: 13px;
 							font-style: italic;
 							font-weight: 400;
-						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+						"><span class="text-primary">*</span> Déjanos tus datos y pronto uno de nuestros asesores se comunicará
 								contigo</p>
 						</div>
 						<div class="col-12 mt-1">
