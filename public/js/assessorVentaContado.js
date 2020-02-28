@@ -318,21 +318,23 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.checkIfExistNum = function(){
-		$http({
-			method: 'GET',
-			url: '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA,
-		}).then(function successCallback(response) {
-			if(response.data >= 1){
-				alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
-				$scope.lead.CELULAR = "";
-			}else{
-				console.log("Validado!!!");
-			}
-		}, function errorCallback(response) {
-			response.url = '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA;
-			console.log(response);
-			$scope.addError(response, $scope.lead.CEDULA);
-		});
+		if($scope.lead.CELULAR != '' && $scope.lead.CEDULA != ''){
+			$http({
+				method: 'GET',
+				url: '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA,
+			}).then(function successCallback(response) {
+				if(response.data >= 1){
+					alert("Este número de celular ya esta registrado con otra cédula, por favor verifícalo");
+					$scope.lead.CELULAR = "";
+				}else{
+					console.log("Validado!!!");
+				}
+			}, function errorCallback(response) {
+				response.url = '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA;
+				console.log(response);
+				$scope.addError(response, $scope.lead.CEDULA);
+			});
+		}
 	};
 
 	$scope.verificationCode = function(){
