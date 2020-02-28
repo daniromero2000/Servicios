@@ -477,7 +477,7 @@
 													validation-pattern="telephone" aria-describedby="emailHelp">
 											</div>
 										</div>
-										<div class="col-12 col-sm-6 form-group">
+										<div class="col-12 col-lg-6 form-group">
 											<label for="city">Ciudad <span class="text-danger">*</span></label>
 											<select id="cityInsurance" name="city" class="form-control" required>
 												@if(!empty($cities))
@@ -572,7 +572,7 @@
 													validation-pattern="telephone" aria-describedby="emailHelp">
 											</div>
 										</div>
-										<div class="col-12 col-sm-6 form-group">
+										<div class="col-12 col-lg-6 form-group">
 											<label for="city">Ciudad <span class="text-danger">*</span></label>
 											<select id="cityInsurance" name="city" class="form-control" required>
 												@if(!empty($cities))
@@ -667,7 +667,7 @@
 													validation-pattern="telephone" aria-describedby="emailHelp">
 											</div>
 										</div>
-										<div class="col-12 col-sm-6 form-group">
+										<div class="col-12 col-lg-6 form-group">
 											<label for="city">Ciudad <span class="text-danger">*</span></label>
 											<select id="cityInsurance" name="city" class="form-control" required>
 												@if(!empty($cities))
@@ -763,7 +763,7 @@
 													validation-pattern="telephone" aria-describedby="emailHelp">
 											</div>
 										</div>
-										<div class="col-12 col-sm-6 form-group">
+										<div class="col-12 col-lg-6 form-group">
 											<label for="city">Ciudad <span class="text-danger">*</span></label>
 											<select id="cityInsurance" name="city" class="form-control" required>
 												@if(!empty($cities))
