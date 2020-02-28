@@ -1,11 +1,11 @@
 @extends('layouts.app')
-
 @section('title', 'Seguros')
-
 @section('metaTags')
 @endsection()
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/seguros/app.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{	asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
 @endsection
 @section('content')
@@ -415,63 +415,92 @@
 	<!-- Modal -->
 	<div class="modal fade" id="modalVida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header border-0">
-					<h5 class="modal-title" id="exampleModalLabel">Póliza de Vida</h5>
+				<div class="modal-header border-0 pb-0">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
-							value="1" aria-describedby="emailHelp" hidden>
-
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
-							value="1" aria-describedby="emailHelp" hidden>
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
-							value="4" aria-describedby="emailHelp" hidden>
-
-						<div class="row">
-
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="name">Nombre *</label>
-									<input type="text" class="form-control" id="name" name="name"
-										aria-describedby="emailHelp" required>
-								</div>
+				<div class="modal-body pt-1">
+					<div class="row">
+						<div class="col-12 text-center">
+							<div class=" bg-primary p-1" style="
+							border-radius: 4px;
+						">
+								<h5 class="modal-title text-white" id="exampleModalLabel">Póliza de Vida</h5>
 							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="email">Email *</label>
-									<input type="email" class="form-control" id="email" name="email"
-										validation-pattern="email" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="description">Tipo de Vehículo</label>
-									<input type="text" class="form-control" id="description" name="description"
-										aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="telephone">Télefono *</label>
-									<input type="text" class="form-control" id="telephone" name="telephone"
-										validation-pattern="telephone" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<input type="text" class="form-control" hidden id="typeProduct" value="32"
-								name="typeProduct">
 						</div>
-						<div class="mt-4 text-right">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Enviar</button>
+						<div class="col-12 text-center mt-3">
+							<p style="
+							color: #5b5d5e;
+							font-size: 13px;
+							font-style: italic;
+							font-weight: 400;
+						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+								contigo</p>
 						</div>
-					</form>
+						<div class="col-12 mt-1">
+							<div class="container">
+								<form action="{{ route('Insurancesleads.store') }}" method="post"
+									enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="channel" value="1" aria-describedby="emailHelp" hidden>
+
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="lead_area_id" value="1" aria-describedby="emailHelp" hidden>
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="typeService" value="4" aria-describedby="emailHelp" hidden>
+
+									<div class="row">
+
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="name">Nombre <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="name" name="name"
+													aria-describedby="emailHelp" required>
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="email">Email <span class="text-danger">*</span></label>
+												<input type="email" class="form-control" id="email" name="email"
+													validation-pattern="email" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="telephone">Télefono <span
+														class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="telephone" name="telephone"
+													validation-pattern="telephone" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6 form-group">
+											<label for="city">Ciudad <span class="text-danger">*</span></label>
+											<select id="cityInsurance" name="city" class="form-control" required>
+												@if(!empty($cities))
+												<option selected value> -- Selecciona Ciudad -- </option>
+												@foreach($cities as $city)
+												<option value="{{ $city->CIUDAD }}">
+													{{ $city->CIUDAD }}
+												</option>
+												@endforeach
+												@endif
+											</select>
+										</div>
+										<input type="text" class="form-control" hidden id="typeProduct" value="32"
+											name="typeProduct">
+									</div>
+									<div class="mt-4 text-center">
+										<button type="submit"
+											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -479,63 +508,94 @@
 	<!-- Modal -->
 	<div class="modal fade" id="modalMotos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header border-0">
-					<h5 class="modal-title" id="exampleModalLabel">Póliza de Motos</h5>
+				<div class="modal-header border-0 pb-0">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
-							value="1" aria-describedby="emailHelp" hidden>
-
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
-							value="1" aria-describedby="emailHelp" hidden>
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
-							value="4" aria-describedby="emailHelp" hidden>
-
-						<div class="row">
-
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="name">Nombre *</label>
-									<input type="text" class="form-control" id="name" name="name"
-										aria-describedby="emailHelp" required>
-								</div>
+				<div class="modal-body pt-1">
+					<div class="row">
+						<div class="col-12 text-center">
+							<div class=" bg-primary p-1" style="
+							border-radius: 4px;
+						">
+								<h5 class="modal-title text-white" id="exampleModalLabel">Póliza de Motos</h5>
 							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="email">Email *</label>
-									<input type="email" class="form-control" id="email" name="email"
-										validation-pattern="email" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="description">Tipo de Vehículo</label>
-									<input type="text" class="form-control" id="description" name="description"
-										aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="telephone">Télefono *</label>
-									<input type="text" class="form-control" id="telephone" name="telephone"
-										validation-pattern="telephone" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<input type="text" class="form-control" hidden id="typeProduct" value="26"
-								name="typeProduct">
 						</div>
-						<div class="mt-4 text-right">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Enviar</button>
+						<div class="col-12 text-center mt-3">
+							<p style="
+							color: #5b5d5e;
+							font-size: 13px;
+							font-style: italic;
+							font-weight: 400;
+						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+								contigo</p>
 						</div>
-					</form>
+						<div class="col-12 mt-1">
+							<div class="container">
+								<form action="{{ route('Insurancesleads.store') }}" method="post"
+									enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="channel" value="1" aria-describedby="emailHelp" hidden>
+
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="lead_area_id" value="1" aria-describedby="emailHelp" hidden>
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="typeService" value="4" aria-describedby="emailHelp" hidden>
+									<input type="text" class="form-control" hidden id="typeProduct" value="26"
+										name="typeProduct">
+
+									<div class="row">
+
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="name">Nombre <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="name" name="name"
+													aria-describedby="emailHelp" required>
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="email">Email <span class="text-danger">*</span></label>
+												<input type="email" class="form-control" id="email" name="email"
+													validation-pattern="email" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="telephone">Télefono <span
+														class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="telephone" name="telephone"
+													validation-pattern="telephone" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6 form-group">
+											<label for="city">Ciudad <span class="text-danger">*</span></label>
+											<select id="cityInsurance" name="city" class="form-control" required>
+												@if(!empty($cities))
+												<option selected value> -- Selecciona Ciudad -- </option>
+												@foreach($cities as $city)
+												<option value="{{ $city->CIUDAD }}">
+													{{ $city->CIUDAD }}
+												</option>
+												@endforeach
+												@endif
+											</select>
+										</div>
+										<input type="text" class="form-control" hidden id="typeProduct" value="32"
+											name="typeProduct">
+									</div>
+									<div class="mt-4 text-center">
+										<button type="submit"
+											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -543,129 +603,191 @@
 	<!-- Modal -->
 	<div class="modal fade" id="modalAutos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header border-0">
-					<h5 class="modal-title" id="exampleModalLabel">Póliza Autos</h5>
+				<div class="modal-header border-0 pb-0">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
-							value="1" aria-describedby="emailHelp" hidden>
-
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
-							value="1" aria-describedby="emailHelp" hidden>
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
-							value="4" aria-describedby="emailHelp" hidden>
-
-						<div class="row">
-
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="name">Nombre *</label>
-									<input type="text" class="form-control" id="name" name="name"
-										aria-describedby="emailHelp" required>
-								</div>
+				<div class="modal-body pt-1">
+					<div class="row">
+						<div class="col-12 text-center">
+							<div class=" bg-primary p-1" style="
+							border-radius: 4px;
+						">
+								<h5 class="modal-title text-white" id="exampleModalLabel">Póliza Autos</h5>
 							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="email">Email *</label>
-									<input type="email" class="form-control" id="email" name="email"
-										validation-pattern="email" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="description">Tipo de Vehículo</label>
-									<input type="text" class="form-control" id="description" name="description"
-										aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="telephone">Télefono *</label>
-									<input type="text" class="form-control" id="telephone" name="telephone"
-										validation-pattern="telephone" aria-describedby="emailHelp">
-								</div>
-							</div>
-
-							<input type="text" class="form-control" hidden id="typeProduct" value="31"
-								name="typeProduct">
 						</div>
-						<div class="mt-4 text-right">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Enviar</button>
+						<div class="col-12 text-center mt-3">
+							<p style="
+							color: #5b5d5e;
+							font-size: 13px;
+							font-style: italic;
+							font-weight: 400;
+						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+								contigo</p>
 						</div>
-					</form>
+						<div class="col-12 mt-1">
+							<div class="container">
+								<form action="{{ route('Insurancesleads.store') }}" method="post"
+									enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="channel" value="1" aria-describedby="emailHelp" hidden>
+
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="lead_area_id" value="1" aria-describedby="emailHelp" hidden>
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="typeService" value="4" aria-describedby="emailHelp" hidden>
+									<input type="text" class="form-control" hidden id="typeProduct" value="26"
+										name="typeProduct">
+
+									<div class="row">
+
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="name">Nombre <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="name" name="name"
+													aria-describedby="emailHelp" required>
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="email">Email <span class="text-danger">*</span></label>
+												<input type="email" class="form-control" id="email" name="email"
+													validation-pattern="email" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="telephone">Télefono <span
+														class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="telephone" name="telephone"
+													validation-pattern="telephone" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6 form-group">
+											<label for="city">Ciudad <span class="text-danger">*</span></label>
+											<select id="cityInsurance" name="city" class="form-control" required>
+												@if(!empty($cities))
+												<option selected value> -- Selecciona Ciudad -- </option>
+												@foreach($cities as $city)
+												<option value="{{ $city->CIUDAD }}">
+													{{ $city->CIUDAD }}
+												</option>
+												@endforeach
+												@endif
+											</select>
+										</div>
+
+										<input type="text" class="form-control" hidden id="typeProduct" value="31"
+											name="typeProduct">
+									</div>
+									<div class="mt-4 text-center">
+										<button type="submit"
+											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<!-- Modal -->
 	<div class="modal fade" id="modalHogar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header border-0">
-					<h5 class="modal-title" id="exampleModalLabel">Póliza Hogar</h5>
+				<div class="modal-header border-0 pb-0">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form action="{{ route('Insurancesleads.store') }}" method="post" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="channel"
-							value="1" aria-describedby="emailHelp" hidden>
-
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="lead_area_id"
-							value="1" aria-describedby="emailHelp" hidden>
-						<input class="form-control input-form-third-sector" id="exampleInputEmail1" name="typeService"
-							value="4" aria-describedby="emailHelp" hidden>
-
-						<div class="row">
-
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="name">Nombre *</label>
-									<input type="text" class="form-control" id="name" name="name"
-										aria-describedby="emailHelp" required>
-								</div>
+				<div class="modal-body pt-1">
+					<div class="row">
+						<div class="col-12 text-center">
+							<div class=" bg-primary p-1" style="
+							border-radius: 4px;
+						">
+								<h5 class="modal-title text-white" id="exampleModalLabel">Póliza Hogar</h5>
 							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="email">Email *</label>
-									<input type="email" class="form-control" id="email" name="email"
-										validation-pattern="email" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="description">Tipo de Vehículo</label>
-									<input type="text" class="form-control" id="description" name="description"
-										aria-describedby="emailHelp">
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="form-group">
-									<label for="telephone">Télefono *</label>
-									<input type="text" class="form-control" id="telephone" name="telephone"
-										validation-pattern="telephone" aria-describedby="emailHelp">
-								</div>
-							</div>
-							<input type="text" class="form-control" hidden id="typeProduct" value="55"
-								name="typeProduct">
 						</div>
-						<div class="mt-4 text-right">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Enviar</button>
+						<div class="col-12 text-center mt-3">
+							<p style="
+							color: #5b5d5e;
+							font-size: 13px;
+							font-style: italic;
+							font-weight: 400;
+						"><span class="text-primary">*</span> Dejanos tus datos y pronto uno de nuestros asesores se comunicara
+								contigo</p>
 						</div>
-					</form>
+						<div class="col-12 mt-1">
+							<div class="container">
+								<form action="{{ route('Insurancesleads.store') }}" method="post"
+									enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="channel" value="1" aria-describedby="emailHelp" hidden>
+
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="lead_area_id" value="1" aria-describedby="emailHelp" hidden>
+									<input class="form-control input-form-third-sector" id="exampleInputEmail1"
+										name="typeService" value="4" aria-describedby="emailHelp" hidden>
+									<input type="text" class="form-control" hidden id="typeProduct" value="26"
+										name="typeProduct">
+
+									<div class="row">
+
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="name">Nombre <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="name" name="name"
+													aria-describedby="emailHelp" required>
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="email">Email <span class="text-danger">*</span></label>
+												<input type="email" class="form-control" id="email" name="email"
+													validation-pattern="email" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="form-group">
+												<label for="telephone">Télefono <span
+														class="text-danger">*</span></label>
+												<input type="text" class="form-control" id="telephone" name="telephone"
+													validation-pattern="telephone" aria-describedby="emailHelp">
+											</div>
+										</div>
+										<div class="col-12 col-lg-6 form-group">
+											<label for="city">Ciudad <span class="text-danger">*</span></label>
+											<select id="cityInsurance" name="city" class="form-control" required>
+												@if(!empty($cities))
+												<option selected value> -- Selecciona Ciudad -- </option>
+												@foreach($cities as $city)
+												<option value="{{ $city->CIUDAD }}">
+													{{ $city->CIUDAD }}
+												</option>
+												@endforeach
+												@endif
+											</select>
+										</div>
+
+										<input type="text" class="form-control" hidden id="typeProduct" value="55"
+											name="typeProduct">
+									</div>
+									<div class="mt-4 text-center">
+										<button type="submit"
+											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
