@@ -21,8 +21,10 @@
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Perfil -- </option>
-                                <option @if ($_GET) @if (!empty($_GET['creditprofile'])) @endif @endif selected>
+                                @if ($_GET) @if (!empty($_GET['creditprofile']))
+                                <option selected>
                                     {{ $_GET['creditprofile'] }}</option>
+                                @endif @endif
                                 <option>TIPO A</option>
                                 <option>TIPO B</option>
                                 <option>TIPO C</option>
