@@ -59,8 +59,8 @@
                                     </option>
                                     @if ($_GET)
                                     @if (!empty($_GET['lead_area_id']))
-                                    @if($_GET['lead_area_id']==$area->name)
-                                    <option selected>{{ $area->name }}</option>
+                                    @if($_GET['lead_area_id']==$area->id)
+                                    <option value="{{$area->id}}" selected>{{ $area->name }}</option>
                                     @endif
                                     @endif
                                     @endif
@@ -69,7 +69,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class=" col-6 col-md-4 col-lg-3 col-xl-2">
                             <div class="form-group">
                                 <label for="typeServiceFilter">Selecciona Servicio</label>
                                 <select name="typeService" id="typeServiceFilter"
@@ -83,8 +83,8 @@
                                     </option>
                                     @if ($_GET)
                                     @if (!empty($_GET['typeService']))
-                                    @if($_GET['typeService']==$service->service)
-                                    <option selected>{{ $service->service }}</option>
+                                    @if($_GET['typeService']==$service->id)
+                                    <option value="{{$service->id}}" selected>{{ $service->service }}</option>
                                     @endif
                                     @endif
                                     @endif
