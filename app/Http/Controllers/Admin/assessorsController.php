@@ -790,8 +790,18 @@ class assessorsController extends Controller
 
 		// 2. WS Fosyga
 		$estadoCliente = "PREAPROBADO";
-		$statusAfiliationCustomer = true;
 		$fuenteFallo = "false";
+		$statusAfiliationCustomer = true;
+		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultationPolicy($identificationNumber);
+		if (!empty($getDataFosyga)) {
+			if($getDataFosyga->fuenteFallo == 'SI'){
+				$fuenteFallo = "true";
+			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+				$fuenteFallo = "true";
+			}
+		} else {
+			$estadoCliente = "PREAPROBADO";
+		}
 
 		// 4.6 Tipo 5 Especial
 		$tipo5Especial = 0;
@@ -832,8 +842,18 @@ class assessorsController extends Controller
 			$customerIntention->save();
 			return ['resp' => "false"];
 		}
-
 		// 5 Definiciones cliente
+
+		if($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA'){
+			$customer->ESTADO = 'PREAPROBADO';
+			$customer->save();
+			$customerIntention->TARJETA          = 'Crédito Tradicional';
+			$customerIntention->ID_DEF           = '13';
+			$customerIntention->ESTADO_INTENCION = '2';
+			$customerIntention->save();
+			return ['resp' =>  "-2"];
+		}
+
 		if ($perfilCrediticio == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
 				if ($tipoCliente == 'OPORTUNIDADES') {
@@ -984,7 +1004,6 @@ class assessorsController extends Controller
 				return ['resp' =>  "-2"];
 			}
 		}
-
 		return ['resp' => "true"];
 	}
 
