@@ -20,6 +20,8 @@
                             <select class="form-control  select2bs4" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option @if ($_GET) @if (!empty($_GET['status'])) @endif @endif selected>
+                                    {{ $_GET['status'] }}</option>
                                 <option>APROBADO</option>
                                 <option>ANALISIS</option>
                                 <option>ANULADA</option>
@@ -61,8 +63,11 @@
                                 request()->input('subsidiary')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Sucursal -- </option>
                                 @foreach ($Subsidiarys as $Subsidiary)
-                                <option @if ($_GET) @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
-                                    @endif @endif>{{ $Subsidiary->CODIGO }}</option>
+                                <option @if ($_GET) @if (!empty($_GET['subsidiary']))
+                                    @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
+                                    @endif
+                                    @endif
+                                    @endif>{{ $Subsidiary->CODIGO }}</option>
                                 @endforeach
                             </select>
                         </div>

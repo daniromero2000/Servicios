@@ -21,6 +21,12 @@
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Perfil -- </option>
+                                @if ($_GET)
+                                @if (!empty($_GET['creditprofile']))
+                                <option selected>
+                                    {{ $_GET['creditprofile'] }}</option>
+                                @endif
+                                @endif
                                 <option>TIPO A</option>
                                 <option>TIPO B</option>
                                 <option>TIPO C</option>
@@ -38,6 +44,12 @@
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach ($status as $state)
                                 <option value="{{ $state->ID }}">{{ $state->NAME }}</option>
+                                @if ($_GET)
+                                @if (!empty($_GET['status']))
+                                <option selected>
+                                    {{ $_GET['status'] }}</option>
+                                @endif
+                                @endif
                                 @endforeach
                             </select>
                         </div>

@@ -23,6 +23,13 @@
                             <option data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
                                 {{ $city->CIUDAD }}
                             </option>
+                            @if ($_GET)
+                            @if (!empty($_GET['city']))
+                            @if($_GET['city']==$city->CIUDAD)
+                            <option selected>{{ $city->CIUDAD }}</option>
+                            @endif
+                            @endif
+                            @endif
                             @endforeach
                             @endif
                         </select>
@@ -50,6 +57,13 @@
                                     <option value="{{ $area->id }}">
                                         {{ $area->name }}
                                     </option>
+                                    @if ($_GET)
+                                    @if (!empty($_GET['lead_area_id']))
+                                    @if($_GET['lead_area_id']==$area->name)
+                                    <option selected>{{ $area->name }}</option>
+                                    @endif
+                                    @endif
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
@@ -67,6 +81,13 @@
                                     <option value="{{ $service->id }}">
                                         {{ $service->service }}
                                     </option>
+                                    @if ($_GET)
+                                    @if (!empty($_GET['typeService']))
+                                    @if($_GET['typeService']==$service->service)
+                                    <option selected>{{ $service->service }}</option>
+                                    @endif
+                                    @endif
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
@@ -84,6 +105,14 @@
                                     <option value="{{ $lead_product->id }}">
                                         {{ $lead_product->lead_product }}
                                     </option>
+                                    @if ($_GET)
+                                    @if (!empty($_GET['typeProduct']))
+                                    @if($_GET['typeProduct']==$lead_product->id)
+                                    <option value="{{$lead_product->id}}" selected>{{ $lead_product->lead_product }}
+                                    </option>
+                                    @endif
+                                    @endif
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
@@ -100,6 +129,13 @@
                                     <option value="{{ $lead_status->id }}">
                                         {{ $lead_status->status }}
                                     </option>
+                                    @if ( $_GET && !empty($_GET['state']))
+                                    @if($_GET['state']==$lead_status->id)
+                                    <option value="{{$lead_status->id}}" selected>
+                                        {{ $lead_status->status }}
+                                    </option>
+                                    @endif
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>

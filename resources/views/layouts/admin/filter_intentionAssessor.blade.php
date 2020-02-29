@@ -21,6 +21,8 @@
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Perfil -- </option>
+                                <option @if ($_GET) @if (!empty($_GET['creditprofile'])) @endif @endif selected>
+                                    {{ $_GET['creditprofile'] }}</option>
                                 <option>TIPO A</option>
                                 <option>TIPO B</option>
                                 <option>TIPO C</option>
@@ -37,6 +39,12 @@
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach ($status as $state)
+                                @if ($_GET)
+                                @if (!empty($_GET['status']))
+                                <option selected>
+                                    {{ $_GET['status'] }}</option>
+                                @endif
+                                @endif
                                 <option value="{{ $state->ID }}">{{ $state->NAME }}</option>
                                 @endforeach
                             </select>
@@ -52,14 +60,15 @@
                     </div>
                     <div class="col-6 col-md-1 mt-2 d-flex justify-content-start align-items-center">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Buscar
+                            <button type="submit" id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i>
+                                Buscar
                             </button>
                         </span>
                     </div>
                 </div>
-               
+
             </div>
-            
+
 
     </div>
     </form>

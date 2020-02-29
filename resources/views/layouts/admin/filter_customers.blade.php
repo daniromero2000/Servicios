@@ -21,6 +21,10 @@
                             <select class="form-control  select2" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
+                                @if ($_GET)
+                                <option @if (!empty($_GET['status'])) @endif selected>
+                                    {{ $_GET['status'] }}</option>
+                                @endif
                                 <option>APROBADO</option>
                                 <option>PREAPROBADO</option>
                                 <option>NEGADO</option>
@@ -42,6 +46,12 @@
                             <select class="form-control  select2" id="step" name="step" {!! request()->input('step')!!}
                                 style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Paso -- </option>
+                                @if ($_GET)
+                                @if (!empty($_GET['step']))
+                                <option selected>
+                                    {{ $_GET['step'] }}</option>
+                                @endif
+                                @endif
                                 <option>PASO1</option>
                                 <option>PASO2</option>
                                 <option>PASO3</option>
