@@ -61,8 +61,8 @@
                                 request()->input('subsidiary')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Sucursal -- </option>
                                 @foreach ($Subsidiarys as $Subsidiary)
-                                <option @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
-                                    @endif>{{ $Subsidiary->CODIGO }}</option>
+                                <option @if ($_GET) @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
+                                    @endif @endif>{{ $Subsidiary->CODIGO }}</option>
                                 @endforeach
                             </select>
                         </div>
