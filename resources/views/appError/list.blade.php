@@ -64,8 +64,11 @@
                                                 <div class="modal-body">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <h5 class="card-title">Error: </h5>
+                                                            <h5 class="card-title">Error</h5>
                                                             <p class="card-text"> @if ($error->data)
+                                                                {{-- @php
+                                                                $error = json_decode($error->data,true );
+                                                                @endphp --}}
                                                                 {{ $error->data}}
                                                                 @endif
                                                             </p>

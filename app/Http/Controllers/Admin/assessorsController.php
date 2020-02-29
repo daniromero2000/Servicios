@@ -1061,7 +1061,8 @@ class assessorsController extends Controller
 		return $resp;
 	}
 
-	public function desistCredit($identificationNumber){
+	public function desistCredit($identificationNumber)
+	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Desistido';
 		$intention->save();
@@ -1069,7 +1070,9 @@ class assessorsController extends Controller
 		return "1";
 	}
 
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam, $fuenteFallo){
+
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam, $fuenteFallo)
+	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();

@@ -1,4 +1,3 @@
-<!-- search form -->
 <div class="row">
     <div class="col-12 text-center">
         <h3 style="color: #007bff;">Filtrar</h3>
@@ -62,7 +61,8 @@
                                 request()->input('subsidiary')!!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Sucursal -- </option>
                                 @foreach ($Subsidiarys as $Subsidiary)
-                                <option>{{ $Subsidiary->CODIGO }}</option>
+                                <option @if ($_GET) @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
+                                    @endif @endif>{{ $Subsidiary->CODIGO }}</option>
                                 @endforeach
                             </select>
                         </div>

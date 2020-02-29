@@ -1,12 +1,12 @@
-app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
+app.controller('libranzaLeadsController', function ($scope, $http, $rootScope) {
 	$scope.q = {
-		'page':30,
-		'current':1,
+		'page': 30,
+		'current': 1,
 		'q': '',
 		'city': '',
 		'fecha_ini': '',
 		'fecha_fin': '',
-		'typeService': 'libranza',
+		'typeService': 14,
 		'state': '',
 	};
 	$scope.cargando = true;
@@ -25,23 +25,23 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 	$scope.typeServices = [
 		{
 			label: 'Oportuya',
-			value: 'terjeta de crédito Oportuya'
+			value: 15
 		},
 		{
 			label: 'Crédito Motos',
-			value: 'Motos'
+			value: 3
 		},
 		{
 			label: 'Crédito Libranza',
-			value: 'Credito libranza'
+			value: 14
 		},
 		{
 			label: 'Seguros',
-			value: 'Seguros'
+			value: 4
 		},
 		{
 			label: 'Viajes',
-			value: 'Viajes'
+			value: 13
 		},
 	];
 
@@ -79,15 +79,17 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.getLeads = function(){
+	console.log($scope.q.libranzaLeads)
+
+	$scope.getLeads = function () {
 		$scope.cargando = true;
 		$http({
-		  method: 'GET',
-		  url: '/api/admin/getDataLibranza?q='+$scope.q.q+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&libranzaLead='+$scope.q.libranzaLeads+'&page='+$scope.q.page+'&current='+$scope.q.current,
+			method: 'GET',
+			url: '/api/admin/getDataLibranza?q=' + $scope.q.q + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&libranzaLead=' + $scope.q.libranzaLeads + '&page=' + $scope.q.page + '&current=' + $scope.q.current,
 		}).then(function successCallback(response) {
-			if(response.data != false){
+			if (response.data != false) {
 				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {
+				angular.forEach(response.data, function (value, key) {
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
@@ -99,52 +101,52 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.searchLeads = function(){
+	$scope.searchLeads = function () {
 		$scope.q.current = 1;
 		$scope.q.page = 30;
 		$scope.leads = [];
 		$scope.getLeads();
 	};
 
-	$scope.resetFiltros = function (){
+	$scope.resetFiltros = function () {
 		$scope.leads = [];
 		$scope.q = {
-			'page':30,
-			'current':1,
+			'page': 30,
+			'current': 1,
 			'q': '',
 			'city': '',
 			'fecha_ini': '',
 			'fecha_fin': '',
-			'typeService': 'libranza',
+			'typeService': 14,
 			'state': '',
 		};
 		$scope.filtros = false;
 		$scope.getLeads();
 	};
 
-	$scope.more=function(){
+	$scope.more = function () {
 		$scope.q.current = $scope.q.current + 1;
 		$scope.getLeads();
 	}
 
-	$scope.vewLead = function(lead){
+	$scope.vewLead = function (lead) {
 		$scope.lead = lead;
 		$("#viewLead").modal("show");
 	};
 
-	$scope.viewComments = function(name, lastName, state, idLead, init=true){
+	$scope.viewComments = function (name, lastName, state, idLead, init = true) {
 		$scope.comments = [];
 		$scope.idLead = idLead;
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/getComentsLeads/'+idLead
+			method: 'GET',
+			url: 'api/leads/getComentsLeads/' + idLead
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				angular.forEach(response.data, function(value, key) {
+			if (response.data != false) {
+				angular.forEach(response.data, function (value, key) {
 					$scope.comments.push(value);
 				});
 			}
-			if(init){
+			if (init) {
 				$("#viewComments").modal("show");
 				$scope.nameLead = name;
 				$scope.lastNameLead = lastName;
@@ -155,14 +157,14 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.addComment = function(){
+	$scope.addComment = function () {
 		$scope.comment.idLead = $scope.idLead;
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
+			method: 'GET',
+			url: 'api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.viewComments("","",$scope.state,$scope.idLead, false);
+			if (response.data != false) {
+				$scope.viewComments("", "", $scope.state, $scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}
@@ -171,7 +173,7 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.changeStateLead = function(name, lastName, idLead, state, title){
+	$scope.changeStateLead = function (name, lastName, idLead, state, title) {
 		$scope.title = title;
 		$scope.nameLead = name;
 		$scope.lastNameLead = lastName;
@@ -180,17 +182,17 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		$("#changeStateLead").modal("show");
 	};
 
-	$scope.viewCommentChange = function(){
+	$scope.viewCommentChange = function () {
 		$scope.viewAddComent = !$scope.viewAddComent;
 	};
 
 
-	$scope.changeStateLeadComment = function(){
+	$scope.changeStateLeadComment = function () {
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
+			method: 'GET',
+			url: 'api/leads/cahngeStateLead/' + $scope.comment.idLead + '/' + $scope.comment.comment + '/' + $scope.comment.state
 		}).then(function successCallback(response) {
-			if(response.data != false){
+			if (response.data != false) {
 				$scope.comment.comment = "";
 				$scope.searchLeads();
 				$("#changeStateLead").modal("hide");
@@ -201,5 +203,5 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 	};
 
 	$scope.getLeads();
-		$scope.getCities();
+	$scope.getCities();
 })

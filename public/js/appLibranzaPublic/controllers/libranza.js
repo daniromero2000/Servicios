@@ -1,4 +1,4 @@
-app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
+app.controller('libranzaLeadsController', function ($scope, $http, $rootScope) {
 	$scope.q = {
 		'q': '',
 		'initFrom': 0,
@@ -7,7 +7,7 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		'fecha_fin': '',
 		'typeService': 'Credito libranza',
 		'state': '',
-		'libranzaLeads' : true
+		'libranzaLeads': true
 	};
 	$scope.cargando = true;
 	$scope.filtros = false;
@@ -64,49 +64,49 @@ app.controller('libranzaLeadsController', function($scope, $http, $rootScope){
 		}
 	];
 
-	$scope.slides=[{
-		img:'creditoLibranza.jpg',
-		description:'Te damos <strong>más</strong> que <strong>Crédito,</strong>  te damos la <br><strong>Oportunidad</strong> de vivir viajando',
-		textButton:'Solicítalo ya',
-		link:'#formularioSimulador'
-	},{
-		img:'creditoLibranzaSuenos.jpg',
-		description:'¿Soñando con remodelar tu casa? <br> hazlo realidad con nuestro <strong>crédito de libranza</strong>',
-		textButton:'Solicítalo ya',
-		link:'#formularioSimulador'
+	$scope.slides = [{
+		img: 'creditoLibranza.jpg',
+		description: 'Te damos <strong>más</strong> que <strong>Crédito,</strong>  te damos la <br><strong>Oportunidad</strong> de vivir viajando',
+		textButton: 'Solicítalo ya',
+		link: '#formularioSimulador'
+	}, {
+		img: 'creditoLibranzaSuenos.jpg',
+		description: '¿Soñando con remodelar tu casa? <br> hazlo realidad con nuestro <strong>crédito de libranza</strong>',
+		textButton: 'Solicítalo ya',
+		link: '#formularioSimulador'
 	}];
 
 
 	$scope.slickConfig = {
-        enabled: true,
-    }
-    $scope.toggleSlick = function() {
-      $scope.slickConfig.enabled = !$scope.slickConfig.enabled;
-    }
+		enabled: true,
+	}
+	$scope.toggleSlick = function () {
+		$scope.slickConfig.enabled = !$scope.slickConfig.enabled;
+	}
 
-$scope.getCities = function () {
-	$http({
-		method: 'GET',
-		url: '/subsidiaries/cities'
-	}).then(function successCallback(response) {
-		console.log(response.data);
-		if (response.data != false) {
-			$scope.cities = response.data;
-		}
-	}, function errorCallback(response) {
-		console.log(response);
-	});
-};
+	$scope.getCities = function () {
+		$http({
+			method: 'GET',
+			url: '/subsidiaries/cities'
+		}).then(function successCallback(response) {
+			console.log(response.data);
+			if (response.data != false) {
+				$scope.cities = response.data;
+			}
+		}, function errorCallback(response) {
+			console.log(response);
+		});
+	};
 
-	$scope.getLeads = function(){
+	$scope.getLeads = function () {
 		$scope.cargando = true;
 		$http({
-		  method: 'GET',
-		  url: '/leads?q='+$scope.q.q+'&limitFrom='+$scope.q.initFrom+'&city='+$scope.q.city+'&fecha_ini='+$scope.q.fecha_ini+'&fecha_fin='+$scope.q.fecha_fin+'&typeService='+$scope.q.typeService+'&state='+$scope.q.state+'&libranzaLead='+$scope.q.libranzaLeads,
+			method: 'GET',
+			url: '/leads?q=' + $scope.q.q + '&limitFrom=' + $scope.q.initFrom + '&city=' + $scope.q.city + '&fecha_ini=' + $scope.q.fecha_ini + '&fecha_fin=' + $scope.q.fecha_fin + '&typeService=' + $scope.q.typeService + '&state=' + $scope.q.state + '&libranzaLead=' + $scope.q.libranzaLeads,
 		}).then(function successCallback(response) {
-			if(response.data != false){
+			if (response.data != false) {
 				$scope.q.initFrom += response.data.length;
-				angular.forEach(response.data, function(value, key) {
+				angular.forEach(response.data, function (value, key) {
 					$scope.leads.push(value);
 				});
 				$scope.cargando = false;
@@ -116,13 +116,13 @@ $scope.getCities = function () {
 		});
 	};
 
-	$scope.searchLeads = function(){
+	$scope.searchLeads = function () {
 		$scope.q.initFrom = 0;
 		$scope.leads = [];
 		$scope.getLeads();
 	};
 
-	$scope.resetFiltros = function (){
+	$scope.resetFiltros = function () {
 		$scope.leads = [];
 		$scope.q = {
 			'q': '',
@@ -132,30 +132,30 @@ $scope.getCities = function () {
 			'fecha_fin': '',
 			'typeService': 'Credito libranza',
 			'state': '',
-			'libranzaLeads' : true
+			'libranzaLeads': true
 		};
 		$scope.filtros = false;
 		$scope.getLeads();
 	};
 
-	$scope.vewLead = function(lead){
+	$scope.vewLead = function (lead) {
 		$scope.lead = lead;
 		$("#viewLead").modal("show");
 	};
 
-	$scope.viewComments = function(name, lastName, state, idLead, init=true){
+	$scope.viewComments = function (name, lastName, state, idLead, init = true) {
 		$scope.comments = [];
 		$scope.idLead = idLead;
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/getComentsLeads/'+idLead
+			method: 'GET',
+			url: 'api/leads/getComentsLeads/' + idLead
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				angular.forEach(response.data, function(value, key) {
+			if (response.data != false) {
+				angular.forEach(response.data, function (value, key) {
 					$scope.comments.push(value);
 				});
 			}
-			if(init){
+			if (init) {
 				$("#viewComments").modal("show");
 				$scope.nameLead = name;
 				$scope.lastNameLead = lastName;
@@ -166,14 +166,14 @@ $scope.getCities = function () {
 		});
 	};
 
-	$scope.addComment = function(){
+	$scope.addComment = function () {
 		$scope.comment.idLead = $scope.idLead;
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/addComent/'+$scope.comment.idLead+'/'+$scope.comment.comment
+			method: 'GET',
+			url: 'api/leads/addComent/' + $scope.comment.idLead + '/' + $scope.comment.comment
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				$scope.viewComments("","",$scope.state,$scope.idLead, false);
+			if (response.data != false) {
+				$scope.viewComments("", "", $scope.state, $scope.idLead, false);
 				$scope.comment.comment = "";
 				$scope.viewAddComent = false;
 			}
@@ -182,7 +182,7 @@ $scope.getCities = function () {
 		});
 	};
 
-	$scope.changeStateLead = function(name, lastName, idLead, state, title){
+	$scope.changeStateLead = function (name, lastName, idLead, state, title) {
 		$scope.title = title;
 		$scope.nameLead = name;
 		$scope.lastNameLead = lastName;
@@ -191,17 +191,17 @@ $scope.getCities = function () {
 		$("#changeStateLead").modal("show");
 	};
 
-	$scope.viewCommentChange = function(){
+	$scope.viewCommentChange = function () {
 		$scope.viewAddComent = !$scope.viewAddComent;
 	};
 
 
-	$scope.changeStateLeadComment = function(){
+	$scope.changeStateLeadComment = function () {
 		$http({
-		  method: 'GET',
-		  url: 'api/leads/cahngeStateLead/'+$scope.comment.idLead+'/'+$scope.comment.comment+'/'+$scope.comment.state
+			method: 'GET',
+			url: 'api/leads/cahngeStateLead/' + $scope.comment.idLead + '/' + $scope.comment.comment + '/' + $scope.comment.state
 		}).then(function successCallback(response) {
-			if(response.data != false){
+			if (response.data != false) {
 				$scope.comment.comment = "";
 				$scope.searchLeads();
 				$("#changeStateLead").modal("hide");
@@ -212,5 +212,5 @@ $scope.getCities = function () {
 	};
 
 	$scope.getLeads();
-		$scope.getCities();
+	$scope.getCities();
 })
