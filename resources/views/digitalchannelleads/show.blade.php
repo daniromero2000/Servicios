@@ -41,13 +41,11 @@
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
                 @include('digitalchannelleads.layouts.generals')
                 @if (auth()->user()->idProfile == 2)
-                @include('digitalchannelleads.layouts.lead_prices')
-                {{-- @if ($digitalChannelLead->typeService == 14)
-                @include('digitalchannelleads.layouts.lead_prices')
-                @endif --}}
-
+                @if ($digitalChannelLead->typeService == 14)
+                @include('digitalchannelleads.layouts.lead_libranza')
                 @endif
-
+                @include('digitalchannelleads.layouts.lead_prices')
+                @endif
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">

@@ -178,6 +178,13 @@ class DigitalChannelLeadController extends Controller
         }
         $leadPriceStatus = LeadPriceStatus::all();
 
+        $liquidators = Liquidator::selectRaw('pagaduria.name as pagaduriaName,libranza_profiles.name as customerType, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria,liquidator.fee,liquidator.rate , liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id,leads.identificationNumber,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
+            ->leftJoin('leads', 'liquidator.idLead', '=', 'leads.id')
+            ->leftJoin('pagaduria', 'liquidator.idPagaduria', '=', 'pagaduria.id')
+            ->leftJoin('libranza_lines', 'liquidator.idCreditLine', '=', 'libranza_lines.id')
+            ->leftJoin('libranza_profiles', 'liquidator.customerType', '=', 'libranza_profiles.id')
+            ->where('leads.id', '=', $id)
+            ->where('leads.typeService', '=', 14)->get();
 
         return view('digitalchannelleads.show', [
             'digitalChannelLead' => $digitalChannelLead,
@@ -194,9 +201,23 @@ class DigitalChannelLeadController extends Controller
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'leadPriceStatus'    => $leadPriceStatus
+            'leadPriceStatus'    => $leadPriceStatus,
+            'liquidators'        => $liquidators
         ]);
     }
+    // "pagaduriaName" => "GOBERNACION DEL QUINDIO"
+    // "customerType" => "DOCENTE"
+    // "creditLineName" => "Libre inversión"
+    // "age" => 20
+    // "creditLine" => null
+    // "pagaduria" => null
+    // "fee" => 186400
+    // "rate" => 0.019
+    // "salary" => 2000000
+    // "amount" => 2000000
+    // "timeLimit" => 13
+
+    // "occupation" => null
 
     public function update(Request $request, $id)
     {
@@ -500,78 +521,5 @@ class DigitalChannelLeadController extends Controller
     {
         $data = $this->leadInterface->findLeadByTelephone($telephone);
         return $data;
-    }
-
-    public function libranzaData(Request $request)
-    {
-        $data = [];
-        $leads = Liquidator::selectRaw('pagaduria.name as pagaduriaName,libranza_profiles.name as customerType, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria,liquidator.fee,liquidator.rate , liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id,leads.identificationNumber,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
-            ->leftJoin('leads', 'liquidator.idLead', '=', 'leads.id')
-            ->leftJoin('pagaduria', 'liquidator.idPagaduria', '=', 'pagaduria.id')
-            ->leftJoin('libranza_lines', 'liquidator.idCreditLine', '=', 'libranza_lines.id')
-            ->leftJoin('libranza_profiles', 'liquidator.customerType', '=', 'libranza_profiles.id')
-            ->where('leads.typeService', '=', 14);
-
-        if (!is_null($request->city)) {
-            $leads->where('leads.city', $request->city);
-        }
-
-        if (!is_null($request->fecha_ini)) {
-            $leads->where('fecha_ini', $request->fecha_ini);
-        }
-
-        if (!is_null($request->fecha_fin)) {
-            $leads->where('fecha_fin', $request->fecha_fin);
-        }
-
-        if (!is_null($request->state)) {
-            $leads->where('leads.state', $request->state);
-        }
-
-        $leads->orderBy('leads.created_at', 'DESC')
-            ->skip($request->page * ($request->current - 1))
-            ->take($request->page)
-            ->get();
-
-        $leadsInfo = $leads->get();
-        $data = [];
-        $dataLeads = [];
-
-        foreach ($leadsInfo as $key => $lead) {
-            $idNumber = $lead->identificationNumber;
-            $dataQuery = DB::connection('oportudata')->select("SELECT score FROM cifin_score WHERE scocedula = :identificationNumber", ['identificationNumber' => $idNumber]);
-            $data = [
-                'age'                  => $lead->age,
-                'amount'               => $lead->amount,
-                'channel'              => $lead->channel,
-                'city'                 => $lead->city,
-                'created_at'           => $lead->created_at,
-                'creditLine'           => $lead->creditLine,
-                'creditLineName'       => $lead->creditLineName,
-                'customerType'         => $lead->customerType,
-                'email'                => $lead->email,
-                'id'                   => $lead->id,
-                'identificationNumber' => $lead->identificationNumber,
-                'lastName'             => $lead->lastName,
-                'name'                 => $lead->name,
-                'occupation'           => $lead->occupation,
-                'pagaduria'            => $lead->pagaduria,
-                'pagaduriaName'        => $lead->pagaduriaName,
-                'salary'               => $lead->salary,
-                'state'                => $lead->state,
-                'fee'                  => $lead->fee,
-                'rate'                 => $lead->rate,
-                'telephone'            => $lead->telephone,
-                'termsAndConditions'   => $lead->termsAndConditions,
-                'timeLimit'            => $lead->timeLimit,
-                'typeDocument'         => $lead->typeDocument,
-                'typeProduct'          => $lead->typeProduct,
-                'typeService'          => $lead->typeService
-            ];
-
-            $dataLeads[] = $data;
-        }
-        //$leadsInfo=$leads->get();
-        return response()->json($dataLeads);
     }
 }
