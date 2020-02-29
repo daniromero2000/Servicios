@@ -127,7 +127,8 @@ class LibranzaController extends Controller
 
         $k = 0;
         for ($k; $k < count($arrayAmount); $k++) {
-            if (($maxAmount - $arrayAmount[$k][0]->amount) < 0) { } else {
+            if (($maxAmount - $arrayAmount[$k][0]->amount) < 0) {
+            } else {
                 $arrayResult[$k] = $arrayAmount[$k][0];
             }
         }
@@ -190,7 +191,7 @@ class LibranzaController extends Controller
             ->leftJoin('pagaduria', 'liquidator.idPagaduria', '=', 'pagaduria.id')
             ->leftJoin('libranza_lines', 'liquidator.idCreditLine', '=', 'libranza_lines.id')
             ->leftJoin('libranza_profiles', 'liquidator.customerType', '=', 'libranza_profiles.id')
-            ->where('leads.typeService', '=', 'Credito libranza');
+            ->where('leads.typeService', '=', 14);
 
         if (!is_null($request->city)) {
             $leads->where('leads.city', $request->city);

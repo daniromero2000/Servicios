@@ -1,6 +1,5 @@
 @extends('layouts.admin.app')
 @section('content')
-
 <section>
   @include('layouts.errors-and-messages')
   @if(!is_null($factoryRequests))

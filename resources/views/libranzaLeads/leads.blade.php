@@ -9,21 +9,20 @@
                     <div class="row form-group">
                         <div class="col-12 col-sm-6">
                             <label for="city">Ciudad</label>
-                            <select id="city" class="form-control" ng-model="q.city" ng-options="city.value as city.label for city in cities"></select>
+                            <select id="city" class="form-control" ng-model="q.city"
+                                ng-options="city.value as city.label for city in cities"></select>
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="state">Estado</label>
-                            <select id="state" class="form-control" ng-model="q.state" ng-options="state.value as state.label for state in typeStates"></select>
+                            <select id="state" class="form-control" ng-model="q.state"
+                                ng-options="state.value as state.label for state in typeStates"></select>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-12 col-sm-6">
                             <label for="fecha_ini">Fecha Inicial</label>
-                            <div class="input-group"
-                                 moment-picker="q.fecha_ini"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.fecha_ini" id="fecha_ini">
+                            <div class="input-group" moment-picker="q.fecha_ini" format="YYYY-MM-DD">
+                                <input class="form-control" ng-model="q.fecha_ini" id="fecha_ini">
                                 <span class="input-group-addon">
                                     <i class="octicon octicon-calendar"></i>
                                 </span>
@@ -31,11 +30,8 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="fecha_fin">Fecha Final</label>
-                            <div class="input-group"
-                                 moment-picker="q.fecha_fin"
-                                 format="YYYY-MM-DD">
-                                <input class="form-control"
-                                       ng-model="q.fecha_fin">
+                            <div class="input-group" moment-picker="q.fecha_fin" format="YYYY-MM-DD">
+                                <input class="form-control" ng-model="q.fecha_fin">
                                 <span class="input-group-addon">
                                     <i class="octicon octicon-calendar"></i>
                                 </span>
@@ -44,7 +40,8 @@
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i class="fas fa-times"></i></button>
+                            <button type="button" ng-click="resetFiltros()" class="btn btn-danger">Resetear Filtros <i
+                                    class="fas fa-times"></i></button>
                             <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-filter"></i></button>
                         </div>
                     </div>
@@ -58,19 +55,21 @@
         <div class="input-group mb-3">
             <input type="text" ng-model="q.q" class="form-control" aria-describedby="searchIcon">
             <div class="input-group-append">
-                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i class="fas fa-search"></i></span>
+                <span class="input-group-text" id="searchIcon" ng-click="searchLeads()"><i
+                        class="fas fa-search"></i></span>
             </div>
         </div>
     </div>
     <div class="col-sm-12 col-md-1 resetCol">
-        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i class="fas fa-filter"></i></button>
+        <button type="button" ng-click="filtros=!filtros" class="btn btn-primary">Filtros <i
+                class="fas fa-filter"></i></button>
     </div>
 </div>
 <div class="table table-responsive">
     <table class="table table-hover table-stripped leadTable">
         <thead class="headTableLeads">
-            <tr> 
-                <th scope="col">fecha</th>
+            <tr>
+                <th scope="col">Fecha</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Teléfono</th>
@@ -94,8 +93,8 @@
                 <td>@{{ lead.amount }}</td>
                 <td>@{{ lead.timeLimit }}</td>
                 <td>
-                    <i class="fas fa-eye cursor" ng-if="lead.typeService == 'Credito libranza'" ng-click="vewLead(lead)"></i>
-                  <!--  <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
+                    <i class="fas fa-eye cursor" ng-if="lead.typeService == 14" ng-click="vewLead(lead)"></i>
+                    <!--  <i class="fas fa-comment cursor" ng-click="viewComments(lead.name, lead.lastName, lead.state, lead.id)"></i>
                     <br>
                     <i class="fas fa-check-double cursor"
                     ng-if="lead.state == 1 || lead.state == 2"
@@ -126,16 +125,18 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">@{{ title }} - @{{ nameLead + " " +lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
+                <h4 class="modal-title" id="myModalLabel">@{{ title }} - @{{ nameLead + " " +lastNameLead }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
                 <div class="container">
                     <form ng-submit="changeStateLeadComment()">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="comment">Comentario</label>
-                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
+                            <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control"
+                                required></textarea>
                         </div>
                         <div class="form-group text-left">
                             <button class="btn btn-primary">Agregar</button>
@@ -152,11 +153,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Ver Contacto</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
-               <div class="container">
+                <h4 class="modal-title" id="myModalLabel">Ver Contacto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
                     <div class="row form-group">
                         <div class="col-sm-12 col-md-6">
                             <label class="labelViewLead">Nombre:</label>
@@ -243,10 +245,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-           </div>
-           <div class="modal-body">
+                <h4 class="modal-title" id="myModalLabel">Ver Comentarios - @{{ nameLead }} @{{ lastNameLead }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
                 <div class="container">
                     <div class="row resetRow " ng-if="viewAddComent">
                         <div class="col-12 form-group">
@@ -254,7 +257,8 @@
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="comment">Comentario</label>
-                                    <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control" required></textarea>
+                                    <textarea ng-model="comment.comment" id="comment" cols="10" class="form-control"
+                                        required></textarea>
                                 </div>
                                 <div class="form-group text-left">
                                     <button class="btn btn-primary">Agregar</button>
@@ -265,7 +269,8 @@
                     </div>
                     <div class="row resetRow" ng-if="state != 4">
                         <div class="col-12 text-right form-group">
-                            <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                            <button type="button" ng-click="viewCommentChange()" class="btn btn-secondary"><i
+                                    class="fas fa-plus"></i></button>
                         </div>
                     </div>
                     <div class="containerCommentsLeads">
