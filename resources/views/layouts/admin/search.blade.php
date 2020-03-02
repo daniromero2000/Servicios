@@ -20,8 +20,12 @@
                             <select class="form-control  select2bs4" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
-                                <option @if ($_GET) @if (!empty($_GET['status'])) @endif @endif selected>
+                                @if ($_GET)
+                                @if (!empty($_GET['status']))
+                                <option selected>
                                     {{ $_GET['status'] }}</option>
+                                @endif
+                                @endif
                                 <option>APROBADO</option>
                                 <option>ANALISIS</option>
                                 <option>ANULADA</option>
