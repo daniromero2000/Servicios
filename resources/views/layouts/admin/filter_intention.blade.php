@@ -44,10 +44,11 @@
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach ($status as $state)
                                 <option value="{{ $state->ID }}">{{ $state->NAME }}</option>
-                                @if ($_GET)
-                                @if (!empty($_GET['status']))
-                                <option selected>
-                                    {{ $_GET['status'] }}</option>
+                                @if ( $_GET && !empty($_GET['status']))
+                                @if($_GET['status']==$state->ID)
+                                <option value="{{$state->ID}}" selected>
+                                    {{$state->NAME }}
+                                </option>
                                 @endif
                                 @endif
                                 @endforeach
