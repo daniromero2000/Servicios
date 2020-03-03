@@ -338,7 +338,7 @@ class assessorsController extends Controller
 				'NIT_IND'          	    => ($request->get('NIT_IND') != '') ? trim($request->get('NIT_IND')) : '0',
 				'RAZON_IND'   			=> ($request->get('RAZON_IND') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('RAZON_IND')))) : 'NA',
 				'ACT_IND'          	    => ($request->get('ACT_IND') != '') ? trim($request->get('ACT_IND')) : 'NA',
-				'EDAD_INDP'          	=> ($request->get($indp) != '') ? trim($request->get($indp)) : 'NA',
+				'EDAD_INDP'          	=> ($indp != '') ? trim($indp) : 'NA',
 				'FEC_CONST'             => trim($request->get('FEC_CONST')) . "-01",
 				'SUELDOIND'          	=> ($request->get('SUELDOIND') != '') ? trim($request->get('SUELDOIND')) : 'NA',
 				'BANCOP'           		=> ($request->get('BANCOP') != '') ? trim($request->get('BANCOP')) : '0',
