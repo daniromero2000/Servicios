@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12">
-            <ol class="breadcrumb bradcrumb-retet float-sm-right">
+            <ol class="breadcrumb bradcrumb-reset float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
               <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequests">Dashboard
                   Solicitudes Fábrica</a>
@@ -36,7 +36,7 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                      <p>Solicitudes en este mes</p>
+                      <p class="textCardNumber">Solicitudes en este mes</p>
                     </div>
                     <div class="icon">
                       <i class="ion ion-stats-bars"></i>
