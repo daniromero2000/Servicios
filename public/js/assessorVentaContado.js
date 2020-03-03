@@ -15,12 +15,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData = false;
 	$scope.reNewToken = false;
 	$scope.totalErrorData = 0;
-	$scope.validateNum = 0;
+	$scope.validateNum = 1;
 	$scope.numError = 0;
 	$scope.decisionCredit = "";
 	$scope.disabledDecisionCredit = false;
 	$scope.disabledButton = false;
 	$scope.disabledButtonCode = false;
+	$scope.step = 1;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -453,13 +454,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.sendDecisionCredit = function(){
 		$('#decisionCredit').modal('hide');
-		$('#proccess').modal('show');
 		$scope.disabledDecisionCredit = true;
-		if($scope.decisionCredit == 1){
-			$scope.creditCard();
-		}else if($scope.decisionCredit == 2){
-			$scope.traditionalCredit();
-		}
+		$scope.step = 2;
 	};
 
 	$scope.creditCard = function(){
@@ -531,9 +527,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}).then(function successCallback(response) {
 			$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
+			$scope.step = 2;
 			setTimeout(() => {
 				$('#proccess').modal('hide');
-				$('#congratulations').modal('show');
 			}, 1500);
 			hideLoader();
 		}, function errorCallback(response) {
