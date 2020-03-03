@@ -58,34 +58,26 @@
                             </div>
                             <div class="col-12 col-md-4">
                                 <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
-                                <div class="input-group" moment-picker="lead.FEC_EXP" format="YYYY-MM-DD">
-                                    <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP" readonly=""
-                                        placeholder="Año/Mes/Día" required>
-                                    <span class="input-group-addon">
-                                        <i class="octicon octicon-calendar"></i>
-                                    </span>
-                                </div>
+                                <input type="date" name="" id="FEC_EXP" class="form-control" ng-model="lead.FEC_EXP" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <label class="labels" for="nombres">Nombres*</label>
                                 <input class="inputs" id="nombres" validation-pattern="name" ng-model="lead.NOMBRES"
                                     type="text" required />
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <label class="labels" for="lastName">Apellidos*</label>
                                 <input class="inputs" id="lastName" validation-pattern="name" type="text"
                                     ng-model="lead.APELLIDOS" required />
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <label class="labels" for="email">Correo electrónico*</label>
                                 <input class="inputs" id="email" type="text" validation-pattern="email"
                                     ng-model="lead.EMAIL" required />
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-3">
                                 <div ng-hide="lead.CEL_VAL">
                                     <label class="ventaContado-label">Celular</label>
                                     <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
@@ -96,290 +88,40 @@
                                     <input class="inputs" ng-model="CELULAR" readonly ng-disabled="true" />
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <label class="ventaContado-label labels" for="actividad">Ocupación</label>
-                                <select class="inputs form-control" ng-model="lead.ACTIVIDAD" id="actividad"
-                                    ng-options="actividad.value as actividad.label for actividad in occupations"></select>
-                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12 col-md-4">
                                 <label class="ventaContado-label" for="ciud_ubi">Ciudad de ubicación</label>
                                 <select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi"
                                     ng-options="city.value as city.label for city in citiesUbi"></select>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 type-client">
-                        <div class="forms-descStep forms-descStep-avances">
-                            <strong>Cuentanos más de ti</strong><br>
-                            <span class="forms-descText">Ingresa tu información personal</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
-                            <span class="forms-descStepNum">2</span>
-                        </div>
-                        <div class="row">
                             <div class="col-12 col-md-4">
-                                <label class="labels" for="">Fecha de nacimiento*</label>
-                                <div class="input-group" moment-picker="lead.FEC_NAC" format="YYYY-MM-DD">
-                                    <input class="form-control inputs" ng-model="lead.FEC_NAC" id="FEC_NAC" readonly=""
-                                        placeholder="Año/Mes/Día" required>
-                                    <span class="input-group-addon">
-                                        <i class="octicon octicon-calendar"></i>
-                                    </span>
-                                </div>
+                                <label class="ventaContado-label labels" for="actividad">Ocupación</label>
+                                <select class="inputs form-control" ng-model="lead.ACTIVIDAD" id="actividad"
+                                    ng-options="actividad.value as actividad.label for actividad in occupations"></select>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <label class="ventaContado-label labels" for="ciud_exp">Ciudad expedición
-                                    documento*</label>
-                                <select ng-model="lead.CIUD_EXP" class="inputs form-control" id="ciud_exp"
-                                    ng-options="city.value as city.label for city in cities" required></select>
+                            <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                                <label class="ventaContado-label labels" for="FEC_ING">Fecha de ingreso*</label>
+                                <input type="date" id="FEC_ING" ng-model="lead_FEC_ING" class="form-control" />
                             </div>
-                            <div class="col-12 col-md-4">
-                                <label class="ventaContado-label labels" for="tipov">Tipo de vivienda*</label>
-                                <select ng-model="lead.TIPOV" class="inputs form-control" id="tipov"
-                                    ng-options="housingType.value as housingType.label for housingType in housingTypes"
-                                    required></select>
+                            <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
+                                <label class="ventaContado-label labels" for="FEC_CONST">Fecha de constitución*</label>
+                                <input type="date" id="FEC_CONST" ng-model="lead.FEC_CONST" class="form-control" required />
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <label class="labels" for="antiquity">Antigüedad en vivienda
-                                    <small>(Meses)</small>*</label>
-                                <input class="inputs" id="antiquity" validation-pattern="number" type="text"
-                                    ng-model="lead.TIEMPO_VIV" required />
+                            <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
+                                <label class="ventaContado-label labels" for="dateCreationCompany">Fecha de constitución</label>
+                                <input type="date" id="FEC_CONST" ng-model="lead.FEC_CONST" class="form-control" />
                             </div>
-                            <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO' || lead.TIPOV == 'FAMILIAR'">
-                                <label class="labels" for="PROPIETARIO">Propietario de la vivienda</label>
-                                <input class="inputs" id="PROPIETARIO" type="text" ng-model="lead.PROPIETARIO" />
-                            </div>
-                            <div class="col-12 col-md-4" ng-show="lead.TIPOV == 'ARRIENDO'">
-                                <label class="labels" for="VRARRIENDO">Valor del arriendo</label>
-                                <input class="inputs" ng-currency="" fraction="0" min="0" id="VRARRIENDO" type="text"
-                                    ng-model="lead.VRARRIENDO" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <label class="ventaContado-label labels" for="direccion">Dirección de
-                                    residencia*</label>
-                                <input class="inputs" type="text" id="direccion" validation-pattern="text"
-                                    ng-model="lead.DIRECCION" required />
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="labels" for="TELFIJO">Teléfono de residencia*</label>
-                                <input class="inputs" validation-pattern="telephone" type="text" ng-model="lead.TELFIJO"
-                                    id="TELFIJO" required />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <label class="labels" for="estrato">Estrato*</label>
-                                <input class="inputs" id="estrato" validation-pattern="number" type="text"
-                                    ng-model="lead.ESTRATO" required />
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label class="ventaContado-label labels" for="genero">Género</label>
-                                <select class="inputs form-control" ng-model="lead.SEXO" id="genero"
-                                    ng-options="gender.value as gender.label for gender in genders"></select>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label class="ventaContado-label labels" for="estadocivil">Estado civil</label>
-                                <select class="inputs form-control" ng-model="lead.ESTADOCIVIL" id="estadocivil"
-                                    ng-options="civilType.value as civilType.label for civilType in civilTypes"></select>
+                            <div class="col-sm-12 col-md-4" ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
+                                <label for="FEC_CONSTpensionado" class="ventaContado-label labels">Fecha de pensión*</label>
+                                <input type="date" id="FEC_CONSTpensionado" ng-model="lead.FEC_CONST" class="form-control" />
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-12 type-client">
-                        <div class="forms-descStep forms-descStep-avances">
-                            <strong>Información laboral</strong><br>
-                            <span class="forms-descText">Ingresa tus datos laborales</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
-                            <span class="forms-descStepNum">3</span>
-                        </div>
-                        <div
-                            ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="empresaNombre">Nombre de la empresa*</label>
-                                    <input class="inputs" type="text" id="empresaNombre"
-                                        ng-model="lead.RAZON_SOC" required />
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="dirEmpresa">Dirección de la empresa*</label>
-                                    <input class="inputs" type="text" id="dirEmpresa"
-                                        ng-model="lead.DIR_EMP" required />
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="telEmpresa">Teléfono de la empresa*</label>
-                                    <input class="inputs" id="telEmpresa" type="text"
-                                        ng-model="lead.TEL_EMP" required />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="eps">E.P.S*</label>
-                                    <input class="inputs" id="eps" type="text"
-                                        ng-model="lead.ACT_ECO" required />
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="cargo">Cargo*</label>
-                                    <input class="inputs" id="cargo" type="text"
-                                        ng-model="lead.CARGO" required />
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="labels" for="FEC_ING">Fecha de ingreso*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_ING" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_ING" id="FEC_ING"
-                                            readonly="" placeholder="Año/Mes" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <label class="ventaContado-label labels" for="tipoCont">Tipo de contrato*</label>
-                                    <select class="inputs form-control" ng-model="lead.TIPO_CONT" id="tipoCont"
-                                        ng-options="typeContract.value as typeContract.label for typeContract in typesContracts"></select>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="labels" for="salario">Salario*</label>
-                                    <input class="inputs" id="salario" ng-currency fraction="0" min="0" type="text"
-                                        ng-model="lead.SUELDO" required />
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            ng-if="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <label class="ventaContado-label" for="CAMARAC">Cámara de comercio</label>
-                                    <select class="form-control" ng-model="lead.CAMARAC" id="CAMARAC">
-                                        <option value="SI">Si</option>
-                                        <option value="NO">No</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="RAZON_IND">Nombre de la empresa *</label>
-                                    <input class="form-control inputs" type="text" id="RAZON_IND" ng-model="lead.RAZON_IND" required />
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="ACT_IND">Qué vendes o comercializas?
-                                        *</label>
-                                    <input class="form-control inputs" type="text" id="ACT_IND" ng-model="lead.ACT_IND" required />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
-                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" required />
-                                </div>
-                                <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                    <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes" required>
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4"
-                                    ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
-                                    <label for="dateCreationCompany">Fecha de Constitución</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes">
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label">Salario*</label>
-                                    <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency
-                                        fraction="0" required />
-                                </div>
-                            </div>
-                        </div>
-                        <div ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <label class="ventaContado-label" for="RAZON_SOC">Nombre de la empresa*</label>
-                                    <input class="form-control inputs" type="text" ng-model="lead.RAZON_SOC" id="RAZON_SOC" required />
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label class="ventaContado-label">Fecha de Pensión*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes" required>
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="SUELDOIND">Salario*</label>
-                                    <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND"
-                                        id="SUELDOIND" ng-currency fraction="0" required />
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
-                                    <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" required />
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <label class="ventaContado-label" for="BANCOP">Banco*</label>
-                                    <select class="form-control inputs" ng-model="lead.BANCOP" id="BANCOP"
-                                        ng-options="bank.value as bank.label for bank in banks" required></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 type-client">
-                        <div class="forms-descStep forms-descStep-avances">
-                            <strong>Referencias</strong><br>
-                            <span class="forms-descText">Ingresa los datos de tus referencias</span>
-                            <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
-                            <span class="forms-descStepNum">4</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <label class="labels-blue" for="refPersonalNombre">Referencia personal:</label>
-                                <input class="inputs" id="refPersonalNombre" ng-model="lead.NOM_REFPER"
-                                    validation-pattern="name" type="text" placeholder="Nombre*" required />
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="labels" for="refPersonalCelular"></label>
-                                <input class="inputs" id="refPersonalCelular" ng-model="lead.TEL_REFPER"
-                                    validation-pattern="telephone" type="text" placeholder="Celular*" required />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <label class="labels-blue" for="refFamiliarNombre">Referencia familiar:</label>
-                                <input class="inputs" type="text" id="refFamiliarNombre" ng-model="lead.NOM_REFFAM"
-                                    validation-pattern="name" placeholder="Nombre*" required />
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="labels" for="refFamiliarCelular"></label>
-                                <input class="inputs" type="text" id="refFamiliarCelular" ng-model="lead.TEL_REFFAM"
-                                    validation-pattern="telephone" placeholder="Celular*" required />
-                            </div>
-                        </div>
-                        <div class="row" ng-show="showWarningErrorData">
-                            <div class="col-12">
-                                <p class="alert alert-danger">
-                                    Verifique la información suministrada
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 text-center form-group">
-                                <button type="submit" ng-disabled="disabledButton"
-                                    class="btn btn-primary">Continuar</button>
-                            </div>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary" ng-disabled="disabledButton">Continuar</button>
                     </div>
                 </div>
             </form>
