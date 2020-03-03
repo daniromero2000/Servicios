@@ -6,6 +6,7 @@ use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\TemporaryCustomers\TemporaryCustomer;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,7 +38,6 @@ class CustomerController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-
         $leadsOfMonth = $this->customerInterface->listCustomersTotal($from, $to);
 
         $skip = $this->toolsInterface->getSkip($request->input('skip'));

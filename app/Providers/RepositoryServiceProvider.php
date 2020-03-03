@@ -86,6 +86,9 @@ use App\Entities\LeadStatuses\Repositories\LeadStatusRepository;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\LeadPriceRepository;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
+use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepository;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
