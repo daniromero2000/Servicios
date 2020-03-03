@@ -46,6 +46,12 @@
                 @endif
                 @include('digitalchannelleads.layouts.lead_prices')
                 @endif
+                @if (auth()->user()->idProfile == 4)
+                @if ($digitalChannelLead->typeService == 14)
+                @include('digitalchannelleads.layouts.lead_libranza')
+                @endif
+                @include('digitalchannelleads.layouts.lead_prices')
+                @endif
             </div>
             <div role="tabpanel" class="tab-pane" id="contact">
                 <div class="row">
