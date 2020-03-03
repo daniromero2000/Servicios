@@ -1,23 +1,19 @@
 <div class="container-fluid card card-table-reset">
   <div class="card-header">
     <div class="row">
-      <div class="col-12 col-lg-7">
-        <h2 class="title-table mt-2"><i class="fas fa-user mr-2"></i> {{ $customer->NOMBRES }}
+      <div class="col-12 col-sm-6">
+        <h2 class=" title-table mt-2"><i class="fas fa-user mr-2"></i> {{ $customer->NOMBRES }}
           {{ $customer->APELLIDOS }} </span>
         </h2>
       </div>
-      <div class="col-12 col-sm-2 col-lg-2 text-right">
+      <div class="col-12 col-sm-6 text-right">
         @if (auth()->user()->idProfile == 5)
         <span class="mt-2 badge title-table-status badge-primary"> Score
-          {{ $customer->latestCifinScore['score'] }}
-          @endif
-
-      </div>
-      <div class="col-12 col-sm-2 col-lg-1 text-right"><span class="mt-2 badge title-table-status badge-primary">
-          @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif
-      </div>
-      <div class="col-12 col-sm-2 col-lg-1 text-right"><span
-          class="mt-2 badge title-table-status badge-primary">{{ $customer->ESTADO }}
+          {{ $customer->latestCifinScore['score'] }} </span>
+        @endif
+        <span class="mt-2 badge title-table-status badge-primary">
+          @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif </span>
+        <span class="mt-2 badge title-table-status badge-primary">{{ $customer->ESTADO }} </span>
       </div>
     </div>
   </div>

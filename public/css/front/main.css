@@ -9,12 +9,15 @@
     }
 }
 
-@media (max-width:650px){
+@media (max-width:750px){
     .container-reset{
         max-width: 97% !important;
     }
-    .bradcrumb-retet{
+    .bradcrumb-reset{
         font-size: 13px;
+    }
+    .title-table-status{
+        font-size: 12px !important;
     }
     .title-filter{
         font-size: 22px;
@@ -25,8 +28,14 @@
     .body-table{
         font-size: 10px;
     }
+    .title-table{
+        font-size: 16px;
+    }
     .titleCardNumber{
         font-size: 1.4rem;
+    }
+    .navTabReset{
+        font-size: 13px !important;
     }
     .btn-sm-reset{
     padding: .25rem .5rem !important;
@@ -35,4 +44,9 @@
     border-radius: .2rem !important;
     }
     
+}
+@media (max-width:325px){
+    .textCardNumber{
+        font-size: 11px !important;
+    }
 }

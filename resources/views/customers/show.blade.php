@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <ol class="breadcrumb float-sm-right">
+                    <ol class="breadcrumb bradcrumb-reset float-sm-right">
                         <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard Clientes</a>
                         </li>
@@ -17,7 +17,8 @@
                 <div class="col-12 mt-4">
                     <div class="row">
                         <div class="col-6">
-                            <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                            <a href="{{ URL::previous() }}"
+                                class="btn btn-primary btn-sm-reset ml-auto mr-3 mb-2 ">Regresar</a>
                         </div>
                         <div class="col-6 text-right">
                             {{-- @if ( auth()->user()->idProfile == 5 )
@@ -39,7 +40,7 @@
         </div>
     </div>
     <div class=" card border-0 m-2">
-        <ul class="nav nav-tabs border-0" id="tablist" role="tablist">
+        <ul class="nav nav-tabs navTabReset border-0" id="tablist" role="tablist">
             <li class="active" role="presentation">
                 <a class="nav-link active " data-toggle="tab" href="#info" role="tab" aria-controls="home">Cliente</a>
             </li>
@@ -111,7 +112,7 @@
                 $customer->customerStatusesLog])
             </div>
             <div class="row row-reset border-0">
-                <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                <a href="{{ URL::previous() }}" class="btn btn-sm-reset btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
             </div>
         </div>
 
