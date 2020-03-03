@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 text-center">
-        <h3 style="color: #007bff;">Filtrar</h3>
+        <h3 class="title-filter" style="color: #007bff;">Filtrar</h3>
     </div>
 
     <div class="col-12  mt-2">
@@ -9,12 +9,12 @@
 
 
                 <div class="row w-100 d-flex justify-content-center">
-                    <div class="col-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-4">
                         <label for="q">Buscar: Solicitud / Cedula</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
-                    <div class="col-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
@@ -52,15 +52,15 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-4">
                         <label for="from">Desde</label>
                         <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">
                     </div>
-                    <div class="col-6 col-md-4">
+                    <div class="col-12 col-sm-6 col-md-4">
                         <label for="to">Hasta</label>
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
-                    <div class="col-6 col-md-4 d-flex align-items-end">
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-end">
                         <div class="form-group w-100">
                             <label for="subsidiary">Sucursal</label>
                             <select class="form-control  select2bs4" id="subsidiary" name="subsidiary" {!!
@@ -76,7 +76,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6 col-md-2 d-flex align-items-center mt-4 justify-content-center">
+                    <div class="col-12 col-sm-6 col-md-2 d-flex align-items-center mt-4 justify-content-center">
                         <div class="form-group">
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" value="1" name="soliWeb" class="custom-control-input"
@@ -88,7 +88,7 @@
                     <div class="col-12 col-md-2 d-flex align-items-end justify-content-end">
                         <div class="form-group">
                             <span class="input-group-btn btn-pr">
-                                <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
+                                <button type="submit" id="search-btn" class="btn btn-primary mt-2 btn-sm-reset"><i
                                         class="fa fa-search"></i>
                                     Buscar
                                 </button>

@@ -1,0 +1,38 @@
+@media (max-width:990px){
+    .container-reset{
+        max-width: 90% !important;
+    }
+}
+@media (max-width:720px){
+    .container-reset{
+        max-width: 95% !important;
+    }
+}
+
+@media (max-width:650px){
+    .container-reset{
+        max-width: 97% !important;
+    }
+    .bradcrumb-retet{
+        font-size: 13px;
+    }
+    .title-filter{
+        font-size: 22px;
+    }
+    .header-table{
+        font-size: 12px;
+    }
+    .body-table{
+        font-size: 10px;
+    }
+    .titleCardNumber{
+        font-size: 1.4rem;
+    }
+    .btn-sm-reset{
+    padding: .25rem .5rem !important;
+    font-size: .875rem !important;
+    line-height: 1.5 !important;
+    border-radius: .2rem !important;
+    }
+    
+}

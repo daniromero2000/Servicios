@@ -6,7 +6,7 @@
                 @endif>Anterior</a>
         </li>
         <li class="page-item">
-            <a type="submit" type="submit" class="page-link"
+            <a type="submit" type="submit" class="page-link btn-sm-reset"
                 href="{{ route("$optionsRoutes.index", ['skip' => ($skip + 1)] ) }}">Siguiente</a>
         </li>
     </ul>
