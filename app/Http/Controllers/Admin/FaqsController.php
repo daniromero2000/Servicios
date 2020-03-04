@@ -65,4 +65,8 @@ class faqsController extends Controller
 
         return response()->json([true]);
     }
+
+    public function test(Request $request){
+        return $request;
+    }
 }

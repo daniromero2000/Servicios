@@ -125,6 +125,7 @@ Route::resource('leads', 'Admin\LeadsController');
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
 Route::resource('faqs', 'Admin\FaqsController');
+Route::post('/faqsCreate', 'Admin\FaqsController@test');
 Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
