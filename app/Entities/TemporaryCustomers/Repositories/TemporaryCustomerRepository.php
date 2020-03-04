@@ -32,7 +32,7 @@ class TemporaryCustomerRepository implements TemporaryCustomerRepositoryInterfac
     public function updateOrCreateCustomer($data)
     {
         try {
-            return $this->model->updateOrCreate(['documentNumber' => $data['documentNumber']], $data);
+            return $this->model->updateOrCreate(['CEDULA' => $data['CEDULA']], $data);
         } catch (QueryException $e) {
             return $e;
         }

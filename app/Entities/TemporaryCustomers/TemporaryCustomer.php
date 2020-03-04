@@ -11,7 +11,7 @@ class TemporaryCustomer extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey = 'documentNumber';
+    protected $primaryKey = 'CEDULA';
 
     public $timestamps = false;
 
