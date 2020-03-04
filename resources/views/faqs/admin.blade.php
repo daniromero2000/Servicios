@@ -75,7 +75,7 @@
         <h5 class="modal-title">Nueva Pregunta Frecuente</h5>
       </div>
       <div class="modal-body">
-        <form ng-submit="test()">
+        <form ng-submit="createFaq()">
           {{ csrf_field() }}
           <div class="form-group">
             <label>Pregunta</label>
@@ -84,34 +84,6 @@
           <div class="form-group">
             <label>Respuesta</label>
             <textarea rows="4" class="form-control" name="answer" ng-model="faq.answer" required></textarea>
-          </div>
-
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="addFaqModal2" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Nueva Pregunta Frecuente 2</h5>
-      </div>
-      <div class="modal-body">
-        <form ng-submit="test()">
-          <div class="form-group">
-            <label>Pregunta</label>
-            <textarea rows="2" class="form-control" name="question" ng-model="test.question" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Respuesta</label>
-            <textarea rows="4" class="form-control" name="answer" ng-model="test.answer" required></textarea>
           </div>
 
           <div class="modal-footer">
