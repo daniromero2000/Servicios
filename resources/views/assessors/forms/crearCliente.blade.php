@@ -80,9 +80,9 @@
                                         ng-model="lead.APELLIDOS" required />
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <label class="labels" for="email">Correo electrónico*</label>
+                                    <label class="labels" for="email">Correo electrónico</label>
                                     <input class="inputs" id="email" type="text" validation-pattern="email"
-                                        ng-model="lead.EMAIL" required />
+                                        ng-model="lead.EMAIL" />
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <div ng-hide="lead.CEL_VAL">
@@ -109,10 +109,9 @@
                                 </div>
                                 <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                                     <label class="ventaContado-label labels" for="FEC_ING">Fecha de ingreso*</label>
-                                    <div class="input-group" moment-picker="lead_FEC_ING" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_ING" id="FEC_ING"
-                                            readonly="" placeholder="Año/Mes" required />
-                                        <span class="input-group-addon">
+                                    <div class="input-group" moment-picker="lead.FEC_ING" format="YYYY-MM">
+                                        <input class="form-control inputs" ng-model="lead.FEC_ING" id="FEC_ING" readonly="" placeholder="Año/Mes" required="" tabindex="0">
+                                        <span class="input-group-addon ng-scope">
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
                                     </div>
@@ -166,6 +165,37 @@
                                 <span class="forms-descStepNum">1</span>
                             </div>
                             <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <label class="labels" for="tipodoc">Tipo de documento*</label>
+                                    <select ng-disabled="true" class="inputs form-control" ng-model="lead.TIPO_DOC" id="tipodoc"
+                                        ng-options="type.value as type.label for type in typesDocuments"></select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="labels" for="CEDULA">Número de documento*</label>
+                                    <input readonly class="inputs" validation-pattern="IdentificationNumber"
+                                        ng-blur="getValidationLead()" type="text" ng-model="lead.CEDULA" id="CEDULA"
+                                        required />
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
+                                    <div class="input-group">
+                                        <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP"
+                                            readonly="" placeholder="Año/Mes" required />
+                                        <span class="input-group-addon">
+                                            <i class="octicon octicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <label for="nombres2" class="labels">Nombres*</label>
+                                    <input type="text" id="nombres2" ng-model="lead.NOMBRES" class="form-control inputs" required="" />
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="apellidos2" class="labels">Apellidos*</label>
+                                    <input type="text" id="apellidos2" ng-model="lead.APELIIDOS" class="form-control inputs" required="" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -340,8 +370,7 @@
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
                                         <p>
                                             Preaprobado <br>
-                                            * <span
-                                                style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                            * <span style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
                                         </p>
                                     </div>
                                 </div>

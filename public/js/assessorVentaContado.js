@@ -7,6 +7,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.code = {};
 	$scope.formConfronta = {};
 	$scope.citiesUbi = {};
+	$scope.professions = {};
 	$scope.cities = {};
 	$scope.banks = {};
 	$scope.tipoCliente = "";
@@ -160,6 +161,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.citiesUbi = response.data.ubicationsCities;
 			$scope.cities = response.data.cities;
 			$scope.banks = response.data.banks;
+			$scope.professions = response.data.professions;
 		}, function errorCallback(response) {
 			hideLoader();
 			response.url = '/assessor/api/ventaContado/getInfoVentaContdado';
@@ -256,7 +258,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.lead = response.data[0];
 				$scope.lead.CEL_VAL = 0;
 				$scope.lead.CELULAR = '';
-				$scope.lead.EMAIL = '';
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA;
