@@ -22,8 +22,10 @@
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @if ($_GET)
-                                <option @if (!empty($_GET['status'])) @endif selected>
+                                @if (!empty($_GET['status']))
+                                <option selected>
                                     {{ $_GET['status'] }}</option>
+                                @endif
                                 @endif
                                 <option>APROBADO</option>
                                 <option>PREAPROBADO</option>
