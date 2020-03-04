@@ -15,12 +15,12 @@ class TemporaryCustomers extends Migration
     {
         Schema::create('temporary_customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('documentType')->nullable();
-            $table->string('documentNumber')->nullable();
-            $table->timestamp('documentIssueDate')->nullable();
-            $table->string('economicActivity')->nullable();
-            $table->string('email')->nullable();
-            $table->string('cellPhone')->nullable();
+            $table->string('TIPO_DOC')->nullable();
+            $table->string('CEDULA')->nullable();
+            $table->timestamp('FEC_EXP')->nullable();
+            $table->string('ACTIVIDAD')->nullable();
+            $table->string('EMAIL')->nullable();
+            $table->string('CELULAR')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
