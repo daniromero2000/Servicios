@@ -23,6 +23,7 @@ use Carbon\Carbon;
         <td> @if($data->leadStatuses) <span class="text-center badge"
             style="color: white ; background-color: {{$data->leadStatuses->color }}"
             class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
+
         <td>{{ $data->leadChannel->channel}}</td>
         <td>
           @if($data->leadAssessor)
@@ -33,6 +34,8 @@ use Carbon\Carbon;
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
         <td>{{ $data->telephone}}</td>
         <td>{{ $data->city}}/{{ $data->nearbyCity}}</td>
+        <td> {{$data->leadChannel->channel}}
+        </td>
         <td> {{$data->leadArea->name}}
         </td>
         <td> @if($data->leadService) {{ $data->leadService->service}} @else
