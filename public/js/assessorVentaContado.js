@@ -279,7 +279,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.lead.CEDULA = cedula.CEDULA;
 				delete cedula;
 			}else{
-				$scope.lead = response.data[0];
+				$scope.lead = response.data;
 				$scope.lead.CEL_VAL = 0;
 				$scope.lead.CELULAR = '';
 			}

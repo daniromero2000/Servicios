@@ -21,10 +21,10 @@ class TemporaryCustomerRepository implements TemporaryCustomerRepositoryInterfac
         $this->model = $temporaryCustomer;
     }
 
-    public function findCustomerById($identificationNumber): TemporaryCustomer
+    public function findCustomerById($identificationNumber)
     {
         try {
-            return $this->model->findOrFail($identificationNumber);
+            return $this->model->find($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

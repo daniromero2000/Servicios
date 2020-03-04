@@ -36,6 +36,7 @@ use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
@@ -44,7 +45,7 @@ use App\TurnosOportuya;
 
 class assessorsController extends Controller
 {
-	private $customerInterface, $toolsInterface, $factoryInterface;
+	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface;
 	private $subsidiaryInterface;
 	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -61,6 +62,7 @@ class assessorsController extends Controller
 	 * @return void
 	 */
 	public function __construct(
+		TemporaryCustomerRepositoryInterface $temporaryCustomerRepositoryInterface,
 		CustomerProfessionRepositoryInterface $customerProfessionRepositoryInterface,
 		AssessorRepositoryInterface $AssessorRepositoryInterface,
 		FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
@@ -85,6 +87,7 @@ class assessorsController extends Controller
 		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface
 	) {
+		$this->temporaryCustomerInterface      = $temporaryCustomerRepositoryInterface;
 		$this->customerProfessionInterface     = $customerProfessionRepositoryInterface;
 		$this->assessorInterface               = $AssessorRepositoryInterface;
 		$this->factoryInterface                = $factoryRequestRepositoryInterface;
@@ -1051,25 +1054,38 @@ class assessorsController extends Controller
 
 	public function getinfoLeadVentaContado($cedula)
 	{
-		$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
-        FROM `CLIENTE_FAB` as cf
-        LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
-        LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
-        WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
-		$resp = DB::connection('oportudata')->select($query);
+		$resp = [];
+		$data= $this->temporaryCustomerInterface->findCustomerById($cedula);
+		if(!empty($data)){
+			$data = $data->toArray();
+			foreach ($data as $key => $value) {
+				if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
+					$data[$key] = trim($value);
+				}
+			}
 
-		if (empty($resp)) {
-			return "false";
-		}
-
-		foreach ($resp[0] as $key => $value) {
-			if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
-				$resp[0]->$key = trim($value);
+			$resp = $data;
+		}else{
+			$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
+			FROM `CLIENTE_FAB` as cf
+			LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
+			LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
+			WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
+			$data = DB::connection('oportudata')->select($query);
+			if(!empty($data)){
+				foreach ($data[0] as $key => $value) {
+					if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
+						$data[0]->$key = trim($value);
+					}
+				}
+				$resp = response()->json($data[0]);
 			}
 		}
 
 		return $resp;
 	}
+
+	
 
 	public function desistCredit($identificationNumber)
 	{

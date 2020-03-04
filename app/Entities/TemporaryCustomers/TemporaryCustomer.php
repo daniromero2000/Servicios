@@ -17,7 +17,18 @@ class TemporaryCustomer extends Model
 
     protected $fillable = [];
 
-    protected $hidden = [];
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 
     protected $searchable = [];
 }
