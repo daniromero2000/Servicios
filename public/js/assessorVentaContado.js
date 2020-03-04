@@ -151,6 +151,29 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 	];
 
+	$scope.scolarities = [
+		{
+			value: 'PRIMARIA',
+			label: 'Primaria'
+		},
+		{
+			value: 'BACHILLERATO',
+			label: 'Bachillerato'
+		},
+		{
+			value: 'TECN/TECNOLOGICO',
+			label: 'Tecn/Tecnológico'
+		},
+		{
+			value: 'UNIVERSITARIO',
+			label: 'Universitario'
+		},
+		{
+			value: 'ESPECIALIZACION',
+			label: 'Especialización'
+		}
+	];
+
 	$scope.getInfoVentaContado = function(){
 		showLoader();
 		$http({
