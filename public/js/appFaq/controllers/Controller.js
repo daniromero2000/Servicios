@@ -14,7 +14,6 @@ app.controller('Controller', function($scope, $http, $rootScope){
 	};//object for index and filter 
 	$scope.cargando = true;//variable for loading effect
 	$scope.faq = {};//scope for storage a new faq
-	$scope.test = {};//scope for storage a new faq
 	$scope.faqCrud = {};//scope for storage a faq for view, update or delete forms
 	$scope.faqs = [];//array of faqs retuned by server 
 
@@ -47,7 +46,7 @@ app.controller('Controller', function($scope, $http, $rootScope){
 
 	$scope.addFaq = function(){
 		
-		$("#addFaqModal2").modal("show");
+		$("#addFaqModal").modal("show");
 	
 	};
 
@@ -59,21 +58,8 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		}).then(function successCallback(response) {
 			if(response.data != false){
 				$scope.search();
-				$("#addFaqModal2").modal("hide");
+				$("#addFaqModal").modal("hide");
 			}
-		}, function errorCallback(response) {
-			
-		});
-	};
-
-
-	$scope.test = function(){
-		$http({
-		  method: 'POST',
-		  url: '/faqsCreate',
-		  data: $scope.faq
-		}).then(function successCallback(response) {
-			console.log([response,'hola']);
 		}, function errorCallback(response) {
 			
 		});
