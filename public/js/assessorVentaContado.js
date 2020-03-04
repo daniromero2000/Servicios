@@ -199,7 +199,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			mensaje: response.data.message,
 			archivo: response.data.file,
 			linea: response.data.line,
-			cedula: cedula
+			cedula: cedula,
+			datos: (response.datos) ? response.datos : []
 		}
 
 		var data = {
@@ -414,9 +415,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/addVentaContado';
-			response.data = $scope.lead;
+			response.datos = $scope.lead;
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -593,7 +593,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/validateFormConfronta';
-			response.data = $scope.infoConfronta;
+			response.datos = $scope.infoConfronta;
 			hideLoader();
 			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);

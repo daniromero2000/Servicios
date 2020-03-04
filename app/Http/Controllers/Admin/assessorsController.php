@@ -263,7 +263,6 @@ class assessorsController extends Controller
 				'STATE' 				=> 'A'
 
 			];
-
 			unset($dataOportudata['tipoCliente']);
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
@@ -290,8 +289,10 @@ class assessorsController extends Controller
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			$cityName         = $this->getCity(trim($request->get('CIUD_UBI')));
 			$getIdcityUbi     = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
-			$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
-			$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+			if($request->get('CIUD_EXP') != ''){
+				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
+				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+			}
 			$antig            = $request->get('ANTIG');
 			$indp             = $request->get('EDAD_INDP');
 			if (trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS') {
@@ -314,8 +315,8 @@ class assessorsController extends Controller
 				'CIUD_UBI'              => trim($cityName[0]->CIUDAD),
 				'ID_CIUD_UBI'           => trim($getIdcityUbi[0]->ID_DIAN),
 				'DEPTO'                 => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
-				'CIUD_EXP'              => trim($getNameCiudadExp[0]->NOMBRE),
-				'ID_CIUD_EXP'           => trim($getIdcityExp[0]->ID_DIAN),
+				'CIUD_EXP'              => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp[0]->NOMBRE) : '',
+				'ID_CIUD_EXP'           => ($request->get('CIUD_EXP') != '') ? trim($getIdcityExp[0]->ID_DIAN) : '',
 				'TIPOV'                 => trim($request->get('TIPOV')),
 				'TIEMPO_VIV'            => trim($request->get('TIEMPO_VIV')),
 				'PROPIETARIO'   		=> ($request->get('PROPIETARIO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('PROPIETARIO')))) : 'NA',
