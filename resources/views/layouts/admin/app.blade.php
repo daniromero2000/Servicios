@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>Oportudata</title>
     <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
