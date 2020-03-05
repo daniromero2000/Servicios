@@ -35,6 +35,29 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-6 col-md-2">
+                    <div class="form-group">
+                        <label for="channel">Canal </label>
+                        <select name="channel" id="channel" class="form-control select2 select2-hidden-accessible"
+                            style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                            @if(!empty($cities))
+                            <option data-select3-id="" disabled selected value> -- Selecciona Canal -- </option>
+                            @foreach($channels as $channel)
+                            <option data-select3-id="{{ $channel->id }}" value="{{ $channel->id }}">
+                                {{ $channel->channel }}
+                            </option>
+                            @if ($_GET)
+                            @if (!empty($_GET['channel']))
+                            @if($_GET['channel']==$channel->id)
+                            <option value="{{$channel->id}}" selected>{{ $channel->channel }}</option>
+                            @endif
+                            @endif
+                            @endif
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                     <label for="from">Desde</label>
                     <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">

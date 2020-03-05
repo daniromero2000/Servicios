@@ -297,9 +297,9 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
-    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection
+    public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $channel = null, $city = null, $area = null, $service = null, $product = null): Collection
     {
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($channel) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product)) {
             return $this->model->orderBy('created_at', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -318,6 +318,8 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('state', $status);
             })->when($assessor, function ($q, $assessor) {
                 return $q->where('assessor_id', $assessor);
+            })->when($channel, function ($q, $channel) {
+                return $q->where('channel', $channel);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
             })->when($area, function ($q, $area) {
@@ -344,6 +346,8 @@ class LeadRepository implements LeadRepositoryInterface
                 return $q->where('state', $status);
             })->when($assessor, function ($q, $assessor) {
                 return $q->where('assessor_id', $assessor);
+            })->when($channel, function ($q, $channel) {
+                return $q->where('channel', $channel);
             })->when($city, function ($q, $city) {
                 return $q->where('city', $city);
             })->when($area, function ($q, $area) {

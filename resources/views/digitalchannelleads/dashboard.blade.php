@@ -25,7 +25,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="ecommerce-tab" data-toggle="pill" href="#ecommerce" role="tab"
-                  aria-controls="ecommerce" aria-selected="false">E-commerces</a>
+                  aria-controls="ecommerce" aria-selected="false">Ecommerce</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="callCenter-tab" data-toggle="pill" href="#callCenter" role="tab"
