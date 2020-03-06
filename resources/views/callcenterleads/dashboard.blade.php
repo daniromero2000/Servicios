@@ -25,7 +25,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="ecommerce-tab" data-toggle="pill" href="#ecommerce" role="tab"
-                  aria-controls="ecommerce" aria-selected="false">E-commerces</a>
+                  aria-controls="ecommerce" aria-selected="false">Ecommerces</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="callCenter-tab" data-toggle="pill" href="#callCenter" role="tab"
@@ -89,8 +89,7 @@
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade active show" id="digitalChanels" role="tabpanel"
-                aria-labelledby="digitalChanels-tab">
+              <div class="tab-pane fade" id="digitalChanels" role="tabpanel" aria-labelledby="digitalChanels-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <div class="col-12 col-sm-12">

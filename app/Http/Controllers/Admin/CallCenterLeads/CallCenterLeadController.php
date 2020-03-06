@@ -68,6 +68,8 @@ class CallCenterLeadController extends Controller
 
         $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
         $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
+        $leadsOfMonthTotal = 0;
+        $leadsOfMonthTotal = $leadPriceTotalSold->sum('lead_price');
 
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->leadInterface->listLeads($skip * 30);
@@ -99,9 +101,13 @@ class CallCenterLeadController extends Controller
                 request()->input('typeProduct')
 
             );
+            foreach ($leadsOfMonth as $key => $status) {
+                $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
+            }
         }
 
 
+        $listCount = $list->count();
         $leadsOfMonth = $leadsOfMonth->count();
 
         $profile = 16;
@@ -207,7 +213,7 @@ class CallCenterLeadController extends Controller
     public function dashboard(Request $request)
     {
         $to = Carbon::now();
-        $from = Carbon::now()->subMonth();
+        $from = Carbon::now()->startOfMonth();
 
         $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
         $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
