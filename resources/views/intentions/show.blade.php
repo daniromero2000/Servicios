@@ -36,7 +36,7 @@
                 @include('intentions.layouts.generals')
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
-                <div class="row">
+                <div class="row row-reset">
                     @include('intentions.layouts.intention_data', ['datas' => $intention->dataIntentionRequest])
                     {{-- @include('intentions.layouts.statusesLog', ['datas' => $digitalChannelLeads->leadStatusesLogs]) --}}
                 </div>
