@@ -273,6 +273,9 @@ Route::get('/getAssessors', 'Admin\UserController@getAllAssessor');
 Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function () {
     Route::resource('appError', 'Admin\AppErrors\AppErrorController');
     Route::get('/crearCliente', 'Admin\assessorsController@getFormVentaContado')->name('assessorsVentaContado');
+    Route::resource('/temporaryCustomer', 'Admin\TemporaryCustomer\TemporaryCustomerController',[
+        'only' => ['store', 'destroy']
+    ]);
     Route::get('/analisis', function () {
         return view('assessors.forms.analisis');
     })->name('assessorAnalisis');

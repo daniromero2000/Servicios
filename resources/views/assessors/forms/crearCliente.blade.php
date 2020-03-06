@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div ng-show="tipoCliente == 'CREDITO'">
-                <form name="clienteCredito" ng-submit="getCodeVerification()" ng-show="step == 1">
+                <form name="clienteCredito" ng-submit="addTemporaryCustomer()" ng-show="step == 1">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -61,7 +61,7 @@
                                     <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
                                     <div class="input-group" moment-picker="lead.FEC_EXP" format="YYYY-MM-DD">
                                         <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP"
-                                            readonly="" placeholder="Año/Mes" required />
+                                            readonly="" placeholder="Año/Mes/Día" required />
                                         <span class="input-group-addon">
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
@@ -155,14 +155,14 @@
                         </div>
                     </div>
                 </form>
-                <form action="" name="clienteCreditoPaso2" ng-show="step == 2">
+                <form ng-submit="addCliente('CREDITO')" method="POST" name="clienteCreditoPaso2" ng-show="step == 2">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
                                 <strong>Información básica</strong><br>
                                 <span class="forms-descText">Ingresa los datos personales</span>
                                 <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
-                                <span class="forms-descStepNum">1</span>
+                                <span class="forms-descStepNum">2</span>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-4">
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="sexo" class="labels">Género</label>
-                                    <select class="form-control inputs" ng-model="lead.SEXO" id="sexo" ng-options="gender.values as gender.label for gender in genders"></select>
+                                    <select class="form-control inputs" ng-model="lead.SEXO" id="sexo" ng-options="gender.value as gender.label for gender in genders"></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -206,7 +206,7 @@
                                     <label class="labels" for="FEC_NAC">Fecha de nacimiento*</label>
                                     <div class="input-group" moment-picker="lead.FEC_NAC" format="YYYY-MM-DD">
                                         <input class="form-control inputs" ng-model="lead.FEC_NAC" id="FEC_NAC"
-                                            readonly="" placeholder="Año/Mes" required />
+                                            readonly="" placeholder="Año/Mes/Día" required />
                                         <span class="input-group-addon">
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
@@ -214,17 +214,17 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_NAC" class="labels">Ciudad de nacimiento</label>
-                                    <select class="form-control inputs" ng-model="lead.CIUD_NAC" id="CIUD_NAC" ng-options="city.value as city.label for city in cities"></select>
+                                    <select class="form-control inputs" ng-model="lead.CIUD_NAC" id="CIUD_NAC" ng-options="city.label as city.label for city in cities"></select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <label for="ESTUDIOS" class="labels">Nivel de estudios</label>
-                                    <select id="ESTUDIOS" class="inputs form-control" ng-model="lead.ESTUDIOS" ng-options="scolarity.vale as scolarity.label for scolarity in scolarities"></select>
+                                    <select id="ESTUDIOS" class="inputs form-control" ng-model="lead.ESTUDIOS" ng-options="scolarity.value as scolarity.label for scolarity in scolarities"></select>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="PROFESION" class="labels">Profesión</label>
-                                    <select id="PROFESION" class="inputs form-control" ng-model="lead.PROFESION" ng-options="profession.CODIGO as profession.NOMBRE for profession in professions"></select>
+                                    <select id="PROFESION" class="inputs form-control" ng-model="lead.PROFESION" ng-options="profession.NOMBRE as profession.NOMBRE for profession in professions"></select>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="PERSONAS" class="labels">Personas a cargo</label>
@@ -294,10 +294,87 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" type="submit">Continuar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
-                <form action="" ng-show="step == 3"></form>
+                <form ng-submit="addCliente('CREDITO')" ng-show="step == 3">
+                    <div class="row container-form">
+                        <div class="col-12 type-client">
+                            <div class="forms-descStep forms-descStep-avances">
+                                <strong>Información básica</strong><br>
+                                <span class="forms-descText">Ingresa los datos de ubicación</span>
+                                <img src="{{ asset('images/datosPersonales.png') }}" class="img-fluid forms-descImg">
+                                <span class="forms-descStepNum">3</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <label class="ventaContado-label" for="ciud_ubi2">Ciudad de ubicación</label>
+                                    <select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi2"
+                                        ng-options="city.value as city.label for city in citiesUbi"></select>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="TIPOV" class="labels">Tipo de vivienda</label>
+                                    <select class="inputs form-control" ng-model="lead.TIPOV" id="TIPOV" ng-options="housingType.value as housingType.label for housingType in housingTypes"></select>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="lead.TIPOV == 'ARRIENDO'">
+                                <div class="col-12 col-sm-4">
+                                    <label for="PROPIETARIO" class="labels">Propietario de la vivienda</label>
+                                    <input type="text" class="inputs form-control" ng-model="lead.PROPIETARIO" id="PROPIETARIO" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="TEL_PROP" class="labels">Teléfono del propietario</label>
+                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_PROP" id="TEL_PROP" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="VRARRIENDO" class="labels">Valor del arriendo ($)</label>
+                                    <input type="text" class="inputs form-control" ng-model="lead.VRARRIENDO" id="VRARRIENDO" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <label for="DIRECCION" class="labels">Dirección</label>
+                                    <input type="text" class="inputs form-control" ng-model="lead.DIRECCION" id="DIRECCION" />
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="ESTRATO" class="labels">Estrato</label>
+                                    <select class="form-control inputs" ng-model="lead.ESTRATO" id="ESTRATO" ng-options="strat.value as strat.label for strat in stratum"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-4">
+                                    <label for="TELFIJO" class="labels">Teléfono fijo</label>
+                                    <input type="text" class="form-control inputs" ng-model="lead.TELFIJO" id="TELFIJO" />
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <div ng-hide="lead.CEL_VAL">
+                                        <label class="ventaContado-label">Celular</label>
+                                        <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
+                                            validation-pattern="telephone" required />
+                                    </div>
+                                    <div ng-show="lead.CEL_VAL">
+                                        <label class="ventaContado-label">Celular</label>
+                                        <input class="inputs" ng-model="CELULAR" readonly ng-disabled="true" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <label for="EMAIL" class="labels">Correo electrónico</label>
+                                    <input type="text" class="form-control inputs" ng-model="lead.EMAIL" id="EMAIL" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary" type="submit">Continuar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 <form action="" ng-show="step == 4"></form>
             </div>
             <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'">
@@ -353,7 +430,7 @@
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label labels" for="genero">Género</label>
                         <select class="inputs" ng-model="lead.SEXO" id="genero"
-                            ng-options="gender.value as gender.label for gender in genders"></select>
+                            ng-options="gender.label as gener.value for gender in genders"></select>
                     </div>
                 </div>
                 <div class="row">

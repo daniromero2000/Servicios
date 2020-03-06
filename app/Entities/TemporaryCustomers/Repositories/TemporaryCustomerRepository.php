@@ -29,12 +29,22 @@ class TemporaryCustomerRepository implements TemporaryCustomerRepositoryInterfac
             abort(503, $e->getMessage());
         }
     }
-    public function updateOrCreateCustomer($data)
+
+    public function updateOrCreateTemporaryCustomer($data)
     {
         try {
             return $this->model->updateOrCreate(['CEDULA' => $data['CEDULA']], $data);
         } catch (QueryException $e) {
             return $e;
         }
+    }
+
+    public function deleteTemporaryCustomer($identificationNumber){
+        $data = $this->findCustomerById($identificationNumber);
+        if($data){
+            return $data->delete();
+        }
+
+        return [];
     }
 }

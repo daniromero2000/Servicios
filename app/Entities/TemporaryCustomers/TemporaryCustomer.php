@@ -13,9 +13,19 @@ class TemporaryCustomer extends Model
 
     protected $primaryKey = 'CEDULA';
 
-    public $timestamps = false;
-
-    protected $fillable = [];
+    protected $fillable = [
+        'TIPO_DOC',
+        'CEDULA',
+        'FEC_EXP',
+        'NOMBRES',
+        'APELLIDOS',
+        'ACTIVIDAD',
+        'EMAIL',
+        'FEC_ING',
+        'CIUD_UBI',
+        'FEC_CONST',
+        'CELULAR'
+    ];
 
     protected $hidden = [
         'id',

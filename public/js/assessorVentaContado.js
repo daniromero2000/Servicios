@@ -174,6 +174,33 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 	];
 
+	$scope.stratum = [
+		{
+			value:1,
+			label:'1'
+		},
+		{
+			value:2,
+			label:'2'
+		},
+		{
+			value:3,
+			label:'3'
+		},
+		{
+			value:4,
+			label:'4'
+		},
+		{
+			value:5,
+			label:'5'
+		},
+		{
+			value:6,
+			label:'6'
+		}
+	];
+
 	$scope.getInfoVentaContado = function(){
 		showLoader();
 		$http({
@@ -223,6 +250,36 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.numError = response.data.id;
 		}, function errorCallback(response) {
 			console.log(response);
+		});
+	};
+
+	$scope.addTemporaryCustomer = function(){
+		$http({
+			method: 'POST',
+			url: '/Administrator/temporaryCustomer',
+			data: $scope.lead,
+		}).then(function successCallback(response) {
+			$scope.getCodeVerification();
+		}, function errorCallback(response) {
+			console.log(response);
+			response.url = '/Administrator/temporaryCustomer';
+			response.datos = $scope.lead;
+			hideLoader();
+			$scope.addError(response, $scope.lead.CEDULA);
+		});
+	};
+
+	$scope.deleteTemporaryCustomer = function(){
+		$http({
+			method: 'DELETE',
+			url: '/Administrator/temporaryCustomer/'+$scope.lead.CEDULA,
+		}).then(function successCallback(response) {
+			console.log("Eliminado !!");
+		}, function errorCallback(response) {
+			console.log(response);
+			response.url = '/Administrator/temporaryCustomer/'+$scope.lead.CEDULA;
+			hideLoader();
+			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
 
@@ -396,23 +453,31 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.addCliente = function(tipoCreacion){
+		$scope.step++;
+		$scope.deleteTemporaryCustomer();
 		$('#proccess').modal('show');
 		$scope.lead.tipoCliente = tipoCreacion;
+		console.log($scope.lead);
 		showLoader();
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
+			console.log(response);
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
 					$('#proccess').modal('hide');
 					$scope.showConfirm();
 				}, 1000);
 			}
-			if(tipoCreacion == 'CREDITO'){
+			if(tipoCreacion == 'CREDITO' && $scope.step == 2){
 				$scope.execConsultasLead(response.data.identificationNumber);
 			}
+
+			setTimeout(() => {
+				$('#proccess').modal('hide');
+			}, 1000);
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/addVentaContado';
 			response.datos = $scope.lead;

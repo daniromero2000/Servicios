@@ -292,9 +292,28 @@ class assessorsController extends Controller
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			$cityName         = $this->getCity(trim($request->get('CIUD_UBI')));
 			$getIdcityUbi     = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
-			if($request->get('CIUD_EXP') != ''){
+			if ($request->get('CIUD_EXP') != '') {
 				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
 				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
+			}
+			if ($request->get('FEC_EXP') != '' && $request->get('FEC_EXP') != '1900-01-01') {
+
+				$time = strtotime($request->get('FEC_EXP'));
+				$now  = time();
+				$age  = ($now - $time);
+				$age  = floor($age);
+		
+				//return $age;
+			
+			// $date = Carbon::parse($request->get('FEC_EXP'));
+			// 	$now = Carbon::now();
+			// 	$now = $now->format('Y-m-d');
+			// 	$years = $date->diffInYears($now);
+				
+			}
+			
+			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
+				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
 			}
 			$antig            = $request->get('ANTIG');
 			$indp             = $request->get('EDAD_INDP');
@@ -303,70 +322,108 @@ class assessorsController extends Controller
 			} else {
 				$indp = $this->calculateTimeCompany(trim($request->get('FEC_CONST')) . "-01");
 			}
+
 			$dataOportudata = [
 				'TIPO_DOC'              => trim($request->get('TIPO_DOC')),
 				'CEDULA'                => trim($request->get('CEDULA')),
-				'FEC_EXP'               => trim($request->get('FEC_EXP')),
-				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
 				'APELLIDOS'   			=> ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
-				'EMAIL'                 => trim($request->get('EMAIL')),
-				'PROFESION'             => 'NO APLICA',
-				'CELULAR'               => trim($request->get('CELULAR')),
-				'ACTIVIDAD'             => trim($request->get('ACTIVIDAD')),
-				'FEC_NAC'               => trim($request->get('FEC_NAC')),
+				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
+				'TIPOCLIENTE'           => 'OPORTUYA',
+				'SUBTIPO'               => 'WEB',
 				'EDAD'                  => $this->calculateAge($request->get('FEC_NAC')),
-				'CIUD_UBI'              => trim($cityName[0]->CIUDAD),
-				'ID_CIUD_UBI'           => trim($getIdcityUbi[0]->ID_DIAN),
-				'DEPTO'                 => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+				'FEC_EXP'     			=> ($request->get('FEC_EXP') != '') ?  trim($request->get('FEC_EXP')) : '1900-01-01',
 				'CIUD_EXP'              => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp[0]->NOMBRE) : '',
-				'ID_CIUD_EXP'           => ($request->get('CIUD_EXP') != '') ? trim($getIdcityExp[0]->ID_DIAN) : '',
-				'TIPOV'                 => trim($request->get('TIPOV')),
-				'TIEMPO_VIV'            => trim($request->get('TIEMPO_VIV')),
+				'SEXO'  				=> ($request->get('SEXO') != '') ? trim($request->get('SEXO')) : '',
+				'PERSONAS'  			=> ($request->get('PERSONAS') != '') ? trim($request->get('PERSONAS')) : '0',
+				'FEC_NAC'               => ($request->get('FEC_NAC') != '') ? trim($request->get('FEC_NAC')) : '1980-01-01',
+				'ESTADOCIVIL'  			=> ($request->get('ESTADOCIVIL') != '') ? trim($request->get('ESTADOCIVIL')) : '',
+				'ESTUDIOS'  			=> ($request->get('ESTUDIOS') != '') ? trim($request->get('ESTUDIOS')) : '',
+				'POSEEVEH'  			=> ($request->get('POSEEVEH') != '') ? trim($request->get('POSEEVEH')) : '',
+				'PLACA'  				=> ($request->get('PLACA') != '') ? trim($request->get('PLACA')) : '',
+				'PROFESION'  			=> ($request->get('PROFESION') != '') ? trim($request->get('PROFESION')) : '',
+				'TIPOV'  				=> ($request->get('TIPOV') != '') ? trim($request->get('TIPOV')) : '',
 				'PROPIETARIO'   		=> ($request->get('PROPIETARIO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('PROPIETARIO')))) : 'NA',
-				'DIRECCION'   			=> ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
+				'TEL_PROP'   			=> ($request->get('TEL_PROP') != '') ? trim($request->get('TEL_PROP')) : '0',
 				'VRARRIENDO'            => trim($request->get('VRARRIENDO') != '') ? trim($request->get('VRARRIENDO')) : 0,
-				'TELFIJO'               => trim($request->get('TELFIJO')),
-				'ESTRATO'               => trim($request->get('ESTRATO')),
-				'SEXO'                  => trim($request->get('SEXO')),
-				'ESTADOCIVIL'           => trim($request->get('ESTADOCIVIL')),
+				'DIRECCION'   			=> ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
+				'TELFIJO'   			=> ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO')) : '0',
+				'CELULAR'   			=> ($request->get('CELULAR') != '') ? trim($request->get('CELULAR')) : '0',
+				'TIEMPO_VIV'   			=> ($request->get('TIEMPO_VIV') != '') ? trim($request->get('TIEMPO_VIV')) : '0',
+				'CIUD_UBI'   			=> ($request->get('CIUD_UBI') != '') ?  trim($cityName[0]->CIUDAD) : '',
+				'EMAIL'   				=> ($request->get('EMAIL') != '') ? trim($request->get('EMAIL')) : '',
+				'DEPTO'                 => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+				'ACTIVIDAD'             => trim($request->get('ACTIVIDAD')),
+				'ACT_ECO'   			=> ($request->get('ACT_ECO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('ACT_ECO')))) : 'NA',
 				'NIT_EMP'   			=> ($request->get('NIT_EMP') != '') ? trim($request->get('NIT_EMP')) : '0',
 				'RAZON_SOC'             => trim($request->get('RAZON_SOC') != '') ? trim(strtoupper($request->get('RAZON_SOC'))) : 'NA',
+				'FEC_ING'               => trim($request->get('FEC_ING')) . "-01",
+				'ANTIG'   				=> ($antig != '') ? trim($antig) : '',
+				'CARGO'   				=> ($request->get('CARGO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('CARGO')))) : 'NA',
 				'DIR_EMP'   			=> ($request->get('DIR_EMP') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIR_EMP')))) : 'NA',
 				'TEL_EMP'   			=> ($request->get('TEL_EMP') != '') ? trim($request->get('TEL_EMP')) : 'NA',
 				'TEL2_EMP'   			=> ($request->get('TEL2_EMP') != '') ? trim($request->get('TEL2_EMP')) : 'NA',
-				'ACT_ECO'   			=> ($request->get('ACT_ECO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('ACT_ECO')))) : 'NA',
-				'CARGO'   				=> ($request->get('CARGO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('CARGO')))) : 'NA',
-				'FEC_ING'               => trim($request->get('FEC_ING')) . "-01",
-				'ANTIG'                 => $antig,
-				'SUELDO'                => trim($request->get('SUELDO')),
 				'TIPO_CONT'   			=> ($request->get('TIPO_CONT') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('TIPO_CONT')))) : 'NA',
-				'CAMARAC'   			=> ($request->get('CAMARAC') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('CAMARAC')))) : 'NO',
-				'OTROS_ING'             => ($request->get('OTROS_ING') != '') ? trim($request->get('OTROS_ING')) : '0',
+				'SUELDO'          	    => trim($request->get('SUELDO') != '') ? trim(strtoupper($request->get('SUELDO'))) : '0',
 				'NIT_IND'          	    => ($request->get('NIT_IND') != '') ? trim($request->get('NIT_IND')) : '0',
 				'RAZON_IND'   			=> ($request->get('RAZON_IND') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('RAZON_IND')))) : 'NA',
 				'ACT_IND'          	    => ($request->get('ACT_IND') != '') ? trim($request->get('ACT_IND')) : 'NA',
-				'EDAD_INDP'          	=> ($indp != '') ? trim($indp) : 'NA',
+				'EDAD_INDP'          	=> ($indp != '') ? trim($indp) : '',
 				'FEC_CONST'             => trim($request->get('FEC_CONST')) . "-01",
-				'SUELDOIND'          	=> ($request->get('SUELDOIND') != '') ? trim($request->get('SUELDOIND')) : 'NA',
-				'BANCOP'           		=> ($request->get('BANCOP') != '') ? trim($request->get('BANCOP')) : '0',
+				'N_EMPLEA'              => trim($request->get('N_EMPLEA')) . "-01",
+				'VENTASMES'             => trim($request->get('VENTASMES')),
+				'COSTOSMES'             => trim($request->get('COSTOSMES')),
+				'GASTOS'             	=> trim($request->get('GASTOS')),
+				'DEUDAMES'             	=> trim($request->get('DEUDAMES')),
+				'OTROS_ING'             => ($request->get('OTROS_ING') != '') ? trim($request->get('OTROS_ING')) : '0',
+				'ESTRATO'            	=> ($request->get('ESTRATO') != '') ? trim($request->get('ESTRATO')) : '0',
+				'SUELDOIND'          	=> ($request->get('SUELDOIND') != '') ? trim($request->get('SUELDOIND')) : '0', 
 				'SUC'                   => $sucursal,
-				'TIPOCLIENTE'           => 'OPORTUYA',
-				'SUBTIPO'               => 'WEB',
-				'MEDIO_PAGO'            => trim($request->get('MEDIO_PAGO')),
-				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
+				'TEL3'          		=> ($request->get('TEL3') != '') ? trim($request->get('TEL3')) : '0', 
+				'TEL4'          		=> ($request->get('TEL4') != '') ? trim($request->get('TEL4')) : '0', 
+				'TEL5'          		=> ($request->get('TEL5') != '') ? trim($request->get('TEL5')) : '0', 
+				'TEL6'          		=> ($request->get('TEL6') != '') ? trim($request->get('TEL6')) : '0', 
+				'TEL7'          		=> ($request->get('TEL7') != '') ? trim($request->get('TEL7')) : '0', 
+				'DIRECCION2'       	  	=> ($request->get('DIRECCION2') != '') ? trim($request->get('DIRECCION2')) : 'NA', 
+				'DIRECCION3'          	=> ($request->get('DIRECCION3') != '') ? trim($request->get('DIRECCION3')) : 'NA', 
+				'DIRECCION4'          	=> ($request->get('DIRECCION4') != '') ? trim($request->get('DIRECCION4')) : 'NA', 
+				'CIUD_NAC'          	=> ($request->get('CIUD_NAC') != '') ? trim($request->get('CIUD_NAC')) : 'NA', 
+				'NOMBRE_CONYU'   		=> ($request->get('NOMBRE_CONYU') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRE_CONYU')))) : 'NA',
+				'CELULAR_CONYU'         => ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0', 
+				'TRABAJO_CONYU'         => ($request->get('TRABAJO_CONYU') != '') ? trim($request->get('TRABAJO_CONYU')) : 'NA', 
+				'SALARIO_CONYU'         => ($request->get('SALARIO_CONYU') != '') ? trim($request->get('SALARIO_CONYU')) : '0', 
+				'CAMARAC'          		=> ($request->get('CAMARAC') != '') ? trim($request->get('CAMARAC')) : 'NO', 
+				'BANCOP'           		=> ($request->get('BANCOP') != '') ? trim($request->get('BANCOP')) : '0',
+				'CEDULA_C'              => ($request->get('CEDULA_C') != '') ? trim($request->get('CEDULA_C')) : '0',
+				'PROFESION_CONYU'       => ($request->get('PROFESION_CONYU') != '') ? trim($request->get('PROFESION_CONYU')) : 'NA',
+				'CARGO_CONYU'           => ($request->get('CARGO_CONYU') != '') ? trim($request->get('CARGO_CONYU')) : 'NA',
+				'EPS_CONYU'           	=> ($request->get('EPS_CONYU') != '') ? trim($request->get('EPS_CONYU')) : 'NA',
+				'TARJETA_OP'            => ($request->get('TARJETA_OP') != '') ? trim($request->get('TARJETA_OP')) : '',
+				'CON1'            		=> ($request->get('CON1') != '') ? trim($request->get('CON1')) : '',
+				'CON2'            		=> ($request->get('CON2') != '') ? trim($request->get('CON2')) : '',
+				'CON3'            		=> ($request->get('CON3') != '') ? trim($request->get('CON3')) : '',
+				'USU'           		=> ($request->get('USU') != '') ? trim($request->get('USU')) : '',
+				'NOTA1'            		=> ($request->get('NOTA1') != '') ? trim($request->get('NOTA1')) : '',
+				'NOTA2'            		=> ($request->get('NOTA2') != '') ? trim($request->get('NOTA2')) : '',
+				'VCON_NOM1'            	=> ($request->get('VCON_NOM1') != '') ? trim($request->get('VCON_NOM1')) : '',
+				'VCON_CED1'            	=> ($request->get('VCON_CED1') != '') ? trim($request->get('VCON_CED1')) : '',
+				'VCON_TEL1'            	=> ($request->get('VCON_TEL1') != '') ? trim($request->get('VCON_TEL1')) : '',
+				'VCON_NOM2'            	=> ($request->get('VCON_NOM2') != '') ? trim($request->get('VCON_NOM2')) : 'NA',
+				'VCON_CED2'            	=> ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : '',
+				'VCON_TEL2'            	=> ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : '',
+				'VCON_DIR'            	=> ($request->get('VCON_DIR') != '') ? trim($request->get('VCON_DIR')) : '',
 				'ORIGEN'                => 'ASESORES-CREDITO',
-				'USUARIO_CREACION'      => $usuarioCreacion,
-				'USUARIO_ACTUALIZACION' => $assessorCode,
+				'PASO'            		=> ($request->get('PASO') != '') ? trim($request->get('PASO')) : '',
+				'STATE'            		=> 'A',
+				'MEDIO_PAGO'            => ($request->get('MEDIO_PAGO') != '') ? trim($request->get('MEDIO_PAGO')) : '',
+				'ID_CIUD_EXP'           => ($request->get('CIUD_EXP') != '') ? trim($getIdcityExp[0]->ID_DIAN) : '',
+				'ID_CIUD_NAC'           => ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') ? trim($getIdcityNac[0]->ID_DIAN) : '',
+				'ID_CIUD_UBI'           => trim($getIdcityUbi[0]->ID_DIAN),
+				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
 				'CLIENTE_WEB'           => $clienteWeb,
-				'EPS_CONYU' 			=> 'NA',
-				'CEDULA_C' 				=> '0',
-				'TRABAJO_CONYU' 		=> 'NA',
-				'CARGO_CONYU' 			=> 'NA',
-				'NOMBRE_CONYU' 			=> 'NA',
-				'PROFESION_CONYU'		=> 'NA',
-				'SALARIO_CONYU' 		=> '0',
-				'CELULAR_CONYU' 		=> '0'
+				'USUARIO_CREACION'      => $usuarioCreacion,
+				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
+
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
 			if ($request->get('CEL_VAL') == 0 && $queryExistCel[0]->total == 0) {
@@ -805,9 +862,9 @@ class assessorsController extends Controller
 		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultationPolicy($identificationNumber);
 		if (!empty($getDataFosyga)) {
-			if($getDataFosyga->fuenteFallo == 'SI'){
+			if ($getDataFosyga->fuenteFallo == 'SI') {
 				$fuenteFallo = "true";
-			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+			} elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				$fuenteFallo = "true";
 			}
 		} else {
@@ -855,7 +912,7 @@ class assessorsController extends Controller
 		}
 		// 5 Definiciones cliente
 
-		if($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA'){
+		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
 			$customer->ESTADO = 'PREAPROBADO';
 			$customer->save();
 			$customerIntention->TARJETA          = 'Crédito Tradicional';
@@ -1055,8 +1112,8 @@ class assessorsController extends Controller
 	public function getinfoLeadVentaContado($cedula)
 	{
 		$resp = [];
-		$data= $this->temporaryCustomerInterface->findCustomerById($cedula);
-		if(!empty($data)){
+		$data = $this->temporaryCustomerInterface->findCustomerById($cedula);
+		if (!empty($data)) {
 			$data = $data->toArray();
 			foreach ($data as $key => $value) {
 				if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
@@ -1065,14 +1122,14 @@ class assessorsController extends Controller
 			}
 
 			$resp = $data;
-		}else{
-			$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
+		} else {
+			$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, cf.`CEDULA_C`, cf.`NOMBRE_CONYU`, cf.`CELULAR_CONYU`, cf.`TRABAJO_CONYU`, cf.`PROFESION_CONYU`, cf.`CARGO_CONYU`, cf.`SALARIO_CONYU`, cf.`EPS_CONYU`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
 			FROM `CLIENTE_FAB` as cf
 			LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
 			LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
 			WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
 			$data = DB::connection('oportudata')->select($query);
-			if(!empty($data)){
+			if (!empty($data)) {
 				foreach ($data[0] as $key => $value) {
 					if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
 						$data[0]->$key = trim($value);
@@ -1085,7 +1142,7 @@ class assessorsController extends Controller
 		return $resp;
 	}
 
-	
+
 
 	public function desistCredit($identificationNumber)
 	{
