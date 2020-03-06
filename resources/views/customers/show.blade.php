@@ -72,10 +72,19 @@
         </ul>
         <div class="tab-content mt-4" id="tabcontent">
             <div role="tabpanel" class="tab-pane container-fluid active" id="info">
-                @include('customers.layouts.generals')
-                @include('customers.layouts.ids')
-                @include('customers.layouts.phones')
-                @include('customers.layouts.emails')
+                <div class="row">
+                    @include('customers.layouts.generals')
+                    <div class="col-12 col-sm-6">
+                        @include('customers.layouts.ids')
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        @include('customers.layouts.phones')
+                    </div>
+                    <div class="col-12 ">
+                        @include('customers.layouts.emails')
+                    </div>
+                </div>
+
             </div>
             <div role="tabpanel" class="tab-pane container-fluid" id="webIntentions">
                 @include('customers.layouts.intentions', ['datas' =>

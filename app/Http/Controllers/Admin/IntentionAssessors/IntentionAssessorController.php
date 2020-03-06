@@ -53,7 +53,7 @@ class IntentionAssessorController extends Controller
         return view('intentionAssessors.list', [
             'intentionAssessors'   => $list,
             'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Fecha', 'Intención', 'Origen', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Decisión', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
+            'headers'              => ['Fecha', 'Intención', 'Origen', 'Asesor', 'Estado',  'Cliente',  'Actividad', 'Estado Obligaciones', 'Perfil Crediticio', 'Historial Crediticio', 'Crédito', 'Decisión', 'Riesgo Zona', 'Edad', 'Tiempo en Labor', 'Tipo 5 Especial', 'Inspección Ocular', 'Definición'],
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
