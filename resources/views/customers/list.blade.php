@@ -35,7 +35,11 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2>{{ $listCount }}</h2>
+                      @if ($_GET)
+                      <p>Total de Clientes</p>
+                      @else
                       <p>Clientes en este mes</p>
+                      @endif
                     </div>
                     <div class="icon">
                       <i class="ion ion-stats-bars"></i>
