@@ -45,7 +45,12 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h2>{{ $leadsOfMonth }}</h2>
+                                            @if ($_GET)
+                                            <p class="mt-3">Total de Solicitudes</p>
+                                            @else
                                             <p>Solicitudes en este mes</p>
+                                            @endif
+
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
@@ -57,7 +62,11 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h4>${{ number_format ($leadsOfMonthTotal) }}</h4>
+                                            @if ($_GET)
+                                            <p class="mt-4">Total de Cotizaciónes</p>
+                                            @else
                                             <p class="mt-3">Total de Cotizaciónes en este mes</p>
+                                            @endif
                                         </div>
                                         <div class="icon">
                                             <i class="fas fa-shopping-cart"></i>

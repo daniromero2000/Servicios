@@ -34,7 +34,11 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2>{{ $listCount }}</h2>
+                      @if ($_GET)
+                      <p>Total de Solicitudes</p>
+                      @else
                       <p>Solicitudes en este mes</p>
+                      @endif
                     </div>
                     <div class="icon">
                       <i class="ion ion-stats-bars"></i>
@@ -46,7 +50,11 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h4>${{ number_format ($factoryRequestsTotal) }}</h4>
+                      @if ($_GET)
+                      <p class="mt-3">Total</p>
+                      @else
                       <p class="mt-3">Total en este mes</p>
+                      @endif
                     </div>
                     <div class="icon">
                       <i class="fas fa-shopping-cart"></i>
