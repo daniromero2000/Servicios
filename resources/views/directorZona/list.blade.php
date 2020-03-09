@@ -49,7 +49,6 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h4 class="mb-3">${{ number_format ($factoryRequestsTotal) }}</h4>
-                      <p>Total de este mes</p>
                       @if ($_GET)
                       <p>Total</p>
                       @else
