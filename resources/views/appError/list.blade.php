@@ -11,7 +11,7 @@
                         <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
                     </div>
                     <div class="col-sm-8">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard/customers">Dashboard
                                     Clientes</a></li>
@@ -94,11 +94,5 @@
 </section>
 @endsection
 @section('scriptsJs')
-{"mensaje":"
-SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CODIGOd' in 'field list' (SQL: SELECT CODIGOd as
-value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 ORDER BY CIUDAD ASC)","
-archivo":"E:\\MIS
-DATOS\\Documents\\proyectos\\dev1.serviciosoportunidades\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php",
-"linea":664,
-"cedula":""}
+
 @endsection
