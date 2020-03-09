@@ -52,8 +52,8 @@
                     @if(!empty($cities))
                     <option disabled selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
-                    <option value="{{ $city->CIUDAD }}">
-                      {{ $city->CIUDAD }}
+                    <option value="{{ $city->NOMBRE }}">
+                      {{ $city->NOMBRE }}
                     </option>
                     @endforeach
                     @endif

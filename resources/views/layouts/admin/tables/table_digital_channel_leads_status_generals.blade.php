@@ -129,9 +129,9 @@ use Carbon\Carbon;
                           <select name="city" id="city{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($cities))
                             @foreach($cities as $city)
-                            <option @if($data->city==$city->CIUDAD) selected="selected" @endif
-                              value="{{ $city->CIUDAD }}">
-                              {{ $city->CIUDAD }}
+                            <option @if($data->city==$city->NOMBRE) selected="selected" @endif
+                              value="{{ $city->NOMBRE }}">
+                              {{ $city->NOMBRE }}
                             </option>
                             @endforeach
                             @endif

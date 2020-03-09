@@ -20,7 +20,7 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
-
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
@@ -28,7 +28,7 @@ use App\Product;
 
 class CallCenterLeadController extends Controller
 {
-    private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
+    private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface, $cityInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
     private $leadProductInterface;
 
@@ -44,7 +44,8 @@ class CallCenterLeadController extends Controller
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
-        LeadAreaRepository $LeadAreaRepositoryInterface
+        LeadAreaRepository $LeadAreaRepositoryInterface,
+        CityRepositoryInterface $CityRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -57,7 +58,8 @@ class CallCenterLeadController extends Controller
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
         $this->UserInterface         = $UserRepositoryInterface;
-        $this->LeadAreaInterface = $LeadAreaRepositoryInterface;
+        $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
+        $this->cityInterface         = $CityRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -119,7 +121,7 @@ class CallCenterLeadController extends Controller
             'listCount'           => $leadsOfMonth,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
@@ -187,7 +189,7 @@ class CallCenterLeadController extends Controller
             'leadService'        => $digitalChannelLead->typeService,
             'leadProduct'        => $digitalChannelLead->typeProduct,
             'leadStatus'         => $digitalChannelLead->state,
-            'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'             => $this->cityInterface->getCityByLabel(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),

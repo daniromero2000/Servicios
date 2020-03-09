@@ -20,13 +20,13 @@
                             @if(!empty($cities))
                             <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                             @foreach($cities as $city)
-                            <option data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
-                                {{ $city->CIUDAD }}
+                            <option data-select3-id="{{ $city->NOMBRE }}" value="{{ $city->NOMBRE }}">
+                                {{ $city->NOMBRE }}
                             </option>
                             @if ($_GET)
                             @if (!empty($_GET['city']))
-                            @if($_GET['city']==$city->CIUDAD)
-                            <option selected>{{ $city->CIUDAD }}</option>
+                            @if($_GET['city']==$city->NOMBRE)
+                            <option selected>{{ $city->NOMBRE }}</option>
                             @endif
                             @endif
                             @endif
