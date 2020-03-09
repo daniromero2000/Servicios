@@ -8,4 +8,6 @@ interface CityRepositoryInterface
     public function getCityByName($name);
 
     public function getCityByCode($code);
+
+    public function getCityByLabel();
 }

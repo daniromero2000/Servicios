@@ -21,6 +21,7 @@ use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Liquidator;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,8 @@ class DigitalChannelLeadController extends Controller
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
-        LeadAreaRepository $LeadAreaRepositoryInterface
+        LeadAreaRepository $LeadAreaRepositoryInterface,
+        CityRepositoryInterface $CityRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -57,6 +59,7 @@ class DigitalChannelLeadController extends Controller
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
         $this->UserInterface         = $UserRepositoryInterface;
         $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
+        $this->cityInterface         = $CityRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -122,7 +125,7 @@ class DigitalChannelLeadController extends Controller
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
@@ -197,7 +200,7 @@ class DigitalChannelLeadController extends Controller
             'leadProduct'        => $digitalChannelLead->typeProduct,
             'leadStatus'         => $digitalChannelLead->state,
             'areas'              => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'             => $this->cityInterface->getCityByLabel(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
@@ -207,19 +210,6 @@ class DigitalChannelLeadController extends Controller
             'liquidators'        => $liquidators
         ]);
     }
-    // "pagaduriaName" => "GOBERNACION DEL QUINDIO"
-    // "customerType" => "DOCENTE"
-    // "creditLineName" => "Libre inversión"
-    // "age" => 20
-    // "creditLine" => null
-    // "pagaduria" => null
-    // "fee" => 186400
-    // "rate" => 0.019
-    // "salary" => 2000000
-    // "amount" => 2000000
-    // "timeLimit" => 13
-
-    // "occupation" => null
 
     public function update(Request $request, $id)
     {

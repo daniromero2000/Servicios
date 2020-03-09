@@ -7,7 +7,6 @@ use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
@@ -20,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\LeadProducts\LeadProduct;
@@ -45,8 +45,8 @@ class LeadInsuranceController extends Controller
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
-        LeadAreaRepository $LeadAreaRepositoryInterface
-
+        LeadAreaRepository $LeadAreaRepositoryInterface,
+        CityRepositoryInterface $CityRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -60,7 +60,7 @@ class LeadInsuranceController extends Controller
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
         $this->UserInterface         = $UserRepositoryInterface;
         $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
-
+        $this->cityInterface         = $CityRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -110,7 +110,7 @@ class LeadInsuranceController extends Controller
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),

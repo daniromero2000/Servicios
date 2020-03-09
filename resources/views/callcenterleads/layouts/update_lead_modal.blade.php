@@ -55,8 +55,8 @@
                     <select name="city" id="city" class="form-control" enabled>
                       @if(!empty($cities))
                       @foreach($cities as $city)
-                      <option @if($leadCity==$city->CIUDAD) selected="selected" @endif value="{{ $city->CIUDAD }}">
-                        {{ $city->CIUDAD }}
+                      <option @if($leadCity==$city->NOMBRE) selected="selected" @endif value="{{ $city->NOMBRE }}">
+                        {{ $city->NOMBRE }}
                       </option>
                       @endforeach
                       @endif

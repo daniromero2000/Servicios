@@ -31,4 +31,13 @@ class CityRepository implements CityRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getCityByLabel()
+    {
+        try {
+            return $this->model->where('ETIQUETA', 'LEADS')->get(['NOMBRE', 'ID_DIAN', 'DEPARTAMENTO']);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }
