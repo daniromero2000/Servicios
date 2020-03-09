@@ -8,10 +8,8 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-8">
-                        <ol class="breadcrumb float-sm-right">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
                                     href="/Administrator/dashboard/digitalChannelLead">Dashboard
@@ -21,8 +19,9 @@
                         </ol>
                     </div>
                     <div class="col-sm-12 mt-2">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
-                        <button class="btn btn-primary ml-auto mr-3 mb-2 ">
+                        <a href="{{ URL::previous() }}"
+                            class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                        <button class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">
                             <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
                                     class="far fa-plus-square"></i></a>
                         </button>
