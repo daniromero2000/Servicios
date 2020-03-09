@@ -21,6 +21,7 @@ use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArr
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
 use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
@@ -34,8 +35,10 @@ use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
+use App\Entities\Kinships\Repositories\Interfaces\KinshipRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
@@ -45,6 +48,7 @@ use App\TurnosOportuya;
 
 class assessorsController extends Controller
 {
+	private $kinshipInterface;
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface;
 	private $subsidiaryInterface;
@@ -56,12 +60,16 @@ class assessorsController extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface;
 	private $assessorInterface;
+	private $codebtorInterface, $secondCodebtorInterface;
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
 	public function __construct(
+		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
+		CodebtorRepositoryInterface $codebtorRepositoryInterface,
+		KinshipRepositoryInterface $kinshipRepositoryInterface,
 		TemporaryCustomerRepositoryInterface $temporaryCustomerRepositoryInterface,
 		CustomerProfessionRepositoryInterface $customerProfessionRepositoryInterface,
 		AssessorRepositoryInterface $AssessorRepositoryInterface,
@@ -87,6 +95,9 @@ class assessorsController extends Controller
 		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface
 	) {
+		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
+		$this->codebtorInterface               = $codebtorRepositoryInterface;
+		$this->kinshipInterface                = $kinshipRepositoryInterface;
 		$this->temporaryCustomerInterface      = $temporaryCustomerRepositoryInterface;
 		$this->customerProfessionInterface     = $customerProfessionRepositoryInterface;
 		$this->assessorInterface               = $AssessorRepositoryInterface;
@@ -303,13 +314,8 @@ class assessorsController extends Controller
 				$age  = ($now - $time);
 				$age  = floor($age);
 		
-				//return $age;
-			
-			// $date = Carbon::parse($request->get('FEC_EXP'));
-			// 	$now = Carbon::now();
-			// 	$now = $now->format('Y-m-d');
-			// 	$years = $date->diffInYears($now);
-				
+				// return $age;
+						
 			}
 			
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
@@ -1105,8 +1111,8 @@ class assessorsController extends Controller
 		$resp3 = DB::connection('oportudata')->select($query3);
 
 		$professions = $this->customerProfessionInterface->listCustomerProfessions();
-
-		return response()->json(['ubicationsCities' => $resp, 'cities' => $resp2, 'banks' => $resp3, 'professions' => $professions->toArray()]);
+		$kinships = $this->kinshipInterface->listKinships();
+		return response()->json(['ubicationsCities' => $resp, 'cities' => $resp2, 'banks' => $resp3, 'professions' => $professions->toArray(), 'kinships' => $kinships->toArray()]);
 	}
 
 	public function getinfoLeadVentaContado($cedula)
@@ -1123,7 +1129,7 @@ class assessorsController extends Controller
 
 			$resp = $data;
 		} else {
-			$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, cf.`CEDULA_C`, cf.`NOMBRE_CONYU`, cf.`CELULAR_CONYU`, cf.`TRABAJO_CONYU`, cf.`PROFESION_CONYU`, cf.`CARGO_CONYU`, cf.`SALARIO_CONYU`, cf.`EPS_CONYU`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
+			$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`PROFESION`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, cf.`CEDULA_C`, cf.`NOMBRE_CONYU`, cf.`CELULAR_CONYU`, cf.`TRABAJO_CONYU`, cf.`PROFESION_CONYU`, cf.`CARGO_CONYU`, cf.`SALARIO_CONYU`, cf.`EPS_CONYU`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
 			FROM `CLIENTE_FAB` as cf
 			LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
 			LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
@@ -1154,7 +1160,7 @@ class assessorsController extends Controller
 	}
 
 
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam, $fuenteFallo)
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $dir_refper, $bar_refper, $tel_refper, $ciu_refper, $nom_refpe2, $dir_refpe2, $bar_refpe2, $tel_refpe2, $ciu_refpe2, $nom_reffam, $dir_reffam, $bar_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $bar_reffa2, $tel_reffa2, $parentesc2, $con_cli1, $con_cli2, $con_cli3, $con_cli4, $edit_rfcli, $edit_rfcl2, $fuenteFallo)
 	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
@@ -1185,16 +1191,40 @@ class assessorsController extends Controller
 		} else {
 			$estadoSolic = 'APROBADO';
 		}
+
 		$policyCredit = [
 			'quotaApprovedProduct' => $quotaApprovedProduct,
 			'quotaApprovedAdvance' => $quotaApprovedAdvance,
 			'resp' => 'true'
 		];
+
 		$data = [
 			'NOM_REFPER' => $nom_refper,
+			'DIR_REFPER' => $dir_refper,
+			'BAR_REFPER' => $bar_refper,
 			'TEL_REFPER' => $tel_refper,
+			'CIU_REFPER' => $ciu_refper,
+			'NOM_REFPE2' => $nom_refpe2,
+			'DIR_REFPE2' => $dir_refpe2,
+			'BAR_REFPE2' => $bar_refpe2,
+			'TEL_REFPE2' => $tel_refpe2,
+			'CIU_REFPE2' => $ciu_refpe2,
 			'NOM_REFFAM' => $nom_reffam,
-			'TEL_REFFAM' => $tel_reffam
+			'DIR_REFFAM' => $dir_reffam,
+			'BAR_REFFAM' => $bar_reffam,
+			'TEL_REFFAM' => $tel_reffam,
+			'PARENTESCO' => $parentesco,
+			'NOM_REFFA2' => $nom_reffa2,
+			'DIR_REFFA2' => $dir_reffa2,
+			'BAR_REFFA2' => $bar_reffa2,
+			'TEL_REFFA2' => $tel_reffa2,
+			'PARENTESC2' => $parentesc2,
+			'CON_CLI1' => $con_cli1,
+			'CON_CLI2' => $con_cli2,
+			'CON_CLI3' => $con_cli3,
+			'CON_CLI4' => $con_cli4,
+			'EDIT_RFCLI' => $edit_rfcli,
+			'EDIT_RFCL2' => $edit_rfcl2
 		];
 
 		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic;
@@ -1360,14 +1390,8 @@ class assessorsController extends Controller
 
 		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
-			$dataDatosCliente = [
-				'identificationNumber' => $identificationNumber,
-				'numSolic'             => $numSolic,
-				'NOM_REFPER'           => $data['NOM_REFPER'],
-				'TEL_REFPER'           => $data['TEL_REFPER'],
-				'NOM_REFFAM'           => $data['NOM_REFFAM'],
-				'TEL_REFFAM'           => $data['TEL_REFFAM']
-			];
+			$data['identificationNumber'] = $identificationNumber;
+			$data['numSolic']             = $numSolic;
 		} else {
 			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,
@@ -1379,7 +1403,7 @@ class assessorsController extends Controller
 			];
 		}
 
-		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
+		$addDatosCliente = $this->addDatosCliente($data);
 		$addAnalisis        = $this->addAnalisis($numSolic, $identificationNumber);
 		$infoLead           = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
@@ -1456,7 +1480,8 @@ class assessorsController extends Controller
 		$solic_fab->SOLICITUD_WEB = 1;
 		$solic_fab->save();
 		$numSolic = $this->factoryInterface->getCustomerFactoryRequest($identificationNumber);
-
+		$this->codebtorInterface->createCodebtor($numSolic);
+		$this->secondCodebtorInterface->createSecondCodebtor($numSolic);
 		return $numSolic;
 	}
 
@@ -1466,26 +1491,26 @@ class assessorsController extends Controller
 
 		$datosCliente->CEDULA     = $data['identificationNumber'];
 		$datosCliente->SOLICITUD  = $data['numSolic']->SOLICITUD;
-		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
-		$datosCliente->DIR_REFPER = 'NA';
-		$datosCliente->BAR_REFPER = 'NA';
-		$datosCliente->TEL_REFPER = trim($data['TEL_REFPER']);
-		$datosCliente->CIU_REFPER = 'NA';
-		$datosCliente->NOM_REFPE2 = 'NA';
-		$datosCliente->DIR_REFPE2 = 'NA';
-		$datosCliente->BAR_REFPE2 = 'NA';
-		$datosCliente->TEL_REFPE2 = 0;
-		$datosCliente->CIU_REFPE2 = " ";
-		$datosCliente->NOM_REFFAM = trim($data['NOM_REFFAM']);
-		$datosCliente->DIR_REFFAM = 'NA';
-		$datosCliente->BAR_REFFAM = 'NA';
-		$datosCliente->TEL_REFFAM = trim($data['TEL_REFFAM']);
-		$datosCliente->PARENTESCO = " ";
-		$datosCliente->NOM_REFFA2 = 'NA';
-		$datosCliente->DIR_REFFA2 = 'NA';
-		$datosCliente->BAR_REFFA2 = 'NA';
-		$datosCliente->TEL_REFFA2 = 0;
-		$datosCliente->PARENTESC2 = " ";
+		$datosCliente->NOM_REFPER = $data['NOM_REFPER'];
+		$datosCliente->DIR_REFPER = $data['DIR_REFPER'];
+		$datosCliente->BAR_REFPER = $data['BAR_REFPER'];
+		$datosCliente->TEL_REFPER = $data['TEL_REFPER'];
+		$datosCliente->CIU_REFPER = $data['CIU_REFPER'];
+		$datosCliente->NOM_REFPE2 = $data['NOM_REFPE2'];
+		$datosCliente->DIR_REFPE2 = $data['DIR_REFPE2'];
+		$datosCliente->BAR_REFPE2 = $data['BAR_REFPE2'];
+		$datosCliente->TEL_REFPE2 = $data['TEL_REFPE2'];
+		$datosCliente->CIU_REFPE2 = $data['CIU_REFPE2'];
+		$datosCliente->NOM_REFFAM = $data['NOM_REFFAM'];
+		$datosCliente->DIR_REFFAM = $data['DIR_REFFAM'];
+		$datosCliente->BAR_REFFAM = $data['BAR_REFFAM'];
+		$datosCliente->TEL_REFFAM = $data['TEL_REFFAM'];
+		$datosCliente->PARENTESCO = $data['PARENTESCO'];
+		$datosCliente->NOM_REFFA2 = $data['NOM_REFFA2'];
+		$datosCliente->DIR_REFFA2 = $data['DIR_REFFA2'];
+		$datosCliente->BAR_REFFA2 = $data['BAR_REFFA2'];
+		$datosCliente->TEL_REFFA2 = $data['TEL_REFFA2'];
+		$datosCliente->PARENTESC2 = $data['PARENTESC2'];
 		$datosCliente->NOM_REFCOM = 'NA';
 		$datosCliente->TEL_REFCOM = 'NA';
 		$datosCliente->NOM_REFCO2 = 'NA';
@@ -1499,12 +1524,12 @@ class assessorsController extends Controller
 		$datosCliente->EPS_CONYUG = 'NA';
 		$datosCliente->TEL_CONYUG = 'NA';
 		$datosCliente->ING_CONYUG = 0;
-		$datosCliente->CON_CLI1   = " ";
-		$datosCliente->CON_CLI2   = " ";
-		$datosCliente->CON_CLI3   = " ";
-		$datosCliente->CON_CLI4   = " ";
-		$datosCliente->EDIT_RFCLI = " ";
-		$datosCliente->EDIT_RFCL2 = " ";
+		$datosCliente->CON_CLI1   = $data['CON_CLI1'];
+		$datosCliente->CON_CLI2   = $data['CON_CLI2'];
+		$datosCliente->CON_CLI3   = $data['CON_CLI3'];
+		$datosCliente->CON_CLI4   = $data['CON_CLI4'];
+		$datosCliente->EDIT_RFCLI = $data['EDIT_RFCLI'];
+		$datosCliente->EDIT_RFCL2 = $data['EDIT_RFCL2'];
 		$datosCliente->EDIT_RFCL3 = " ";
 		$datosCliente->INFORMA1   = 'NA';
 		$datosCliente->CARGO_INF1 = 'NA';
@@ -1661,7 +1686,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam)
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $bar_refper, $tel_refper, $ciu_refper, $nom_refpe2, $dir_refpe2, $bar_refpe2, $tel_refpe2, $ciu_refpe2, $nom_reffam, $dir_reffam, $bar_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $bar_reffa2, $tel_reffa2, $parentesc2, $con_cli1, $con_cli2, $con_cli3, $con_cli4, $edit_rfcli, $edit_rfcl2)
 	{
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->TIPOCLIENTE = "NUEVO";
@@ -1678,9 +1703,31 @@ class assessorsController extends Controller
 		];
 		$data = [
 			'NOM_REFPER' => $nom_refper,
+			'DIR_REFPER' => $dir_refper,
+			'BAR_REFPER' => $bar_refper,
 			'TEL_REFPER' => $tel_refper,
+			'CIU_REFPER' => $ciu_refper,
+			'NOM_REFPE2' => $nom_refpe2,
+			'DIR_REFPE2' => $dir_refpe2,
+			'BAR_REFPE2' => $bar_refpe2,
+			'TEL_REFPE2' => $tel_refpe2,
+			'CIU_REFPE2' => $ciu_refpe2,
 			'NOM_REFFAM' => $nom_reffam,
-			'TEL_REFFAM' => $tel_reffam
+			'DIR_REFFAM' => $dir_reffam,
+			'BAR_REFFAM' => $bar_reffam,
+			'TEL_REFFAM' => $tel_reffam,
+			'PARENTESCO' => $parentesco,
+			'NOM_REFFA2' => $nom_reffa2,
+			'DIR_REFFA2' => $dir_reffa2,
+			'BAR_REFFA2' => $bar_reffa2,
+			'TEL_REFFA2' => $tel_reffa2,
+			'PARENTESC2' => $parentesc2,
+			'CON_CLI1'   => $con_cli1,
+			'CON_CLI2'   => $con_cli2,
+			'CON_CLI3'   => $con_cli3,
+			'CON_CLI4'   => $con_cli4,
+			'EDIT_RFCLI' => $edit_rfcli,
+			'EDIT_RFCL2' => $edit_rfcl2
 		];
 
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);

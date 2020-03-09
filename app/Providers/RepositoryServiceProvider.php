@@ -82,6 +82,8 @@ use App\Entities\Services\Repositories\ServiceRepository;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\FactoryRequestStatusesLogRepository;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
+use App\Entities\Kinships\Repositories\Interfaces\KinshipRepositoryInterface;
+use App\Entities\Kinships\Repositories\KinshipRepository;
 use App\Entities\LeadProducts\Repositories\LeadProductRepository;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\LeadStatusRepository;
@@ -90,12 +92,29 @@ use App\Entities\LeadPrices\Repositories\LeadPriceRepository;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\TemporaryCustomerRepository;
-
+use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
+use App\Entities\Codebtors\Repositories\CodebtorRepository;
+use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
+use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            SecondCodebtorRepositoryInterface::class,
+            SecondCodebtorRepository::class
+        );
+        $this->app->bind(
+            CodebtorRepositoryInterface::class,
+            CodebtorRepository::class
+        );
+
+        $this->app->bind(
+            KinshipRepositoryInterface::class,
+            KinshipRepository::class
+        );
+
         $this->app->bind(
             CustomerProfessionRepositoryInterface::class,
             CustomerProfessionRepository::class

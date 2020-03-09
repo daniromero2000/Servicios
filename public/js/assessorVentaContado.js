@@ -4,25 +4,27 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.lead.CIUD_EXP = 5002;
 		$scope.lead.CIUD_UBI = 144;
 	}, 1500);
-	$scope.code = {};
-	$scope.formConfronta = {};
-	$scope.citiesUbi = {};
-	$scope.professions = {};
-	$scope.cities = {};
-	$scope.banks = {};
-	$scope.tipoCliente = "";
-	$scope.estadoCliente = "";
-	$scope.messageValidationLead = "";
-	$scope.showWarningErrorData = false;
-	$scope.reNewToken = false;
-	$scope.totalErrorData = 0;
-	$scope.validateNum = 1;
-	$scope.numError = 0;
-	$scope.decisionCredit = "";
+	$scope.code                   = {};
+	$scope.formConfronta          = {};
+	$scope.citiesUbi              = {};
+	$scope.professions            = {};
+	$scope.cities                 = {};
+	$scope.banks                  = {};
+	$scope.kinships               = {}
+	$scope.tipoCliente            = "";
+	$scope.estadoCliente          = "";
+	$scope.messageValidationLead  = "";
+	$scope.showWarningErrorData   = false;
+	$scope.reNewToken             = false;
+	$scope.totalErrorData         = 0;
+	$scope.validateNum            = 1;
+	$scope.numError               = 0;
+	$scope.decisionCredit         = "";
 	$scope.disabledDecisionCredit = false;
-	$scope.disabledButton = false;
-	$scope.disabledButtonCode = false;
-	$scope.step = 1;
+	$scope.disabledButton         = false;
+	$scope.disabledButtonCode     = false;
+	$scope.disabledButtonSolic    = false;
+	$scope.step                   = 1;
     $scope.typesDocuments = [
 		{
 			'value' : "1",
@@ -201,6 +203,25 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 	];
 
+	$scope.concepts = [
+		{
+			value: 'EXCELENTE',
+			label: 'Excelente'
+		},
+		{
+			value: 'BUENO',
+			label: 'Bueno'
+		},
+		{
+			value: 'REGULAR',
+			label: 'Regular'
+		},
+		{
+			value: 'MALO',
+			label: 'Malo'
+		},
+	];
+
 	$scope.getInfoVentaContado = function(){
 		showLoader();
 		$http({
@@ -212,6 +233,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.cities = response.data.cities;
 			$scope.banks = response.data.banks;
 			$scope.professions = response.data.professions;
+			$scope.kinships = response.data.kinships;
 		}, function errorCallback(response) {
 			hideLoader();
 			response.url = '/assessor/api/ventaContado/getInfoVentaContdado';
@@ -453,31 +475,31 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.addCliente = function(tipoCreacion){
-		$scope.step++;
 		$scope.deleteTemporaryCustomer();
 		$('#proccess').modal('show');
 		$scope.lead.tipoCliente = tipoCreacion;
-		console.log($scope.lead);
 		showLoader();
 		$http({
 			method: 'POST',
 			url: '/assessor/api/ventaContado/addVentaContado',
 			data: $scope.lead,
 		}).then(function successCallback(response) {
-			console.log(response);
 			if(tipoCreacion == 'CONTADO'){
 				setTimeout(() => {
 					$('#proccess').modal('hide');
 					$scope.showConfirm();
 				}, 1000);
 			}
-			if(tipoCreacion == 'CREDITO' && $scope.step == 2){
+			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
+				console.log("Siiiiiii");
 				$scope.execConsultasLead(response.data.identificationNumber);
+			}else{
+				console.log("Siiiiiii222222");
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+				}, 1000);
+				$scope.step++;
 			}
-
-			setTimeout(() => {
-				$('#proccess').modal('hide');
-			}, 1000);
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/addVentaContado';
 			response.datos = $scope.lead;
@@ -496,6 +518,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/execConsultasLead/'+identificationNumber,
 		}).then(function successCallback(response) {
+			$scope.step ++;
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
@@ -547,6 +570,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.step = 2;
 	};
 
+	$scope.addSolic = function(){
+		$scope.disabledButtonSolic = true;
+		if($scope.decisionCredit == 1){
+			$scope.creditCard();
+		}else{
+			$scope.traditionalCredit();
+		}
+	};
+
 	$scope.creditCard = function(){
 		showLoader();
 		$http({
@@ -558,9 +590,31 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.resp.quotaApprovedAdvance+'/'
 			+$scope.lead.FEC_EXP+'/'
 			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.DIR_REFPER+'/'
+			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.CIU_REFPER+'/'
+			+$scope.lead.NOM_REFPE2+'/'
+			+$scope.lead.DIR_REFPE2+'/'
+			+$scope.lead.BAR_REFPE2+'/'
+			+$scope.lead.TEL_REFPE2+'/'
+			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
+			+$scope.lead.DIR_REFFAM+'/'
+			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.lead.PARENTESCO+'/'
+			+$scope.lead.NOM_REFFA2+'/'
+			+$scope.lead.DIR_REFFA2+'/'
+			+$scope.lead.BAR_REFFA2+'/'
+			+$scope.lead.TEL_REFFA2+'/'
+			+$scope.lead.PARENTESC2+'/'
+			+$scope.lead.CON_CLI1+'/'
+			+$scope.lead.CON_CLI2+'/'
+			+$scope.lead.CON_CLI3+'/'
+			+$scope.lead.CON_CLI4+'/'
+			+$scope.lead.EDIT_RFCLI+'/'
+			+$scope.lead.EDIT_RFCL2+'/'
 			+$scope.resp.policy.fuenteFallo+'/',
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
@@ -594,9 +648,31 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.resp.quotaApprovedAdvance+'/'
 			+$scope.lead.FEC_EXP+'/'
 			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.DIR_REFPER+'/'
+			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.CIU_REFPER+'/'
+			+$scope.lead.NOM_REFPE2+'/'
+			+$scope.lead.DIR_REFPE2+'/'
+			+$scope.lead.BAR_REFPE2+'/'
+			+$scope.lead.TEL_REFPE2+'/'
+			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
+			+$scope.lead.DIR_REFFAM+'/'
+			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.lead.PARENTESCO+'/'
+			+$scope.lead.NOM_REFFA2+'/'
+			+$scope.lead.DIR_REFFA2+'/'
+			+$scope.lead.BAR_REFFA2+'/'
+			+$scope.lead.TEL_REFFA2+'/'
+			+$scope.lead.PARENTESC2+'/'
+			+$scope.lead.CON_CLI1+'/'
+			+$scope.lead.CON_CLI2+'/'
+			+$scope.lead.CON_CLI3+'/'
+			+$scope.lead.CON_CLI4+'/'
+			+$scope.lead.EDIT_RFCLI+'/'
+			+$scope.lead.EDIT_RFCL2+'/'
 			+$scope.resp.policy.fuenteFallo+'/';
 			hideLoader();
 			console.log(response);
@@ -610,24 +686,70 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			url: '/assessor/api/decisionTraditionalCredit/'
 			+$scope.lead.CEDULA+'/'
 			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.DIR_REFPER+'/'
+			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.CIU_REFPER+'/'
+			+$scope.lead.NOM_REFPE2+'/'
+			+$scope.lead.DIR_REFPE2+'/'
+			+$scope.lead.BAR_REFPE2+'/'
+			+$scope.lead.TEL_REFPE2+'/'
+			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
-			+$scope.lead.TEL_REFFAM+'/',
+			+$scope.lead.DIR_REFFAM+'/'
+			+$scope.lead.BAR_REFFAM+'/'
+			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.lead.PARENTESCO+'/'
+			+$scope.lead.NOM_REFFA2+'/'
+			+$scope.lead.DIR_REFFA2+'/'
+			+$scope.lead.BAR_REFFA2+'/'
+			+$scope.lead.TEL_REFFA2+'/'
+			+$scope.lead.PARENTESC2+'/'
+			+$scope.lead.CON_CLI1+'/'
+			+$scope.lead.CON_CLI2+'/'
+			+$scope.lead.CON_CLI3+'/'
+			+$scope.lead.CON_CLI4+'/'
+			+$scope.lead.EDIT_RFCLI+'/'
+			+$scope.lead.EDIT_RFCL2+'/',
 		}).then(function successCallback(response) {
 			$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
-			$scope.step = 2;
+			setTimeout(() => {
+				$('#confronta').modal('hide');
+			}, 800);
 			setTimeout(() => {
 				$('#proccess').modal('hide');
-			}, 1500);
+				$('#congratulations').modal('show');
+			}, 1800);
 			hideLoader();
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/decisionTraditionalCredit/'
-			+$scope.lead.CEDULA+'/'
 			+$scope.lead.NOM_REFPER+'/'
+			+$scope.lead.DIR_REFPER+'/'
+			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
+			+$scope.lead.CIU_REFPER+'/'
+			+$scope.lead.NOM_REFPE2+'/'
+			+$scope.lead.DIR_REFPE2+'/'
+			+$scope.lead.BAR_REFPE2+'/'
+			+$scope.lead.TEL_REFPE2+'/'
+			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
-			+$scope.lead.TEL_REFFAM+'/';
+			+$scope.lead.DIR_REFFAM+'/'
+			+$scope.lead.BAR_REFFAM+'/'
+			+$scope.lead.TEL_REFFAM+'/'
+			+$scope.lead.PARENTESCO+'/'
+			+$scope.lead.NOM_REFFA2+'/'
+			+$scope.lead.DIR_REFFA2+'/'
+			+$scope.lead.BAR_REFFA2+'/'
+			+$scope.lead.TEL_REFFA2+'/'
+			+$scope.lead.PARENTESC2+'/'
+			+$scope.lead.CON_CLI1+'/'
+			+$scope.lead.CON_CLI2+'/'
+			+$scope.lead.CON_CLI3+'/'
+			+$scope.lead.CON_CLI4+'/'
+			+$scope.lead.EDIT_RFCLI+'/'
+			+$scope.lead.EDIT_RFCL2+'/';
 			hideLoader();
 			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
