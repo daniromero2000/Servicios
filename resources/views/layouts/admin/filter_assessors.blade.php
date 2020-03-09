@@ -62,12 +62,15 @@
                         <input type="date" name="to" class="form-control " value="{!! request()->input('to') !!}">
                     </div>
 
-                    <div class="col-12 text-right ">
+                    <div class="col-12 d-flex align-items-end justify-content-end mt-3">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
+                            <button type="submit" id="search-btn" class="btn btn-primary btn-sm-reset mt-2"><i
                                     class="fa fa-search"></i>
                                 Buscar
                             </button>
+                            <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                                <i class="fas fa-times"></i> Restaurar filtros
+                            </a>
                         </span>
                     </div>
                 </div>
