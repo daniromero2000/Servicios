@@ -86,7 +86,6 @@ class FactoryRequestController extends Controller
             'fabrica' => 0,
             'sucursal' => 0
         ];
-        // dd($datas);
         foreach ($datas as $key => $value) {
             $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key]->created_at);
             if (isset($datas[$key + 1]->created_at)) {
@@ -98,6 +97,7 @@ class FactoryRequestController extends Controller
                 }
             }
         }
+
         if (($data['fabrica'] / 60) / 60 > 1) {
             $timeFactory = [$data['fabrica'] / 60 / 60, 'Horas'];
         } else {
@@ -108,6 +108,10 @@ class FactoryRequestController extends Controller
         } else {
             $timeSubsidiary = [$data['sucursal'] / 60, 'Minutos'];
         }
+
+        $timeFactory[0] = round($timeFactory[0], 1);
+        $timeSubsidiary[0] = round($timeSubsidiary[0], 1);
+
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
             'timeFactory' => $timeFactory,
