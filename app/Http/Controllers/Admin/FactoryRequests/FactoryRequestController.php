@@ -98,12 +98,12 @@ class FactoryRequestController extends Controller
                 }
             }
         }
-        if (($data['fabrica'] / 60 / 60) > 1) {
+        if (($data['fabrica'] / 60) / 60 > 1) {
             $timeFactory = [$data['fabrica'] / 60 / 60, 'Horas'];
         } else {
             $timeFactory = [$data['fabrica'] / 60, 'Minutos'];
         }
-        if (($data['sucursal'] / 60 / 60) > 1) {
+        if (($data['sucursal'] / 60) / 60 > 1) {
             $timeSubsidiary = [$data['sucursal'] / 60 / 60, 'Horas'];
         } else {
             $timeSubsidiary = [$data['sucursal'] / 60, 'Minutos'];
