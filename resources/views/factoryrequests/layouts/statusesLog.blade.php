@@ -1,11 +1,12 @@
-<div class="col-md-3">
-    <h2 class="text-center">Historial</h2>
+<div class="col-sm-12 col-md-8 col-lg-4">
+    <h3 class="text-center" style="color: #007bff;">Historial</h3>
     <ul class="timeline">
         @if(!Empty($datas))
         @foreach($datas as $data)
         <li>
-            <i class="fa fa-clock-o bg-blue"></i>
-            <div class="timeline-item">
+            <i class="fa fa-clock-o"
+                style="color: white ; background-color: @if($data->factoryRequestStatus){{$data->factoryRequestStatus['color'] }} @endif"></i>
+            <div class="timeline-item p-2 shadow">
                 <span class="time"><i class="fa fa-clock-o"></i>
                     {{ $data->created_at->diffForHumans($factoryRequest->FECHASOL) }}</span>
                 <h3 class="timeline-header"><span class="text-center badge"

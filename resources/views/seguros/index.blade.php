@@ -9,78 +9,6 @@
 
 @endsection
 @section('content')
-{{-- <div id="content-landing">
-	<div id="header-seguros">
-		<div class="row content-imgHeader">
-			<div class="col-12 col-sm-12 content-img d-flex align-items-center justify-content-center">
-				<span class="text-header">¡Lleva tu SOAT a crédito!</span>
-			</div>
-		</div>
-		<div class="row content-1">
-			<div class="col-12 col-md-6 d-flex align-items-center justify-content-center content-text1">
-				<span class="">¡Adquiere el <span class="text-soat">SOAT</span><br>para tu vehículo <br> a
-					CRÉDITO!</span>
-			</div>
-			<div class="col-12 col-md-6 pd-img">
-				<div>
-					<img src="{{ asset('images/seguros/img1.png')}}" class="img1">
-</div>
-</div>
-</div>
-</div>
-<div id="imagenes">
-	<div class="row content-2">
-		<div class="col-12 col-md-4 col-sm-4 resetCol1">
-			<div class="content-product">
-				<div>
-					<img class="img-ajust" src="{{ asset('images/seguros/img2.png')}}" class="imgproduct">
-					<div class="content-textProduct">
-						<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
-					</div>
-				</div>
-				<div class="content-btn">
-					<h1 class="text-products">Automóviles</h1>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-4 col-sm-4 resetCol1">
-			<div class="content-product">
-				<div>
-					<img class="img-ajust" src="{{ asset('images/seguros/img3.png')}}" class="imgproduct">
-					<div class="content-textProduct">
-						<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
-					</div>
-				</div>
-				<div class="content-btn">
-					<h1 class="text-products">Motos</h1>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-md-4 col-sm-4 resetCol1">
-			<div class="content-product">
-				<div>
-					<img class="img-ajust" src="{{ asset('images/seguros/img4.png')}}" class="imgproduct">
-					<div class="content-textProduct">
-						<a class="btn-product" href="/seguros/credito">Quiero mi SOAT a crédito</a>
-					</div>
-				</div>
-				<div class="content-btn">
-					<h1 class="text-products">Carga Pesada</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row resetRow">
-		<div class="col-12 col-md-12 content-wpp">
-			<a href="https://api.whatsapp.com/send?phone=573138701355&text=Quiero más información, sobre el crédito fácil de SOAT."
-				target="_blank"><img class="img-wpp" src="{{ asset('images/assets/botonWP.png') }}" alt="">
-			</a>
-		</div>
-	</div>
-</div>
-</div> --}}
-
-
 <div class="row row-reset mt-4">
 	<div class="col-12 col-reset">
 		<div class="container-first-sector">
@@ -197,6 +125,18 @@
 								</div>
 							</div>
 
+						</div>
+						<div class="form-group" style="
+						margin-bottom: 5px;
+					">
+							<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1"
+								required="">
+							<label for="termsAndConditions" class="termAndConditions">
+								Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition"
+									target="_blank">términos y condiciones</a> y <a
+									href="/Proteccion-de-datos-personales" class="linkTermAndCondition"
+									target="_blank">política de tratamiento de datos</a>
+							</label>
 						</div>
 						<div class="text-center">
 							<button type="submit" class="btn btn-third-sector">Enviar</button>
@@ -490,10 +430,24 @@
 												@endif
 											</select>
 										</div>
+										<div class="col-12 form-group">
+											<div class="form-group">
+												<input type="checkbox" name="termsAndConditions" id="termsAndConditions"
+													value="1" required="">
+												<label for="termsAndConditions"
+													style="font-size: 13px; font-style: italic;">
+													Aceptar <a href="/Terminos-y-condiciones"
+														class="linkTermAndCondition" target="_blank">términos y
+														condiciones</a> y <a href="/Proteccion-de-datos-personales"
+														class="linkTermAndCondition" target="_blank">política de
+														tratamiento de datos</a>
+												</label>
+											</div>
+										</div>
 										<input type="text" class="form-control" hidden id="typeProduct" value="32"
 											name="typeProduct">
 									</div>
-									<div class="mt-4 text-center">
+									<div class="text-center">
 										<button type="submit"
 											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
 									</div>
@@ -585,10 +539,24 @@
 												@endif
 											</select>
 										</div>
+										<div class="col-12 form-group">
+											<div class="form-group">
+												<input type="checkbox" name="termsAndConditions" id="termsAndConditions"
+													value="1" required="">
+												<label for="termsAndConditions"
+													style="font-size: 13px; font-style: italic;">
+													Aceptar <a href="/Terminos-y-condiciones"
+														class="linkTermAndCondition" target="_blank">términos y
+														condiciones</a> y <a href="/Proteccion-de-datos-personales"
+														class="linkTermAndCondition" target="_blank">política de
+														tratamiento de datos</a>
+												</label>
+											</div>
+										</div>
 										<input type="text" class="form-control" hidden id="typeProduct" value="32"
 											name="typeProduct">
 									</div>
-									<div class="mt-4 text-center">
+									<div class="text-center">
 										<button type="submit"
 											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
 									</div>
@@ -680,11 +648,24 @@
 												@endif
 											</select>
 										</div>
-
+										<div class="col-12 form-group">
+											<div class="form-group">
+												<input type="checkbox" name="termsAndConditions" id="termsAndConditions"
+													value="1" required="">
+												<label for="termsAndConditions"
+													style="font-size: 13px; font-style: italic;">
+													Aceptar <a href="/Terminos-y-condiciones"
+														class="linkTermAndCondition" target="_blank">términos y
+														condiciones</a> y <a href="/Proteccion-de-datos-personales"
+														class="linkTermAndCondition" target="_blank">política de
+														tratamiento de datos</a>
+												</label>
+											</div>
+										</div>
 										<input type="text" class="form-control" hidden id="typeProduct" value="31"
 											name="typeProduct">
 									</div>
-									<div class="mt-4 text-center">
+									<div class="text-center">
 										<button type="submit"
 											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
 									</div>
@@ -776,11 +757,24 @@
 												@endif
 											</select>
 										</div>
-
+										<div class="col-12 form-group">
+											<div class="form-group">
+												<input type="checkbox" name="termsAndConditions" id="termsAndConditions"
+													value="1" required="">
+												<label for="termsAndConditions"
+													style="font-size: 13px; font-style: italic;">
+													Aceptar <a href="/Terminos-y-condiciones"
+														class="linkTermAndCondition" target="_blank">términos y
+														condiciones</a> y <a href="/Proteccion-de-datos-personales"
+														class="linkTermAndCondition" target="_blank">política de
+														tratamiento de datos</a>
+												</label>
+											</div>
+										</div>
 										<input type="text" class="form-control" hidden id="typeProduct" value="55"
 											name="typeProduct">
 									</div>
-									<div class="mt-4 text-center">
+									<div class="text-center">
 										<button type="submit"
 											class="btn btn-primary pt-1 pb-1 pl-3 pr-3">Enviar</button>
 									</div>

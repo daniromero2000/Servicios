@@ -106,7 +106,7 @@ class FactoryRequest extends Model
 
     public function factoryRequestStatusesLogs()
     {
-        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
     }
     public function factoryRequestaAssessors()
     {

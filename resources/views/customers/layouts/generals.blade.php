@@ -8,8 +8,10 @@
       </div>
       <div class="col-12 col-sm-6 text-right">
         @if (auth()->user()->idProfile == 5)
+        @if ( $customer->latestCifinScore)
         <span class="mt-2 badge title-table-status badge-primary"> Score
           {{ $customer->latestCifinScore['score'] }} </span>
+        @endif
         @endif
         <span class="mt-2 badge title-table-status badge-primary">
           @if($customer->latestIntention) {{  $customer->latestIntention->PERFIL_CREDITICIO }} @endif </span>

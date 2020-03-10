@@ -3,6 +3,7 @@
 namespace App\Entities\FactoryRequestStatusesLogs;
 
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
+use App\Entities\OportudataUsers\OportudataUser;
 use Illuminate\Database\Eloquent\Model;
 
 class FactoryRequestStatusesLog extends Model
@@ -20,5 +21,10 @@ class FactoryRequestStatusesLog extends Model
     public function factoryRequestStatus()
     {
         return $this->belongsTo(FactoryRequestStatus::class, 'estadosolicitudes_id');
+    }
+
+    public function oportudataUser()
+    {
+        return $this->belongsTo(OportudataUser::class, 'usuario', 'USUARIO');
     }
 }

@@ -10,7 +10,7 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h4>Referencia Personal 1</h4>
+          <h4 class="title-table">Referencia Personal 1</h4>
           @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
@@ -54,7 +54,7 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h4>Referencia Personal 2</h4>
+          <h4 class="title-table">Referencia Personal 2</h4>
           @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
@@ -97,7 +97,7 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h4>Referencia Familiar 1</h4>
+          <h4 class="title-table">Referencia Familiar 1</h4>
           @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
@@ -140,7 +140,7 @@
     <div class="col-12 col-sm-10 col-md-10 col-lg-6">
       <div class="card mt-4">
         <div class="card-body table-responsive pt-1">
-          <h4>Referencia Familiar 2</h4>
+          <h4 class="title-table">Referencia Familiar 2</h4>
           @if($references->isNotEmpty())
           <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Customers;
 
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
@@ -177,15 +178,16 @@ class CustomerController extends Controller
 
     public function getPoliceDebtors($identificationNumber)
     {
-        $customer = DebtorInsurance::where('SOLIC', $identificationNumber)->get()->first();
+        $customer = DebtorInsurance::where('SOLIC', $identificationNumber)->orderBy('FECHA', 'DESC')->get();
         // return $customer;
-        return $customer;
+        return $customer->first();
     }
 
     public function getPoliceDebtorOportuyas($identificationNumber)
     {
-        $customer = $this->customerInterface->findCustomerById($identificationNumber);
+        $customer = DebtorInsuranceOportuya::where('CEDULA', $identificationNumber)->orderBy('FECHA', 'DESC')->get();
+        // $this->customerInterface->findCustomerById($identificationNumber);
         // return $customer;
-        return $customer->DebtorInsuranceOportuya->first();
+        return $customer->first();
     }
 }

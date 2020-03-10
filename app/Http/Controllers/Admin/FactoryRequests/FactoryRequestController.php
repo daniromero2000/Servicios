@@ -79,8 +79,39 @@ class FactoryRequestController extends Controller
 
     public function show(int $id)
     {
+
+
+        $datas = $this->factoryRequestInterface->findFactoryRequestByIdFull($id)->factoryRequestStatusesLogs;
+        $data = [
+            'fabrica' => 0,
+            'sucursal' => 0
+        ];
+        // dd($datas);
+        foreach ($datas as $key => $value) {
+            $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key]->created_at);
+            if (isset($datas[$key + 1]->created_at)) {
+                $date2 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key + 1]->created_at);
+                if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
+                    $data['fabrica'] += $date1->diffInSeconds($date2);
+                } else {
+                    $data['sucursal'] += $date1->diffInSeconds($date2);
+                }
+            }
+        }
+        if (($data['fabrica'] / 60 / 60) > 1) {
+            $timeFactory = [$data['fabrica'] / 60 / 60, 'Horas'];
+        } else {
+            $timeFactory = [$data['fabrica'] / 60, 'Minutos'];
+        }
+        if (($data['sucursal'] / 60 / 60) > 1) {
+            $timeSubsidiary = [$data['sucursal'] / 60 / 60, 'Horas'];
+        } else {
+            $timeSubsidiary = [$data['sucursal'] / 60, 'Minutos'];
+        }
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
+            'timeFactory' => $timeFactory,
+            'timeSubsidiary' => $timeSubsidiary
         ]);
     }
 
