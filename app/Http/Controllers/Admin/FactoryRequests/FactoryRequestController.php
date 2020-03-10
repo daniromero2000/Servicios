@@ -110,6 +110,7 @@ class FactoryRequestController extends Controller
         }
 
         $timeFactory[0] = round($timeFactory[0], 1);
+
         $timeSubsidiary[0] = round($timeSubsidiary[0], 1);
 
         return view('factoryrequests.show', [
