@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                    <label class="ventaContado-label labels" for="FEC_CONST">Fecha de constitución*</label>
+                                    <label class="ventaContado-label labels" for="FEC_CONST">¿Desde qué año desempeña la actividad?</label>
                                     <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
                                         <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
                                             readonly="" placeholder="Año/Mes" required />
@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
-                                    <label class="ventaContado-label labels" for="dateCreationCompany">Fecha de constitución</label>
+                                    <label class="ventaContado-label labels" for="dateCreationCompany">¿Desde qué año desempeña la actividad?</label>
                                     <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
                                         <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
                                             readonly="" placeholder="Año/Mes"/>
@@ -468,7 +468,7 @@
                                         <input class="form-control inputs" type="text" id="ACT_ECO" ng-model="lead.ACT_ECO" required />
                                     </div>
                                     <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
-                                        <label class="ventaContado-label" for="FEC_CONST">Fecha de constitución*</label>
+                                        <label class="ventaContado-label" for="FEC_CONST">¿Desde qué año desempeña la actividad?*</label>
                                         <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
                                             <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
                                                 readonly="" placeholder="Año/Mes" required>
@@ -479,7 +479,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4"
                                         ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
-                                        <label for="dateCreationCompany">Fecha de Constitución</label>
+                                        <label for="dateCreationCompany">¿Desde qué año desempeña la actividad?</label>
                                         <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
                                             <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
                                                 readonly="" placeholder="Año/Mes">
@@ -490,8 +490,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario*</label>
-                                        <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency
-                                            fraction="0" required />
+                                        <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
                                     </div>
                                 </div>
                             </div>
@@ -559,8 +558,8 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="NOM_REFPER" class="labels">Nombre</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPER" id="NOM_REFPER" />
+                                                    <label for="NOM_REFPER" class="labels">Nombre*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPER" id="NOM_REFPER" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPER" class="labels">Dirección</label>
@@ -568,31 +567,17 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="BAR_REFPER" class="labels">Barrio</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.BAR_REFPER" id="BAR_REFPER" />
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="TEL_REFPER" class="labels">Teléfono</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFPER" id="TEL_REFPER" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CIU_REFPER" class="labels">Ciudad</label>
-                                                    <select id="CIU_REFPER" class="inputs form-control" ng-model="lead.CIU_REFPER" ng-options="city.label as city.label for city in cities"></select>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CON_CLI1" class="labels">Concepto</label>
-                                                    <select id="CON_CLI1" class="inputs form-control" ng-model="lead.CON_CLI1" ng-options="concept.value as concept.label for concept in concepts"></select>
+                                                <div class="col-12">
+                                                    <label for="TEL_REFPER" class="labels">Teléfono*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFPER" id="TEL_REFPER" required />
                                                 </div>
                                             </div>
                                             <h5 class="card-title">2. Referencia personal</h5>
                                             <br>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="NOM_REFPE2" class="labels">Nombre</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPE2" id="NOM_REFPE2" />
+                                                    <label for="NOM_REFPE2" class="labels">Nombre*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPE2" id="NOM_REFPE2" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPE2" class="labels">Dirección</label>
@@ -600,29 +585,9 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="BAR_REFPE2" class="labels">Barrio</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.BAR_REFPE2" id="BAR_REFPE2" />
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="TEL_REFPE2" class="labels">Teléfono</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFPE2" id="TEL_REFPE2" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CIU_REFPE2" class="labels">Ciudad</label>
-                                                    <select id="CIU_REFPE2" class="inputs form-control" ng-model="lead.CIU_REFPE2" ng-options="city.label as city.label for city in cities"></select>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CON_CLI2" class="labels">Concepto</label>
-                                                    <select id="CON_CLI2" class="inputs form-control" ng-model="lead.CON_CLI2" ng-options="concept.value as concept.label for concept in concepts"></select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-12">
-                                                    <label for="EDIT_RFCLI" class="labels">Observaciones</label>
-                                                    <textarea id="EDIT_RFCLI" cols="30" rows="3" class="form-control" ng-model="lead.EDIT_RFCLI"></textarea>
+                                                    <label for="TEL_REFPE2" class="labels">Teléfono*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFPE2" id="TEL_REFPE2" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -642,8 +607,8 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="NOM_REFFAM" class="labels">Nombre</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFAM" id="NOM_REFFAM" />
+                                                    <label for="NOM_REFFAM" class="labels">Nombre*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFAM" id="NOM_REFFAM" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFAM" class="labels">Dirección</label>
@@ -652,30 +617,20 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="BAR_REFFAM" class="labels">Barrio</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.BAR_REFFAM" id="BAR_REFFAM" />
+                                                    <label for="TEL_REFFAM" class="labels">Teléfono*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFFAM" id="TEL_REFFAM" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="TEL_REFFAM" class="labels">Teléfono</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFFAM" id="TEL_REFFAM" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="PARENTESCO" class="labels">Parentesco</label>
-                                                    <select id="PARENTESCO" class="inputs form-control" ng-model="lead.PARENTESCO" ng-options="kinship.TIPO as kinship.TIPO for kinship in kinships"></select>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CON_CLI3" class="labels">Concepto</label>
-                                                    <select id="CON_CLI3" class="inputs form-control" ng-model="lead.CON_CLI13" ng-options="concept.value as concept.label for concept in concepts"></select>
+                                                    <label for="PARENTESCO" class="labels">Parentesco*</label>
+                                                    <select id="PARENTESCO" class="inputs form-control" ng-model="lead.PARENTESCO" ng-options="kinship.TIPO as kinship.TIPO for kinship in kinships" required></select>
                                                 </div>
                                             </div>
                                             <h5 class="card-title">2. Referencia familiar</h5>
                                             <br>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="NOM_REFFA2" class="labels">Nombre</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFA2" id="NOM_REFFA2" />
+                                                    <label for="NOM_REFFA2" class="labels">Nombre*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFA2" id="NOM_REFFA2"  required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFA2" class="labels">Dirección</label>
@@ -684,28 +639,12 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="BAR_REFFA2" class="labels">Barrio</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.BAR_REFFA2" id="BAR_REFFA2" />
+                                                    <label for="TEL_REFFA2" class="labels">Teléfono*</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFFA2" id="TEL_REFFA2"  required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="TEL_REFFA2" class="labels">Teléfono</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.TEL_REFFA2" id="TEL_REFFA2" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="PARENTESC2" class="labels">Parentesco</label>
-                                                    <select id="PARENTESC2" class="inputs form-control" ng-model="lead.PARENTESC2" ng-options="kinship.TIPO as kinship.TIPO for kinship in kinships"></select>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <label for="CON_CLI4" class="labels">Concepto</label>
-                                                    <select id="CON_CLI4" class="inputs form-control" ng-model="lead.CON_CLI4" ng-options="concept.value as concept.label for concept in concepts"></select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="EDIT_RFCL2" class="labels">Observaciones</label>
-                                                    <textarea id="EDIT_RFCL2" cols="30" rows="3" class="form-control" ng-model="lead.EDIT_RFCL2"></textarea>
+                                                    <label for="PARENTESC2" class="labels">Parentesco*</label>
+                                                    <select id="PARENTESC2" class="inputs form-control" ng-model="lead.PARENTESC2" ng-options="kinship.TIPO as kinship.TIPO for kinship in kinships" required ></select>
                                                 </div>
                                             </div>
                                         </div>
@@ -831,7 +770,32 @@
         </div>
     </div>
 
-
+    <div class="modal fade modalThankYouPage-asessors" id="showWarningErrorData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modalCode">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 0">
+                    <div class="row resetRow">
+                        <div class="col-12 text-center resetCol headThankYuoModal">
+                            <img src="{{ asset('images/asessors/logoModal.png') }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="row resetRow ">
+                        <div class="col-12 form-group">
+                            <h2 class="decisionCredit-title text-center" style="color: #dc3545;">Información errónea</h2>
+                            <p class="textModal text-center">
+                                Por favor verifica la información sumistrada
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row resetRow form-group">
+                        <div class="col-12 form-group text-center">
+                            <button class="btn btn-danger" ng-click="close()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade hide modalThankYouPage-asessors" data-backdrop="static" data-keyboard="false"
         id="decisionCredit" tabindex="-1" role="dialog" aria-hidden="true">
@@ -844,7 +808,7 @@
                         </div>
                         <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
                         <div class="col-12" ng-if="resp.resp == 'true'">
-                            <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
+                            <h2 class="decisionCredit-title text-center">Selecciona una opción</h2>
                             <div class="row my-4">
                                 <div class="col-12 col-sm-6 text-center my-4">
                                     <div class="decisionCredit-option"

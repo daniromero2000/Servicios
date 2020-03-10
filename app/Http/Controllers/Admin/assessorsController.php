@@ -313,11 +313,8 @@ class assessorsController extends Controller
 				$now  = time();
 				$age  = ($now - $time);
 				$age  = floor($age);
-		
 				// return $age;
-						
 			}
-			
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
 			}
@@ -362,7 +359,7 @@ class assessorsController extends Controller
 				'ACT_ECO'   			=> ($request->get('ACT_ECO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('ACT_ECO')))) : 'NA',
 				'NIT_EMP'   			=> ($request->get('NIT_EMP') != '') ? trim($request->get('NIT_EMP')) : '0',
 				'RAZON_SOC'             => trim($request->get('RAZON_SOC') != '') ? trim(strtoupper($request->get('RAZON_SOC'))) : 'NA',
-				'FEC_ING'               => trim($request->get('FEC_ING')) . "-01",
+				'FEC_ING'               => ($request->get('FEC_ING') != '') ? trim($request->get('FEC_ING')) . "-01" : '1990-01-01',
 				'ANTIG'   				=> ($antig != '') ? trim($antig) : '',
 				'CARGO'   				=> ($request->get('CARGO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('CARGO')))) : 'NA',
 				'DIR_EMP'   			=> ($request->get('DIR_EMP') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIR_EMP')))) : 'NA',
@@ -374,7 +371,7 @@ class assessorsController extends Controller
 				'RAZON_IND'   			=> ($request->get('RAZON_IND') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('RAZON_IND')))) : 'NA',
 				'ACT_IND'          	    => ($request->get('ACT_IND') != '') ? trim($request->get('ACT_IND')) : 'NA',
 				'EDAD_INDP'          	=> ($indp != '') ? trim($indp) : '',
-				'FEC_CONST'             => trim($request->get('FEC_CONST')) . "-01",
+				'FEC_CONST'             => ($request->get('FEC_CONST') != '') ? trim($request->get('FEC_CONST')) . "-01" : '1990-01-01' ,
 				'N_EMPLEA'              => trim($request->get('N_EMPLEA')) . "-01",
 				'VENTASMES'             => trim($request->get('VENTASMES')),
 				'COSTOSMES'             => trim($request->get('COSTOSMES')),
@@ -477,6 +474,7 @@ class assessorsController extends Controller
 			$oportudataLead[0]->APELLIDOS
 		);
 
+		
 		if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
 			return ['resp' => $consultasFosyga];
 		}
@@ -529,14 +527,14 @@ class assessorsController extends Controller
 		} else {
 			$consultaFosyga = 1;
 		}
+
 		$validateConsultaFosyga = 0;
+
 		if ($consultaFosyga > 0) {
 			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
 		} else {
 			$validateConsultaFosyga = 1;
 		}
-
-		$validateConsultaFosyga = 1;
 
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
@@ -1160,7 +1158,7 @@ class assessorsController extends Controller
 	}
 
 
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $dir_refper, $bar_refper, $tel_refper, $ciu_refper, $nom_refpe2, $dir_refpe2, $bar_refpe2, $tel_refpe2, $ciu_refpe2, $nom_reffam, $dir_reffam, $bar_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $bar_reffa2, $tel_reffa2, $parentesc2, $con_cli1, $con_cli2, $con_cli3, $con_cli4, $edit_rfcli, $edit_rfcl2, $fuenteFallo)
+	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2, $fuenteFallo)
 	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
@@ -1201,30 +1199,30 @@ class assessorsController extends Controller
 		$data = [
 			'NOM_REFPER' => $nom_refper,
 			'DIR_REFPER' => $dir_refper,
-			'BAR_REFPER' => $bar_refper,
+			'BAR_REFPER' => '',
 			'TEL_REFPER' => $tel_refper,
-			'CIU_REFPER' => $ciu_refper,
+			'CIU_REFPER' => '',
 			'NOM_REFPE2' => $nom_refpe2,
 			'DIR_REFPE2' => $dir_refpe2,
-			'BAR_REFPE2' => $bar_refpe2,
+			'BAR_REFPE2' => '',
 			'TEL_REFPE2' => $tel_refpe2,
-			'CIU_REFPE2' => $ciu_refpe2,
+			'CIU_REFPE2' => '',
 			'NOM_REFFAM' => $nom_reffam,
 			'DIR_REFFAM' => $dir_reffam,
-			'BAR_REFFAM' => $bar_reffam,
+			'BAR_REFFAM' => '',
 			'TEL_REFFAM' => $tel_reffam,
 			'PARENTESCO' => $parentesco,
 			'NOM_REFFA2' => $nom_reffa2,
 			'DIR_REFFA2' => $dir_reffa2,
-			'BAR_REFFA2' => $bar_reffa2,
+			'BAR_REFFA2' => '',
 			'TEL_REFFA2' => $tel_reffa2,
 			'PARENTESC2' => $parentesc2,
-			'CON_CLI1' => $con_cli1,
-			'CON_CLI2' => $con_cli2,
-			'CON_CLI3' => $con_cli3,
-			'CON_CLI4' => $con_cli4,
-			'EDIT_RFCLI' => $edit_rfcli,
-			'EDIT_RFCL2' => $edit_rfcl2
+			'CON_CLI1' => '',
+			'CON_CLI2' => '',
+			'CON_CLI3' => '',
+			'CON_CLI4' => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
 		];
 
 		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic;
@@ -1524,12 +1522,12 @@ class assessorsController extends Controller
 		$datosCliente->EPS_CONYUG = 'NA';
 		$datosCliente->TEL_CONYUG = 'NA';
 		$datosCliente->ING_CONYUG = 0;
-		$datosCliente->CON_CLI1   = $data['CON_CLI1'];
-		$datosCliente->CON_CLI2   = $data['CON_CLI2'];
-		$datosCliente->CON_CLI3   = $data['CON_CLI3'];
-		$datosCliente->CON_CLI4   = $data['CON_CLI4'];
-		$datosCliente->EDIT_RFCLI = $data['EDIT_RFCLI'];
-		$datosCliente->EDIT_RFCL2 = $data['EDIT_RFCL2'];
+		$datosCliente->CON_CLI1   = '';
+		$datosCliente->CON_CLI2   = '';
+		$datosCliente->CON_CLI3   = '';
+		$datosCliente->CON_CLI4   = '';
+		$datosCliente->EDIT_RFCLI = '';
+		$datosCliente->EDIT_RFCL2 = '';
 		$datosCliente->EDIT_RFCL3 = " ";
 		$datosCliente->INFORMA1   = 'NA';
 		$datosCliente->CARGO_INF1 = 'NA';
@@ -1686,7 +1684,7 @@ class assessorsController extends Controller
 		}
 	}
 
-	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $bar_refper, $tel_refper, $ciu_refper, $nom_refpe2, $dir_refpe2, $bar_refpe2, $tel_refpe2, $ciu_refpe2, $nom_reffam, $dir_reffam, $bar_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $bar_reffa2, $tel_reffa2, $parentesc2, $con_cli1, $con_cli2, $con_cli3, $con_cli4, $edit_rfcli, $edit_rfcl2)
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2)
 	{
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->TIPOCLIENTE = "NUEVO";
@@ -1704,30 +1702,30 @@ class assessorsController extends Controller
 		$data = [
 			'NOM_REFPER' => $nom_refper,
 			'DIR_REFPER' => $dir_refper,
-			'BAR_REFPER' => $bar_refper,
+			'BAR_REFPER' => '',
 			'TEL_REFPER' => $tel_refper,
-			'CIU_REFPER' => $ciu_refper,
+			'CIU_REFPER' => '',
 			'NOM_REFPE2' => $nom_refpe2,
 			'DIR_REFPE2' => $dir_refpe2,
-			'BAR_REFPE2' => $bar_refpe2,
+			'BAR_REFPE2' => '',
 			'TEL_REFPE2' => $tel_refpe2,
-			'CIU_REFPE2' => $ciu_refpe2,
+			'CIU_REFPE2' => '',
 			'NOM_REFFAM' => $nom_reffam,
 			'DIR_REFFAM' => $dir_reffam,
-			'BAR_REFFAM' => $bar_reffam,
+			'BAR_REFFAM' => '',
 			'TEL_REFFAM' => $tel_reffam,
 			'PARENTESCO' => $parentesco,
 			'NOM_REFFA2' => $nom_reffa2,
 			'DIR_REFFA2' => $dir_reffa2,
-			'BAR_REFFA2' => $bar_reffa2,
+			'BAR_REFFA2' => '',
 			'TEL_REFFA2' => $tel_reffa2,
 			'PARENTESC2' => $parentesc2,
-			'CON_CLI1'   => $con_cli1,
-			'CON_CLI2'   => $con_cli2,
-			'CON_CLI3'   => $con_cli3,
-			'CON_CLI4'   => $con_cli4,
-			'EDIT_RFCLI' => $edit_rfcli,
-			'EDIT_RFCL2' => $edit_rfcl2
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
 		];
 
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);

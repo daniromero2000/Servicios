@@ -17,7 +17,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showWarningErrorData   = false;
 	$scope.reNewToken             = false;
 	$scope.totalErrorData         = 0;
-	$scope.validateNum            = 1;
+	$scope.validateNum            = 0;
 	$scope.numError               = 0;
 	$scope.decisionCredit         = "";
 	$scope.disabledDecisionCredit = false;
@@ -178,27 +178,27 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.stratum = [
 		{
-			value:1,
+			value:'1',
 			label:'1'
 		},
 		{
-			value:2,
+			value:'2',
 			label:'2'
 		},
 		{
-			value:3,
+			value:'3',
 			label:'3'
 		},
 		{
-			value:4,
+			value:'4',
 			label:'4'
 		},
 		{
-			value:5,
+			value:'5',
 			label:'5'
 		},
 		{
-			value:6,
+			value:'6',
 			label:'6'
 		}
 	];
@@ -491,14 +491,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
-				console.log("Siiiiiii");
 				$scope.execConsultasLead(response.data.identificationNumber);
 			}else{
-				console.log("Siiiiiii222222");
 				setTimeout(() => {
 					$('#proccess').modal('hide');
 				}, 1000);
 				$scope.step++;
+				$scope.lead.PARENTESCO = 'YERNO';
+				$scope.lead.PARENTESC2 = 'YERNO';
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/addVentaContado';
@@ -510,7 +510,12 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 	$scope.changeDesicionCredit = function(value){
 		$scope.decisionCredit = value;
-	}
+	};
+
+	$scope.close = function(){
+		$('#showWarningErrorData').modal('hide');
+
+	};
 
 	$scope.execConsultasLead = function(identificationNumber){
 		$('#proccess').modal('show');
@@ -518,7 +523,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/execConsultasLead/'+identificationNumber,
 		}).then(function successCallback(response) {
-			$scope.step ++;
+			console.log(response);
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
@@ -526,6 +531,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.resp = response.data;
 			if ($scope.resp.resp == "true" || $scope.resp.resp == "-2") {
 				$('#decisionCredit').modal('show');
+				$scope.step ++;
 			}
 
 			if ($scope.resp.resp == -3 || $scope.resp.resp == -4 || $scope.resp.resp == -1) {
@@ -534,6 +540,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.disabledButton = false;
 				if($scope.totalErrorData >= 2){
 					$scope.deniedLeadForFecExp('1');
+				}else{
+					$('#showWarningErrorData').modal('show');
 				}
 			}
 
@@ -591,30 +599,18 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.FEC_EXP+'/'
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.DIR_REFPER+'/'
-			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
-			+$scope.lead.CIU_REFPER+'/'
 			+$scope.lead.NOM_REFPE2+'/'
 			+$scope.lead.DIR_REFPE2+'/'
-			+$scope.lead.BAR_REFPE2+'/'
 			+$scope.lead.TEL_REFPE2+'/'
-			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
 			+$scope.lead.DIR_REFFAM+'/'
-			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
 			+$scope.lead.PARENTESCO+'/'
 			+$scope.lead.NOM_REFFA2+'/'
 			+$scope.lead.DIR_REFFA2+'/'
-			+$scope.lead.BAR_REFFA2+'/'
 			+$scope.lead.TEL_REFFA2+'/'
 			+$scope.lead.PARENTESC2+'/'
-			+$scope.lead.CON_CLI1+'/'
-			+$scope.lead.CON_CLI2+'/'
-			+$scope.lead.CON_CLI3+'/'
-			+$scope.lead.CON_CLI4+'/'
-			+$scope.lead.EDIT_RFCLI+'/'
-			+$scope.lead.EDIT_RFCL2+'/'
 			+$scope.resp.policy.fuenteFallo+'/',
 		}).then(function successCallback(response) {
 			if (response.data.resp == 'true') {
@@ -646,33 +642,20 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.CEDULA+'/'
 			+$scope.resp.quotaApprovedProduct+'/'
 			+$scope.resp.quotaApprovedAdvance+'/'
-			+$scope.lead.FEC_EXP+'/'
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.DIR_REFPER+'/'
-			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
-			+$scope.lead.CIU_REFPER+'/'
 			+$scope.lead.NOM_REFPE2+'/'
 			+$scope.lead.DIR_REFPE2+'/'
-			+$scope.lead.BAR_REFPE2+'/'
 			+$scope.lead.TEL_REFPE2+'/'
-			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
 			+$scope.lead.DIR_REFFAM+'/'
-			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
 			+$scope.lead.PARENTESCO+'/'
 			+$scope.lead.NOM_REFFA2+'/'
 			+$scope.lead.DIR_REFFA2+'/'
-			+$scope.lead.BAR_REFFA2+'/'
 			+$scope.lead.TEL_REFFA2+'/'
 			+$scope.lead.PARENTESC2+'/'
-			+$scope.lead.CON_CLI1+'/'
-			+$scope.lead.CON_CLI2+'/'
-			+$scope.lead.CON_CLI3+'/'
-			+$scope.lead.CON_CLI4+'/'
-			+$scope.lead.EDIT_RFCLI+'/'
-			+$scope.lead.EDIT_RFCL2+'/'
 			+$scope.resp.policy.fuenteFallo+'/';
 			hideLoader();
 			console.log(response);
@@ -687,30 +670,18 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.CEDULA+'/'
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.DIR_REFPER+'/'
-			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
-			+$scope.lead.CIU_REFPER+'/'
 			+$scope.lead.NOM_REFPE2+'/'
 			+$scope.lead.DIR_REFPE2+'/'
-			+$scope.lead.BAR_REFPE2+'/'
 			+$scope.lead.TEL_REFPE2+'/'
-			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
 			+$scope.lead.DIR_REFFAM+'/'
-			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
 			+$scope.lead.PARENTESCO+'/'
 			+$scope.lead.NOM_REFFA2+'/'
 			+$scope.lead.DIR_REFFA2+'/'
-			+$scope.lead.BAR_REFFA2+'/'
 			+$scope.lead.TEL_REFFA2+'/'
 			+$scope.lead.PARENTESC2+'/'
-			+$scope.lead.CON_CLI1+'/'
-			+$scope.lead.CON_CLI2+'/'
-			+$scope.lead.CON_CLI3+'/'
-			+$scope.lead.CON_CLI4+'/'
-			+$scope.lead.EDIT_RFCLI+'/'
-			+$scope.lead.EDIT_RFCL2+'/',
 		}).then(function successCallback(response) {
 			$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
@@ -724,32 +695,21 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			hideLoader();
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/decisionTraditionalCredit/'
+			+$scope.lead.CEDULA+'/'
 			+$scope.lead.NOM_REFPER+'/'
 			+$scope.lead.DIR_REFPER+'/'
-			+$scope.lead.BAR_REFPER+'/'
 			+$scope.lead.TEL_REFPER+'/'
-			+$scope.lead.CIU_REFPER+'/'
 			+$scope.lead.NOM_REFPE2+'/'
 			+$scope.lead.DIR_REFPE2+'/'
-			+$scope.lead.BAR_REFPE2+'/'
 			+$scope.lead.TEL_REFPE2+'/'
-			+$scope.lead.CIU_REFPE2+'/'
 			+$scope.lead.NOM_REFFAM+'/'
 			+$scope.lead.DIR_REFFAM+'/'
-			+$scope.lead.BAR_REFFAM+'/'
 			+$scope.lead.TEL_REFFAM+'/'
 			+$scope.lead.PARENTESCO+'/'
 			+$scope.lead.NOM_REFFA2+'/'
 			+$scope.lead.DIR_REFFA2+'/'
-			+$scope.lead.BAR_REFFA2+'/'
 			+$scope.lead.TEL_REFFA2+'/'
-			+$scope.lead.PARENTESC2+'/'
-			+$scope.lead.CON_CLI1+'/'
-			+$scope.lead.CON_CLI2+'/'
-			+$scope.lead.CON_CLI3+'/'
-			+$scope.lead.CON_CLI4+'/'
-			+$scope.lead.EDIT_RFCLI+'/'
-			+$scope.lead.EDIT_RFCL2+'/';
+			+$scope.lead.PARENTESC2+'/';
 			hideLoader();
 			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
