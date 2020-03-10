@@ -32,6 +32,11 @@
               <div class="icon">
                 <i class="ion ion-stats-bars " style="color: white;"></i>
               </div>
+              <div class="col-12 text-right color-white">
+                <span class="info-box-text text-right"><a href="{{ route('callCenter.index') }}"
+                    style="color: white; !important">Ver
+                    Más</a></span>
+              </div>
             </div>
           </div>
         </div>
@@ -118,7 +123,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            
+
             <div class="col-12">
               <canvas id="pieChart" style="height:310px; min-height:300px"></canvas>
             </div>

@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a href="/Administrator/dashboard/intentions">Dashboard
                                     Intenciones Web</a>
@@ -16,7 +16,8 @@
                         </ol>
                     </div>
                     <div class="col-12 mt-2">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                        <a href="{{ URL::previous() }}"
+                            class="btn btn-primary ml-auto mr-3 mb-2  btn-sm-reset">Regresar</a>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -26,7 +27,7 @@
                 <div class="row form-group" ng-if="filtros">
                     <div class="col-12">
                         <div class="card-header">
-                            @include('layouts.admin.filter_intention', ['datas' => $status,'route'
+                            @include('layouts.admin.filter_intentionAssessor', ['datas' => $status,'route'
                             =>"/Administrator/intentions/assessors/web"])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
@@ -36,7 +37,11 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h2>{{ $listCount }}</h2>
-                                            <p>Solicitudes</p>
+                                            @if ($_GET)
+                                            <p>Total de Solicitudes</p>
+                                            @else
+                                            <p>Solicitudes en este mes</p>
+                                            @endif
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>

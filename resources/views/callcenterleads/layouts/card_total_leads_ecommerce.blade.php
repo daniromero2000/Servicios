@@ -8,7 +8,7 @@
     </div>
     <div class="text-right mr-2">
         <span class="info-box-text text-right">
-            <a href="/Administrator/callcenterleads" style="color: white; !important">Ver
+            <a href="/Administrator/callcenterleads?q=&from=&to=&lead_area_id=8" style="color: white; !important">Ver
                 Más</a></span>
     </div>
 </div>

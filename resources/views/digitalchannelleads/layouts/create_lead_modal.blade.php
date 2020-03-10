@@ -49,8 +49,8 @@
                     @if(!empty($cities))
                     <option selected value> -- Selecciona Ciudad -- </option>
                     @foreach($cities as $city)
-                    <option value="{{ $city->CIUDAD }}">
-                      {{ $city->CIUDAD }}
+                    <option value="{{ $city->NOMBRE }}">
+                      {{ $city->NOMBRE }}
                     </option>
                     @endforeach
                     @endif
@@ -135,7 +135,8 @@
                     name="description" cols="10" class="form-control">
                 </div>
               </div>
-
+              <input type="text" id="termsAndConditions" name="termsAndConditions" value="1" class="form-control"
+                hidden>
               <div class="form-group text-right mb-0 mt-2">
                 <button class="btn btn-primary">Agregar</button>
                 <button class=" btn btn-danger" data-dismiss="modal" aria-label="Close">Cancelar</button>

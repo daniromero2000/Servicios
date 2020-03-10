@@ -1,4 +1,4 @@
-<tbody>
+<tbody class="body-table">
   @foreach($datas as $data)
   <tr>
     @if(!empty($datas))

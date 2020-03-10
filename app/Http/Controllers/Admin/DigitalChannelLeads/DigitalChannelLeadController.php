@@ -21,6 +21,7 @@ use App\Entities\Leads\Repositories\LeadRepository;
 use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Liquidator;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,8 @@ class DigitalChannelLeadController extends Controller
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
-        LeadAreaRepository $LeadAreaRepositoryInterface
+        LeadAreaRepository $LeadAreaRepositoryInterface,
+        CityRepositoryInterface $CityRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -57,6 +59,7 @@ class DigitalChannelLeadController extends Controller
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
         $this->UserInterface         = $UserRepositoryInterface;
         $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
+        $this->cityInterface         = $CityRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -122,7 +125,7 @@ class DigitalChannelLeadController extends Controller
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'              => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
             'channels'            => $this->channelInterface->getAllChannelNames(),
             'services'            => $this->serviceInterface->getAllServiceNames(),
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
@@ -137,25 +140,25 @@ class DigitalChannelLeadController extends Controller
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
-        $dataOportudata = [
-            'TIPO_DOC' => 1,
-            'CEDULA' => $request->input('identificationNumber'),
-            'APELLIDOS' => $request->input('lastName'),
-            'NOMBRES' => $request->input('name'),
-            'TIPOCLIENTE' => 'NUEVO',
-            'SUBTIPO' => 'WEB',
-            'CELULAR' => $request->input('telephone'),
-            'CIUD_UBI' => $request->input('city'),
-            'EMAIL' => $request->input('email'),
-            'MIGRADO' => 1,
-            'SUC' => 9999,
-            'ORIGEN' => 'Canal Digital',
-            'CLIENTE_WEB' => 1,
-        ];
-        $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
-        if (empty($customer)) {
-            $this->customerInterface->updateOrCreateCustomer($dataOportudata);
-        }
+        // $dataOportudata = [
+        //     'TIPO_DOC' => 1,
+        //     'CEDULA' => $request->input('identificationNumber'),
+        //     'APELLIDOS' => $request->input('lastName'),
+        //     'NOMBRES' => $request->input('name'),
+        //     'TIPOCLIENTE' => 'NUEVO',
+        //     'SUBTIPO' => 'WEB',
+        //     'CELULAR' => $request->input('telephone'),
+        //     'CIUD_UBI' => $request->input('city'),
+        //     'EMAIL' => $request->input('email'),
+        //     'MIGRADO' => 1,
+        //     'SUC' => 9999,
+        //     'ORIGEN' => 'Canal Digital',
+        //     'CLIENTE_WEB' => 1,
+        // ];
+        // $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
+        // if (empty($customer)) {
+        //     $this->customerInterface->updateOrCreateCustomer($dataOportudata);
+        // }
 
         $lead =  $this->leadInterface->createLead($request->input());
         $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
@@ -197,7 +200,7 @@ class DigitalChannelLeadController extends Controller
             'leadProduct'        => $digitalChannelLead->typeProduct,
             'leadStatus'         => $digitalChannelLead->state,
             'areas'              => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
-            'cities'             => $this->subsidiaryInterface->getAllSubsidiaryCityNames(),
+            'cities'             => $this->cityInterface->getCityByLabel(),
             'channels'           => $this->channelInterface->getAllChannelNames(),
             'services'           => $this->serviceInterface->getAllServiceNames(),
             'campaigns'          => $this->campaignInterface->getAllCampaignNames(),
@@ -207,25 +210,13 @@ class DigitalChannelLeadController extends Controller
             'liquidators'        => $liquidators
         ]);
     }
-    // "pagaduriaName" => "GOBERNACION DEL QUINDIO"
-    // "customerType" => "DOCENTE"
-    // "creditLineName" => "Libre inversión"
-    // "age" => 20
-    // "creditLine" => null
-    // "pagaduria" => null
-    // "fee" => 186400
-    // "rate" => 0.019
-    // "salary" => 2000000
-    // "amount" => 2000000
-    // "timeLimit" => 13
-
-    // "occupation" => null
 
     public function update(Request $request, $id)
     {
         // dd($request->input());
         $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
+        $request['termsAndConditions'] = 2;
 
         $lead = $this->leadInterface->findLeadById($id);
         if ($lead->state != $request['state']) {

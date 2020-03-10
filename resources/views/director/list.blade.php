@@ -8,8 +8,8 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
-            <ol class="breadcrumb float-sm-right">
+          <div class="col-sm-12 d-flex justify-content-end">
+            <ol class="breadcrumb bradcrumb-reset float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
               <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Dashboard Directores</a>
               </li>
@@ -34,7 +34,11 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2>{{ $listCount }}</h2>
+                      @if ($_GET)
+                      <p>Total de Solicitudes</p>
+                      @else
                       <p>Solicitudes este mes</p>
+                      @endif
                     </div>
                     <div class="icon">
                       <i class="ion ion-stats-bars"></i>
@@ -45,7 +49,11 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h4 class="mb-3">${{ number_format ($factoryRequestsTotal) }}</h4>
+                      @if ($_GET)
+                      <p>Total</p>
+                      @else
                       <p>Total de este mes</p>
+                      @endif
                     </div>
                     <div class="icon">
                       <i class="fas fa-shopping-cart"></i>

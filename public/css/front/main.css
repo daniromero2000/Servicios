@@ -43,6 +43,9 @@
     line-height: 1.5 !important;
     border-radius: .2rem !important;
     }
+    .input-group-sm-reset {
+        height: calc(1.8125rem + 2px);
+    }
     
 }
 @media (max-width:325px){

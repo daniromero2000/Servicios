@@ -9,8 +9,8 @@
             <div class="input-group">
 
 
-                <div class="row w-100 d-flex justify-content-center">
-                    <div class="col-6 col-md-3">
+                <div class="row w-100 d-flex justify-content-start">
+                    <div class="col-12 col-sm-6 col-md-3">
                         <label for="q">Buscar: Cedula - Nombre - Apellido</label>
                         <input type="text" name="q" class="form-control" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
@@ -60,12 +60,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
+                    <div class="col-12 col-md-9 d-flex align-items-end justify-content-end mt-3">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary mt-2"><i
+                            <button type="submit" id="search-btn" class="btn btn-primary btn-sm-reset mt-2"><i
                                     class="fa fa-search"></i>
                                 Buscar
                             </button>
+                            <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                                <i class="fas fa-times"></i> Restaurar filtros
+                            </a>
                         </span>
                     </div>
                 </div>

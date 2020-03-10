@@ -1,11 +1,9 @@
 User-agent: *
-Disallow:/leads/
-Disallow:/home/
-Disallow:/login/
-Disallow:/pages/
-Disallow:/seguros/
-Disallow:/users/
-Disallow:/register/
-Disallow:/motos/
-Disallow:/dashboard/
+Disallow:/home/$
+Disallow:/login/$
+Disallow:/pages/$
+Disallow:/users/$
+Disallow:/register/$
+Disallow:/motos/$
+Disallow:/Administrator/
 Sitemap: http://www.serviciosoportunidades.com/sitemap.xml

@@ -17,7 +17,7 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle text-decoretion-none" data-toggle="dropdown"> <img
-              src="{{ asset('images/analista1.png') }}" class="user-image" alt="User Image"> <span
+              src="{{ asset('images/analisis/user.png') }}" class="user-image" alt="User Image"> <span
               class="hidden-xs text-decoration-none color-gray">{{ auth()->user()->name }}</span> </a>
 
 
@@ -36,7 +36,7 @@
 
                       </div>
                       <div class="col-5 w-100 text-center">
-                        <img src="{{ asset('images/analista1.png') }}" alt="" class="img-circle img-fluid">
+                        <img src="{{ asset('images/analisis/user.png') }}" alt="" class="img-circle img-fluid">
                       </div>
                     </div>
                     <div class="row w-100 mt-2">

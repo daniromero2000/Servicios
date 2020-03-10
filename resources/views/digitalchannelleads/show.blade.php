@@ -8,10 +8,26 @@
             <div class="col-sm-12 text-right">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item bradcrumb-reset"><a href="/Administrator/dashboard">Dashboard</a></li>
+                    @if (auth()->user()->idProfile == 2 )
                     <li class="breadcrumb-item active"><a href="/Administrator/dashboard/comunitymanager">Dashboard
-                            Leads Canal Digital</a>
+                            Leads Canal Digital</a></li>
                     <li class="breadcrumb-item active"><a href="/Administrator/digitalchannelleads">Leads Canal
                             Digital</a></li>
+                    @endif
+                    @if (auth()->user()->idProfile == 20 )
+                    <li class="breadcrumb-item active"><a href="/Administrator/LeadsInsurance">Leads Seguros</a></li>
+                    @endif
+                    @if (auth()->user()->idProfile == 19 )
+                    <li class="breadcrumb-item active"><a href="/Administrator/LeadWallets">Leads Cartera</a></li>
+                    @endif
+                    @if (auth()->user()->idProfile == 18 )
+                    <li class="breadcrumb-item active"><a href="/Administrator/LeadWarranties">Leads Garantias</a></li>
+                    @endif
+                    @if (auth()->user()->idProfile == 22 )
+                    <li class="breadcrumb-item active"><a href="/Administrator/LeadsAdvancedUnit">Leads Unidad
+                            Avanzada</a>
+                    </li>
+                    @endif
                     <li class="breadcrumb-item active"><a href="">Detalle Intención</a></li>
                 </ol>
             </div>

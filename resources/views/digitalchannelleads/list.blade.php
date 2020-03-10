@@ -8,10 +8,8 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-8">
-                        <ol class="breadcrumb float-sm-right">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
                                     href="/Administrator/dashboard/digitalChannelLead">Dashboard
@@ -21,8 +19,9 @@
                         </ol>
                     </div>
                     <div class="col-sm-12 mt-2">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
-                        <button class="btn btn-primary ml-auto mr-3 mb-2 ">
+                        <a href="{{ URL::previous() }}"
+                            class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
+                        <button class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">
                             <a data-toggle="modal" data-target="#addleadmodal">Agregar Lead <i
                                     class="far fa-plus-square"></i></a>
                         </button>
@@ -45,7 +44,12 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h2>{{ $leadsOfMonth }}</h2>
+                                            @if ($_GET)
+                                            <p class="mt-3">Total de Solicitudes</p>
+                                            @else
                                             <p>Solicitudes en este mes</p>
+                                            @endif
+
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
@@ -57,7 +61,11 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h4>${{ number_format ($leadsOfMonthTotal) }}</h4>
+                                            @if ($_GET)
+                                            <p class="mt-4">Total de Cotizaciónes</p>
+                                            @else
                                             <p class="mt-3">Total de Cotizaciónes en este mes</p>
+                                            @endif
                                         </div>
                                         <div class="icon">
                                             <i class="fas fa-shopping-cart"></i>

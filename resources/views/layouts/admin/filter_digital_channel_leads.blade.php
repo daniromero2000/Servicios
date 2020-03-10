@@ -20,13 +20,13 @@
                             @if(!empty($cities))
                             <option data-select3-id="" disabled selected value> -- Selecciona Ciudad -- </option>
                             @foreach($cities as $city)
-                            <option data-select3-id="{{ $city->CIUDAD }}" value="{{ $city->CIUDAD }}">
-                                {{ $city->CIUDAD }}
+                            <option data-select3-id="{{ $city->NOMBRE }}" value="{{ $city->NOMBRE }}">
+                                {{ $city->NOMBRE }}
                             </option>
                             @if ($_GET)
                             @if (!empty($_GET['city']))
-                            @if($_GET['city']==$city->CIUDAD)
-                            <option selected>{{ $city->CIUDAD }}</option>
+                            @if($_GET['city']==$city->NOMBRE)
+                            <option selected>{{ $city->NOMBRE }}</option>
                             @endif
                             @endif
                             @endif
@@ -35,6 +35,7 @@
                         </select>
                     </div>
                 </div>
+                @if (auth()->user()->idProfile == 2 )
                 <div class="col-6 col-md-2">
                     <div class="form-group">
                         <label for="channel">Canal </label>
@@ -58,6 +59,32 @@
                         </select>
                     </div>
                 </div>
+                @endif
+                @if ( auth()->user()->idProfile == 18 )
+                <div class="col-6 col-md-2">
+                    <div class="form-group">
+                        <label for="channel">Canal </label>
+                        <select name="channel" id="channel" class="form-control select2 select2-hidden-accessible"
+                            style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
+                            @if(!empty($cities))
+                            <option data-select3-id="" disabled selected value> -- Selecciona Canal -- </option>
+                            @foreach($channels as $channel)
+                            <option data-select3-id="{{ $channel->id }}" value="{{ $channel->id }}">
+                                {{ $channel->channel }}
+                            </option>
+                            @if ($_GET)
+                            @if (!empty($_GET['channel']))
+                            @if($_GET['channel']==$channel->id)
+                            <option value="{{$channel->id}}" selected>{{ $channel->channel }}</option>
+                            @endif
+                            @endif
+                            @endif
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                @endif
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                     <label for="from">Desde</label>
                     <input type="date" name="from" class="form-control " value="{!! request()->input('from') !!}">
@@ -184,6 +211,9 @@
                             <button type="submit" id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i>
                                 Buscar
                             </button>
+                            <a class="btn btn-danger" href="{{$route}}">
+                                <i class="fas fa-times"></i> Restaurar filtros
+                            </a>
                         </span>
                     </div>
                 </div>

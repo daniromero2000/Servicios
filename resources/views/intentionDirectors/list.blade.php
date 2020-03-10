@@ -7,8 +7,8 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <ol class="breadcrumb float-sm-right">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
                                     href="/Administrator/dashboard/intentions/directors">Dashboard
@@ -18,7 +18,8 @@
                         </ol>
                     </div>
                     <div class="col-12 mt-2">
-                        <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 ">Regresar</a>
+                        <a href="{{ URL::previous() }}"
+                            class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -38,7 +39,11 @@
                                     <div class="small-box ">
                                         <div class="inner">
                                             <h2>{{ $listCount }}</h2>
+                                            @if ($_GET)
+                                            <p>Total de Solicitudes</p>
+                                            @else
                                             <p>Solicitudes en este mes</p>
+                                            @endif
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
