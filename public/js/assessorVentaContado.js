@@ -758,7 +758,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		showLoader();
 		hideLoader();
 	};
-
+	
 	$scope.resetInfo = function(){
 		$scope.lead = {
 			'TIPO_DOC' : '1',
