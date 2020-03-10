@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface TemporaryCustomerRepositoryInterface
 {
-    public function findCustomerById($identificationNumber): TemporaryCustomer;
+    public function findCustomerById($identificationNumber);
 
-    public function updateOrCreateCustomer($data);
+    public function updateOrCreateTemporaryCustomer($data);
+
+    public function deleteTemporaryCustomer($identificationNumber);
 }

@@ -1023,6 +1023,17 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 5 Definiciones cliente
+
+		if($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA'){
+			$customer->ESTADO = 'PREAPROBADO';
+			$customer->save();
+			$customerIntention->TARJETA          = 'Crédito Tradicional';
+			$customerIntention->ID_DEF           = '13';
+			$customerIntention->ESTADO_INTENCION = '2';
+			$customerIntention->save();
+			return ['resp' =>  "-2"];
+		}
+
 		if ($perfilCrediticio == 'TIPO A') {
 			if ($statusAfiliationCustomer == true) {
 				if ($tipoCliente == 'OPORTUNIDADES') {

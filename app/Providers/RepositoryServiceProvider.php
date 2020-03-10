@@ -76,10 +76,14 @@ use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusReposi
 use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Channels\Repositories\ChannelRepository;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
+use App\Entities\CustomerProfessions\Repositories\CustomerProfessionRepository;
+use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
 use App\Entities\Services\Repositories\ServiceRepository;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\FactoryRequestStatusesLogRepository;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
+use App\Entities\Kinships\Repositories\Interfaces\KinshipRepositoryInterface;
+use App\Entities\Kinships\Repositories\KinshipRepository;
 use App\Entities\LeadProducts\Repositories\LeadProductRepository;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\LeadStatusRepository;
@@ -87,13 +91,40 @@ use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterf
 use App\Entities\LeadPrices\Repositories\LeadPriceRepository;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
-use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepository;
-
+use App\Entities\TemporaryCustomers\Repositories\TemporaryCustomerRepository;
+use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
+use App\Entities\Codebtors\Repositories\CodebtorRepository;
+use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
+use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            SecondCodebtorRepositoryInterface::class,
+            SecondCodebtorRepository::class
+        );
+        $this->app->bind(
+            CodebtorRepositoryInterface::class,
+            CodebtorRepository::class
+        );
+
+        $this->app->bind(
+            KinshipRepositoryInterface::class,
+            KinshipRepository::class
+        );
+
+        $this->app->bind(
+            CustomerProfessionRepositoryInterface::class,
+            CustomerProfessionRepository::class
+        );
+
+        $this->app->bind(
+            TemporaryCustomerRepositoryInterface::class,
+            TemporaryCustomerRepository::class
+        );
+
         $this->app->bind(
             AppErrorRepositoryInterface::class,
             AppErrorRepository::class
