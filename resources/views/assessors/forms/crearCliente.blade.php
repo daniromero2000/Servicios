@@ -438,7 +438,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="labels" for="salario">Salario*</label>
-                                        <input class="inputs" id="salario" ng-currency fraction="0" min="0" type="text"
+                                        <input class="inputs" id="salario" ng-currency fraction="0" min="100000" type="text"
                                             ng-model="lead.SUELDO" required />
                                     </div>
                                 </div>
@@ -490,7 +490,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario*</label>
-                                        <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
+                                        <input class="form-control inputs" min="100000" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
                                     </div>
                                 </div>
                             </div>
@@ -515,7 +515,7 @@
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="SUELDOIND">Salario*</label>
                                         <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND"
-                                            id="SUELDOIND" ng-currency fraction="0" required />
+                                            id="SUELDOIND" ng-currency min="100000" fraction="0" required />
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="ACT_ECO">EPS*</label>
