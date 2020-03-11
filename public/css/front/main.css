@@ -1,6 +1,15 @@
+.container-card-dashboard{
+    margin-left: 3rem;
+}
 @media (max-width:990px){
     .container-reset{
         max-width: 90% !important;
+    }
+    .nameDashboard{
+        font-size: 20px;
+    }
+    .wellcomeDashboard{
+        font-size: 14px;
     }
 }
 @media (max-width:720px){
@@ -46,7 +55,24 @@
     .input-group-sm-reset {
         height: calc(1.8125rem + 2px);
     }
+    .container-card-dashboard{
+        margin-left: 0px !important;
+    }
     
+}
+@media (max-width:500px){
+    .nameDashboard{
+        font-size: 15px;
+    }
+    .wellcomeDashboard{
+        font-size: 11px;
+    }
+    .info-box-reset {
+        min-height: 70px !important;
+    }
+    .info-icon-reset{
+        width: 62px !important;
+    }
 }
 @media (max-width:325px){
     .textCardNumber{

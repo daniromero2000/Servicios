@@ -12,31 +12,34 @@ $modules = session('modules');
 @section('content')
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Bienvenido {{ auth()->user()->name }}</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+    <div class="row d-flex justify-content-center justify-content-md-start">
+      <div class="col-10 col-md-6 container-card-dashboard ">
+        <div class="card p-2 mt-3" style="background-color: #ffa41b; border-radius: 20px;">
+          <div class="card-body p-4">
+            <h4 class="text-white nameDashboard mb-2">Hola, {{ auth()->user()->name }}</h4>
+            <p class="card-text wellcomeDashboard text-white">Bienvenido al Panel Administrativo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <section class="content">
   <div class="container">
-    <div class="row d-flex mt-3">
+    <div class="row d-flex justify-content-center justify-content-sm-start mt-3">
       @foreach ($modules as $module)
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 text-center ">
-        <a class="btn btn-primary mb-3 " href="{{ $module->route}}"
-          style="min-width: 220px; min-height: 115px;border-radius: 10px;">
-          <i class="mt-1 {{ $module->icon}} nav-icon" style="font-size: 50px;"></i>
-          <p class="mt-1" style="font-size: 17px;">{{ $module->name }}</p>
+      <div class="col-8 col-sm-6 col-lg-4 col-xl-3">
+        <a class="cursor" data-toggle="tooltip" data-placement="top" title="Ir al panel" href="{{ $module->route}}">
+          <div class="info-box info-box-reset">
+            <span class="info-box-icon info-icon-reset bg-info elevation-1"><i class="{{ $module->icon}}"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text wellcomeDashboard ">{{ $module->name }}</span>
+            </div>
+          </div>
         </a>
       </div>
       @endforeach
-      <!-- /.col -->
     </div>
+  </div>
 </section>
 @endsection
