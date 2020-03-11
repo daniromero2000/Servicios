@@ -12,6 +12,7 @@ use Carbon\Carbon;
     </thead>
     <tbody class="body-table">
       @foreach($datas as $data)
+
       <tr>
         <td><span class="text-center badge"
             style="color: white ; background-color:

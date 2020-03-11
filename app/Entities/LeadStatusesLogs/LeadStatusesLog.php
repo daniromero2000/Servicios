@@ -11,13 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 class LeadStatusesLog extends Model
 {
     protected $fillable = [
-        'name',
-        'color',
+        'id',
+        'lead_id',
+        'lead_status_id',
+        'created_at',
+        'updated_at',
+        'user_id'
     ];
 
     protected $table  = 'lead_status';
-
-    protected $hidden = ['created_at'];
 
     public function leads()
     {

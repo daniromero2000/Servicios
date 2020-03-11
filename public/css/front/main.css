@@ -68,10 +68,10 @@
         font-size: 11px;
     }
     .info-box-reset {
-        min-height: 70px !important;
+        min-height: 65px !important;
     }
     .info-icon-reset{
-        width: 62px !important;
+        width: 58px !important;
     }
 }
 @media (max-width:325px){
