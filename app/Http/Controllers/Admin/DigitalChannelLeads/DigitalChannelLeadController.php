@@ -111,9 +111,6 @@ class DigitalChannelLeadController extends Controller
 
         $listCount = $list->count();
         $leadsOfMonth = $leadsOfMonth->count();
-
-
-
         $profile = 2;
 
         return view('digitalchannelleads.list', [
