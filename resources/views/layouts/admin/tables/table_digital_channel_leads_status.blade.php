@@ -157,6 +157,7 @@ use Carbon\Carbon;
                               class="text-danger">*</span></label>
                           <select name="channel" id="channel{{$data->id}}" class="form-control " style="width: 100%;">
                             @if(!empty($channels))
+                            <option data-select3-id="" selected value> Selecciona Asesor </option>
                             @foreach($channels as $channel)
                             <option @if($data->channel==$channel->id) selected="selected" @endif
                               value="{{ $channel->id }}">

@@ -14,13 +14,25 @@ use Carbon\Carbon;
       @foreach($datas as $data)
 
       <tr>
-        <td><span class="text-center badge"
-            style="color: white ; background-color:
-                        @if($data->created_at->diffInDays(Carbon::now()) <= 1) #0bb010 @endif
-                        @if($data->created_at->diffInDays(Carbon::now()) <= 2 && $data->created_at->diffInDays(Carbon::now()) >1) #ff9900 @endif
-                        @if($data->created_at->diffInDays(Carbon::now()) >= 3) #b0130b @endif
-                        @if($data->state === 2 || $data->state === 5 || $data->state === 6 || $data->state === 9 || $data->state === 4 || $data->state === 7) gray @endif"
-            class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
+        @php
+        $date = $data->leadStatusesLogs->last();
+        @endphp
+        <td>
+          @if ($date)
+          @if ($date->created_at->diffInDays(Carbon::now()) <= 1) <span class="text-center badge"
+            style="color: white ; background-color: #0bb010" class=" btn btn-info btn-block"><i
+              class="fa fa-bell-o"></i> </span>
+            @endif
+            @if ($date->created_at->diffInDays(Carbon::now()) <= 2 && $date->created_at->diffInDays(Carbon::now()) >1)
+              <span class="text-center badge" style="color: white ; background-color: #ff9900"
+                class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span>
+              @endif
+              @if ($date->created_at->diffInDays(Carbon::now()) >= 3)
+              <span class="text-center badge" style="color: white ; background-color: #b0130b"
+                class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span>
+              @endif
+              @endif
+        </td>
         <td> @if($data->leadStatuses) <span class="text-center badge"
             style="color: white ; background-color: {{$data->leadStatuses->color }}"
             class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
