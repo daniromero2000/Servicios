@@ -1,6 +1,9 @@
 .container-card-dashboard{
     margin-left: 3rem;
 }
+.p-reset{
+    padding: 1.5rem;
+}
 @media (max-width:990px){
     .container-reset{
         max-width: 90% !important;
@@ -72,6 +75,9 @@
     }
     .info-icon-reset{
         width: 58px !important;
+    }
+    .p-reset{
+        padding: 1rem!important;
     }
 }
 @media (max-width:325px){

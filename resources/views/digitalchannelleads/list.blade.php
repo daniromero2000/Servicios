@@ -45,9 +45,9 @@
                                         <div class="inner">
                                             <h2>{{ $leadsOfMonth }}</h2>
                                             @if ($_GET)
-                                            <p class="mt-3">Total de Solicitudes</p>
+                                            <p class="mt-3">Total de Leads</p>
                                             @else
-                                            <p>Solicitudes en este mes</p>
+                                            <p>Leads en este mes</p>
                                             @endif
 
                                         </div>

@@ -1,12 +1,12 @@
-$( document ).ready(function() {
+$(document).ready(function () {
 	setTimeout(() => {
 		var inputs = $('input');
 		for (var i = 0; i < inputs.length; i++) {
 			var name = "";
 			var typeInput = "";
-			if(inputs[i].getAttribute('type') != 'hidden'){
+			if (inputs[i].getAttribute('type') != 'hidden') {
 				name = getTypeValidationInput(inputs[i]);
-				switch(name) {
+				switch (name) {
 					case 'number':
 						validateNumber(inputs[i]);
 						break;
@@ -46,57 +46,57 @@ $( document ).ready(function() {
 			}
 		}
 
-		function getTypeValidationInput(input){
+		function getTypeValidationInput(input) {
 			var name = "";
 			name = input.getAttribute('validation-pattern');
 			return name;
 		}
 
-		function setAttributePatternInput(input, pattern){
-			var typePattern = (input.getAttribute('ng-model') ? 'ng-pattern' : 'pattern' );
+		function setAttributePatternInput(input, pattern) {
+			var typePattern = (input.getAttribute('ng-model') ? 'ng-pattern' : 'pattern');
 			input.setAttribute('pattern', pattern);
 		}
 
 		/*Type Text*/
 
-		function validateName(input){
-			var patt ="(([a-zA-ZñÑáéíóúÁÉÍÓÚ]+([\\.]?)[a-zA-ZñÑáéíóúÁÉÍÓÚ]*)\\s{0,1})+";
+		function validateName(input) {
+			var patt = "(([a-zA-ZñÑáéíóúÁÉÍÓÚ]+([\\.]?)[a-zA-ZñÑáéíóúÁÉÍÓÚ]*)\\s{0,1})+";
 			setAttributePatternInput(input, patt);
 		}
 
-		function validateNit(input){
-			var patt ="[0-9]{1,15}(-[0-9])?";
+		function validateNit(input) {
+			var patt = "[0-9]{1,15}(-[0-9])?";
 			setAttributePatternInput(input, patt);
 		}
 
-		function validateText(input){
-			var patt ="((\\w*([\\.]?)(#?)(-?)([\\(]?)([\\)]?)([\\']?)([\\,]?))\\s{0,1})+";
+		function validateText(input) {
+			var patt = "((\\w*([\\.]?)(#?)(-?)([\\(]?)([\\)]?)([\\']?)([\\,]?))\\s{0,1})+";
 			setAttributePatternInput(input, patt);
 		}
 
-		function validateTelephoneAndCelphone(input){
+		function validateTelephoneAndCelphone(input) {
 			var patt = "(\\+57)?\\s?((\\d{7})|(\\d{10}))";
 			setAttributePatternInput(input, patt);
 		}
 
-		function validateTextOnly(input){
+		function validateTextOnly(input) {
 			var patt = "([a-zA-ZñÑáéíóúÁÉÍÓÚ]+\\s?)+";
 			setAttributePatternInput(input, patt);
 		}
 
 		/*Type Email*/
-		function validateEmail(input){
+		function validateEmail(input) {
 			var patt = "\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,4})+";
 			setAttributePatternInput(input, patt);
 		}
 
 		/* Type Number */
-		function validateNumber(input){
+		function validateNumber(input) {
 			var patt = "[0-9]*";
 			setAttributePatternInput(input, patt);
 		};
 		/* Identification Number */
-		function validateIdentificationNumber(input){
+		function validateIdentificationNumber(input) {
 
 			var patt = "[0-9]{5,10}";
 			setAttributePatternInput(input, patt);

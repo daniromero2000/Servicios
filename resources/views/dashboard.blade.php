@@ -15,7 +15,7 @@ $modules = session('modules');
     <div class="row d-flex justify-content-center justify-content-md-start">
       <div class="col-10 col-md-6 container-card-dashboard ">
         <div class="card p-1 mt-3 bg-primary" style="border-radius: 20px;">
-          <div class="card-body p-4">
+          <div class="card-body p-reset">
             <h4 class="text-white nameDashboard mb-2">Hola, {{ auth()->user()->name }}</h4>
             <p class="card-text wellcomeDashboard text-white">Bienvenido al Panel Administrativo</p>
           </div>
