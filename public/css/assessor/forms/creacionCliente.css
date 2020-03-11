@@ -140,6 +140,11 @@ input{
     width: 50%;
     border-radius:15px;
 }
+
+.crearCliente-form{
+    animation: fadeIn 2.5s;
+}
+
 @media (max-width: 750px){
     .content-top{
         text-align: center;
@@ -157,5 +162,15 @@ input{
     .img-top{
         width: 100%;
         border-radius:15px;
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0
+    }
+
+    to{
+        opacity: 1;
     }
 }
