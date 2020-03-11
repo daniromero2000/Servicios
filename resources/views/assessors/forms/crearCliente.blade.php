@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div ng-show="tipoCliente == 'CREDITO'">
-                <form name="clienteCredito" ng-submit="addTemporaryCustomer()" ng-show="step == 1" class="crearCliente-form">
+                <form name="clienteCredito" id="addCustomerStep1" ng-submit="addTemporaryCustomer()" ng-show="step == 1" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -48,7 +48,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="tipodoc">Tipo de documento*</label>
-                                    <select class="inputs form-control" ng-model="lead.TIPO_DOC" id="tipodoc"
+                                    <select class="inputs form-control select2bs4" ng-model="lead.TIPO_DOC" id="tipodoc"
                                         ng-options="type.value as type.label for type in typesDocuments"></select>
                                 </div>
                                 <div class="col-12 col-md-4">
@@ -98,13 +98,13 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-md-4">
-                                    <label class="ventaContado-label" for="ciud_ubi">Ciudad de ubicación</label>
-                                    <select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi"
+                                    <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal</label>
+                                    <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubi"
                                         ng-options="city.value as city.label for city in citiesUbi"></select>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="actividad">Ocupación</label>
-                                    <select class="inputs form-control" ng-model="lead.ACTIVIDAD" id="actividad"
+                                    <select class="inputs form-control select2bs4" ng-model="lead.ACTIVIDAD" id="actividad"
                                         ng-options="actividad.value as actividad.label for actividad in occupations"></select>
                                 </div>
                                 <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_EXP" class="labels">Ciudad de expedición</label>
-                                    <select class="form-control inputs" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities"></select>
+                                    <select class="form-control inputs select2bs4" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities"></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="sexo" class="labels">Género</label>
-                                    <select class="form-control inputs" ng-model="lead.SEXO" id="sexo" ng-options="gender.value as gender.label for gender in genders"></select>
+                                    <select class="form-control inputs select2bs4" ng-model="lead.SEXO" id="sexo" ng-options="gender.value as gender.label for gender in genders"></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -220,17 +220,17 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_NAC" class="labels">Ciudad de nacimiento</label>
-                                    <select class="form-control inputs" ng-model="lead.CIUD_NAC" id="CIUD_NAC" ng-options="city.label as city.label for city in cities"></select>
+                                    <select class="form-control inputs select2bs4" ng-model="lead.CIUD_NAC" id="CIUD_NAC" ng-options="city.label as city.label for city in cities"></select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <label for="ESTUDIOS" class="labels">Nivel de estudios</label>
-                                    <select id="ESTUDIOS" class="inputs form-control" ng-model="lead.ESTUDIOS" ng-options="scolarity.value as scolarity.label for scolarity in scolarities"></select>
+                                    <select id="ESTUDIOS" class="inputs form-control select2bs4" ng-model="lead.ESTUDIOS" ng-options="scolarity.value as scolarity.label for scolarity in scolarities"></select>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="PROFESION" class="labels">Profesión</label>
-                                    <select id="PROFESION" class="inputs form-control" ng-model="lead.PROFESION" ng-options="profession.NOMBRE as profession.NOMBRE for profession in professions"></select>
+                                    <select id="PROFESION" class="inputs form-control select2bs4" ng-model="lead.PROFESION" ng-options="profession.NOMBRE as profession.NOMBRE for profession in professions"></select>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <label for="PERSONAS" class="labels">Personas a cargo</label>
@@ -240,7 +240,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label for="" class="labels">Posee vehículo</label>
-                                    <select ng-model="lead.POSEEVEH" class="form-control inputs" id="POSEEVEH">
+                                    <select ng-model="lead.POSEEVEH" class="form-control inputs select2bs4" id="POSEEVEH">
                                         <option value="S">Si</option>
                                         <option value="N">No</option>
                                     </select>
@@ -253,7 +253,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12">
                                     <label for="ESTADOCIVIL" class="labels">Estado civil</label>
-                                    <select class="inputs form-control" ng-model="lead.ESTADOCIVIL" id="ESTADOCIVIL" ng-options="civilType.value as civilType.label for civilType in civilTypes" >
+                                    <select class="inputs form-control select2bs4" ng-model="lead.ESTADOCIVIL" id="ESTADOCIVIL" ng-options="civilType.value as civilType.label for civilType in civilTypes" >
                                     </select>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="TIPOV" class="labels">Tipo de vivienda</label>
-                                    <select class="inputs form-control" ng-model="lead.TIPOV" id="TIPOV" ng-options="housingType.value as housingType.label for housingType in housingTypes"></select>
+                                    <select class="inputs form-control select2bs4" ng-model="lead.TIPOV" id="TIPOV" ng-options="housingType.value as housingType.label for housingType in housingTypes"></select>
                                 </div>
                             </div>
                             <div class="row" ng-show="lead.TIPOV == 'ARRIENDO'">
@@ -345,11 +345,11 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label for="DIRECCION" class="labels">Dirección</label>
-                                    <input type="text" class="inputs form-control" ng-model="lead.DIRECCION" id="DIRECCION" />
+                                    <input type="text" class="inputs form-control" ng-model="lead.DIRECCION" id="DIRECCION"  />
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="ESTRATO" class="labels">Estrato</label>
-                                    <select class="form-control inputs" ng-model="lead.ESTRATO" id="ESTRATO" ng-options="strat.value as strat.label for strat in stratum"></select>
+                                    <select class="form-control inputs select2bs4" ng-model="lead.ESTRATO" id="ESTRATO" ng-options="strat.value as strat.label for strat in stratum"></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -437,7 +437,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <label class="ventaContado-label labels" for="tipoCont">Tipo de contrato*</label>
-                                        <select class="inputs form-control" ng-model="lead.TIPO_CONT" id="tipoCont"
+                                        <select class="inputs form-control select2bs4" ng-model="lead.TIPO_CONT" id="tipoCont"
                                             ng-options="typeContract.value as typeContract.label for typeContract in typesContracts"></select>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -451,7 +451,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <label class="ventaContado-label" for="CAMARAC">Cámara de comercio</label>
-                                        <select class="form-control" ng-model="lead.CAMARAC" id="CAMARAC">
+                                        <select class="form-control select2bs4 inputs" ng-model="lead.CAMARAC" id="CAMARAC">
                                             <option value="SI">Si</option>
                                             <option value="NO">No</option>
                                         </select>
@@ -523,7 +523,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="BANCOP">Banco*</label>
-                                        <select class="form-control inputs" ng-model="lead.BANCOP" id="BANCOP"
+                                        <select class="form-control inputs select2bs4" ng-model="lead.BANCOP" id="BANCOP"
                                             ng-options="bank.value as bank.label for bank in banks" required></select>
                                     </div>
                                 </div>
@@ -562,8 +562,8 @@
                                                     <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPER" id="NOM_REFPER" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFPER" class="labels">Dirección</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" />
+                                                    <label for="DIR_REFPER" class="labels">Dirección (No usar # ni /)</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" validation-pattern="text" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -580,8 +580,8 @@
                                                     <input type="text" class="inputs form-control" ng-model="lead.NOM_REFPE2" id="NOM_REFPE2" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFPE2" class="labels">Dirección</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" />
+                                                    <label for="DIR_REFPE2" class="labels">Dirección (No usar # ni /)</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" validation-pattern="text" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -611,8 +611,8 @@
                                                     <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFAM" id="NOM_REFFAM" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFFAM" class="labels">Dirección</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" />
+                                                    <label for="DIR_REFFAM" class="labels">Dirección (No usar # ni /)</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" validation-pattern="text" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -633,8 +633,8 @@
                                                     <input type="text" class="inputs form-control" ng-model="lead.NOM_REFFA2" id="NOM_REFFA2"  required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFFA2" class="labels">Dirección</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" />
+                                                    <label for="DIR_REFFA2" class="labels">Dirección (No usar # ni /)</label>
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" validation-pattern="text" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -674,7 +674,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <label class="labels" for="tipodoc">Tipo de documento*</label>
-                        <select class="inputs" ng-model="lead.TIPO_DOC" id="tipodoc"
+                        <select class="inputs select2bs4" ng-model="lead.TIPO_DOC" id="tipodoc"
                             ng-options="type.value as type.label for type in typesDocuments"></select>
                     </div>
                     <div class="col-12 col-sm-6">
@@ -712,7 +712,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label labels" for="genero">Género</label>
-                        <select class="inputs" ng-model="lead.SEXO" id="genero"
+                        <select class="inputs select2bs4" ng-model="lead.SEXO" id="genero"
                             ng-options="gender.label as gener.value for gender in genders"></select>
                     </div>
                 </div>
@@ -723,7 +723,7 @@
                     </div>
                     <div class="col-12 col-sm-6">
                         <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de ubicación</label>
-                        <select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubiContado"
+                        <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubiContado"
                             ng-options="city.value as city.label for city in citiesUbi"></select>
                     </div>
                 </div>

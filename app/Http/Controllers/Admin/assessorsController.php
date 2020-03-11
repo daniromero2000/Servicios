@@ -590,9 +590,10 @@ class assessorsController extends Controller
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
-				$customerStatusDenied = true;
-				$idDef = '8';
 				$perfilCrediticio = 'TIPO NE';
+				$customerIntention->ID_DEF = '8';
+				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 

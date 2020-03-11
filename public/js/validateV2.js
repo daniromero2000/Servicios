@@ -69,8 +69,13 @@ $(document).ready(function () {
 			setAttributePatternInput(input, patt);
 		}
 
+<<<<<<< HEAD
 		function validateText(input) {
 			var patt = "((\\w*([\\.]?)(#?)(-?)([\\(]?)([\\)]?)([\\']?)([\\,]?))\\s{0,1})+";
+=======
+		function validateText(input){
+			var patt ="(\\w*\\s?[\\.]*[\\-]*)+";
+>>>>>>> 492e0d043e7f90cafe0e0b09987973f1e7576c16
 			setAttributePatternInput(input, patt);
 		}
 
