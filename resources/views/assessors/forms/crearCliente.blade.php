@@ -165,18 +165,20 @@
                                 <span class="forms-descStepNum">2</span>
                             </div>
                             <div class="row">
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <label class="labels" for="tipodoc">Tipo de documento*</label>
                                     <select ng-disabled="true" class="inputs form-control" ng-model="lead.TIPO_DOC" id="tipodoc"
                                         ng-options="type.value as type.label for type in typesDocuments"></select>
                                 </div>
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <label class="labels" for="CEDULA">Número de documento*</label>
                                     <input readonly class="inputs" validation-pattern="IdentificationNumber"
                                         ng-blur="getValidationLead()" type="text" ng-model="lead.CEDULA" id="CEDULA"
                                         required />
                                 </div>
-                                <div class="col-12 col-md-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
                                     <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
                                     <div class="input-group">
                                         <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP"
@@ -185,6 +187,10 @@
                                             <i class="octicon octicon-calendar"></i>
                                         </span>
                                     </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="CIUD_EXP" class="labels">Ciudad de expedición</label>
+                                    <select class="form-control inputs" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities"></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -314,7 +320,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label class="ventaContado-label" for="ciud_ubi2">Ciudad de ubicación</label>
-                                    <select class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi2"
+                                    <select ng-disabled="true" class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi2"
                                         ng-options="city.value as city.label for city in citiesUbi"></select>
                                 </div>
                                 <div class="col-12 col-sm-6">
