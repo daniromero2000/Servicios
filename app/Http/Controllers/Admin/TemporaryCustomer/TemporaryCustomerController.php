@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\TemporaryCustomer;
 
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class TemporaryCustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $request['FEC_ING'] = ($request['FEC_ING'] != '') ? $request['FEC_ING'].'-01' : '' ;
+        $request['FEC_CONST'] = ($request['FEC_CONST'] != '') ? $request['FEC_CONST'].'-01' : '' ;
         return $this->temporaryCustomerInterface->updateOrCreateTemporaryCustomer($request->input());
     }
 
