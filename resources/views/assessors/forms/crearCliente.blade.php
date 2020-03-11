@@ -660,7 +660,7 @@
                     </div>
                 </form>
             </div>
-            <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'">
+            <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'" class="crearCliente-form">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 type-client">
                         <div class="forms-descStep forms-descStep-avances">
