@@ -20,22 +20,16 @@
                                 @if(!empty($cities))
                                 <option data-select3-id="" selected value> Selecciona Ciudad </option>
                                 @foreach($cities as $city)
-                                <option data-select3-id="{{ $city->NOMBRE }}" value="{{ $city->NOMBRE }}">
+                                <option data-select3-id="{{ $city->NOMBRE }}" @if ($_GET && !empty($_GET['city']) &&
+                                    $_GET['city']==$city->NOMBRE) selected @endif value="{{ $city->NOMBRE }}">
                                     {{ $city->NOMBRE }}
                                 </option>
-                                @if ($_GET)
-                                @if (!empty($_GET['city']))
-                                @if($_GET['city']==$city->NOMBRE)
-                                <option selected>{{ $city->NOMBRE }}</option>
-                                @endif
-                                @endif
-                                @endif
                                 @endforeach
                                 @endif
                             </select>
                         </div>
                     </div>
-                    @if (auth()->user()->idProfile == 2 )
+                    @if (auth()->user()->idProfile == 2 || auth()->user()->idProfile == 18)
                     <div class="col-6 col-md-2">
                         <div class="form-group">
                             <label for="channel">Canal </label>
@@ -44,41 +38,10 @@
                                 @if(!empty($cities))
                                 <option data-select3-id="" selected value> Selecciona Canal </option>
                                 @foreach($channels as $channel)
-                                <option data-select3-id="{{ $channel->id }}" value="{{ $channel->id }}">
+                                <option data-select3-id="{{ $channel->id }}" @if ($_GET && !empty($_GET['channel']) &&
+                                    $_GET['channel']==$channel->id) selected @endif value="{{ $channel->id }}">
                                     {{ $channel->channel }}
                                 </option>
-                                @if ($_GET)
-                                @if (!empty($_GET['channel']))
-                                @if($_GET['channel']==$channel->id)
-                                <option value="{{$channel->id}}" selected>{{ $channel->channel }}</option>
-                                @endif
-                                @endif
-                                @endif
-                                @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                    @endif
-                    @if ( auth()->user()->idProfile == 18 )
-                    <div class="col-6 col-md-2">
-                        <div class="form-group">
-                            <label for="channel">Canal </label>
-                            <select name="channel" id="channel" class="form-control select2 select2-hidden-accessible"
-                                style="width: 100%;" data-select3-id="1" tabindex="-1" aria-hidden="true">
-                                @if(!empty($cities))
-                                <option data-select3-id="" selected value> Selecciona Canal </option>
-                                @foreach($channels as $channel)
-                                <option data-select3-id="{{ $channel->id }}" value="{{ $channel->id }}">
-                                    {{ $channel->channel }}
-                                </option>
-                                @if ($_GET)
-                                @if (!empty($_GET['channel']))
-                                @if($_GET['channel']==$channel->id)
-                                <option value="{{$channel->id}}" selected>{{ $channel->channel }}</option>
-                                @endif
-                                @endif
-                                @endif
                                 @endforeach
                                 @endif
                             </select>
@@ -105,16 +68,10 @@
                                         <option selected value> Selecciona Area </option>
                                         @if(!empty($areas))
                                         @foreach($areas as $area)
-                                        <option value="{{ $area->id }}">
+                                        <option value="{{ $area->id }}" @if ($_GET && !empty($_GET['lead_area_id']) &&
+                                            $_GET['lead_area_id']==$area->id) selected @endif>
                                             {{ $area->name }}
                                         </option>
-                                        @if ($_GET)
-                                        @if (!empty($_GET['lead_area_id']))
-                                        @if($_GET['lead_area_id']==$area->id)
-                                        <option value="{{$area->id}}" selected>{{ $area->name }}</option>
-                                        @endif
-                                        @endif
-                                        @endif
                                         @endforeach
                                         @endif
                                     </select>
@@ -129,16 +86,10 @@
                                         <option selected value> Selecciona Servicio </option>
                                         @if(!empty($services))
                                         @foreach ($services as $service)
-                                        <option value="{{ $service->id }}">
+                                        <option value="{{ $service->id }}" @if ($_GET && !empty($_GET['typeService']) &&
+                                            $_GET['typeService']==$service->id) selected @endif>
                                             {{ $service->service }}
                                         </option>
-                                        @if ($_GET)
-                                        @if (!empty($_GET['typeService']))
-                                        @if($_GET['typeService']==$service->id)
-                                        <option value="{{$service->id}}" selected>{{ $service->service }}</option>
-                                        @endif
-                                        @endif
-                                        @endif
                                         @endforeach
                                         @endif
                                     </select>
@@ -153,17 +104,12 @@
                                         <option selected value> Selecciona Producto </option>
                                         @if(!empty($lead_products))
                                         @foreach ($lead_products as $lead_product)
-                                        <option value="{{ $lead_product->id }}">
+                                        <option value="{{ $lead_product->id }}" @if ($_GET &&
+                                            !empty($_GET['typeProduct']) && $_GET['typeProduct']==$lead_product->id)
+                                            selected
+                                            @endif>
                                             {{ $lead_product->lead_product }}
                                         </option>
-                                        @if ($_GET)
-                                        @if (!empty($_GET['typeProduct']))
-                                        @if($_GET['typeProduct']==$lead_product->id)
-                                        <option value="{{$lead_product->id}}" selected>{{ $lead_product->lead_product }}
-                                        </option>
-                                        @endif
-                                        @endif
-                                        @endif
                                         @endforeach
                                         @endif
                                     </select>
@@ -178,16 +124,12 @@
                                         <option selected value> Selecciona Estado </option>
                                         @if(!empty($lead_statuses))
                                         @foreach ($lead_statuses as $lead_status)
-                                        <option value="{{ $lead_status->id }}">
+                                        <option value="{{ $lead_status->id }}" @if ($_GET && !empty($_GET['state']) &&
+                                            $_GET['state']==$lead_status->id)
+                                            selected
+                                            @endif>
                                             {{ $lead_status->status }}
                                         </option>
-                                        @if ( $_GET && !empty($_GET['state']))
-                                        @if($_GET['state']==$lead_status->id)
-                                        <option value="{{$lead_status->id}}" selected>
-                                            {{ $lead_status->status }}
-                                        </option>
-                                        @endif
-                                        @endif
                                         @endforeach
                                         @endif
                                     </select>

@@ -43,14 +43,8 @@
                                 request()->input('status') !!} style="width: 100%;">
                                 <option disabled selected value> -- Selecciona Estado -- </option>
                                 @foreach ($status as $state)
-                                <option value="{{ $state->ID }}">{{ $state->NAME }}</option>
-                                @if ( $_GET && !empty($_GET['status']))
-                                @if($_GET['status']==$state->ID)
-                                <option value="{{$state->ID}}" selected>
-                                    {{$state->NAME }}
-                                </option>
-                                @endif
-                                @endif
+                                <option value="{{ $state->ID }}" @if ($_GET && !empty($_GET['status']) &&
+                                    $_GET['status']==$state->ID) selected @endif>{{ $state->NAME }}</option>
                                 @endforeach
                             </select>
                         </div>
