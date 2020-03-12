@@ -29,71 +29,71 @@
             </div>
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
-                @php
+                {{-- @php
                 dd($estadosPendientes);
-                @endphp
-                <div class="col-6 col-md-6">
+                @endphp --}}
+                {{-- <div class="col-6 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
                       <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                      @if ($_GET)
-                      <p class="textCardNumber">Total de Solicitudes</p>
-                      @else
-                      <p class="textCardNumber">Solicitudes en este mes</p>
-                      @endif
-                    </div>
-                    <div class="icon">
-                      <i class="ion ion-stats-bars"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-6">
-                  <!-- /.info-box -->
-                  <div class="small-box ">
-                    <div class="inner">
-                      <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                      @if ($_GET)
-                      <p class="textCardNumber">Total de Solicitudes</p>
-                      @else
-                      <p class="textCardNumber">Solicitudes en este mes</p>
-                      @endif
-                    </div>
-                    <div class="icon">
-                      <i class="ion ion-stats-bars"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-6">
-                  <!-- /.info-box -->
-                  <div class="small-box ">
-                    <div class="inner">
-                      <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
-                      @if ($_GET)
-                      <p class="textCardNumber">Total</p>
-                      @else
-                      <p class="textCardNumber">Total en este mes</p>
-                      @endif
-                    </div>
-                    <div class="icon">
-                      <i class="ion ion-stats-bars"></i>
-                    </div>
-                  </div>
-                </div>
+                @if ($_GET)
+                <p class="textCardNumber">Total de Solicitudes</p>
+                @else
+                <p class="textCardNumber">Solicitudes en este mes</p>
+                @endif
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
               </div>
             </div>
-            <div class="card-body text-center pt-0 pb-0 ">
-              @if($factoryRequests)
-              @include('layouts.admin.tables.tables_factory_requests_status', [$headers, 'datas' => $factoryRequests ])
-              @include('layouts.admin.pagination.pagination', [$skip])
-              @else
-              @include('layouts.admin.pagination.pagination_null', [$skip])
-              @endif
+          </div> --}}
+          <div class="col-6 col-md-6">
+            <!-- /.info-box -->
+            <div class="small-box ">
+              <div class="inner">
+                <h2 class="titleCardNumber">{{ $listCount }}</h2>
+                @if ($_GET)
+                <p class="textCardNumber">Total de Solicitudes</p>
+                @else
+                <p class="textCardNumber">Solicitudes en este mes</p>
+                @endif
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-6">
+            <!-- /.info-box -->
+            <div class="small-box ">
+              <div class="inner">
+                <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
+                @if ($_GET)
+                <p class="textCardNumber">Total</p>
+                @else
+                <p class="textCardNumber">Total en este mes</p>
+                @endif
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="card-body text-center pt-0 pb-0 ">
+        @if($factoryRequests)
+        @include('layouts.admin.tables.tables_factory_requests_status', [$headers, 'datas' => $factoryRequests ])
+        @include('layouts.admin.pagination.pagination', [$skip])
+        @else
+        @include('layouts.admin.pagination.pagination_null', [$skip])
+        @endif
+      </div>
     </div>
+  </div>
+  </div>
+  </div>
   </div>
   @endif
 </section>

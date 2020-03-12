@@ -141,7 +141,6 @@ class assessorsController extends Controller
 		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO");
 		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
 		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
-		dd($estadosNegados);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
 			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
@@ -214,16 +213,16 @@ class assessorsController extends Controller
 		$listCount = $listCount->count();
 
 		return view('assessors.assessors.list', [
-			'factoryRequests'      => $list,
-			'optionsRoutes'        => (request()->segment(2)),
-			'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-			'listCount'            => $listCount,
-			'skip'                 => $skip,
-			'factoryRequestsTotal' => $factoryRequestsTotal,
-			'estadosAprobados' 	   => $estadosAprobados,
-			'estadosNegados' 	   => $estadosNegados,
-			'estadosDesistidos'    => $estadosDesistidos,
-			'statusesPendientesValues'    => $statusesPendientesValues
+			'factoryRequests'     		   => $list,
+			'optionsRoutes'       		   => (request()->segment(2)),
+			'headers'             		   => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+			'listCount'           		   => $listCount,
+			'skip'                		   => $skip,
+			'factoryRequestsTotal'		   => $factoryRequestsTotal,
+			'estadosAprobados' 	  		   => $estadosAprobados,
+			'estadosNegados' 	  		   => $estadosNegados,
+			'estadosDesistidos'   		   => $estadosDesistidos,
+			'statusesPendientesValues'     => $statusesPendientesValues
 		]);
 	}
 
