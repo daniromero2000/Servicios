@@ -88,15 +88,14 @@
                     <div class="col-12 d-flex align-items-end justify-content-end">
                         <div class="form-group">
                             <span class="input-group-btn btn-pr">
+                                <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                                    <i class="fas fa-times"></i> Restaurar filtros
+                                </a>
                                 <button type="submit" id="search-btn" class="btn btn-primary mt-2 btn-sm-reset"><i
                                         class="fa fa-search"></i>
                                     Buscar
                                 </button>
-                                <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
-                                    <i class="fas fa-times"></i> Restaurar filtros
-                                </a>
                             </span>
-
                         </div>
                     </div>
                 </div>

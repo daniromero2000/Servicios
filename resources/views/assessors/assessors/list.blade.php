@@ -39,7 +39,7 @@
                       <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
                         ${{number_format( $statusesAprobadosValues )}} @else $0
                         @endif </h2>
-                      @if ($_GET)
+                      @if ($_GET && $_GET['from'] != '')
                       <p class="textCardNumber textCardNumberForTotals">Total Vendidos</p>
                       @else
                       <p class="textCardNumber textCardNumberForTotals">Total Vendidos en este mes</p>
@@ -57,7 +57,7 @@
                       <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
                         ${{number_format( $statusesNegadosValues )}}@else $0
                         @endif </h2>
-                      @if ($_GET)
+                      @if ($_GET && $_GET['from'] != '')
                       <p class="textCardNumber textCardNumberForTotals">Total Negados</p>
                       @else
                       <p class="textCardNumber textCardNumberForTotals">Total Negados en este mes</p>
@@ -74,7 +74,7 @@
                     <div class="inner">
                       <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesDesistidosValues !=0 )
                         ${{number_format( $statusesDesistidosValues )}} @else $0 @endif </h2>
-                      @if ($_GET)
+                      @if ($_GET && $_GET['from'] != '')
                       <p class="textCardNumber textCardNumberForTotals">Total Desistidos</p>
                       @else
                       <p class="textCardNumber textCardNumberForTotals">Total Desistidos en este mes</p>
@@ -91,7 +91,7 @@
                     <div class="inner">
                       <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesPendientesValues !=0 )
                         ${{number_format( $statusesPendientesValues )}} @else $0 @endif</h2>
-                      @if ($_GET)
+                      @if ($_GET && $_GET['from'] != '')
                       <p class="textCardNumber textCardNumberForTotals">Total Pendientes</p>
                       @else
                       <p class="textCardNumber textCardNumberForTotals">Total Pendientes en este mes</p>
@@ -107,7 +107,7 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                      @if ($_GET)
+                      @if ($_GET )
                       <p class="textCardNumber">Total de Solicitudes</p>
                       @else
                       <p class="textCardNumber">Solicitudes en este mes</p>
@@ -123,7 +123,7 @@
                   <div class="small-box ">
                     <div class="inner">
                       <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
-                      @if ($_GET)
+                      @if ($_GET )
                       <p class="textCardNumber">Total</p>
                       @else
                       <p class="textCardNumber">Total en este mes</p>

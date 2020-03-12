@@ -154,8 +154,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
-                ->whereIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
+                ->whereIn('ESTADO', $status)->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
@@ -394,8 +393,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
-                ->whereIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
+                ->whereIn('ESTADO', $status)->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
@@ -418,46 +416,147 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, $status)
+    public function countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor = null, $status, $subsidiary = null)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
-                ->where('state', 'A')
-                ->where('CODASESOR', $assessor)
-                ->where('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
-                ->groupBy('ESTADO')
-                ->get();
+            if (!empty($assessor) && !empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->where('ESTADO', $status)
+                    ->where('CODASESOR', $subsidiary)
+                    ->where('SUCURSAL', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (empty($assessor) && empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->where('ESTADO', $status)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (!empty($subsidiary) && empty($assessor)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->where('ESTADO', $status)
+                    ->where('SUCURSAL', $subsidiary)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+            if (!empty($assessor) && empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->where('ESTADO', $status)
+                    ->where('CODASESOR', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
         } catch (QueryException $e) {
             dd($e);
         }
     }
 
-    public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, $status)
+    public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor = null, $status, $subsidiary = null)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
-                ->where('state', 'A')
-                ->where('CODASESOR', $assessor)
-                ->whereIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
-                ->groupBy('ESTADO')
-                ->get();
+            if (!empty($assessor) && !empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereIn('ESTADO', $status)
+                    ->where('CODASESOR', $subsidiary)
+                    ->where('SUCURSAL', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (empty($assessor) && empty($subsidiary)) {
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereIn('ESTADO', $status)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (!empty($subsidiary) && empty($assessor)) {
+                return $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereIn('ESTADO', $status)
+                    ->where('SUCURSAL', $subsidiary)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+            if (!empty($assessor) && empty($subsidiary)) {
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereIn('ESTADO', $status)
+                    ->where('CODASESOR', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
         } catch (QueryException $e) {
             dd($e);
         }
     }
 
-    public function countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, $status)
+    public function countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor = null, $status, $subsidiary = null)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
-                ->where('state', 'A')
-                ->where('CODASESOR', $assessor)
-                ->whereNotIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
-                ->groupBy('ESTADO')
-                ->get();
+            if (!empty($assessor) && !empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereNotIn('ESTADO', $status)
+                    ->where('CODASESOR', $subsidiary)
+                    ->where('SUCURSAL', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (empty($assessor) && empty($subsidiary)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereNotIn('ESTADO', $status)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+
+            if (!empty($subsidiary) && empty($assessor)) {
+
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereNotIn('ESTADO', $status)
+                    ->where('SUCURSAL', $subsidiary)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
+            if (!empty($assessor) && empty($subsidiary)) {
+                return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                    ->where('state', 'A')
+                    ->whereNotIn('ESTADO', $status)
+                    ->where('CODASESOR', $assessor)
+                    ->whereBetween('FECHASOL', [$from, $to])
+                    ->groupBy('ESTADO')
+                    ->get();
+            }
         } catch (QueryException $e) {
             dd($e);
         }
@@ -600,8 +699,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('SUCURSAL', $director)
-                ->whereIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
+                ->whereIn('ESTADO', $status)->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
@@ -717,8 +815,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->whereIn('SUCURSAL', $director)
-                ->whereIn('ESTADO', $status)
-                ->whereBetween('FECHASOL', [$from, $to])
+                ->whereIn('ESTADO', $status)->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {
