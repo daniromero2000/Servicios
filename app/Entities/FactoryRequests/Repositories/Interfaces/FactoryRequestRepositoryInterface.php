@@ -58,6 +58,12 @@ interface FactoryRequestRepositoryInterface
 
   public function countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, $status);
 
+  public function countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, $status);
+
+  public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, $status);
+
+  public function countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, $status);
+
   public function countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, $status);
 
   public function countFactoryRequestsStatusesGeneralsDirector($from, $to, $Director, $status);

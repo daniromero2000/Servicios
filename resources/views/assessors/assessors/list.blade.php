@@ -29,6 +29,25 @@
             </div>
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
+                @php
+                dd($estadosPendientes);
+                @endphp
+                <div class="col-6 col-md-6">
+                  <!-- /.info-box -->
+                  <div class="small-box ">
+                    <div class="inner">
+                      <h2 class="titleCardNumber">{{ $listCount }}</h2>
+                      @if ($_GET)
+                      <p class="textCardNumber">Total de Solicitudes</p>
+                      @else
+                      <p class="textCardNumber">Solicitudes en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-6 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">

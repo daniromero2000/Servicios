@@ -388,7 +388,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, $status)
     {
         try {
@@ -418,6 +417,64 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
+    public function countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->where('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                ->where('state', 'A')
+                ->where('CODASESOR', $assessor)
+                ->whereNotIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+
+
+    // public function listFactoryAssessorsTotal($from, $to, $assessor)
+    // {
+    //     try {
+    //         return  $this->model->whereBetween('FECHASOL', [$from, $to])->where('state', 'A')
+    //             ->where('CODASESOR', $assessor)
+    //             ->get();
+    //     } catch (QueryException $e) {
+    //         abort(503, $e->getMessage());
+    //     }
+    // }
 
     //Hasta aqui Asesores
 
