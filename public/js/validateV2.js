@@ -31,6 +31,10 @@ $(document).ready(function () {
 						validateText(inputs[i]);
 						break;
 
+					case 'addres':
+						validateAddres(inputs[i]);
+						break;
+
 					case 'textOnly':
 						validateTextOnly(inputs[i]);
 						break;
@@ -70,6 +74,11 @@ $(document).ready(function () {
 		}
 
 		function validateText(input) {
+			var patt = "((\\w*([\\.]?)(#?)(-?)([\\(]?)([\\)]?)([\\']?)([\\,]?))\\s{0,1})+";
+			setAttributePatternInput(input, patt);
+		}
+
+		function validateAddres(input) {
 			var patt ="(\\w*\\s?[\\.]*[\\-]*)+";
 			setAttributePatternInput(input, patt);
 		}

@@ -561,7 +561,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPER" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -579,7 +579,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPE2" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -610,7 +610,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFAM" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -632,7 +632,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFA2" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -718,7 +718,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <label class="ventaContado-label labels">Dirección de residencia*</label>
-                        <input class="inputs" ng-model="lead.DIRECCION" type="text" validation-pattern="text" />
+                        <input class="inputs" ng-model="lead.DIRECCION" type="text" />
                     </div>
                     <div class="col-12 col-sm-6">
                         <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de ubicación</label>

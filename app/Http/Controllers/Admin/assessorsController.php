@@ -364,7 +364,6 @@ class assessorsController extends Controller
 			if ($request->get('FEC_EXP') != '' && $request->get('FEC_EXP') != '1900-01-01') {
 
 				$age = $this->calculateAgeFromExpeditionDate($request->get('FEC_EXP'));
-				// return $age;
 			}
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
