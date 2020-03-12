@@ -424,8 +424,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
                     ->where('state', 'A')
                     ->where('ESTADO', $status)
-                    ->where('CODASESOR', $subsidiary)
-                    ->where('SUCURSAL', $assessor)
+                    ->where('CODASESOR', $assessor)
+                    ->where('SUCURSAL', $subsidiary)
                     ->whereBetween('FECHASOL', [$from, $to])
                     ->groupBy('ESTADO')
                     ->get();
@@ -470,12 +470,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             if (!empty($assessor) && !empty($subsidiary)) {
-
                 return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
                     ->where('state', 'A')
                     ->whereIn('ESTADO', $status)
-                    ->where('CODASESOR', $subsidiary)
-                    ->where('SUCURSAL', $assessor)
+                    ->where('CODASESOR', $assessor)
+                    ->where('SUCURSAL', $subsidiary)
                     ->whereBetween('FECHASOL', [$from, $to])
                     ->groupBy('ESTADO')
                     ->get();
@@ -517,12 +516,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             if (!empty($assessor) && !empty($subsidiary)) {
-
                 return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
                     ->where('state', 'A')
                     ->whereNotIn('ESTADO', $status)
-                    ->where('CODASESOR', $subsidiary)
-                    ->where('SUCURSAL', $assessor)
+                    ->where('CODASESOR', $assessor)
+                    ->where('SUCURSAL', $subsidiary)
                     ->whereBetween('FECHASOL', [$from, $to])
                     ->groupBy('ESTADO')
                     ->get();

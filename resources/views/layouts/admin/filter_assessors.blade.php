@@ -20,7 +20,7 @@
                             <label for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option selected value> -- Selecciona Estado -- </option>
                                 @if ($_GET)
                                 @if (!empty($_GET['status']))
                                 <option selected>
