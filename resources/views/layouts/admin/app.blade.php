@@ -162,18 +162,7 @@
       //Money Euro
       $('[data-mask]').inputmask()
   
-      //Date range as a button
-      $('#daterange-btn').daterangepicker(
-        {
-          startDate: moment().subtract(29, 'days'),
-          endDate  : moment()
-        },
-        function (start, end) {
-          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-        }
-      )
-  
-      //Timepicker
+       //Timepicker
       $('#timepicker').datetimepicker({
         format: 'LT'
       })
