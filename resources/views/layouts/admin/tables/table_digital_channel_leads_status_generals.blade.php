@@ -12,17 +12,17 @@ use Carbon\Carbon;
     </thead>
     <tbody class="body-table">
       @foreach($datas as $data)
-      {{-- @php
+      @php
       $date = $data->leadStatusesLogs->last();
-      @endphp --}}
+      @endphp
       <tr>
-        {{-- <td><span class="text-center badge"
+        <td><span class="text-center badge"
             style="color: white ; background-color:
                     @if($date->created_at->diffInDays(Carbon::now()) <= 1) #0bb010 @endif
                     @if($date->created_at->diffInDays(Carbon::now()) <= 2 && $date->created_at->diffInDays(Carbon::now()) >1) #ff9900 @endif
                     @if($date->created_at->diffInDays(Carbon::now()) >= 3) #b0130b @endif
                     @if($data->state === 2 || $data->state === 5 || $data->state === 6 || $data->state === 9 || $data->state === 4 || $data->state === 7) gray @endif"
-            class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td> --}}
+            class=" btn btn-info btn-block"><i class="fa fa-bell-o"></i> </span></td>
         <td> @if($data->leadStatuses) <span class="text-center badge"
             style="color: white ; background-color: {{$data->leadStatuses->color }}"
             class="btn btn-info btn-block">{{ $data->leadStatuses->status}}</span> @endif</td>
