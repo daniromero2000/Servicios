@@ -137,17 +137,17 @@ class assessorsController extends Controller
 		$skip         = $this->toolsInterface->getSkip($request->input('skip'));
 		$list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 		$listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-		// $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
-		// $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
-		// $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
-		// $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
-		// if (request()->has('from') && request()->input('from') != '') {
-		// 	$estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
-		// 	$estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
-		// 	$estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
-		// 	dd($estadosDesistidos);
-		// 	$estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
-		// }
+		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
+		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO");
+		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
+		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+
+		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
+			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
+			$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
+			$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
+			$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+		}
 		if (request()->has('q')) {
 			$list = $this->factoryInterface->searchFactoryAseessors(
 				request()->input('q'),
@@ -169,17 +169,60 @@ class assessorsController extends Controller
 			)->sortByDesc('FECHASOL');
 		}
 
+		$estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+		$estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+		$estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+		$estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+		$statusesAprobadosValue = [];
+		foreach ($estadosAprobados as $estadosPendiente) {
+			array_push($statusesAprobadosValue, trim($estadosPendiente['total']));
+		}
+		$statusesAprobadosValues = 0;
+		foreach ($statusesAprobadosValue as $key => $status) {
+			$statusesAprobadosValues +=  $statusesAprobadosValue[$key];
+		}
+
+		$statusesNegadosValue = [];
+		foreach ($estadosNegados as $estadosPendiente) {
+			array_push($statusesNegadosValue, trim($estadosPendiente['total']));
+		}
+		$statusesNegadosValues = 0;
+		foreach ($statusesNegadosValue as $key => $status) {
+			$statusesNegadosValues +=  $statusesNegadosValue[$key];
+		}
+
+		$statusesDesistidosValue = [];
+		foreach ($estadosDesistidos as $estadosPendiente) {
+			array_push($statusesDesistidosValue, trim($estadosPendiente['total']));
+		}
+		$statusesDesistidosValues = 0;
+		foreach ($statusesDesistidosValue as $key => $status) {
+			$statusesDesistidosValues +=  $statusesDesistidosValue[$key];
+		}
+
+		$statusesPendientesValue = [];
+		foreach ($estadosPendientes as $estadosPendiente) {
+			array_push($statusesPendientesValue, trim($estadosPendiente['total']));
+		}
+		$statusesPendientesValues = 0;
+		foreach ($statusesPendientesValue as $key => $status) {
+			$statusesPendientesValues +=  $statusesPendientesValue[$key];
+		}
 		$factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 		$listCount = $listCount->count();
 
 		return view('assessors.assessors.list', [
-			'factoryRequests'      => $list,
-			'optionsRoutes'        => (request()->segment(2)),
-			'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-			'listCount'            => $listCount,
-			'skip'                 => $skip,
-			'factoryRequestsTotal' => $factoryRequestsTotal,
-
+			'factoryRequests'     		   => $list,
+			'optionsRoutes'       		   => (request()->segment(2)),
+			'headers'             		   => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+			'listCount'           		   => $listCount,
+			'skip'                		   => $skip,
+			'factoryRequestsTotal'		   => $factoryRequestsTotal,
+			'estadosAprobados' 	  		   => $estadosAprobados,
+			'estadosNegados' 	  		   => $estadosNegados,
+			'estadosDesistidos'   		   => $estadosDesistidos,
+			'statusesPendientesValues'     => $statusesPendientesValues
 		]);
 	}
 
@@ -317,9 +360,19 @@ class assessorsController extends Controller
 				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
 				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
 			}
+<<<<<<< HEAD
 			$age = 0;
 			if ($request->get('FEC_EXP') != '') {
 				$age = $this->calculateAgeFromExpeditionDate($request->get('FEC_EXP'));
+=======
+			if ($request->get('FEC_EXP') != '' && $request->get('FEC_EXP') != '1900-01-01') {
+
+				$time = strtotime($request->get('FEC_EXP'));
+				$now  = time();
+				$age  = ($now - $time);
+				$age  = floor($age);
+				// return $age;
+>>>>>>> 880f2eb6f1dfaf4f4a17fb6661d58b90238a2514
 			}
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
