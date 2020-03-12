@@ -263,6 +263,10 @@ angular.module('appAdvanceStep1', ['moment-picker'])
 						$('#confirmCodeVerification').modal('show');
 					}
 				}
+
+				if(response.data == -1){
+					$scope.saveStep1();
+				}
 			}, function errorCallback(response) {
 				hideLoader();
 				console.log(response);
