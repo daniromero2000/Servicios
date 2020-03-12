@@ -30,70 +30,124 @@
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
                 {{-- @php
-                dd($estadosPendientes);
+                dd($statusesDesistidosValues)
                 @endphp --}}
-                {{-- <div class="col-6 col-md-6">
+                <div class="col-6 col-md-6 col-lg-3">
+                  <!-- /.info-box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
+                        ${{number_format( $statusesAprobadosValues )}} @else $0
+                        @endif </h2>
+                      @if ($_GET)
+                      <p class="textCardNumber textCardNumberForTotals">Total Vendidos</p>
+                      @else
+                      <p class="textCardNumber textCardNumberForTotals">Total Vendidos en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-6 col-lg-3">
+                  <!-- /.info-box -->
+                  <div class="small-box bg-danger">
+                    <div class="inner">
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
+                        ${{number_format( $statusesNegadosValues )}}@else $0
+                        @endif </h2>
+                      @if ($_GET)
+                      <p class="textCardNumber textCardNumberForTotals">Total Negados</p>
+                      @else
+                      <p class="textCardNumber textCardNumberForTotals">Total Negados en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-6 col-lg-3">
+                  <!-- /.info-box -->
+                  <div class="small-box bg-info">
+                    <div class="inner">
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesDesistidosValues !=0 )
+                        ${{number_format( $statusesDesistidosValues )}} @else $0 @endif </h2>
+                      @if ($_GET)
+                      <p class="textCardNumber textCardNumberForTotals">Total Desistidos</p>
+                      @else
+                      <p class="textCardNumber textCardNumberForTotals">Total Desistidos en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-6 col-lg-3">
+                  <!-- /.info-box -->
+                  <div class="small-box bg-secondary">
+                    <div class="inner">
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesPendientesValues !=0 )
+                        ${{number_format( $statusesPendientesValues )}} @else $0 @endif</h2>
+                      @if ($_GET)
+                      <p class="textCardNumber textCardNumberForTotals">Total Pendientes</p>
+                      @else
+                      <p class="textCardNumber textCardNumberForTotals">Total Pendientes en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
                       <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                @if ($_GET)
-                <p class="textCardNumber">Total de Solicitudes</p>
-                @else
-                <p class="textCardNumber">Solicitudes en este mes</p>
-                @endif
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                      @if ($_GET)
+                      <p class="textCardNumber">Total de Solicitudes</p>
+                      @else
+                      <p class="textCardNumber">Solicitudes en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-md-6">
+                  <!-- /.info-box -->
+                  <div class="small-box ">
+                    <div class="inner">
+                      <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
+                      @if ($_GET)
+                      <p class="textCardNumber">Total</p>
+                      @else
+                      <p class="textCardNumber">Total en este mes</p>
+                      @endif
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-stats-bars"></i>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div> --}}
-          <div class="col-6 col-md-6">
-            <!-- /.info-box -->
-            <div class="small-box ">
-              <div class="inner">
-                <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                @if ($_GET)
-                <p class="textCardNumber">Total de Solicitudes</p>
-                @else
-                <p class="textCardNumber">Solicitudes en este mes</p>
-                @endif
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-md-6">
-            <!-- /.info-box -->
-            <div class="small-box ">
-              <div class="inner">
-                <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
-                @if ($_GET)
-                <p class="textCardNumber">Total</p>
-                @else
-                <p class="textCardNumber">Total en este mes</p>
-                @endif
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
+            <div class="card-body text-center pt-0 pb-0 ">
+              @if($factoryRequests)
+              @include('layouts.admin.tables.tables_factory_requests_status', [$headers, 'datas' => $factoryRequests ])
+              @include('layouts.admin.pagination.pagination', [$skip])
+              @else
+              @include('layouts.admin.pagination.pagination_null', [$skip])
+              @endif
             </div>
           </div>
         </div>
       </div>
-      <div class="card-body text-center pt-0 pb-0 ">
-        @if($factoryRequests)
-        @include('layouts.admin.tables.tables_factory_requests_status', [$headers, 'datas' => $factoryRequests ])
-        @include('layouts.admin.pagination.pagination', [$skip])
-        @else
-        @include('layouts.admin.pagination.pagination_null', [$skip])
-        @endif
-      </div>
     </div>
-  </div>
-  </div>
-  </div>
   </div>
   @endif
 </section>

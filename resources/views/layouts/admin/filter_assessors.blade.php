@@ -64,13 +64,14 @@
 
                     <div class="col-12 d-flex align-items-end justify-content-end mt-3">
                         <span class="input-group-btn btn-pr">
+                            <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                                <i class="fas fa-times"></i> Restaurar filtros
+                            </a>
                             <button type="submit" id="search-btn" class="btn btn-primary btn-sm-reset mt-2"><i
                                     class="fa fa-search"></i>
                                 Buscar
                             </button>
-                            <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
-                                <i class="fas fa-times"></i> Restaurar filtros
-                            </a>
+
                         </span>
                     </div>
                 </div>
