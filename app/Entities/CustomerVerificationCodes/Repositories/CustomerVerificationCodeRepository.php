@@ -63,6 +63,32 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
     }
 
+    public function getLastCustomerCodeVerified($identificationNumber){
+        try {
+            return $this->model->where('identificationNumber', $identificationNumber)
+                ->where('state', 1)->orderBy('identificador', 'DESC')->get()->first();
+        } catch (QueryException $e) {
+            //throw $th;
+        }
+    }
+
+    public function checkCustomerVerificationCode($identificationNumber, $daysToIncrement){
+        $dateNow = date('Y-m-d');
+        $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
+        $dateNew = date('Y-m-d', $dateNew);
+
+        $lastCodeCustomerVerified = $this->getLastCustomerCodeVerified($identificationNumber);
+        if(!empty($lastCodeCustomerVerified)){
+            if (strtotime($lastCodeCustomerVerified->created_at) < strtotime($dateNew)) {
+                return 'true'; // Fecha menor, generar token
+            } else {
+                return 'false'; // Fecha mayor, no generar token
+            }
+        }else{
+            return 'true'; // No hay registro, generar token
+        }
+    }
+
     public function checkIfCodeExists($code)
     {
         try {
