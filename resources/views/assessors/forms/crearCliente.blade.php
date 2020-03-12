@@ -59,12 +59,11 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_EXP" format="YYYY-MM-DD">
-                                        <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP"
-                                            readonly="" placeholder="Año/Mes/Día" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -109,41 +108,38 @@
                                 </div>
                                 <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                                     <label class="ventaContado-label labels" for="FEC_ING">Fecha de ingreso*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_ING" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_ING" id="FEC_ING" readonly="" placeholder="Año/Mes" required tabindex="0">
-                                        <span class="input-group-addon ng-scope">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
                                     <label class="ventaContado-label labels" for="FEC_CONST">¿Desde qué año desempeña la actividad?</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
                                     <label class="ventaContado-label labels" for="dateCreationCompany">¿Desde qué año desempeña la actividad?</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes"/>
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
                                     <label for="FEC_CONSTpensionado" class="ventaContado-label labels">Fecha de pensión*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes" required/>
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -181,16 +177,15 @@
                                 <div class="col-12 col-md-6">
                                     <label class="labels" for="FEC_EXP">Fecha expedición documento*</label>
                                     <div class="input-group">
-                                        <input class="form-control inputs" ng-model="lead.FEC_EXP" id="FEC_EXP"
-                                            readonly="" placeholder="Año/Mes" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_EXP" class="labels">Ciudad de expedición</label>
-                                    <select class="form-control inputs select2bs4" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities"></select>
+                                    <select class="form-control inputs select2bs4" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities" required></select>
                                 </div>
                             </div>
                             <div class="row">
@@ -210,12 +205,11 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <label class="labels" for="FEC_NAC">Fecha de nacimiento*</label>
-                                    <div class="input-group" moment-picker="lead.FEC_NAC" format="YYYY-MM-DD">
-                                        <input class="form-control inputs" ng-model="lead.FEC_NAC" id="FEC_NAC"
-                                            readonly="" placeholder="Año/Mes/Día" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -319,7 +313,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                    <label class="ventaContado-label" for="ciud_ubi2">Ciudad de ubicación</label>
+                                    <label class="ventaContado-label" for="ciud_ubi2">Ciudad de sucursal</label>
                                     <select ng-disabled="true" class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi2"
                                         ng-options="city.value as city.label for city in citiesUbi"></select>
                                 </div>
@@ -427,11 +421,12 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <label class="labels" for="FEC_ING">Fecha de ingreso*</label>
-                                        <input class="form-control inputs" ng-model="lead.FEC_ING" id="FEC_ING"
-                                            readonly="" ng-disabled="true" placeholder="Año/Mes" required />
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -473,20 +468,22 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
                                         <label class="ventaContado-label" for="FEC_CONST">¿Desde qué año desempeña la actividad?*</label>
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" placeholder="Año/Mes">
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4"
                                         ng-show="lead.ACTIVIDAD == 'NO CERTIFICADO' || lead.ACTIVIDAD == 'RENTISTA'">
                                         <label for="dateCreationCompany">¿Desde qué año desempeña la actividad?</label>
-                                        <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                            readonly="" ng-disabled="true" placeholder="Año/Mes">
-                                        <span class="input-group-addon">
-                                            <i class="octicon octicon-calendar"></i>
-                                        </span>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario*</label>
@@ -502,12 +499,11 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <label class="ventaContado-label">Fecha de Pensión*</label>
-                                        <div class="input-group" moment-picker="lead.FEC_CONST" format="YYYY-MM">
-                                            <input class="form-control inputs" ng-model="lead.FEC_CONST" id="FEC_CONST"
-                                                readonly="" ng-disabled="true" placeholder="Año/Mes">
-                                            <span class="input-group-addon">
-                                                <i class="octicon octicon-calendar"></i>
-                                            </span>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
                                         </div>
                                     </div>
                                 </div>

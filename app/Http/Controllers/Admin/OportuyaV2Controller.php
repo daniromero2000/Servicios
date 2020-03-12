@@ -505,6 +505,11 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
+		if($checkCustomerCodeVerified == 'false'){
+			return -1;
+		}
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerificationOportudata                         = [];
 		$codeUserVerificationOportudata['token']                = $code;

@@ -331,6 +331,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 						$('#confirmCodeVerification').modal('show');
 					}
 				}
+
+				if(response.data == '-1'){
+					$scope.addCliente('CREDITO');
+				}
 			}, function errorCallback(response) {
 				hideLoader();
 				response.url = '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD';
