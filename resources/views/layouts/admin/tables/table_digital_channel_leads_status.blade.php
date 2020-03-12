@@ -16,6 +16,7 @@ use Carbon\Carbon;
         {{-- @php
         $date = $data->leadStatusesLogs->last();
         @endphp
+
         <td>
           @if ($date)<span class="text-center badge"
             style="color: white ; background-color:
