@@ -244,7 +244,7 @@
                                     <input type="text" class="inputs form-control" ng-model="lead.PLACA" id="PLACA" />
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-12 col-sm-12">
                                     <label for="ESTADOCIVIL" class="labels">Estado civil</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.ESTADOCIVIL" id="ESTADOCIVIL" ng-options="civilType.value as civilType.label for civilType in civilTypes" >
@@ -283,7 +283,7 @@
                                         <input type="text" class="inputs form-control" ng-model="lead.CARGO_CONYU" id="CARGO_CONYU" />
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row form-group">
                                     <div class="col-12 col-sm-6">
                                         <label for="SALARIO_CONYU" class="labels">Ingresos del cónyuge</label>
                                         <input type="text" class="inputs form-control" ng-model="lead.SALARIO_CONYU" id="SALARIO_CONYU" />
@@ -346,7 +346,7 @@
                                     <select class="form-control inputs select2bs4" ng-model="lead.ESTRATO" id="ESTRATO" ng-options="strat.value as strat.label for strat in stratum"></select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-12 col-sm-4">
                                     <label for="TELFIJO" class="labels">Teléfono fijo</label>
                                     <input type="text" class="form-control inputs" ng-model="lead.TELFIJO" id="TELFIJO" />
@@ -369,6 +369,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" type="submit">Continuar</button>
                                 </div>
                             </div>
@@ -526,6 +527,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" type="submit">Continuar</button>
                                 </div>
                             </div>
@@ -559,7 +561,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPER" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPER" id="DIR_REFPER" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -577,7 +579,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPE2" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -608,7 +610,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFAM" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -630,7 +632,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFA2" class="labels">Dirección (No usar # ni /)</label>
-                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" validation-pattern="text" />
+                                                    <input type="text" class="inputs form-control" ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" validation-pattern="addres" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -649,6 +651,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" ng-disabled="disabledButtonSolic" type="submit">Continuar</button>
                                 </div>
                             </div>
@@ -715,7 +718,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <label class="ventaContado-label labels">Dirección de residencia*</label>
-                        <input class="inputs" ng-model="lead.DIRECCION" type="text" validation-pattern="text" />
+                        <input class="inputs" ng-model="lead.DIRECCION" type="text" />
                     </div>
                     <div class="col-12 col-sm-6">
                         <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de ubicación</label>

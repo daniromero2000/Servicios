@@ -1,7 +1,6 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
 	$timeout(function() {
-		$scope.lead.CIUD_EXP = 5002;
 		$scope.lead.CIUD_UBI = 144;
 	}, 1500);
 	$scope.code                   = {};
@@ -237,7 +236,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			hideLoader();
 			response.url = '/assessor/api/ventaContado/getInfoVentaContdado';
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -283,7 +281,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}).then(function successCallback(response) {
 			$scope.getCodeVerification();
 		}, function errorCallback(response) {
-			console.log(response);
 			response.url = '/Administrator/temporaryCustomer';
 			response.datos = $scope.lead;
 			hideLoader();
@@ -298,7 +295,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}).then(function successCallback(response) {
 			console.log("Eliminado !!");
 		}, function errorCallback(response) {
-			console.log(response);
 			response.url = '/Administrator/temporaryCustomer/'+$scope.lead.CEDULA;
 			hideLoader();
 			$scope.addError(response, $scope.lead.CEDULA);
@@ -338,7 +334,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}, function errorCallback(response) {
 				hideLoader();
 				response.url = '/api/oportudata/getCodeVerification/'+$scope.lead.CEDULA+'/'+$scope.lead.CELULAR+'/SOLICITUD';
-				console.log(response);
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		}
@@ -368,7 +363,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/ventaContado/getinfoLeadVentaContado/'+$scope.lead.CEDULA;
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -400,7 +394,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}, function errorCallback(response) {
 				hideLoader();
 				response.url = '/api/oportuya/validationLead/'+$scope.lead.CEDULA;
-				console.log(response);
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		}
@@ -423,7 +416,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			response.url = '/api/oportuya/getNumLead/'+$scope.lead.CEDULA;
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -442,7 +434,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}
 			}, function errorCallback(response) {
 				response.url = '/api/checkIfExistNum/'+$scope.lead.CELULAR+'/'+$scope.lead.CEDULA;
-				console.log(response);
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		}
@@ -473,7 +464,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			response.url='/api/oportuya/verificationCode/'+$scope.code.code+'/'+$scope.lead.CEDULA;
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -496,6 +486,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
 				$scope.execConsultasLead(response.data.identificationNumber);
+				$scope.lead.CIUD_EXP = 5002;
 			}else{
 				setTimeout(() => {
 					$('#proccess').modal('hide');
@@ -527,7 +518,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			method: 'GET',
 			url: '/assessor/api/execConsultasLead/'+identificationNumber,
 		}).then(function successCallback(response) {
-			console.log(response);
 			$timeout(function() {
 				$('#proccess').modal('hide');
 			}, 800);
@@ -557,7 +547,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/execConsultasLead/'+identificationNumber;
-			console.log(response);
 			$('#proccess').modal('hide');
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
@@ -662,7 +651,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.PARENTESC2+'/'
 			+$scope.resp.policy.fuenteFallo+'/';
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -715,7 +703,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.TEL_REFFA2+'/'
 			+$scope.lead.PARENTESC2+'/';
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -746,7 +733,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			response.url = '/assessor/api/validateFormConfronta';
 			response.datos = $scope.infoConfronta;
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -788,7 +774,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}, function errorCallback(response) {
 			response.url = '/api/oportuya/deniedLeadForFecExp/'+$scope.lead.CEDULA+'/'+typeDenied;
 			hideLoader();
-			console.log(response);
 			$scope.addError(response, $scope.lead.CEDULA);
 		});
 	};
@@ -813,7 +798,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		  }, function errorCallback(response) {
 			  response.url = '/assessor/api/getInfoLead/'+$scope.lead.cedula;
 			  hideLoader();
-			  console.log(response);
 			  $scope.addError(response, $scope.lead.CEDULA);
 		  });
 	};
