@@ -137,7 +137,17 @@ class assessorsController extends Controller
 		$skip         = $this->toolsInterface->getSkip($request->input('skip'));
 		$list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 		$listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-
+		// $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
+		// $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
+		// $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
+		// $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+		// if (request()->has('from') && request()->input('from') != '') {
+		// 	$estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
+		// 	$estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
+		// 	$estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
+		// 	dd($estadosDesistidos);
+		// 	$estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+		// }
 		if (request()->has('q')) {
 			$list = $this->factoryInterface->searchFactoryAseessors(
 				request()->input('q'),
@@ -371,7 +381,7 @@ class assessorsController extends Controller
 				'RAZON_IND'   			=> ($request->get('RAZON_IND') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('RAZON_IND')))) : 'NA',
 				'ACT_IND'          	    => ($request->get('ACT_IND') != '') ? trim($request->get('ACT_IND')) : 'NA',
 				'EDAD_INDP'          	=> ($indp != '') ? trim($indp) : '',
-				'FEC_CONST'             => ($request->get('FEC_CONST') != '') ? trim($request->get('FEC_CONST')) . "-01" : '1990-01-01' ,
+				'FEC_CONST'             => ($request->get('FEC_CONST') != '') ? trim($request->get('FEC_CONST')) . "-01" : '1990-01-01',
 				'N_EMPLEA'              => trim($request->get('N_EMPLEA')) . "-01",
 				'VENTASMES'             => trim($request->get('VENTASMES')),
 				'COSTOSMES'             => trim($request->get('COSTOSMES')),
@@ -379,22 +389,22 @@ class assessorsController extends Controller
 				'DEUDAMES'             	=> trim($request->get('DEUDAMES')),
 				'OTROS_ING'             => ($request->get('OTROS_ING') != '') ? trim($request->get('OTROS_ING')) : '0',
 				'ESTRATO'            	=> ($request->get('ESTRATO') != '') ? trim($request->get('ESTRATO')) : '0',
-				'SUELDOIND'          	=> ($request->get('SUELDOIND') != '') ? trim($request->get('SUELDOIND')) : '0', 
+				'SUELDOIND'          	=> ($request->get('SUELDOIND') != '') ? trim($request->get('SUELDOIND')) : '0',
 				'SUC'                   => $sucursal,
-				'TEL3'          		=> ($request->get('TEL3') != '') ? trim($request->get('TEL3')) : '0', 
-				'TEL4'          		=> ($request->get('TEL4') != '') ? trim($request->get('TEL4')) : '0', 
-				'TEL5'          		=> ($request->get('TEL5') != '') ? trim($request->get('TEL5')) : '0', 
-				'TEL6'          		=> ($request->get('TEL6') != '') ? trim($request->get('TEL6')) : '0', 
-				'TEL7'          		=> ($request->get('TEL7') != '') ? trim($request->get('TEL7')) : '0', 
-				'DIRECCION2'       	  	=> ($request->get('DIRECCION2') != '') ? trim($request->get('DIRECCION2')) : 'NA', 
-				'DIRECCION3'          	=> ($request->get('DIRECCION3') != '') ? trim($request->get('DIRECCION3')) : 'NA', 
-				'DIRECCION4'          	=> ($request->get('DIRECCION4') != '') ? trim($request->get('DIRECCION4')) : 'NA', 
-				'CIUD_NAC'          	=> ($request->get('CIUD_NAC') != '') ? trim($request->get('CIUD_NAC')) : 'NA', 
+				'TEL3'          		=> ($request->get('TEL3') != '') ? trim($request->get('TEL3')) : '0',
+				'TEL4'          		=> ($request->get('TEL4') != '') ? trim($request->get('TEL4')) : '0',
+				'TEL5'          		=> ($request->get('TEL5') != '') ? trim($request->get('TEL5')) : '0',
+				'TEL6'          		=> ($request->get('TEL6') != '') ? trim($request->get('TEL6')) : '0',
+				'TEL7'          		=> ($request->get('TEL7') != '') ? trim($request->get('TEL7')) : '0',
+				'DIRECCION2'       	  	=> ($request->get('DIRECCION2') != '') ? trim($request->get('DIRECCION2')) : 'NA',
+				'DIRECCION3'          	=> ($request->get('DIRECCION3') != '') ? trim($request->get('DIRECCION3')) : 'NA',
+				'DIRECCION4'          	=> ($request->get('DIRECCION4') != '') ? trim($request->get('DIRECCION4')) : 'NA',
+				'CIUD_NAC'          	=> ($request->get('CIUD_NAC') != '') ? trim($request->get('CIUD_NAC')) : 'NA',
 				'NOMBRE_CONYU'   		=> ($request->get('NOMBRE_CONYU') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRE_CONYU')))) : 'NA',
-				'CELULAR_CONYU'         => ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0', 
-				'TRABAJO_CONYU'         => ($request->get('TRABAJO_CONYU') != '') ? trim($request->get('TRABAJO_CONYU')) : 'NA', 
-				'SALARIO_CONYU'         => ($request->get('SALARIO_CONYU') != '') ? trim($request->get('SALARIO_CONYU')) : '0', 
-				'CAMARAC'          		=> ($request->get('CAMARAC') != '') ? trim($request->get('CAMARAC')) : 'NO', 
+				'CELULAR_CONYU'         => ($request->get('CELULAR_CONYU') != '') ? trim($request->get('CELULAR_CONYU')) : '0',
+				'TRABAJO_CONYU'         => ($request->get('TRABAJO_CONYU') != '') ? trim($request->get('TRABAJO_CONYU')) : 'NA',
+				'SALARIO_CONYU'         => ($request->get('SALARIO_CONYU') != '') ? trim($request->get('SALARIO_CONYU')) : '0',
+				'CAMARAC'          		=> ($request->get('CAMARAC') != '') ? trim($request->get('CAMARAC')) : 'NO',
 				'BANCOP'           		=> ($request->get('BANCOP') != '') ? trim($request->get('BANCOP')) : '0',
 				'CEDULA_C'              => ($request->get('CEDULA_C') != '') ? trim($request->get('CEDULA_C')) : '0',
 				'PROFESION_CONYU'       => ($request->get('PROFESION_CONYU') != '') ? trim($request->get('PROFESION_CONYU')) : 'NA',
@@ -474,7 +484,7 @@ class assessorsController extends Controller
 			$oportudataLead[0]->APELLIDOS
 		);
 
-		
+
 		if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
 			return ['resp' => $consultasFosyga];
 		}
@@ -1113,39 +1123,39 @@ class assessorsController extends Controller
 		$kinships = $this->kinshipInterface->listKinships();
 		return response()->json(['ubicationsCities' => $resp, 'cities' => $resp2, 'banks' => $resp3, 'professions' => $professions->toArray(), 'kinships' => $kinships->toArray()]);
 	}
-	
+
 	public function getinfoLeadVentaContado($cedula)
 	{
-		
+
 		$resp = [];
 		$query = sprintf("SELECT cf.`TIPO_DOC`, cf.`CEDULA`, cf.`APELLIDOS`, cf.`NOMBRES`, cf.`TIPOCLIENTE`, cf.`PROFESION`, cf.`SUBTIPO`, cf.`EDAD`, cf.`EMAIL`, CONCAT(cf.`FEC_EXP`, ' 01:00:00') as FEC_EXP, cf.`SEXO`, CONCAT(cf.`FEC_NAC`, ' 01:00:00') as FEC_NAC, cf.`ESTADOCIVIL`, cf.`TIPOV`, cf.`PROPIETARIO`, cf.`VRARRIENDO`, cf.`DIRECCION`, cf. `TELFIJO`, cf. `TIEMPO_VIV`, cf.`CIUD_UBI`, cf.`DEPTO`, cf.`ACTIVIDAD`, cf.`ACT_ECO`, cf.`NIT_EMP`, cf.`RAZON_SOC`, CONCAT(cf.`FEC_ING`, ' 01:00:00') as FEC_ING, cf.`ANTIG`, cf.`CARGO`, cf.`DIR_EMP`, cf.`TEL_EMP`, cf.`TEL2_EMP`, cf.`TIPO_CONT`, cf.`SUELDO`, cf.`NIT_IND`, cf.`RAZON_IND`, cf.`ACT_IND`, cf.`EDAD_INDP`, CONCAT(cf.`FEC_CONST`, ' 01:00:00') as FEC_CONST, cf.`OTROS_ING`, cf.`ESTRATO`, cf.`SUELDOIND`, cf.`VCON_NOM1`, cf.`VCON_CED1`, cf.`VCON_TEL1`, cf.`VCON_NOM2`, cf.`VCON_CED2`, cf.`VCON_TEL2`, cf.`VCON_DIR`,cf.`MEDIO_PAGO`, cf.`TRAT_DATOS`, cf.`BANCOP`, cf.`CAMARAC`, cf.`PASO`, cf.`ORIGEN`, cf.`SUC`, cf.`ID_CIUD_EXP`, cf.`ID_CIUD_UBI`, cf.`PERSONAS`, cf.`ESTUDIOS`, cf.`POSEEVEH`, cf.`PLACA`, cf.`TEL_PROP`, cf.`N_EMPLEA`, cf.`VENTASMES`, cf.`COSTOSMES`, cf.`GASTOS`, cf.`DEUDAMES`, cf.`TEL3`, cf.`TEL4`, cf.`TEL5`, cf.`TEL6`, cf.`TEL7`, cf.`DIRECCION2`, cf.`DIRECCION3`, cf.`DIRECCION4`, cf.`CIUD_NAC`, cf.`CEDULA_C`, cf.`NOMBRE_CONYU`, cf.`CELULAR_CONYU`, cf.`TRABAJO_CONYU`, cf.`PROFESION_CONYU`, cf.`CARGO_CONYU`, cf.`SALARIO_CONYU`, cf.`EPS_CONYU`, suc.CODIGO as CIUD_UBI, ciu.`CODIGO` as CIUD_EXP
 			FROM `CLIENTE_FAB` as cf
 			LEFT JOIN SUCURSALES as suc ON suc.CIUDAD = cf.CIUD_UBI
 			LEFT JOIN CIUDADES as ciu ON ciu.`NOMBRE` = cf.`CIUD_EXP`
 			WHERE `CEDULA` = '%s' AND suc.PRINCIPAL = 1 ", $cedula);
-			$data = DB::connection('oportudata')->select($query);
-			if (!empty($data)) {
-				foreach ($data[0] as $key => $value) {
-					if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
-						$data[0]->$key = trim($value);
-					}
-				}
-				$resp = response()->json($data[0]);
-			}else{
-				$data = $this->temporaryCustomerInterface->findCustomerById($cedula);
-				if (!empty($data)) {
-					$data = $data->toArray();
-					foreach ($data as $key => $value) {
-						if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
-							$data[$key] = trim($value);
-						}else{
-							$data[$key] = intval($value);
-						}
-					}
-		
-					$resp = $data;
+		$data = DB::connection('oportudata')->select($query);
+		if (!empty($data)) {
+			foreach ($data[0] as $key => $value) {
+				if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
+					$data[0]->$key = trim($value);
 				}
 			}
+			$resp = response()->json($data[0]);
+		} else {
+			$data = $this->temporaryCustomerInterface->findCustomerById($cedula);
+			if (!empty($data)) {
+				$data = $data->toArray();
+				foreach ($data as $key => $value) {
+					if ($key != 'CIUD_UBI' && $key != 'CIUD_EXP') {
+						$data[$key] = trim($value);
+					} else {
+						$data[$key] = intval($value);
+					}
+				}
+
+				$resp = $data;
+			}
+		}
 
 
 		return $resp;

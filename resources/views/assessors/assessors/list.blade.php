@@ -20,7 +20,7 @@
       </div><!-- /.container-fluid -->
     </div>
 
-    <div class="container">
+    <div class="container container-reset">
       <div class="card  mb-4 border-0 shadow-lg">
         <div class="row form-group" ng-if="filtros">
           <div class="col-12">
@@ -29,15 +29,15 @@
             </div>
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
-                <div class="col-12 col-sm-12 col-md-6">
+                <div class="col-6 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
-                      <h2>{{ $listCount }}</h2>
+                      <h2 class="titleCardNumber">{{ $listCount }}</h2>
                       @if ($_GET)
-                      <p>Total de Solicitudes</p>
+                      <p class="textCardNumber">Total de Solicitudes</p>
                       @else
-                      <p>Solicitudes en este mes</p>
+                      <p class="textCardNumber">Solicitudes en este mes</p>
                       @endif
                     </div>
                     <div class="icon">
@@ -45,19 +45,19 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-6">
+                <div class="col-6 col-md-6">
                   <!-- /.info-box -->
                   <div class="small-box ">
                     <div class="inner">
-                      <h4>${{ number_format ($factoryRequestsTotal) }}</h4>
+                      <h2 class="titleCardNumber">${{ number_format ($factoryRequestsTotal) }}</h2>
                       @if ($_GET)
-                      <p class="mt-3">Total</p>
+                      <p class="textCardNumber">Total</p>
                       @else
-                      <p class="mt-3">Total en este mes</p>
+                      <p class="textCardNumber">Total en este mes</p>
                       @endif
                     </div>
                     <div class="icon">
-                      <i class="fas fa-shopping-cart"></i>
+                      <i class="ion ion-stats-bars"></i>
                     </div>
                   </div>
                 </div>

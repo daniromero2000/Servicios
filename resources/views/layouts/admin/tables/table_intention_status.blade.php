@@ -43,7 +43,8 @@
                     @if ($data->ESTADO_OBLIGACIONES === 0)En Mora @endif
                     @if ($data->ESTADO_OBLIGACIONES === null)Sin Datos @endif
                 </td>
-                <td> @if($data->customer->latestCifinScore) @if ($data->customer->latestCifinScore['score'] == '')Sin
+                <td> @if($data->customer && $data->customer->latestCifinScore)
+                    @if ($data->customer->latestCifinScore['score'] == '')Sin
                     Datos
                     @endif{{ $data->customer->latestCifinScore['score']}} @endif
                 </td>
