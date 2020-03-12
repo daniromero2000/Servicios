@@ -317,13 +317,9 @@ class assessorsController extends Controller
 				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
 				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
 			}
+			$age = 0;
 			if ($request->get('FEC_EXP') != '') {
-				/*$dateExpeditionCustomer = Carbon::createFromFormat('Y-m-d H:m:s', $request->get('FEC_EXP'));
-				$dateNow = Carbon::now();
-
-				$age = $dateExpeditionCustomer->diffInYears($dateNow) + 18;
-
-				//return $age;*/
+				$age = $this->calculateAgeFromExpeditionDate($request->get('FEC_EXP'));
 			}
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
@@ -343,7 +339,7 @@ class assessorsController extends Controller
 				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
 				'TIPOCLIENTE'           => 'OPORTUYA',
 				'SUBTIPO'               => 'WEB',
-				'EDAD'                  => $this->calculateAge($request->get('FEC_NAC')),
+				'EDAD'                  => $age,
 				'FEC_EXP'     			=> ($request->get('FEC_EXP') != '') ?  trim($request->get('FEC_EXP')) : '1900-01-01',
 				'CIUD_EXP'              => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp[0]->NOMBRE) : '',
 				'SEXO'  				=> ($request->get('SEXO') != '') ? trim($request->get('SEXO')) : '',
@@ -1787,6 +1783,15 @@ class assessorsController extends Controller
 		$now  = time();
 		$age  = ($now - $time) / (60 * 60 * 24 * 365.25);
 		$age  = floor($age);
+
+		return $age;
+	}
+
+	private function calculateAgeFromExpeditionDate($date){
+		$expeditionDate = date('Y-m-d', strtotime($date));
+		$dateExpeditionCustomer = Carbon::createFromFormat('Y-m-d', $expeditionDate);
+		$dateNow = Carbon::now();
+		$age = $dateExpeditionCustomer->diffInYears($dateNow) + 18;
 
 		return $age;
 	}
