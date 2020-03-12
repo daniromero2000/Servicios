@@ -145,6 +145,10 @@ input{
     animation: fadeIn 2.5s;
 }
 
+.arrowReturnBack{
+    font-size: 18px;
+}
+
 @media (max-width: 750px){
     .content-top{
         text-align: center;

@@ -244,7 +244,7 @@
                                     <input type="text" class="inputs form-control" ng-model="lead.PLACA" id="PLACA" />
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-12 col-sm-12">
                                     <label for="ESTADOCIVIL" class="labels">Estado civil</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.ESTADOCIVIL" id="ESTADOCIVIL" ng-options="civilType.value as civilType.label for civilType in civilTypes" >
@@ -283,7 +283,7 @@
                                         <input type="text" class="inputs form-control" ng-model="lead.CARGO_CONYU" id="CARGO_CONYU" />
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row form-group">
                                     <div class="col-12 col-sm-6">
                                         <label for="SALARIO_CONYU" class="labels">Ingresos del cónyuge</label>
                                         <input type="text" class="inputs form-control" ng-model="lead.SALARIO_CONYU" id="SALARIO_CONYU" />
@@ -346,7 +346,7 @@
                                     <select class="form-control inputs select2bs4" ng-model="lead.ESTRATO" id="ESTRATO" ng-options="strat.value as strat.label for strat in stratum"></select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-12 col-sm-4">
                                     <label for="TELFIJO" class="labels">Teléfono fijo</label>
                                     <input type="text" class="form-control inputs" ng-model="lead.TELFIJO" id="TELFIJO" />
@@ -369,6 +369,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" type="submit">Continuar</button>
                                 </div>
                             </div>
@@ -526,6 +527,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" type="submit">Continuar</button>
                                 </div>
                             </div>
@@ -649,6 +651,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
+                                    <button type="button" class="btn btn-secondary" ng-click="step=step-1"><i class="fas fa-arrow-circle-left arrowReturnBack"></i> Regresar</button>
                                     <button class="btn btn-primary" ng-disabled="disabledButtonSolic" type="submit">Continuar</button>
                                 </div>
                             </div>

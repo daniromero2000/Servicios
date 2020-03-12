@@ -362,10 +362,7 @@ class assessorsController extends Controller
 			}
 			if ($request->get('FEC_EXP') != '' && $request->get('FEC_EXP') != '1900-01-01') {
 
-				$time = strtotime($request->get('FEC_EXP'));
-				$now  = time();
-				$age  = ($now - $time);
-				$age  = floor($age);
+				$age = $this->calculateAgeFromExpeditionDate($request->get('FEC_EXP'));
 				// return $age;
 			}
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
@@ -643,8 +640,11 @@ class assessorsController extends Controller
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
-				$perfilCrediticio = 'TIPO NE';
-				$customerIntention->ID_DEF = '8';
+				$customer->ESTADO = 'NEGADO';
+				$customer->save();
+				$perfilCrediticio                     = 'TIPO NE';
+				$customerIntention->ID_DEF            = '8';
+				$customerIntention->ESTADO_INTENCION  = '1';
 				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 				$customerIntention->save();
 				return ['resp' => "false"];
