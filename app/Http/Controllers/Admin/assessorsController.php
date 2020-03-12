@@ -307,13 +307,13 @@ class assessorsController extends Controller
 				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
 				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
 			}
-			if ($request->get('FEC_EXP') != '' && $request->get('FEC_EXP') != '1900-01-01') {
+			if ($request->get('FEC_EXP') != '') {
+				/*$dateExpeditionCustomer = Carbon::createFromFormat('Y-m-d H:m:s', $request->get('FEC_EXP'));
+				$dateNow = Carbon::now();
 
-				$time = strtotime($request->get('FEC_EXP'));
-				$now  = time();
-				$age  = ($now - $time);
-				$age  = floor($age);
-				// return $age;
+				$age = $dateExpeditionCustomer->diffInYears($dateNow) + 18;
+
+				//return $age;*/
 			}
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
