@@ -192,6 +192,7 @@ class assessorsController extends Controller
 			$statusesNegadosValues +=  $statusesNegadosValue[$key];
 		}
 
+
 		$statusesDesistidosValue = [];
 		foreach ($estadosDesistidos as $estadosPendiente) {
 			array_push($statusesDesistidosValue, trim($estadosPendiente['total']));
@@ -219,9 +220,9 @@ class assessorsController extends Controller
 			'listCount'           		   => $listCount,
 			'skip'                		   => $skip,
 			'factoryRequestsTotal'		   => $factoryRequestsTotal,
-			'estadosAprobados' 	  		   => $estadosAprobados,
-			'estadosNegados' 	  		   => $estadosNegados,
-			'estadosDesistidos'   		   => $estadosDesistidos,
+			'statusesAprobadosValues' 	   => $statusesAprobadosValues,
+			'statusesNegadosValues' 	   => $statusesNegadosValues,
+			'statusesDesistidosValues'      => $statusesDesistidosValues,
 			'statusesPendientesValues'     => $statusesPendientesValues
 		]);
 	}

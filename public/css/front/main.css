@@ -4,6 +4,12 @@
 .p-reset{
     padding: 1.5rem;
 }
+.titleCardNumberForTotals{
+    font-size: 23px;
+}
+.textCardNumberForTotals{
+    font-size: 13px;
+}
 @media (max-width:990px){
     .container-reset{
         max-width: 90% !important;
@@ -67,8 +73,14 @@
     .nameDashboard{
         font-size: 15px;
     }
+    .titleCardNumber{
+        font-size: 18px;
+    }
+    .textCardNumberForTotals{
+        font-size: 11px !important;
+    }
     .wellcomeDashboard{
-        font-size: 11px;
+        font-size: 12px;
     }
     .info-box-reset {
         min-height: 65px !important;
@@ -78,6 +90,11 @@
     }
     .p-reset{
         padding: 1rem!important;
+    }
+}
+@media (max-width:380px){
+    .textCardNumberForTotals{
+        font-size: 10px !important;
     }
 }
 @media (max-width:325px){
