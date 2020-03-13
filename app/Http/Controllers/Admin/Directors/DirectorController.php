@@ -30,10 +30,28 @@ class DirectorController extends Controller
   {
     $to = Carbon::now();
     $from = Carbon::now()->startOfMonth();
+    $assessor = '';
     $director = auth()->user()->codeOportudata;
     $skip     = $this->toolsInterface->getSkip($request->input('skip'));
     $list     = $this->factoryInterface->listFactoryDirector($skip * 30, $director);
     $listCount = $this->factoryInterface->listFactoryDirectorTotal($from, $to, $director);
+    $estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $director);
+    $estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $director);
+    $estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $director);
+    $estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $director);
+
+    if (request()->has('q') && request()->input('from') == '' && request()->input('to') == '' && request()->input('assessor') != '') {
+      $estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, request()->input('assessor'), array('APROBADO', 'EN FACTURACION'), $director);
+      $estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, request()->input('assessor'), "NEGADO", $director);
+      $estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, request()->input('assessor'), "DESISTIDO", $director);
+      $estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, request()->input('assessor'), array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $director);
+    }
+    if (request()->has('q') && request()->input('from') != '' && request()->input('to') != '') {
+      $estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), request()->input('assessor'), array('APROBADO', 'EN FACTURACION'), $director);
+      $estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), request()->input('assessor'), "NEGADO", $director);
+      $estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), request()->input('assessor'), "DESISTIDO", $director);
+      $estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), request()->input('assessor'), array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $director);
+    }
 
     if (request()->has('q')) {
       $list = $this->factoryInterface->searchFactoryDirectors(
@@ -59,7 +77,48 @@ class DirectorController extends Controller
     $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
     $listCount            = $listCount->count();
 
-    // dd($list);
+    $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+    $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+    $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+    $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+    $statusesAprobadosValue = [];
+    foreach ($estadosAprobados as $estadosPendiente) {
+      array_push($statusesAprobadosValue, trim($estadosPendiente['total']));
+    }
+    $statusesAprobadosValues = 0;
+    foreach ($statusesAprobadosValue as $key => $status) {
+      $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
+    }
+
+    $statusesNegadosValue = [];
+    foreach ($estadosNegados as $estadosPendiente) {
+      array_push($statusesNegadosValue, trim($estadosPendiente['total']));
+    }
+    $statusesNegadosValues = 0;
+    foreach ($statusesNegadosValue as $key => $status) {
+      $statusesNegadosValues +=  $statusesNegadosValue[$key];
+    }
+
+
+    $statusesDesistidosValue = [];
+    foreach ($estadosDesistidos as $estadosPendiente) {
+      array_push($statusesDesistidosValue, trim($estadosPendiente['total']));
+    }
+    $statusesDesistidosValues = 0;
+    foreach ($statusesDesistidosValue as $key => $status) {
+      $statusesDesistidosValues +=  $statusesDesistidosValue[$key];
+    }
+
+    $statusesPendientesValue = [];
+    foreach ($estadosPendientes as $estadosPendiente) {
+      array_push($statusesPendientesValue, trim($estadosPendiente['total']));
+    }
+    $statusesPendientesValues = 0;
+    foreach ($statusesPendientesValue as $key => $status) {
+      $statusesPendientesValues +=  $statusesPendientesValue[$key];
+    }
+
     return view('director.list', [
       'factoryRequests'      => $list,
       'optionsRoutes'        => (request()->segment(2)),
@@ -67,7 +126,10 @@ class DirectorController extends Controller
       'listCount'            => $listCount,
       'skip'                 => $skip,
       'factoryRequestsTotal' => $factoryRequestsTotal,
-
+      'statusesAprobadosValues'        => $statusesAprobadosValues,
+      'statusesNegadosValues'        => $statusesNegadosValues,
+      'statusesDesistidosValues'      => $statusesDesistidosValues,
+      'statusesPendientesValues'     => $statusesPendientesValues
     ]);
   }
 

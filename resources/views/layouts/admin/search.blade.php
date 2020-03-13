@@ -19,7 +19,7 @@
                             <label for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option selected value> -- Selecciona Estado -- </option>
                                 @if ($_GET)
                                 @if (!empty($_GET['status']))
                                 <option selected>
@@ -65,7 +65,7 @@
                             <label for="subsidiary">Sucursal</label>
                             <select class="form-control  select2bs4" id="subsidiary" name="subsidiary" {!!
                                 request()->input('subsidiary')!!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Sucursal -- </option>
+                                <option selected value> -- Selecciona Sucursal -- </option>
                                 @foreach ($Subsidiarys as $Subsidiary)
                                 <option @if ($_GET) @if (!empty($_GET['subsidiary']))
                                     @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
@@ -88,15 +88,14 @@
                     <div class="col-12 d-flex align-items-end justify-content-end">
                         <div class="form-group">
                             <span class="input-group-btn btn-pr">
+                                <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                                    <i class="fas fa-times"></i> Restaurar filtros
+                                </a>
                                 <button type="submit" id="search-btn" class="btn btn-primary mt-2 btn-sm-reset"><i
                                         class="fa fa-search"></i>
                                     Buscar
                                 </button>
-                                <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
-                                    <i class="fas fa-times"></i> Restaurar filtros
-                                </a>
                             </span>
-
                         </div>
                     </div>
                 </div>
