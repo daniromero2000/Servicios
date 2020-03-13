@@ -63,7 +63,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -99,14 +99,14 @@
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubi"
-                                        ng-options="city.value as city.label for city in citiesUbi"></select>
+                                        ng-options="city.value as city.label for city in citiesUbi" ng-required="true"></select>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="actividad">Ocupación</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.ACTIVIDAD" id="actividad"
                                         ng-options="actividad.value as actividad.label for actividad in occupations"></select>
                                 </div>
-                                <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                                <div class="col-12 col-md-4" ng-show="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                                     <label class="ventaContado-label labels" for="FEC_ING">Fecha de ingreso*</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -130,16 +130,16 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="dateCreationCompany" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4" ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
+                                <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'PENSIONADO'">
                                     <label for="FEC_CONSTpensionado" class="ventaContado-label labels">Fecha de pensión*</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONSTpensionado" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                             </div>
