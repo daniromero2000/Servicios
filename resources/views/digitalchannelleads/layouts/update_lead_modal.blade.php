@@ -160,13 +160,15 @@
                   </div>
                   <div class="col-6 d-flex align-items-end">
                     <div class="form-group w-100">
-                      <label for="assessor_id">Asesor</label>
-                      <select class="form-control  select2" id="assessor_id" name="assessor_id"
-                        ng-model="lead.assessor_id" style="width: 100%;">
-                        <option disabled selected value> -- Selecciona Asesor-- </option>
-                        <option value="13">Evelyn Correa</option>
-                        <option value="18">Vanessa Parra</option>
-                        <option value="85">Danitza Naranjo</option>
+                      <label for="selectAssessorEdit{{$digitalChannelLead->id}}">Asesor</label>
+                      <select class="form-control  " id="selectAssessorEdit{{$digitalChannelLead->id}}"
+                        name="assessor_id" ng-model="lead.assessor_id" style="width: 100%;">
+                        @if($digitalChannelLead->leadAssessor)
+                        <option value="{{ $digitalChannelLead->leadAssessor->id }}" selected="selected"
+                          style="width: 100%;">
+                          {{ $digitalChannelLead->leadAssessor->name }}
+                        </option>
+                        @endif
                       </select>
                     </div>
                   </div>
