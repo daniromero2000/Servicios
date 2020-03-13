@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{{ asset('css/seguros/app.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{	asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-
 @endsection
 @section('content')
 <div class="row row-reset mt-4">
@@ -124,7 +123,8 @@
 									</div>
 								</div>
 							</div>
-
+							<input type="text" class="form-control" hidden id="typeProduct" value="27"
+								name="typeProduct">
 						</div>
 						<div class="form-group" style="
 						margin-bottom: 5px;
