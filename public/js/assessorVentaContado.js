@@ -483,7 +483,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
 				$scope.execConsultasLead(response.data.identificationNumber);
-				$scope.lead.CIUD_EXP = 5002;
+				console.log(typeof $scope.lead.CIUD_EXP);
+				if($scope.lead.CIUD_EXP == null || typeof $scope.lead.CIUD_EXP == 'undefined'){
+					$scope.lead.CIUD_EXP = 5002;
+				}
 			}else{
 				setTimeout(() => {
 					$('#proccess').modal('hide');
