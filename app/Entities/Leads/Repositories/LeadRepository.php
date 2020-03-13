@@ -125,6 +125,39 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function countLeadTotalSlopes($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->whereBetween('created_at', [$from, $to])->where('state', 12)->where('assessor_id', $assessor)->orderBy('id', 'desc')->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function listleadSlopes($totalView, $assessor): Support
+    {
+        try {
+            return  $this->model->with([
+                'leadStatusesLogs',
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct',
+                'leadPrices',
+                'LeadArea'
+            ])->orderBy('id', 'desc')
+                ->where('state', 12)
+                ->where('assessor_id', $assessor)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function countLeadChannels($from, $to)
     {
         try {

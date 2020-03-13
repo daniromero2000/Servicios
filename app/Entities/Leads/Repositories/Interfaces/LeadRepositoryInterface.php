@@ -24,6 +24,10 @@ interface LeadRepositoryInterface
 
     public function countLeadTotal($from, $to);
 
+    public function countLeadTotalSlopes($from, $to, $assessor);
+
+    public function listleadSlopes($totalView, $assessor);
+
     public function countLeadStatuses($from, $to);
 
     public function countLeadStatusGenerals($from, $to, $area);

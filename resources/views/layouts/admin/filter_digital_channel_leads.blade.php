@@ -115,6 +115,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @if ($route != '/Administrator/DigitalChannelLeadSlopes')
                             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                                 <div class="form-group">
                                     <label for="stateSelectFilter">Selecciona Estado </label>
@@ -135,6 +136,9 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
+
+                            @if ($route != '/Administrator/DigitalChannelLeadSlopes')
                             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                                 <div class="form-group">
                                     <label for="assessorSelectFilter">Asesor</label>
@@ -145,6 +149,8 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
+
 
                         </div>
 

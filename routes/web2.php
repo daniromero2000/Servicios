@@ -173,6 +173,10 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/CallCenterleads', 'CallCenterLeadController@dashboard')->name('CallCenterleads_dashboard');
     });
 
+    Route::namespace('DigitalChannelLeadSlopes')->group(function () {
+        Route::resource('Administrator/DigitalChannelLeadSlopes', 'DigitalChannelLeadSlopeController');
+    });
+
     Route::namespace('DebtorInsurances')->group(function () {
         Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
     });

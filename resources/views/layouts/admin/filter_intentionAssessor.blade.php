@@ -1,4 +1,3 @@
-<!-- search form -->
 <div class="row">
     <div class="col-12 text-center">
         <h3 style="color: #007bff;">Filtrar</h3>
@@ -20,7 +19,7 @@
                             <label for="creditprofile">Perfil Crediticio </label>
                             <select class="form-control  select2" id="creditprofile" name="creditprofile" {!!
                                 request()->input('creditprofile') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Perfil -- </option>
+                                <option selected value> Selecciona Perfil </option>
                                 @if ($_GET) @if (!empty($_GET['creditprofile']))
                                 <option selected>
                                     {{ $_GET['creditprofile'] }}</option>
@@ -39,7 +38,7 @@
                             <label for="status">Estado</label>
                             <select class="form-control  select2" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option disabled selected value> -- Selecciona Estado -- </option>
+                                <option selected value> Selecciona Estado </option>
                                 @foreach ($status as $state)
                                 <option value="{{ $state->ID }}" @if ($_GET && !empty($_GET['status']) &&
                                     $_GET['status']==$state->ID) selected @endif>{{ $state->NAME }}</option>
@@ -69,8 +68,6 @@
                 </div>
 
             </div>
-
-
+        </form>
     </div>
-    </form>
 </div>
