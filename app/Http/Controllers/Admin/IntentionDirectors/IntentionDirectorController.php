@@ -36,7 +36,7 @@ class IntentionDirectorController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        $assessor = auth()->user()->codeOportudata;
+        $assessor = auth()->user()->Assessor->SUCURSAL;
 
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
@@ -81,7 +81,7 @@ class IntentionDirectorController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        $assessor = auth()->user()->codeOportudata;
+        $assessor = auth()->user()->Assessor->SUCURSAL;
 
         $listAssessors = $this->assessorInterface->listIntentionDirector($assessor);
         $creditProfiles    = $this->intentionInterface->countIntentionDirectorCreditProfiles($from, $to, $listAssessors);

@@ -44,7 +44,7 @@
         font-size: 12px;
     }
     .body-table{
-        font-size: 10px;
+        font-size: 11px;
     }
     .title-table{
         font-size: 16px;
@@ -91,11 +91,35 @@
     .p-reset{
         padding: 1rem!important;
     }
+    .label-reset{
+        font-size: 10px !important;
+    }
+    .input-reset{
+        height: 31px !important;
+        font-size: 11px !important;
+    }
+    .form-group-reset{
+        margin-bottom: 10px !important;
+    } 
+    .hidden-xs{
+        font-size: 11px !important;
+
+    }
+    .lead{
+        font-size: 15px !important;
+    }
 }
 @media (max-width:380px){
     .textCardNumberForTotals{
         font-size: 10px !important;
     }
+    .header-table{
+        font-size: 11px;
+    }
+    .body-table{
+        font-size: 10px;
+    }
+    
 }
 @media (max-width:325px){
     .textCardNumber{

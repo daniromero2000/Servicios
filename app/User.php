@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Entities\Assessors\Assessor;
 use App\Entities\Comment;
 use App\Entities\LeadAreas\LeadArea;
 use Illuminate\Notifications\Notifiable;
@@ -39,5 +40,10 @@ class User extends Authenticatable
     public function leadArea()
     {
         return $this->belongsTo(LeadArea::class);
+    }
+
+    public function Assessor()
+    {
+        return $this->belongsTo(Assessor::class, 'codeOportudata');
     }
 }

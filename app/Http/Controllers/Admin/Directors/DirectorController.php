@@ -31,7 +31,7 @@ class DirectorController extends Controller
     $to = Carbon::now();
     $from = Carbon::now()->startOfMonth();
     $assessor = '';
-    $director = auth()->user()->codeOportudata;
+    $director = auth()->user()->Assessor->SUCURSAL;
     $skip     = $this->toolsInterface->getSkip($request->input('skip'));
     $list     = $this->factoryInterface->listFactoryDirector($skip * 30, $director);
     $listCount = $this->factoryInterface->listFactoryDirectorTotal($from, $to, $director);
@@ -137,7 +137,7 @@ class DirectorController extends Controller
   public function dashboard(Request $request)
   {
 
-    $director = auth()->user()->codeOportudata;
+    $director = auth()->user()->Assessor->SUCURSAL;
 
     $to   = Carbon::now();
     $from = Carbon::now()->startOfMonth();
