@@ -26,7 +26,7 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
     public function generateVerificationCode($identificationNumber)
     {
         if ($customerCode = $this->checkCustomerHasCustomerVerificationCode($identificationNumber)) {
-            $customerCode->state = 1;
+            $customerCode->state = 2;
             $customerCode->update();
         }
 
