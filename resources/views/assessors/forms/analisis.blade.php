@@ -10,7 +10,7 @@
             <div class="col-sm-6">
             </div><!-- /.col -->
             <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
+                <ol class="breadcrumb  bradcrumb-reset float-right">
                     <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                     <li class="breadcrumb-item active"><a href="/Administrator/analisis">Realizar Analisis</a></li>
                 </ol>
@@ -19,19 +19,19 @@
     </div><!-- /.container-fluid -->
 </div>
 <div ng-app="asessorVentaContadoApp" ng-controller="realizarAnalisisCtrl" class="containerleads container" ng-cloak>
-    <div class="row ">
+    <div class="row d-flex justify-content-center">
         <div class="col-12 text-center">
-            <h2 class="headerAdmin ng-scope">Resumen análisis política</h2>
+            <h2 class="headerAdmin title-filter ng-scope">Resumen análisis política</h2>
         </div>
-        <div class="col-12 col-sm-4 offset-sm-4">
+        <div class="col-10 col-sm-4 offset-sm-4">
             <form name="simular" ng-submit="getInfoLead()">
                 <div class="row">
                     <div class="col-12 form-group">
-                        <label class="ventaContado-label">Número de identificación</label>
+                        <label class="label-reset ventaContado-label">Número de identificación</label>
                         <input required class="form-control" ng-model="lead.cedula" validation-pattern="number">
                     </div>
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary">Ver Resumen</button>
+                        <button type="submit" class="btn btn-primary btn-sm-reset">Ver Resumen</button>
                     </div>
                 </div>
             </form>
