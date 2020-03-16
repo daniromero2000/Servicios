@@ -37,7 +37,9 @@
           <td class="text-center">{{ $leadPrice->leadProduct->lead_product }}</td>
           <td class="text-center">{{ $leadPrice->description }}</td>
           <td class="text-center">${{ number_format($leadPrice->lead_price) }}</td>
+          @if ($leadPrice->user)
           <td class="text-center">{{ $leadPrice->user->name }}</td>
+          @endif
           <td class="text-center"><span class="badge badge-{{$leadPrice->leadPriceStatus->color}}">
               {{$leadPrice->leadPriceStatus->status}}
             </span></td>

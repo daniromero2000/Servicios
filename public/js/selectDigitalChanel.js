@@ -1,6 +1,11 @@
 $(function () {
     $("#typeAreaSelectCreate").on('change', ontypeAreaSelectCreate)
 });
+if ($('#typeProductCreate').val() == 27) {
+    $('#fechExpirationCreate').show();
+} else {
+    $('#fechExpirationCreate').hide();
+}
 function ontypeAreaSelectCreate() {
     var typeServiceCreateSelected_id = $(this).val();
     if (!typeServiceCreateSelected_id) {
@@ -12,6 +17,14 @@ function ontypeAreaSelectCreate() {
             html_selectEdit += '<option value="' + data[i].id + '">' + data[i].lead_product + '</option>';
         }
         $('#typeProductCreate').html(html_selectEdit);
+
+        $("#typeProductCreate").change(function () {
+            if ($('#typeProductCreate').val() == 27) {
+                $('#fechExpirationCreate').show();
+            } else {
+                $('#fechExpirationCreate').hide();
+            }
+        });
     });
     $.get('/getServices/' + typeServiceCreateSelected_id + '', function (data) {
         var html_selectEdit = '<option  selected value>  Selecciona Servicio  </option>';
@@ -36,7 +49,6 @@ function dataLead(dataId) {
     ontypeServiceSelectedProductEditModal(dataId)
 
 }
-
 function ontypeServiceSelectedProductEditModal(dataId) {
     var typeServiceEditSelected_id = $("#typeAreaSelectEdit" + dataId).val();
     $.get('/getproducts/' + typeServiceEditSelected_id + '', function (data) {
@@ -48,6 +60,19 @@ function ontypeServiceSelectedProductEditModal(dataId) {
             html_selectEdit += '<option value="' + data[i].id + '" ">' + data[i].lead_product + '</option>';
         }
         $('#typeProductselectedit' + dataId).html(html_selectEdit);
+        if ($('#typeProductselectedit' + dataId).val() == 27) {
+            $('#fechExpiration' + dataId).show();
+        } else {
+            $('#fechExpiration' + dataId).hide();
+        }
+        $('#typeProductselectedit' + dataId).change(function () {
+            if ($('#typeProductselectedit' + dataId).val() == 27) {
+                $('#fechExpiration' + dataId).show();
+            } else {
+                $('#fechExpiration' + dataId).hide();
+            }
+        });
+
     });
     $.get('/getServices/' + typeServiceEditSelected_id + '', function (data) {
         var html_selectEdit = "";

@@ -23,7 +23,7 @@
         <div class="col-12 text-center">
             <h2 class="headerAdmin title-filter ng-scope">Resumen análisis política</h2>
         </div>
-        <div class="col-10 col-sm-4 offset-sm-4">
+        <div class="col-10 col-sm-4">
             <form name="simular" ng-submit="getInfoLead()">
                 <div class="row">
                     <div class="col-12 form-group">
