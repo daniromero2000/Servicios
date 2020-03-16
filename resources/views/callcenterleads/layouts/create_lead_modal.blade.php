@@ -120,6 +120,10 @@
                     <option selected value> -- Selecciona Producto -- </option>
                   </select>
                 </div>
+                <div class="col-12 col-sm-6 no-padding-right mt-3" id="fechExpirationCreate">
+                  <label for="expirationDateSoat">Fecha de Vencimiento</label>
+                  <input type="date" name="expirationDateSoat" class="form-control" value="">
+                </div>
                 <div class="col-12 col-sm-6 form-group no-padding-right">
                   <label for="selectAssessorCreate">Asesor</label>
                   <select class="form-control  select2" id="selectAssessorCreate" name="assessor_id"

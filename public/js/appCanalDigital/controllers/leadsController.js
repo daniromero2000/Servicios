@@ -49,13 +49,13 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
 
     $scope.leadsChannels = [{
-            label: 'FACEBOOK',
-            value: 2
-        },
-        {
-            label: 'WHATSAPP',
-            value: 3
-        }
+        label: 'FACEBOOK',
+        value: 2
+    },
+    {
+        label: 'WHATSAPP',
+        value: 3
+    }
     ];
 
     $scope.comment = {
@@ -72,71 +72,71 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
     $scope.cities = [];
 
     $scope.typeServices = [{
-            label: 'Crédito',
-            value: 'Crédito'
-        },
-        {
-            label: 'Crédito Motos',
-            value: 'Motos'
-        },
-        {
-            label: 'Crédito Libranza',
-            value: 'Credito libranza'
-        },
-        {
-            label: 'Seguros',
-            value: 'Seguros'
-        },
+        label: 'Crédito',
+        value: 'Crédito'
+    },
+    {
+        label: 'Crédito Motos',
+        value: 'Motos'
+    },
+    {
+        label: 'Crédito Libranza',
+        value: 'Credito libranza'
+    },
+    {
+        label: 'Seguros',
+        value: 'Seguros'
+    },
     ];
 
     $scope.typeStates = [{
-            label: 'Pendiente',
-            value: 0
-        },
-        {
-            label: 'En estudio',
-            value: 1
-        },
-        {
-            label: 'En espera',
-            value: 2
-        },
-        {
-            label: 'Aprobado',
-            value: 3
-        },
-        {
-            label: 'Negado',
-            value: 4
-        }
+        label: 'Pendiente',
+        value: 0
+    },
+    {
+        label: 'En estudio',
+        value: 1
+    },
+    {
+        label: 'En espera',
+        value: 2
+    },
+    {
+        label: 'Aprobado',
+        value: 3
+    },
+    {
+        label: 'Negado',
+        value: 4
+    }
     ];
 
     $scope.cardTypes = [{
-            label: 'Tarjeta Black',
-            value: 0
-        },
-        {
-            label: 'Tarjeta Gray',
-            value: 1
-        }
+        label: 'Tarjeta Black',
+        value: 0
+    },
+    {
+        label: 'Tarjeta Gray',
+        value: 1
+    }
     ];
 
     $scope.origenes = [{
-            label: 'Oportuya',
-            value: 'Oportuya'
-        },
-        {
-            label: 'Avances',
-            value: 'Avance'
-        },
-        {
-            label: 'Seguros - SOAT',
-            value: 'SEGUROS'
-        },
-        {
-            label: 'ASESORES - CRÉDITO',
-            value: 'ASESORES-CREDITO'
-        }
+        label: 'Oportuya',
+        value: 'Oportuya'
+    },
+    {
+        label: 'Avances',
+        value: 'Avance'
+    },
+    {
+        label: 'Seguros - SOAT',
+        value: 'SEGUROS'
+    },
+    {
+        label: 'ASESORES - CRÉDITO',
+        value: 'ASESORES-CREDITO'
+    }
     ];
 
     $scope.getCities = function () {
@@ -227,7 +227,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
 
     $scope.resetFiltros = function () {
         $scope.leads = [];
-               $scope.leadsTR = [];
+        $scope.leadsTR = [];
         $scope.leadsGen = [];
         $scope.q = {
             'q': '',
@@ -244,7 +244,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             'qOrigenTR': '',
             'qTRAnt': '',
             'initFrom': 0,
-                      'initFromCM': 0,
+            'initFromCM': 0,
             'initFromRL': 0,
             'initFromGen': 0,
             'initFromTR': 0,
@@ -276,11 +276,11 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
             method: 'GET',
             url: '/communityLeads/viewCommunityLeads/' + idLead
         }).then(function successCallback(response) {
-                if (response.data != false) {
-                    $scope.lead = response.data;
-                }
-            },
-            function errorCallback(response) {});
+            if (response.data != false) {
+                $scope.lead = response.data;
+            }
+        },
+            function errorCallback(response) { });
     };
 
     $scope.updateCommunityLeads = function () {
@@ -475,7 +475,7 @@ app.controller('leadsController', function ($scope, $http, $rootScope, $ngBootbo
                 $scope.comment.comment = "";
                 $scope.viewAddComent = false;
             }
-        }, function errorCallback(response) {});
+        }, function errorCallback(response) { });
     };
 
 

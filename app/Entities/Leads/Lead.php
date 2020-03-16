@@ -38,7 +38,8 @@ class Lead extends Model
         'nearbyCity',
         'assessor_id',
         'description',
-        'lead_area_id'
+        'lead_area_id',
+        'expirationDateSoat'
     ];
 
     protected $guarded = [

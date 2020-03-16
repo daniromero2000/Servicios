@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function Assessor()
     {
-        return $this->belongsTo(Assessor::class, 'codeOportudata');
+        return $this->belongsTo(Assessor::class, 'codeOportudata', 'CODIGO');
     }
 }
