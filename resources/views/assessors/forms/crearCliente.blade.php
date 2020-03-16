@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-sm-6 offset-sm-3">
-            <label class="ventaContado-label" for="tipoCliente">Tipo de Cliente</label>
+            <label class="ventaContado-label" for="tipoCliente">Tipo de Cliente*</label>
             <select class="form-control" id="tipoCliente" ng-model="tipoCliente" ng-change="resetInfoLead()">
                 <option value="CREDITO">Crédito</option>
                 <option value="CONTADO">Contado</option>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                 </form>
-                <form ng-submit="addCliente('CREDITO')" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
+                <form ng-submit="validateStep2()" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -192,6 +192,9 @@
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_EXP" class="labels">Ciudad de expedición</label>
                                     <select class="form-control inputs select2bs4" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities" required></select>
+                                    <div class="alert alert-danger" role="alert" ng-show="showAlertCiudExp" style="margin-top: 10px;">
+                                        Debe seleccionar una ciudad
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
