@@ -93,6 +93,7 @@ use Carbon\Carbon;
               <button type="button" class="close" data-dismiss="modal" onclick="reset({{$data->id}})"
                 aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
+
             <div class="modal-body">
               <div class="container">
                 <div class="row resetRow ">
@@ -222,6 +223,15 @@ use Carbon\Carbon;
                             @endif
                           </select>
                         </div>
+                        @php
+                        $originalDate = $data->expirationDateSoat;
+                        $newDate = date('Y-m-d', strtotime($originalDate));
+                        @endphp
+                        <div class="col-12 col-sm-6 no-padding-right mt-3" id="fechExpiration{{$data->id}}">
+                          <label for="expirationDateSoat">Fecha de Vencimiento</label>
+                          <input type="date" name="expirationDateSoat" class="form-control "
+                            value="@if($data->expirationDateSoat){{$newDate}}@endif">
+                        </div>
                       </div>
                       <div class="form-group">
                         <label for="telephone">Observación </label>
@@ -277,7 +287,7 @@ use Carbon\Carbon;
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Actualizar Lead</h4>
+              <h4 class="modal-title" id="myModalLabel">Agregar Comentario</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                   aria-hidden="true">×</span></button>
             </div>

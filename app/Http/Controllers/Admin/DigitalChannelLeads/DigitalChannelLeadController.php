@@ -137,25 +137,7 @@ class DigitalChannelLeadController extends Controller
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
         $request['termsAndConditions'] = 2;
         $request['state'] = 8;
-        // $dataOportudata = [
-        //     'TIPO_DOC' => 1,
-        //     'CEDULA' => $request->input('identificationNumber'),
-        //     'APELLIDOS' => $request->input('lastName'),
-        //     'NOMBRES' => $request->input('name'),
-        //     'TIPOCLIENTE' => 'NUEVO',
-        //     'SUBTIPO' => 'WEB',
-        //     'CELULAR' => $request->input('telephone'),
-        //     'CIUD_UBI' => $request->input('city'),
-        //     'EMAIL' => $request->input('email'),
-        //     'MIGRADO' => 1,
-        //     'SUC' => 9999,
-        //     'ORIGEN' => 'Canal Digital',
-        //     'CLIENTE_WEB' => 1,
-        // ];
-        // $customer = $this->customerInterface->checkIfExists($request->input('identificationNumber'));
-        // if (empty($customer)) {
-        //     $this->customerInterface->updateOrCreateCustomer($dataOportudata);
-        // }
+
 
         $lead =  $this->leadInterface->createLead($request->input());
         $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
@@ -210,7 +192,6 @@ class DigitalChannelLeadController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->input());
         $request['identificationNumber'] = (!empty($request->input('identificationNumber'))) ? $request->input('identificationNumber') : '0';
         $request['telephone'] = (!empty($request->input('telephone'))) ? $request->input('telephone') : 'N/A';
         $request['termsAndConditions'] = 2;
@@ -220,7 +201,6 @@ class DigitalChannelLeadController extends Controller
             $lead->state = $request['state'];
             $lead->leadStatus()->attach($request['state'], ['user_id' => auth()->user()->id]);
         }
-        // dd($request->input());
 
         $leadRerpo = new leadRepository($lead);
         $leadRerpo->updateLead($request->input());

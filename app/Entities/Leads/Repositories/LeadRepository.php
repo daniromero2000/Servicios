@@ -29,7 +29,8 @@ class LeadRepository implements LeadRepositoryInterface
         'campaign',
         'assessor_id',
         'identificationNumber',
-        'lead_area_id'
+        'lead_area_id',
+        'expirationDateSoat'
     ];
 
 

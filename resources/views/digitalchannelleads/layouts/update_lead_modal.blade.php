@@ -138,6 +138,15 @@
                       @endif
                     </select>
                   </div>
+                  @php
+                  $originalDate = $digitalChannelLead->expirationDateSoat;
+                  $newDate = date('Y-m-d', strtotime($originalDate));
+                  @endphp
+                  <div class="col-12 col-sm-6 no-padding-right mt-3" id="fechExpiration{{$digitalChannelLead->id}}">
+                    <label for="expirationDateSoat">Fecha de Vencimiento</label>
+                    <input type="date" name="expirationDateSoat" class="form-control "
+                      value="@if($digitalChannelLead->expirationDateSoat){{$newDate}}@endif">
+                  </div>
                 </div>
                 <div class="col-12 col-sm-12 no-padding-right">
                   <label for="telephone">Observación <span class="text-danger">*</span></label>

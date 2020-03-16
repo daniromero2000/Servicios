@@ -59,7 +59,7 @@
           <div class="row">
 
             <div class="col-12">
-              <canvas id="pieChart" style="height:310px; min-height:200px"></canvas>
+              <canvas id="pieChart" class="pie-chart"></canvas>
             </div>
           </div>
         </div>
