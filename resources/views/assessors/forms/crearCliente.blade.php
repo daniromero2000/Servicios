@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div ng-show="tipoCliente == 'CREDITO'">
-                <form name="clienteCredito" id="addCustomerStep1" ng-submit="addTemporaryCustomer()" ng-show="step == 1" class="crearCliente-form">
+                <form ng-submit="validateStep1()" name="clienteCredito" id="addCustomerStep1" ng-show="step == 1" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -88,6 +88,9 @@
                                         <label class="ventaContado-label">Celular</label>
                                         <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
                                             validation-pattern="telephone" required />
+                                        <div class="alert alert-danger" role="alert" ng-show="showAlertCel" style="margin-top: 10px;">
+                                            Debe digitar un número de celular
+                                        </div>
                                     </div>
                                     <div ng-show="lead.CEL_VAL">
                                         <label class="ventaContado-label">Celular</label>
@@ -100,6 +103,9 @@
                                     <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubi"
                                         ng-options="city.value as city.label for city in citiesUbi" ng-required="true"></select>
+                                    <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbi" style="margin-top: 10px;">
+                                        Debe seleccionar una ciudad
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="actividad">Ocupación</label>
@@ -112,7 +118,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" required data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
@@ -151,7 +157,7 @@
                         </div>
                     </div>
                 </form>
-                <form ng-submit="addCliente('CREDITO')" method="POST" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
+                <form ng-submit="addCliente('CREDITO')" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -712,7 +718,7 @@
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label labels" for="genero">Género</label>
                         <select class="inputs select2bs4" ng-model="lead.SEXO" id="genero"
-                            ng-options="gender.label as gener.value for gender in genders"></select>
+                            ng-options="gender.label as gender.value for gender in genders"></select>
                     </div>
                 </div>
                 <div class="row">

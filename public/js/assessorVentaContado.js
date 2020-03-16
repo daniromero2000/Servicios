@@ -20,6 +20,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.disabledButton         = false;
 	$scope.disabledButtonCode     = false;
 	$scope.disabledButtonSolic    = false;
+	$scope.showAlertCiudUbi       = false;
+	$scope.showAlertCel = false;
 	$scope.step                   = 1;
     $scope.typesDocuments = [
 		{
@@ -269,6 +271,16 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			console.log(response);
 		});
 	};
+
+	$scope.validateStep1 = function(){
+		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
+			$scope.showAlertCiudUbi = true;
+		}else if($scope.lead.CEDLULAR == '' || typeof $scope.lead.CELULAR == 'undefined' || $scope.lead.CELULAR == null){
+			$scope.showAlertCel = true;
+		}else{
+			$scope.addTemporaryCustomer();
+		}
+	}
 
 	$scope.addTemporaryCustomer = function(){
 		$http({
