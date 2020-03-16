@@ -553,7 +553,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			return $policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
@@ -775,55 +775,56 @@ class assessorsController extends Controller
 			}
 			$customerIntention->EDAD = 0;
 			$customerIntention->save();
-		}
+		}else{
+			$queryEdad = explode('-', $queryEdad);
+			$edadMin = $queryEdad[0];
+			$edadMax = $queryEdad[1];
 
-		$queryEdad = explode('-', $queryEdad);
-		$edadMin = $queryEdad[0];
-		$edadMax = $queryEdad[1];
-
-		$validateTipoCliente = TRUE;
-		if ($customer->ACTIVIDAD == 'PENSIONADO') {
-			$validateTipoCliente = FALSE;
-			if ($edadMin >= 18 && $edadMax <= 80) {
-				$customerIntention->EDAD = 1;
-				$customerIntention->save();
-			} else {
-				if ($customerStatusDenied == false && empty($idDef)) {
-					$customerStatusDenied = true;
-					$idDef = "9";
+			$validateTipoCliente = TRUE;
+			if ($customer->ACTIVIDAD == 'PENSIONADO') {
+				$validateTipoCliente = FALSE;
+				if ($edadMin >= 18 && $edadMax <= 80) {
+					$customerIntention->EDAD = 1;
+					$customerIntention->save();
+				} else {
+					if ($customerStatusDenied == false && empty($idDef)) {
+						$customerStatusDenied = true;
+						$idDef = "9";
+					}
+					$customerIntention->EDAD = 0;
+					$customerIntention->save();
 				}
-				$customerIntention->EDAD = 0;
-				$customerIntention->save();
+			}
+
+			if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
+				if ($edadMin >= 18 && $edadMax <= 75) {
+					$customerIntention->EDAD = 1;
+					$customerIntention->save();
+				} else {
+					if ($customerStatusDenied == false && empty($idDef)) {
+						$customerStatusDenied = true;
+						$idDef = "9";
+					}
+					$customerIntention->EDAD = 0;
+					$customerIntention->save();
+				}
+			}
+
+			if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
+				if ($edadMin >= 18 && $edadMax <= 70) {
+					$customerIntention->EDAD = 1;
+					$customerIntention->save();
+				} else {
+					if ($customerStatusDenied == false && empty($idDef)) {
+						$customerStatusDenied = true;
+						$idDef = "9";
+					}
+					$customerIntention->EDAD = 0;
+					$customerIntention->save();
+				}
 			}
 		}
 
-		if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
-			if ($edadMin >= 18 && $edadMax <= 75) {
-				$customerIntention->EDAD = 1;
-				$customerIntention->save();
-			} else {
-				if ($customerStatusDenied == false && empty($idDef)) {
-					$customerStatusDenied = true;
-					$idDef = "9";
-				}
-				$customerIntention->EDAD = 0;
-				$customerIntention->save();
-			}
-		}
-
-		if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
-			if ($edadMin >= 18 && $edadMax <= 70) {
-				$customerIntention->EDAD = 1;
-				$customerIntention->save();
-			} else {
-				if ($customerStatusDenied == false && empty($idDef)) {
-					$customerStatusDenied = true;
-					$idDef = "9";
-				}
-				$customerIntention->EDAD = 0;
-				$customerIntention->save();
-			}
-		}
 
 		// 4.5 Tiempo en Labor
 		if ($customer->ACTIVIDAD == 'PENSIONADO') {
