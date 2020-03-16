@@ -553,7 +553,7 @@ class assessorsController extends Controller
 				'quotaApprovedAdvance' => 0
 			];
 
-			return $policyCredit = $this->validatePolicyCredit_new($identificationNumber);
+			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 			return [
