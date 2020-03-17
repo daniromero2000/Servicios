@@ -118,7 +118,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO'">
@@ -435,7 +435,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" ng-disabled="true" data-inputmask-inputformat="yyyy-mm" data-mask>
                                         </div>
                                     </div>
                                 </div>
