@@ -305,7 +305,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary" type="submit">Continuar</button>
+                                    <button class="btn btn-primary" ng-disabled="disabledButtonStep2" type="submit">Continuar</button>
                                 </div>
                             </div>
                         </div>
