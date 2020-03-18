@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-sm-6 offset-sm-3">
-            <label class="ventaContado-label" for="tipoCliente">Tipo de Cliente</label>
+            <label class="ventaContado-label" for="tipoCliente">Tipo de Cliente*</label>
             <select class="form-control" id="tipoCliente" ng-model="tipoCliente" ng-change="resetInfoLead()">
                 <option value="CREDITO">Crédito</option>
                 <option value="CONTADO">Contado</option>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div ng-show="tipoCliente == 'CREDITO'">
-                <form name="clienteCredito" id="addCustomerStep1" ng-submit="addTemporaryCustomer()" ng-show="step == 1" class="crearCliente-form">
+                <form ng-submit="validateStep1()" name="clienteCredito" id="addCustomerStep1" ng-show="step == 1" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -63,7 +63,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +88,9 @@
                                         <label class="ventaContado-label">Celular</label>
                                         <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
                                             validation-pattern="telephone" required />
+                                        <div class="alert alert-danger" role="alert" ng-show="showAlertCel" style="margin-top: 10px;">
+                                            Debe digitar un número de celular
+                                        </div>
                                     </div>
                                     <div ng-show="lead.CEL_VAL">
                                         <label class="ventaContado-label">Celular</label>
@@ -99,14 +102,17 @@
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubi"
-                                        ng-options="city.value as city.label for city in citiesUbi"></select>
+                                        ng-options="city.value as city.label for city in citiesUbi" ng-required="true"></select>
+                                    <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbi" style="margin-top: 10px;">
+                                        Debe seleccionar una ciudad
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <label class="ventaContado-label labels" for="actividad">Ocupación</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.ACTIVIDAD" id="actividad"
                                         ng-options="actividad.value as actividad.label for actividad in occupations"></select>
                                 </div>
-                                <div class="col-12 col-md-4" ng-if="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
+                                <div class="col-12 col-md-4" ng-show="lead.ACTIVIDAD == 'EMPLEADO' || lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'">
                                     <label class="ventaContado-label labels" for="FEC_ING">Fecha de ingreso*</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -130,16 +136,16 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="dateCreationCompany" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4" ng-if="lead.ACTIVIDAD == 'PENSIONADO'">
+                                <div class="col-sm-12 col-md-4" ng-show="lead.ACTIVIDAD == 'PENSIONADO'">
                                     <label for="FEC_CONSTpensionado" class="ventaContado-label labels">Fecha de pensión*</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONST" data-inputmask-inputformat="yyyy-mm" data-mask>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_CONST" id="FEC_CONSTpensionado" data-inputmask-inputformat="yyyy-mm" data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +157,7 @@
                         </div>
                     </div>
                 </form>
-                <form ng-submit="addCliente('CREDITO')" method="POST" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
+                <form ng-submit="validateStep2()" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -186,6 +192,9 @@
                                 <div class="col-12 col-sm-6">
                                     <label for="CIUD_EXP" class="labels">Ciudad de expedición</label>
                                     <select class="form-control inputs select2bs4" ng-model="lead.CIUD_EXP" id="CIUD_EXP" ng-options="city.value as city.label for city in cities" required></select>
+                                    <div class="alert alert-danger" role="alert" ng-show="showAlertCiudExp" style="margin-top: 10px;">
+                                        Debe seleccionar una ciudad
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -296,7 +305,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary" type="submit">Continuar</button>
+                                    <button class="btn btn-primary" ng-disabled="disabledButtonStep2" type="submit">Continuar</button>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +435,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" ng-disabled="true" required data-inputmask-inputformat="yyyy-mm" data-mask>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_ING" id="FEC_ING" ng-disabled="true" data-inputmask-inputformat="yyyy-mm" data-mask>
                                         </div>
                                     </div>
                                 </div>
@@ -438,7 +447,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="labels" for="salario">Salario*</label>
-                                        <input class="inputs" id="salario" ng-currency fraction="0" min="100000" type="text"
+                                        <input class="inputs" id="salario" ng-currency fraction="0" type="text"
                                             ng-model="lead.SUELDO" required />
                                     </div>
                                 </div>
@@ -488,7 +497,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario*</label>
-                                        <input class="form-control inputs" min="100000" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
+                                        <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
                                     </div>
                                 </div>
                             </div>
@@ -712,7 +721,7 @@
                     <div class="col-12 col-md-4">
                         <label class="ventaContado-label labels" for="genero">Género</label>
                         <select class="inputs select2bs4" ng-model="lead.SEXO" id="genero"
-                            ng-options="gender.label as gener.value for gender in genders"></select>
+                            ng-options="gender.label as gender.value for gender in genders"></select>
                     </div>
                 </div>
                 <div class="row">
