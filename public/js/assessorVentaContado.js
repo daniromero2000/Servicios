@@ -1,29 +1,30 @@
 angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSanitize'])
 .controller("asessorVentaContadoCtrl", function($scope, $http, $timeout) {
-	$scope.code                   = {};
-	$scope.formConfronta          = {};
-	$scope.citiesUbi              = {};
-	$scope.professions            = {};
-	$scope.cities                 = {};
-	$scope.banks                  = {};
-	$scope.kinships               = {}
-	$scope.tipoCliente            = "";
-	$scope.estadoCliente          = "";
-	$scope.messageValidationLead  = "";
-	$scope.showWarningErrorData   = false;
-	$scope.reNewToken             = false;
-	$scope.totalErrorData         = 0;
-	$scope.validateNum            = 0;
-	$scope.numError               = 0;
-	$scope.decisionCredit         = "";
-	$scope.disabledDecisionCredit = false;
-	$scope.disabledButton         = false;
-	$scope.disabledButtonCode     = false;
-	$scope.disabledButtonSolic    = false;
-	$scope.showAlertCiudUbi       = false;
-	$scope.showAlertCiudExp       = false;
-	$scope.showAlertCel           = false;
-	$scope.disabledButtonStep2    = false;
+	$scope.code                    = {};
+	$scope.formConfronta           = {};
+	$scope.citiesUbi               = {};
+	$scope.professions             = {};
+	$scope.cities                  = {};
+	$scope.banks                   = {};
+	$scope.kinships                = {}
+	$scope.tipoCliente             = "";
+	$scope.estadoCliente           = "";
+	$scope.messageValidationLead   = "";
+	$scope.showWarningErrorData    = false;
+	$scope.reNewToken              = false;
+	$scope.totalErrorData          = 0;
+	$scope.validateNum             = 0;
+	$scope.numError                = 0;
+	$scope.decisionCredit          = "";
+	$scope.disabledDecisionCredit  = false;
+	$scope.disabledButton          = false;
+	$scope.disabledButtonCode      = false;
+	$scope.disabledButtonSolic     = false;
+	$scope.showAlertCiudUbi        = false;
+	$scope.showAlertCiudExp        = false;
+	$scope.showAlertCel            = false;
+	$scope.disabledButtonStep2     = false;
+	$scope.showAlertCiudUbiContado = false;
 	$scope.step                   = 1;
     $scope.typesDocuments = [
 		{
@@ -283,7 +284,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}else{
 			$scope.addTemporaryCustomer();
 		}
-	}
+	};
 
 	$scope.validateStep2 = function(){
 		$scope.disabledButtonStep2    = true;
@@ -292,7 +293,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}else {
 			$scope.addCliente('CREDITO');
 		}
-	}
+	};
+
+	$scope.validateVentaContado = function(){
+		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
+			$scope.showAlertCiudUbiContado = true;
+		}else {
+			$scope.addCliente('CONTADO');
+		}
+	};
 
 	$scope.addTemporaryCustomer = function(){
 		$http({
