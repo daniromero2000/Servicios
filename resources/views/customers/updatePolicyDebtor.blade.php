@@ -1,4 +1,7 @@
 @extends('layouts.admin.app')
+@section('linkStyleSheets')
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+@endsection
 @section('content')
 <section class="content border-0">
     @include('layouts.errors-and-messages')
@@ -32,11 +35,12 @@
                                     <div class="form-group">
 
                                         <div class="row d-flex justify-content-center ">
-                                            <div class="col-6">
+                                            <div class="col-10 col-sm-6">
                                                 <label for="my-input">Solicitud</label>
                                                 <input id="soliDebtor" class="form-control" type="text">
                                             </div>
-                                            <div class="col-4 mt-4">
+                                            <div
+                                                class="col-4 mt-4 d-flex justify-content-center justify-content-sm-start">
                                                 <div class="mt-1" id="ButtonCustomerSearch">
                                                     <button type="button" id="debtor" data-toggle="modal"
                                                         data-target="#exampleModal" class="btn btn-primary">
@@ -95,8 +99,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer d-flex justify-content-start">
-                                                            <button type="button" class="btn btn-danger"
+                                                        <div
+                                                            class="modal-footer pl-0 pb-0 d-flex justify-content-start">
+                                                            <button type="button" class="btn btn-outline-secondary"
                                                                 data-dismiss="modal">Cerrar</button>
                                                             <button type="submit"
                                                                 class="btn btn-primary">Actualizar</button>
@@ -121,12 +126,13 @@
                                     <div class="form-group">
                                         <form action="/Administrator/Insurance/Policy/Debtors">
                                             <div class="row d-flex justify-content-center ">
-                                                <div class="col-6">
+                                                <div class="col-10 col-sm-6">
                                                     <label for="my-input">Cédula</label>
                                                     <input id="identificationOportuya" class="form-control" type="text"
                                                         name="identification">
                                                 </div>
-                                                <div class="col-4 mt-4">
+                                                <div
+                                                    class="col-4 mt-4 d-flex justify-content-center justify-content-sm-start">
                                                     <div class="mt-1">
                                                         <button type="button" id="debtorOportuya" data-toggle="modal"
                                                             data-target="#exampleModal2" class="btn btn-primary">
@@ -182,8 +188,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer d-flex justify-content-start">
-                                                            <button type="button" class="btn btn-danger"
+                                                        <div
+                                                            class="modal-footer pl-0 pb-0 d-flex justify-content-start">
+                                                            <button type="button" class="btn btn-outline-secondary"
                                                                 data-dismiss="modal">Cerrar</button>
                                                             <button type="submit"
                                                                 class="btn btn-primary">Actualizar</button>
@@ -210,4 +217,5 @@
 @endsection
 @section('scriptsJs')
 <script src="{{ asset('js/UpdateInsurancePolicyDebtors.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 @endsection

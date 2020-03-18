@@ -41,7 +41,8 @@ class Intention extends Model
         'ESTADO_INTENCION',
         'CREDIT_DECISION',
         'ASESOR',
-        'FECHA_INTENCION'
+        'FECHA_INTENCION',
+        'deleted_at'
     ];
 
     protected $searchable = [

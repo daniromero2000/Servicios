@@ -53,10 +53,10 @@ class DebtorInsuranceController extends Controller
         $save = DebtorInsurance::where('SOLIC', $dataOportudata['SOLIC'])->get()->first();
         if (!empty($save)) {
             $save = $save->update($dataOportudata);
-            $request->session()->flash('message', 'Creación de Lead Exitosa!');
+            $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
         } else {
             $request->session()->flash('error', 'No existe benefeciario para esta Solicitud');
         };
-        return redirect()->back();
+        return redirect()->back()->with('hola');
     }
 }
