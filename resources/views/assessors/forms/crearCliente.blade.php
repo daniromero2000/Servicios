@@ -668,7 +668,7 @@
                     </div>
                 </form>
             </div>
-            <form name="clienteContado" ng-submit="addCliente('CONTADO')" ng-show="tipoCliente == 'CONTADO'" class="crearCliente-form">
+            <form name="clienteContado" ng-submit="validateVentaContado()" ng-show="tipoCliente == 'CONTADO'" class="crearCliente-form">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 type-client">
                         <div class="forms-descStep forms-descStep-avances">
@@ -730,9 +730,12 @@
                         <input class="inputs" ng-model="lead.DIRECCION" type="text" />
                     </div>
                     <div class="col-12 col-sm-6">
-                        <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de ubicación</label>
+                        <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de sucursal</label>
                         <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubiContado"
                             ng-options="city.value as city.label for city in citiesUbi"></select>
+                        <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbiContado" style="margin-top: 10px;">
+                            Debe seleccionar una ciudad
+                        </div>
                     </div>
                 </div>
                 <div class="row">
