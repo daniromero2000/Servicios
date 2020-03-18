@@ -104,7 +104,7 @@
                                                             <button type="button" class="btn btn-outline-secondary"
                                                                 data-dismiss="modal">Cerrar</button>
                                                             <button type="submit"
-                                                                class="btn btn-primary">Actualizar</button>
+                                                                class="btn btn-primary btn-disabled-desicion">Actualizar</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -193,7 +193,7 @@
                                                             <button type="button" class="btn btn-outline-secondary"
                                                                 data-dismiss="modal">Cerrar</button>
                                                             <button type="submit"
-                                                                class="btn btn-primary">Actualizar</button>
+                                                                class="btn btn-primary btn-disabled-desicion-opo">Actualizar</button>
                                                         </div>
                                                     </form>
                                                 </div>

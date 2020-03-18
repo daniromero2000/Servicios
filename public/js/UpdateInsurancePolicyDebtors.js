@@ -1,7 +1,6 @@
 $(function () {
     $("#debtor").click(ontypeServiceSelectedProductEditModal);
 });
-
 $(function () {
     $("#debtorOportuya").click(ontypedebtorOportuya);
 });
@@ -17,6 +16,7 @@ function ontypeServiceSelectedProductEditModal() {
         $('#identificationNumberDebtor').val('').prop("disabled", true);
         $('#nameDebtor').val('').prop("disabled", true);
         $('#parenterDebtor').val('').prop("disabled", true);
+        $('.btn-disabled-desicion').val('').prop("disabled", true);
 
         if (data == '') {
             const Toast = Swal.mixin({
@@ -37,6 +37,7 @@ function ontypeServiceSelectedProductEditModal() {
             $('#identificationNumberDebtor').val(data.CEDULA_BEN).prop("disabled", false);
             $('#nameDebtor').val(data.BENEFIC).prop("disabled", false);
             $('#parenterDebtor').prop("disabled", false);
+            $('.btn-disabled-desicion').val('').prop("disabled", false);
             html_selectEdit = '<option value="' + data.PARENTESCO + '" selected="selected" >' + data.PARENTESCO + '</option>';
             html_selectEdit += '<option value="HERMANOS">' + "HERMANOS" + '</option>';
             html_selectEdit += '<option value="YERNO">' + "YERNO" + '</option>';
@@ -65,6 +66,7 @@ function ontypedebtorOportuya() {
         $('#identificationNumberDebtorOportuya').val('').prop("disabled", true);
         $('#nameDebtorOportuya').val('').prop("disabled", true);
         $('#parenterDebtorOportuya').val('').prop("disabled", true);
+        $('.btn-disabled-desicion-opo').val('').prop("disabled", true);
 
         if (data == '') {
             const Toast = Swal.mixin({
@@ -84,6 +86,7 @@ function ontypedebtorOportuya() {
             $('#sucursalCustomerOportuya').val(data.SUCURSAL).prop("disabled", false);
             $('#identificationNumberDebtorOportuya').val(data.CEDULA_BEN).prop("disabled", false);
             $('#nameDebtorOportuya').val(data.BENEFIC).prop("disabled", false);
+            $('.btn-disabled-desicion-opo').val('').prop("disabled", false);
             html_selectEdit = '<option value="' + data.PARENTESCO + '" selected="selected" >' + data.PARENTESCO + '</option>';
             html_selectEdit += '<option value="HERMANOS">' + "HERMANOS" + '</option>';
             html_selectEdit += '<option value="YERNO">' + "YERNO" + '</option>';
