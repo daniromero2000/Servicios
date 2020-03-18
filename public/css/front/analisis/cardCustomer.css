@@ -1,32 +1,53 @@
 .customerCardAnaliticsResponsive{
-    display: none;
+    display: flex;
 }
-@media (max-width:990px){
-    .customerAnaliticsResponsive{ 
-        display: none;
-    }
-    .customerCardAnaliticsResponsive{
-        display: flex;
-    }
     .customerNameCardAnalicts{
         font-family: arial;
         font-size: 16px;
         font-weight: 300;
     }
     .containerCardCustomer{
-        width: 85% !important;
-        border-radius: 16px !important;
+        width: 85%;
+        border-radius: 16px;
+        max-width: 600px;
     }
     .badge-reset{
         font-family: arial;
         font-size: 9px;
         font-weight: bold;
     }
-}
+    .text-card-analitycs-responsive{
+        text-align: left !important;
+    }
 
+    @media (max-width:990px){
+   
+    .customerNameCardAnalicts {
+        font-size: 13px;
+    }
+    .text-card-analitycs{
+        font-size: 85% !important;
+    }
+}
+@media (max-width:576px){
+    .img-card-client{
+        max-width: 40% !important;
+    }
+    .container-info-principal{
+        border-bottom: 1pt solid #bfbaba;
+        margin-bottom: 6px;
+    }
+    .text-card-analitycs-responsive{
+        text-align: center !important;
+    }
+    .margin-reponsive{
+        margin-bottom: 6px;
+    }
+}
 @media (max-width:770px){
         .containerCardCustomer{
         width: 100% !important;
         border-radius: 16px !important;
     }
-}
+  }
+

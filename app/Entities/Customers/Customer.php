@@ -181,7 +181,7 @@ class Customer extends Model
 
     public function latestIntention()
     {
-        return $this->hasOne(Intention::class, 'CEDULA')->with('definition')->latest('FECHA_INTENCION');
+        return $this->hasOne(Intention::class, 'CEDULA')->with('definition')->orderBy('FECHA_INTENCION', 'DESC');
     }
 
     public function Intentions()
