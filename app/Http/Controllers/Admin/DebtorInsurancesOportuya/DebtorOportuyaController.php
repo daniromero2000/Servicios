@@ -25,7 +25,7 @@ class DebtorOportuyaController extends Controller
         ];
 
         $save = DebtorInsuranceOportuya::findOrfail($dataOportudata['CEDULA'])->update($dataOportudata);
-        $request->session()->flash('message', 'Creación de Lead Exitosa!');
+        $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
         return redirect()->back();
     }
 }
