@@ -22,6 +22,7 @@ use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\OportudataLogs\OportudataLog;
 use App\Liquidator;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -212,94 +213,94 @@ class DigitalChannelLeadController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        $leadChannels = $this->leadInterface->countLeadChannels($from, $to);
-        $leadStatuses = $this->leadInterface->countLeadStatuses($from, $to);
+        $leadChannels  = $this->leadInterface->countLeadChannels($from, $to);
+        $leadStatuses  = $this->leadInterface->countLeadStatuses($from, $to);
         $leadAssessors = $this->leadInterface->countLeadAssessors($from, $to);
-        $leadProducts = $this->leadInterface->countLeadProducts($from, $to);
+        $leadProducts  = $this->leadInterface->countLeadProducts($from, $to);
 
         $leadProductDigitalChanels = $this->leadInterface->countLeadProductGenerals($from, $to, 1);
-        $leadProductInsurances = $this->leadInterface->countLeadProductGenerals($from, $to, 2);
-        $leadProductWarranties = $this->leadInterface->countLeadProductGenerals($from, $to, 3);
-        $leadProductOportuyas = $this->leadInterface->countLeadProductGenerals($from, $to, 6);
-        $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals($from, $to, 10);
-        $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals($from, $to, 5);
-        $leadProductWallets = $this->leadInterface->countLeadProductGenerals($from, $to, 4);
-        $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
-        $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
-        $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
+        $leadProductInsurances     = $this->leadInterface->countLeadProductGenerals($from, $to, 2);
+        $leadProductWarranties     = $this->leadInterface->countLeadProductGenerals($from, $to, 3);
+        $leadProductOportuyas      = $this->leadInterface->countLeadProductGenerals($from, $to, 6);
+        $leadProductsCallCenter    = $this->leadInterface->countLeadProductGenerals($from, $to, 10);
+        $leadProductsAdvancedUnit  = $this->leadInterface->countLeadProductGenerals($from, $to, 5);
+        $leadProductWallets        = $this->leadInterface->countLeadProductGenerals($from, $to, 4);
+        $leadProductJuridicales    = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
+        $leadProductLibranzas      = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
+        $leadProductEcommerces     = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
 
         $leadServiceDigitalChanels = $this->leadInterface->countLeadServicesGenerals($from, $to, 1);
-        $leadServiceInsurances = $this->leadInterface->countLeadServicesGenerals($from, $to, 2);
-        $leadServiceWarranties = $this->leadInterface->countLeadServicesGenerals($from, $to, 3);
-        $leadServiceOportuyas = $this->leadInterface->countLeadServicesGenerals($from, $to, 6);
-        $leadServicesCallCenter = $this->leadInterface->countLeadServicesGenerals($from, $to, 10);
-        $leadServicesAdvancedUnit = $this->leadInterface->countLeadServicesGenerals($from, $to, 5);
-        $leadServiceWallets = $this->leadInterface->countLeadServicesGenerals($from, $to, 4);
-        $leadServiceJuridicales = $this->leadInterface->countLeadServicesGenerals($from, $to, 9);
-        $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
-        $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
+        $leadServiceInsurances     = $this->leadInterface->countLeadServicesGenerals($from, $to, 2);
+        $leadServiceWarranties     = $this->leadInterface->countLeadServicesGenerals($from, $to, 3);
+        $leadServiceOportuyas      = $this->leadInterface->countLeadServicesGenerals($from, $to, 6);
+        $leadServicesCallCenter    = $this->leadInterface->countLeadServicesGenerals($from, $to, 10);
+        $leadServicesAdvancedUnit  = $this->leadInterface->countLeadServicesGenerals($from, $to, 5);
+        $leadServiceWallets        = $this->leadInterface->countLeadServicesGenerals($from, $to, 4);
+        $leadServiceJuridicales    = $this->leadInterface->countLeadServicesGenerals($from, $to, 9);
+        $leadServiceLibranzas      = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
+        $leadServiceEcommerces     = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
 
 
         $leadStatusDigitalChanels = $this->leadInterface->countLeadStatusGenerals($from, $to, 1);
-        $leadStatusInsurances = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
-        $leadStatusWarranties = $this->leadInterface->countLeadStatusGenerals($from, $to, 3);
-        $leadStatusOportuyas = $this->leadInterface->countLeadStatusGenerals($from, $to, 6);
-        $leadStatusCallCenter = $this->leadInterface->countLeadStatusGenerals($from, $to, 10);
-        $leadStatusAdvancedUnit = $this->leadInterface->countLeadStatusGenerals($from, $to, 5);
-        $leadStatusWallets = $this->leadInterface->countLeadStatusGenerals($from, $to, 4);
-        $leadStatusJuridicales = $this->leadInterface->countLeadStatusGenerals($from, $to, 9);
-        $leadStatusLibranzas = $this->leadInterface->countLeadStatusGenerals($from, $to, 7);
-        $leadStatusEcommerces = $this->leadInterface->countLeadStatusGenerals($from, $to, 8);
+        $leadStatusInsurances     = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
+        $leadStatusWarranties     = $this->leadInterface->countLeadStatusGenerals($from, $to, 3);
+        $leadStatusOportuyas      = $this->leadInterface->countLeadStatusGenerals($from, $to, 6);
+        $leadStatusCallCenter     = $this->leadInterface->countLeadStatusGenerals($from, $to, 10);
+        $leadStatusAdvancedUnit   = $this->leadInterface->countLeadStatusGenerals($from, $to, 5);
+        $leadStatusWallets        = $this->leadInterface->countLeadStatusGenerals($from, $to, 4);
+        $leadStatusJuridicales    = $this->leadInterface->countLeadStatusGenerals($from, $to, 9);
+        $leadStatusLibranzas      = $this->leadInterface->countLeadStatusGenerals($from, $to, 7);
+        $leadStatusEcommerces     = $this->leadInterface->countLeadStatusGenerals($from, $to, 8);
 
 
-        $leadServices = $this->leadInterface->countLeadServices($from, $to);
-        $leadPriceTotal = $this->leadInterface->getLeadPriceTotal($from, $to);
+        $leadServices       = $this->leadInterface->countLeadServices($from, $to);
+        $leadPriceTotal     = $this->leadInterface->getLeadPriceTotal($from, $to);
         $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
-        $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
+        $leadPrice          = $this->LeadPriceInterface->getPriceDigitalChanel($from, $to, 1);
 
 
         if (request()->has('from')) {
-            $leadChannels = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
-            $leadStatuses = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
-            $leadAssessors = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
-            $leadProducts = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
-            $leadServices = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
-            $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
-            $leadPriceTotal = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
-            $leadPrice = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
-            $leadProductInsurances = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 2);
-            $leadProductWarranties = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 3);
-            $leadProductOportuyas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 6);
-            $leadProductsCallCenter = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 10);
-            $leadProductsAdvancedUnit = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 5);
-            $leadProductWallets = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 4);
-            $leadProductJuridicales = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
-            $leadProductLibranzas = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
-            $leadProductEcommerces = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
+            $leadChannels              = $this->leadInterface->countLeadChannels(request()->input('from'), request()->input('to'));
+            $leadStatuses              = $this->leadInterface->countLeadStatuses(request()->input('from'), request()->input('to'));
+            $leadAssessors             = $this->leadInterface->countLeadAssessors(request()->input('from'), request()->input('to'));
+            $leadProducts              = $this->leadInterface->countLeadProducts(request()->input('from'), request()->input('to'));
+            $leadServices              = $this->leadInterface->countLeadServices(request()->input('from'), request()->input('to'));
+            $leadPriceTotal            = $this->leadInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
+            $leadProductInsurances     = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 2);
+            $leadProductWarranties     = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 3);
+            $leadProductOportuyas      = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 6);
+            $leadProductsCallCenter    = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadProductsAdvancedUnit  = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadProductWallets        = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadProductJuridicales    = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadProductLibranzas      = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadProductEcommerces     = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
             $leadProductDigitalChanels = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 1);
+            $leadPriceTotalSold        = $this->LeadPriceInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
+            $leadPrice                 = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
 
 
-            $leadServiceInsurances = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
-            $leadServiceWarranties = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
-            $leadServiceOportuyas = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 6);
-            $leadServicesCallCenter = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 10);
-            $leadServicesAdvancedUnit = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 5);
-            $leadServiceWallets = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 4);
-            $leadServiceJuridicales = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 9);
-            $leadServiceLibranzas = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 7);
-            $leadServiceEcommerces = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 8);
+            $leadServiceInsurances     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
+            $leadServiceWarranties     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
+            $leadServiceOportuyas      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 6);
+            $leadServicesCallCenter    = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadServicesAdvancedUnit  = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadServiceWallets        = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadServiceJuridicales    = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadServiceLibranzas      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadServiceEcommerces     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 8);
             $leadServiceDigitalChanels = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 1);
 
             $leadStatusDigitalChanels = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 1);
-            $leadStatusInsurances = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 2);
-            $leadStatusWarranties = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 3);
-            $leadStatusOportuyas = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 6);
-            $leadStatusCallCenter = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 10);
-            $leadStatusAdvancedUnit = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 5);
-            $leadStatusWallets = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 4);
-            $leadStatusJuridicales = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 9);
-            $leadStatusLibranzas = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 7);
-            $leadStatusEcommerces = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 8);
+            $leadStatusInsurances     = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 2);
+            $leadStatusWarranties     = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 3);
+            $leadStatusOportuyas      = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 6);
+            $leadStatusCallCenter     = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 10);
+            $leadStatusAdvancedUnit   = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 5);
+            $leadStatusWallets        = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 4);
+            $leadStatusJuridicales    = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 9);
+            $leadStatusLibranzas      = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 7);
+            $leadStatusEcommerces     = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 8);
         }
 
         foreach ($leadChannels as $key => $status) {
@@ -374,18 +375,7 @@ class DigitalChannelLeadController extends Controller
         }
         $pricesTotal = $leadPriceTotalSold->sum('lead_price');
 
-
-
         $leadpriceTotals = $leadPrice->sum('lead_price');
-
-        // dd($leadPrice);
-        // $leadpriceTotal = $leadPrice->sum('lead_price');
-
-        // $pricesTotal = 0;
-        // foreach ($leadPriceTotal as $key => $status) {
-        //     $pricesTotal +=  $leadPriceTotal[$key]->leadPrices->sum('lead_price');
-        // }
-
 
         return view('digitalchannelleads.dashboard', [
             'pricesTotal'               => $pricesTotal,
@@ -435,9 +425,21 @@ class DigitalChannelLeadController extends Controller
     }
     public function destroy($id)
     {
-        // $Campaign = Campaigns::findOrfail($id);
         $digitalChannelLead =  $this->leadInterface->findLeadDelete($id);
         $digitalChannelLead->delete();
+
+        $userInfo = auth()->user();
+        $data = [
+            'modulo' => 'Panel Asesores',
+            'proceso' => 'Leads',
+            'accion' => 'Eliminar',
+            'identificacion' => $id,
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => $userInfo->email,
+            'state' => 'A'
+        ];
+        $oportudataLog = OportudataLog::create($data);
+
         return redirect()->back();
     }
 

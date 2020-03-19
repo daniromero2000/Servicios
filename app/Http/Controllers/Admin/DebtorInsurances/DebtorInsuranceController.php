@@ -8,6 +8,7 @@ use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
+use App\Entities\OportudataLogs\OportudataLog;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class DebtorInsuranceController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->input());
+        $search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
+        $replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
+        $userInfo = auth()->user();
         $dataOportudata = [
             'CEDULA' => $request->input('identificationNumberCustomer'),
             'VRCREDITO' => 0,
@@ -42,16 +45,25 @@ class DebtorInsuranceController extends Controller
             'SUCURSAL' => $request->input('sucursalCustomer'),
             'FECHA' => date('Y-m-d H:i:s'),
             'VALOR' => 3000,
-            'BENEFIC' => $request->input('BENEFI'),
+            'BENEFIC' => strtoupper(trim(str_replace($search, $replace, $request->input('BENEFI')))),
             'PARENTESCO' => $request->input('PARENTESCO'),
             'SEG_VAL' => 0,
             'STATE' => 'A',
             'CEDULA_BEN' =>  $request->input('CEDULA_BEN'),
         ];
-
+        $data = [
+            'modulo' => 'Panel Asesores',
+            'proceso' => 'Actualizar Beneficiario',
+            'accion' => 'Tradicional',
+            'identificacion' => $request->input('SOLIC'),
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => $userInfo->email,
+            'state' => 'A'
+        ];
 
         $save = DebtorInsurance::where('SOLIC', $dataOportudata['SOLIC'])->get()->first();
         if (!empty($save)) {
+            $oportudataLog = OportudataLog::create($data);
             $save = $save->update($dataOportudata);
             $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
         } else {
