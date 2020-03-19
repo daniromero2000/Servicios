@@ -47,9 +47,6 @@
       </div>
 
       <div class="row">
-        {{-- @php
-        dd($statusesDesistidosValues)
-        @endphp --}}
         <div class="col-6 col-md-6 col-xl-3">
           <!-- /.info-box -->
           <div class="small-box bg-success">
@@ -163,7 +160,7 @@
       </div>
     </div>
     <!-- /.col (RIGHT) -->
-    <div class=" order-md-first col-sm-12 col-md-5 col-lg-4">
+    <div class="order-md-first col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row">
           <div class="col-12  ">

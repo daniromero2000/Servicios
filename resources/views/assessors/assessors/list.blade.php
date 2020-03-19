@@ -29,9 +29,6 @@
             </div>
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
-                {{-- @php
-                dd($statusesDesistidosValues)
-                @endphp --}}
                 <div class="col-6 col-md-6 col-lg-3">
                   <!-- /.info-box -->
                   <div class="small-box bg-success">
