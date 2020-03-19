@@ -121,4 +121,16 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             return 0;
         }
     }
+
+    public function execMigrateCustomer($identificationNumber){
+        $obj = new \stdClass();
+        $obj->identificationNumber = trim($identificationNumber);
+        try {
+            $ws = new \SoapClient("http://10.238.14.181:2816/Conector.svc", array()); //correcta
+            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
 }
