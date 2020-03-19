@@ -54,7 +54,7 @@
                   <!-- /.info-box -->
                   <div class="small-box bg-danger">
                     <div class="inner">
-                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesNegadosValues !=0 )
                         ${{number_format( $statusesNegadosValues )}}@else $0
                         @endif </h2>
                       @if ($_GET && $_GET['from'] != '')

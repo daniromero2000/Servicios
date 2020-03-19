@@ -29,25 +29,36 @@
         font-size: 85% !important;
     }
 }
-@media (max-width:576px){
-    .img-card-client{
-        max-width: 40% !important;
-    }
+@media (max-width:391px){
     .container-info-principal{
-        border-bottom: 1pt solid #bfbaba;
-        margin-bottom: 6px;
-    }
-    .text-card-analitycs-responsive{
-        text-align: center !important;
-    }
-    .margin-reponsive{
-        margin-bottom: 6px;
-    }
+     border-bottom: 1pt solid #bfbaba;
+     margin-bottom: 6px;
+     order: -1 !important;
+     flex: 0 0 100% !important;
+     max-width: 100% !important;
+ }
+ .img-card-client{
+    max-width: 40% !important;
 }
+ .text-card-analitycs-responsive{
+     text-align: center !important;
+ }
+ .margin-reponsive{
+     margin-bottom: 6px;
+ }
+ .container-info{
+     order: 13 !important;
+     flex: 0 0 100% !important;
+     max-width: 100% !important;
+ }
+}
+
 @media (max-width:770px){
         .containerCardCustomer{
         width: 100% !important;
         border-radius: 16px !important;
     }
   }
-
+/* 
+  flex: 0 0 100%;
+  max-width: 100%; */
