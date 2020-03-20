@@ -94,6 +94,8 @@ use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRep
 use App\Entities\TemporaryCustomers\Repositories\TemporaryCustomerRepository;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\CodebtorRepository;
+use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
+use App\Entities\Ruafs\Repositories\RuafRepository;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
@@ -102,9 +104,15 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
+            RuafRepositoryInterface::class,
+            RuafRepository::class
+        );
+
+        $this->app->bind(
             SecondCodebtorRepositoryInterface::class,
             SecondCodebtorRepository::class
         );
+
         $this->app->bind(
             CodebtorRepositoryInterface::class,
             CodebtorRepository::class
