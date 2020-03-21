@@ -23,6 +23,7 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
+use App\Events\LeadNotification;
 use App\Liquidator;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -147,6 +148,8 @@ class DigitalChannelLeadController extends Controller
             $lead['STATE'] = 3;
             $lead->save();
         }
+
+        event(new LeadNotification($lead));
 
         $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();

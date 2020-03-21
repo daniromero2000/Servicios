@@ -9,6 +9,55 @@
 
   <title>Oportudata</title>
   <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
+  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  @php
+  $user = auth()->user()->lead_area_id;
+  @endphp
+  <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded",function(){
+  if(!Notification){
+    alert("las notificaciones no se soportan en tu navegador, descarga una nueva version")
+  }
+  if(Notification.permission !== "granted"){
+        Notification.requestPermission();
+      }
+});
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+    var user = [<?php echo $user ?>];
+    var pusher = new Pusher('887ca7dad5d99dcb86a5', {
+      cluster: 'us2',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('lead-channel');
+    channel.bind('lead-event', function(data) { 
+
+      if( user[0] === data.message.lead_area_id){
+        console.log(user);
+        console.log(data.message.lead_area_id);
+        console.log(user[0]);
+
+        if(Notification.permission !== "granted"){
+        Notification.requestPermission();
+        }else{
+          let notificacion = new Notification("Notificación de Leads",{
+            icon: "https://www.serviciosoportunidades.com/images/bolitas.png",
+            body: 'El Lead '+ data.message.id +' ha sido asignado a tu area'
+          })
+
+          notificacion.onclick = function(){
+            window.open("https://www.serviciosoportunidades.com/Administrator/dashboard")
+          }
+        }
+      }
+
+    });
+        
+  </script>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
   <script>
     window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823');
@@ -172,5 +221,7 @@
   
     })
 </script>
+<script src="{{ asset('js/UpdateInsurancePolicyDebtors.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 </html>
