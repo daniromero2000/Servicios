@@ -24,10 +24,10 @@
       }
 });
 
-
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
     var user = [<?php echo $user ?>];
+    console.log(user);
     var pusher = new Pusher('8dbb3ac2e799f1f3aa32', {
       cluster: 'us2',
       forceTLS: true
