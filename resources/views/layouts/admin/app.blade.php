@@ -36,7 +36,7 @@
     var channel = pusher.subscribe('lead-channel');
     channel.bind('lead-event', function(data) { 
 
-      console.log( user === data.message.lead_area_id);
+      console.log(data.message.lead_area_id);
       var notificacion;
       if( user === data.message.lead_area_id){
         console.log("Si es");
