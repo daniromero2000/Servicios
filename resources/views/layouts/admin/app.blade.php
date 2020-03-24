@@ -26,7 +26,7 @@
 
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
-    var user = [<?php echo $user ?>];
+    var user = <?php echo $user ?>;
     console.log(user);
     var pusher = new Pusher('8dbb3ac2e799f1f3aa32', {
       cluster: 'us2',
@@ -36,9 +36,10 @@
     var channel = pusher.subscribe('lead-channel');
     channel.bind('lead-event', function(data) { 
 
-      console.log( user[0] === data.message.lead_area_id);
+      console.log( user === data.message.lead_area_id);
 
-      if( user[0] === data.message.lead_area_id){
+      if( user === data.message.lead_area_id){
+
        if(Notification.permission !== "granted"){
         Notification.requestPermission();
         }else{
