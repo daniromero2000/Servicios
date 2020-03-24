@@ -11,56 +11,10 @@
   <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
   <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   @php
-  $user = auth()->user()->lead_area_id;
+  $user = auth()->user();
   @endphp
   <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded",function(){
-  if(!Notification){
-    alert("las notificaciones no se soportan en tu navegador, descarga una nueva version")
-  }
-  if(Notification.permission !== "granted"){
-        Notification.requestPermission();
-      }
-});
-
-    // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
-    var user = <?php echo $user ?>;
-    console.log(user);
-    var pusher = new Pusher('8dbb3ac2e799f1f3aa32', {
-      cluster: 'us2',
-      forceTLS: true
-    });
-
-    var channel = pusher.subscribe('lead-channel');
-    channel.bind('lead-event', function(data) { 
-
-      console.log(data.message.lead_area_id);
-      var notificacion;
-      if( user === data.message.lead_area_id){
-        console.log("Si es");
-       if(Notification.permission !== "granted"){
-        Notification.requestPermission();
-        }else{
-          notificacion = new Notification("Notificación de Leads",{
-            icon: "https://www.serviciosoportunidades.com/images/bolitas.png",
-            body: data.message.name + ' ha sido asignado a tu área'
-          })
-
-          notificacion.onclick = function(){
-            window.open("https://www.serviciosoportunidades.com/Administrator/dashboard")
-          }
-        }
-
-      }else{
-        notificacion = "";
-      }
-
-    });
-        
-  </script>
-
+  @include('layouts.admin.notifications')
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
   <script>
     window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823');
