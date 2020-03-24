@@ -37,13 +37,13 @@
     channel.bind('lead-event', function(data) { 
 
       console.log( user === data.message.lead_area_id);
-
+      var notificacion;
       if( user === data.message.lead_area_id){
         console.log("Si es");
        if(Notification.permission !== "granted"){
         Notification.requestPermission();
         }else{
-          let notificacion = new Notification("Notificación de Leads",{
+          notificacion = new Notification("Notificación de Leads",{
             icon: "https://www.serviciosoportunidades.com/images/bolitas.png",
             body: data.message.name + ' ha sido asignado a tu área'
           })
@@ -54,7 +54,7 @@
         }
 
       }else{
-        console.log("No es");
+        notificacion = "";
       }
 
     });
