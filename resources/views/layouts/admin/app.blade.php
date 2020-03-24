@@ -24,6 +24,7 @@
       }
 });
 
+
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
     var user = [<?php echo $user ?>];
