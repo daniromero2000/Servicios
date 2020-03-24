@@ -39,7 +39,7 @@
       console.log( user === data.message.lead_area_id);
 
       if( user === data.message.lead_area_id){
-
+        console.log("Si es");
        if(Notification.permission !== "granted"){
         Notification.requestPermission();
         }else{
@@ -52,6 +52,9 @@
             window.open("https://www.serviciosoportunidades.com/Administrator/dashboard")
           }
         }
+
+      }else{
+        console.log("No es");
       }
 
     });
