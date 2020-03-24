@@ -36,16 +36,12 @@
     channel.bind('lead-event', function(data) { 
 
       if( user[0] === data.message.lead_area_id){
-        console.log(user);
-        console.log(data.message.lead_area_id);
-        console.log(user[0]);
-
-        if(Notification.permission !== "granted"){
+       if(Notification.permission !== "granted"){
         Notification.requestPermission();
         }else{
           let notificacion = new Notification("Notificación de Leads",{
             icon: "https://www.serviciosoportunidades.com/images/bolitas.png",
-            body: 'El Lead '+ data.message.id +' ha sido asignado a tu area'
+            body: data.message.name + ' ha sido asignado a tu área'
           })
 
           notificacion.onclick = function(){
