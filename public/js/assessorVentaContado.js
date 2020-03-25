@@ -627,7 +627,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	};
 
 	$scope.addSolic = function(){
-		$scope.disabledButtonSolic = true;
+		//$scope.disabledButtonSolic = true;
 		if($scope.decisionCredit == 1){
 			$scope.creditCard();
 		}else{
@@ -661,7 +661,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.PARENTESC2+'/'
 			+$scope.resp.policy.fuenteFallo+'/',
 		}).then(function successCallback(response) {
-			if (response.data.resp == 'true') {
+			console.log(response);
+			/*if (response.data.resp == 'true') {
 				$scope.quota = response.data.quotaApprovedProduct;
 				$scope.quotaAdvance = response.data.quotaApprovedAdvance;
 				$scope.numSolic = response.data.infoLead.numSolic;
@@ -683,7 +684,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			setTimeout(() => {
 				$('#proccess').modal('hide');
 			}, 1000);
-			hideLoader();
+			hideLoader();*/
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/decisionCreditCard/'
 			+$scope.lead.APELLIDOS+'/'
@@ -730,7 +731,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			+$scope.lead.TEL_REFFA2+'/'
 			+$scope.lead.PARENTESC2+'/'
 		}).then(function successCallback(response) {
-			$scope.numSolic = response.data.infoLead.numSolic;
+			console.log(response);
+			/*$scope.numSolic = response.data.infoLead.numSolic;
 			$scope.estadoCliente = "TRADICIONAL";
 			setTimeout(() => {
 				$('#confronta').modal('hide');
@@ -739,7 +741,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$('#proccess').modal('hide');
 				$('#congratulations').modal('show');
 			}, 1800);
-			hideLoader();
+			hideLoader();*/
 		}, function errorCallback(response) {
 			response.url = '/assessor/api/decisionTraditionalCredit/'
 			+$scope.lead.CEDULA+'/'

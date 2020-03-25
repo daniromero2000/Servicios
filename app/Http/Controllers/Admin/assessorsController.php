@@ -1445,7 +1445,7 @@ class assessorsController extends Controller
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
-		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
+		return response()->json($this->webServiceInterface->execMigrateCustomer($identificationNumber));
 		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$data['identificationNumber'] = $identificationNumber;
