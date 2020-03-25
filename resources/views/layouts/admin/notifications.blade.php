@@ -9,9 +9,9 @@
       });
 
         // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        // Pusher.logToConsole = true;
         var user = <?php echo $user?>;
-        console.log(user);
+        // console.log(user);
         var pusher = new Pusher('8dbb3ac2e799f1f3aa32', {
             cluster: 'us2',
             forceTLS: true
@@ -20,10 +20,10 @@
         var channel = pusher.subscribe('lead-channel');
         channel.bind('lead-event', function (data) {
             if (data.message) {
-                console.log("hola")
+                // console.log("hola")
 
                 if (data.message.assessor_id && user.id === data.message.assessor_id) {
-                    console.log("si hay asesor")
+                    // console.log("si hay asesor")
                     if (Notification.permission !== "granted") {
                         Notification.requestPermission();
                     } else {
@@ -37,7 +37,7 @@
                     }
                 }
                 if (data.message.assessor_id === null && user.lead_area_id === data.message.lead_area_id) {
-                    console.log("si hay lead")
+                    // console.log("si hay lead")
                     if (Notification.permission !== "granted") {
                         Notification.requestPermission();
                     } else {

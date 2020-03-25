@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endsection
 @section('content')
 <section class="content border-0">
@@ -215,5 +216,7 @@
 </section>
 @endsection
 @section('scriptsJs')
+<script src="{{ asset('js/UpdateInsurancePolicyDebtors.js') }}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
 @endsection

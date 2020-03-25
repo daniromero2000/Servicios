@@ -9,12 +9,14 @@
 
   <title>Oportudata</title>
   <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
-  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   @php
   $user = auth()->user();
+  // dd($user->lead_area_id > 0)
   @endphp
   <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+  @if ($user->lead_area_id > 0)
   @include('layouts.admin.notifications')
+  @endif
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
   <script>
     window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823');
@@ -178,7 +180,6 @@
   
     })
 </script>
-<script src="{{ asset('js/UpdateInsurancePolicyDebtors.js') }}"></script>
-<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('js/leadsNotifications.js') }}"></script>
 
 </html>

@@ -6,6 +6,7 @@
     </li>
   </ul>
 
+
   <!-- SEARCH FORM -->
 
   <nav class="navbar navbar-static-top" style="margin-left: auto !important;"> <a href="#" class="sidebar-toggle"
@@ -13,11 +14,28 @@
       <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
       <span class="icon-bar"></span> </a>
 
+    <input type="text" value="{{ auth()->user()->lead_area_id }}" hidden id="authUserAreaId">
     <div class="navbar-custom-menu">
+
       <ul class="nav navbar-nav">
+        @if ($user->lead_area_id > 0)
+        <li class="nav-item dropdown ml-2">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge" id="totalNotifications">0</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="LeadsNotifications"
+            style="max-height: 320px;overflow: auto;">
+            <input type="text" value="{{ auth()->user()->id }}" hidden id="authUserId">
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">No tienes Notificaciónes</a>
+          </div>
+        </li>
+        @endif
+
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle text-decoretion-none" data-toggle="dropdown"> <img
-              src="{{ asset('images/analisis/user.png') }}" class="user-image" alt="User Image"> <span
+              src="{{ asset('images/analisis/user.png') }}" class="user-image mt-0" alt="User Image"> <span
               class="hidden-xs text-decoration-none color-gray">{{ auth()->user()->name }}</span> </a>
 
 

@@ -497,4 +497,43 @@ class DigitalChannelLeadController extends Controller
         $data = $this->leadInterface->findLeadByTelephone($telephone);
         return $data;
     }
+
+    public function byLeadNotifications($id)
+    {
+        $dates = [];
+        $dataSuccess = [];
+        $dataWarning = [];
+        $dataDanger = [];
+
+        $datas = $this->leadInterface->findLeadByAssessorFull($id);
+
+        foreach ($datas as $key => $value) {
+
+            $dates[] = $datas[$key]->leadStatusesLogs->last();
+
+            // foreach ($dates as $key2 => $value) {
+            if ($dates[$key] != null) {
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) <= 1) {
+                    $dataSuccess[] =  $dates[$key];
+                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dia';
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                }
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) > 1 && $dates[$key]->created_at->diffInDays(Carbon::now()) <= 2) {
+                    $dataWarning[] =  $dates[$key];
+                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                }
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) >= 3) {
+                    $dataDanger[] =  $dates[$key];
+                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                }
+            }
+            // }
+            // if($datas[$key]-)
+            // $data = $datas
+        }
+
+        return ['success' => $dataSuccess, 'warning' => $dataWarning, 'danger' => $dataDanger];
+    }
 }
