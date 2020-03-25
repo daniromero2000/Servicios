@@ -121,4 +121,16 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             return 0;
         }
     }
+
+    public function execMigrateCustomer($identificationNumber){
+        $obj = new \stdClass();
+        $obj->cedula = trim($identificationNumber);
+        try {
+            $ws = new \SoapClient("http://10.238.14.181:2816/Conector.svc?singleWsdl", array()); //correcta
+            $result = $ws->ConsultarCliente($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
 }
