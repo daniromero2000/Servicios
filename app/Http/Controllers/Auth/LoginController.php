@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entities\OportudataLogs\OportudataLog;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,11 +55,24 @@ class LoginController extends Controller
         }
         if ($this->attemptLogin($request)) {
             $userInfo = auth()->user();
+            $date = Carbon::now();
             $resp = DB::select("SELECT modu.name, modu.icon, modu.route
             FROM permissions_profile_module as ppm
             LEFT JOIN modules as modu ON ppm.id_module = modu.id
             WHERE ppm.id_profile = :idProfile order by modu.name", ['idProfile' => $userInfo->idProfile]);
             session(['modules' => $resp]);
+
+            $data = [
+                'modulo' => 'Panel Asesores',
+                'proceso' => 'Inicio de Sesion',
+                'accion' => 'Ingresar',
+                'identificacion' => $userInfo->codeOportudata,
+                'fecha' => $date,
+                'usuario' => $userInfo->email,
+                'state' => 'A'
+            ];
+
+            $oportudataLog = OportudataLog::create($data);
 
             return $this->sendLoginResponse($request);
         }

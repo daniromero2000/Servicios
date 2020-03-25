@@ -25,6 +25,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.showAlertCel            = false;
 	$scope.disabledButtonStep2     = false;
 	$scope.showAlertCiudUbiContado = false;
+	$scope.showAlertSalary         = false;
 	$scope.step                   = 1;
     $scope.typesDocuments = [
 		{
@@ -279,7 +280,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.disabledButton = true;
 		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
 			$scope.showAlertCiudUbi = true;
-		}else if($scope.lead.CEDLULAR == '' || typeof $scope.lead.CELULAR == 'undefined' || $scope.lead.CELULAR == null){
+		}else if($scope.lead.CELULAR == '' || typeof $scope.lead.CELULAR == 'undefined' || $scope.lead.CELULAR == null){
 			$scope.showAlertCel = true;
 		}else{
 			$scope.addTemporaryCustomer();
@@ -294,6 +295,28 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			$scope.addCliente('CREDITO');
 		}
 	};
+
+	$scope.validateStep4 = function(){
+		if($scope.lead.ACTIVIDAD == 'EMPLEADO' || $scope.lead.ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA' || $scope.lead.ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS'){
+			if($scope.lead.SUELDO < 100000){
+				$scope.showAlertSalary = true;
+			}else{
+				$scope.addCliente('CREDITO');
+			}
+		}else if($scope.lead.ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $scope.lead.ACTIVIDAD == 'NO CERTIFICADO' || $scope.lead.ACTIVIDAD == 'RENTISTA'){
+			if($scope.lead.SUELDOIND < 100000){
+				$scope.showAlertSalary = true;
+			}else{
+				$scope.addCliente('CREDITO');
+			}
+		}else if($scope.lead.ACTIVIDAD == 'PENSIONADO'){
+			if($scope.lead.SUELDOIND < 100000){
+				$scope.showAlertSalary = true;
+			}else{
+				$scope.addCliente('CREDITO');
+			}
+		}
+	}
 
 	$scope.validateVentaContado = function(){
 		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
@@ -516,7 +539,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
 				$scope.execConsultasLead(response.data.identificationNumber);
-				console.log(typeof $scope.lead.CIUD_EXP);
 				if($scope.lead.CIUD_EXP == null || typeof $scope.lead.CIUD_EXP == 'undefined'){
 					$scope.lead.CIUD_EXP = 5002;
 				}

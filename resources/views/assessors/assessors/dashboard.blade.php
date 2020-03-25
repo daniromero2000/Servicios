@@ -46,6 +46,79 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-6 col-md-6 col-xl-3">
+          <!-- /.info-box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h2 class="titleCardNumber titleCardNumberForTotals">@if ($valuesOfStatusesAprobados !=0 )
+                ${{number_format( $valuesOfStatusesAprobados )}} @else $0
+                @endif </h2>
+              @if ($_GET && $_GET['from'] != '' && $_GET['to'] != '')
+              <p class="textCardNumber textCardNumberForTotals">Total Vendidos</p>
+              @else
+              <p class="textCardNumber textCardNumberForTotals">Total Vendidos en este mes</p>
+              @endif
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-6 col-xl-3">
+          <!-- /.info-box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h2 class="titleCardNumber titleCardNumberForTotals">@if ($valuesOfStatusesNegados !=0 )
+                ${{number_format( $valuesOfStatusesNegados )}}@else $0
+                @endif </h2>
+              @if ($_GET && $_GET['from'] != '' && $_GET['to'] != '')
+              <p class="textCardNumber textCardNumberForTotals">Total Negados</p>
+              @else
+              <p class="textCardNumber textCardNumberForTotals">Total Negados en este mes</p>
+              @endif
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-6 col-xl-3">
+          <!-- /.info-box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h2 class="titleCardNumber titleCardNumberForTotals">@if ($valuesOfStatusesDesistidos !=0 )
+                ${{number_format( $valuesOfStatusesDesistidos )}} @else $0 @endif </h2>
+              @if ($_GET && $_GET['from'] != '' && $_GET['to'] != '')
+              <p class="textCardNumber textCardNumberForTotals">Total Desistidos</p>
+              @else
+              <p class="textCardNumber textCardNumberForTotals">Total Desistidos en este mes</p>
+              @endif
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-6 col-xl-3">
+          <!-- /.info-box -->
+          <div class="small-box bg-secondary">
+            <div class="inner">
+              <h2 class="titleCardNumber titleCardNumberForTotals">@if ($valuesOfStatusesPendientes !=0 )
+                ${{number_format( $valuesOfStatusesPendientes )}} @else $0 @endif</h2>
+              @if ($_GET && $_GET['from'] != '' && $_GET['to'] != '')
+              <p class="textCardNumber textCardNumberForTotals">Total Pendientes</p>
+              @else
+              <p class="textCardNumber textCardNumberForTotals">Total Pendientes en este mes</p>
+              @endif
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Estados Solicitudes</h3>
@@ -87,22 +160,27 @@
       </div>
     </div>
     <!-- /.col (RIGHT) -->
-    <div class=" order-md-first col-sm-12 col-md-5 col-lg-4">
+    <div class="order-md-first col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
         <div class="row">
           <div class="col-12  ">
             <!-- /.info-box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h2>{{ $totalStatuses }}</h2>
-                <p style="margin-bottom: -4px !important;">Solicitudes Crédito en este mes</p>
+                <h2 class="titleCardNumber ">{{ $totalStatuses }}</h2>
+                @if ($_GET && $_GET['from'] != '')
+                <p class="textCardNumber textCardNumberForTotals">Total Solicitudes</p>
+                @else
+                <p class="textCardNumber textCardNumberForTotals">Solicitudes Crédito en este mes</p>
+                @endif
               </div>
-              <div class="icon mt-3">
+              <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
               <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('assessors.index') }}" style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" class="textCardNumberForTotals"
+                    style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -110,17 +188,21 @@
           <div class="col-12 ">
             <div class="small-box bg-success">
               <div class="inner">
-                <h4 class="mt-2">${{ number_format ($factoryAssessorsTotal) }}
+                <h4 class="titleCardNumber titleCardNumberForTotals">${{ number_format ($factoryAssessorsTotal) }}
                 </h4>
-                <p style="margin-bottom: -4px !important;">Total en este mes</p>
+                @if ($_GET && $_GET['from'] != '')
+                <p class="textCardNumber textCardNumberForTotals">Total </p>
+                @else
+                <p class="textCardNumber textCardNumberForTotals">Total en este mes</p>
+                @endif
               </div>
-              <br>
               <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
               </div>
-              <div style="margin-top: -5px;" class="text-right mr-2">
+              <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('assessors.index') }}" style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" class="textCardNumberForTotals"
+                    style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -329,7 +411,6 @@
 @endsection
 @section('scriptsJs')
 <!-- OPTIONAL SCRIPTS -->
-<script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('dist/js/pages/dashboard3.js') }}"></script>
 <!-- jQuery UI -->

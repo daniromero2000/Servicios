@@ -385,7 +385,7 @@
                         </div>
                     </div>
                 </form>
-                <form ng-submit="addCliente('CREDITO')" ng-show="step == 4" class="crearCliente-form">
+                <form ng-submit="validateStep4()" ng-show="step == 4" class="crearCliente-form">
                     <div class="row container-form">
                         <div class="col-12 type-client">
                             <div class="forms-descStep forms-descStep-avances">
@@ -449,6 +449,9 @@
                                         <label class="labels" for="salario">Salario*</label>
                                         <input class="inputs" id="salario" ng-currency fraction="0" type="text"
                                             ng-model="lead.SUELDO" required />
+                                        <div class="alert alert-danger" role="alert" ng-show="showAlertSalary" style="margin-top: 10px;">
+                                            El salario no puede ser menor a $100.000
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -498,6 +501,9 @@
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label">Salario*</label>
                                         <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND" ng-currency fraction="0" required />
+                                        <div class="alert alert-danger" role="alert" ng-show="showAlertSalary" style="margin-top: 10px;">
+                                            El salario no puede ser menor a $100.000
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -521,7 +527,10 @@
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="SUELDOIND">Salario*</label>
                                         <input class="form-control inputs" type="text" ng-model="lead.SUELDOIND"
-                                            id="SUELDOIND" ng-currency min="100000" fraction="0" required />
+                                            id="SUELDOIND" ng-currency fraction="0" required />
+                                        <div class="alert alert-danger" role="alert" ng-show="showAlertSalary" style="margin-top: 10px;">
+                                            El salario no puede ser menor a $100.000
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label class="ventaContado-label" for="ACT_ECO">EPS*</label>

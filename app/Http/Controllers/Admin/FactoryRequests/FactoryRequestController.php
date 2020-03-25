@@ -193,7 +193,8 @@ class FactoryRequestController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-
+        $assessor = '';
+        $subsidiary = '';
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
@@ -201,6 +202,19 @@ class FactoryRequestController extends Controller
         $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "NEGADO");
         $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "DESISTIDO");
         $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+
+        $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
+        $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
+        $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
+        $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+
+        if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
+            $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
+            $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
+            $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
+            $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+        }
+
 
         if (request()->has('from')) {
             $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
@@ -218,6 +232,11 @@ class FactoryRequestController extends Controller
         $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
         $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
         $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+        $valuesEstadosAprobados = $this->toolsInterface->extractValuesToArray($valuesEstadosAprobados);
+        $valuesEstadosNegados = $this->toolsInterface->extractValuesToArray($valuesEstadosNegados);
+        $valuesEstadosDesistidos = $this->toolsInterface->extractValuesToArray($valuesEstadosDesistidos);
+        $valuesEstadosPendientes = $this->toolsInterface->extractValuesToArray($valuesEstadosPendientes);
 
         $statusesAprobadosValue = [];
         foreach ($estadosAprobados as $estadosAprobado) {
@@ -258,6 +277,44 @@ class FactoryRequestController extends Controller
             array_push($statusesValues, trim($estadosName['total']));
         }
 
+        $valuesOfStatusesAprobado = [];
+        foreach ($valuesEstadosAprobados as $valuesEstadosAprobado) {
+            array_push($valuesOfStatusesAprobado, trim($valuesEstadosAprobado['total']));
+        }
+        $valuesOfStatusesAprobados = 0;
+        foreach ($valuesOfStatusesAprobado as $key => $status) {
+            $valuesOfStatusesAprobados +=  $valuesOfStatusesAprobado[$key];
+        }
+
+        $valuesOfStatusesNegado = [];
+        foreach ($valuesEstadosNegados as $valuesEstadosNegado) {
+            array_push($valuesOfStatusesNegado, trim($valuesEstadosNegado['total']));
+        }
+        $valuesOfStatusesNegados = 0;
+        foreach ($valuesOfStatusesNegado as $key => $status) {
+            $valuesOfStatusesNegados +=  $valuesOfStatusesNegado[$key];
+        }
+
+        $valuesOfStatusesDesistido = [];
+        foreach ($valuesEstadosDesistidos as $valuesEstadosDesistido) {
+            array_push($valuesOfStatusesDesistido, trim($valuesEstadosDesistido['total']));
+        }
+        $valuesOfStatusesDesistidos = 0;
+        foreach ($valuesOfStatusesDesistido as $key => $status) {
+            $valuesOfStatusesDesistidos +=  $valuesOfStatusesDesistido[$key];
+        }
+
+        $valuesOfStatusesPendiente = [];
+        foreach ($valuesEstadosPendientes as $valuesEstadosPendiente) {
+            array_push($valuesOfStatusesPendiente, trim($valuesEstadosPendiente['total']));
+        }
+        $valuesOfStatusesPendientes = 0;
+        foreach ($valuesOfStatusesPendiente as $key => $status) {
+            $valuesOfStatusesPendientes +=  $valuesOfStatusesPendiente[$key];
+        }
+
+
+
         $webValues      = [];
         $webNames       = [];
 
@@ -276,7 +333,11 @@ class FactoryRequestController extends Controller
             'statusesAprobadosValues'  => $statusesAprobadosValues,
             'statusesNegadoValues'     => $statusesNegadoValues,
             'statusesPendientesValues' => $statusesPendientesValues,
-            'statusesDesistidosValues' => $statusesDesistidosValues
+            'statusesDesistidosValues' => $statusesDesistidosValues,
+            'valuesOfStatusesAprobados' => $valuesOfStatusesAprobados,
+            'valuesOfStatusesNegados' => $valuesOfStatusesNegados,
+            'valuesOfStatusesDesistidos' => $valuesOfStatusesDesistidos,
+            'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
         ]);
     }
 }

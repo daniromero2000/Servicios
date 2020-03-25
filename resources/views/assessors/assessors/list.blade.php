@@ -29,9 +29,6 @@
             </div>
             <div class=" mt-2 col-12 col-sm-12 col-md-12">
               <div class="row">
-                {{-- @php
-                dd($statusesDesistidosValues)
-                @endphp --}}
                 <div class="col-6 col-md-6 col-lg-3">
                   <!-- /.info-box -->
                   <div class="small-box bg-success">
@@ -54,7 +51,7 @@
                   <!-- /.info-box -->
                   <div class="small-box bg-danger">
                     <div class="inner">
-                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesAprobadosValues !=0 )
+                      <h2 class="titleCardNumber titleCardNumberForTotals">@if ($statusesNegadosValues !=0 )
                         ${{number_format( $statusesNegadosValues )}}@else $0
                         @endif </h2>
                       @if ($_GET && $_GET['from'] != '')

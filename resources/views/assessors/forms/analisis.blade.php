@@ -52,7 +52,7 @@
                                 @{{ infoLead.APELLIDOS }}</b></h2>
                         <div class="card-body pt-0">
                             <div class="row">
-                                <div class="order-sm-last container-info-principal col-sm-5 text-center">
+                                <div class="order-last container-info-principal col-5 text-center">
                                     <img src="{{ asset('images/analisis/user.png')}}" alt=""
                                         class="img-circle img-fluid img-card-client">
                                     <ul
@@ -66,7 +66,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="order-sm-first col-sm-7">
+                                <div class="order-first col-7 container-info">
                                     <ul class="ml-4 mb-0 fa-ul text-muted text-card-analitycs">
                                         <li class="small mt-2"><span class="fa-li"><i
                                                     class="fas fa-address-card ml-1 mr-1"></i></i></span>

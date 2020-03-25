@@ -176,8 +176,8 @@ class assessorsController extends Controller
 		$estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
 
 		$statusesAprobadosValue = [];
-		foreach ($estadosAprobados as $estadosPendiente) {
-			array_push($statusesAprobadosValue, trim($estadosPendiente['total']));
+		foreach ($estadosAprobados as $estadosAprobado) {
+			array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
 		}
 		$statusesAprobadosValues = 0;
 		foreach ($statusesAprobadosValue as $key => $status) {
@@ -185,8 +185,8 @@ class assessorsController extends Controller
 		}
 
 		$statusesNegadosValue = [];
-		foreach ($estadosNegados as $estadosPendiente) {
-			array_push($statusesNegadosValue, trim($estadosPendiente['total']));
+		foreach ($estadosNegados as $estadosNegado) {
+			array_push($statusesNegadosValue, trim($estadosNegado['total']));
 		}
 		$statusesNegadosValues = 0;
 		foreach ($statusesNegadosValue as $key => $status) {
@@ -195,8 +195,8 @@ class assessorsController extends Controller
 
 
 		$statusesDesistidosValue = [];
-		foreach ($estadosDesistidos as $estadosPendiente) {
-			array_push($statusesDesistidosValue, trim($estadosPendiente['total']));
+		foreach ($estadosDesistidos as $estadosDesistido) {
+			array_push($statusesDesistidosValue, trim($estadosDesistido['total']));
 		}
 		$statusesDesistidosValues = 0;
 		foreach ($statusesDesistidosValue as $key => $status) {
@@ -775,7 +775,7 @@ class assessorsController extends Controller
 			}
 			$customerIntention->EDAD = 0;
 			$customerIntention->save();
-		}else{
+		} else {
 			$queryEdad = explode('-', $queryEdad);
 			$edadMin = $queryEdad[0];
 			$edadMax = $queryEdad[1];
@@ -1865,6 +1865,7 @@ class assessorsController extends Controller
 		$assessor = auth()->user()->email;
 		$to = Carbon::now();
 		$from = Carbon::now()->startOfMonth();
+		$subsidiary = '';
 
 		$estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
 		$webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
@@ -1873,6 +1874,18 @@ class assessorsController extends Controller
 		$estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
 		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
 		$estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+
+		$valuesEstadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
+		$valuesEstadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
+		$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
+		$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+
+		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
+			$valuesEstadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
+			$valuesEstadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
+			$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
+			$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+		}
 
 		if (request()->has('from')) {
 			$estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
@@ -1884,6 +1897,11 @@ class assessorsController extends Controller
 			$estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 		}
 
+
+		$valuesEstadosAprobados = $this->toolsInterface->extractValuesToArray($valuesEstadosAprobados);
+		$valuesEstadosNegados = $this->toolsInterface->extractValuesToArray($valuesEstadosNegados);
+		$valuesEstadosDesistidos = $this->toolsInterface->extractValuesToArray($valuesEstadosDesistidos);
+		$valuesEstadosPendientes = $this->toolsInterface->extractValuesToArray($valuesEstadosPendientes);
 
 		$estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
 		$estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
@@ -1897,6 +1915,43 @@ class assessorsController extends Controller
 		$statusesAssessors    = [];
 		$statusesValues       = [];
 		$statusesColors       = [];
+
+
+		$valuesOfStatusesAprobado = [];
+		foreach ($valuesEstadosAprobados as $valuesEstadosAprobado) {
+			array_push($valuesOfStatusesAprobado, trim($valuesEstadosAprobado['total']));
+		}
+		$valuesOfStatusesAprobados = 0;
+		foreach ($valuesOfStatusesAprobado as $key => $status) {
+			$valuesOfStatusesAprobados +=  $valuesOfStatusesAprobado[$key];
+		}
+
+		$valuesOfStatusesNegado = [];
+		foreach ($valuesEstadosNegados as $valuesEstadosNegado) {
+			array_push($valuesOfStatusesNegado, trim($valuesEstadosNegado['total']));
+		}
+		$valuesOfStatusesNegados = 0;
+		foreach ($valuesOfStatusesNegado as $key => $status) {
+			$valuesOfStatusesNegados +=  $valuesOfStatusesNegado[$key];
+		}
+
+		$valuesOfStatusesDesistido = [];
+		foreach ($valuesEstadosDesistidos as $valuesEstadosDesistido) {
+			array_push($valuesOfStatusesDesistido, trim($valuesEstadosDesistido['total']));
+		}
+		$valuesOfStatusesDesistidos = 0;
+		foreach ($valuesOfStatusesDesistido as $key => $status) {
+			$valuesOfStatusesDesistidos +=  $valuesOfStatusesDesistido[$key];
+		}
+
+		$valuesOfStatusesPendiente = [];
+		foreach ($valuesEstadosPendientes as $valuesEstadosPendiente) {
+			array_push($valuesOfStatusesPendiente, trim($valuesEstadosPendiente['total']));
+		}
+		$valuesOfStatusesPendientes = 0;
+		foreach ($valuesOfStatusesPendiente as $key => $status) {
+			$valuesOfStatusesPendientes +=  $valuesOfStatusesPendiente[$key];
+		}
 
 
 		$statusesAprobadosValue = [];
@@ -1957,7 +2012,11 @@ class assessorsController extends Controller
 			'statusesAprobadosValues'  => $statusesAprobadosValues,
 			'statusesNegadoValues'     => $statusesNegadoValues,
 			'statusesPendientesValues' => $statusesPendientesValues,
-			'statusesDesistidosValues' => $statusesDesistidosValues
+			'statusesDesistidosValues' => $statusesDesistidosValues,
+			'valuesOfStatusesAprobados' => $valuesOfStatusesAprobados,
+			'valuesOfStatusesNegados' => $valuesOfStatusesNegados,
+			'valuesOfStatusesDesistidos' => $valuesOfStatusesDesistidos,
+			'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
 		]);
 	}
 }
