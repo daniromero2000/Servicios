@@ -29,6 +29,7 @@ class Ruaf extends Model
         'estado_pension',
         'tipo_afiliacion_compensacion_familiar',
         'administradora_compensacion_familiar',
+        'estado_compensacion_familiar',
         'fuenteFallo'
     ];
 

@@ -14,5 +14,5 @@ interface RuafRepositoryInterface
 
     public function countCustomersRuafsConsultatios($from, $to);
 
-    public function validateConsultaRuaf($identificationNumber, $names, $lastName, $dateExpedition);
+    public function validateConsultaRuaf($identificationNumber, $names);
 }

@@ -45,6 +45,7 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\TurnosOportuya;
+use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -52,7 +53,7 @@ class assessorsController extends Controller
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface;
 	private $subsidiaryInterface;
-	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
+	private $fosygaInterface, $registraduriaInterface, $webServiceInterface, $ruafInterface;
 	private $commercialConsultationInterface, $customerProfessionInterface;
 	private $creditCardInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
@@ -80,6 +81,7 @@ class assessorsController extends Controller
 		SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
 		CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface,
 		FosygaRepositoryInterface $fosygaRepositoryInterface,
+		RuafRepositoryInterface $ruafRepositoryInterface,
 		WebServiceRepositoryInterface $WebServiceRepositoryInterface,
 		RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
 		CommercialConsultationRepositoryInterface $commercialConsultationRepositoryInterface,
@@ -122,8 +124,11 @@ class assessorsController extends Controller
 		$this->extinctRealCifinInterface       = $extintRealCifinRepositoryInterface;
 		$this->cifinBasicDataInterface         = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
+		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->middleware('auth');
 	}
+
+
 	/**
 	 * Show the application dashboard.
 	 *
@@ -587,6 +592,23 @@ class assessorsController extends Controller
 			$validateConsultaFosyga = 1;
 		}
 
+		//Ruaf
+		$dateConsultaRuaf = $this->ruafInterface->validateDateConsultaRuaf($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaRuaf == "true") {
+			$infoRuaf = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '46784765', $typeDocument, "2012-10-03");
+			$infoRuaf = (array) $infoRuaf;
+			$consultaRuaf =  $this->ruafInterface->createRuaf($infoRuaf['original'], $identificationNumber);
+		} else {
+			$consultaRuaf = 1;
+		}
+
+		$validateConsultaRuaf = 0;
+		if ($consultaRuaf > 0) {
+			$validateConsultaRuaf = $this->ruafInterface->validateConsultaRuaf($identificationNumber, trim($name)." ".trim($lastName));
+		} else {
+			$validateConsultaRuaf = 1;
+		}
+
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
 		if ($dateConsultaRegistraduria == "true") {
@@ -608,7 +630,7 @@ class assessorsController extends Controller
 			return -1;
 		}
 
-		if ($validateConsultaRegistraduria < 0 || $validateConsultaFosyga < 0) {
+		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0 || $validateConsultaRuaf < 0)) {
 			return "-3";
 		}
 
@@ -2019,4 +2041,5 @@ class assessorsController extends Controller
 			'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
 		]);
 	}
+
 }

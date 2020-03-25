@@ -15,10 +15,34 @@ class RuafRepository implements RuafRepositoryInterface
         $this->model = $ruaf;
     }
 
-    public function createRuaf(array $data)
+    public function createRuaf(array $infoRuaf)
     {
+        if($infoRuaf['fuenteFallo'] == 'SI'){
+            $ruaf['cedula'] = $infoRuaf['personaVO']['numeroDocumento'];
+            $ruaf['fuenteFallo'] = $infoRuaf['fuenteFallo'];
+        }else{
+            $dataSalud = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblSL']['tblSLGrpSLCollection']['tblSLGrpSL'];
+            $dataPensiones = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblPensiones']['tblPensionesGrpPensionesCollection']['tblPensionesGrpPensiones'];
+            $dataCompensacionFamiliar = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblCompensacionFamiliar']['tblCompensacionFamiliarGrpCompensacionFamiliarCollection']['tblCompensacionFamiliarGrpCompensacionFamiliar'];
+            $ruaf['cedula'] = $infoRuaf['personaVO']['numeroDocumento'];
+            $ruaf['nombres'] = $infoRuaf['personaVO']['nombres']['RUAF']['primerNombre'];
+            $ruaf['regimen_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['regimenSL'] : '';
+            $ruaf['administradora_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['administradoraSL'] : '';
+            $ruaf['estado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['estadoAfiliadoSL'] : '';
+            $ruaf['tipo_afiliado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['tipoAfiliadoSL'] : '';
+            $ruaf['ciudad_afiliacion'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['ubicacionAfiliacion'] : '';
+            $ruaf['regimen_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['regimen']: '' ;
+            $ruaf['administradora_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['administradora']: '' ;
+            $ruaf['estado_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['estadoAfiliacion']: '' ;
+            $ruaf['tipo_afiliacion_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['tipoAfiliadoCF'] : '' ;
+            $ruaf['administradora_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['administradora'] : '' ;
+            $ruaf['estado_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['estadoAfiliacion'] : '' ;
+            $ruaf['fuenteFallo'] = $infoRuaf['fuenteFallo'];
+        }
+        $data = $ruaf;
         try {
-            return $this->model->create($data);
+            $this->model->create($data);
+            return 1;
         } catch (QueryException $e) {
             dd($e);
         }
@@ -50,7 +74,7 @@ class RuafRepository implements RuafRepositoryInterface
         $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
         $dateNew = date('Y-m-d', $dateNew);
 
-        $dateLastConsultaRuaf = $this->getLastRuafConsultation($identificationNumber);
+        $dateLastConsultaRuaf = $this->getLastRuafConsultationPolicy($identificationNumber);
 
         if (empty($dateLastConsultaRuaf)) {
             return 'true';
@@ -82,9 +106,22 @@ class RuafRepository implements RuafRepositoryInterface
         }
     }
 
-    public function validateConsultaRuaf($identificationNumber, $names, $lastName, $dateExpedition)
+    public function validateConsultaRuaf($identificationNumber, $names)
     {
-        
+        $respRuaf = $this->getLastRuafConsultation($identificationNumber);
+
+        $nameDataLead = explode(" ", $names);
+        $nameRuaf = explode(" ", $respRuaf->nombres);
+        $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameRuaf);
+
+        DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respRuaf->tipo_afiliado_salud]);
+
+        if ($coincideNames == 0) {
+            DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+            return -3; // Nombres y/o apellidos no coinciden    
+        }
+
+        return 1;
     }
 
     private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
