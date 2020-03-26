@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Entities\ConfrontForms\Repositories;
+namespace App\Entities\ConfrontResults\Repositories;
 
-use App\Entities\ConfrontForms\ConfrontForm;
-use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
+use App\Entities\ConfrontResults\ConfrontResult;
+use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 
-class ConfrontFormRepository implements ConfrontFormRepositoryInterface
+class ConfrontResultRepository implements ConfrontResultRepositoryInterface
 {
     private $columns = [
         'id',
-        'identificationNumber',
+        'confron_form_id',
+        'hits',
         'created_at',
         'updated_at',
     ];
 
     public function __construct(
-        ConfrontForm $confrontForm
+        ConfrontResult $confrontResult
     ) {
-        $this->model = $confrontForm;
+        $this->model = $confrontResult;
     }
 
-    public function createConfrontForm($data){
+    public function createConfrontResult($data){
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
@@ -30,7 +31,7 @@ class ConfrontFormRepository implements ConfrontFormRepositoryInterface
         }
     }
 
-    public function getAllConfrontForms()
+    public function getAllConfrontResults()
     {
         try {
             return $this->model->get();
