@@ -71,7 +71,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'id',
                 'name',
                 'created_at',
-                'assessor_id',
+                'assessor_id'
             )->with([
                 'leadStatusesLogs',
                 'leadStatus'

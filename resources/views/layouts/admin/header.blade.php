@@ -18,7 +18,7 @@
     <div class="navbar-custom-menu">
 
       <ul class="nav navbar-nav">
-        @if ($user->lead_area_id > 0)
+        {{-- @if ($user->lead_area_id > 0) --}}
         <li class="nav-item dropdown ml-2">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -31,7 +31,7 @@
             <a href="#" class="dropdown-item dropdown-footer">No tienes Notificaciónes</a>
           </div>
         </li>
-        @endif
+        {{-- @endif --}}
 
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle text-decoretion-none" data-toggle="dropdown"> <img

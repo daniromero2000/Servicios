@@ -11,7 +11,6 @@
   <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
   @php
   $user = auth()->user();
-  // dd($user->lead_area_id > 0)
   @endphp
   <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
   @if ($user->lead_area_id > 0)
