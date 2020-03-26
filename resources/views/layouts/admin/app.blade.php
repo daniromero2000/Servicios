@@ -8,7 +8,6 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Oportudata</title>
-  <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
   @php
   $user = auth()->user();
   @endphp
@@ -16,6 +15,7 @@
   @if ($user->lead_area_id > 0)
   @include('layouts.admin.notifications')
   @endif
+  <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
   <script>
     window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823');

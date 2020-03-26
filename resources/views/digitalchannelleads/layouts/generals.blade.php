@@ -32,6 +32,9 @@
           <th class="text-center" scope="col">Ciudad</th>
           <th class="text-center" scope="col">Servicio</th>
           <th class="text-center" scope="col">Producto</th>
+          @if ($digitalChannelLead->expirationDateSoat)
+          <th class="text-center" scope="col">Vencimiento de SOAT</th>
+          @endif
           <th class="text-center" scope="col">Observación</th>
           <th class="text-center" scope="col">Canal</th>
         </tr>
@@ -48,6 +51,9 @@
           <td class="text-center">
             @if($digitalChannelLead->leadProduct) {{ $digitalChannelLead->leadProduct->lead_product }} @else
             {{$digitalChannelLead->typeProduct}} @endif</td>
+          @if ($digitalChannelLead->expirationDateSoat)
+          <td class="text-center">{{ $digitalChannelLead->expirationDateSoat }}</td>
+          @endif
           <td class="text-center">{{ $digitalChannelLead->description }}</td>
           <td class="text-center">{{ $digitalChannelLead->leadChannel->channel }}</td>
         </tr>
