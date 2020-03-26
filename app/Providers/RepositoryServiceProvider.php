@@ -94,6 +94,18 @@ use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRep
 use App\Entities\TemporaryCustomers\Repositories\TemporaryCustomerRepository;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\CodebtorRepository;
+use App\Entities\ConfrontFormAnswers\Repositories\ConfrontFormAnswerRepository;
+use App\Entities\ConfrontFormAnswers\Repositories\Interfaces\ConfrontFormAnswerRepositoryInterface;
+use App\Entities\ConfrontFormOptions\Repositories\ConfrontFormOptionRepository;
+use App\Entities\ConfrontFormOptions\Repositories\Interfaces\ConfrontFormOptionRepositoryInterface;
+use App\Entities\ConfrontFormQuestions\Repositories\ConfrontFormQuestionRepository;
+use App\Entities\ConfrontFormQuestions\Repositories\Interfaces\ConfrontFormQuestionRepositoryInterface;
+use App\Entities\ConfrontForms\Repositories\ConfrontFormRepository;
+use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
+use App\Entities\ConfrontQuestions\Repositories\ConfrontQuestionRepository;
+use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepositoryInterface;
+use App\Entities\ConfrontResults\Repositories\ConfrontResultRepository;
+use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
@@ -102,9 +114,40 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
+            ConfrontResultRepositoryInterface::class,
+            ConfrontResultRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontQuestionRepositoryInterface::class,
+            ConfrontQuestionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormRepositoryInterface::class,
+            ConfrontFormRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormQuestionRepositoryInterface::class,
+            ConfrontFormQuestionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormOptionRepositoryInterface::class,
+            ConfrontFormOptionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormAnswerRepositoryInterface::class,
+            ConfrontFormAnswerRepository::class
+        );
+
+        $this->app->bind(
             SecondCodebtorRepositoryInterface::class,
             SecondCodebtorRepository::class
         );
+
         $this->app->bind(
             CodebtorRepositoryInterface::class,
             CodebtorRepository::class
