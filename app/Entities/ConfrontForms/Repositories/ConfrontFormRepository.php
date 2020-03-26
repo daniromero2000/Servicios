@@ -22,6 +22,14 @@ class ConfrontFormRepository implements ConfrontFormRepositoryInterface
         $this->model = $confrontForm;
     }
 
+    public function createConfrontForm($data){
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            //throw $th;
+        }
+    }
+
     public function getAllConfrontForms()
     {
         try {
