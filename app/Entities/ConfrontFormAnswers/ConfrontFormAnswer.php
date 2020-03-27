@@ -28,14 +28,14 @@ class ConfrontFormAnswer extends Model
         return $this->belongsTo(ConfrontForm::class);
     }
 
-    public function question()
+    public function confrontFormQuestion()
     {
-        return $this->belongsTo(ConfrontFormQuestion::class, 'confront_form_question_id');
+        return $this->belongsTo(ConfrontFormQuestion::class);
     }
 
-    public function option()
+    public function confrontFormOption()
     {
-        return $this->belongsTo(ConfrontFormOption::class, 'confront_form_option_id');
+        return $this->belongsTo(ConfrontFormOption::class);
     }
 
 }

@@ -22,7 +22,7 @@ class ConfrontFormOption extends Model
         'deleted_at'
     ];
 
-    public function question()
+    public function confrontFormQuestion()
     {
         return $this->belongsTo(ConfrontFormQuestion::class);
     }

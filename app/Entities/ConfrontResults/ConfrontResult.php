@@ -20,7 +20,7 @@ class ConfrontResult extends Model
         'deleted_at'
     ];
 
-    public function form()
+    public function confrontForm()
     {
         return $this->belongsTo(ConfrontForm::class);
     }
