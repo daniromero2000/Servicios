@@ -11,10 +11,6 @@
   @php
   $user = auth()->user();
   @endphp
-  <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
-  @if ($user->lead_area_id > 0)
-  @include('layouts.admin.notifications')
-  @endif
   <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
   <script>
@@ -179,6 +175,10 @@
   
     })
 </script>
+<script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+@if ($user->lead_area_id > 0)
+@include('layouts.admin.notifications')
+@endif
 <script src="{{ asset('js/leadsNotifications.js') }}"></script>
 
 </html>
