@@ -2,6 +2,7 @@
 
 namespace App\Entities\ConfrontResults;
 
+use App\Entities\ConfrontForms\ConfrontForm;
 use Illuminate\Database\Eloquent\Model;
 
 class ConfrontResult extends Model
@@ -18,4 +19,9 @@ class ConfrontResult extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function form()
+    {
+        return $this->belongsTo(ConfrontForm::class);
+    }
 }

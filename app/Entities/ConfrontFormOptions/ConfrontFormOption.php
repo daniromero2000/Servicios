@@ -2,6 +2,8 @@
 
 namespace App\Entities\ConfrontFormOptions;
 
+use App\Entities\ConfrontFormAnswers\ConfrontFormAnswer;
+use App\Entities\ConfrontFormQuestions\ConfrontFormQuestion;
 use Illuminate\Database\Eloquent\Model;
 
 class ConfrontFormOption extends Model
@@ -19,4 +21,14 @@ class ConfrontFormOption extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(ConfrontFormQuestion::class);
+    }
+
+    public function answer()
+    {
+        return $this->hasOne(ConfrontFormAnswer::class);
+    }
 }
