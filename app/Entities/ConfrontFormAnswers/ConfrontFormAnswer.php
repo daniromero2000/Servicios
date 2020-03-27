@@ -30,12 +30,12 @@ class ConfrontFormAnswer extends Model
 
     public function question()
     {
-        return $this->belongsTo(ConfrontFormQuestion::class);
+        return $this->belongsTo(ConfrontFormQuestion::class, 'confront_form_question_id');
     }
 
     public function option()
     {
-        return $this->belongsTo(ConfrontFormOption::class);
+        return $this->belongsTo(ConfrontFormOption::class, 'confront_form_option_id');
     }
 
 }
