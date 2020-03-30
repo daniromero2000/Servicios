@@ -14,12 +14,16 @@ class CifinCtaVigenRepository implements CifinCtaVigenRepositoryInterface
         $this->model = $cifinCtaVigen;
     }
 
-    public function getNameEntities(){
+    public function getNameEntities($nameEntity){
         try {
-            return  $this->model->groupBy('vigentid')->random(4)->get(['vigentid']);
+            return  $this->model->where('vigentid','!=',$nameEntity)->groupBy('vigentid')->orderByRaw("RAND()")->limit(4)->get(['vigentid']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
         }
+    }
+
+    public function getCustomerEntityName($identificationNumber){
+        return $this->model->where('vigcedula', $identificationNumber)->groupBy('vigentid')->orderByRaw("RAND()")->limit(1)->get(['vigentid']);
     }
 }
