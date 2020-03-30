@@ -76,6 +76,10 @@ use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusReposi
 use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Channels\Repositories\ChannelRepository;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
+use App\Entities\CifinCtaExts\Repositories\CifinCtaExtRepository;
+use App\Entities\CifinCtaExts\Repositories\Interfaces\CifinCtaExtRepositoryInterface;
+use App\Entities\CifinCtaVigens\Repositories\CifinCtaVigenRepository;
+use App\Entities\CifinCtaVigens\Repositories\Interfaces\CifinCtaVigenRepositoryInterface;
 use App\Entities\CustomerProfessions\Repositories\CustomerProfessionRepository;
 use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
 use App\Entities\Services\Repositories\ServiceRepository;
@@ -111,8 +115,20 @@ use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
+
+        $this->app->bind(
+            CifinCtaExtRepositoryInterface::class,
+            CifinCtaExtRepository::class
+        );
+
+        $this->app->bind(
+            CifinCtaVigenRepositoryInterface::class,
+            CifinCtaVigenRepository::class
+        );
+
         $this->app->bind(
             ConfrontResultRepositoryInterface::class,
             ConfrontResultRepository::class

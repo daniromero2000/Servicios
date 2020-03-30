@@ -39,4 +39,22 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getConfrontQuestionPhoneChange(){
+        try {
+            return $this->model->where('type',1)->orWhere('type',3)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function getConfrontQuestionCreditRequest(){
+        try {
+            return $this->model->where('type',1)->orWhere('type',3)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    
 }
