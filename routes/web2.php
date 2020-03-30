@@ -292,6 +292,10 @@ Route::namespace('Front')->group(function () {
         });
     });
 
+    Route::namespace('ConfrontaCustomers')->group(function () {
+        Route::resource('testConfronta', 'ConfrontraCustomerController');
+    });
+
     Route::namespace('Motos')->group(function () {
         Route::resource('motos', 'MotosController');
     });
