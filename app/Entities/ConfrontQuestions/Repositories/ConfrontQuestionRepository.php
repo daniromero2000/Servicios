@@ -66,6 +66,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
     public function getDataQuestionOne($identicationNumber){
         $options = [];
+        $customerCurrentEntities = [];
+        $customerExtinctEntities = [];
 
         $currentCostumerBankAccount = $this->cifinCtaVigenInterface->getCustomerEntityName($identicationNumber);
         $currentCostumerBankAccount = $currentCostumerBankAccount->toArray();
@@ -73,15 +75,22 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         if(count($currentCostumerBankAccount) < 1){
             $currentCostumerBankAccount = [['vigentid' => 'Ninguna de las anteriores']];
         }
-        $currentBankAccounts = $this->cifinCtaVigenInterface->getNameEntities($currentCostumerBankAccount[0]['vigentid']);
+
+        foreach ($currentCostumerBankAccount as $value) {
+            $customerCurrentEntities[] = $value['vigentid'];
+        }
+        $currentBankAccounts = $this->cifinCtaVigenInterface->getNameEntities($customerCurrentEntities);
         $currentBankAccounts = $currentBankAccounts->toArray();
+
         foreach ($currentBankAccounts as $value) {
             $options[] = ['option' => $value['vigentid'], 'correct_option' => 0];
         }
 
         $correctOption = ['option' => $currentCostumerBankAccount[0]['vigentid'], 'correct_option' => 1];
         array_push($options, $correctOption);
-        shuffle($options);
+        if(count($currentCostumerBankAccount) > 1){
+            shuffle($options);
+        }
 
         if(count($currentCostumerBankAccount) < 1){
             $extinctCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identicationNumber);
@@ -89,17 +98,28 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             if(count($extinctCustomerBankAccount) < 1){
                 $extinctCustomerBankAccount = [['cextentid'=>'Ninguna de las anteriores']];
             }
-            $extinctBankAccounts = $this->cifinCtaExtInterface->getNameEntities($extinctCustomerBankAccount[0]['cextentid']);
+
+            foreach ($extinctCustomerBankAccount as $value) {
+                $customerExtinctEntities[] = $value['cextentid'];
+            }
+
+            $extinctBankAccounts = $this->cifinCtaExtInterface->getNameEntities($customerExtinctEntities);
             $extinctBankAccounts = $extinctBankAccounts->toArray();
-            foreach ($currentBankAccounts as $value) {
+            foreach ($extinctBankAccounts as $value) {
                 $options[] = ['option' => $value['cextentid'], 'correct_option' => 0];
             }
             $correctOption = ['option' => $currentCostumerBankAccount[0]['cextentid'], 'correct_option' => 1];
             array_push($options, $correctOption);
-            shuffle($options);
+            if(count($extinctCustomerBankAccount) > 1){
+                shuffle($options);
+            }
         }
 
 
         return $options;
+    }
+
+    public function getDataQuestionTwo($identificationNumber){
+        
     }
 }

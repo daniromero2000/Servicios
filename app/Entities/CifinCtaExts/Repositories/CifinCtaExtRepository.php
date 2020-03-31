@@ -14,9 +14,9 @@ class CifinCtaExtRepository implements CifinCtaExtRepositoryInterface
         $this->model = $cifinCtaExt;
     }
 
-    public function getNameEntities(){
+    public function getNameEntities($nameEntities){
         try {
-            return $this->model->groupBy('cextentid')->orderByRaw("RAND()")->limit(4)->get(['cextentid']);
+            return $this->model->whereNotIn('cextentid',$nameEntities)->groupBy('cextentid')->orderByRaw("RAND()")->limit(4)->get(['cextentid']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -24,6 +24,6 @@ class CifinCtaExtRepository implements CifinCtaExtRepositoryInterface
     }
 
     public function getCustomerEntityName($identificationNumber){
-        return $this->model->where('cextcedula', $identificationNumber)->groupBy('cextentid')->orderByRaw("RAND()")->limit(1)->get(['cextentid']);
+        return $this->model->where('cextcedula', $identificationNumber)->groupBy('cextentid')->orderByRaw("RAND()")->get(['cextentid']);
     }
 }

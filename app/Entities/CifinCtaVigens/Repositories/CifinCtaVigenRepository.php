@@ -14,9 +14,9 @@ class CifinCtaVigenRepository implements CifinCtaVigenRepositoryInterface
         $this->model = $cifinCtaVigen;
     }
 
-    public function getNameEntities($nameEntity){
+    public function getNameEntities($customerExtinctEntities){
         try {
-            return  $this->model->where('vigentid','!=',$nameEntity)->groupBy('vigentid')->orderByRaw("RAND()")->limit(4)->get(['vigentid']);
+            return  $this->model->whereNotIn('vigentid',$customerExtinctEntities)->groupBy('vigentid')->orderByRaw("RAND()")->limit(4)->get(['vigentid']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -24,6 +24,6 @@ class CifinCtaVigenRepository implements CifinCtaVigenRepositoryInterface
     }
 
     public function getCustomerEntityName($identificationNumber){
-        return $this->model->where('vigcedula', $identificationNumber)->groupBy('vigentid')->orderByRaw("RAND()")->limit(1)->get(['vigentid']);
+        return $this->model->where('vigcedula', $identificationNumber)->groupBy('vigentid')->orderByRaw("RAND()")->get(['vigentid']);
     }
 }
