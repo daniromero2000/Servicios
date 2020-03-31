@@ -72,9 +72,9 @@ class LeadRepository implements LeadRepositoryInterface
                 'name',
                 'created_at',
                 'assessor_id',
+                'expirationDateSoat'
             )->with([
-                'leadStatusesLogs',
-                'leadStatus'
+                'leadStatusesLogs'
             ])->where('assessor_id', $id)
                 ->whereNotIn('state', [2, 5, 6, 9, 4, 7])->get();
             return $datas;

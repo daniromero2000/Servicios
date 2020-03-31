@@ -504,36 +504,58 @@ class DigitalChannelLeadController extends Controller
         $dataSuccess = [];
         $dataWarning = [];
         $dataDanger = [];
+        $expirationDateSoat = [];
 
         $datas = $this->leadInterface->findLeadByAssessorFull($id);
 
         foreach ($datas as $key => $value) {
 
+            if ($datas[$key]->expirationDateSoat != '' && Carbon::now() <= $datas[$key]->expirationDateSoat) {
+                $expirationDateSoat[] = $datas[$key];
+                if (Carbon::now()->diffInMinutes($datas[$key]->expirationDateSoat)) {
+                    if (Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) >= 1 && Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) <= 90) {
+                        $datas[$key]['diference'] =  Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) . ' dias';
+                    }
+                    if (Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) < 1 && Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) >= 0) {
+                        if (Carbon::now()->diffInHours($datas[$key]->expirationDateSoat) > 0) {
+                            $datas[$key]['diference'] =  Carbon::now()->diffInHours($datas[$key]->expirationDateSoat) . ' horas';
+                        } else {
+                            $datas[$key]['diference'] =  Carbon::now()->diffInMinutes($datas[$key]->expirationDateSoat) . ' minutos';
+                        }
+                    }
+                }
+            }
+
+
             $dates[] = $datas[$key]->leadStatusesLogs->last();
 
-            // foreach ($dates as $key2 => $value) {
             if ($dates[$key] != null) {
                 if ($dates[$key]->created_at->diffInDays(Carbon::now()) <= 1) {
+                    if ($dates[$key]->created_at->diffInDays(Carbon::now()) > 0) {
+                        $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dia';
+                    } else {
+                        if ($dates[$key]->created_at->diffInHours(Carbon::now()) > 0) {
+                            $dates[$key]['diference'] =  $dates[$key]->created_at->diffInHours(Carbon::now()) . ' horas';
+                        } else {
+                            $dates[$key]['diference'] =  $dates[$key]->created_at->diffInMinutes(Carbon::now()) . ' minutos';
+                        }
+                    }
                     $dataSuccess[] =  $dates[$key];
-                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dia';
                     $dates[$key]['nameLead'] = $datas[$key]->name;
                 }
                 if ($dates[$key]->created_at->diffInDays(Carbon::now()) > 1 && $dates[$key]->created_at->diffInDays(Carbon::now()) <= 2) {
-                    $dataWarning[] =  $dates[$key];
                     $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
                     $dates[$key]['nameLead'] = $datas[$key]->name;
+                    $dataWarning[] =  $dates[$key];
                 }
                 if ($dates[$key]->created_at->diffInDays(Carbon::now()) >= 3) {
-                    $dataDanger[] =  $dates[$key];
                     $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
                     $dates[$key]['nameLead'] = $datas[$key]->name;
+                    $dataDanger[] =  $dates[$key];
                 }
             }
-            // }
-            // if($datas[$key]-)
-            // $data = $datas
         }
 
-        return ['success' => $dataSuccess, 'warning' => $dataWarning, 'danger' => $dataDanger];
+        return ['success' => $dataSuccess, 'warning' => $dataWarning, 'danger' => $dataDanger, 'expirationDateSoat' => $expirationDateSoat];
     }
 }
