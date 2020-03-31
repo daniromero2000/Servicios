@@ -10,6 +10,8 @@ interface LeadRepositoryInterface
 {
     public function createLead(array $data);
 
+    public function findLeadByAssessorFull($id);
+
     public function getLeadChannel($cedula);
 
     public function findLeadById(int $id): Lead;

@@ -218,4 +218,5 @@
 @section('scriptsJs')
 <script src="{{ asset('js/UpdateInsurancePolicyDebtors.js') }}"></script>
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+
 @endsection

@@ -64,6 +64,18 @@ class CustomerRepository implements CustomerRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+    public function findCustomerByIdForConfronta($identificationNumber)
+    {
+        try {
+            return $this->model->with([
+                'latestCifinScore',
+                'latestIntention',
+                'DebtorInsurance'
+            ])->find($identificationNumber);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 
     public function findCustomerByIdFull($identificationNumber): Customer
     {

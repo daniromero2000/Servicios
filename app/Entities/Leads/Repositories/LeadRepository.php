@@ -63,6 +63,26 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function findLeadByAssessorFull($id)
+    {
+        try {
+
+            $datas = $this->model->select(
+                'id',
+                'name',
+                'created_at',
+                'assessor_id',
+                'expirationDateSoat'
+            )->with([
+                'leadStatusesLogs'
+            ])->where('assessor_id', $id)
+                ->whereNotIn('state', [2, 5, 6, 9, 4, 7])->get();
+            return $datas;
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getLeadChannel($cedula)
     {
         try {

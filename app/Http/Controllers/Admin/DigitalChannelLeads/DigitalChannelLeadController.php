@@ -23,6 +23,7 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
+use App\Events\LeadNotification;
 use App\Liquidator;
 use App\Product;
 use Illuminate\Support\Facades\DB;
@@ -147,6 +148,8 @@ class DigitalChannelLeadController extends Controller
             $lead['STATE'] = 3;
             $lead->save();
         }
+
+        event(new LeadNotification($lead));
 
         $request->session()->flash('message', 'Creación de Lead Exitosa!');
         return redirect()->back();
@@ -493,5 +496,66 @@ class DigitalChannelLeadController extends Controller
     {
         $data = $this->leadInterface->findLeadByTelephone($telephone);
         return $data;
+    }
+
+    public function byLeadNotifications($id)
+    {
+        $dates = [];
+        $dataSuccess = [];
+        $dataWarning = [];
+        $dataDanger = [];
+        $expirationDateSoat = [];
+
+        $datas = $this->leadInterface->findLeadByAssessorFull($id);
+
+        foreach ($datas as $key => $value) {
+
+            if ($datas[$key]->expirationDateSoat != '' && Carbon::now() <= $datas[$key]->expirationDateSoat) {
+                $expirationDateSoat[] = $datas[$key];
+                if (Carbon::now()->diffInMinutes($datas[$key]->expirationDateSoat)) {
+                    if (Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) >= 1 && Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) <= 90) {
+                        $datas[$key]['diference'] =  Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) . ' dias';
+                    }
+                    if (Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) < 1 && Carbon::now()->diffInDays($datas[$key]->expirationDateSoat) >= 0) {
+                        if (Carbon::now()->diffInHours($datas[$key]->expirationDateSoat) > 0) {
+                            $datas[$key]['diference'] =  Carbon::now()->diffInHours($datas[$key]->expirationDateSoat) . ' horas';
+                        } else {
+                            $datas[$key]['diference'] =  Carbon::now()->diffInMinutes($datas[$key]->expirationDateSoat) . ' minutos';
+                        }
+                    }
+                }
+            }
+
+
+            $dates[] = $datas[$key]->leadStatusesLogs->last();
+
+            if ($dates[$key] != null) {
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) <= 1) {
+                    if ($dates[$key]->created_at->diffInDays(Carbon::now()) > 0) {
+                        $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dia';
+                    } else {
+                        if ($dates[$key]->created_at->diffInHours(Carbon::now()) > 0) {
+                            $dates[$key]['diference'] =  $dates[$key]->created_at->diffInHours(Carbon::now()) . ' horas';
+                        } else {
+                            $dates[$key]['diference'] =  $dates[$key]->created_at->diffInMinutes(Carbon::now()) . ' minutos';
+                        }
+                    }
+                    $dataSuccess[] =  $dates[$key];
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                }
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) > 1 && $dates[$key]->created_at->diffInDays(Carbon::now()) <= 2) {
+                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                    $dataWarning[] =  $dates[$key];
+                }
+                if ($dates[$key]->created_at->diffInDays(Carbon::now()) >= 3) {
+                    $dates[$key]['diference'] =  $dates[$key]->created_at->diffInDays(Carbon::now()) . ' dias';
+                    $dates[$key]['nameLead'] = $datas[$key]->name;
+                    $dataDanger[] =  $dates[$key];
+                }
+            }
+        }
+
+        return ['success' => $dataSuccess, 'warning' => $dataWarning, 'danger' => $dataDanger, 'expirationDateSoat' => $expirationDateSoat];
     }
 }
