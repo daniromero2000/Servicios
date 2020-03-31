@@ -78,7 +78,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         foreach ($currentBankAccounts as $value) {
             $options[] = ['option' => $value['vigentid'], 'correct_option' => 0];
         }
-        
+
         $correctOption = ['option' => $currentCostumerBankAccount[0]['vigentid'], 'correct_option' => 1];
         array_push($options, $correctOption);
         shuffle($options);
