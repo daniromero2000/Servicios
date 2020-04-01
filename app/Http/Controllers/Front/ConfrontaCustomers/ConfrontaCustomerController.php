@@ -33,7 +33,7 @@ class ConfrontaCustomerController extends Controller
     public function index()
     {
         return view('confrontaCustomers.form', [
-            'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
+            'notification' => 0,
         ]);
     }
 
@@ -42,15 +42,22 @@ class ConfrontaCustomerController extends Controller
         $customer = $this->customerInterface->findCustomerByIdForConfronta($request->input('numberIdentification'));
         if ($customer) {
             if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {
-                return "hola";
+                return view('confrontaCustomers.form_update', ['customer' => $customer]);
             } else {
-                return "informacion no valida";
+                return view('confrontaCustomers.form', [
+                    'notification' => 1,
+                ]);
             }
         } else {
-            return "chao";
+            return view('confrontaCustomers.form', [
+                'notification' => 1,
+            ]);
         }
     }
-
+    public function show()
+    {
+        return;
+    }
 
     public function getInfoForm()
     {

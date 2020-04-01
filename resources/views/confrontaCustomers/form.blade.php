@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endsection
 @section('content')
 <div class="row ml-0 mr-0 mb-5 mt-5 d-flex justify-content-center">
@@ -20,6 +21,7 @@
         <div class="login-logo">
             <a class="text-decoration-none" style="font-size: 21px;"><b>Actualizar Número Telefonico</b></a>
         </div>
+        <input type="text" id="notification" value="{{$notification}}" hidden>
         <div class="card border-0 shadow-lg">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Diligencie los sigiuentes datos</p>
@@ -86,4 +88,6 @@
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('js/front/ConfrontaCustomers/app.js') }}"></script>
 @endsection
