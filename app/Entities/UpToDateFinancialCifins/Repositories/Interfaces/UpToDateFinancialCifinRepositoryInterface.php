@@ -11,4 +11,8 @@ interface UpToDateFinancialCifinRepositoryInterface
   public function checkCustomerHasVectors($identificationNumber);
 
   public function check6MonthsPaymentVector($identificationNumber);
+
+  public function getCustomerEntityName($identificationNumber);
+
+  public function getNameEntities($nameEntities);
 }

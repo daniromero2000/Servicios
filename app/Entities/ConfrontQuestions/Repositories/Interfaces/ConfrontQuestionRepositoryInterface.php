@@ -11,4 +11,8 @@ interface ConfrontQuestionRepositoryInterface
     public function getConfrontQuestionPhoneChange();
 
     public function getDataQuestionOne($identicationNumber);
+
+    public function getDataQuestionTwo($identificationNumber);
+
+    public function getDataQuestionThree($identificationNumber);
 }

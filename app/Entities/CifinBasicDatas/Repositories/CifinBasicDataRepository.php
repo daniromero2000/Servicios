@@ -51,4 +51,15 @@ class CifinBasicDataRepository implements CifinBasicDataRepositoryInterface
         $charTrim = trim($charItem);
         return $charTrim;
     }
+
+    public function getCityExpedition($identificationNumber){
+        try {
+            return  $this->model->where('tercedula', $identificationNumber)
+                ->where('terconsul', $this->model->where('tercedula', $identificationNumber)->max('terconsul'))
+                ->get(['terlugexp']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 }

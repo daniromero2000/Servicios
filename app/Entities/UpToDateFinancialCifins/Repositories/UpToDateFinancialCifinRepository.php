@@ -112,4 +112,22 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
         $charTrim = trim($charItem);
         return $charTrim;
     }
+
+    public function getCustomerEntityName($identificationNumber){
+        try {
+            return $this->model->where('fdcedula', $identificationNumber)->where('fdlincre', 'TCR')->groupBy('fdnoment')->orderByRaw("RAND()")->get(['fdnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getNameEntities($nameEntities){
+        try {
+            return  $this->model->where('fdlincre', 'TCR')->whereNotIn('fdnoment',$nameEntities)->groupBy('fdnoment')->orderByRaw("RAND()")->limit(4)->get(['fdnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 }

@@ -23,6 +23,15 @@ class CityRepository implements CityRepositoryInterface
         }
     }
 
+    public function getNameDepartments($customerDepartment){
+        try {
+            return  $this->model->where('DEPARTAMENTO', '!=', $customerDepartment)->groupBy('DEPARTAMENTO')->orderByRaw("RAND()")->limit(4)->get(['DEPARTAMENTO']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
     public function getCityByCode($code)
     {
         try {

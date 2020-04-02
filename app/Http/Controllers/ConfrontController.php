@@ -70,7 +70,7 @@ class ConfrontController extends Controller
      */
     public function show($identificationNumber)
     {
-        dd($this->confrontQuestionInterface->getDataQuestionOne($identificationNumber));
+        dd($this->confrontQuestionInterface->getDataQuestionThree($identificationNumber));
         $form = $this->confrontFormInterface->createConfrontForm(['identificationNumber' => $identificationNumber]);
         $questions = $this->confrontQuestionInterface->getConfrontQuestionPhoneChange();
         $questions = $questions->toArray();

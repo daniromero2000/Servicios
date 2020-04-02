@@ -110,6 +110,8 @@ use App\Entities\ConfrontQuestions\Repositories\ConfrontQuestionRepository;
 use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepositoryInterface;
 use App\Entities\ConfrontResults\Repositories\ConfrontResultRepository;
 use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
+use App\Entities\Departments\Repositories\DepartmentRepository;
+use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 
@@ -118,6 +120,11 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function register()
     {
+
+        $this->app->bind(
+            DepartmentRepositoryInterface::class,
+            DepartmentRepository::class
+        );
 
         $this->app->bind(
             CifinCtaExtRepositoryInterface::class,
