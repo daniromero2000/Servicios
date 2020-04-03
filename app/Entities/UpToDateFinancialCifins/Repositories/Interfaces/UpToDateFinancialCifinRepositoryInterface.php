@@ -15,4 +15,8 @@ interface UpToDateFinancialCifinRepositoryInterface
   public function getCustomerEntityName($identificationNumber);
 
   public function getNameEntities($nameEntities);
+
+  public function getCustomerEntityNameHousingCredit($identificationNumber);
+
+  public function getNameEntitiesHousingCredit($nameEntities);
 }

@@ -129,4 +129,22 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
             //throw $th;
         }
     }
+
+    public function getCustomerEntityNameHousingCredit($identificationNumber){
+        try {
+            return $this->model->where('extcedula', $identificationNumber)->where('extlincre', 'VIVI')->groupBy('extnoment')->orderByRaw("RAND()")->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getNameEntitiesHousingCredit($nameEntities){
+        try {
+            return  $this->model->where('extlincre', 'VIVI')->whereNotIn('extnoment',$nameEntities)->groupBy('extnoment')->orderByRaw("RAND()")->limit(4)->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 }

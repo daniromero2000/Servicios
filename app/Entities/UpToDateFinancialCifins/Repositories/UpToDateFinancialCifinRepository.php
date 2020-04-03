@@ -130,4 +130,22 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
             //throw $th;
         }
     }
+
+    public function getCustomerEntityNameHousingCredit($identificationNumber){
+        try {
+            return $this->model->where('fdcedula', $identificationNumber)->where('fdlincre', 'VIVI')->groupBy('fdnoment')->orderByRaw("RAND()")->get(['fdnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getNameEntitiesHousingCredit($nameEntities){
+        try {
+            return  $this->model->where('fdlincre', 'VIVI')->whereNotIn('fdnoment',$nameEntities)->groupBy('fdnoment')->orderByRaw("RAND()")->limit(4)->get(['fdnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 }

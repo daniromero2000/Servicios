@@ -114,6 +114,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         $correctOption = ['option' => $currentCostumerBankAccount[0]['vigentid'], 'correct_option' => 1];
         array_push($options, $correctOption);
+
         if($checkCurrentCostumerBankAccount){
             shuffle($options);
         }
@@ -156,6 +157,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         $options = [];
         $customerFinancialEntities = [];
+        $arrearCustomerFinancialEntities = [];
         $extintCustomerFinancialEntities = [];
         $checkFinancialCustomerCreditCard = true;
         $checkArrearFinancialCustomerCreditCard = true;
@@ -183,7 +185,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $correctOption = ['option' => $financialCustomerCreditCard[0]['fdnoment'], 'correct_option' => 1];
         array_push($options, $correctOption);
 
-        if(count($financialCustomerCreditCard) > 1){
+        if($checkFinancialCustomerCreditCard){
             shuffle($options);
         }
 
@@ -198,10 +200,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             }
 
             foreach ($arrearFinancialCustomerCreditCard as $value) {
-                $extintCustomerFinancialEntities[] = $value['finnoment'];
+                $arrearCustomerFinancialEntities[] = $value['finnoment'];
             }
 
-            $arrearFinancialCustomerCreditCardEntities = $this->cifinFinancialArrearInterface->getNameEntities($extintCustomerFinancialEntities);
+            $arrearFinancialCustomerCreditCardEntities = $this->cifinFinancialArrearInterface->getNameEntities($arrearCustomerFinancialEntities);
             $arrearFinancialCustomerCreditCardEntities = $arrearFinancialCustomerCreditCardEntities->toArray();
 
             foreach ($arrearFinancialCustomerCreditCardEntities as $value) {
@@ -211,7 +213,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $arrearFinancialCustomerCreditCard[0]['finnoment'], 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if(count($arrearFinancialCustomerCreditCard) > 1){
+            if($checkArrearFinancialCustomerCreditCard){
                 shuffle($options);
             }
         }
@@ -250,7 +252,6 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
     public function getDataQuestionThree($identificationNumber){
         // 3.	CUAL ES EL DEPARTAMENTO DE EXPEDICION DE SU DOCUMENTO DE IDENTIDAD
-
         $options = [];
         $checkDepartmentExpedition = true;
 
@@ -280,9 +281,100 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         return $options;
     }
 
-    public function getDataQuestionFour($identicationNumber){
-        //  4.	CON CUAL DE LOS SIGUIENTES BANCOS PRESENTA UN CREDITO DE VIVIENDA._md-datepicker-floating-label
+    public function getDataQuestionFour($identificationNumber){
+        //  4.	CON CUAL DE LOS SIGUIENTES BANCOS PRESENTA UN CREDITO DE VIVIENDA.
+        $options = [];
+        $customerFinancialHousingCreditEntities = [];
+        $customerExtintFinancialHousingCreditEntities = [];
+        $customerArrearFinancialHousingCreditEntities = [];
+        $checkCustomerFinancialHousingCredit = true;
+        $checkCustomerExtintFinancialHousingCredit = true;
+        $checkCustomerArrearFinancialHousingCredit = true;
 
-        
+        $customerFinancialHousingCredit = $this->upToDateFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
+        $customerFinancialHousingCredit = $customerFinancialHousingCredit->toArray();
+
+        if(count($customerFinancialHousingCredit) < 1){
+            $customerFinancialHousingCredit = [['fdnoment' => 'Ninguna de las anteriores']];
+            $checkCustomerFinancialHousingCredit = false;
+        }
+
+        foreach ($customerFinancialHousingCredit as $value) {
+            $customerFinancialHousingCreditEntities[] = $value['fdnoment'];
+        }
+
+        $financialHousingCredit = $this->upToDateFinancialCifinInterface->getNameEntitiesHousingCredit($customerFinancialHousingCreditEntities);
+        $financialHousingCredit = $financialHousingCredit->toArray();
+
+        foreach ($financialHousingCredit as $value) {
+            $options[] = ['option' => $value['fdnoment'], 'correct_option' => 0];
+        }
+
+        $correctOption = ['option' => $customerFinancialHousingCredit[0]['fdnoment'], 'correct_option' => 1];
+        array_push($options, $correctOption);
+
+        if($checkCustomerFinancialHousingCredit){
+            shuffle($options);
+        }
+
+        if($checkCustomerFinancialHousingCredit == false){
+            $options=[];
+            $customerArrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getCustomerEntityNameHousingCredit($identificationNumber);
+            $customerArrearFinancialHousingCredit = $customerArrearFinancialHousingCredit->toArray();
+
+            if(count($customerArrearFinancialHousingCredit) < 1){
+                $customerArrearFinancialHousingCredit = [['finnoment' => 'Ninguna de las anteriores']];
+                $checkCustomerArrearFinancialHousingCredit = false;
+            }
+
+            foreach ($customerArrearFinancialHousingCredit as $value) {
+                $customerArrearFinancialHousingCreditEntities[] = $value['finnoment'];
+            }
+
+            $arrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getNameEntitiesHousingCredit($customerArrearFinancialHousingCreditEntities);
+            $arrearFinancialHousingCredit = $arrearFinancialHousingCredit->toArray();
+
+            foreach ($arrearFinancialHousingCredit as $value) {
+                $options[] = ['option' => $value['finnoment'], 'correct_option' => 0];
+            }
+
+            $correctOption = ['option' => $customerArrearFinancialHousingCredit[0]['finnoment'], 'correct_option' => 1];
+            array_push($options, $correctOption);
+
+            if($checkCustomerArrearFinancialHousingCredit){
+                shuffle($options);
+            }
+        }
+
+        if($checkCustomerFinancialHousingCredit == false && $checkCustomerArrearFinancialHousingCredit == false){
+            $options=[];
+            $customerExtintFinancialHousingCredit = $this->extintFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
+            $customerExtintFinancialHousingCredit = $customerExtintFinancialHousingCredit->toArray();
+
+            if(count($customerExtintFinancialHousingCredit) < 1){
+                $customerExtintFinancialHousingCredit = [['extnoment' => 'Ninguna de las anteriores']];
+                $checkCustomerExtintFinancialHousingCredit = false;
+            }
+
+            foreach ($customerExtintFinancialHousingCredit as $value) {
+                $customerExtintFinancialHousingCreditEntities[] = $value['extnoment'];
+            }
+
+            $extintFinancialHousingCredit = $this->extintFinancialCifinInterface->getNameEntitiesHousingCredit($customerExtintFinancialHousingCreditEntities);
+            $extintFinancialHousingCredit = $extintFinancialHousingCredit->toArray();
+
+            foreach ($extintFinancialHousingCredit as $value) {
+                $options[] = ['option' => $value['extnoment'], 'correct_option' => 0];
+            }
+
+            $correctOption = ['option' => $customerExtintFinancialHousingCredit[0]['extnoment'], 'correct_option' => 1];
+            array_push($options, $correctOption);
+
+            if($checkCustomerExtintFinancialHousingCredit){
+                shuffle($options);
+            }
+        }
+
+        return $options;
     }
 }
