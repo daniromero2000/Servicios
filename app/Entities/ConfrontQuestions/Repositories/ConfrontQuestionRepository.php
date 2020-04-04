@@ -11,6 +11,8 @@ use App\Entities\ConfrontQuestions\ConfrontQuestion;
 use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepositoryInterface;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
+use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
@@ -21,6 +23,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
     private $upToDateFinancialCifinInterface, $extintFinancialCifinInterface, $cifinFinancialArrearInterface;
     private $cifinBasicDataInterface;
     private $cityInterface, $departmentInterface;
+    private $ubicaInterface, $ubicaAddressInterface;
 
     private $columns = [
         'id',
@@ -39,7 +42,9 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         CifinFinancialArrearRepositoryInterface $cifinFinancialArrearRepositoryInterface,
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         CityRepositoryInterface $cityRepositoryInterface,
-        DepartmentRepositoryInterface $departmentRepositoryInterface
+        DepartmentRepositoryInterface $departmentRepositoryInterface,
+        UbicaRepositoryInterface $ubicaRepositoryInterface,
+        UbicaAddressRepositoryInterface $ubicaAddressRepositoryInterface
     ) {
         $this->model                           = $confrontQuestion;
         $this->cifinCtaVigenInterface          = $cifinCtaVigenRepositoryInterface;
@@ -50,6 +55,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $this->cifinBasicDataInterface         = $cifinBasicDataRepositoryInterface;
         $this->cityInterface                   = $cityRepositoryInterface;
         $this->departmentInterface             = $departmentRepositoryInterface;
+        $this->ubicaInterface                  = $ubicaRepositoryInterface;
+        $this->ubicaAddressInterface           = $ubicaAddressRepositoryInterface;
     }
 
     public function createConfrontQuestion($data){
@@ -85,7 +92,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
     }
 
-    public function getDataQuestionOne($identicationNumber){
+    public function getDataQuestionOne($identificationNumber){
         // 1.	CON CUAL DE LAS SIGUIENTES ENTIDADES TIENE O HA TENIDO CUENTA DE AHORROS
 
         $options = [];
@@ -94,7 +101,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $checkCurrentCostumerBankAccount = true;
         $checkExtintCustomerBankAccount = true;
 
-        $currentCostumerBankAccount = $this->cifinCtaVigenInterface->getCustomerEntityName($identicationNumber);
+        $currentCostumerBankAccount = $this->cifinCtaVigenInterface->getCustomerEntityName($identificationNumber);
         $currentCostumerBankAccount = $currentCostumerBankAccount->toArray();
 
         if(count($currentCostumerBankAccount) < 1){
@@ -121,7 +128,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkCurrentCostumerBankAccount == false){
             $options = [];
-            $extintCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identicationNumber);
+            $extintCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identificationNumber);
             $extintCustomerBankAccount = $extintCustomerBankAccount->toArray();
 
             if(count($extintCustomerBankAccount) < 1){
@@ -283,13 +290,13 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
     public function getDataQuestionFour($identificationNumber){
         //  4.	CON CUAL DE LOS SIGUIENTES BANCOS PRESENTA UN CREDITO DE VIVIENDA.
-        $options = [];
-        $customerFinancialHousingCreditEntities = [];
+        $options                                      = [];
+        $customerFinancialHousingCreditEntities       = [];
         $customerExtintFinancialHousingCreditEntities = [];
         $customerArrearFinancialHousingCreditEntities = [];
-        $checkCustomerFinancialHousingCredit = true;
-        $checkCustomerExtintFinancialHousingCredit = true;
-        $checkCustomerArrearFinancialHousingCredit = true;
+        $checkCustomerFinancialHousingCredit          = true;
+        $checkCustomerExtintFinancialHousingCredit    = true;
+        $checkCustomerArrearFinancialHousingCredit    = true;
 
         $customerFinancialHousingCredit = $this->upToDateFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
         $customerFinancialHousingCredit = $customerFinancialHousingCredit->toArray();
@@ -376,5 +383,39 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
 
         return $options;
+    }
+
+    public function getDataQuestionFive($identificationNumber){
+        // 5. CON CUAL DE LAS SIGUIENTES DIRECCIONES HA TENIDO RELACION
+        $options              = [];
+        $checkCustomerAddress = true;
+        $customerAddresses    = [];
+
+        $ubicaAddress = $this->ubicaInterface->getUbicaConsultation($identificationNumber);
+        if(count($ubicaAddress->toArray()) > 1){
+            $getCustomerAddresses = $ubicaAddress[0]->ubicAddress;
+            $getCustomerAddresses = $getCustomerAddresses->toArray();
+        }else{
+            $checkCustomerAddress = false;
+            $getCustomerAddresses = [['ubidireccion' => 'Ninguna de las anteriores']];
+        }
+
+        foreach ($getCustomerAddresses as $value) {
+            $customerAddresses[] = $value['ubidireccion'];
+        }
+
+        $addresses = $this->ubicaAddressInterface->getAddresses($customerAddresses);
+
+        foreach ($addresses as $value) {
+            $options[] = ['option' => $value['ubidireccion'], 'correct_option' => 0];
+        }
+
+        array_push($options, ['option' => $getCustomerAddresses[0]['ubidireccion'], 'correct_option' => 1]);
+
+        if($checkCustomerAddress){
+            shuffle($options);
+        }
+
+        dd($options);
     }
 }

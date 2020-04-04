@@ -114,12 +114,19 @@ use App\Entities\Departments\Repositories\DepartmentRepository;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
+use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
+use App\Entities\UbicaAddresses\Repositories\UbicaAddressRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+
+        $this->app->bind(
+            UbicaAddressRepositoryInterface::class,
+            UbicaAddressRepository::class
+        );
 
         $this->app->bind(
             DepartmentRepositoryInterface::class,

@@ -38,7 +38,7 @@ class Ubica extends Model
 
     public function ubicAddress()
     {
-        return $this->hasOne(UbicaAddress::class, 'ubiconsul');
+        return $this->hasMany(UbicaAddress::class, 'ubiconsul')->orderByRaw("RAND()");
     }
 
     public function ubicEmails()

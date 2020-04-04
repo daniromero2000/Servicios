@@ -19,7 +19,17 @@ class UbicaRepository implements UbicaRepositoryInterface
     {
         try {
             return $this->model->where('cedula', $identificationNumber)
-                ->orderBy('consec', 'desc')->get(['fecha'])->first();
+                ->orderBy('consec', 'desc')->get(['fecha', 'consec'])->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function getUbicaConsultation($identificationNumber)
+    {
+        try {
+            return $this->model->where('cedula', $identificationNumber)
+                ->orderBy('consec', 'desc')->get();
         } catch (QueryException $e) {
             dd($e);
         }
