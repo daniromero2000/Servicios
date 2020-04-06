@@ -116,12 +116,19 @@ use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositor
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
 use App\Entities\UbicaAddresses\Repositories\UbicaAddressRepository;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\UbicaCellPhoneRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+
+        $this->app->bind(
+            UbicaCellPhoneRepositoryInterface::class,
+            UbicaCellPhoneRepository::class
+        );
 
         $this->app->bind(
             UbicaAddressRepositoryInterface::class,

@@ -19,4 +19,6 @@ interface ConfrontQuestionRepositoryInterface
     public function getDataQuestionFour($identificationNumber);
 
     public function getDataQuestionFive($identificationNumber);
+
+    public function getDataQuestionSix($identificationNumber);
 }

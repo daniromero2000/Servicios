@@ -12,6 +12,7 @@ use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepos
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use Illuminate\Database\QueryException;
@@ -23,7 +24,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
     private $upToDateFinancialCifinInterface, $extintFinancialCifinInterface, $cifinFinancialArrearInterface;
     private $cifinBasicDataInterface;
     private $cityInterface, $departmentInterface;
-    private $ubicaInterface, $ubicaAddressInterface;
+    private $ubicaInterface, $ubicaAddressInterface, $ubicaCellPhoneInterface;
 
     private $columns = [
         'id',
@@ -44,7 +45,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         CityRepositoryInterface $cityRepositoryInterface,
         DepartmentRepositoryInterface $departmentRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
-        UbicaAddressRepositoryInterface $ubicaAddressRepositoryInterface
+        UbicaAddressRepositoryInterface $ubicaAddressRepositoryInterface,
+        UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface
     ) {
         $this->model                           = $confrontQuestion;
         $this->cifinCtaVigenInterface          = $cifinCtaVigenRepositoryInterface;
@@ -57,6 +59,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $this->departmentInterface             = $departmentRepositoryInterface;
         $this->ubicaInterface                  = $ubicaRepositoryInterface;
         $this->ubicaAddressInterface           = $ubicaAddressRepositoryInterface;
+        $this->ubicaCellPhoneInterface         = $ubicaCellPhoneRepositoryInterface;
     }
 
     public function createConfrontQuestion($data){
@@ -417,5 +420,40 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
 
         dd($options);
+    }
+
+    public function getDataQuestionSix($identificationNumber){
+        // 6. CON CUAL DE LOS SIGUIENTES NUMEROS DE TELEFONO HA TENIDO ALGUNA RELACION
+        $options             = [];
+        $checkCustomerCellPhones = true;
+        $customerCellPhones      = [];
+
+        $ubicaCellPhones = $this->ubicaInterface->getUbicaConsultation($identificationNumber);
+        if(count($ubicaCellPhones->toArray()) > 1){
+            $getCustomerCellPhones = $ubicaCellPhones[0]->ubicCellPhones;
+            $getCustomerCellPhones = $getCustomerCellPhones->toArray();
+        }else{
+            $checkCustomerCellPhones = false;
+            $getCustomerCellPhones = [['ubicelular' => 'Ninguna de las anteriores']];
+        }
+
+        foreach ($getCustomerCellPhones as $value) {
+            $customerCellPhones[] = $value['ubicelular'];
+        }
+
+        $cellPhones = $this->ubicaCellPhoneInterface->getCellPhones($customerCellPhones);
+        $cellPhones = $cellPhones->toArray();
+
+        foreach ($cellPhones as $value) {
+            $options[] = ['option' => $value['ubicelular'], 'correct_option' => 0];
+        }
+
+        array_push($options, ['option' =>  $getCustomerCellPhones[0]['ubicelular'], 'correct_option' => 1]);
+
+        if($checkCustomerCellPhones){
+            shuffle($options);
+        }
+
+        return $options;
     }
 }
