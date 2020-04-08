@@ -419,7 +419,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             shuffle($options);
         }
 
-        dd($options);
+        return $options;
     }
 
     public function getDataQuestionSix($identificationNumber){

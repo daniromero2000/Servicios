@@ -70,7 +70,8 @@ class ConfrontController extends Controller
      */
     public function show($identificationNumber)
     {
-        dd($this->confrontQuestionInterface->getDataQuestionSix($identificationNumber));
+        $confrontForm = [];
+
         $form = $this->confrontFormInterface->createConfrontForm(['identificationNumber' => $identificationNumber]);
         $questions = $this->confrontQuestionInterface->getConfrontQuestionPhoneChange();
         $questions = $questions->toArray();
@@ -80,12 +81,62 @@ class ConfrontController extends Controller
         while (count($formQuestions) < 5) {
             $rand = rand(0,$totalQuestions-1);
             if(isset($questions[$rand])){
-                $formQuestions[] = $questions[$rand];
-                $this->confrontFormQuestionInterface->createConfrontFormQuestion(['confront_question_id' => $questions[$rand]['id'], 'confront_form_id' => $form->id]);
+                $formQuestions[] = ['confront_question_id'=> $questions[$rand]['id']];
                 unset($questions[$rand]);
             }
         }
-        dd($formQuestions);
+        $formQuestions = $form->questions()->createMany($formQuestions);
+
+        foreach ($formQuestions as $question) {
+            $optionsForm = [];
+            $questionOptions = [];
+            $getOptions = $this->getOptionsQuestion($question->confront_question_id, $identificationNumber);
+            $createOptions = $question->options()->createMany($getOptions);
+            $options = $createOptions->toarray();
+
+            foreach ($options as $option) {
+                $questionOptions[] = ['optionId' => $option['id'], 'option' => $option['option']];
+            }
+            $confrontForm[] = [
+                'question_id' => $question->id,
+                'question' => $question->confrontQuestion->question,
+                'options' => $questionOptions
+            ];
+        }
+
+        dd($confrontForm);
+    }
+
+    private function getOptionsQuestion($questionId, $identificationNumber){
+        $options = [];
+        switch ($questionId) {
+            case 1:
+                $options = $this->confrontQuestionInterface->getDataQuestionOne($identificationNumber);
+                break;
+
+            case 2:
+                $options = $this->confrontQuestionInterface->getDataQuestionTwo($identificationNumber);
+                break;
+
+            case 3:
+                $options = $this->confrontQuestionInterface->getDataQuestionThree($identificationNumber);
+                break;
+
+            case 4:
+                $options = $this->confrontQuestionInterface->getDataQuestionFour($identificationNumber);
+                break;
+
+            case 5:
+
+                $options = $this->confrontQuestionInterface->getDataQuestionFive($identificationNumber);
+                break;
+
+            case 6:
+                $options = $this->confrontQuestionInterface->getDataQuestionSix($identificationNumber);
+                break;
+        }
+
+        return $options;
     }
 
     /**

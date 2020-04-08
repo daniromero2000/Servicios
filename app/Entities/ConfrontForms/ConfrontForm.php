@@ -23,7 +23,7 @@ class ConfrontForm extends Model
 
     public function questions()
     {
-        return $this->hasMany(ConfrontFormQuestion::class);
+        return $this->hasMany(ConfrontFormQuestion::class)->with(['options', 'confrontQuestion']);
     }
 
     public function answers()
