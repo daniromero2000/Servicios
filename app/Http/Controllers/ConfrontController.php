@@ -104,7 +104,7 @@ class ConfrontController extends Controller
             ];
         }
 
-        dd($confrontForm);
+        return $confrontForm;
     }
 
     private function getOptionsQuestion($questionId, $identificationNumber){
