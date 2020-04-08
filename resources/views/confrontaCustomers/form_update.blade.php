@@ -14,6 +14,7 @@ dd($customer);
 @endsection
 @section('content')
 
+<input type="text" value="{{$notification}}" id="notification" hidden>
 @include('layouts.form.ConfrontaCustomersUpdate')
 
 @endsection

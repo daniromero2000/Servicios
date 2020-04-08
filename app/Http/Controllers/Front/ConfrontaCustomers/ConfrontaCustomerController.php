@@ -42,7 +42,8 @@ class ConfrontaCustomerController extends Controller
         $customer = $this->customerInterface->findCustomerByIdForConfronta($request->input('numberIdentification'));
         if ($customer) {
             if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {
-                return view('confrontaCustomers.form_update', ['customer' => $customer]);
+
+                return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 0]);
             } else {
                 return view('confrontaCustomers.form', [
                     'notification' => 1,
@@ -54,9 +55,10 @@ class ConfrontaCustomerController extends Controller
             ]);
         }
     }
-    public function show()
+    public function update(Request $request, $id)
     {
-        return;
+        $customer = $this->customerInterface->updateOrCreateCustomer($request->except(['_token', '_method']));
+        return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 2]);;
     }
 
     public function getInfoForm()
