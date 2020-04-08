@@ -38,13 +38,27 @@ class ConfrontController extends Controller
      */
     public function index()
     {
-        $request['523'] = 1;
-        $request['524'] = 1;
-        $request['525'] = 1;
+        $hits = 0;
+
+        $request['548'] = 188;
+        $request['549'] = 196;
+        $request['550'] = 199;
+        $request['551'] = 203;
+        $request['552'] = 209;
+        $formId = 124;
 
         foreach ($request as $questionId => $optionId) {
-            dd($optionId);
+            $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $questionId, 'confront_form_option_id' => $optionId];
+            $this->confrontFormAnswerInterface->createConfrontFormAnswer($answer);
+
+            $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($questionId);
+
+            if($correctOption[0]->id === $optionId){
+                $hits ++;
+            }
         }
+
+        return $hits;
     }
 
     /**
@@ -65,14 +79,24 @@ class ConfrontController extends Controller
      */
     public function store(Request $request)
     {
-        $request['523'] = 1;
-        $request['524'] = 1;
-        $request['525'] = 1;
+        $hits = 0;
 
-        foreach ($$request as $questionId => $optionId) {
-            dd("Siiii");
+        $questions = $request->input();
+        $formId = $request->input('formId');
+
+        foreach ($questions as $questionId => $optionId) {
+            if($questionId != 'formId'){
+                $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $questionId, 'confront_form_option_id' => $optionId];
+                $this->confrontFormAnswerInterface->createConfrontFormAnswer($answer);
+                $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($questionId);
+
+                if($correctOption[0]->id === $optionId){
+                    $hits ++;
+                }
+            }
         }
 
+        return $hits;
     }
 
     /**
