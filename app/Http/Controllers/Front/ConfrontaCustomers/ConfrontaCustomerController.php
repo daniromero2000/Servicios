@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ConfrontraCustomerController extends Controller
+class ConfrontaCustomerController extends Controller
 {
     private $customerInterface, $subsidiaryInterface, $customerCellPhoneInterface, $cityInterface;
 
