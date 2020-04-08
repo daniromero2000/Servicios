@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 class UbicaCellPhoneRepository implements UbicaCellPhoneRepositoryInterface
 {
     public function __construct(
-        UbicaCellPhone $UbicaCellPhone
+        UbicaCellPhone $ubicaCellPhone
     ) {
-        $this->model = $UbicaCellPhone;
+        $this->model = $ubicaCellPhone;
     }
 
     public function getLastUbicaCellPhoneConsultation($identificationNumber)
@@ -24,6 +24,15 @@ class UbicaCellPhoneRepository implements UbicaCellPhoneRepositoryInterface
             dd($e);
         }
     }
+
+    public function getCellPhones($customerCellPhone){
+		try {
+			return  $this->model->whereNotIn('ubicelular',$customerCellPhone)->groupBy('ubicelular')->orderByRaw("RAND()")->limit(4)->get(['ubicelular']);
+		} catch (QueryException $e) {
+			dd($e);
+			//throw $th;
+		}
+	}
 
     public function validateDateConsultaUbicaCellPhone($identificationNumber, $daysToIncrement)
     {

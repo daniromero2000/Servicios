@@ -76,6 +76,10 @@ use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusReposi
 use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Entities\Channels\Repositories\ChannelRepository;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
+use App\Entities\CifinCtaExts\Repositories\CifinCtaExtRepository;
+use App\Entities\CifinCtaExts\Repositories\Interfaces\CifinCtaExtRepositoryInterface;
+use App\Entities\CifinCtaVigens\Repositories\CifinCtaVigenRepository;
+use App\Entities\CifinCtaVigens\Repositories\Interfaces\CifinCtaVigenRepositoryInterface;
 use App\Entities\CustomerProfessions\Repositories\CustomerProfessionRepository;
 use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
 use App\Entities\Services\Repositories\ServiceRepository;
@@ -94,17 +98,93 @@ use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRep
 use App\Entities\TemporaryCustomers\Repositories\TemporaryCustomerRepository;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\CodebtorRepository;
+use App\Entities\ConfrontFormAnswers\Repositories\ConfrontFormAnswerRepository;
+use App\Entities\ConfrontFormAnswers\Repositories\Interfaces\ConfrontFormAnswerRepositoryInterface;
+use App\Entities\ConfrontFormOptions\Repositories\ConfrontFormOptionRepository;
+use App\Entities\ConfrontFormOptions\Repositories\Interfaces\ConfrontFormOptionRepositoryInterface;
+use App\Entities\ConfrontFormQuestions\Repositories\ConfrontFormQuestionRepository;
+use App\Entities\ConfrontFormQuestions\Repositories\Interfaces\ConfrontFormQuestionRepositoryInterface;
+use App\Entities\ConfrontForms\Repositories\ConfrontFormRepository;
+use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
+use App\Entities\ConfrontQuestions\Repositories\ConfrontQuestionRepository;
+use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepositoryInterface;
+use App\Entities\ConfrontResults\Repositories\ConfrontResultRepository;
+use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
+use App\Entities\Departments\Repositories\DepartmentRepository;
+use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
+use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
+use App\Entities\UbicaAddresses\Repositories\UbicaAddressRepository;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\UbicaCellPhoneRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
+
     public function register()
     {
+
+        $this->app->bind(
+            UbicaCellPhoneRepositoryInterface::class,
+            UbicaCellPhoneRepository::class
+        );
+
+        $this->app->bind(
+            UbicaAddressRepositoryInterface::class,
+            UbicaAddressRepository::class
+        );
+
+        $this->app->bind(
+            DepartmentRepositoryInterface::class,
+            DepartmentRepository::class
+        );
+
+        $this->app->bind(
+            CifinCtaExtRepositoryInterface::class,
+            CifinCtaExtRepository::class
+        );
+
+        $this->app->bind(
+            CifinCtaVigenRepositoryInterface::class,
+            CifinCtaVigenRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontResultRepositoryInterface::class,
+            ConfrontResultRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontQuestionRepositoryInterface::class,
+            ConfrontQuestionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormRepositoryInterface::class,
+            ConfrontFormRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormQuestionRepositoryInterface::class,
+            ConfrontFormQuestionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormOptionRepositoryInterface::class,
+            ConfrontFormOptionRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontFormAnswerRepositoryInterface::class,
+            ConfrontFormAnswerRepository::class
+        );
+
         $this->app->bind(
             SecondCodebtorRepositoryInterface::class,
             SecondCodebtorRepository::class
         );
+
         $this->app->bind(
             CodebtorRepositoryInterface::class,
             CodebtorRepository::class

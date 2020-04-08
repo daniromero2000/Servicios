@@ -7,6 +7,9 @@
     | routes are loaded by the RouteServiceProvider within a group which
     | contains the "web" middleware group. Now create something great!
 */
+
+Route::resource('confrontInHouse', 'ConfrontController');
+
 Route::get('/', function () {
     $sliders = collect([
         ['img' => 'tarjetaCreditoOportuya.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Obtén beneficios que otros no tienen con <br /> nuestra tarjeta de crédito Oportuya</p>', 'textoBoton' => 'Solicita tu tarjeta ya', 'title' => 'Tarjeta Oportuya', 'color' => '#1d84c3', 'position_text' => 'bottom', 'enlace' => '/oportuya'],

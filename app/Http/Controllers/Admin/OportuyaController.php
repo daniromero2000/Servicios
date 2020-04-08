@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
 use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,13 +12,16 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 class OportuyaController extends Controller
 {
     private $leadInterface, $subsidiaryInterface;
+    private $formInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
-        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        ConfrontFormRepositoryInterface $confrontFormRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
+        $this->formInterface       = $confrontFormRepositoryInterface;
     }
 
     public function index()

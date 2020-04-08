@@ -6,6 +6,8 @@ interface UbicaCellPhoneRepositoryInterface
 {
     public function getLastUbicaCellPhoneConsultation($identificationNumber);
 
+    public function getCellPhones($customerCellPhone);
+
     public function createConsultaUbicaCellPhone($infoBdua, $identificationNumber);
 
     public function validateConsultaUbicaCellPhone($identificationNumber, $names, $lastName, $dateExpedition);

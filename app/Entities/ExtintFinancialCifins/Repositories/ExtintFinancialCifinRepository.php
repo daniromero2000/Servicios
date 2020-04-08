@@ -111,4 +111,40 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
         $charTrim = trim($charItem);
         return $charTrim;
     }
+
+    public function getCustomerEntityName($identificationNumber){
+        try {
+            return $this->model->where('extcedula', $identificationNumber)->where('extlincre', 'TCR')->groupBy('extnoment')->orderByRaw("RAND()")->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getNameEntities($nameEntities){
+        try {
+            return  $this->model->where('extlincre', 'TCR')->whereNotIn('extnoment',$nameEntities)->groupBy('extnoment')->orderByRaw("RAND()")->limit(4)->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getCustomerEntityNameHousingCredit($identificationNumber){
+        try {
+            return $this->model->where('extcedula', $identificationNumber)->where('extlincre', 'VIVI')->groupBy('extnoment')->orderByRaw("RAND()")->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
+
+    public function getNameEntitiesHousingCredit($nameEntities){
+        try {
+            return  $this->model->where('extlincre', 'VIVI')->whereNotIn('extnoment',$nameEntities)->groupBy('extnoment')->orderByRaw("RAND()")->limit(4)->get(['extnoment']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 }
