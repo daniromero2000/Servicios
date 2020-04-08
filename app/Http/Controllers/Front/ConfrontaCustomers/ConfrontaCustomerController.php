@@ -39,7 +39,7 @@ class ConfrontaCustomerController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->input());
+        // dd($request->input());
         $customer = $this->customerInterface->findCustomerByIdForConfronta($request->input('numberIdentification'));
         if ($customer) {
             if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {

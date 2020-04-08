@@ -80,7 +80,7 @@ $(document).ready(function () {
         var headers = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
 
         $.ajax({
-            url: '/testConfronta',
+            url: '/confrontInHouse',
             type: 'POST',
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             data: { message: $("#formQuestions").serializeArray() },
