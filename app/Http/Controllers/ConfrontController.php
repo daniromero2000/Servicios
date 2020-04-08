@@ -38,7 +38,13 @@ class ConfrontController extends Controller
      */
     public function index()
     {
-        //
+        $request['523'] = 1;
+        $request['524'] = 1;
+        $request['525'] = 1;
+
+        foreach ($request as $questionId => $optionId) {
+            dd($optionId);
+        }
     }
 
     /**
@@ -59,6 +65,13 @@ class ConfrontController extends Controller
      */
     public function store(Request $request)
     {
+        $request['523'] = 1;
+        $request['524'] = 1;
+        $request['525'] = 1;
+
+        foreach ($$request as $questionId => $optionId) {
+            dd("Siiii");
+        }
 
     }
 
@@ -97,12 +110,14 @@ class ConfrontController extends Controller
             foreach ($options as $option) {
                 $questionOptions[] = ['optionId' => $option['id'], 'option' => $option['option']];
             }
-            $confrontForm[] = [
+            $confrontForm['questions'][] = [
                 'question_id' => $question->id,
                 'question' => $question->confrontQuestion->question,
                 'options' => $questionOptions
             ];
         }
+
+        $confrontForm['formId'] = $form->id;
 
         return $confrontForm;
     }

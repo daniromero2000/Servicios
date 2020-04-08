@@ -40,4 +40,13 @@ class ConfrontFormOptionRepository implements ConfrontFormOptionRepositoryInterf
             abort(503, $e->getMessage());
         }
     }
+
+    public function getQuestionCorrectOption($questionId)
+    {
+        try {
+            return $this->model->where('confront_form_question_id', $questionId)->where('correct_option', 1)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

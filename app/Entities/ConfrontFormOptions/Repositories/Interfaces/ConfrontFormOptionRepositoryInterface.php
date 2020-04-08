@@ -7,4 +7,6 @@ interface ConfrontFormOptionRepositoryInterface
     public function createConfrontFormOption($data);
 
     public function getAllConfrontFormOptions();
+
+    public function getQuestionCorrectOption($questionId);
 }
