@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'testConfronta')
 @section('metaTags')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('linkStyleSheets')
 <!-- Font Awesome -->
@@ -19,10 +20,9 @@ dd($customer);
 
 @endsection
 @section('scriptsJs')
-<!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <script src="{{ asset('js/front/ConfrontaCustomers/app.js') }}"></script>
+<script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 @endsection
