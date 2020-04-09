@@ -38,13 +38,7 @@ class ConfrontController extends Controller
      */
     public function index()
     {
-        $request['523'] = 1;
-        $request['524'] = 1;
-        $request['525'] = 1;
 
-        foreach ($request as $questionId => $optionId) {
-            dd($optionId);
-        }
     }
 
     /**
@@ -65,14 +59,23 @@ class ConfrontController extends Controller
      */
     public function store(Request $request)
     {
-        $request['523'] = 1;
-        $request['524'] = 1;
-        $request['525'] = 1;
+        $dataQuestions = $request->input();
+        $questions = $dataQuestions['questions'];
+        $hits = 0;
 
-        foreach ($$request as $questionId => $optionId) {
-            dd("Siiii");
+        foreach ($questions as $key => $value) {
+            if($value['name'] == 'formId'){
+                $formId = $value['value'];
+            }else{
+                $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $value['name'], 'confront_form_option_id' => $value['value']];
+                $this->confrontFormAnswerInterface->createConfrontFormAnswer($answer);
+                $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($value['name']);
+                if($correctOption[0]->id == $value['value']){
+                    $hits ++;
+                }
+            }
         }
-
+        return $hits;
     }
 
     /**
