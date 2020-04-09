@@ -26,7 +26,7 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Diligencie los sigiuentes datos</p>
 
-                <form action="testConfronta" method="POST">
+                <form action="/testConfronta" method="POST">
                     @csrf
 
                     <label for=" inputEmail4">Tipo de Identificación</label>

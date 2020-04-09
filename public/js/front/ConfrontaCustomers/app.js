@@ -38,8 +38,9 @@ $(document).ready(function () {
             setTimeout(() => {
                 $('#confrontaForm').hide();
                 var htmlConfronta = '<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <br> <span>Cargando...</span>';
-                negarConfronta();
-            }, 60000);
+                $('#response').html(htmlConfronta);
+
+            }, 3000);
             console.log(data.questions)
             var htmlConfronta = '<div class="text-left"> <form id="formQuestions"> <input type="text" value="' + data.formId + '" name="formId" hidden>'
             var formulario = ""
