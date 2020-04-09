@@ -79,23 +79,22 @@ class ConfrontController extends Controller
      */
     public function store(Request $request)
     {
+        $dataQuestions = $request->input();
+        $questions = $dataQuestions['questions'];
         $hits = 0;
 
-        $questions = $request->input();
-        $formId = $request->input('formId');
-
-        foreach ($questions as $questionId => $optionId) {
-            if($questionId != 'formId'){
-                $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $questionId, 'confront_form_option_id' => $optionId];
+        foreach ($questions as $key => $value) {
+            if($value['name'] == 'formId'){
+                $formId = $value['value'];
+            }else{
+                $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $value['name'], 'confront_form_option_id' => $value['value']];
                 $this->confrontFormAnswerInterface->createConfrontFormAnswer($answer);
-                $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($questionId);
-
-                if($correctOption[0]->id === $optionId){
+                $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($value['name']);
+                if($correctOption[0]->id == $value['value']){
                     $hits ++;
                 }
             }
         }
-
         return $hits;
     }
 
