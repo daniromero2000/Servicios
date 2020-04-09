@@ -58,18 +58,16 @@
                                 </div>
                             </div>
                         </form>
-
+                        {{-- <button type="button" id="timer"> hola</button> --}}
                     </div>
 
-                    <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
-                        aria-hidden="true">
+                    <div id="my-modal" class="modal fade" tabindex="-1" data-backdrop="static" role="dialog"
+                        aria-labelledby="my-modal-title" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="my-modal-title">Preguntas de Seguridad</h5>
-                                    <button class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <div id="timer" style="position: absolute;right: 4%;top: 0.7%;"></div>
                                 </div>
                                 <div class="modal-body text-center" id="response">
                                     <div class="spinner-border text-primary" role="status">
@@ -79,7 +77,7 @@
                                     <span>Cargando...</span>
                                 </div>
                                 <div class="modal-footer">
-                                    <div class="row">
+                                    <div class="row ">
                                         <div class="col-4">
                                             <a id="confrontaForm" class="btn btn-primary text-white">Enviar</a>
                                         </div>
