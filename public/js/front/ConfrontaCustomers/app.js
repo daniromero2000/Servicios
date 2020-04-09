@@ -35,12 +35,12 @@ $(document).ready(function () {
 
         var identification = $('#CEDULA').val();
         $.get("/confrontInHouse/" + identification, function (data) {
-            setTimeout(() => {
-                $('#confrontaForm').hide();
-                var htmlConfronta = '<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <br> <span>Cargando...</span>';
-                $('#response').html(htmlConfronta);
+            // setTimeout(() => {
+            //     $('#confrontaForm').hide();
+            //     var htmlConfronta = '<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span> </div> <br> <span>Cargando...</span>';
+            //     $('#response').html(htmlConfronta);
 
-            }, 3000);
+            // }, 3000);
             console.log(data.questions)
             var htmlConfronta = '<div class="text-left"> <form id="formQuestions"> <input type="text" value="' + data.formId + '" name="formId" hidden>'
             var formulario = ""
