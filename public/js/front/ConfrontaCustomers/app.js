@@ -6,7 +6,6 @@ $(document).ready(function () {
     $(function () {
         var typeNotification = $('#notification').val();
 
-        // alert(typeNotification)
         if (typeNotification == 1) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -37,9 +36,6 @@ $(document).ready(function () {
     $("#confronta").click(function () {
 
         var identification = $('#CEDULA').val();
-        // console.log($("#customerData").serializeArray()[0].value != '');
-        // console.log($("#CELULAR").val());
-
         if ($("#CELULAR").val() == '' || $("#DIRECCION").val() == '' || $("#EMAIL").val() == '') {
             const Toast = Swal.mixin({
                 toast: true,
@@ -52,7 +48,6 @@ $(document).ready(function () {
             })
         } else {
             $.get("/confrontInHouse/" + identification, function (data) {
-                // timeWait(true);
                 startTimer();
 
                 console.log(data.questions)
@@ -113,14 +108,15 @@ $(document).ready(function () {
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 data: { questions: $("#formQuestions").serializeArray() },
                 success: function (response) {
-                    var htmlConfrontaResponse = '<div class="row justify-content-center"><div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/2666/2666505.svg" alt="" style=" width: 20%; margin-top: 10%; margin-right: 3%; " />  <span class="text-secondary">Resultado: ' + response + ' aciertos</span> </div><div class="col-12"> ';
+                    var htmlConfrontaResponse = '<div class="row justify-content-center">';
 
-                    if (response < 4) {
-                        htmlConfrontaResponse += ' <span class="text-secondary"> Debe volver a verificar la información </span>'
+                    if (response <= 4) {
+                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/753/753345.svg" alt="" style=" width: 14%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Incorrecto </span> </div><div class="col-12"> <label for="" style=" font-size: 16px >Debe volver a verificar la información <span class="color-red">*</span></label>'
+                        // <span class="text-secondary"> Debe volver a verificar la información </span>
                         $('#updateDataFailed').show();
-
                     } else {
-                        htmlConfrontaResponse += ' <span class="text-secondary"> Ya puede actualizar sus datos</span>'
+                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 14%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Exitoso </span> </div><div class="col-12"> <label for="" style=" font-size: 16px>Ya puede actualizar sus datos <span class="color-red">*</span></label> '
+                        // <span class="text-secondary"> Ya puede actualizar sus datos </span>
                         $('#updateData').show();
                     }
                     htmlConfrontaResponse += '  </div> </div>'

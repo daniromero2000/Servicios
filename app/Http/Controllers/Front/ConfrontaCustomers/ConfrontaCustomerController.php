@@ -64,7 +64,6 @@ class ConfrontaCustomerController extends Controller
         }
 
         $customer = $this->customerInterface->updateOrCreateCustomer($datas);
-        // dd($customer);
         return $customer;
     }
 
