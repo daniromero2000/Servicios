@@ -58,8 +58,14 @@ class ConfrontaCustomerController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $customer = $this->customerInterface->updateOrCreateCustomer($request->except(['_token', '_method']));
-        return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 2]);;
+        $datas = [];
+        foreach ($request->customerData as $key => $value) {
+            $datas[$request->customerData[$key]['name']] = $request->customerData[$key]['value'];
+        }
+
+        $customer = $this->customerInterface->updateOrCreateCustomer($datas);
+        // dd($customer);
+        return $customer;
     }
 
     public function getInfoForm()
