@@ -111,11 +111,11 @@ $(document).ready(function () {
                     var htmlConfrontaResponse = '<div class="row justify-content-center">';
 
                     if (response <= 4) {
-                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/753/753345.svg" alt="" style=" width: 14%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Incorrecto </span> </div><div class="col-12"> <label for="" style=" font-size: 16px >Debe volver a verificar la información <span class="color-red">*</span></label>'
+                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/753/753345.svg" alt="" style=" width: 13%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Incorrecto </span> </div><div class="col-12"> <label for="" style="font-size: 15px;">Debe volver a verificar la información <span class="color-red">*</span></label>'
                         // <span class="text-secondary"> Debe volver a verificar la información </span>
                         $('#updateDataFailed').show();
                     } else {
-                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 14%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Exitoso </span> </div><div class="col-12"> <label for="" style=" font-size: 16px>Ya puede actualizar sus datos <span class="color-red">*</span></label> '
+                        htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 13%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Exitoso </span> </div><div class="col-12"> <label for="" style="font-size: 15px;">Ya puede actualizar sus datos <span class="color-red">*</span></label> '
                         // <span class="text-secondary"> Ya puede actualizar sus datos </span>
                         $('#updateData').show();
                     }
