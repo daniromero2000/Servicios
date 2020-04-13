@@ -14,7 +14,7 @@ $(document).ready(function () {
             });
             Toast.fire({
                 type: 'error',
-                title: 'Los datos no se encuentran registrados en nuestras base de datos.'
+                title: 'Los datos ingresados no se encuentran registrados en nuestras base de datos.'
             })
         }
 
