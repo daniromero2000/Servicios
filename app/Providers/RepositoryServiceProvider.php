@@ -112,6 +112,8 @@ use App\Entities\ConfrontResults\Repositories\ConfrontResultRepository;
 use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
 use App\Entities\Departments\Repositories\DepartmentRepository;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
+use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
+use App\Entities\Ruafs\Repositories\RuafRepository;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
@@ -178,6 +180,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ConfrontFormAnswerRepositoryInterface::class,
             ConfrontFormAnswerRepository::class
+        );
+
+        $this->app->bind(
+            RuafRepositoryInterface::class,
+            RuafRepository::class
         );
 
         $this->app->bind(
