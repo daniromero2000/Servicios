@@ -953,6 +953,21 @@ class assessorsController extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
+		if($fuenteFallo == "true"){
+			$getDataRuaf = $this->ruafInterface->getLastRuafConsultationPolicy($identificationNumber);
+			if (!empty($getDataRuaf)) {
+				if ($getDataRuaf->fuenteFallo == 'SI') {
+					$fuenteFallo = "true";
+				} elseif (empty($getDataRuaf->regimen_salud) || empty($getDataRuaf->estado_salud) || empty($getDataRuaf->tipo_afiliado_salud)) {
+					$fuenteFallo = "true";
+				}else{
+					$fuenteFallo = "false";
+				}
+			} else {
+				$estadoCliente = "PREAPROBADO";
+			}
+		}
+
 		// 4.6 Tipo 5 Especial
 		$tipo5Especial = 0;
 		if ($perfilCrediticio == 'TIPO 5' && ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PENSIONADO') && $statusAfiliationCustomer == true) {
