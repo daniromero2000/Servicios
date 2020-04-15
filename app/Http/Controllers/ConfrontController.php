@@ -38,7 +38,24 @@ class ConfrontController extends Controller
      */
     public function index()
     {
+        dd("404");
+        $dataQuestions = [];
+        $questions = $dataQuestions['questions'];
+        $hits = 0;
 
+        foreach ($questions as $key => $value) {
+            if($value['name'] == 'formId'){
+                $formId = $value['value'];
+            }else{
+                $answer = ['confront_form_id' => $formId, 'confront_form_question_id' => $value['name'], 'confront_form_option_id' => $value['value']];
+                $this->confrontFormAnswerInterface->createConfrontFormAnswer($answer);
+                $correctOption = $this->confrontFormOptionInterface->getQuestionCorrectOption($value['name']);
+                if($correctOption[0]->id == $value['value']){
+                    $hits ++;
+                }
+            }
+        }
+        return $hits;
     }
 
     /**
@@ -75,6 +92,7 @@ class ConfrontController extends Controller
                 }
             }
         }
+        $this->confrontResultInterface->createConfrontResult(['confront_form_id' => $formId, 'hits' => $hits]);
         return $hits;
     }
 

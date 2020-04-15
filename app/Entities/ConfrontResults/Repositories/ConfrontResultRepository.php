@@ -27,7 +27,7 @@ class ConfrontResultRepository implements ConfrontResultRepositoryInterface
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
-            //throw $th;
+            throw $e;
         }
     }
 

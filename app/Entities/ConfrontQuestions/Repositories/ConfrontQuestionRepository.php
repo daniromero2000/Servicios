@@ -11,6 +11,7 @@ use App\Entities\ConfrontQuestions\ConfrontQuestion;
 use App\Entities\ConfrontQuestions\Repositories\Interfaces\ConfrontQuestionRepositoryInterface;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
@@ -25,6 +26,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
     private $cifinBasicDataInterface;
     private $cityInterface, $departmentInterface;
     private $ubicaInterface, $ubicaAddressInterface, $ubicaCellPhoneInterface;
+    private $toolInterface;
 
     private $columns = [
         'id',
@@ -46,7 +48,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         DepartmentRepositoryInterface $departmentRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
         UbicaAddressRepositoryInterface $ubicaAddressRepositoryInterface,
-        UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface
+        UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
+        ToolRepositoryInterface $toolRepositoryInterface
     ) {
         $this->model                           = $confrontQuestion;
         $this->cifinCtaVigenInterface          = $cifinCtaVigenRepositoryInterface;
@@ -60,6 +63,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $this->ubicaInterface                  = $ubicaRepositoryInterface;
         $this->ubicaAddressInterface           = $ubicaAddressRepositoryInterface;
         $this->ubicaCellPhoneInterface         = $ubicaCellPhoneRepositoryInterface;
+        $this->toolInterface                   = $toolRepositoryInterface;
     }
 
     public function createConfrontQuestion($data){
@@ -97,7 +101,6 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
     public function getDataQuestionOne($identificationNumber){
         // 1.	CON CUAL DE LAS SIGUIENTES ENTIDADES TIENE O HA TENIDO CUENTA DE AHORROS
-
         $options = [];
         $customerCurrentEntities = [];
         $customerExtintEntities = [];
@@ -108,7 +111,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $currentCostumerBankAccount = $currentCostumerBankAccount->toArray();
 
         if(count($currentCostumerBankAccount) < 1){
-            $currentCostumerBankAccount = [['vigentid' => 'Ninguna de las anteriores']];
+            $currentCostumerBankAccount = [['vigentid' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCurrentCostumerBankAccount = false;
         }
 
@@ -119,10 +122,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $currentBankAccounts = $currentBankAccounts->toArray();
 
         foreach ($currentBankAccounts as $value) {
-            $options[] = ['option' => $value['vigentid'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['vigentid']), 'correct_option' => 0];
         }
 
-        $correctOption = ['option' => $currentCostumerBankAccount[0]['vigentid'], 'correct_option' => 1];
+        $correctOption = ['option' => $this->toolInterface->upperCase($currentCostumerBankAccount[0]['vigentid']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
         if($checkCurrentCostumerBankAccount){
@@ -135,7 +138,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $extintCustomerBankAccount = $extintCustomerBankAccount->toArray();
 
             if(count($extintCustomerBankAccount) < 1){
-                $extintCustomerBankAccount = [['cextentid'=>'Ninguna de las anteriores']];
+                $extintCustomerBankAccount = [['cextentid'=>'NINGUNA DE LAS ANTERIORES']];
                 $checkExtintCustomerBankAccount = false;
             }
 
@@ -147,10 +150,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $extinctBankAccounts = $extinctBankAccounts->toArray();
 
             foreach ($extinctBankAccounts as $value) {
-                $options[] = ['option' => $value['cextentid'], 'correct_option' => 0];
+                $options[] = ['option' => $this->toolInterface->upperCase($value['cextentid']), 'correct_option' => 0];
             }
 
-            $correctOption = ['option' => $extintCustomerBankAccount[0]['cextentid'], 'correct_option' => 1];
+            $correctOption = ['option' => $this->toolInterface->upperCase($extintCustomerBankAccount[0]['cextentid']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
             if($checkExtintCustomerBankAccount){
@@ -177,7 +180,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $financialCustomerCreditCard = $financialCustomerCreditCard->toArray();
 
         if(count($financialCustomerCreditCard) < 1){
-            $financialCustomerCreditCard = [['fdnoment' => 'Ninguna de las anteriores']];
+            $financialCustomerCreditCard = [['fdnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkFinancialCustomerCreditCard = false;
         }
 
@@ -189,10 +192,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $financialCustomerCreditCardEntities = $financialCustomerCreditCardEntities->toArray();
 
         foreach ($financialCustomerCreditCardEntities as $value) {
-            $options[] = ['option' => $value['fdnoment'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['fdnoment']), 'correct_option' => 0];
         }
 
-        $correctOption = ['option' => $financialCustomerCreditCard[0]['fdnoment'], 'correct_option' => 1];
+        $correctOption = ['option' => $this->toolInterface->upperCase($financialCustomerCreditCard[0]['fdnoment']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
         if($checkFinancialCustomerCreditCard){
@@ -205,7 +208,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $arrearFinancialCustomerCreditCard = $arrearFinancialCustomerCreditCard->toArray();
 
             if(count($arrearFinancialCustomerCreditCard) < 1){
-                $arrearFinancialCustomerCreditCard = [['finnoment' => 'Ninguna de las anteriores']];
+                $arrearFinancialCustomerCreditCard = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
                 $checkArrearFinancialCustomerCreditCard = false;
             }
 
@@ -217,10 +220,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $arrearFinancialCustomerCreditCardEntities = $arrearFinancialCustomerCreditCardEntities->toArray();
 
             foreach ($arrearFinancialCustomerCreditCardEntities as $value) {
-                $options[] = ['option' => $value['finnoment'], 'correct_option' => 0];
+                $options[] = ['option' => $this->toolInterface->upperCase($value['finnoment']), 'correct_option' => 0];
             }
 
-            $correctOption = ['option' => $arrearFinancialCustomerCreditCard[0]['finnoment'], 'correct_option' => 1];
+            $correctOption = ['option' => $this->toolInterface->upperCase($arrearFinancialCustomerCreditCard[0]['finnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
             if($checkArrearFinancialCustomerCreditCard){
@@ -234,7 +237,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $extintnFinancialCustomerCreditCard = $extintnFinancialCustomerCreditCard->toArray();
 
             if(count($extintnFinancialCustomerCreditCard) < 1){
-                $extintnFinancialCustomerCreditCard = [['extnoment' => 'Ninguna de las anteriores']];
+                $extintnFinancialCustomerCreditCard = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
                 $checkExtintnFinancialCustomerCreditCard = false;
             }
 
@@ -246,10 +249,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $extintnFinancialCustomerCreditCardEntities = $extintnFinancialCustomerCreditCardEntities->toArray();
 
             foreach ($extintnFinancialCustomerCreditCardEntities as $value) {
-                $options[] = ['option' => $value['extnoment'], 'correct_option' => 0];
+                $options[] = ['option' => $this->toolInterface->upperCase($value['extnoment']), 'correct_option' => 0];
             }
 
-            $correctOption = ['option' => $extintnFinancialCustomerCreditCard[0]['extnoment'], 'correct_option' => 1];
+            $correctOption = ['option' => $this->toolInterface->upperCase($extintnFinancialCustomerCreditCard[0]['extnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
             if($checkExtintnFinancialCustomerCreditCard){
@@ -268,7 +271,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $cityExpedition = $this->cifinBasicDataInterface->getCityExpedition($identificationNumber);
         $cityExpedition = $cityExpedition->toArray();
         if(count($cityExpedition) < 1){
-            $departmentExpedition = ['DEPARTAMENTO' => 'Ninguna de las anteriores', 'correct_option' => 1];
+            $departmentExpedition = ['DEPARTAMENTO' => 'NINGUNA DE LAS ANTERIORES', 'correct_option' => 1];
             $checkDepartmentExpedition = false;
         }else{
             $departmentExpedition = $this->cityInterface->getCityByName($cityExpedition[0]['terlugexp']);
@@ -279,10 +282,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $departments = $this->departmentInterface->getConfrontDepartments($departmentExpedition['DEPARTAMENTO']);
 
         foreach ($departments as $value) {
-            $options[] = ['option' => $value['NAME'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['NAME']), 'correct_option' => 0];
         }
 
-        array_push($options, ['option' => $departmentExpedition['DEPARTAMENTO'], 'correct_option' => 1]);
+        array_push($options, ['option' => $this->toolInterface->upperCase($departmentExpedition['DEPARTAMENTO']), 'correct_option' => 1]);
 
         if($checkDepartmentExpedition){
             shuffle($options);
@@ -305,7 +308,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $customerFinancialHousingCredit = $customerFinancialHousingCredit->toArray();
 
         if(count($customerFinancialHousingCredit) < 1){
-            $customerFinancialHousingCredit = [['fdnoment' => 'Ninguna de las anteriores']];
+            $customerFinancialHousingCredit = [['fdnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCustomerFinancialHousingCredit = false;
         }
 
@@ -317,10 +320,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $financialHousingCredit = $financialHousingCredit->toArray();
 
         foreach ($financialHousingCredit as $value) {
-            $options[] = ['option' => $value['fdnoment'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['fdnoment']), 'correct_option' => 0];
         }
 
-        $correctOption = ['option' => $customerFinancialHousingCredit[0]['fdnoment'], 'correct_option' => 1];
+        $correctOption = ['option' => $this->toolInterface->upperCase($customerFinancialHousingCredit[0]['fdnoment']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
         if($checkCustomerFinancialHousingCredit){
@@ -333,7 +336,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $customerArrearFinancialHousingCredit = $customerArrearFinancialHousingCredit->toArray();
 
             if(count($customerArrearFinancialHousingCredit) < 1){
-                $customerArrearFinancialHousingCredit = [['finnoment' => 'Ninguna de las anteriores']];
+                $customerArrearFinancialHousingCredit = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
                 $checkCustomerArrearFinancialHousingCredit = false;
             }
 
@@ -345,10 +348,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $arrearFinancialHousingCredit = $arrearFinancialHousingCredit->toArray();
 
             foreach ($arrearFinancialHousingCredit as $value) {
-                $options[] = ['option' => $value['finnoment'], 'correct_option' => 0];
+                $options[] = ['option' => $this->toolInterface->upperCase($value['finnoment']), 'correct_option' => 0];
             }
 
-            $correctOption = ['option' => $customerArrearFinancialHousingCredit[0]['finnoment'], 'correct_option' => 1];
+            $correctOption = ['option' => $this->toolInterface->upperCase($customerArrearFinancialHousingCredit[0]['finnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
             if($checkCustomerArrearFinancialHousingCredit){
@@ -362,7 +365,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $customerExtintFinancialHousingCredit = $customerExtintFinancialHousingCredit->toArray();
 
             if(count($customerExtintFinancialHousingCredit) < 1){
-                $customerExtintFinancialHousingCredit = [['extnoment' => 'Ninguna de las anteriores']];
+                $customerExtintFinancialHousingCredit = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
                 $checkCustomerExtintFinancialHousingCredit = false;
             }
 
@@ -374,10 +377,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $extintFinancialHousingCredit = $extintFinancialHousingCredit->toArray();
 
             foreach ($extintFinancialHousingCredit as $value) {
-                $options[] = ['option' => $value['extnoment'], 'correct_option' => 0];
+                $options[] = ['option' => $this->toolInterface->upperCase($value['extnoment']), 'correct_option' => 0];
             }
 
-            $correctOption = ['option' => $customerExtintFinancialHousingCredit[0]['extnoment'], 'correct_option' => 1];
+            $correctOption = ['option' => $this->toolInterface->upperCase($customerExtintFinancialHousingCredit[0]['extnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
             if($checkCustomerExtintFinancialHousingCredit){
@@ -400,7 +403,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $getCustomerAddresses = $getCustomerAddresses->toArray();
         }else{
             $checkCustomerAddress = false;
-            $getCustomerAddresses = [['ubidireccion' => 'Ninguna de las anteriores']];
+            $getCustomerAddresses = [['ubidireccion' => 'NINGUNA DE LAS ANTERIORES']];
         }
 
         foreach ($getCustomerAddresses as $value) {
@@ -410,10 +413,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $addresses = $this->ubicaAddressInterface->getAddresses($customerAddresses);
 
         foreach ($addresses as $value) {
-            $options[] = ['option' => $value['ubidireccion'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['ubidireccion']), 'correct_option' => 0];
         }
 
-        array_push($options, ['option' => $getCustomerAddresses[0]['ubidireccion'], 'correct_option' => 1]);
+        array_push($options, ['option' => $this->toolInterface->upperCase($getCustomerAddresses[0]['ubidireccion']), 'correct_option' => 1]);
 
         if($checkCustomerAddress){
             shuffle($options);
@@ -434,7 +437,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $getCustomerCellPhones = $getCustomerCellPhones->toArray();
         }else{
             $checkCustomerCellPhones = false;
-            $getCustomerCellPhones = [['ubicelular' => 'Ninguna de las anteriores']];
+            $getCustomerCellPhones = [['ubicelular' => 'NINGUNA DE LAS ANTERIORES']];
         }
 
         foreach ($getCustomerCellPhones as $value) {
@@ -445,10 +448,10 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $cellPhones = $cellPhones->toArray();
 
         foreach ($cellPhones as $value) {
-            $options[] = ['option' => $value['ubicelular'], 'correct_option' => 0];
+            $options[] = ['option' => $this->toolInterface->upperCase($value['ubicelular']), 'correct_option' => 0];
         }
 
-        array_push($options, ['option' =>  $getCustomerCellPhones[0]['ubicelular'], 'correct_option' => 1]);
+        array_push($options, ['option' => $this->toolInterface->upperCase($getCustomerCellPhones[0]['ubicelular']), 'correct_option' => 1]);
 
         if($checkCustomerCellPhones){
             shuffle($options);
