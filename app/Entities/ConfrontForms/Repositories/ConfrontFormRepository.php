@@ -38,4 +38,14 @@ class ConfrontFormRepository implements ConfrontFormRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getCustomerConfrontFormLastDay($identificationNumber){
+        $dateIni = date("Y-m-d 01:00:00");
+        $dateFin = date("Y-m-d 23:59:59");
+        try {
+            return $this->model->where('created_at', '>=', $dateIni)->where('created_at', '<=', $dateFin)->where('identificationNumber', $identificationNumber)->count();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

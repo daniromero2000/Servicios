@@ -104,10 +104,12 @@ class ConfrontController extends Controller
      */
     public function show($identificationNumber)
     {
-        return $options = $this->confrontQuestionInterface->getDataQuestionSix($identificationNumber);
-
-
         $confrontForm = [];
+        $numFormsToday = $this->confrontFormInterface->getCustomerConfrontFormLastDay($identificationNumber);
+
+        if($numFormsToday >= 2){
+            return "false";
+        }
 
         $form = $this->confrontFormInterface->createConfrontForm(['identificationNumber' => $identificationNumber]);
         $questions = $this->confrontQuestionInterface->getConfrontQuestionPhoneChange();
