@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'testConfronta')
+@section('title', 'Actualizar Datos')
 @section('metaTags')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection

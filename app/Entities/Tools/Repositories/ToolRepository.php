@@ -34,4 +34,13 @@ class ToolRepository implements ToolRepositoryInterface
 
     return $data;
   }
+
+  public function upperCase($string){
+    $search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
+    $replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
+    $string = strtoupper($string);
+
+    $string_new = str_replace($search,$replace,$string);
+    return $string_new;
+  }
 }

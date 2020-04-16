@@ -10,4 +10,6 @@ interface ToolRepositoryInterface
   public function getDataPercentage($data);
 
   public function extractValuesToArray($data);
+
+  public function upperCase($string);
 }

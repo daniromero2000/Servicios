@@ -10,7 +10,7 @@ class ConfrontResult extends Model
     protected $connection = 'oportudata';
 
     protected $fillable = [
-        'confron_form_id',
+        'confront_form_id',
         'hits'
     ];
 

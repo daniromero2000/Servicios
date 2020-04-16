@@ -7,4 +7,6 @@ interface ConfrontFormRepositoryInterface
     public function createConfrontForm($data);
 
     public function getAllConfrontForms();
+
+    public function getCustomerConfrontFormLastDay($identificationNumber);
 }
