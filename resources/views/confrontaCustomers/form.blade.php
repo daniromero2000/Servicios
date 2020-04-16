@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'testConfronta')
+@section('title', 'Actualizar Datos')
 @section('metaTags')
 @endsection
 @section('linkStyleSheets')
@@ -19,14 +19,14 @@
 <div class="row ml-0 mr-0 mb-5 mt-5 d-flex justify-content-center">
     <div class="login-box">
         <div class="login-logo">
-            <a class="text-decoration-none" style="font-size: 21px;"><b>Actualizar Número Telefonico</b></a>
+            <a class="text-decoration-none" style="font-size: 21px;"><b>Actualizar Número Telefónico</b></a>
         </div>
         <input type="text" id="notification" value="{{$notification}}" hidden>
         <div class="card border-0 shadow-lg">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Diligencie los sigiuentes datos</p>
 
-                <form action="/testConfronta" method="POST">
+                <form action="/change-customer-data" method="POST">
                     @csrf
 
                     <label for=" inputEmail4">Tipo de Identificación</label>
@@ -72,9 +72,10 @@
                                 class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
                         </label>
                     </div>
-                    <div class="row d-flex justify-content-end">
+                    <div class="row d-flex justify-content-sm-end">
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Continuar</button>
+                            <button type="submit" class="btn btn-primary btn-block"
+                                style="min-width: 100px;">Continuar</button>
                         </div>
                     </div>
                 </form>
