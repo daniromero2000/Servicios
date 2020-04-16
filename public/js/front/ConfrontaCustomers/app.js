@@ -2,6 +2,9 @@ $(document).ready(function () {
     $('#confrontaForm').hide();
     $('#updateData').hide();
     $('#updateDataFailed').hide();
+    // $('#updateDataFailed').show();
+
+
 
     $(function () {
         var typeNotification = $('#notification').val();
@@ -48,29 +51,39 @@ $(document).ready(function () {
             })
         } else {
             $.get("/confrontInHouse/" + identification, function (data) {
-                startTimer();
+                console.log(data)
+                if (data != 'false') {
+                    startTimer();
 
+                    var htmlConfronta = '<label for="">Este formulario tiene un tiempo máximo de 2 minutos para ser diligenciado <span class="color-red">*</span></label> <div class="text-left"> <form id="formQuestions"> <br> <input type="text" value="' + data.formId + '" name="formId" hidden>'
+                    var formulario = ""
 
-                var htmlConfronta = '<label for="">Este formulario tiene un tiempo máximo de 2 minutos para ser diligenciado <span class="color-red">*</span></label> <div class="text-left"> <form id="formQuestions"> <br> <input type="text" value="' + data.formId + '" name="formId" hidden>'
-                var formulario = ""
+                    for (var i = 0; i < data.questions.length; i++) {
 
-                for (var i = 0; i < data.questions.length; i++) {
+                        htmlConfronta += '<div class="form-group padding-form"> <h6 class="questions-form" >' + data.questions[i].question + '</h6> ';
 
-                    htmlConfronta += '<div class="form-group padding-form"> <h6 class="questions-form" >' + data.questions[i].question + '</h6> ';
+                        formulario += htmlConfronta
 
-                    formulario += htmlConfronta
+                        for (var d = 0; d < data.questions[i].options.length; d++) {
+                            htmlConfronta += '<div class="custom-control custom-radio"> <input class="custom-control-input" type="radio" required value="' + data.questions[i].options[d].optionId + '" id="confrontaRadio' + i + '' + d + '" name="' + data.questions[i].question_id + '"> <label for="confrontaRadio' + i + '' + d + '" class="custom-control-label options-form">' + data.questions[i].options[d].option + '</label>  </div>'
 
-                    for (var d = 0; d < data.questions[i].options.length; d++) {
-                        htmlConfronta += '<div class="custom-control custom-radio"> <input class="custom-control-input" type="radio" required value="' + data.questions[i].options[d].optionId + '" id="confrontaRadio' + i + '' + d + '" name="' + data.questions[i].question_id + '"> <label for="confrontaRadio' + i + '' + d + '" class="custom-control-label options-form">' + data.questions[i].options[d].option + '</label>  </div>'
-
+                        }
+                        htmlConfronta += '</div>';
                     }
-                    htmlConfronta += '</div>';
+
+                    htmlConfronta += '</form> </div>';
+                    formulario = htmlConfronta
+                    $('#confrontaForm').show();
+                    $('#response').html(formulario);
+                } else {
+
+                    var htmlConfrontaResponse = "";
+
+                    htmlConfrontaResponse = '<div class="error-page mt-0" style=" width: auto; "> <h2 class="headline text-warning title-modal-error" style=" float: none; "> Oops!</h2> <div class="error-content" style=" margin-left: 0px; "> <h3 class="content-title-modal-error"><i class="fas fa-exclamation-triangle text-warning"></i> Has excedido el máximo de intentos posibles.</h3> <p class="content-text-modal-error"> Por favor inténtalo nuevamente mañana <a href="/">Volver a la Pagina principal</a></p> </div> <!-- /.error-content --> </div>'
+                    $('#response').html(htmlConfrontaResponse);
+
                 }
 
-                htmlConfronta += '</form> </div>';
-                formulario = htmlConfronta
-                $('#confrontaForm').show();
-                $('#response').html(formulario);
             });
             $('#confrontaCustomer').modal('show')
         }
