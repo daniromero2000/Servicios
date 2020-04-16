@@ -14,7 +14,7 @@ $(document).ready(function () {
             });
             Toast.fire({
                 type: 'error',
-                title: 'Los datos ingresados no se encuentran registrados en nuestras base de datos.'
+                title: 'Datos incorrectos.'
             })
         }
 
@@ -50,35 +50,27 @@ $(document).ready(function () {
             $.get("/confrontInHouse/" + identification, function (data) {
                 startTimer();
 
-                console.log(data.questions)
+
                 var htmlConfronta = '<label for="">Este formulario tiene un tiempo máximo de 2 minutos para ser diligenciado <span class="color-red">*</span></label> <div class="text-left"> <form id="formQuestions"> <br> <input type="text" value="' + data.formId + '" name="formId" hidden>'
                 var formulario = ""
 
                 for (var i = 0; i < data.questions.length; i++) {
-                    console.log(data.questions[i].options.length)
-                    htmlConfronta += '<div class="form-group pl-4 pr-4"> <h6 >' + data.questions[i].question + '</h6> ';
 
+                    htmlConfronta += '<div class="form-group padding-form"> <h6 class="questions-form" >' + data.questions[i].question + '</h6> ';
 
                     formulario += htmlConfronta
 
                     for (var d = 0; d < data.questions[i].options.length; d++) {
-                        htmlConfronta += '<div class="custom-control custom-radio"> <input class="custom-control-input" type="radio" required value="' + data.questions[i].options[d].optionId + '" id="confrontaRadio' + i + '' + d + '" name="' + data.questions[i].question_id + '"> <label for="confrontaRadio' + i + '' + d + '" class="custom-control-label" style="line-height: unset; font-size: 14px;">' + data.questions[i].options[d].option + '</label>  </div>'
+                        htmlConfronta += '<div class="custom-control custom-radio"> <input class="custom-control-input" type="radio" required value="' + data.questions[i].options[d].optionId + '" id="confrontaRadio' + i + '' + d + '" name="' + data.questions[i].question_id + '"> <label for="confrontaRadio' + i + '' + d + '" class="custom-control-label options-form">' + data.questions[i].options[d].option + '</label>  </div>'
 
                     }
                     htmlConfronta += '</div>';
-
-
                 }
 
-                htmlConfronta += '<div class="row"> <div class="col-12 text-center"> </div> </div> </form> </div>';
-
+                htmlConfronta += '</form> </div>';
                 formulario = htmlConfronta
-
                 $('#confrontaForm').show();
-
                 $('#response').html(formulario);
-
-
             });
             $('#confrontaCustomer').modal('show')
         }
@@ -88,7 +80,7 @@ $(document).ready(function () {
 
     $("#confrontaForm").click(function () {
 
-        console.log($("#formQuestions").serializeArray());
+
         var headers = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
 
         if ($("#formQuestions").serializeArray().length < 6) {
@@ -110,18 +102,16 @@ $(document).ready(function () {
                 success: function (response) {
                     var htmlConfrontaResponse = '<div class="row justify-content-center">';
 
-                    if (response <= 4) {
+                    if (response < 4) {
                         htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/753/753345.svg" alt="" style=" width: 13%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Incorrecto </span> </div><div class="col-12"> <label for="" style="font-size: 15px;">Debe volver a verificar la información <span class="color-red">*</span></label>'
-                        // <span class="text-secondary"> Debe volver a verificar la información </span>
                         $('#updateDataFailed').show();
                     } else {
                         htmlConfrontaResponse += '<div class="register-left" style="max-width: 290px;"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 13%; margin-top: 10%; margin-right: 3%; " /> <span class="text-secondary" style=" font-size: 20px; "> Formulario Exitoso </span> </div><div class="col-12"> <label for="" style="font-size: 15px;">Ya puede actualizar sus datos <span class="color-red">*</span></label> '
-                        // <span class="text-secondary"> Ya puede actualizar sus datos </span>
                         $('#updateData').show();
                     }
                     htmlConfrontaResponse += '  </div> </div>'
                     $('#response').html(htmlConfrontaResponse);
-                    console.log(response);
+
                 }
             });
 
@@ -134,19 +124,19 @@ $(document).ready(function () {
 
     $("#updateData").click(function () {
 
-        console.log($("#customerData").serializeArray());
+
         var headers = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
 
 
         $.ajax({
-            url: '/testConfronta/' + $('#CEDULA').val(),
+            url: '/change-customer-data/' + $('#CEDULA').val(),
             type: 'PUT',
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             data: { customerData: $("#customerData").serializeArray() },
             success: function (response) {
 
                 $('#updateData').hide();
-                var htmlConfronta = '<div class="row justify-content-center"> <div class="register-left mb-2" style="max-width: 3000px;"> <div class="row"> <div class="col-12"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 45px; margin-top: 0%; margin-bottom: 1%; margin-right: 0%; " /> </div> <div class="col-12"> <span class="text-secondary">Los datos fueron actualizados correctamente</span> </div> </div> </div> <div class="col-12"> <a href="javascript:location.reload()" class="btn btn-secondary text-white">Regresar</a> </div> </div>';
+                var htmlConfronta = '<div class="row justify-content-center"> <div class="register-left mb-2" style="max-width: 3000px;"> <div class="row"> <div class="col-12"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 45px; margin-top: 0%; margin-bottom: 1%; margin-right: 0%; " /> </div> <div class="col-12"> <span class="text-secondary">Los datos fueron actualizados correctamente</span> </div> </div> </div> <div class="col-12"> <a href="/" class="btn btn-secondary text-white">Regresar</a> </div> </div>';
                 $('#response').html(htmlConfronta);
             }
         });

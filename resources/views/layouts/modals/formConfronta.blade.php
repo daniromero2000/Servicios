@@ -16,10 +16,12 @@
             <div class="modal-footer">
                 <div class="row ">
                     <div class="col-4">
-                        <button id="confrontaForm" class="btn btn-primary text-white" type="submit">Enviar</button>
-                        <button id="updateData" class="btn btn-primary text-white" type="submit">Actualizar</button>
+                        <button id="confrontaForm" class="btn btn-primary text-white button-confronta"
+                            type="submit">Enviar</button>
+                        <button id="updateData" class="btn btn-primary text-white button-confronta"
+                            type="submit">Actualizar</button>
                         <a id="updateDataFailed" href=" javascript:location.reload()"
-                            class="btn btn-secondary text-white">Reitentar</a>
+                            class="btn btn-secondary text-white button-confronta">Reitentar</a>
                     </div>
                 </div>
             </div>
