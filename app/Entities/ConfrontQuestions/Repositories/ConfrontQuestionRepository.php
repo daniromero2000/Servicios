@@ -102,8 +102,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
     public function getDataQuestionOne($identificationNumber){
         // 1.	CON CUAL DE LAS SIGUIENTES ENTIDADES TIENE O HA TENIDO CUENTA DE AHORROS
         $options = [];
-        $customerCurrentEntities = [];
-        $customerExtintEntities = [];
+        $customerEntities = [];
         $checkCurrentCostumerBankAccount = true;
         $checkExtintCustomerBankAccount = true;
 
@@ -116,9 +115,23 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
 
         foreach ($currentCostumerBankAccount as $value) {
-            $customerCurrentEntities[] = $value['vigentid'];
+            array_push($customerEntities, $value['vigentid']);
         }
-        $currentBankAccounts = $this->cifinCtaVigenInterface->getNameEntities($customerCurrentEntities);
+
+        $extintCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identificationNumber);
+        $extintCustomerBankAccount = $extintCustomerBankAccount->toArray();
+
+        if(count($extintCustomerBankAccount) < 1){
+            $extintCustomerBankAccount = [['cextentid'=>'NINGUNA DE LAS ANTERIORES']];
+            $checkExtintCustomerBankAccount = false;
+        }
+
+        foreach ($extintCustomerBankAccount as $value) {
+            array_push($customerEntities, $value['cextentid']);
+        }
+
+
+        $currentBankAccounts = $this->cifinCtaVigenInterface->getNameEntities($customerEntities);
         $currentBankAccounts = $currentBankAccounts->toArray();
 
         foreach ($currentBankAccounts as $value) {
@@ -134,19 +147,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkCurrentCostumerBankAccount == false){
             $options = [];
-            $extintCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identificationNumber);
-            $extintCustomerBankAccount = $extintCustomerBankAccount->toArray();
 
-            if(count($extintCustomerBankAccount) < 1){
-                $extintCustomerBankAccount = [['cextentid'=>'NINGUNA DE LAS ANTERIORES']];
-                $checkExtintCustomerBankAccount = false;
-            }
-
-            foreach ($extintCustomerBankAccount as $value) {
-                $customerExtintEntities[] = $value['cextentid'];
-            }
-
-            $extinctBankAccounts = $this->cifinCtaExtInterface->getNameEntities($customerExtintEntities);
+            $extinctBankAccounts = $this->cifinCtaExtInterface->getNameEntities($customerEntities);
             $extinctBankAccounts = $extinctBankAccounts->toArray();
 
             foreach ($extinctBankAccounts as $value) {
@@ -169,9 +171,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         // 2.	CON CUAL DE LAS SIGUIENTES ENTIDADES HA TENIDO TARJETA DE CREDITO
 
         $options = [];
-        $customerFinancialEntities = [];
-        $arrearCustomerFinancialEntities = [];
-        $extintCustomerFinancialEntities = [];
+        $customerEntities = [];
         $checkFinancialCustomerCreditCard = true;
         $checkArrearFinancialCustomerCreditCard = true;
         $checkExtintnFinancialCustomerCreditCard = true;
@@ -185,10 +185,34 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
 
         foreach ($financialCustomerCreditCard as $value) {
-            $customerFinancialEntities[] = $value['fdnoment'];
+            array_push($customerEntities, $value['fdnoment']);
         }
 
-        $financialCustomerCreditCardEntities = $this->upToDateFinancialCifinInterface->getNameEntities($customerFinancialEntities);
+        $arrearFinancialCustomerCreditCard = $this->cifinFinancialArrearInterface->getCustomerEntityName($identificationNumber);
+        $arrearFinancialCustomerCreditCard = $arrearFinancialCustomerCreditCard->toArray();
+
+        if(count($arrearFinancialCustomerCreditCard) < 1){
+            $arrearFinancialCustomerCreditCard = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
+            $checkArrearFinancialCustomerCreditCard = false;
+        }
+
+        foreach ($arrearFinancialCustomerCreditCard as $value) {
+            array_push($customerEntities, $value['finnoment']);
+        }
+
+        $extintnFinancialCustomerCreditCard = $this->extintFinancialCifinInterface->getCustomerEntityName($identificationNumber);
+        $extintnFinancialCustomerCreditCard = $extintnFinancialCustomerCreditCard->toArray();
+
+        if(count($extintnFinancialCustomerCreditCard) < 1){
+            $extintnFinancialCustomerCreditCard = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
+            $checkExtintnFinancialCustomerCreditCard = false;
+        }
+
+        foreach ($extintnFinancialCustomerCreditCard as $value) {
+            array_push($customerEntities, $value['extnoment']);
+        }
+
+        $financialCustomerCreditCardEntities = $this->upToDateFinancialCifinInterface->getNameEntities($customerEntities);
         $financialCustomerCreditCardEntities = $financialCustomerCreditCardEntities->toArray();
 
         foreach ($financialCustomerCreditCardEntities as $value) {
@@ -204,19 +228,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkFinancialCustomerCreditCard == false){
             $options = [];
-            $arrearFinancialCustomerCreditCard = $this->cifinFinancialArrearInterface->getCustomerEntityName($identificationNumber);
-            $arrearFinancialCustomerCreditCard = $arrearFinancialCustomerCreditCard->toArray();
 
-            if(count($arrearFinancialCustomerCreditCard) < 1){
-                $arrearFinancialCustomerCreditCard = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
-                $checkArrearFinancialCustomerCreditCard = false;
-            }
-
-            foreach ($arrearFinancialCustomerCreditCard as $value) {
-                $arrearCustomerFinancialEntities[] = $value['finnoment'];
-            }
-
-            $arrearFinancialCustomerCreditCardEntities = $this->cifinFinancialArrearInterface->getNameEntities($arrearCustomerFinancialEntities);
+            $arrearFinancialCustomerCreditCardEntities = $this->cifinFinancialArrearInterface->getNameEntities($customerEntities);
             $arrearFinancialCustomerCreditCardEntities = $arrearFinancialCustomerCreditCardEntities->toArray();
 
             foreach ($arrearFinancialCustomerCreditCardEntities as $value) {
@@ -233,19 +246,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkArrearFinancialCustomerCreditCard == false && $checkFinancialCustomerCreditCard == false){
             $options = [];
-            $extintnFinancialCustomerCreditCard = $this->extintFinancialCifinInterface->getCustomerEntityName($identificationNumber);
-            $extintnFinancialCustomerCreditCard = $extintnFinancialCustomerCreditCard->toArray();
 
-            if(count($extintnFinancialCustomerCreditCard) < 1){
-                $extintnFinancialCustomerCreditCard = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
-                $checkExtintnFinancialCustomerCreditCard = false;
-            }
-
-            foreach ($extintnFinancialCustomerCreditCard as $value) {
-                $extintCustomerFinancialEntities[] = $value['extnoment'];
-            }
-
-            $extintnFinancialCustomerCreditCardEntities = $this->extintFinancialCifinInterface->getNameEntities($extintCustomerFinancialEntities);
+            $extintnFinancialCustomerCreditCardEntities = $this->extintFinancialCifinInterface->getNameEntities($customerEntities);
             $extintnFinancialCustomerCreditCardEntities = $extintnFinancialCustomerCreditCardEntities->toArray();
 
             foreach ($extintnFinancialCustomerCreditCardEntities as $value) {
@@ -296,13 +298,11 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
     public function getDataQuestionFour($identificationNumber){
         //  4.	CON CUAL DE LOS SIGUIENTES BANCOS PRESENTA UN CREDITO DE VIVIENDA.
-        $options                                      = [];
-        $customerFinancialHousingCreditEntities       = [];
-        $customerExtintFinancialHousingCreditEntities = [];
-        $customerArrearFinancialHousingCreditEntities = [];
-        $checkCustomerFinancialHousingCredit          = true;
-        $checkCustomerExtintFinancialHousingCredit    = true;
-        $checkCustomerArrearFinancialHousingCredit    = true;
+        $options                                   = [];
+        $customerHousingCreditEntities             = [];
+        $checkCustomerFinancialHousingCredit       = true;
+        $checkCustomerExtintFinancialHousingCredit = true;
+        $checkCustomerArrearFinancialHousingCredit = true;
 
         $customerFinancialHousingCredit = $this->upToDateFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
         $customerFinancialHousingCredit = $customerFinancialHousingCredit->toArray();
@@ -313,10 +313,34 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
 
         foreach ($customerFinancialHousingCredit as $value) {
-            $customerFinancialHousingCreditEntities[] = $value['fdnoment'];
+            array_push($customerHousingCreditEntities, $value['fdnoment']);
         }
 
-        $financialHousingCredit = $this->upToDateFinancialCifinInterface->getNameEntitiesHousingCredit($customerFinancialHousingCreditEntities);
+        $customerArrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getCustomerEntityNameHousingCredit($identificationNumber);
+        $customerArrearFinancialHousingCredit = $customerArrearFinancialHousingCredit->toArray();
+
+        if(count($customerArrearFinancialHousingCredit) < 1){
+            $customerArrearFinancialHousingCredit = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
+            $checkCustomerArrearFinancialHousingCredit = false;
+        }
+
+        foreach ($customerArrearFinancialHousingCredit as $value) {
+            array_push($customerHousingCreditEntities, $value['finnoment']);
+        }
+
+        $customerExtintFinancialHousingCredit = $this->extintFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
+        $customerExtintFinancialHousingCredit = $customerExtintFinancialHousingCredit->toArray();
+
+        if(count($customerExtintFinancialHousingCredit) < 1){
+            $customerExtintFinancialHousingCredit = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
+            $checkCustomerExtintFinancialHousingCredit = false;
+        }
+
+        foreach ($customerExtintFinancialHousingCredit as $value) {
+            array_push($customerHousingCreditEntities, $value['extnoment']);
+        }
+
+        $financialHousingCredit = $this->upToDateFinancialCifinInterface->getNameEntitiesHousingCredit($customerHousingCreditEntities);
         $financialHousingCredit = $financialHousingCredit->toArray();
 
         foreach ($financialHousingCredit as $value) {
@@ -332,19 +356,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkCustomerFinancialHousingCredit == false){
             $options=[];
-            $customerArrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getCustomerEntityNameHousingCredit($identificationNumber);
-            $customerArrearFinancialHousingCredit = $customerArrearFinancialHousingCredit->toArray();
 
-            if(count($customerArrearFinancialHousingCredit) < 1){
-                $customerArrearFinancialHousingCredit = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
-                $checkCustomerArrearFinancialHousingCredit = false;
-            }
-
-            foreach ($customerArrearFinancialHousingCredit as $value) {
-                $customerArrearFinancialHousingCreditEntities[] = $value['finnoment'];
-            }
-
-            $arrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getNameEntitiesHousingCredit($customerArrearFinancialHousingCreditEntities);
+            $arrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getNameEntitiesHousingCredit($customerHousingCreditEntities);
             $arrearFinancialHousingCredit = $arrearFinancialHousingCredit->toArray();
 
             foreach ($arrearFinancialHousingCredit as $value) {
@@ -361,19 +374,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         if($checkCustomerFinancialHousingCredit == false && $checkCustomerArrearFinancialHousingCredit == false){
             $options=[];
-            $customerExtintFinancialHousingCredit = $this->extintFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
-            $customerExtintFinancialHousingCredit = $customerExtintFinancialHousingCredit->toArray();
 
-            if(count($customerExtintFinancialHousingCredit) < 1){
-                $customerExtintFinancialHousingCredit = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
-                $checkCustomerExtintFinancialHousingCredit = false;
-            }
-
-            foreach ($customerExtintFinancialHousingCredit as $value) {
-                $customerExtintFinancialHousingCreditEntities[] = $value['extnoment'];
-            }
-
-            $extintFinancialHousingCredit = $this->extintFinancialCifinInterface->getNameEntitiesHousingCredit($customerExtintFinancialHousingCreditEntities);
+            $extintFinancialHousingCredit = $this->extintFinancialCifinInterface->getNameEntitiesHousingCredit($customerHousingCreditEntities);
             $extintFinancialHousingCredit = $extintFinancialHousingCredit->toArray();
 
             foreach ($extintFinancialHousingCredit as $value) {

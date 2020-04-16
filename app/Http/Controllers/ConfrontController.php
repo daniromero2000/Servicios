@@ -104,6 +104,9 @@ class ConfrontController extends Controller
      */
     public function show($identificationNumber)
     {
+        return $options = $this->confrontQuestionInterface->getDataQuestionSix($identificationNumber);
+
+
         $confrontForm = [];
 
         $form = $this->confrontFormInterface->createConfrontForm(['identificationNumber' => $identificationNumber]);
