@@ -20,11 +20,20 @@
 }
 
 .decisionCredit-option{
+    border-radius: 15px;
     cursor:pointer;
     display: block;
     width: 240px;
-    height: 150px;
+    height: 195px;
     margin: auto;
+    background-color: #fff;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
+
+.decisionCredit-textOption{
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 5px;
 }
 
 .decisionCredit-selected{
