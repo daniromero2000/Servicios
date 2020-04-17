@@ -155,6 +155,11 @@
                         <div class="col-12 text-center">
                             <button type="submit" class="btn btn-primary" ng-disabled="disabledButton">Continuar</button>
                         </div>
+                        <div class="col-12 text-center mt-2">
+                            <p class="ventaContado-text">
+                                <i><a href="/change-customer-data" class="ventaContado-changeDataCustomer" target="_blank">Click aquí</a> si desea actualizar los datos del cliente</i>
+                            </p>
+                        </div>
                     </div>
                 </form>
                 <form ng-submit="validateStep2()" name="clienteCreditoPaso2" ng-show="step == 2" class="crearCliente-form">

@@ -427,10 +427,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				url: '/api/oportuya/validationLead/'+$scope.lead.CEDULA,
 			}).then(function successCallback(response) {
 				hideLoader();
-				if(response.data == -1){
-					$('#validationLead').modal('show');
-					$scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
-				}else if(response.data == -2){
+				if(response.data == -2){
 					$('#validationLead').modal('show');
 					$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
 				}else if(response.data == -3){

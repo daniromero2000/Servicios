@@ -1478,7 +1478,11 @@ class assessorsController extends Controller
 			$customerIntention->save();
 
 			$estadoResult = "APROBADO";
-			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
+			if ($existCard == true) {
+			}else{
+				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			}
 		} elseif ($estadoSolic == "EN SUCURSAL") {
 			$estadoResult = "PREAPROBADO";
 		} else {
