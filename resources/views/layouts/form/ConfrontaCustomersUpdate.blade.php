@@ -6,6 +6,8 @@
                 <h3>Bienvenido</h3>
                 <p style="font-weight: normal;"> {{$customer->NOMBRES}} {{$customer->APELLIDOS}} </p>
             </div>
+            <input type="text" name="login" id="login" value="{{$login}}" hidden>
+
             <div class="col-md-9 register-right bg-white">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

@@ -32,9 +32,16 @@ class ConfrontaCustomerController extends Controller
 
     public function index()
     {
-        return view('confrontaCustomers.form', [
-            'notification' => 0,
-        ]);
+
+        if (auth()->user()) {
+            return view('confrontaCustomers.admin.form', [
+                'notification' => 0,
+            ]);
+        } else {
+            return view('confrontaCustomers.form', [
+                'notification' => 0,
+            ]);
+        }
     }
 
     public function store(Request $request)
@@ -44,16 +51,32 @@ class ConfrontaCustomerController extends Controller
         if ($customer) {
             if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {
 
-                return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 0]);
+                if (auth()->user()) {
+                    return view('confrontaCustomers.admin.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 1]);
+                } else {
+                    return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 0]);
+                }
+            } else {
+                if (auth()->user()) {
+                    return view('confrontaCustomers.admin.form', [
+                        'notification' => 1,
+                    ]);
+                } else {
+                    return view('confrontaCustomers.form', [
+                        'notification' => 1,
+                    ]);
+                }
+            }
+        } else {
+            if (auth()->user()) {
+                return view('confrontaCustomers.admin.form', [
+                    'notification' => 1,
+                ]);
             } else {
                 return view('confrontaCustomers.form', [
                     'notification' => 1,
                 ]);
             }
-        } else {
-            return view('confrontaCustomers.form', [
-                'notification' => 1,
-            ]);
         }
     }
     public function update(Request $request, $id)
