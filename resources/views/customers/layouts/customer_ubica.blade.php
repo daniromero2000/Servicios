@@ -178,33 +178,31 @@
                                 </tr>
                             </thead>
                             <tbody class="body-table">
-                                @foreach ($ubicaCustomers->ubicAddress as $ubica )
+                                @foreach ($ubicaCustomers as $ubica )
                                 <tr>
-                                    @if ($ubica)
+                                    @if ($ubica->ubicAddress)
                                     <td class="text-center"> @if ($ubica->cedula)
                                         {{ $ubica->cedula }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica )
-                                        @if ($ubica->ubidireccion )
-                                        {{ $ubica->ubidireccion  }}
-                                        @endif
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubidireccion )
+                                        {{ $ubica->ubicAddress->ubidireccion  }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica->ubiciudad )
-                                        {{ $ubica->ubiciudad  }}
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiciudad )
+                                        {{ $ubica->ubicAddress->ubiciudad  }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica->ubiprodactivo )
-                                        {{ $ubica->ubiprodactivo  }}
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiprodactivo )
+                                        {{ $ubica->ubicAddress->ubiprodactivo  }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica->ubiprimerrep )
-                                        {{ $ubica->ubiprimerrep  }}
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiprimerrep )
+                                        {{ $ubica->ubicAddress->ubiprimerrep  }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica->ubiultimorep )
-                                        {{ $ubica->ubiultimorep  }}
+                                    <td class="text-center"> @if ($ubica->ubicAddress->ubiultimorep )
+                                        {{ $ubica->ubicAddress->ubiultimorep  }}
                                         @else NA
                                         @endif</td>
                                     @else
