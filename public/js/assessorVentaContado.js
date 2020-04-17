@@ -280,8 +280,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.disabledButton = true;
 		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
 			$scope.showAlertCiudUbi = true;
+			$scope.disabledButton   = false;
 		}else if($scope.lead.CELULAR == '' || typeof $scope.lead.CELULAR == 'undefined' || $scope.lead.CELULAR == null){
-			$scope.showAlertCel = true;
+			$scope.showAlertCel   = true;
+			$scope.disabledButton = false;
 		}else{
 			$scope.addTemporaryCustomer();
 		}
@@ -290,7 +292,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.validateStep2 = function(){
 		$scope.disabledButtonStep2    = true;
 		if($scope.lead.CIUD_EXP == '' || typeof $scope.lead.CIUD_EXP == 'undefined' || $scope.lead.CIUD_EXP == null){
-			$scope.showAlertCiudExp = true;
+			$scope.showAlertCiudExp    = true;
+			$scope.disabledButtonStep2 =  false;
 		}else {
 			$scope.addCliente('CREDITO');
 		}
@@ -536,9 +539,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
 				$scope.execConsultasLead(response.data.identificationNumber);
-				if($scope.lead.CIUD_EXP == null || typeof $scope.lead.CIUD_EXP == 'undefined'){
-					$scope.lead.CIUD_EXP = 5002;
-				}
 			}else{
 				setTimeout(() => {
 					$('#proccess').modal('hide');
