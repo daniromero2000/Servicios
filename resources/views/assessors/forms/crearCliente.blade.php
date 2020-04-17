@@ -836,25 +836,31 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opción</h2>
                             <div class="row my-4">
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
+                                    <div class="decisionCredit-option"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 1}"
                                         ng-click="changeDesicionCredit(1)">
                                         <p>@{{ resp.infoLead.TARJETA }}</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
-                                        <p>
+                                        <p class="mb-0">
                                             Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
                                             Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
+                                    <div class="decisionCredit-option"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 2}"
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
-                                        <p style="font-style:italic; margin-top: 11px">
+                                        <p class="mb-0" style="font-style:italic; margin-top: 11px">
                                             * Aprobado sin codeudor
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>
@@ -870,14 +876,17 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
                             <div class="row my-4">
                                 <div class="col-12 text-center my-4">
-                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
+                                    <div class="decisionCredit-option"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 2}"
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
-                                        <p>
+                                        <p class="mb-0">
                                             Preaprobado <br>
                                             * <span style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>
