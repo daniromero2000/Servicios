@@ -6,7 +6,7 @@
         <input type="text" id="notification" value="{{$notification}}" hidden>
         <div class="card border-0 shadow-lg">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Diligencie los sigiuentes datos</p>
+                <p class="login-box-msg">Diligencie los siguientes datos</p>
 
                 <form action="/change-customer-data" method="POST">
                     @csrf

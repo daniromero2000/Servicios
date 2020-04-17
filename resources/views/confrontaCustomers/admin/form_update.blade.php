@@ -31,6 +31,7 @@ dd($customer);
 
 @endsection
 @section('scriptsJs')
+<script src="{{asset('plugins/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <script src="{{ asset('js/front/ConfrontaCustomers/app.js') }}"></script>

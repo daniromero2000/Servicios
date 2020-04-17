@@ -185,8 +185,11 @@
                                         {{ $ubica->cedula }}
                                         @else NA
                                         @endif</td>
-                                    <td class="text-center"> @if ($ubica->ubicAddress->ubidireccion )
+                                    <td class="text-center"> @if ($ubica->ubicAddress )
+                                        @if ($ubica->ubicAddress->ubidireccion )
                                         {{ $ubica->ubicAddress->ubidireccion  }}
+                                        @else NA
+                                        @endif
                                         @else NA
                                         @endif</td>
                                     <td class="text-center"> @if ($ubica->ubicAddress->ubiciudad )

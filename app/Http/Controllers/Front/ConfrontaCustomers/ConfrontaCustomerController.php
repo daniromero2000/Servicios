@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
+use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
 use App\Entities\Customers\Customer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +23,13 @@ class ConfrontaCustomerController extends Controller
         CustomerRepositoryInterface $customerRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         CustomerCellPhoneRepositoryInterface $customerCellPhoneRepositoryInterface,
+        ConfrontFormRepositoryInterface $confrontFormRepositoryInterface,
         CityRepositoryInterface $cityRepositoryInterface
     ) {
         $this->subsidiaryInterface        = $subsidiaryRepositoryInterface;
         $this->customerInterface          = $customerRepositoryInterface;
         $this->customerCellPhoneInterface = $customerCellPhoneRepositoryInterface;
+        $this->confrontFormInterface         = $confrontFormRepositoryInterface;
         $this->cityInterface              = $cityRepositoryInterface;
     }
 
@@ -46,15 +49,38 @@ class ConfrontaCustomerController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->input());
-        $customer = $this->customerInterface->findCustomerByIdForConfronta($request->input('numberIdentification'));
-        if ($customer) {
-            if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {
+        $numFormsToday = $this->confrontFormInterface->getCustomerConfrontFormLastDay($request->input('numberIdentification'));
 
-                if (auth()->user()) {
-                    return view('confrontaCustomers.admin.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 1]);
+        if ($numFormsToday >= 2) {
+            if (auth()->user()) {
+                return view('confrontaCustomers.admin.form', [
+                    'notification' => 3,
+                ]);
+            } else {
+                return view('confrontaCustomers.form', [
+                    'notification' => 3,
+                ]);
+            }
+        } else {
+            $customer = $this->customerInterface->findCustomerByIdForConfronta($request->input('numberIdentification'));
+            if ($customer) {
+                if ($customer->FEC_EXP === $request->input('dateExpedition') && $customer->TIPO_DOC === $request->input('typeIdentification')) {
+
+                    if (auth()->user()) {
+                        return view('confrontaCustomers.admin.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 1]);
+                    } else {
+                        return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 0]);
+                    }
                 } else {
-                    return view('confrontaCustomers.form_update', ['customer' => $customer, 'notification' => 0, 'login' => 0]);
+                    if (auth()->user()) {
+                        return view('confrontaCustomers.admin.form', [
+                            'notification' => 1,
+                        ]);
+                    } else {
+                        return view('confrontaCustomers.form', [
+                            'notification' => 1,
+                        ]);
+                    }
                 }
             } else {
                 if (auth()->user()) {
@@ -66,16 +92,6 @@ class ConfrontaCustomerController extends Controller
                         'notification' => 1,
                     ]);
                 }
-            }
-        } else {
-            if (auth()->user()) {
-                return view('confrontaCustomers.admin.form', [
-                    'notification' => 1,
-                ]);
-            } else {
-                return view('confrontaCustomers.form', [
-                    'notification' => 1,
-                ]);
             }
         }
     }

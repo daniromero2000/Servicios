@@ -28,8 +28,19 @@ $(document).ready(function () {
                 showConfirmButton: false,
             });
             Toast.fire({
-                type: 'success',
-                title: 'Los datos han sido actualizados correctamente.'
+                type: 'error',
+                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+            })
+        }
+        if (typeNotification == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+            });
+            Toast.fire({
+                type: 'warning',
+                title: 'No puedes hacer mas intentos por hoy.'
             })
         }
     });

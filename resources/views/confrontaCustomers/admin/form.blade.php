@@ -3,8 +3,6 @@
 @section('metaTags')
 @endsection
 @section('linkStyleSheets')
-<!-- Font Awesome -->
-<link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- icheck bootstrap -->
@@ -28,6 +26,8 @@
 @include('layouts.form.loginConfrontaCustomers')
 @endsection
 @section('scriptsJs')
+
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <script src="{{ asset('js/front/ConfrontaCustomers/app.js') }}"></script>
 @endsection
