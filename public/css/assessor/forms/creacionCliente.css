@@ -20,6 +20,7 @@
 }
 
 .decisionCredit-option{
+    border-radius: 15px;
     cursor:pointer;
     display: block;
     width: 240px;

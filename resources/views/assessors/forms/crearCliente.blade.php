@@ -836,7 +836,7 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opción</h2>
                             <div class="row my-4">
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option"
+                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 1}"
                                         ng-click="changeDesicionCredit(1)">
                                         <p>@{{ resp.infoLead.TARJETA }}</p>
@@ -848,7 +848,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 text-center my-4">
-                                    <div class="decisionCredit-option"
+                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 2}"
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
@@ -870,7 +870,7 @@
                             <h2 class="decisionCredit-title text-center">Selecciona una opciòn</h2>
                             <div class="row my-4">
                                 <div class="col-12 text-center my-4">
-                                    <div class="decisionCredit-option"
+                                    <div class="decisionCredit-option shadow-lg border-0 bg-white"
                                         ng-class="{'decisionCredit-selected': decisionCredit == 2}"
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
