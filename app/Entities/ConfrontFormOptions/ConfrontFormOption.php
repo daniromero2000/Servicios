@@ -5,9 +5,12 @@ namespace App\Entities\ConfrontFormOptions;
 use App\Entities\ConfrontFormAnswers\ConfrontFormAnswer;
 use App\Entities\ConfrontFormQuestions\ConfrontFormQuestion;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConfrontFormOption extends Model
 {
+    use SoftDeletes;
+
     protected $connection = 'oportudata';
 
     protected $fillable = [
