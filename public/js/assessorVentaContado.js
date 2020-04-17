@@ -280,8 +280,10 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.disabledButton = true;
 		if($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null){
 			$scope.showAlertCiudUbi = true;
+			$scope.disabledButton   = false;
 		}else if($scope.lead.CELULAR == '' || typeof $scope.lead.CELULAR == 'undefined' || $scope.lead.CELULAR == null){
-			$scope.showAlertCel = true;
+			$scope.showAlertCel   = true;
+			$scope.disabledButton = false;
 		}else{
 			$scope.addTemporaryCustomer();
 		}
@@ -290,7 +292,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 	$scope.validateStep2 = function(){
 		$scope.disabledButtonStep2    = true;
 		if($scope.lead.CIUD_EXP == '' || typeof $scope.lead.CIUD_EXP == 'undefined' || $scope.lead.CIUD_EXP == null){
-			$scope.showAlertCiudExp = true;
+			$scope.showAlertCiudExp    = true;
+			$scope.disabledButtonStep2 =  false;
 		}else {
 			$scope.addCliente('CREDITO');
 		}
@@ -427,10 +430,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				url: '/api/oportuya/validationLead/'+$scope.lead.CEDULA,
 			}).then(function successCallback(response) {
 				hideLoader();
-				if(response.data == -1){
-					$('#validationLead').modal('show');
-					$scope.messageValidationLead = "Actualmente ya cuentas <br> con una <b>Tarjeta Oportuya</b>.<br>Te invitamos a que la utilices en <br>cualquiera de nuestros puntos de venta! <br><br>Para más información comunicate  <br>a la línea <strong>01 8000 11 77 87</strong>";
-				}else if(response.data == -2){
+				if(response.data == -2){
 					$('#validationLead').modal('show');
 					$scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
 				}else if(response.data == -3){
@@ -539,9 +539,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 			if(tipoCreacion == 'CREDITO' && $scope.step == 1){
 				$scope.execConsultasLead(response.data.identificationNumber);
-				if($scope.lead.CIUD_EXP == null || typeof $scope.lead.CIUD_EXP == 'undefined'){
-					$scope.lead.CIUD_EXP = 5002;
-				}
 			}else{
 				setTimeout(() => {
 					$('#proccess').modal('hide');

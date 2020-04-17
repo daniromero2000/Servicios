@@ -43,3 +43,8 @@
     font-weight: bold;
     font-style: italic;
 }
+
+.ventaContado-changeDataCustomer{
+    font-size: 15px;
+    text-decoration: underline;
+}
