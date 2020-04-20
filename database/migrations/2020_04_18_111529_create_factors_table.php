@@ -18,7 +18,7 @@ class CreateFactorsTable extends Migration
             $table->integer('creation_user_id')->unsigned();
             $table->string('name', 40);
             $table->float('value', 4,2);
-            $table->tinyInteger('checked', 1)->default(0)->comment('0: No comprobada, 1: Comprobada');
+            $table->tinyInteger('checked')->default(0)->comment('0: No comprobada, 1: Comprobada');
             $table->integer('checked_user_id')->unsigned()->nullable();
             $table->date('start_date');
             $table->date('end_date');

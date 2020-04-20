@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListsTable extends Migration
+class CreateProductListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lists', function (Blueprint $table) {
+        Schema::create('product_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creation_user_id')->unsigned();
             $table->string('name', 30);
             $table->float('pp_percentage', 4,2);
-            $table->tinyInteger('checked', 1)->default(0)->comment('0: No comprobada, 1: Comprobada');
+            $table->tinyInteger('checked')->default(0)->comment('0: No comprobada, 1: Comprobada');
             $table->integer('checked_user_id')->unsigned()->nullable();
             $table->date('start_date');
             $table->date('end_date');
