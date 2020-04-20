@@ -15,6 +15,10 @@ class CreateListProductsTable extends Migration
     {
         Schema::create('list_products', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('sku');
+            $table->text('item');
+            $table->integer('base_cost');
+            $table->integer('iva_cost');
             $table->timestamps();
             $table->softDeletes();
         });
