@@ -411,6 +411,18 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
         });
     });
 
+    // Administrador de Listas
+    Route::group(['prefix' => '/ProductList/'], function () {
+
+        Route::get("/", function () {
+            return view('ProductList.index');
+        });
+
+        Route::get('/admin', function () {
+            return view('ProductList.admin');
+        });
+    });
+
     // Community leads
     Route::group(['prefix' => '/communityLeads/'], function () {
 
