@@ -841,9 +841,12 @@
                                         ng-click="changeDesicionCredit(1)">
                                         <p>@{{ resp.infoLead.TARJETA }}</p>
                                         <i class="fas fa-credit-card decisionCredit-option-icon"></i>
-                                        <p>
+                                        <p class="mb-0">
                                             Cupo Compras : $ @{{ resp.quotaApprovedProduct | number:0 }} <br>
                                             Cupo Avance : $ @{{ resp.quotaApprovedAdvance | number:0 }}
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>
@@ -853,8 +856,11 @@
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
-                                        <p style="font-style:italic; margin-top: 11px">
+                                        <p class="mb-0" style="font-style:italic; margin-top: 11px">
                                             * Aprobado sin codeudor
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>
@@ -875,9 +881,12 @@
                                         ng-click="changeDesicionCredit(2)">
                                         <p>Crédito Tradicional</p>
                                         <i class="fas fa-money-bill-wave decisionCredit-option-icon"></i>
-                                        <p>
+                                        <p class="mb-0">
                                             Preaprobado <br>
                                             * <span style="font-style:italic; font-size:13px">@{{ resp.infoLead.DESCRIPCION }}</span>
+                                        </p>
+                                        <p class="decisionCredit-textOption">
+                                            <button type="button" class="btn btn-default">Click aquí</button>
                                         </p>
                                     </div>
                                 </div>

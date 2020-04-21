@@ -112,6 +112,10 @@ use App\Entities\ConfrontResults\Repositories\ConfrontResultRepository;
 use App\Entities\ConfrontResults\Repositories\Interfaces\ConfrontResultRepositoryInterface;
 use App\Entities\Departments\Repositories\DepartmentRepository;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
+use App\Entities\Factors\Repositories\FactorRepository;
+use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
+use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
+use App\Entities\ProductLists\Repositories\ProductListRepository;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
@@ -126,9 +130,20 @@ class RepositoryServiceProvider extends ServiceProvider
     {
 
         $this->app->bind(
+            ProductListRepositoryInterface::class,
+            ProductListRepository::class
+        );
+
+        $this->app->bind(
+            FactorRepositoryInterface::class,
+            FactorRepository::class
+        );
+
+        $this->app->bind(
             UbicaCellPhoneRepositoryInterface::class,
             UbicaCellPhoneRepository::class
         );
+        
 
         $this->app->bind(
             UbicaAddressRepositoryInterface::class,

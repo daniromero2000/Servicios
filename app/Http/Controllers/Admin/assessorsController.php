@@ -897,7 +897,7 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
-		if ($aprobado == false && $perfilCrediticio == 'TIPO A') {
+		if ($aprobado == false && $perfilCrediticio == 'TIPO A' && $customerStatusDenied == false) {
 			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 				if ($historialCrediticio == 1) {
 					$customerIntention->ID_DEF  = '17';
