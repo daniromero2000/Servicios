@@ -16,16 +16,17 @@ class CreateProductListsTable extends Migration
         Schema::create('product_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('creation_user_id')->unsigned();
+            $table->foreign('creation_user_id')->references('id')->on('users');
             $table->string('name', 30);
-            $table->float('pp_percentage', 4,2);
+            $table->float('public_price_percentage', 4, 2);
             $table->tinyInteger('checked')->default(0)->comment('0: No comprobada, 1: Comprobada');
             $table->integer('checked_user_id')->unsigned()->nullable();
+            $table->foreign('checked_user_id')->references('id')->on('users');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('zone', 30);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('creation_user_id')->references('id')->on('users');
-            $table->foreign('checked_user_id')->references('id')->on('users');
         });
     }
 

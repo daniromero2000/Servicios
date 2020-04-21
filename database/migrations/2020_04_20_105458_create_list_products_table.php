@@ -19,6 +19,9 @@ class CreateListProductsTable extends Migration
             $table->text('item');
             $table->integer('base_cost');
             $table->integer('iva_cost');
+            $table->integer('protection');
+            $table->integer('min_tolerance');
+            $table->integer('max_tolerance');
             $table->timestamps();
             $table->softDeletes();
         });

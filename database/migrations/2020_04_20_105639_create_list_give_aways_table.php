@@ -15,6 +15,10 @@ class CreateListGiveAwaysTable extends Migration
     {
         Schema::create('list_give_aways', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('base_give_aways');
+            $table->integer('increment');
+            $table->integer('total');
+            $table->integer('?');
             $table->timestamps();
             $table->softDeletes();
         });
