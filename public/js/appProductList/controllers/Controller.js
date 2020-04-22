@@ -255,5 +255,114 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 
 	$scope.getFactor();
 
+	//Products
+
+
+	$scope.addFactor = function () {
+		$scope.factor = {};
+		$("#addFactorModal").modal("show");
+		$("#alertFactor").hide();
+	};
+
+	// query of faqs index and with filter 
+	$scope.getFactor = function () {
+		showLoader();
+		//dsplay or not the delete action
+		if ($scope.qf.delete) {
+			$scope.activFacttor = false;
+		} else {
+			$scope.activFacttor = true;
+		}
+		$http({
+			method: 'GET',
+			url: '/api/factors'
+		}).then(function successCallback(response) {
+			if (response != false) {
+				angular.forEach(response.data, function (value) {
+					$scope.factors.push(value);
+				});
+				hideLoader();
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+		});
+	};
+
+	$scope.createFactor = function () {
+		console.log($scope.factor)
+		$http({
+			method: 'POST',
+			url: '/api/factors',
+			data: $scope.factor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('p').innerHTML = "La lista <b>" + $scope.factor.name + "</b>  ya se encuentra registrado en la base de datos";
+					$("#alertFactor").show();
+				} else if (response.data == true) {
+					$scope.factor = "";
+					$("#addFactorModal").modal("hide");
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+
+	$scope.showDialogFactor = function (factor) {
+		$("#ShowFactor").modal("show");
+		$scope.factor = factor;
+	};
+
+
+	$scope.showUpdateDialogFactor = function (factor) {
+		$("#alertUpdateFactor").hide();
+		$("#UpdateFactor").modal("show");
+		$scope.factor = angular.extend({}, factor);
+	};
+
+	$scope.UpdateFactor = function () {
+		$http({
+			method: 'PUT',
+			url: '/api/factors/' + $scope.factor.id,
+			data: $scope.factor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.factor.name + "</b>  ya esta registrada en la base de datos";
+					$("#alertUpdate").show();
+				} else if (response.data == true) {
+					$scope.factor.name = "";
+					$("#Update").modal("hide");
+					$scope.factor = {};
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.showDialogDeleteFactor = function (factor) {
+		$("#DeleteFactor").modal("show");
+		$scope.factor = factor;
+	};
+
+	$scope.deleteFactor = function (idFactor) {
+		$http({
+			method: 'DELETE',
+			url: '/api/factors/' + idFactor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				$("#DeleteFactor").modal("hide");
+				$scope.search();
+			}
+		}, function errorCallback(response) {
+
+		});
+	}
+
+	$scope.getFactor();
+
 
 });
