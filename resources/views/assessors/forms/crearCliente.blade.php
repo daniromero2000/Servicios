@@ -63,7 +63,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
+                                        <input type="text" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                                        <input type="text" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
