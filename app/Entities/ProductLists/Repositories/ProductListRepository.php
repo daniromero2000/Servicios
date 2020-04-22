@@ -12,11 +12,12 @@ class ProductListRepository implements ProductListRepositoryInterface
     private $columns = [
         'creation_user_id',
         'name',
-        'pp_percentage',
+        'public_price_percentage',
         'checked',
         'checked_user_id',
         'start_date',
-        'end_date'
+        'end_date',
+        'zone'
     ];
 
     public function __construct(
@@ -25,7 +26,8 @@ class ProductListRepository implements ProductListRepositoryInterface
         $this->model = $productList;
     }
 
-    public function createProductList($data){
+    public function createProductList($data)
+    {
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
@@ -60,9 +62,10 @@ class ProductListRepository implements ProductListRepositoryInterface
         }
     }
 
-    public function deleteProductList($id){
+    public function deleteProductList($id)
+    {
         $data = $this->findProductListById($id);
-        if($data){
+        if ($data) {
             return $data->delete();
         }
 

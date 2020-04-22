@@ -1,12 +1,5 @@
-	/**
-     /Proyecto: SERVICIOS FINANCIEROS
-    **Caso de Uso: MODULO CATALOGO
-    **Autor: Luis David Giraldo Grajales 
-    **Email: desarrolladorjunior@lagobo.com
-    **Descripción: controlador para la administracion productos marcas y lineas.
-    **Fecha: 19/12/2018
-     **/
-app.controller('Controller', function($scope, $http, $rootScope){
+
+app.controller('Controller', function ($scope, $http, $rootScope) {
 
 	$scope.q = {
 		'q': '',
@@ -14,104 +7,82 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		'actual': 1,
 		'delete': false
 	};//object for index and filter 
-	$scope.resource = {}; //object for index line
-	$scope.resources = []; //list of brands returned by server
+	$scope.productList = {}; //object for index line
+	$scope.productLists = []; //list of brands returned by server
 	$scope.alert = "";	//text in create alert text 
-	$scope.activ  = true; // display delete action for each resourse if this is activ 
+	$scope.activ = true; // display delete action for each resourse if this is activ 
 
-	$scope.addResource= function(){
-		$scope.resource = {};
-		$scope.resource.city = 0;
-		$("#addResourceModal").modal("show");
-		$("#alertResource").hide();
+	$scope.qf = {
+		'q': '',
+		'page': 30,
+		'actual': 1,
+		'delete': false
+	};//object for index and filter 
+	$scope.factor = {}; //object for index line
+	$scope.factors = []; //list of brands returned by server
+	$scope.alertFactor = "";	//text in create alert text 
+	$scope.activFacttor = true; // display delete action for each resourse if this is activ 
+
+
+	$scope.addProductList = function () {
+		$scope.productList = {};
+		$("#addProductListModal").modal("show");
+		$("#alertProductList").hide();
 	};
 
 	// query of faqs index and with filter 
-	$scope.getResource = function(){
+	$scope.getProductList = function () {
 		showLoader();
 		//dsplay or not the delete action
-		if($scope.q.delete){
+		if ($scope.q.delete) {
 			$scope.activ = false;
-		}else{
+		} else {
 			$scope.activ = true;
 		}
 		$http({
-		  method: 'GET',
-		  url: '/profiles?q='+$scope.q.q+'&page='+$scope.q.page+'&actual='+$scope.q.actual+'&delete='+$scope.q.delete
+			method: 'GET',
+			url: '/api/productList'
 		}).then(function successCallback(response) {
-			if(response != false){
-				angular.forEach(response.data, function(value) {
-					$scope.resources.push(value);
+			if (response != false) {
+				angular.forEach(response.data, function (value) {
+					$scope.productLists.push(value);
 				});
 				hideLoader();
-			}	
+			}
 		}, function errorCallback(response) {
 			hideLoader();
 		});
 	};
 
-	$scope.search = function(){
-		$scope.resource = {};
+	$scope.search = function () {
+		$scope.productList = {};
 		$scope.alert = "";
-		$scope.resources = [];
+		$scope.productLists = [];
 		$scope.q.actual = 1;
 		$scope.q.page = 30;
-		$scope.getResource();
+		$scope.getProductList();
 	};
 
-	$scope.moreRegister = function(){
+	$scope.moreRegister = function () {
 		$scope.q.actual = $scope.q.actual + 1;
-		getResource()
+		getProductList()
 	};
 
 
-	$scope.createResource = function(){
+	$scope.createProductList = function () {
+		console.log($scope.productList)
 		$http({
-		  method: 'POST',
-		  url: '/profiles',
-		  data: $scope.resource
+			method: 'POST',
+			url: '/api/productList',
+			data: $scope.productList
 		}).then(function successCallback(response) {
-			if(response.data != false){
-				if(response.data=="23000"){
-					document.getElementById('p').innerHTML = "El perfil <b>" + $scope.resource.name + "</b>  ya esta registrado en la base de datos";
-					$("#alertResource").show();
-				}else if (response.data==true) {
-					$scope.resource.name = "";
-					$("#addResourceModal").modal("hide");
-					$scope.search();
-				}	
-			}
-		}, function errorCallback(response) {
-		});
-	};
-
-
-	$scope.showDialog = function(resource){
-		$("#Show").modal("show");
-		$scope.resource = resource;
-	};
-	
-
-	$scope.showUpdateDialog = function(resource){
-		$("#alertUpdate").hide();
-		$("#Update").modal("show");
-		$scope.resource = angular.extend({}, resource);
-	};
-
-	$scope.UpdateResource = function(){
-		$http({
-		  method: 'PUT',
-		  url: '/profiles/'+$scope.resource.id,
-		  data: $scope.resource
-		}).then(function successCallback(response) {
-			if(response.data != false){
-				if(response.data=="23000"){
-					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.resource.name + "</b>  ya esta registrada en la base de datos";
-					$("#alertUpdate").show();
-				}else if (response.data==true) {
-					$scope.resource.name = "";
-					$("#Update").modal("hide");
-					$scope.resource = {};
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('p').innerHTML = "La lista <b>" + $scope.productList.name + "</b>  ya se encuentra registrado en la base de datos";
+					$("#alertProductList").show();
+				} else if (response.data == true) {
+					$scope.productList = "";
+					$("#addProductListModal").modal("hide");
 					$scope.search();
 				}
 			}
@@ -119,25 +90,170 @@ app.controller('Controller', function($scope, $http, $rootScope){
 		});
 	};
 
-	$scope.showDialogDelete = function(resource){
-		$("#Delete").modal("show");
-		$scope.resource = resource;
+
+	$scope.showDialog = function (productList) {
+		$("#Show").modal("show");
+		$scope.productList = productList;
 	};
 
-	$scope.deleteResource = function(idResource){
+
+	$scope.showUpdateDialog = function (productList) {
+		$("#alertUpdate").hide();
+		$("#Update").modal("show");
+		$scope.productList = angular.extend({}, productList);
+	};
+
+	$scope.UpdateProductList = function () {
 		$http({
-		  method: 'DELETE',
-		  url: '/profiles/' + idResource
-		}).then(function successCallback(response){	
-			if(response.data != false){
+			method: 'PUT',
+			url: '/api/productList/' + $scope.productList.id,
+			data: $scope.productList
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.productList.name + "</b>  ya esta registrada en la base de datos";
+					$("#alertUpdate").show();
+				} else if (response.data == true) {
+					$scope.productList.name = "";
+					$("#Update").modal("hide");
+					$scope.productList = {};
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.showDialogDelete = function (productList) {
+		$("#Delete").modal("show");
+		$scope.productList = productList;
+	};
+
+	$scope.deleteProductList = function (idProductList) {
+		$http({
+			method: 'DELETE',
+			url: '/api/productList/' + idProductList
+		}).then(function successCallback(response) {
+			if (response.data != false) {
 				$("#Delete").modal("hide");
 				$scope.search();
 			}
-		},function errorCallback(response){
-			
+		}, function errorCallback(response) {
+
 		});
 	}
 
-	$scope.getResource();
+	$scope.getProductList();
+
+
+	//Factores
+
+
+	$scope.addFactor = function () {
+		$scope.factor = {};
+		$("#addFactorModal").modal("show");
+		$("#alertFactor").hide();
+	};
+
+	// query of faqs index and with filter 
+	$scope.getFactor = function () {
+		showLoader();
+		//dsplay or not the delete action
+		if ($scope.qf.delete) {
+			$scope.activFacttor = false;
+		} else {
+			$scope.activFacttor = true;
+		}
+		$http({
+			method: 'GET',
+			url: '/api/factors'
+		}).then(function successCallback(response) {
+			if (response != false) {
+				angular.forEach(response.data, function (value) {
+					$scope.factors.push(value);
+				});
+				hideLoader();
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+		});
+	};
+
+	$scope.createFactor = function () {
+		console.log($scope.factor)
+		$http({
+			method: 'POST',
+			url: '/api/factors',
+			data: $scope.factor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('p').innerHTML = "La lista <b>" + $scope.factor.name + "</b>  ya se encuentra registrado en la base de datos";
+					$("#alertFactor").show();
+				} else if (response.data == true) {
+					$scope.factor = "";
+					$("#addFactorModal").modal("hide");
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+
+	$scope.showDialogFactor = function (factor) {
+		$("#ShowFactor").modal("show");
+		$scope.factor = factor;
+	};
+
+
+	$scope.showUpdateDialogFactor = function (factor) {
+		$("#alertUpdateFactor").hide();
+		$("#UpdateFactor").modal("show");
+		$scope.factor = angular.extend({}, factor);
+	};
+
+	$scope.UpdateFactor = function () {
+		$http({
+			method: 'PUT',
+			url: '/api/factors/' + $scope.factor.id,
+			data: $scope.factor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.factor.name + "</b>  ya esta registrada en la base de datos";
+					$("#alertUpdate").show();
+				} else if (response.data == true) {
+					$scope.factor.name = "";
+					$("#Update").modal("hide");
+					$scope.factor = {};
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.showDialogDeleteFactor = function (factor) {
+		$("#DeleteFactor").modal("show");
+		$scope.factor = factor;
+	};
+
+	$scope.deleteFactor = function (idFactor) {
+		$http({
+			method: 'DELETE',
+			url: '/api/factors/' + idFactor
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				$("#DeleteFactor").modal("hide");
+				$scope.search();
+			}
+		}, function errorCallback(response) {
+
+		});
+	}
+
+	$scope.getFactor();
+
 
 });

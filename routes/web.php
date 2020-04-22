@@ -130,6 +130,9 @@ Route::resource('faqs', 'Admin\FaqsController');
 Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
+Route::resource('api/productList', 'Admin\ProductList\ProductListController');
+Route::resource('api/factors', 'Admin\Factors\FactorController');
+
 Route::resource('products', 'Admin\ProductsController');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}', 'Admin\OportuyaV2Controller@encrypt');
@@ -278,6 +281,7 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     Route::resource('/temporaryCustomer', 'Admin\TemporaryCustomer\TemporaryCustomerController', [
         'only' => ['store', 'destroy']
     ]);
+
     Route::get('/analisis', function () {
         return view('assessors.forms.analisis');
     })->name('assessorAnalisis');

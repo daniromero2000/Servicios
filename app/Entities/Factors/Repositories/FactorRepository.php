@@ -25,7 +25,8 @@ class FactorRepository implements FactorRepositoryInterface
         $this->model = $factor;
     }
 
-    public function createFactor($data){
+    public function createFactor($data)
+    {
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
@@ -60,9 +61,10 @@ class FactorRepository implements FactorRepositoryInterface
         }
     }
 
-    public function deleteFactor($id){
+    public function deleteFactor($id)
+    {
         $data = $this->findFactorById($id);
-        if($data){
+        if ($data) {
             return $data->delete();
         }
 
