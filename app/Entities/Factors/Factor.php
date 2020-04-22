@@ -9,8 +9,6 @@ class Factor extends Model
 {
     use SoftDeletes;
 
-    protected $connection = 'oportudata';
-
     protected $fillable = [
         'creation_user_id',
         'name',

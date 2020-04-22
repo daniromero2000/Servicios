@@ -9,16 +9,15 @@ class ProductList extends Model
 {
     use SoftDeletes;
 
-    protected $connection = 'oportudata';
-
     protected $fillable = [
         'creation_user_id',
         'name',
-        'pp_percentage',
+        'public_price_percentage',
         'checked',
         'checked_user_id',
         'start_date',
-        'end_date'
+        'end_date',
+        'zone'
     ];
 
     protected $dates = [
