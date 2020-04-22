@@ -116,6 +116,10 @@ use App\Entities\Factors\Repositories\FactorRepository;
 use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
 use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
 use App\Entities\ProductLists\Repositories\ProductListRepository;
+use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
+use App\Entities\ListProducts\Repositories\ListProductRepository;
+use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
+use App\Entities\ListGiveAways\Repositories\ListGiveAwayRepository;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
@@ -128,6 +132,15 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->bind(
+            ListGiveAwayRepositoryInterface::class,
+            ListGiveAwayRepository::class
+        );
+
+        $this->app->bind(
+            ListProductRepositoryInterface::class,
+            ListProductRepository::class
+        );
 
         $this->app->bind(
             ProductListRepositoryInterface::class,
@@ -143,7 +156,7 @@ class RepositoryServiceProvider extends ServiceProvider
             UbicaCellPhoneRepositoryInterface::class,
             UbicaCellPhoneRepository::class
         );
-        
+
 
         $this->app->bind(
             UbicaAddressRepositoryInterface::class,

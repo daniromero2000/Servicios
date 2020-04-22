@@ -3,7 +3,7 @@
         <div class="row resetRow">
             <div class=" col-5 col-sm-8 col-md-8">
                 <h4 class="mb-2">
-                    Listas
+                    Obsequios
                 </h4>
             </div>
             <div class=" col-7 col-sm-4 col-md-4">
@@ -23,29 +23,30 @@
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads small">
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Verificado por:</th>
-                        <th scope="col">Fecha de inicio</th>
-                        <th scope="col">Fecha de Finalización</th>
-                        <th scope="col">Zona</th>
+                        <th scope="col">Base de Obsequio</th>
+                        <th scope="col">Incremento</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">?</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
-                    <tr ng-repeat="productList in productLists">
-                        <td>@{{ productList.name }}</td>
-                        <td>@{{ productList.checked }}</td>
-                        <td>@{{ productList.checked_user_id }}</td>
-                        <td>@{{ productList.start_date }}</td>
-                        <td>@{{ productList.end_date }}</td>
-                        <td>@{{ productList.zone }}</td>
+                    <tr ng-repeat="listGiveAway in listGiveAways">
+                        <td>@{{ listGiveAway.base_give_aways }}</td>
+                        <td>@{{ listGiveAway.increment }}</td>
+                        <td>@{{ listGiveAway.total }}</td>
+                        {{-- <td>@{{ listGiveAway.? }}</td> --}}
                         <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(productList)"></i>
+
+                        </td>
+
+                        <td>
+                            <i class="fas fa-eye cursor" title="Ver"
+                                ng-click="showDialogListGiveAway(listGiveAway)"></i>
                             <i class="fas fa-edit cursor" title="Actualizar"
-                                ng-click="showUpdateDialog(productList)"></i>
-                            <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(productList)"
-                                ng-if="activ"></i>
+                                ng-click="showUpdateDialogListGiveAway(listGiveAway)"></i>
+                            <i class="fas fa-times cursor" title="Eliminar"
+                                ng-click="showDialogDeleteListGiveAway(listGiveAway)" ng-if="activ"></i>
 
                         </td>
                     </tr>
@@ -60,7 +61,7 @@
             </div>
         </div>
         <div class="text-right mt-2">
-            <button class="btn btn-primary btn-sm" ng-click="addProductList()">Agregar Lista</button>
+            <button class="btn btn-primary btn-sm" ng-click="addListGiveAway()">Agregar Producto</button>
         </div>
     </div>
 
