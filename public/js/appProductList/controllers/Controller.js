@@ -23,6 +23,27 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 	$scope.alertFactor = "";	//text in create alert text 
 	$scope.activFacttor = true; // display delete action for each resourse if this is activ 
 
+	$scope.qlp = {
+		'q': '',
+		'page': 30,
+		'actual': 1,
+		'delete': false
+	};//object for index and filter 
+	$scope.listProduct = {}; //object for index line
+	$scope.listProducts = []; //list of brands returned by server
+	$scope.alertListProduct = "";	//text in create alert text 
+	$scope.activListProduct = true; // display delete action for each resourse if this is activ 
+
+	$scope.qlg = {
+		'q': '',
+		'page': 30,
+		'actual': 1,
+		'delete': false
+	};//object for index and filter 
+	$scope.listGiveAway = {}; //object for index line
+	$scope.listGiveAways = []; //list of brands returned by server
+	$scope.alertListGiveAway = "";	//text in create alert text 
+	$scope.activListGiveAway = true; // display delete action for each resourse if this is activ 
 
 	$scope.addProductList = function () {
 		$scope.productList = {};
@@ -143,7 +164,6 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		});
 	}
 
-	$scope.getProductList();
 
 
 	//Factores
@@ -253,19 +273,18 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		});
 	}
 
-	$scope.getFactor();
 
-	//Products
+	//ListProduct
 
 
-	$scope.addFactor = function () {
-		$scope.factor = {};
-		$("#addFactorModal").modal("show");
-		$("#alertFactor").hide();
+	$scope.addListProduct = function () {
+		$scope.listProduct = {};
+		$("#addListProductModal").modal("show");
+		$("#alertListProduct").hide();
 	};
 
 	// query of faqs index and with filter 
-	$scope.getFactor = function () {
+	$scope.getListProduct = function () {
 		showLoader();
 		//dsplay or not the delete action
 		if ($scope.qf.delete) {
@@ -275,11 +294,11 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		}
 		$http({
 			method: 'GET',
-			url: '/api/factors'
+			url: '/api/listProducts'
 		}).then(function successCallback(response) {
 			if (response != false) {
 				angular.forEach(response.data, function (value) {
-					$scope.factors.push(value);
+					$scope.listProducts.push(value);
 				});
 				hideLoader();
 			}
@@ -288,20 +307,20 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		});
 	};
 
-	$scope.createFactor = function () {
-		console.log($scope.factor)
+	$scope.createListProduct = function () {
+		console.log($scope.listProduct)
 		$http({
 			method: 'POST',
-			url: '/api/factors',
-			data: $scope.factor
+			url: '/api/listProducts',
+			data: $scope.listProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				if (response.data == "23000") {
-					document.getElementById('p').innerHTML = "La lista <b>" + $scope.factor.name + "</b>  ya se encuentra registrado en la base de datos";
-					$("#alertFactor").show();
+					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
+					$("#alertListProduct").show();
 				} else if (response.data == true) {
-					$scope.factor = "";
-					$("#addFactorModal").modal("hide");
+					$scope.listProduct = "";
+					$("#addListProductModal").modal("hide");
 					$scope.search();
 				}
 			}
@@ -310,32 +329,32 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 	};
 
 
-	$scope.showDialogFactor = function (factor) {
-		$("#ShowFactor").modal("show");
-		$scope.factor = factor;
+	$scope.showDialogListProduct = function (listProduct) {
+		$("#ShowListProduct").modal("show");
+		$scope.listProduct = listProduct;
 	};
 
 
-	$scope.showUpdateDialogFactor = function (factor) {
-		$("#alertUpdateFactor").hide();
-		$("#UpdateFactor").modal("show");
-		$scope.factor = angular.extend({}, factor);
+	$scope.showUpdateDialogListProduct = function (listProduct) {
+		$("#alertUpdateListProduct").hide();
+		$("#UpdateListProduct").modal("show");
+		$scope.listProduct = angular.extend({}, listProduct);
 	};
 
-	$scope.UpdateFactor = function () {
+	$scope.UpdateListProduct = function () {
 		$http({
 			method: 'PUT',
-			url: '/api/factors/' + $scope.factor.id,
-			data: $scope.factor
+			url: '/api/listProducts/' + $scope.listProduct.id,
+			data: $scope.listProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				if (response.data == "23000") {
-					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.factor.name + "</b>  ya esta registrada en la base de datos";
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.listProduct.name + "</b>  ya esta registrada en la base de datos";
 					$("#alertUpdate").show();
 				} else if (response.data == true) {
-					$scope.factor.name = "";
+					$scope.listProduct.name = "";
 					$("#Update").modal("hide");
-					$scope.factor = {};
+					$scope.listProduct = {};
 					$scope.search();
 				}
 			}
@@ -343,18 +362,18 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		});
 	};
 
-	$scope.showDialogDeleteFactor = function (factor) {
-		$("#DeleteFactor").modal("show");
-		$scope.factor = factor;
+	$scope.showDialogDeleteListProduct = function (listProduct) {
+		$("#DeleteListProduct").modal("show");
+		$scope.listProduct = listProduct;
 	};
 
-	$scope.deleteFactor = function (idFactor) {
+	$scope.deleteListProduct = function (idListProduct) {
 		$http({
 			method: 'DELETE',
-			url: '/api/factors/' + idFactor
+			url: '/api/listProducts/' + idListProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				$("#DeleteFactor").modal("hide");
+				$("#DeleteListProduct").modal("hide");
 				$scope.search();
 			}
 		}, function errorCallback(response) {
@@ -362,7 +381,119 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		});
 	}
 
-	$scope.getFactor();
 
+
+	//ListGiveAways
+
+
+	$scope.addListGiveAway = function () {
+		$scope.listGiveAway = {};
+		$("#addListGiveAwayModal").modal("show");
+		$("#alertListGiveAway").hide();
+	};
+
+	// query of faqs index and with filter 
+	$scope.getListGiveAway = function () {
+		showLoader();
+		//dsplay or not the delete action
+		if ($scope.qf.delete) {
+			$scope.activFacttor = false;
+		} else {
+			$scope.activFacttor = true;
+		}
+		$http({
+			method: 'GET',
+			url: '/api/listGiveAways'
+		}).then(function successCallback(response) {
+			if (response != false) {
+				angular.forEach(response.data, function (value) {
+					$scope.listGiveAways.push(value);
+				});
+				hideLoader();
+			}
+		}, function errorCallback(response) {
+			hideLoader();
+		});
+	};
+
+	$scope.createListGiveAway = function () {
+		console.log($scope.listGiveAway)
+		$http({
+			method: 'POST',
+			url: '/api/listGiveAways',
+			data: $scope.listGiveAway
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listGiveAway.name + "</b>  ya se encuentra registrado en la base de datos";
+					$("#alertListGiveAway").show();
+				} else if (response.data == true) {
+					$scope.listGiveAway = "";
+					$("#addListGiveAwayModal").modal("hide");
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+
+	$scope.showDialogListGiveAway = function (listGiveAway) {
+		$("#ShowListGiveAway").modal("show");
+		$scope.listGiveAway = listGiveAway;
+	};
+
+
+	$scope.showUpdateDialogListGiveAway = function (listGiveAway) {
+		$("#alertUpdateListGiveAway").hide();
+		$("#UpdateListGiveAway").modal("show");
+		$scope.listGiveAway = angular.extend({}, listGiveAway);
+	};
+
+	$scope.UpdateListGiveAway = function () {
+		$http({
+			method: 'PUT',
+			url: '/api/listGiveAways/' + $scope.listGiveAway.id,
+			data: $scope.listGiveAway
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				if (response.data == "23000") {
+					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.listGiveAway.name + "</b>  ya esta registrada en la base de datos";
+					$("#alertUpdate").show();
+				} else if (response.data == true) {
+					$scope.listGiveAway.name = "";
+					$("#Update").modal("hide");
+					$scope.listGiveAway = {};
+					$scope.search();
+				}
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.showDialogDeleteListGiveAway = function (listGiveAway) {
+		$("#DeleteListGiveAway").modal("show");
+		$scope.listGiveAway = listGiveAway;
+	};
+
+	$scope.deleteListGiveAway = function (idListGiveAway) {
+		$http({
+			method: 'DELETE',
+			url: '/api/listGiveAways/' + idListGiveAway
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				$("#DeleteListGiveAway").modal("hide");
+				$scope.search();
+			}
+		}, function errorCallback(response) {
+
+		});
+	}
+
+
+	$scope.getProductList();
+	$scope.getFactor();
+	$scope.getListProduct();
+	$scope.getListGiveAway();
 
 });

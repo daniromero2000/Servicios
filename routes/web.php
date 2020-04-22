@@ -132,6 +132,8 @@ Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
 Route::resource('api/productList', 'Admin\ProductList\ProductListController');
 Route::resource('api/factors', 'Admin\Factors\FactorController');
+Route::resource('api/listProducts', 'Admin\ListProducts\ListProductController');
+Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
 
 Route::resource('products', 'Admin\ProductsController');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
