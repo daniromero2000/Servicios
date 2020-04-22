@@ -116,7 +116,7 @@ $(document).ready(function () {
 		};
 
 		function validateDate(input){
-			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-1][0-9]";
+			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-3][0-9]";
 			setAttributePatternInput(input, patt);
 		}
 
