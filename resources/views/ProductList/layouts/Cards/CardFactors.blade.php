@@ -1,4 +1,4 @@
-<div class="card mt-5 bg-white shadow border-0">
+<div class="card bg-white shadow border-0">
     <div class="card-header">
         <div class="row resetRow">
             <div class=" col-5 col-sm-8 col-md-8">
