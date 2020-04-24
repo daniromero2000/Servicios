@@ -1,6 +1,6 @@
 
-app.controller('Controller', function ($scope, $http, $rootScope) {
-
+app.controller('productListController', function ($scope, $http, $rootScope) {
+	$scope.tabs = 1;
 	$scope.q = {
 		'q': '',
 		'page': 30,
@@ -91,7 +91,6 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 
 
 	$scope.createProductList = function () {
-		console.log($scope.productList)
 		$http({
 			method: 'POST',
 			url: '/api/productList',

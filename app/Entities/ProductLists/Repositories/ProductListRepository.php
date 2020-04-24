@@ -71,4 +71,13 @@ class ProductListRepository implements ProductListRepositoryInterface
 
         return [];
     }
+
+    public function getAllCurrentProductLists(){
+        $dateNow = date("Y-m-d");
+        try {
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }
