@@ -1,0 +1,10 @@
+.relative{
+    position: relative; 
+}
+
+.container-text-baner-initial{
+    position: absolute;    top: 20%;    left: 3%;
+}
+.text-baner-initial{
+    font-size: 48px;    color: white;
+}
