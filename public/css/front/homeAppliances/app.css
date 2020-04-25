@@ -1,10 +1,280 @@
-.relative{
-    position: relative; 
+.relative {
+    position: relative;
 }
 
-.container-text-baner-initial{
-    position: absolute;    top: 20%;    left: 3%;
+.img-principal {
+    display: block;
 }
-.text-baner-initial{
-    font-size: 48px;    color: white;
+
+.img-secondary {
+    display: none;
+}
+
+.card-body-view {
+    z-index: 99;
+}
+
+.container-text-baner-initial {
+    position: absolute;
+    top: 20%;
+    left: 3%;
+}
+
+.text-baner-initial {
+    font-size: 48px;
+    color: white;
+}
+
+.container-step-cards {
+    max-width: 1300px;
+}
+
+.text-step-cards {
+    color: #005dca;
+}
+
+.row-step-cards {
+    border: 1px solid #d8d8d8;
+    border-radius: 45px;
+    box-shadow: 0.5rem 0rem 3rem 0rem rgba(32, 32, 255, 0.15)!important;
+}
+
+.first-step-cards {
+    border-radius: 0px 47px 47px 0px;
+}
+
+.last-step-cards {
+    border-radius: 47px 0px 0px 47px;
+}
+
+.first-img-step-cards {
+    position: absolute;
+    margin-right: auto;
+    left: 15%;
+    top: 0px;
+    max-height: 74px;
+}
+
+.second-img-step-cards {
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 74px;
+}
+
+.container-text-Snipet-promotions {
+    position: absolute;
+    top: 20%;
+    right: 12%;
+}
+
+.text-Snipet-promotions {
+    font-size: 57px;
+    color: white;
+    font-weight: 400;
+}
+
+.container-card-products {
+    max-width: 1208px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.card-products {
+    border-radius: 14px;
+}
+
+.card-container-products-logo {
+    position: relative;
+    height: 30px;
+}
+
+.card-products-logo {
+    position: absolute;
+    width: 87px;
+    top: 13px;
+    right: 19px;
+}
+
+.card-products-img {
+    max-height: 240px;
+}
+
+.card-products-title {
+    font-size: 19px;
+    color: #0d70ac;
+}
+
+.card-products-text {
+    font-size: 16px;
+    color: #0d70ac;
+    line-height: 18px;
+    margin-right: 10%;
+}
+
+.card-products-price {
+    font-size: 23px;
+    color: #d20509;
+    margin-bottom: 0px;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.card-products-card-black {
+    position: absolute;
+    width: 44px;
+    top: 8px;
+    right: 45px;
+}
+
+.card-products-label {
+    font-size: 13px;
+    color: #0d70ac;
+}
+
+.card-products-button {
+    border-radius: 20px !important;
+    font-weight: bold !important;
+    padding-left: 21px !important;
+    padding-right: 21px !important;
+}
+
+.card-products-button-see-more {
+    color: #007bff;
+    background-color: transparent;
+    background-image: none;
+    border-color: #007bff !important;
+}
+
+.card-products-button-see-more:hover {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.card-products-button-apply {
+    color: #28a745;
+    background-color: transparent;
+    background-image: none;
+    border-color: #28a745 !important;
+}
+
+.card-products-button-apply:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.background-container-snipet-benefits {
+    background-image: linear-gradient(to right, #2aace0, #1d84c3);
+    margin-top: 5%;
+}
+
+.container-snipet-benefits {
+    max-width: 1300px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.container-snipet-benefits-title {
+    font-size: 33px;
+}
+
+.container-card-benefits {
+    background: #fdd00000 !important;
+    border: 0px !important;
+}
+
+.container-card-benefits .img-card {
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 67px;
+}
+
+@media screen and (min-width: 1105px) and (max-width: 1325px) {
+    .container-text-baner-initial {
+        left: 4%;
+        top: 24%;
+    }
+    .text-baner-initial {
+        font-size: 38px;
+    }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1104px) {
+    .container-text-baner-initial {
+        left: 4%;
+        top: 24%;
+    }
+    .text-baner-initial {
+        font-size: 30px;
+    }
+    .first-img-step-cards {
+        left: 11%;
+        max-height: 64px;
+    }
+    .second-img-step-cards {
+        max-height: 64px;
+    }
+    .text-step-cards {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    .container-text-baner-initial {
+        left: 4%;
+        top: 24%;
+    }
+    .text-baner-initial {
+        font-size: 22px;
+    }
+    .first-img-step-cards {
+        left: 11%;
+        max-height: 50px;
+    }
+    .second-img-step-cards {
+        max-height: 50px;
+    }
+    .text-step-cards {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .img-principal {
+        display: none;
+    }
+    .img-secondary {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 520px) and (max-width: 600px) {
+    .text-baner-initial {
+        font-size: 26px;
+    }
+}
+
+@media screen and (min-width: 520px) and (max-width: 600px) {
+    .text-baner-initial {
+        font-size: 26px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 519px) {
+    .text-baner-initial {
+        font-size: 21px;
+    }
+}
+
+@media screen and (min-width: 310px) and (max-width: 399px) {
+    .text-baner-initial {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 309px) {
+    .text-baner-initial {
+        font-size: 14px;
+    }
 }
