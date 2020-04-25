@@ -1,6 +1,6 @@
 
 app.controller('productListController', function ($scope, $http, $rootScope) {
-	$scope.tabs = 1;
+	$scope.tabs = 3;
 	$scope.q = {
 		'q': '',
 		'page': 30,
@@ -43,7 +43,10 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	$scope.listGiveAway = {}; //object for index line
 	$scope.listGiveAways = []; //list of brands returned by server
 	$scope.alertListGiveAway = "";	//text in create alert text 
-	$scope.activListGiveAway = true; // display delete action for each resourse if this is activ 
+	$scope.activListGiveAway = true; // display delete action for each resourse if this is activ
+	$scope.product = {};
+	$scope.productPrices = {};
+	$scope.viewProductPrices = false;
 
 	$scope.addProductList = function () {
 		$scope.productList = {};
@@ -487,7 +490,26 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		}, function errorCallback(response) {
 
 		});
-	}
+	};
+
+	$scope.selectedProduct = function(productObject){
+		$scope.product = productObject.originalObject;
+		$scope.getDataPriceProduct($scope.product.id);
+	};
+
+	$scope.getDataPriceProduct = function(productId){
+		$http({
+			method: 'GET',
+			url: '/api/listProducts/getDataPriceProduct/' + productId
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				$scope.productPrices = response.data;
+				$scope.viewProductPrices = true;
+			}
+		}, function errorCallback(response) {
+
+		});
+	};
 
 
 	$scope.getProductList();

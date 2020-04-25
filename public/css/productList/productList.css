@@ -17,3 +17,24 @@
 .angucomplete-row:hover {
     background-color: rgba(28, 171, 226, 0.4);
 }
+
+.productlist-card{
+    border: 1px solid #bfbfbf !important;
+}
+
+.productlist-card-title{
+    font-size: 18px;
+    font-weight: bold;
+    color: #4c4c4c;
+}
+
+.productlist-card-subtitle{
+    color: #007bff;
+    font-size: 13px;
+    width: 180px;
+}
+
+.productlist-card-price{
+    font-weight: bold;
+    font-size: 13px;
+}

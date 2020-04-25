@@ -40,7 +40,9 @@
 			<div class="tab-pane fade card  mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
 			ng-class="{ 'show active': tabs == 3 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
 				<div class="row">
-					@include('productList.layouts.Cards.cardProductPrice')
+					<div class="col-12">
+						@include('productList.layouts.Cards.cardProductPrice')
+					</div>
 				</div>
 			</div>
 		</div>

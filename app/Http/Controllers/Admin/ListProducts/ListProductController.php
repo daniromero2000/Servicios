@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ListProducts;
 
+use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
 use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
 use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -12,13 +13,16 @@ class ListProductController extends Controller
 {
     private $productListInterface;
     private $listProductInterface;
+    private $giveAwayInterface;
 
     public function __construct(
         ListProductRepositoryInterface $listProductRepositoryInterface,
-        ProductListRepositoryInterface $productListRepositoryInterface
+        ProductListRepositoryInterface $productListRepositoryInterface,
+        ListGiveAwayRepositoryInterface $listGiveAwayRepositoryInterface
         ) {
         $this->productListInterface = $productListRepositoryInterface;
         $this->listProductInterface = $listProductRepositoryInterface;
+        $this->giveAwayInterface    = $listGiveAwayRepositoryInterface;
         $this->middleware('auth');
     }
     public function index(Request $request)
@@ -43,10 +47,11 @@ class ListProductController extends Controller
         $product = $product->toArray();
         $currentProductLists = $this->productListInterface->getAllCurrentProductLists();
         $currentProductLists = $currentProductLists->toArray();
-        $costObs = "154700";
+        $priceGiveAway = $this->giveAwayInterface->getPriceGiveAwayProduct($product['base_cost']);
+        $priceGiveAway = $priceGiveAway->total;
         foreach ($currentProductLists as $key => $productList) {
             $dataProduct[$productList['name']]=[
-                'normal_public_price' => round(($product['iva_cost']+$costObs)/((100-$productList['public_price_percentage'])/100)/0.95)
+                'normal_public_price' => round(($product['iva_cost']+$priceGiveAway)/((100-$productList['public_price_percentage'])/100)/0.95)
             ];
         }
 

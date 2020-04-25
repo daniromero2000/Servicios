@@ -13,4 +13,6 @@ interface ListGiveAwayRepositoryInterface
     public function updateListGiveAway($data);
 
     public function deleteListGiveAway($id);
+
+    public function getPriceGiveAwayProduct($productPrice);
 }
