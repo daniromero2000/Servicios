@@ -341,7 +341,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('CELULAR'));
 				$clienteCelular->TIPO    = 'CEL';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
@@ -351,7 +351,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
 				$clienteCelular->TIPO    = 'FIJO';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			return $dataOportudata;
@@ -486,7 +486,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('CELULAR'));
 				$clienteCelular->TIPO    = 'CEL';
 				$clienteCelular->CEL_VAL = 1;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
@@ -496,7 +496,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
 				$clienteCelular->TIPO    = 'FIJO';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$lastName = explode(" ", trim($request->get('APELLIDOS')));
