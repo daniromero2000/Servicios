@@ -13,16 +13,8 @@
                     <input type="hidden" name="_method" value="put">
                     <div class="col-md-12">
                         <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist" id="tablist">
-                            <li role="presentation" @if(!request()->has('combination')) class="active" @endif><a
-                                    href="#info" aria-controls="home" role="tab" data-toggle="tab">Info</a></li>
 
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content" id="tabcontent">
-                            <div role="tabpanel" class="tab-pane @if(!request()->has('combination')) active @endif"
-                                id="info">
-                                <div cla    ss="row">
+                                <div class="row">
                                     <div class="col-md-8">
                                         <h2>{{ ucfirst($product->name) }}</h2>
                                         <div class="form-group">
@@ -146,9 +138,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
                     </div>
                 </div>
             </div>
