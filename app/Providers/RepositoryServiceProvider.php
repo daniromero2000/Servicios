@@ -126,12 +126,26 @@ use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryIn
 use App\Entities\UbicaAddresses\Repositories\UbicaAddressRepository;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\UbicaCellPhoneRepository;
+use App\Entities\Brands\Repositories\BrandRepository;
+use App\Entities\Brands\Repositories\BrandRepositoryInterface;
+use App\Entities\Products\Repositories\ProductRepository;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+        $this->app->bind(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
+        );
+
+        $this->app->bind(
+            BrandRepositoryInterface::class,
+            BrandRepository::class
+        );
+
         $this->app->bind(
             ListGiveAwayRepositoryInterface::class,
             ListGiveAwayRepository::class

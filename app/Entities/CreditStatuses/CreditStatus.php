@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\CreditStatuses;
+namespace App\Entities\CreditStatuses;
 
 
 use Illuminate\Database\Eloquent\Model;
