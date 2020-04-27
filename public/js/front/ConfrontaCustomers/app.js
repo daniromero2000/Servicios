@@ -165,14 +165,14 @@ $(document).ready(function () {
             data: { customerData: $("#customerData").serializeArray() },
             success: function (response) {
 
-                $('#updateData').hide();
-                var htmlConfronta = '<div class="row justify-content-center"> <div class="register-left mb-2" style="max-width: 3000px;"> <div class="row"> <div class="col-12"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 45px; margin-top: 0%; margin-bottom: 1%; margin-right: 0%; " /> </div> <div class="col-12"> <span class="text-secondary">Los datos fueron actualizados correctamente</span> </div> </div> </div> <div class="col-12">';
-                if ($('#login').val() == 1) {
-                    htmlConfronta += '<a href="/Administrator/dashboard" class="btn btn-secondary text-white">Regresar</a> </div> </div>'
-                } else {
-                    htmlConfronta += '<a href="/" class="btn btn-secondary text-white">Regresar</a> </div> </div>'
-                }
-                $('#response').html(htmlConfronta);
+                // $('#updateData').hide();
+                // var htmlConfronta = '<div class="row justify-content-center"> <div class="register-left mb-2" style="max-width: 3000px;"> <div class="row"> <div class="col-12"> <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt="" style=" width: 45px; margin-top: 0%; margin-bottom: 1%; margin-right: 0%; " /> </div> <div class="col-12"> <span class="text-secondary">Los datos fueron actualizados correctamente</span> </div> </div> </div> <div class="col-12">';
+                // if ($('#login').val() == 1) {
+                //     htmlConfronta += '<a href="/Administrator/dashboard" class="btn btn-secondary text-white">Regresar</a> </div> </div>'
+                // } else {
+                //     htmlConfronta += '<a href="/" class="btn btn-secondary text-white">Regresar</a> </div> </div>'
+                // }
+                // $('#response').html(htmlConfronta);
             }
         });
 
