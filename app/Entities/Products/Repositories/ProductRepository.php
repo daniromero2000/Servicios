@@ -2,12 +2,10 @@
 
 namespace App\Entities\Products\Repositories;
 
-use App\Entities\AttributeValues\AttributeValue;
 use App\Entities\Products\Exceptions\ProductCreateErrorException;
 use App\Entities\Products\Exceptions\ProductUpdateErrorException;
 use App\Entities\Tools\UploadableTrait;
 use App\Entities\Brands\Brand;
-use App\Entities\ProductAttributes\ProductAttribute;
 use App\Entities\ProductImages\ProductImage;
 use App\Entities\Products\Exceptions\ProductNotFoundException;
 use App\Entities\Products\Product;
@@ -42,7 +40,6 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-
     public function updateProduct(array $data): bool
     {
         $filtered = collect($data)->except('image')->all();
@@ -54,7 +51,6 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-
     public function findProductById(int $id): Product
     {
         try {
@@ -64,59 +60,27 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * Delete the product
-     *
-     * @param Product $product
-     *
-     * @return bool
-     * @throws \Exception
-     * @deprecated
-     * @use removeProduct
-     */
     public function deleteProduct(Product $product): bool
     {
         $product->images()->delete();
         return $product->delete();
     }
 
-    /**
-     * @return bool
-     * @throws \Exception
-     */
     public function removeProduct(): bool
     {
         return $this->model->where('id', $this->model->id)->delete();
     }
 
-
-    /**
-     * @param $file
-     * @param null $disk
-     * @return bool
-     */
     public function deleteFile(array $file, $disk = null): bool
     {
         return $this->model->update(['cover' => null], $file['product']);
     }
 
-    /**
-     * @param string $src
-     * @return bool
-     */
     public function deleteThumb(string $src): bool
     {
         return DB::table('product_images')->where('src', $src)->delete();
     }
 
-    /**
-     * Get the product via slug
-     *
-     * @param array $slug
-     *
-     * @return Product
-     * @throws ProductNotFoundException
-     */
     public function findProductBySlug(array $slug): Product
     {
         try {
@@ -126,10 +90,6 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * @param string $text
-     * @return mixed
-     */
     public function searchProduct(string $text): Collection
     {
         if (!empty($text)) {
@@ -139,28 +99,16 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function findProductImages(): Collection
     {
         return $this->model->images()->get();
     }
 
-    /**
-     * @param UploadedFile $file
-     * @return string
-     */
     public function saveCoverImage(UploadedFile $file): string
     {
         return $file->store('products', ['disk' => 'public']);
     }
 
-    /**
-     * @param Collection $collection
-     *
-     * @return void
-     */
     public function saveProductImages(Collection $collection)
     {
         $collection->each(function (UploadedFile $file) {
@@ -173,17 +121,11 @@ class ProductRepository implements ProductRepositoryInterface
         });
     }
 
-    /**
-     * @param Brand $brand
-     */
     public function saveBrand(Brand $brand)
     {
         $this->model->brand()->associate($brand);
     }
 
-    /**
-     * @return Brand
-     */
     public function findBrand()
     {
         return $this->model->brand;

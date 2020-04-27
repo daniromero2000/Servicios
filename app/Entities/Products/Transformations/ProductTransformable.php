@@ -11,12 +11,6 @@ use App\Entities\Brands\Repositories\BrandRepository;
 
 trait ProductTransformable
 {
-    /**
-     * Transform the product
-     *
-     * @param Product $product
-     * @return Product
-     */
     protected function transformProduct(Product $product)
     {
         $prod = new Product;
@@ -34,8 +28,6 @@ trait ProductTransformable
         $prod->sale_price = $product->sale_price;
         $brandsRepo = new BrandRepository(new Brand());
         $prod->brands_id = $brandsRepo->findBrandById($product->brands_id);
-
-
         return $prod;
     }
 }

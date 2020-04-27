@@ -10,24 +10,13 @@ use App\Entities\Brands\Requests\UpdateBrandRequest;
 
 class BrandController extends Controller
 {
-    /**
-     * @var BrandRepositoryInterface
-     */
     private $brandRepo;
 
-    /**
-     * BrandController constructor.
-     *
-     * @param BrandRepositoryInterface $brandRepository
-     */
     public function __construct(BrandRepositoryInterface $brandRepository)
     {
         $this->brandRepo = $brandRepository;
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function index()
     {
         return view('brands.list', [
@@ -35,19 +24,11 @@ class BrandController extends Controller
         ]);
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function create()
     {
         return view('brands.create');
     }
 
-    /**
-     * @param CreateBrandRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(CreateBrandRequest $request)
     {
         $this->brandRepo->createBrand($request->all());
@@ -55,11 +36,6 @@ class BrandController extends Controller
         return redirect()->route('brands.index')->with('message', 'Create brand successful!');
     }
 
-    /**
-     * @param $id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function edit($id)
     {
         return view(
@@ -70,13 +46,6 @@ class BrandController extends Controller
         );
     }
 
-    /**
-     * @param UpdateBrandRequest $request
-     * @param $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \App\Entities\Brands\Exceptions\UpdateBrandErrorException
-     */
     public function update(UpdateBrandRequest $request, $id)
     {
         $brand = $this->brandRepo->findBrandById($id);
@@ -86,12 +55,6 @@ class BrandController extends Controller
         return redirect()->route('brands.edit', $id)->with('message', 'Actualización Exitosa!');
     }
 
-    /**
-     * @param $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
     public function destroy($id)
     {
         $brand = $this->brandRepo->findBrandById($id);
