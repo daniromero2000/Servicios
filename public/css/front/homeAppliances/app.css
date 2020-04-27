@@ -27,6 +27,7 @@
 
 .container-step-cards {
     max-width: 1300px;
+    padding: 3rem;
 }
 
 .text-step-cards {
@@ -37,6 +38,11 @@
     border: 1px solid #d8d8d8;
     border-radius: 45px;
     box-shadow: 0.5rem 0rem 3rem 0rem rgba(32, 32, 255, 0.15)!important;
+}
+
+.step-cards {
+    margin-bottom: 3rem;
+    margin-top: 3rem;
 }
 
 .first-step-cards {
@@ -220,6 +226,12 @@
     }
 }
 
+@media screen and (max-width: 900px) {
+    .container-step-cards {
+        padding: 1rem 2rem 2rem 2rem;
+    }
+}
+
 @media screen and (min-width: 600px) and (max-width: 900px) {
     .container-text-baner-initial {
         left: 4%;
@@ -238,6 +250,10 @@
     .text-step-cards {
         font-size: 14px;
     }
+    .step-cards {
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -247,17 +263,25 @@
     .img-secondary {
         display: block;
     }
-}
-
-@media screen and (min-width: 520px) and (max-width: 600px) {
-    .text-baner-initial {
-        font-size: 26px;
+    .step-cards {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
     }
 }
 
 @media screen and (min-width: 520px) and (max-width: 600px) {
     .text-baner-initial {
         font-size: 26px;
+    }
+    .first-img-step-cards {
+        left: 26%;
+        max-height: 38px;
+    }
+    .second-img-step-cards {
+        max-height: 38px;
+    }
+    .text-step-cards {
+        font-size: 12px;
     }
 }
 
@@ -265,16 +289,50 @@
     .text-baner-initial {
         font-size: 21px;
     }
+    .first-img-step-cards {
+        left: 26%;
+        max-height: 38px;
+    }
+    .second-img-step-cards {
+        max-height: 38px;
+    }
+    .text-step-cards {
+        font-size: 12px;
+    }
 }
 
 @media screen and (min-width: 310px) and (max-width: 399px) {
     .text-baner-initial {
         font-size: 17px;
     }
+    .first-img-step-cards {
+        left: 26%;
+        max-height: 32px;
+    }
+    .second-img-step-cards {
+        max-height: 32px;
+    }
+    .text-step-cards {
+        font-size: 12px;
+    }
 }
 
 @media screen and (max-width: 309px) {
     .text-baner-initial {
         font-size: 14px;
+    }
+    .first-img-step-cards {
+        left: 26%;
+        max-height: 28px;
+    }
+    .second-img-step-cards {
+        max-height: 28px;
+    }
+    .text-step-cards {
+        font-size: 10px;
+    }
+    .step-cards {
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
     }
 }

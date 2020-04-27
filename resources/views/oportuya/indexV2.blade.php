@@ -36,11 +36,11 @@
     </div>
 </div>
 
-<div class=" container-step-cards justify-content-center ml-auto mr-auto p-5">
+<div class=" container-step-cards justify-content-center ml-auto mr-auto">
     <div class="row justify-content-center mt-4 row-step-cards">
 
-        <div class="col-md-4 col-sm-5 beforeLine">
-            <div class="card text-center mt-5 mb-5 first-step-cards border-0">
+        <div class="col-md-4 col-sm-6 col-10 beforeLine">
+            <div class="card text-center first-step-cards step-cards border-0">
 
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.png') }}" alt=""
                     class="first-img-step-cards">
@@ -51,14 +51,15 @@
                     <p class="card-text text-step-cards">Políticas de crédito <b>flexibles</b> para pensionados con
                         reportes en
                         <b>centrales de riesgo</b></p>
+                    <button class="btn btn-primary" type="button">Text</button>
 
                 </div>
             </div>
 
         </div>
 
-        <div class="col-md-4 col-sm-5 beforeLine">
-            <div class="card text-center mt-5 mb-5 border-0">
+        <div class="col-md-4 col-sm-6 col-10 beforeLine">
+            <div class="card text-center step-cards border-0">
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.png') }}" alt=""
                     class="first-img-step-cards">
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.png') }}" alt=""
@@ -72,8 +73,8 @@
             </div>
 
         </div>
-        <div class="col-md-4 col-sm-5 ">
-            <div class="card text-center mt-5 mb-5 last-step-cards border-0">
+        <div class="col-md-4 col-sm-6 col-10 ">
+            <div class="card text-center step-cards last-step-cards border-0">
 
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.png') }}" alt=""
                     class="first-img-step-cards">
