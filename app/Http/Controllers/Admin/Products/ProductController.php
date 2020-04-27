@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
-use App\Entities\Products\Exceptions\ProductInvalidArgumentException;
-use App\Entities\Products\Exceptions\ProductNotFoundException;
 use App\Entities\Products\Product;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Entities\Products\Repositories\ProductRepository;
@@ -15,8 +13,6 @@ use App\Entities\Products\Transformations\ProductTransformable;
 use App\Entities\Tools\UploadableTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -54,8 +50,6 @@ class ProductController extends Controller
     {
         return view('products.create', [
             'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc'),
-            'default_weight' => env('SHOP_WEIGHT'),
-            'weight_units' => Product::MASS_UNIT,
             'product' => new Product
         ]);
     }
@@ -70,7 +64,6 @@ class ProductController extends Controller
         }
 
         $product = $this->productRepo->createProduct($data);
-
         $productRepo = new ProductRepository($product);
 
         if ($request->hasFile('image')) {
@@ -107,20 +100,11 @@ class ProductController extends Controller
         $product = $this->productRepo->findProductById($id);
         $productRepo = new ProductRepository($product);
 
-        if ($request->has('attributeValue')) {
-            $this->saveProductCombinations($request, $product);
-            return redirect()->route('products.edit', [$id, 'combination' => 1])
-                ->with('message', 'Combinación de atributo creada exitosamente');
-        }
-
         $data = $request->except(
             '_token',
             '_method',
             'default',
             'image',
-            'productAttributeQuantity',
-            'productAttributePrice',
-            'combination'
         );
 
         $data['slug'] = str_slug($request->input('name'));
@@ -148,20 +132,17 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('message', 'Eliminado Satisfactoriamente');
     }
 
-
     public function removeImage(Request $request)
     {
         $this->productRepo->deleteFile($request->only('product', 'image'), 'uploads');
         return redirect()->back()->with('message', 'Imagen Eliminada Satisfactoriamente');
     }
 
-
     public function removeThumbnail(Request $request)
     {
         $this->productRepo->deleteThumb($request->input('src'));
         return redirect()->back()->with('message', 'Imagen Eliminada Satisfactoriamente');
     }
-
 
     private function validateFields(array $data)
     {
