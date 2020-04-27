@@ -98,10 +98,7 @@ class ConfrontaCustomerController extends Controller
     }
     public function update(Request $request, $id)
     {
-        // dd($request);
 
-        // dd($request->customerData[0]['value']);
-        // dd($request->customerData[1]['value']);
 
         $datas = [];
         foreach ($request->customerData as $key => $value) {
@@ -118,16 +115,6 @@ class ConfrontaCustomerController extends Controller
             $clienteCelular->save();
         }
         $customer = $this->customerInterface->updateOrCreateCustomer($datas);
-
-        $clienteCelular          = new cliCel;
-        $clienteCelular->IDENTI  = $request->customerData[0]['value'];
-        $clienteCelular->NUM     = $request->customerData[1]['value'];
-        $clienteCelular->TIPO    = 'CEL';
-        $clienteCelular->CEL_VAL = 1;
-        $clienteCelular->FECHA   = date("Y-m-d H: i: s");
-        $clienteCelular->save();
-
-        dd($clienteCelular);
 
         return $customer;
     }
