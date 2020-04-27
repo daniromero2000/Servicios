@@ -341,7 +341,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('CELULAR'));
 				$clienteCelular->TIPO    = 'CEL';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
@@ -351,7 +351,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
 				$clienteCelular->TIPO    = 'FIJO';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			return $dataOportudata;
@@ -486,7 +486,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('CELULAR'));
 				$clienteCelular->TIPO    = 'CEL';
 				$clienteCelular->CEL_VAL = 1;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
@@ -496,7 +496,7 @@ class assessorsController extends Controller
 				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
 				$clienteCelular->TIPO    = 'FIJO';
 				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H: i: s");
+				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
 				$clienteCelular->save();
 			}
 			$lastName = explode(" ", trim($request->get('APELLIDOS')));
@@ -758,7 +758,7 @@ class assessorsController extends Controller
 		$customerIntention->save();
 
 		// 4.3 Edad.
-		$queryEdad = $this->cifinBasicDataInterface->checkCustomerHasCifinBasicData($identificationNumber)->teredad;
+		$queryEdad = $customer->EDAD;
 		if ($queryEdad == false || empty($queryEdad)) {
 			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
@@ -768,7 +768,7 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
-		if ($queryEdad == 'Mas 75') {
+		if ($queryEdad > 80) {
 			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "9";
@@ -776,14 +776,10 @@ class assessorsController extends Controller
 			$customerIntention->EDAD = 0;
 			$customerIntention->save();
 		} else {
-			$queryEdad = explode('-', $queryEdad);
-			$edadMin = $queryEdad[0];
-			$edadMax = $queryEdad[1];
-
 			$validateTipoCliente = TRUE;
 			if ($customer->ACTIVIDAD == 'PENSIONADO') {
 				$validateTipoCliente = FALSE;
-				if ($edadMin >= 18 && $edadMax <= 80) {
+				if ($queryEdad >= 18 && $queryEdad <= 80) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
@@ -797,7 +793,7 @@ class assessorsController extends Controller
 			}
 
 			if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
-				if ($edadMin >= 18 && $edadMax <= 75) {
+				if ($queryEdad >= 18 && $queryEdad <= 75) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
@@ -811,7 +807,7 @@ class assessorsController extends Controller
 			}
 
 			if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
-				if ($edadMin >= 18 && $edadMax <= 70) {
+				if ($queryEdad >= 18 && $queryEdad <= 70) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
