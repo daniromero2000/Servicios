@@ -23,36 +23,16 @@ class ProductRepository implements ProductRepositoryInterface
 {
     use ProductTransformable, UploadableTrait;
 
-    /**
-     * ProductRepository constructor.
-     * @param Product $product
-     */
     public function __construct(Product $product)
     {
         $this->model = $product;
     }
 
-    /**
-     * List all the products
-     *
-     * @param string $order
-     * @param string $sort
-     * @param array $columns
-     * @return Collection
-     */
     public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection
     {
         return $this->model->all($columns, $order, $sort);
     }
 
-    /**
-     * Create the product
-     *
-     * @param array $data
-     *
-     * @return Product
-     * @throws ProductCreateErrorException
-     */
     public function createProduct(array $data): Product
     {
         try {
@@ -62,14 +42,7 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * Update the product
-     *
-     * @param array $data
-     *
-     * @return bool
-     * @throws ProductUpdateErrorException
-     */
+
     public function updateProduct(array $data): bool
     {
         $filtered = collect($data)->except('image')->all();
@@ -81,18 +54,11 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * Find the product by ID
-     *
-     * @param int $id
-     *
-     * @return Product
-     * @throws ProductNotFoundException
-     */
+
     public function findProductById(int $id): Product
     {
         try {
-            return $this->transformProduct($this->model->findOneOrFail($id));
+            return $this->transformProduct($this->model->findOrFail($id));
         } catch (ModelNotFoundException $e) {
             throw new ProductNotFoundException($e);
         }
@@ -123,62 +89,6 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->model->where('id', $this->model->id)->delete();
     }
 
-    /**
-     * Detach the categories
-     */
-    public function detachCategories()
-    {
-        $this->model->categories()->detach();
-    }
-
-    /**
-     * Return the categories which the product is associated with
-     *
-     * @return Collection
-     */
-    public function getCategories(): Collection
-    {
-        return $this->model->categories()->get();
-    }
-
-    /**
-     * Sync the categories
-     *
-     * @param array $params
-     */
-    public function syncCategories(array $params)
-    {
-        $this->model->categories()->sync($params);
-    }
-
-
-    /**
-     * Detach the Subsidiaries
-     */
-    public function detachSubsidiaries()
-    {
-        $this->model->subsidiaries()->detach();
-    }
-
-    /**
-     * Return the Subsidiaries which the product is associated with
-     *
-     * @return Collection
-     */
-    public function getSubsidiary(): Collection
-    {
-        return $this->model->subsidiaries()->get();
-    }
-
-    /**
-     * Sync the Subsidiaries
-     *
-     * @param array $params
-     */
-    public function syncSubsidiaries(array $params)
-    {
-        $this->model->subsidiaries()->sync($params);
-    }
 
     /**
      * @param $file
@@ -260,81 +170,6 @@ class ProductRepository implements ProductRepositoryInterface
                 'src' => $filename
             ]);
             $this->model->images()->save($productImage);
-        });
-    }
-
-    /**
-     * Associate the product attribute to the product
-     *
-     * @param ProductAttribute $productAttribute
-     * @return ProductAttribute
-     */
-    public function saveProductAttributes(ProductAttribute $productAttribute): ProductAttribute
-    {
-        $this->model->attributes()->save($productAttribute);
-        return $productAttribute;
-    }
-
-    /**
-     * List all the product attributes associated with the product
-     *
-     * @return Collection
-     */
-    public function listProductAttributes(): Collection
-    {
-        return $this->model->attributes()->get();
-    }
-
-    /**
-     * Delete the attribute from the product
-     *
-     * @param ProductAttribute $productAttribute
-     *
-     * @return bool|null
-     * @throws \Exception
-     */
-    public function removeProductAttribute(ProductAttribute $productAttribute): ?bool
-    {
-        return $productAttribute->delete();
-    }
-
-    /**
-     * @param ProductAttribute $productAttribute
-     * @param AttributeValue ...$attributeValues
-     *
-     * @return Collection
-     */
-    public function saveCombination(ProductAttribute $productAttribute, AttributeValue ...$attributeValues): Collection
-    {
-        return collect($attributeValues)->each(function (AttributeValue $value) use ($productAttribute) {
-            return $productAttribute->attributesValues()->save($value);
-        });
-    }
-
-    /**
-     * @return Collection
-     */
-    public function listCombinations(): Collection
-    {
-        return $this->model->attributes()->map(function (ProductAttribute $productAttribute) {
-            return $productAttribute->attributesValues;
-        });
-    }
-
-    /**
-     * @param ProductAttribute $productAttribute
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function findProductCombination(ProductAttribute $productAttribute)
-    {
-        $values = $productAttribute->attributesValues()->get();
-
-        return $values->map(function (AttributeValue $attributeValue) {
-            return $attributeValue;
-        })->keyBy(function (AttributeValue $item) {
-            return strtolower($item->attribute->name);
-        })->transform(function (AttributeValue $value) {
-            return $value->value;
         });
     }
 

@@ -23,12 +23,6 @@ interface ProductRepositoryInterface
 
     public function removeProduct(): bool;
 
-    public function detachCategories();
-
-    public function getCategories(): Collection;
-
-    public function syncCategories(array $params);
-
     public function deleteFile(array $file, $disk = null): bool;
 
     public function deleteThumb(string $src): bool;
@@ -42,18 +36,6 @@ interface ProductRepositoryInterface
     public function saveCoverImage(UploadedFile $file): string;
 
     public function saveProductImages(Collection $collection);
-
-    public function saveProductAttributes(ProductAttribute $productAttribute): ProductAttribute;
-
-    public function listProductAttributes(): Collection;
-
-    public function removeProductAttribute(ProductAttribute $productAttribute): ?bool;
-
-    public function saveCombination(ProductAttribute $productAttribute, AttributeValue ...$attributeValues): Collection;
-
-    public function listCombinations(): Collection;
-
-    public function findProductCombination(ProductAttribute $attribute);
 
     public function saveBrand(Brand $brand);
 

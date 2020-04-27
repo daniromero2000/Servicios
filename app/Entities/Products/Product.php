@@ -7,12 +7,11 @@ use App\Entities\Categories\Category;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\ProductAttributes\ProductAttribute;
 use App\Entities\ProductImages\ProductImage;
-use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Product extends Model implements Buyable
+class Product extends Model
 {
     use SearchableTrait;
 
@@ -40,11 +39,7 @@ class Product extends Model implements Buyable
         'columns' => [
             'products.sku' => 10,
             'products.name' => 10,
-            'product_statuses.name' => 10,
             'products.description' => 5
-        ],
-        'joins' => [
-            'product_statuses' => ['product_statuses.id', 'products.product_status_id']
         ],
         'groupBy' => ['products.id']
     ];
@@ -62,7 +57,6 @@ class Product extends Model implements Buyable
         'quantity',
         'price',
         'brands_id',
-        'product_status_id',
         'status',
         'weight',
         'mass_unit',
@@ -82,48 +76,6 @@ class Product extends Model implements Buyable
      */
     protected $hidden = [];
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function subsidiaries()
-    {
-        return $this->belongsToMany(Subsidiary::class);
-    }
-
-    /**
-     * Get the identifier of the Buyable item.
-     *
-     * @param null $options
-     * @return int|string
-     */
-    public function getBuyableIdentifier($options = null)
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get the description or title of the Buyable item.
-     *
-     * @param null $options
-     * @return string
-     */
-    public function getBuyableDescription($options = null)
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the price of the Buyable item.
-     *
-     * @param null $options
-     * @return float
-     */
-    public function getBuyablePrice($options = null)
-    {
-        return $this->price;
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -137,18 +89,12 @@ class Product extends Model implements Buyable
      * @param string $term
      * @return Collection
      */
-    public function searchProduct(string $term) : Collection
+    public function searchProduct(string $term): Collection
     {
         return self::search($term)->get();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function attributes()
-    {
-        return $this->hasMany(ProductAttribute::class);
-    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

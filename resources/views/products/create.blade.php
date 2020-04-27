@@ -4,7 +4,7 @@
 <section class="content">
     @include('layouts.errors-and-messages')
     <div class="box" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .25);">
-        <form action="{{ route('admin.products.store') }}" method="post" class="form" enctype="multipart/form-data">
+        <form action="{{ route('products.store') }}" method="post" class="form" enctype="multipart/form-data">
             <div class="box-body">
                 {{ csrf_field() }}
                 <h1>Crear Producto</h1>
@@ -84,22 +84,12 @@
                     @endif
                     <input id="product_status_id" type="hidden" class="form-control" name="product_status_id" value="2">
                     <input type="hidden" name="status" id="status" class="form-control" value="1">
-                    <!-- /.box-body
-    @include('admin.shared.attribute-select', [compact('default_weight')])-->
-                </div>
-                <div class="col-md-4">
-                    <h2>Categorías</h2>
-                    @include('admin.shared.categories', ['categories' => $categories, 'selectedIdsC' => []])
-                </div>
-                <div class="col-md-4">
-                    <h2>Sucursales</h2>
-                    @include('admin.shared.subsidiaries', ['subsidiaries' => $subsidiaries, 'selectedIds' => []])
                 </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="btn-group">
-                    <a href="{{ route('admin.products.index') }}" class="btn btn-default">Regresar</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-default">Regresar</a>
                     <button type="submit" class="btn btn-primary">Crear</button>
                 </div>
             </div>
