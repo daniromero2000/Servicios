@@ -1,9 +1,5 @@
 @extends('layouts.app')
-
-
-
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
-
 @section('metaTags')
 <meta name="googlebot" content="noindex">
 <meta name="robots" content="noindex">
@@ -25,6 +21,109 @@
 @endsection()
 
 @section('content')
+
+<div style="max-width: 1300px;margin: 0px auto;">
+
+    <div class="row mr-0">
+        <div class="col-8">
+            <div class="mt-5">
+                <div class="carousel-container position-relative row">
+
+                    <!-- Sorry! Lightbox doesn't work - yet. -->
+                    <div class="row">
+                        <div class="col-3">
+                            hola
+                        </div>
+                        <div class="col-9">
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active" data-slide-number="0">
+                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-01.jpg')}}"
+                                            class="d-block w-100" alt="..."
+                                            data-remote="https://source.unsplash.com/Pn6iimgM-wo/" data-type="image"
+                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                    <div class="carousel-item" data-slide-number="1">
+                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-06.jpg')}}"
+                                            class="d-block w-100" alt="..."
+                                            data-remote="https://source.unsplash.com/tXqVe7oO-go/" data-type="image"
+                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                    <div class="carousel-item" data-slide-number="2">
+                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-03.jpg')}}"
+                                            class="d-block w-100" alt="..."
+                                            data-remote="https://source.unsplash.com/qlYQb7B9vog/" data-type="image"
+                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                    <div class="carousel-item" data-slide-number="3">
+                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-05.jpg')}}"
+                                            class="d-block w-100" alt="..."
+                                            data-remote="https://source.unsplash.com/QfEfkWk1Uhk/" data-type="image"
+                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                    <div class="carousel-item" data-slide-number="4">
+                                        <img src="https://source.unsplash.com/CSIcgaLiFO0/1600x900/"
+                                            class="d-block w-100" alt="..."
+                                            data-remote="https://source.unsplash.com/CSIcgaLiFO0/" data-type="image"
+                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div> <!-- /row -->
+                <!-- Carousel Navigation -->
+                <div id="carousel-thumbs" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row mx-0">
+                                <div id="carousel-selector-0" class="thumb col-4 col-sm-3 px-0 py-2 selected"
+                                    data-target="#myCarousel" data-slide-to="0">
+                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-01.jpg')}}"
+                                        class="img-fluid" alt="...">
+                                </div>
+                                <div id="carousel-selector-1" class="thumb col-4 col-sm-3 px-0 py-2"
+                                    data-target="#myCarousel" data-slide-to="1">
+                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-06.jpg')}}"
+                                        class="img-fluid" alt="...">
+                                </div>
+                                <div id="carousel-selector-2" class="thumb col-4 col-sm-3 px-0 py-2"
+                                    data-target="#myCarousel" data-slide-to="2">
+                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-03.jpg')}}"
+                                        class="img-fluid" alt="...">
+                                </div>
+                                <div id="carousel-selector-3" class="thumb col-4 col-sm-3 px-0 py-2"
+                                    data-target="#myCarousel" data-slide-to="3">
+                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-05.jpg')}}"
+                                        class="img-fluid" alt="...">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <a class="carousel-control-prev" href="#carousel-thumbs" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-thumbs" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a> --}}
+                </div>
+            </div> <!-- /container -->
+        </div>
+        <div class="col-4">
+            <h4>hola</h4>
+        </div>
+
+    </div>
+</div>
+
 <div class="row m-0 relative">
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Banner/Banner.png')}}"
         class="img-fluid img-responsive img-principal" />
@@ -34,7 +133,13 @@
         <h4 class="text-baner-initial">Comprar tus <br>electrodomésticos <br> a crédito jamás
             <br> fue tan facil</h4>
     </div>
+    <a href="" class="btn button-baner-initial">
+        <div>
+            Solicita tu crédito
+        </div>
+    </a>
 </div>
+
 
 <div class=" container-step-cards justify-content-center ml-auto mr-auto">
     <div class="row justify-content-center mt-4 row-step-cards">
@@ -48,9 +153,7 @@
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.png') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
-                    <p class="card-text text-step-cards">Políticas de crédito <b>flexibles</b> para pensionados con
-                        reportes en
-                        <b>centrales de riesgo</b></p>
+                    <p class="card-text text-step-cards">Solicita tu <b>crédito</b> llenando el formulario</p>
                     <button class="btn first-step-cards-button" type="button">Solicitar</button>
 
                 </div>
@@ -65,9 +168,9 @@
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.png') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
-                    <p class="card-text text-step-cards">Políticas de crédito <b>flexibles</b> para pensionados con
-                        reportes en
-                        <b>centrales de riesgo</b>
+                    <p class="card-text text-step-cards">Uno de nuestros asesores se comunicará contigo para que
+                        elijas
+                        tu electrodoméstico y finalizar el proceso <b>100% digital</b>
                     </p>
                 </div>
             </div>
@@ -83,9 +186,9 @@
                     class="second-img-step-cards">
 
                 <div class="card-body card-body-view">
-                    <p class="card-text text-step-cards">Políticas de crédito <b>flexibles</b> para pensionados con
-                        reportes en
-                        <b>centrales de riesgo</b></p>
+                    <p class="card-text text-step-cards">Finalmente enviaremos un asesor hasta tu <b>domicilio</b>
+                        para
+                        firmar tus documentos</p>
 
                 </div>
             </div>
@@ -105,9 +208,6 @@
     </div>
 
 </div>
-
-
-
 
 <div style=" margin-top: 5%;">
     <div class=" row justify-content-center container-card-products">
@@ -148,7 +248,8 @@
                             $ 31.100
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver más</a>
+                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver
+                            más</a>
                         <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>
 
@@ -195,7 +296,8 @@
                             $ 31.100
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver más</a>
+                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver
+                            más</a>
                         <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>
 
@@ -241,7 +343,8 @@
                             $ 31.100
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver más</a>
+                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver
+                            más</a>
                         <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>
 
@@ -251,7 +354,6 @@
         </div>
     </div>
 </div>
-
 
 <div style=" margin-bottom: 5%; ">
     <div class="p-3 background-container-snipet-benefits">
@@ -265,9 +367,10 @@
                     <img src="{{asset('images/Front/OportuyaCustomers/PageCredit/SnipetMasBeneficios/Icon_Electrodomesticos.png')}} "
                         alt="" class="img-card">
                     <div class="card-body">
-                        <p class="card-text">Estudio y desembolso de <b>crédito</b> parra
-                            <b>electrodomésticos</b>, libre
-                            inversión y/o compra de cartera.</p>
+                        <p class="card-text">Accede con facilidad a una gran variedad de <b>electrodomésticos</b>
+                            para
+                            tu
+                            parra <b>hogar</b>.</p>
                     </div>
                 </div>
             </div>
@@ -277,9 +380,8 @@
                     <img src="{{asset('images/Front/OportuyaCustomers/PageCredit/SnipetMasBeneficios/Icon_Avances.png')}} "
                         alt="" class="img-card">
                     <div class="card-body">
-                        <p class="card-text">Estudio y desembolso de <b>crédito</b> parra
-                            <b>electrodomésticos</b>, libre
-                            inversión y/o compra de cartera.</p>
+                        <p class="card-text">Un cupo de avances para que utilices cuando más lo necesites (desde
+                            <b>$100.000</b> - hasta <b>$500.000</b>). </p>
                     </div>
                 </div>
             </div>
@@ -289,9 +391,8 @@
                     <img src="{{asset('images/Front/OportuyaCustomers/PageCredit/SnipetMasBeneficios/Icon_Descuentos.png')}} "
                         class="img-card">
                     <div class="card-body">
-                        <p class="card-text">Estudio y desembolso de <b>crédito</b> parra
-                            <b>electrodomésticos</b>, libre
-                            inversión y/o compra de cartera.</p>
+                        <p class="card-text">Tienes acceso a los súper descuentos que lanzamos cada semana con los
+                            mejores precios.</p>
                     </div>
                 </div>
             </div>
@@ -299,3 +400,9 @@
     </div>
 </div>
 @stop
+
+
+@section('scriptsJs')
+<script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
+
+@endsection

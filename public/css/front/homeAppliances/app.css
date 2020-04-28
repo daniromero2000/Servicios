@@ -25,6 +25,20 @@
     color: white;
 }
 
+.button-baner-initial {
+    position: absolute;
+    color: #0868a4;
+    top: 66%;
+    right: 7%;
+    font-size: 29px !important;
+    font-weight: bold !important;
+    padding-left: 37px !important;
+    padding-right: 37px !important;
+    border-radius: 31px !important;
+    background-color: #ffff00;
+    border-color: #ffff00 !important;
+}
+
 .container-step-cards {
     max-width: 1300px;
     padding: 3rem;
@@ -249,6 +263,7 @@
 .container-card-benefits {
     background: #fdd00000 !important;
     border: 0px !important;
+    font-size: 18px;
 }
 
 .container-card-benefits .img-card {
@@ -267,6 +282,12 @@
     }
     .text-snipet-promotions {
         font-size: 48px;
+    }
+    .button-baner-initial {
+        right: 6%;
+        font-size: 23px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
     }
 }
 
@@ -291,11 +312,23 @@
     .text-snipet-promotions {
         font-size: 39px;
     }
+    .button-baner-initial {
+        right: 6%;
+        font-size: 18px !important;
+        padding-left: 26px !important;
+        padding-right: 26px !important;
+    }
 }
 
 @media screen and (max-width: 900px) {
     .container-step-cards {
         padding: 1rem 2rem 2rem 2rem;
+    }
+    .container-card-benefits {
+        font-size: 15px;
+    }
+    .container-snipet-benefits-title {
+        font-size: 28px;
     }
 }
 
@@ -330,6 +363,12 @@
     .text-snipet-promotions {
         font-size: 29px;
     }
+    .button-baner-initial {
+        right: 6%;
+        font-size: 15px !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -338,6 +377,9 @@
     }
     .img-secondary {
         display: block;
+    }
+    .button-baner-initial {
+        display: none !important;
     }
     .step-cards {
         margin-bottom: 1rem;
@@ -414,6 +456,9 @@
     }
     .container-card-benefits {
         font-size: 13px;
+    }
+    .container-snipet-benefits-title {
+        font-size: 24px;
     }
 }
 
@@ -499,5 +544,59 @@
     }
     .text-snipet-promotions {
         font-size: 20px;
+    }
+}
+
+/* ////// */
+
+.carousel {
+    position: relative;
+}
+
+.carousel-item img {
+    object-fit: cover;
+}
+
+#carousel-thumbs {
+    background: rgba(255, 255, 255, .3);
+    bottom: 5px;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    top: 0px;
+}
+
+#carousel-thumbs img {
+    border: 5px solid transparent;
+    cursor: pointer;
+}
+
+#carousel-thumbs img:hover {
+    border-color: rgba(255, 255, 255, .3);
+}
+
+#carousel-thumbs .selected img {
+    opacity: 0.5;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: 50px;
+}
+
+@media all and (max-width: 767px) {
+    .carousel-container #carousel-thumbs img {
+        border-width: 3px;
+    }
+}
+
+@media all and (min-width: 576px) {
+    .carousel-container #carousel-thumbs {
+        position: absolute;
+    }
+}
+
+@media all and (max-width: 576px) {
+    .carousel-container #carousel-thumbs {
+        background: #ccccce;
     }
 }
