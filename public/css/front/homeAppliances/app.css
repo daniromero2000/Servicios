@@ -549,6 +549,127 @@
 
 /* ////// */
 
+.container-steps-products {
+    max-width: 460px;
+}
+
+.img-step-product {
+    margin-right: auto;
+    margin-left: auto;
+    max-height: 60px;
+}
+
+.text-step-product {
+    font-size: 15px;
+    color: #00cdff;
+    font-weight: bold;
+    line-height: 16px;
+}
+
+.container-deal-product {
+    margin-bottom: 18px;
+    max-width: 430px;
+    margin-right: auto;
+    margin-top: 8%;
+}
+
+.term-deal-product {
+    font-size: 18px;
+    color: #0d70ac;
+    line-height: 18px;
+    margin-right: 42%;
+    text-align: center;
+}
+
+.img-card-deal-product {
+    position: absolute;
+    width: 55px;
+    top: 3%;
+    right: 73px;
+}
+
+.container-ol-steps-deal-product {
+    line-height: 21px;
+    padding-left: 23px;
+    color: #0d70ac;
+    font-weight: 500;
+}
+
+.container-dues-deal-product {
+    text-align: center;
+    margin-right: 42%;
+    margin-bottom: 6%;
+}
+
+.text-dues-deal-product {
+    font-size: 13px;
+    color: #0d70ac;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.question-contact-deal-product {
+    color: #737070;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.first-img-contact-deal-product {
+    max-height: 55px;
+}
+
+.second-img-contact-deal-product {
+    max-height: 36px;
+}
+
+.container-text-contact-deal-product {
+    position: absolute;
+    right: 34px;
+    top: 35px;
+    max-width: 200px;
+    line-height: 19px;
+    font-size: 19px;
+    color: #5e5e5e;
+    font-weight: 500;
+}
+
+.number-contact-deal-product {
+    margin-top: 2%;
+    font-size: 34px;
+    color: #646363;
+    font-weight: 600;
+}
+
+.button-contact-deal-product {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem 1.95rem;
+    border-radius: 24px;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    color: #fff;
+    background-color: #00c84b;
+    border-color: #28a745;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.img-principal-carousel {
+    max-height: 400px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .carousel {
     position: relative;
 }
