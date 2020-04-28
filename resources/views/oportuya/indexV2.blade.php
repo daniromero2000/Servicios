@@ -51,7 +51,7 @@
                     <p class="card-text text-step-cards">Políticas de crédito <b>flexibles</b> para pensionados con
                         reportes en
                         <b>centrales de riesgo</b></p>
-                    <button class="btn btn-primary" type="button">Text</button>
+                    <button class="btn first-step-cards-button" type="button">Solicitar</button>
 
                 </div>
             </div>
@@ -95,9 +95,11 @@
 </div>
 <div class="row m-0 relative">
     <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/SnipetPromociones/Promociones.png')}}"
-        class="img-fluid img-responsive" />
-    <div class="text-center container-text-Snipet-promotions">
-        <h4 class="text-Snipet-promotions">Tenemos estas <br> <b>súper promociones </b> <br>
+        class="img-fluid img-responsive img-promociones" />
+    <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/SnipetPromociones/Promociones02.png')}}"
+        class="img-fluid img-responsive img-promociones-responsive" />
+    <div class="text-center container-text-snipet-promotions">
+        <h4 class="text-snipet-promotions">Tenemos estas <br> <b>súper promociones </b> <br>
             a
             crédito para ti</h4>
     </div>
@@ -109,7 +111,7 @@
 
 <div style=" margin-top: 5%;">
     <div class=" row justify-content-center container-card-products">
-        <div class="col-sm-6 col-lg-5 col-xl-4">
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
             <div class="card shadow border-0 text-center card-products">
                 <div class="w-100 card-container-products-logo">
                     <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
@@ -125,8 +127,18 @@
                     <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
                         consectetur adipisicing elit. Minima </h5>
                     <div class="relative">
+                        <div class="card-products-discount">
+                            <p>26%</p>
+                            <p>Dcto</p>
+                        </div>
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                             class="card-products-card-black">
+                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+                        <p class="card-text card-products-label mb-1">Precio antes</p>
+
+                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+                        <p class="card-text card-products-label mb-3">Precio ahora</p>
+
                         <p class="card-text card-products-text">Llévalo a <b> 15
                                 meses </b> con
                             <br>
@@ -145,7 +157,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-5 col-xl-4">
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
             <div class="card shadow border-0 text-center card-products">
                 <div class="w-100 card-container-products-logo">
                     <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
@@ -163,6 +175,17 @@
                     <div class="relative">
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                             class="card-products-card-black">
+                        <div class="card-products-discount">
+                            <p>26%</p>
+                            <p>Dcto</p>
+                        </div>
+                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+                        <p class="card-text card-products-label mb-1">Precio antes</p>
+
+                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+                        <p class="card-text card-products-label mb-3">Precio ahora</p>
+
+
                         <p class="card-text card-products-text">Llévalo a <b> 15
                                 meses </b> con
                             <br>
@@ -181,7 +204,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-5 col-xl-4">
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
             <div class="card shadow border-0 text-center card-products">
                 <div class="w-100 card-container-products-logo">
                     <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
@@ -199,6 +222,16 @@
                     <div class="relative">
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                             class="card-products-card-black">
+                        <div class="card-products-discount">
+                            <p>26%</p>
+                            <p>Dcto</p>
+                        </div>
+                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+                        <p class="card-text card-products-label mb-1">Precio antes</p>
+
+                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+                        <p class="card-text card-products-label mb-3">Precio ahora</p>
+
                         <p class="card-text card-products-text">Llévalo a <b> 15
                                 meses </b> con
                             <br>
@@ -222,7 +255,7 @@
 
 <div style=" margin-bottom: 5%; ">
     <div class="p-3 background-container-snipet-benefits">
-        <div class="row container-snipet-benefits text-white text-center">
+        <div class="row container-snipet-benefits text-white justify-content-center text-center">
             <div class="col-12 mt-4 mb-4">
                 <h4 class="container-snipet-benefits-title">Más beneficios para ti </h4>
             </div>

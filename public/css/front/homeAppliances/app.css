@@ -30,6 +30,11 @@
     padding: 3rem;
 }
 
+.step-cards {
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+
 .text-step-cards {
     color: #005dca;
 }
@@ -40,13 +45,18 @@
     box-shadow: 0.5rem 0rem 3rem 0rem rgba(32, 32, 255, 0.15)!important;
 }
 
-.step-cards {
-    margin-bottom: 3rem;
-    margin-top: 3rem;
-}
-
 .first-step-cards {
     border-radius: 0px 47px 47px 0px;
+}
+
+.first-step-cards-button {
+    color: #004498;
+    font-weight: bold !important;
+    background-color: #fff800;
+    border-color: #fff800 !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+    border-radius: 15px !important;
 }
 
 .last-step-cards {
@@ -67,13 +77,21 @@
     max-height: 74px;
 }
 
-.container-text-Snipet-promotions {
+.container-text-snipet-promotions {
     position: absolute;
     top: 20%;
-    right: 12%;
+    right: 10%;
 }
 
-.text-Snipet-promotions {
+.img-promociones {
+    display: block;
+}
+
+.img-promociones-responsive {
+    display: none;
+}
+
+.text-snipet-promotions {
     font-size: 57px;
     color: white;
     font-weight: 400;
@@ -86,23 +104,28 @@
 }
 
 .card-products {
-    border-radius: 14px;
+    border-radius: 15px !important;
+    margin-bottom: 18px;
+    max-width: 365px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card-container-products-logo {
     position: relative;
-    height: 30px;
+    height: 40px;
 }
 
 .card-products-logo {
     position: absolute;
-    width: 87px;
+    max-height: 40px;
     top: 13px;
     right: 19px;
 }
 
 .card-products-img {
     max-height: 240px;
+    max-width: 100%;
 }
 
 .card-products-title {
@@ -117,6 +140,21 @@
     margin-right: 10%;
 }
 
+.card-products-old-price {
+    font-size: 18px;
+    color: #0d70ac;
+    line-height: 18px;
+    font-weight: bold;
+}
+
+.card-products-new-price {
+    font-size: 24px;
+    color: #d20509;
+    line-height: 18px;
+    font-weight: bold;
+    margin-right: 4%;
+}
+
 .card-products-price {
     font-size: 23px;
     color: #d20509;
@@ -125,16 +163,39 @@
     font-weight: bold;
 }
 
+.card-products-discount {
+    background: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 37px;
+    position: absolute;
+    width: 44px;
+    top: 12%;
+    right: 45px;
+    font-size: 14px;
+}
+
+.card-products-discount p:first-child {
+    margin-bottom: 0px;
+    margin-top: 3px;
+}
+
+.card-products-discount p:last-child {
+    line-height: 10px;
+    margin-bottom: 11px;
+}
+
 .card-products-card-black {
     position: absolute;
     width: 44px;
-    top: 8px;
+    top: 41%;
     right: 45px;
 }
 
 .card-products-label {
     font-size: 13px;
     color: #0d70ac;
+    font-weight: 500;
 }
 
 .card-products-button {
@@ -204,6 +265,9 @@
     .text-baner-initial {
         font-size: 38px;
     }
+    .text-snipet-promotions {
+        font-size: 48px;
+    }
 }
 
 @media screen and (min-width: 900px) and (max-width: 1104px) {
@@ -223,6 +287,9 @@
     }
     .text-step-cards {
         font-size: 15px;
+    }
+    .text-snipet-promotions {
+        font-size: 39px;
     }
 }
 
@@ -254,6 +321,15 @@
         margin-bottom: 2rem;
         margin-top: 2rem;
     }
+    .first-step-cards-button {
+        padding-left: 21px !important;
+        padding-right: 21px !important;
+        border-radius: 15px !important;
+        font-size: 14px !important;
+    }
+    .text-snipet-promotions {
+        font-size: 29px;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -266,6 +342,26 @@
     .step-cards {
         margin-bottom: 1rem;
         margin-top: 1rem;
+    }
+    .card-products-button-see-more {
+        font-size: 13px !important;
+    }
+    .card-products-button-apply {
+        font-size: 13px !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .row-step-cards {
+        max-width: 320px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    .first-step-cards-button {
+        padding-left: 17px !important;
+        padding-right: 17px !important;
+        border-radius: 15px !important;
+        font-size: 12px !important;
     }
 }
 
@@ -283,6 +379,42 @@
     .text-step-cards {
         font-size: 12px;
     }
+    .text-snipet-promotions {
+        font-size: 23px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .card-products-logo {
+        max-height: 30px;
+    }
+    .card-container-products-logo {
+        height: 24px;
+    }
+    .card-products-img {
+        max-height: 200px;
+    }
+    .card-products-title {
+        font-size: 15px;
+    }
+    .card-products-text {
+        font-size: 14px;
+    }
+    .card-products-card-black {
+        width: 38px;
+    }
+    .card-products-price {
+        font-size: 21px;
+    }
+    .card-products-label {
+        font-size: 11px;
+    }
+    .container-card-benefits .img-card {
+        max-height: 49px;
+    }
+    .container-card-benefits {
+        font-size: 13px;
+    }
 }
 
 @media screen and (min-width: 400px) and (max-width: 519px) {
@@ -297,6 +429,25 @@
         max-height: 38px;
     }
     .text-step-cards {
+        font-size: 12px;
+    }
+    .text-snipet-promotions {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .img-promociones {
+        display: none;
+    }
+    .img-promociones-responsive {
+        display: block;
+    }
+    .card-products-card-black {
+        right: 19px;
+    }
+    .card-products-discount {
+        right: 19px;
         font-size: 12px;
     }
 }
@@ -314,6 +465,13 @@
     }
     .text-step-cards {
         font-size: 12px;
+    }
+    .container-text-snipet-promotions {
+        top: 22%;
+        right: 23%;
+    }
+    .text-snipet-promotions {
+        font-size: 24px;
     }
 }
 
@@ -334,5 +492,12 @@
     .step-cards {
         margin-bottom: 0.5rem;
         margin-top: 0.5rem;
+    }
+    .container-text-snipet-promotions {
+        top: 20%;
+        right: 20%;
+    }
+    .text-snipet-promotions {
+        font-size: 20px;
     }
 }
