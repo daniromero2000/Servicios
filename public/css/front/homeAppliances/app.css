@@ -2,6 +2,11 @@
     position: relative;
 }
 
+.padding-reset {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
 .img-principal {
     display: block;
 }
@@ -549,6 +554,36 @@
 
 /* ////// */
 
+.breadcrumb-product {
+    font-size: 13px;
+    color: #d3d1d1;
+    font-weight: bold;
+}
+
+.reference-product {
+    font-size: 17px;
+    color: #0062A7;
+    font-weight: 500;
+    line-height: 18px;
+    margin-bottom: 6px;
+}
+
+.name-product {
+    font-size: 26px;
+    line-height: 25px;
+    font-weight: bold;
+    color: #0062A7;
+}
+
+.description-product {
+    padding-left: 21px;
+    color: #0062A7;
+    font-weight: 400;
+    line-height: 18px;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
 .container-steps-products {
     max-width: 460px;
 }
@@ -570,7 +605,8 @@
     margin-bottom: 18px;
     max-width: 430px;
     margin-right: auto;
-    margin-top: 8%;
+    margin-top: 5%;
+    margin-left: 2%;
 }
 
 .term-deal-product {
@@ -620,11 +656,12 @@
 
 .second-img-contact-deal-product {
     max-height: 36px;
+    margin-top: -10px;
 }
 
 .container-text-contact-deal-product {
     position: absolute;
-    right: 34px;
+    right: 68px;
     top: 35px;
     max-width: 200px;
     line-height: 19px;
@@ -701,7 +738,187 @@
 }
 
 .carousel-control-prev, .carousel-control-next {
-    width: 50px;
+    background: #c8cdd2;
+    width: 8% !important;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background: #858c93;
+}
+
+@media screen and (max-width: 990px) {
+    .container-deal {
+        max-width: 500px;
+        margin-top: 5%;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 900px) {
+    .container-deal {
+        max-width: 500px;
+        margin-top: 5%;
+    }
+    .img-step-product {
+        max-height: 52px;
+    }
+    .text-step-product {
+        font-size: 13px;
+    }
+    .container-ol-steps-deal-product {
+        font-size: 15px;
+    }
+    .question-contact-deal-product {
+        font-size: 18px;
+    }
+    .first-img-contact-deal-product {
+        max-height: 50px;
+    }
+    .second-img-contact-deal-product {
+        max-height: 30px;
+    }
+    .container-text-contact-deal-product {
+        font-size: 17px;
+    }
+    .number-contact-deal-product {
+        font-size: 29px;
+    }
+}
+
+@media screen and (min-width: 372px) and (max-width: 500px) {
+    .container-deal {
+        max-width: 400px;
+    }
+    .container-deal-product {
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .img-step-product {
+        max-height: 48px;
+    }
+    .text-step-product {
+        font-size: 12px;
+    }
+    .img-card-deal-product {
+        width: 52px;
+        top: 3%;
+        right: 64px;
+    }
+    .term-deal-product {
+        font-size: 16px;
+        margin-right: 42%;
+    }
+    .container-ol-steps-deal-product {
+        font-size: 13px;
+    }
+    .question-contact-deal-product {
+        font-size: 16px;
+    }
+    .first-img-contact-deal-product {
+        max-height: 45px;
+    }
+    .second-img-contact-deal-product {
+        max-height: 27px;
+    }
+    .container-text-contact-deal-product {
+        font-size: 15px;
+        top: 16%;
+        right: 2%;
+    }
+    .number-contact-deal-product {
+        font-size: 24px;
+    }
+    .button-contact-deal-product {
+        padding: .375rem 1.25rem;
+        font-size: 13px;
+    }
+    .breadcrumb-product {
+        font-size: 12px;
+    }
+    .reference-product {
+        font-size: 15px;
+    }
+    .name-product {
+        font-size: 20px;
+    }
+    .description-product {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 372px) {
+    .padding-reset {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .container-steps-products .col-4 {
+        flex: 0 0 50%;
+        max-width: 50% !important;
+    }
+    .container-deal {
+        margin-top: 7%;
+    }
+    .container-deal-product {
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .img-step-product {
+        max-height: 40px;
+    }
+    .text-step-product {
+        font-size: 11px;
+    }
+    .img-card-deal-product {
+        width: 46px;
+        top: 4%;
+        right: 7px;
+    }
+    .container-dues-deal-product {
+        text-align: center;
+        margin-right: 0%;
+        margin-bottom: 6%;
+    }
+    .term-deal-product {
+        font-size: 15px;
+        margin-right: 22%;
+    }
+    .container-ol-steps-deal-product {
+        font-size: 13px;
+    }
+    .question-contact-deal-product {
+        font-size: 15px;
+    }
+    .first-img-contact-deal-product {
+        max-height: 45px;
+    }
+    .second-img-contact-deal-product {
+        max-height: 27px;
+    }
+    .container-text-contact-deal-product {
+        font-size: 15px;
+        top: 17%;
+        right: -18%;
+    }
+    .number-contact-deal-product {
+        font-size: 24px;
+    }
+    .button-contact-deal-product {
+        padding: .375rem 1.25rem;
+        font-size: 13px;
+    }
+    .breadcrumb-product {
+        font-size: 12px;
+    }
+    .reference-product {
+        font-size: 15px;
+    }
+    .name-product {
+        font-size: 20px;
+    }
+    .description-product {
+        font-size: 14px;
+    }
 }
 
 @media all and (max-width: 767px) {
