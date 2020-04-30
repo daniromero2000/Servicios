@@ -86,16 +86,104 @@
                                     <span class="text-warning">Puedes usar ctr (cmd) para seleccionar multiples
                                         imagenes</span>
                                 </div>
+<div class="form-group">
+    <div class="col-md-3">
+        <div class="row">
+            <img src="{{ asset("storage/$product->description_image1") }}" alt="" class="img-responsive img-thumbnail">
+        </div>
+    </div>
+</div>
+                                <div class="form-group">
+                                    <label for="description_image1">Imagen de descripcion 1<span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                        <input type="file" name="description_image1" id="description_image1"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <img src="{{ asset("storage/$product->description_image2") }}" alt="" class="img-responsive img-thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_image2">Imagen de descripcion 2<span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                        <input type="file" name="description_image2" id="description_image2"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <img src="{{ asset("storage/$product->description_image3") }}" alt="" class="img-responsive img-thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_image3">Imagen de descripcion 3<span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                        <input type="file" name="description_image3" id="description_image3"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <img src="{{ asset("storage/$product->description_image4") }}" alt="" class="img-responsive img-thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_image4">Imagen de descripcion 4<span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                        <input type="file" name="description_image4" id="description_image4"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <img src="{{ asset("storage/$product->specification_image") }}" alt="" class="img-responsive img-thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="specification_image">Imagen de especificaciones<span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                        <input type="file" name="specification_image" id="specification_image"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="price">Precio</label>
-
                                     <div class="input-group">
                                         <span class="input-group-addon">{{ config('cart.currency_symbol') }}</span>
                                         <input type="text" name="price" id="price" placeholder="Precio"
                                             class="form-control" value="{{ $product->price, 0}}" required>
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <label for="sale_price">Precio Oferta</label>
@@ -103,6 +191,22 @@
                                         <span class="input-group-addon">{{ config('cart.currency_symbol') }}</span>
                                         <input type="text" name="sale_price" id="sale_price" placeholder="Precio Oferta"
                                             class="form-control" value="{{ $product->sale_price }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="months">Meses a Pagar</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{{ config('cart.currency_symbol') }}</span>
+                                        <input type="text" name="months" id="months" placeholder="Meses a Pagar"
+                                            class="form-control" value="{{ $product->months, 0}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pays">Cuotas Mensuales</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{{ config('cart.currency_symbol') }}</span>
+                                        <input type="text" name="pays" id="pays" placeholder="Cuotas Mensuales"
+                                            class="form-control" value="{{ $product->pays, 0}}" required>
                                     </div>
                                 </div>
                                 @if(!$brands->isEmpty())

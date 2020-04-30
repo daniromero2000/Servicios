@@ -16,7 +16,6 @@ class CreateProductRequest extends BaseFormRequest
         return [
             'sku' => ['required'],
             'name' => ['required', 'unique:products'],
-            'quantity' => ['required', 'numeric'],
             'price' => ['required'],
             'cover' => ['required', 'file', 'image:png,jpeg,jpg,gif']
         ];

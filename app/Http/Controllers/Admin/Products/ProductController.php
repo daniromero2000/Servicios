@@ -63,6 +63,26 @@ class ProductController extends Controller
             $data['cover'] = $this->productRepo->saveCoverImage($request->file('cover'));
         }
 
+        if ($request->hasFile('description_image1') && $request->file('description_image1') instanceof UploadedFile) {
+            $data['description_image1'] = $this->productRepo->saveCoverImage($request->file('description_image1'));
+        }
+
+        if ($request->hasFile('description_image2') && $request->file('description_image2') instanceof UploadedFile) {
+            $data['description_image2'] = $this->productRepo->saveCoverImage($request->file('description_image2'));
+        }
+
+        if ($request->hasFile('description_image3') && $request->file('description_image3') instanceof UploadedFile) {
+            $data['description_image3'] = $this->productRepo->saveCoverImage($request->file('description_image3'));
+        }
+
+        if ($request->hasFile('description_image4') && $request->file('description_image4') instanceof UploadedFile) {
+            $data['description_image4'] = $this->productRepo->saveCoverImage($request->file('description_image4'));
+        }
+
+        if ($request->hasFile('specification_image') && $request->file('specification_image') instanceof UploadedFile) {
+            $data['specification_image'] = $this->productRepo->saveCoverImage($request->file('specification_image'));
+        }
+
         $product = $this->productRepo->createProduct($data);
         $productRepo = new ProductRepository($product);
 

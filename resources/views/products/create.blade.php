@@ -76,9 +76,7 @@
                             <input type="file" name="description_image1" id="description_image1" class="form-control"
                                 required>
                         </div>
-
                     </div>
-
                     <div class="form-group">
                         <label for="description_image2">Imagen de descripcion 2<span
                                 class="text-danger">*</span></label>
@@ -89,9 +87,7 @@
                             <input type="file" name="description_image2" id="description_image2" class="form-control"
                                 required>
                         </div>
-
                     </div>
-
                     <div class="form-group">
                         <label for="description_image3">Imagen de descripcion 3<span
                                 class="text-danger">*</span></label>
@@ -102,9 +98,7 @@
                             <input type="file" name="description_image3" id="description_image3" class="form-control"
                                 required>
                         </div>
-
                     </div>
-
                     <div class="form-group">
                         <label for="description_image4">Imagen de descripcion 4<span
                                 class="text-danger">*</span></label>
@@ -116,7 +110,6 @@
                                 required>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="specification_image">Imagen de especificaciones<span
                                 class="text-danger">*</span></label>
