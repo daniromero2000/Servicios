@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\CreditStatuses\Exceptions;
+namespace App\Entities\CreditStatuses\Exceptions;
 
 class CreditStatusNotFoundException extends \Exception
 {

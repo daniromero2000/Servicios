@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Shop\CreditStatuses\Repositories;
+namespace App\Entities\CreditStatuses\Repositories;
 
 use Jsdecena\Baserepo\BaseRepository;
-use App\Shop\CreditStatuses\Exceptions\CreditStatusInvalidArgumentException;
-use App\Shop\CreditStatuses\Exceptions\CreditStatusNotFoundException;
-use App\Shop\CreditStatuses\CreditStatus;
-use App\Shop\CreditStatuses\Repositories\Interfaces\CreditStatusRepositoryInterface;
+use App\Entities\CreditStatuses\Exceptions\CreditStatusInvalidArgumentException;
+use App\Entities\CreditStatuses\Exceptions\CreditStatusNotFoundException;
+use App\Entities\CreditStatuses\CreditStatus;
+use App\Entities\CreditStatuses\Repositories\Interfaces\CreditStatusRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;

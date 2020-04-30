@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Shop\CreditStatuses\Repositories\Interfaces;
+namespace App\Entities\CreditStatuses\Repositories\Interfaces;
 
 use Jsdecena\Baserepo\BaseRepositoryInterface;
-use App\Shop\CreditStatuses\CreditStatus;
+use App\Entities\CreditStatuses\CreditStatus;
 use Illuminate\Support\Collection;
 
 interface CreditStatusRepositoryInterface extends BaseRepositoryInterface

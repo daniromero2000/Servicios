@@ -9,7 +9,7 @@ Route::group(['prefix' => '/admin/'], function () {
 });
 
 
-Route::group(['prefix' => '/seguros/'], function (){
+Route::group(['prefix' => '/seguros/'], function () {
     Route::get('/taxis', function () {
         return view('seguros.taxis.index');
     });
@@ -70,4 +70,20 @@ Route::group(['prefix' => '/digitalWarranty/'], function () {
     Route::get('/test', 'Admin\WarrantyController@test');
     // send a emails notification for new Warranty
     Route::post('/sendAWarrantyEmail', 'Admin\WarrantyController@sendAWarrantyEmail');
+});
+
+
+/**
+ * Admin routes
+ */
+Route::namespace('Admin')->group(function () {
+
+    Route::namespace('Products')->group(function () {
+        Route::resource('Administrator/products', 'ProductController');
+        Route::get('remove-image-product', 'ProductController@removeThumbnail')->name('product.remove.image');
+        Route::get('remove-image-thumb', 'ProductController@removeThumbnail')->name('product.remove.thumb');
+        Route::resource('product-statuses', 'ProductStatusController');
+    });
+
+    Route::resource('Administrator/brands', 'Brands\BrandController');
 });

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities\CreditStatuses\Requests;
+namespace App\Entities\Brands\Requests;
 
 use App\Entities\Base\BaseFormRequest;
 
-class CreateCreditStatusRequest extends BaseFormRequest
+class CreateBrandRequest extends BaseFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class CreateCreditStatusRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'unique:customer_statuses']
+            'name' => ['required', 'unique:brands']
         ];
     }
 }
