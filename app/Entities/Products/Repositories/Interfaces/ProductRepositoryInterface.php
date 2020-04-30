@@ -2,9 +2,7 @@
 
 namespace App\Entities\Products\Repositories\Interfaces;
 
-use App\Entities\AttributeValues\AttributeValue;
 use App\Entities\Brands\Brand;
-use App\Entities\ProductAttributes\ProductAttribute;
 use App\Entities\Products\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;

@@ -16,6 +16,16 @@
                             </div>
                     <input type="text" name="name" id="name" placeholder="Nombre" class="form-control" value="{{ old('name') }}" required>
                 </div>
+                <div class="form-group">
+                    <label for="cover">Imagen <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-picture-o"></i>
+                        </div>
+                        <input type="file" name="cover" id="cover" class="form-control" required>
+                    </div>
+                    <small class="text-warning">El cover del producto es obligatorio</small>
+                </div>
             </div>
             </div>
             <!-- /.box-body -->

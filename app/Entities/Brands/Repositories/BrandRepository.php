@@ -10,9 +10,14 @@ use App\Entities\Products\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
+use Illuminate\Http\UploadedFile;
+use App\Entities\Tools\UploadableTrait;
 
 class BrandRepository implements BrandRepositoryInterface
 {
+
+    use UploadableTrait;
+
     public function __construct(Brand $brand)
     {
         $this->model = $brand;
@@ -66,5 +71,10 @@ class BrandRepository implements BrandRepositoryInterface
             $product->brands_id = null;
             $product->save();
         });
+    }
+
+    public function saveCoverImage(UploadedFile $file): string
+    {
+        return $file->store('brands', ['disk' => 'public']);
     }
 }

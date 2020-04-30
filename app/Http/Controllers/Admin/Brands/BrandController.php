@@ -7,9 +7,13 @@ use App\Entities\Brands\Repositories\BrandRepository;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 use App\Entities\Brands\Requests\CreateBrandRequest;
 use App\Entities\Brands\Requests\UpdateBrandRequest;
+use App\Entities\Tools\UploadableTrait;
+use Illuminate\Http\UploadedFile;
 
 class BrandController extends Controller
 {
+    use UploadableTrait;
+
     private $brandRepo;
 
     public function __construct(BrandRepositoryInterface $brandRepository)
@@ -31,7 +35,16 @@ class BrandController extends Controller
 
     public function store(CreateBrandRequest $request)
     {
-        $this->brandRepo->createBrand($request->all());
+        $data = $request->except(
+            '_token',
+            '_method',
+        );
+
+        if ($request->hasFile('cover') && $request->file('cover') instanceof UploadedFile) {
+            $data['cover'] = $this->brandRepo->saveCoverImage($request->file('cover'));
+        }
+
+        $this->brandRepo->createBrand($data);
 
         return redirect()->route('brands.index')->with('message', 'Create brand successful!');
     }

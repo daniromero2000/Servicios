@@ -5,6 +5,7 @@ namespace App\Entities\Brands\Repositories;
 use App\Entities\Brands\Brand;
 use App\Entities\Products\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Http\UploadedFile;
 
 interface BrandRepositoryInterface
 {
@@ -19,4 +20,6 @@ interface BrandRepositoryInterface
     public function listBrands($columns = array('*'), string $orderBy = 'id', string $sortBy = 'asc'): Collection;
 
     public function saveProduct(Product $product);
+
+    public function saveCoverImage(UploadedFile $file): string;
 }

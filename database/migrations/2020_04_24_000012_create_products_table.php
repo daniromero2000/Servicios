@@ -19,19 +19,21 @@ class CreateProductsTable extends Migration
             $table->foreign('brands_id')->references('id')->on('brands');
             $table->string('sku');
             $table->string('name');
+            $table->string('reference');
             $table->string('slug');
             $table->text('description')->nullable();
             $table->string('cover')->nullable();
+            $table->string('description_image1')->nullable();
+            $table->string('description_image2')->nullable();
+            $table->string('description_image3')->nullable();
+            $table->string('description_image4')->nullable();
+            $table->string('specification_image')->nullable();
             $table->integer('quantity');
             $table->integer('price');
             $table->integer('sale_price')->nullable();
+            $table->integer('months');
+            $table->integer('pays');
             $table->integer('status')->default(0);
-            $table->decimal('length')->nullable();
-            $table->decimal('width')->nullable();
-            $table->decimal('height')->nullable();
-            $table->string('distance_unit')->nullable();
-            $table->decimal('weight')->default(0)->nullable();
-            $table->string('mass_unit')->nullable();
             $table->timestamps();
         });
     }
