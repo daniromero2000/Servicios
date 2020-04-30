@@ -28,7 +28,6 @@ class CreateProductsTable extends Migration
             $table->string('description_image3')->nullable();
             $table->string('description_image4')->nullable();
             $table->string('specification_image')->nullable();
-            $table->integer('quantity');
             $table->integer('price');
             $table->integer('sale_price')->nullable();
             $table->integer('months');

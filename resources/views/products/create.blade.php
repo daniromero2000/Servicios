@@ -21,6 +21,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="reference">Referencia <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-at"></i>
+                            </div>
+                            <input type="text" name="reference" id="reference" placeholder="Referencia"
+                                class="form-control" value="{{ old('reference') }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Nombre <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <div class="input-group-addon">
@@ -36,7 +46,7 @@
                             placeholder="Descripción" required>{{ old('description') }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="cover">Imagen <span class="text-danger">*</span></label>
+                        <label for="cover">Cover Principal <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-picture-o"></i>
@@ -46,7 +56,7 @@
                         <small class="text-warning">El cover del producto es obligatorio</small>
                     </div>
                     <div class="form-group">
-                        <label for="image">Images</label>
+                        <label for="image">Images secundarias</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-picture-o"></i>
@@ -55,8 +65,69 @@
                         </div>
                         <small class="text-warning">Puedes usar ctr (cmd) para seleccionar multiples imagenes</small>
                     </div>
-                    <input type="hidden" name="quantity" id="quantity" placeholder="Cantidad" class="form-control"
-                        value="1" required>
+
+                    <div class="form-group">
+                        <label for="description_image1">Imagen de descripcion 1<span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                            </div>
+                            <input type="file" name="description_image1" id="description_image1" class="form-control"
+                                required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description_image2">Imagen de descripcion 2<span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                            </div>
+                            <input type="file" name="description_image2" id="description_image2" class="form-control"
+                                required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description_image3">Imagen de descripcion 3<span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                            </div>
+                            <input type="file" name="description_image3" id="description_image3" class="form-control"
+                                required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description_image4">Imagen de descripcion 4<span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                            </div>
+                            <input type="file" name="description_image4" id="description_image4" class="form-control"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specification_image">Imagen de especificaciones<span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-picture-o"></i>
+                            </div>
+                            <input type="file" name="specification_image" id="specification_image" class="form-control"
+                                required>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="price">Precio <span class="text-danger">*</span></label>
                         <div class="input-group">
@@ -67,6 +138,29 @@
                                 value="{{ old('price') }}" required>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <input type="text" name="months" id="months" placeholder="Meses a Pagar"
+                                class="form-control" value="{{ old('months') }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pays">Cuotas Mensuales<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <input type="text" name="pays" id="pays" placeholder="Cuotas Mensuales" class="form-control"
+                                value="{{ old('pays') }}" required>
+                        </div>
+                    </div>
+
                     @if(!$brands->isEmpty())
                     <div class="form-group">
                         <label for="brands_id">Marca </label>
