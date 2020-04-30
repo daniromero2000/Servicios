@@ -131,7 +131,16 @@
                                 value="{{ old('price') }}" required>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="price">Precio Oferta <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <input type="text" name="sale_price" id="sale_price" placeholder="Precio Oferta"
+                                class="form-control" value="{{ old('sale_price') }}" required>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
                         <div class="input-group">
@@ -142,7 +151,6 @@
                                 class="form-control" value="{{ old('months') }}" required>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="pays">Cuotas Mensuales<span class="text-danger">*</span></label>
                         <div class="input-group">
@@ -153,7 +161,6 @@
                                 value="{{ old('pays') }}" required>
                         </div>
                     </div>
-
                     @if(!$brands->isEmpty())
                     <div class="form-group">
                         <label for="brands_id">Marca </label>
@@ -183,7 +190,6 @@
         </form>
     </div>
     <!-- /.box -->
-
 </section>
 <!-- /.content -->
 @endsection

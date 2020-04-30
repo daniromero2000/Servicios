@@ -86,13 +86,14 @@
                                     <span class="text-warning">Puedes usar ctr (cmd) para seleccionar multiples
                                         imagenes</span>
                                 </div>
-<div class="form-group">
-    <div class="col-md-3">
-        <div class="row">
-            <img src="{{ asset("storage/$product->description_image1") }}" alt="" class="img-responsive img-thumbnail">
-        </div>
-    </div>
-</div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <img src="{{ asset("storage/$product->description_image1") }}" alt=""
+                                                class="img-responsive img-thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="description_image1">Imagen de descripcion 1<span
                                             class="text-danger">*</span></label>
@@ -107,7 +108,8 @@
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <div class="row">
-                                            <img src="{{ asset("storage/$product->description_image2") }}" alt="" class="img-responsive img-thumbnail">
+                                            <img src="{{ asset("storage/$product->description_image2") }}" alt=""
+                                                class="img-responsive img-thumbnail">
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +127,8 @@
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <div class="row">
-                                            <img src="{{ asset("storage/$product->description_image3") }}" alt="" class="img-responsive img-thumbnail">
+                                            <img src="{{ asset("storage/$product->description_image3") }}" alt=""
+                                                class="img-responsive img-thumbnail">
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +146,8 @@
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <div class="row">
-                                            <img src="{{ asset("storage/$product->description_image4") }}" alt="" class="img-responsive img-thumbnail">
+                                            <img src="{{ asset("storage/$product->description_image4") }}" alt=""
+                                                class="img-responsive img-thumbnail">
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +165,8 @@
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <div class="row">
-                                            <img src="{{ asset("storage/$product->specification_image") }}" alt="" class="img-responsive img-thumbnail">
+                                            <img src="{{ asset("storage/$product->specification_image") }}" alt=""
+                                                class="img-responsive img-thumbnail">
                                         </div>
                                     </div>
                                 </div>
