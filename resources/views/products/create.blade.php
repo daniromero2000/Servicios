@@ -65,7 +65,6 @@
                         </div>
                         <small class="text-warning">Puedes usar ctr (cmd) para seleccionar multiples imagenes</small>
                     </div>
-
                     <div class="form-group">
                         <label for="description_image1">Imagen de descripcion 1<span
                                 class="text-danger">*</span></label>
