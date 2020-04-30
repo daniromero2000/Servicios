@@ -63,7 +63,19 @@ class BrandController extends Controller
     {
         $brand = $this->brandRepo->findBrandById($id);
         $brandRepo = new BrandRepository($brand);
-        $brandRepo->updateBrand($request->all());
+
+        $data = $request->except(
+            '_token',
+            '_method',
+            'default',
+            'image',
+        );
+
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $brandRepo->saveCoverImage($request->file('cover'));
+        }
+
+        $brandRepo->updateBrand($data);
 
         return redirect()->route('brands.edit', $id)->with('message', 'Actualización Exitosa!');
     }
