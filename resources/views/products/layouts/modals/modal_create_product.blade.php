@@ -39,7 +39,8 @@
                                         @if(!$brands->isEmpty())
 
                                         <label for="brands_id">Marca </label>
-                                        <select name="brands_id" id="brands_id" class=" form-control ">
+                                        <select name="brands_id" id="brands_id" class=" form-control " required>
+                                            <option value=""> Seleccione</option>
                                             @foreach($brands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                             @endforeach
@@ -53,24 +54,27 @@
                                             value="{{ old('price') }}" required>
                                     </div>
                                     <div class="col-6">
-                                        <label for="price">Precio Oferta <span class="text-danger">*</span></label>
+                                        <label for="price">Precio de Oferta <span class="text-danger">*</span></label>
                                         <input type="text" name="sale_price" id="sale_price" class="form-control"
                                             value="{{ old('sale_price') }}" required>
                                     </div>
 
                                     <div class="col-6">
                                         <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
-                                        <input type="text" name="months" id="months" class="form-control"
-                                            value="{{ old('months') }}" required>
+                                        <select name="months" id="months" class=" form-control " required>
+                                            <option value=""> Seleccione</option>
+                                            <option value="12"> 12 meses</option>
+                                            <option value="15"> 15 meses</option>
+                                        </select>
                                     </div>
                                     <div class="col-6">
-                                        <label for="pays">Cuotas Mensuales<span class="text-danger">*</span></label>
+                                        <label for="pays">Valor Cuota Mensual<span class="text-danger">*</span></label>
                                         <input type="text" name="pays" id="pays" class="form-control"
                                             value="{{ old('pays') }}" required>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 px-0">
                                     <label for="description">Descripción <span class="text-danger">*</span></label>
                                     <textarea class="form-control" name="description" id="description" rows="6"
                                         required>{{ old('description') }}</textarea>

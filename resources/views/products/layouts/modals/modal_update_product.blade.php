@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar Producto</h5>
+                <h5 class="modal-title">Actualizar Producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
             </div>
@@ -65,11 +65,16 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <label for="months_update">Meses a Pagar<span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="months" id="months_update" class="form-control"
-                                            value="{{ $product->months }}" required>
+                                        <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
+                                        <select name="months" id="months" class=" form-control " required>
+                                            <option value=""> Seleccione</option>
+                                            <option value="12" @if ($product->months == 12) selected @endif> 12 meses
+                                            </option>
+                                            <option value="15" @if ($product->months == 15) selected @endif> 15 meses
+                                            </option>
+                                        </select>
                                     </div>
+
                                     <div class="col-6">
                                         <label for="pays_update">Cuotas Mensuales<span
                                                 class="text-danger">*</span></label>
@@ -77,11 +82,21 @@
                                             value="{{ $product->pays }}" required>
                                     </div>
                                 </div>
+                                <div class="col-12 px-0">
+                                    <label for="months">Estado<span class="text-danger">*</span></label>
+                                    <select name="status" id="status_update" class=" form-control " required>
+                                        <option value=""> Seleccione</option>
+                                        <option value="0" @if ($product->status == 0) selected @endif> Inactivo
+                                        </option>
+                                        <option value="1" @if ($product->status == 1) selected @endif> Activo
+                                        </option>
+                                    </select>
+                                </div>
 
                                 <div class="col-12 px-0">
                                     <label for="description_update">Descripción <span
                                             class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="description" id="description_update" rows="6"
+                                    <textarea class="form-control" name="description" id="description_update" rows="4"
                                         required>{{ $product->description }}</textarea>
                                 </div>
 
@@ -185,7 +200,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </form>
 

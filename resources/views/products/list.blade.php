@@ -31,8 +31,9 @@
                                         <tr>
                                             <th scope="col">Código</th>
                                             <th scope="col">Nombre</th>
-                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Marca</th>
                                             <th scope="col">Precio</th>
+                                            <th scope="col">Estado</th>
                                             <th scope="col">Opciones</th>
                                         </tr>
                                     </thead>
@@ -43,33 +44,29 @@
                                             <td> <a
                                                     href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
                                             </td>
-                                            <td>{{ $product->quantity }}</td>
+
+                                            <td>{{ $product->brands_id->name }}</td>
                                             <td>$ {{ number_format($product->price, 0, '.', ',') }}</td>
+                                            <td>
+                                                @if ($product->status == 1)
+                                                <span class="badge badge-success">Activo</span>
+                                                @else
+                                                <span class="badge badge-danger">Inactivo</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
                                                     data-target="#deleteLead"></i>
                                                 <i class="fas fa-edit cursor" data-toggle="modal"
                                                     data-target="#updateProduct{{ $product->id }}"></i>
-                                                <i class="fas fa-comments cursor" data-toggle="modal"
-                                                    data-target="#addComment"></i>
-                                                {{-- <i class="fas fa-comments cursor" data-toggle="modal" data-target="#addComment{{$data->id}}"></i>
-                                                <form action="{{ route('products.destroy', $product->id) }}"
-                                                    method="post" class="form-horizontal">
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" name="_method" value="delete">
-                                                    <div class="btn-group">
-                                                        <a href="{{ route('products.edit', $product->id) }}"
-                                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
-                                                            Editar</a>
-                                                        <button onclick="return confirm('¿Estás Seguro?')" type="submit"
-                                                            class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
-                                                            Borrar</button>
-                                                    </div>
-                                                </form> --}}
+                                                <i class="fas fa-eye cursor" data-toggle="modal"
+                                                    data-target="#showProduct{{ $product->id }}"></i>
                                             </td>
                                         </tr>
 
                                         @include('products.layouts.modals.modal_update_product')
+                                        @include('products.layouts.modals.modal_show_product')
+
                                         @endforeach
 
                                     </tbody>
