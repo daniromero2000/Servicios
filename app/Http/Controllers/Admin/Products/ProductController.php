@@ -40,9 +40,10 @@ class ProductController extends Controller
         $products = $list->map(function (Product $item) {
             return $this->transformProduct($item);
         })->all();
-
         return view('products.list', [
             'products' => $products,
+            'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+            'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc'),
         ]);
     }
 
