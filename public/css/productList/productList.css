@@ -31,10 +31,18 @@
 .productlist-card-subtitle{
     color: #007bff;
     font-size: 13px;
-    width: 180px;
+    width: 200px;
 }
 
 .productlist-card-price{
     font-weight: bold;
+    font-size: 13px;
+}
+
+.productlist-card-container{
+    padding: 20px;
+}
+
+.productlist-card-titleCard{
     font-size: 13px;
 }

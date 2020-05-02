@@ -13,6 +13,7 @@ class ProductList extends Model
         'creation_user_id',
         'name',
         'public_price_percentage',
+        'cash_margin',
         'checked',
         'checked_user_id',
         'start_date',
