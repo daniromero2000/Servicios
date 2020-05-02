@@ -110,7 +110,7 @@
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
                                                     data-target="#deleteLead"></i>
-                                                <i class="fas fa-edit cursor" data-toggle="modal" onclick="dataLead()"
+                                                <i class="fas fa-edit cursor" data-toggle="modal" 
                                                     data-target="#editLead"></i>
                                                 <i class="fas fa-comments cursor" data-toggle="modal"
                                                     data-target="#addComment"></i>
