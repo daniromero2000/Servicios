@@ -243,7 +243,8 @@
                             $ 31.100
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="#" class="btn card-products-button card-products-button-see-more" style="">Ver
+                        <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more"
+                            style="">Ver
                             más</a>
                         <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>

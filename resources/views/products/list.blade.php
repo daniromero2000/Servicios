@@ -2,6 +2,8 @@
 @section('linkStyleSheets')
 <!-- Theme style -->
 <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/admin/main.css')}}">
+
 @endsection
 @section('content')
 <section class="content">
@@ -110,7 +112,7 @@
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
                                                     data-target="#deleteLead"></i>
-                                                <i class="fas fa-edit cursor" data-toggle="modal" 
+                                                <i class="fas fa-edit cursor" data-toggle="modal"
                                                     data-target="#editLead"></i>
                                                 <i class="fas fa-comments cursor" data-toggle="modal"
                                                     data-target="#addComment"></i>
@@ -163,5 +165,19 @@
     $(document).ready(function () {
       bsCustomFileInput.init();
     });
+</script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+    $("[rel='tooltip']").tooltip();    
+ 
+    $('.thumbnail').hover(
+        function(){
+            $(this).find('.caption').slideDown(250); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.caption').slideUp(250); //.fadeOut(205)
+        }
+    ); 
+});
 </script>
 @endsection

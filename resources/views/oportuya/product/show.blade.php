@@ -28,9 +28,8 @@
             <h5 class="breadcrumb-product">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti quo
                 voluptatem </h5>
         </div>
-        <div class="col-lg-7 padding-reset"
-            style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
-            <div class="w-100">
+        <div class="col-lg-7 px-0" style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
+            <div class="w-100 padding-reset">
                 <p class="reference-product">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 <h4 class="name-product"> Lorem ipsum dolor sit amet consectetur </h4>
                 <ul class="description-product">
@@ -135,7 +134,7 @@
             <div class="row mx-0 container-steps-products justify-content-center text-center">
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Pagina Interna/Icon_Envio.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Envio.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -144,7 +143,7 @@
                 </div>
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Pagina Interna/Icono_Credit.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icono_Credit.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -153,7 +152,7 @@
                 </div>
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Pagina Interna/Iicon Store.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Store.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -194,9 +193,9 @@
 
                         <div class="relative">
                             <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
-                            <img src="{{ asset('images/Front/OportuyaCustomers/Pagina Interna/Icon_WhatsApp.png')}}"
+                            <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_WhatsApp.png')}}"
                                 alt="" class="first-img-contact-deal-product">
-                            <img src="{{ asset('images/Front/OportuyaCustomers/Pagina Interna/Icon_Tell.png')}}" alt=""
+                            <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Tell.png')}}" alt=""
                                 class="second-img-contact-deal-product">
                             <div class="container-text-contact-deal-product">
                                 <p>Preguntale a nuestros asesores:</p>
@@ -214,6 +213,133 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<div style="max-width: 1300px;margin: 0px auto;">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Descripción del producto</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Especificaciones</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container mt-2">
+                        <div class="row justify-content-center ">
+                            <div class="col-10 col-sm-6  p-0"> <img
+                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe1.png') }}"
+                                    class="img-fluid img-responsive">
+                            </div>
+                            <div class="col-10 col-sm-6  p-0"> <img
+                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe2.png') }}"
+                                    class="img-fluid img-responsive">
+                            </div>
+                            <div class="col-10 col-sm-6  p-0"> <img
+                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe3.png') }}"
+                                    class="img-fluid img-responsive">
+                            </div>
+                            <div class="col-10 col-sm-6  p-0"> <img
+                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe4.png') }}"
+                                    class="img-fluid img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container mt-2 ">
+                        <div class="card">
+                            <img class="img-fluid"
+                                src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/especificaciones1.png') }}"
+                                alt="">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="container mt-5 mb-5 pt-5  border-0 mx-auto  shadow p-3 mb-5 bg-white rounded" style="margin top: 0%">
+    <div class="card    border-0 mx-auto" style="center">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h4 class="text-primary font-weight-bold title-card-step"> Obten tu crédito de la siguiente maneras</h4>
+            </div>
+
+            <div class="col-md-6 col-sm-8 col-10 ">
+                <div class="card text-center step-cards-product  border-0 mx-auto">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}" alt=""
+                        class="number-img-step-cards">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}" alt=""
+                        class="icon-step-cards">
+                    <div class="card-body card-body-view">
+                        <p class="card-text text-step-cards">Ingresa nuestra solicitud de crédito para comenzar
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-8 col-10 ">
+                <div class="card text-center step-cards-product  border-0 mx-auto">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}" alt=""
+                        class="number-img-step-cards">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}" alt=""
+                        class="icon-step-cards">
+                    <div class="card-body card-body-view">
+                        <p class="card-text text-step-cards">Deja tus datos completos según la solicitud de crédito que
+                            estés dilifenciando. De la calidad de la información dependerá la velocidad en el resultado.
+                            Además recuerda que todos los datos son verificados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-8 col-10 ">
+                <div class="card text-center step-cards-product  border-0 mx-auto">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}" alt=""
+                        class="number-img-step-cards">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}" alt=""
+                        class="icon-step-cards">
+                    <div class="card-body card-body-view">
+                        <p class="card-text text-step-cards">En el intermedio del proceso recibirás un token de
+                            confirmación para verificar la existencia de tu número telefónico; no lo elimines, el
+                            proceso te lo exigirá para continuar con tu solicitud.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-8 col-10 ">
+                <div class="card text-center step-cards-product  border-0 mx-auto">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}" alt=""
+                        class="number-img-step-cards">
+                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}" alt=""
+                        class="icon-step-cards">
+                    <div class="card-body card-body-view">
+                        <p class="card-text text-step-cards">Una vez haya sido aprobada tu solicitud de crédito. Un
+                            asesor se comunicará contigo para finalizar el proceso.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 

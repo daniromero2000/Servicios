@@ -1,37 +1,30 @@
-
 .title-card-step {
     font-size: 33px;
     margin-top: 15px;
     margin-bottom: 38px;
 }
 
-
-.step-cards {
+.step-cards-product {
     margin-bottom: 3rem;
     margin-top: 3rem;
     max-width: 477px;
 }
 
-.text-step-cards {
-    color: #005dca;
-}
-
-
-.first-img-step-cards {
+.number-img-step-cards {
     position: absolute;
     left: 17%;
-     top: 1px;
+    top: 1px;
     max-height: 74px;
 }
 
-.second-img-step-cards {
+.icon-step-cards {
     margin-left: auto;
     margin-right: auto;
     max-height: 74px;
 }
 
 @media only screen and (min-width: 576px) and (max-width: 994px) {
-    .first-img-step-cards {
+    .number-img-step-cards {
         left: 10%;
     }
-  }
+}
