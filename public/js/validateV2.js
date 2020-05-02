@@ -110,13 +110,12 @@ $(document).ready(function () {
 		};
 		/* Identification Number */
 		function validateIdentificationNumber(input) {
-
 			var patt = "[0-9]{5,10}";
 			setAttributePatternInput(input, patt);
 		};
 
 		function validateDate(input){
-			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-1][0-9]";
+			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-3][0-9]";
 			setAttributePatternInput(input, patt);
 		}
 

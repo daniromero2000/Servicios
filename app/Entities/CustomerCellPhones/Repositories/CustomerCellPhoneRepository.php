@@ -55,7 +55,7 @@ class CustomerCellPhoneRepository implements CustomerCellPhoneRepositoryInterfac
     {
         try {
             return $this->model->where('TIPO', 'CEL')
-                ->where('IDENTI', $identificationNumber)->where('CEL_VAL', 1)
+                ->where('IDENTI', $identificationNumber)
                 ->orderBy('FECHA', 'desc')
                 ->get()->first();
         } catch (\Throwable $th) {
