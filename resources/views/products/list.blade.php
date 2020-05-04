@@ -56,7 +56,7 @@
                                             </td>
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                                    data-target="#deleteLead"></i>
+                                                    data-target="#deleteProduct{{ $product->id }}"></i>
                                                 <i class="fas fa-edit cursor" data-toggle="modal"
                                                     data-target="#updateProduct{{ $product->id }}"></i>
                                                 <i class="fas fa-eye cursor" data-toggle="modal"
@@ -65,6 +65,7 @@
                                         </tr>
 
                                         @include('products.layouts.modals.modal_update_product')
+                                        @include('products.layouts.modals.modal_delete_product')
                                         @include('products.layouts.modals.modal_show_product')
 
                                         @endforeach

@@ -12,7 +12,7 @@
 
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-7 col-xl-6">
                             <div class="w-100">
                                 <h5>Datos del producto</h5>
                             </div>
@@ -86,85 +86,151 @@
 
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-5 col-xl-6">
                             <div class="w-100">
                                 <h5>Imagenes</h5>
 
-                                <label for="cover">Cover Principal <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="cover" id="cover">
-                                        <label class="custom-file-label" for="cover" required>Seleccionar imagen</label>
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-primary ">
+                                        <h3 class="card-title">Imagenes del producto</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body " style="display: none;">
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <label for="cover">Cover Principal <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="cover"
+                                                            id="cover">
+                                                        <label class="custom-file-label" for="cover"
+                                                            required>Seleccionar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <label for="image">Images secundarias <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="image[]"
+                                                            id="image" multiple required>
+                                                        <label class="custom-file-label" for="image">Seleccionar
+                                                            imagenes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <label for="image">Images secundarias <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image[]" id="image" multiple
-                                            required>
-                                        <label class="custom-file-label" for="image">Seleccionar imagenes</label>
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-success ">
+                                        <h3 class="card-title">Imagenes de descripción</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body " style="display: none;">
+                                        <div class="row">
+
+                                            <div class="col-xl-6">
+                                                <label for="description_image1">Imagen de descripcion 1<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image1" id="description_image1" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image1">Seleccionar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-6">
+
+                                                <label for="description_image2">Imagen de descripcion 2<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image2" id="description_image2" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image2">Seleccionar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+
+                                                <label for="description_image3">Imagen de descripcion 3<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image3" id="description_image3" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image3">Seleccionar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+
+                                                <label for="description_image4">Imagen de descripcion 4<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image4" id="description_image4" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image4">Seleccionar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-secondary ">
+                                        <h3 class="card-title">Imagen de especificaciones</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body " style="display: none;">
+                                        <label for="specification_image">Imagen de especificaciones<span
+                                                class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="specification_image"
+                                                    id="specification_image" required>
+                                                <label class="custom-file-label" for="specification_image">Seleccionar
+                                                    imagen</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
 
 
-                                <label for="description_image1">Imagen de descripcion 1<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image1"
-                                            id="description_image1" required>
-                                        <label class="custom-file-label" for="description_image1">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
 
-                                <label for="description_image2">Imagen de descripcion 2<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image2"
-                                            id="description_image2" required>
-                                        <label class="custom-file-label" for="description_image2">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-                                <label for="description_image3">Imagen de descripcion 3<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image3"
-                                            id="description_image3" required>
-                                        <label class="custom-file-label" for="description_image3">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-
-                                <label for="description_image4">Imagen de descripcion 4<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image4"
-                                            id="description_image4" required>
-                                        <label class="custom-file-label" for="description_image4">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-
-                                <label for="specification_image">Imagen de especificaciones<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="specification_image"
-                                            id="specification_image" required>
-                                        <label class="custom-file-label" for="specification_image">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
 
                             </div>
 

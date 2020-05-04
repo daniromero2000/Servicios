@@ -120,92 +120,197 @@
                             <div class="w-100">
                                 <h5>Imagenes</h5>
 
-                                <label for="cover_update{{ $product->id }}">Cover Principal <span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="cover"
-                                            id="cover_update{{ $product->id }}">
-                                        <label class="custom-file-label" for="cover_update{{ $product->id }}"
-                                            required>Seleccionar
-                                            imagen</label>
+
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-primary ">
+                                        <h3 class="card-title">Imagenes del producto</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body " style="display: none;">
+
+                                        <label for="cover_update{{ $product->id }}">Cover Principal <span
+                                                class="text-danger">*</span></label>
+                                        <div>
+                                            <img class="img-fluid img-show-products"
+                                                src="{{asset("storage/$product->cover")}}" alt="">
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="cover"
+                                                    id="cover_update{{ $product->id }}">
+                                                <label class="custom-file-label" for="cover_update{{ $product->id }}"
+                                                    required>Cambiar imagen</label>
+                                            </div>
+                                        </div>
+
+
+                                        <label for="image_update{{ $product->id }}">Images secundarias <span
+                                                class="text-danger">*</span></label>
+
+                                        <div style="max-height: 100px;overflow: auto;">
+                                            <div class="row mx-0">
+                                                @foreach($product->images()->get(['src']) as $image)
+                                                <div class="col-4">
+                                                    <img class="img-fluid img-show-products"
+                                                        src="{{asset("storage/$image->src")}}" alt="">
+                                                    <a onclick="return confirm('¿Estás Seguro?')"
+                                                        href="{{ route('product.remove.image', ['src' => $image->src]) }}"
+                                                        class="btn btn-danger btn-sm btn-block">¿Eliminar?</a><br />
+                                                </div>
+                                                @endforeach
+                                            </div>
+
+                                        </div>
+
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="image[]"
+                                                    id="image_update{{ $product->id }}" multiple required>
+                                                <label class="custom-file-label"
+                                                    for="image_update{{ $product->id }}">Cambiar magenes</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <label for="image_update{{ $product->id }}">Images secundarias <span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image[]"
-                                            id="image_update{{ $product->id }}" multiple required>
-                                        <label class="custom-file-label"
-                                            for="image_update{{ $product->id }}">Seleccionar imagenes</label>
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-success ">
+                                        <h3 class="card-title">Imagenes de descripción</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body " style="display: none;">
+                                        <div class="row mx-0">
+                                            <div class="col-6">
+
+                                                <label for="description_image1_update{{ $product->id }}">Imagen de
+                                                    descripcion 1<span class="text-danger">*</span></label>
+                                                <div class="mb-2">
+                                                    <img class="img-fluid img-show-products"
+                                                        src="{{asset("storage/$product->description_image1")}}" alt="">
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image1"
+                                                            id="description_image1_update{{ $product->id }}" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image1_update{{ $product->id }}">Cambiar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="col-6">
+
+                                                <label for="description_image2_update{{ $product->id }}">Imagen de
+                                                    descripcion 2<span class="text-danger">*</span></label>
+                                                <div class="mb-2">
+                                                    <img class="img-fluid img-show-products"
+                                                        src="{{asset("storage/$product->description_image2")}}" alt="">
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image2"
+                                                            id="description_image2_update{{ $product->id }}" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image2_update{{ $product->id }}">Cambiar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="col-6">
+
+                                                <label for="description_image3_update{{ $product->id }}">Imagen de
+                                                    descripcion 3<span class="text-danger">*</span></label>
+                                                <div class="mb-2">
+                                                    <img class="img-fluid img-show-products"
+                                                        src="{{asset("storage/$product->description_image3")}}" alt="">
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image3"
+                                                            id="description_image3_update{{ $product->id }}" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image3_update{{ $product->id }}">Cambiar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="description_image4_update{{ $product->id }}">Imagen de
+                                                    descripcion 4<span class="text-danger">*</span></label>
+                                                <div class="mb-2">
+                                                    <img class="img-fluid img-show-products"
+                                                        src="{{asset("storage/$product->description_image4")}}" alt="">
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            name="description_image4"
+                                                            id="description_image4_update{{ $product->id }}" required>
+                                                        <label class="custom-file-label"
+                                                            for="description_image4_update{{ $product->id }}">Cambiar
+                                                            imagen</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card collapsed-card">
+                                    <div class="card-header bg-secondary ">
+                                        <h3 class="card-title">Imagen de especificaciones</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        <label for="specification_image_update{{ $product->id }}">Imagen de
+                                            especificaciones<span class="text-danger">*</span></label>
+                                        <div>
+                                            <img class="img-fluid img-show-products"
+                                                src="{{asset("storage/$product->specification_image")}}" alt="">
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name="specification_image"
+                                                    id="specification_image_update{{ $product->id }}" required>
+                                                <label class="custom-file-label"
+                                                    for="specification_image_update{{ $product->id }}">Cambiar
+                                                    imagen</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
 
 
-                                <label for="description_image1_update{{ $product->id }}">Imagen de descripcion 1<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image1"
-                                            id="description_image1_update{{ $product->id }}" required>
-                                        <label class="custom-file-label"
-                                            for="description_image1_update{{ $product->id }}">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-                                <label for="description_image2_update{{ $product->id }}">Imagen de descripcion 2<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image2"
-                                            id="description_image2_update{{ $product->id }}" required>
-                                        <label class="custom-file-label"
-                                            for="description_image2_update{{ $product->id }}">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-                                <label for="description_image3_update{{ $product->id }}">Imagen de descripcion 3<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image3"
-                                            id="description_image3_update{{ $product->id }}" required>
-                                        <label class="custom-file-label"
-                                            for="description_image3_update{{ $product->id }}">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-
-                                <label for="description_image4_update{{ $product->id }}">Imagen de descripcion 4<span
-                                        class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="description_image4"
-                                            id="description_image4_update{{ $product->id }}" required>
-                                        <label class="custom-file-label"
-                                            for="description_image4_update{{ $product->id }}">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
-
-
-                                <label for="specification_image_update{{ $product->id }}">Imagen de
-                                    especificaciones<span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="specification_image"
-                                            id="specification_image_update{{ $product->id }}" required>
-                                        <label class="custom-file-label"
-                                            for="specification_image_update{{ $product->id }}">Seleccionar
-                                            imagen</label>
-                                    </div>
-                                </div>
 
                             </div>
 

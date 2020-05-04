@@ -101,12 +101,12 @@
 
                             <div class="card collapsed-card">
                                 <div class="card-header bg-primary ">
-                                    <h3 class="card-title"> Imagenes del Producto
+                                    <h3 class="card-title"> Imagenes del producto
                                     </h3>
 
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                                class="fas fa-plus"></i>
+                                                class="fas fa-plus text-white"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-plus"></i>
+                                        class="fas fa-plus text-white"></i>
                                 </button>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-plus"></i>
+                                        class="fas fa-plus text-white"></i>
                                 </button>
                             </div>
                         </div>
