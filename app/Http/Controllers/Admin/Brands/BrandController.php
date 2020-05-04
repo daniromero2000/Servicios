@@ -68,7 +68,7 @@ class BrandController extends Controller
             '_token',
             '_method',
             'default',
-            'image',
+            'image'
         );
 
         if ($request->hasFile('cover')) {
