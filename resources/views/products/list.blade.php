@@ -12,7 +12,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-8">
+                <div class="col-md-8">
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Productos</h3>
@@ -41,10 +41,7 @@
                                         @foreach ($products as $product)
                                         <tr>
                                             <td>{{ $product->sku }}</td>
-                                            <td> <a
-                                                    href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
-                                            </td>
-
+                                            <td> {{ $product->name }} </td>
                                             <td>{{ $product->brands_id->name }}</td>
                                             <td>$ {{ number_format($product->price, 0, '.', ',') }}</td>
                                             <td>
@@ -65,6 +62,7 @@
                                         </tr>
 
                                         @include('products.layouts.modals.modal_update_product')
+
                                         @include('products.layouts.modals.modal_delete_product')
                                         @include('products.layouts.modals.modal_show_product')
 
@@ -82,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4">
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Marcas</h3>
@@ -112,11 +110,9 @@
                                             </td>
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                                    data-target="#deleteLead"></i>
+                                                    data-target="#deletebrand{{ $brand->id }}"></i>
                                                 <i class="fas fa-edit cursor" data-toggle="modal"
-                                                    data-target="#editLead"></i>
-                                                <i class="fas fa-comments cursor" data-toggle="modal"
-                                                    data-target="#addComment"></i>
+                                                    data-target="#updatebrand{{ $brand->id }}"></i>
                                                 {{-- <form action="{{ route('brands.destroy', $brand->id) }}"
                                                 method="post"
                                                 class="form-horizontal">
@@ -133,6 +129,13 @@
                                                 </form> --}}
                                             </td>
                                         </tr>
+                                        <div>
+                                            <div>
+                                                @include('products.layouts.modals.modal_update_brand')
+                                            </div>
+                                            @include('products.layouts.modals.modal_delete_brand')
+
+                                        </div>
                                         @endforeach
 
                                     </tbody>
@@ -145,8 +148,9 @@
                                     href="{{ route('brands.create') }}">Crea una!</a></p>
                             @endif
                             <div class="text-right mt-2">
-                                <button class="btn btn-primary btn-sm" ng-click="addListGiveAway()">Agregar
-                                    Marca</button>
+                                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#addbrand">Agregar
+                                    Producto</button>
                             </div>
                         </div>
                     </div>
@@ -154,8 +158,14 @@
             </div>
         </div>
     </div>
+    <div>
+        @include('products.layouts.modals.modal_create_brand')
 
-    @include('products.layouts.modals.modal_create_product')
+    </div>
+    <div>
+
+        @include('products.layouts.modals.modal_create_product')
+    </div>
 
 </section>
 @endsection

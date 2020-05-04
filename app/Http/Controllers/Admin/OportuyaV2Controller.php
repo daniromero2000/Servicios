@@ -121,6 +121,16 @@ class OportuyaV2Controller extends Controller
 			->where('category', '=', '1')
 			->where('isSlide', '=', '1')
 			->get();
+		return view('oportuya.indexV2', ['images' => $images]);
+	}
+
+
+	public function catalog()
+	{
+		$images = Imagenes::selectRaw('*')
+			->where('category', '=', '1')
+			->where('isSlide', '=', '1')
+			->get();
 		return view('oportuya.catalog', ['images' => $images]);
 	}
 

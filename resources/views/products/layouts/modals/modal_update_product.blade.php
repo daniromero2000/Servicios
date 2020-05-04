@@ -14,7 +14,7 @@
                     @method('PUT')
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-7 col-xl-6">
                             <div class="w-100">
                                 <h5>Datos del producto</h5>
                             </div>
@@ -108,15 +108,12 @@
                                         id="description_update{{ $product->id }}" rows="4"
                                         required>{{ $product->description }}</textarea>
                                 </div>
-
-                                <input id="product_status_id_update{{ $product->id }}" type="hidden"
-                                    class="form-control" name="product_status_id" value="2">
                                 <input type="hidden" name="status" id="status_update{{ $product->id }}"
                                     class="form-control" value="1">
 
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-5 col-xl-6">
                             <div class="w-100">
                                 <h5>Imagenes</h5>
 
@@ -143,8 +140,8 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="cover"
                                                     id="cover_update{{ $product->id }}">
-                                                <label class="custom-file-label" for="cover_update{{ $product->id }}"
-                                                    required>Cambiar imagen</label>
+                                                <label class="custom-file-label"
+                                                    for="cover_update{{ $product->id }}">Cambiar imagen</label>
                                             </div>
                                         </div>
 
@@ -170,7 +167,7 @@
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="image[]"
-                                                    id="image_update{{ $product->id }}" multiple required>
+                                                    id="image_update{{ $product->id }}" multiple>
                                                 <label class="custom-file-label"
                                                     for="image_update{{ $product->id }}">Cambiar magenes</label>
                                             </div>
@@ -190,7 +187,7 @@
                                     </div>
                                     <div class="card-body " style="display: none;">
                                         <div class="row mx-0">
-                                            <div class="col-6">
+                                            <div class="col-sm-6 col-lg-11 col-xl-6">
 
                                                 <label for="description_image1_update{{ $product->id }}">Imagen de
                                                     descripcion 1<span class="text-danger">*</span></label>
@@ -202,7 +199,7 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
                                                             name="description_image1"
-                                                            id="description_image1_update{{ $product->id }}" required>
+                                                            id="description_image1_update{{ $product->id }}">
                                                         <label class="custom-file-label"
                                                             for="description_image1_update{{ $product->id }}">Cambiar
                                                             imagen</label>
@@ -213,7 +210,7 @@
 
                                             </div>
 
-                                            <div class="col-6">
+                                            <div class="col-sm-6 col-lg-11 col-xl-6">
 
                                                 <label for="description_image2_update{{ $product->id }}">Imagen de
                                                     descripcion 2<span class="text-danger">*</span></label>
@@ -225,7 +222,7 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
                                                             name="description_image2"
-                                                            id="description_image2_update{{ $product->id }}" required>
+                                                            id="description_image2_update{{ $product->id }}">
                                                         <label class="custom-file-label"
                                                             for="description_image2_update{{ $product->id }}">Cambiar
                                                             imagen</label>
@@ -235,7 +232,7 @@
 
 
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-sm-6 col-lg-11 col-xl-6">
 
                                                 <label for="description_image3_update{{ $product->id }}">Imagen de
                                                     descripcion 3<span class="text-danger">*</span></label>
@@ -247,7 +244,8 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
                                                             name="description_image3"
-                                                            id="description_image3_update{{ $product->id }}" required>
+                                                            id="description_image3_update{{ $product->id }}">
+
                                                         <label class="custom-file-label"
                                                             for="description_image3_update{{ $product->id }}">Cambiar
                                                             imagen</label>
@@ -258,7 +256,7 @@
 
                                             </div>
 
-                                            <div class="col-6">
+                                            <div class="col-sm-6 col-lg-11 col-xl-6">
                                                 <label for="description_image4_update{{ $product->id }}">Imagen de
                                                     descripcion 4<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
@@ -269,7 +267,7 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
                                                             name="description_image4"
-                                                            id="description_image4_update{{ $product->id }}" required>
+                                                            id="description_image4_update{{ $product->id }}">
                                                         <label class="custom-file-label"
                                                             for="description_image4_update{{ $product->id }}">Cambiar
                                                             imagen</label>
@@ -300,7 +298,7 @@
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="specification_image"
-                                                    id="specification_image_update{{ $product->id }}" required>
+                                                    id="specification_image_update{{ $product->id }}">
                                                 <label class="custom-file-label"
                                                     for="specification_image_update{{ $product->id }}">Cambiar
                                                     imagen</label>
