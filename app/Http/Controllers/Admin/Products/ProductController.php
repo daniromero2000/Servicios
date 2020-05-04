@@ -125,7 +125,7 @@ class ProductController extends Controller
             '_token',
             '_method',
             'default',
-            'image',
+            'image'
         );
 
         $data['slug'] = str_slug($request->input('name'));
