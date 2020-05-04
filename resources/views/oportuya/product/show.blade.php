@@ -134,7 +134,7 @@
             <div class="row mx-0 container-steps-products justify-content-center text-center">
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Envio.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -143,7 +143,7 @@
                 </div>
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icono_Credit.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col-4">
                     <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Store.png') }}" alt=""
+                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}" alt=""
                             class="img-step-product">
                     </div>
                     <div class="mt-2 text-step-product">
@@ -193,9 +193,9 @@
 
                         <div class="relative">
                             <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
-                            <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_WhatsApp.png')}}"
-                                alt="" class="first-img-contact-deal-product">
-                            <img src="{{ asset('images/Front/OportuyaCustomers/Paginainterna/Icon_Tell.png')}}" alt=""
+                            <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}" alt=""
+                                class="first-img-contact-deal-product">
+                            <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}" alt=""
                                 class="second-img-contact-deal-product">
                             <div class="container-text-contact-deal-product">
                                 <p>Preguntale a nuestros asesores:</p>
