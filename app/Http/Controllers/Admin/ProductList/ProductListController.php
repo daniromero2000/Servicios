@@ -21,7 +21,6 @@ class ProductListController extends Controller
     }
     public function index(Request $request)
     {
-
         $productLists = $this->productListInterface->getAllProductLists();
 
         return response()->json($productLists);
@@ -44,5 +43,9 @@ class ProductListController extends Controller
 
     public function destroy($id)
     {
+    }
+
+    public function getDataPriceProduct($productId){
+        
     }
 }

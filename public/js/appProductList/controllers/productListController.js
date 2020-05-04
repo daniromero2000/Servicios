@@ -1,6 +1,6 @@
 
-app.controller('Controller', function ($scope, $http, $rootScope) {
-
+app.controller('productListController', function ($scope, $http, $rootScope) {
+	$scope.tabs = 1;
 	$scope.q = {
 		'q': '',
 		'page': 30,
@@ -43,7 +43,10 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 	$scope.listGiveAway = {}; //object for index line
 	$scope.listGiveAways = []; //list of brands returned by server
 	$scope.alertListGiveAway = "";	//text in create alert text 
-	$scope.activListGiveAway = true; // display delete action for each resourse if this is activ 
+	$scope.activListGiveAway = true; // display delete action for each resourse if this is activ
+	$scope.product = {};
+	$scope.productPrices = {};
+	$scope.viewProductPrices = false;
 
 	$scope.addProductList = function () {
 		$scope.productList = {};
@@ -91,7 +94,6 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 
 
 	$scope.createProductList = function () {
-		console.log($scope.productList)
 		$http({
 			method: 'POST',
 			url: '/api/productList',
@@ -308,7 +310,6 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.createListProduct = function () {
-		console.log($scope.listProduct)
 		$http({
 			method: 'POST',
 			url: '/api/listProducts',
@@ -318,10 +319,11 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 				if (response.data == "23000") {
 					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 					$("#alertListProduct").show();
-				} else if (response.data == true) {
-					$scope.listProduct = "";
+				} else{
+					$scope.listProduct = {};
+					$scope.listProducts = [];
 					$("#addListProductModal").modal("hide");
-					$scope.search();
+					$scope.getListProduct();
 				}
 			}
 		}, function errorCallback(response) {
@@ -488,7 +490,26 @@ app.controller('Controller', function ($scope, $http, $rootScope) {
 		}, function errorCallback(response) {
 
 		});
-	}
+	};
+
+	$scope.selectedProduct = function(productObject){
+		$scope.product = productObject.originalObject;
+		$scope.getDataPriceProduct($scope.product.id);
+	};
+
+	$scope.getDataPriceProduct = function(productId){
+		$http({
+			method: 'GET',
+			url: '/api/listProducts/getDataPriceProduct/' + productId
+		}).then(function successCallback(response) {
+			if (response.data != false) {
+				$scope.productPrices = response.data;
+				$scope.viewProductPrices = true;
+			}
+		}, function errorCallback(response) {
+
+		});
+	};
 
 
 	$scope.getProductList();

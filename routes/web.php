@@ -132,9 +132,7 @@ Route::resource('faqs', 'Admin\FaqsController');
 Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
-Route::resource('api/productList', 'Admin\ProductList\ProductListController');
 Route::resource('api/factors', 'Admin\Factors\FactorController');
-Route::resource('api/listProducts', 'Admin\ListProducts\ListProductController');
 Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
 
 Route::resource('products', 'Admin\ProductsController');
@@ -200,6 +198,15 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
+    Route::resource('productList', 'Admin\ProductList\ProductListController');
+    Route::group(['prefix' => 'listProducts'], function () {
+        Route::resource('/', 'Admin\ListProducts\ListProductController');
+        Route::get('/getDataPriceProduct/{product_id}', 'Admin\ListProducts\ListProductController@getDataPriceProduct');
+
+    });
+    Route::group(['prefix' => 'productList'], function () {
+        Route::resource('/', 'Admin\ProductList\ProductListController');
+    });
 
     // Dashboard
     Route::get('dashBoard/getModules', 'Admin\DashboardController@getModulesDashboard');
@@ -427,6 +434,10 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
         });
 
         Route::get('/admin', function () {
+            return view('ProductList.admin');
+        });
+
+        Route::get('/products', function () {
             return view('ProductList.admin');
         });
     });

@@ -6,7 +6,7 @@
                     Productos
                 </h4>
             </div>
-            <div class=" col-7 col-sm-4 col-md-4">
+            <!--<div class=" col-7 col-sm-4 col-md-4">
                 <div class="input-group input-group-sm">
                     <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
                         aria-describedby="searchIcon" placeholder="Buscar">
@@ -15,7 +15,7 @@
                                 class="fas fa-search"></i></button>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="card-body">
@@ -24,30 +24,23 @@
                 <thead class="headTableLeads small">
                     <tr>
                         <th scope="col">Articulo</th>
+                        <th scope="col">SKU</th>
                         <th scope="col">Costo Base</th>
-                        <th scope="col">IVA</th>
+                        <th scope="col">Costo + IVA</th>
                         <th scope="col">Proteccion</th>
                         <th scope="col">Valor min</th>
                         <th scope="col">Valor max</th>
-                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
                     <tr ng-repeat="listProduct in listProducts">
                         <td>@{{ listProduct.item }}</td>
-                        <td>@{{ listProduct.base_cost }}</td>
-                        <td>@{{ listProduct.iva_cost }}%</td>
-                        <td>@{{ listProduct.protection }}</td>
-                        <td>@{{ listProduct.min_tolerance }}</td>
-                        <td>@{{ listProduct.max_tolerance }}</td>
-                        <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialogListProduct(listProduct)"></i>
-                            <i class="fas fa-edit cursor" title="Actualizar"
-                                ng-click="showUpdateDialogListProduct(listProduct)"></i>
-                            <i class="fas fa-times cursor" title="Eliminar"
-                                ng-click="showDialogDeleteListProduct(listProduct)" ng-if="activ"></i>
-
-                        </td>
+                        <td>@{{ listProduct.sku }}</td>
+                        <td>$@{{ listProduct.base_cost | number:0}}</td>
+                        <td>$@{{ listProduct.iva_cost | number:0 }}</td>
+                        <td>$@{{ listProduct.protection | number:0 }}</td>
+                        <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
+                        <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
                     </tr>
                 </tbody>
             </table>
