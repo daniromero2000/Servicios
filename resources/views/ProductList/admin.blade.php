@@ -17,10 +17,10 @@
 			ng-class="{ 'show active': tabs == 1 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
 			<div class="row">
 				<div class="col-7">
-					@include('productList.layouts.Cards.CardListProducts')
+					@include('ProductList.layouts.Cards.CardListProducts')
 				</div>
 				<div class="col-5">
-					@include('productList.layouts.Cards.CardProductLists')
+					@include('ProductList.layouts.Cards.CardProductLists')
 				</div>
 				</div>
 			</div>
@@ -29,10 +29,10 @@
 			ng-class="{ 'show active': tabs == 2 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
 				<div class="row">
 					<div class="col-6">
-					@include('productList.layouts.Cards.CardListGiveAway')
+					@include('ProductList.layouts.Cards.CardListGiveAway')
 					</div>
 					<div class="col-6">
-					@include('productList.layouts.Cards.CardFactors')
+					@include('ProductList.layouts.Cards.CardFactors')
 					</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 			ng-class="{ 'show active': tabs == 3 }" style="box-shadow: 0 3rem 4rem rgba(0,0,0,.175) !important;">
 				<div class="row">
 					<div class="col-12">
-						@include('productList.layouts.Cards.cardProductPrice')
+						@include('ProductList.layouts.Cards.cardProductPrice')
 					</div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
     </div>
   </div>
 </div> --}}
-<div> @include('productList.layouts.Modals.ModalFactors') </div>
-<div> @include('productList.layouts.Modals.ModalProductLists')</div>
-<div> @include('productList.layouts.Modals.ModalListProduct') </div>
-<div> @include('productList.layouts.Modals.ModalListGiveAway') </div>
+<div> @include('ProductList.layouts.Modals.ModalFactors') </div>
+<div> @include('ProductList.layouts.Modals.ModalProductLists')</div>
+<div> @include('ProductList.layouts.Modals.ModalListProduct') </div>
+<div> @include('ProductList.layouts.Modals.ModalListGiveAway') </div>
