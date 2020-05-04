@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entities\CreditStatuses\Requests;
+namespace App\Entities\Products\Requests;
 
 use App\Entities\Base\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCreditStatusRequest extends BaseFormRequest
+class UpdateProductRequest extends BaseFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,9 @@ class UpdateCreditStatusRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'name' => ['required']
+            'sku' => ['required'],
+            'name' => ['required', Rule::unique('products')->ignore($this->segment(3))],
+            'price' => ['required']
         ];
     }
 }

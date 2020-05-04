@@ -98,6 +98,8 @@ class ConfrontaCustomerController extends Controller
     }
     public function update(Request $request, $id)
     {
+
+
         $datas = [];
         foreach ($request->customerData as $key => $value) {
             $datas[$request->customerData[$key]['name']] = $request->customerData[$key]['value'];
@@ -113,10 +115,7 @@ class ConfrontaCustomerController extends Controller
             $clienteCelular->save();
         }
         $customer = $this->customerInterface->updateOrCreateCustomer($datas);
-        return $customer;
-    }
 
-    public function getInfoForm()
-    {
+        return $customer;
     }
 }
