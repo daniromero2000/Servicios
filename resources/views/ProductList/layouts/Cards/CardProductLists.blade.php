@@ -7,14 +7,14 @@
                 </h4>
             </div>
             <div class=" col-7 col-sm-4 col-md-4">
-                <div class="input-group input-group-sm">
+                <!--<div class="input-group input-group-sm">
                     <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
                         aria-describedby="searchIcon" placeholder="Buscar">
                     <div class="input-group-append">
                         <button type="button" ng-click="search()" class="btn btn-default"><i
                                 class="fas fa-search"></i></button>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -29,7 +29,6 @@
                         <th scope="col">Fecha de inicio</th>
                         <th scope="col">Fecha de Finalización</th>
                         <th scope="col">Zona</th>
-                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -40,14 +39,6 @@
                         <td>@{{ productList.start_date }}</td>
                         <td>@{{ productList.end_date }}</td>
                         <td>@{{ productList.zone }}</td>
-                        <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(productList)"></i>
-                            <i class="fas fa-edit cursor" title="Actualizar"
-                                ng-click="showUpdateDialog(productList)"></i>
-                            <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(productList)"
-                                ng-if="activ"></i>
-
-                        </td>
                     </tr>
                 </tbody>
             </table>

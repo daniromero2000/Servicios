@@ -38,7 +38,6 @@ class ListProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->input();
-        dd($data);
 
         $listProduct =  $this->listProductInterface->createlistProduct($data);
         dd($listProduct);

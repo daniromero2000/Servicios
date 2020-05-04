@@ -6,7 +6,7 @@
                     Factores
                 </h4>
             </div>
-            <div class=" col-7 col-sm-4 col-md-4">
+            <!--<div class=" col-7 col-sm-4 col-md-4">
                 <div class="input-group input-group-sm">
                     <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
                         aria-describedby="searchIcon" placeholder="Buscar">
@@ -15,7 +15,7 @@
                                 class="fas fa-search"></i></button>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="card-body">
@@ -29,7 +29,6 @@
                         <th scope="col">Verificado por:</th>
                         <th scope="col">Fecha de inicio</th>
                         <th scope="col">Fecha de Finalización</th>
-                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -40,14 +39,6 @@
                         <td>@{{ factor.checked_user_id }}</td>
                         <td>@{{ factor.start_date }}</td>
                         <td>@{{ factor.end_date }}</td>
-                        <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialogFactor(factor)"></i>
-                            <i class="fas fa-edit cursor" title="Actualizar"
-                                ng-click="showUpdateDialogFactor(factor)"></i>
-                            <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDeleteFactor(factor)"
-                                ng-if="activ"></i>
-
-                        </td>
                     </tr>
                 </tbody>
             </table>

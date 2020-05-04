@@ -9,38 +9,40 @@
                 <div class="alert alert-danger" role="alert" id="alertListProduct"><span id="p"></span></div>
                 <form ng-submit="createListProduct()">
                     <div class=" row pl-0 pr-0">
-                        <div class="col-12 col-sm-8 form-group">
-                            <label for="itemCreateListProduct">Articulo <span class="text-danger">*</span> </label>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="itemCreateListProduct">Articulo</label>
                             <input type="text" ng-model="listProduct.item" id="itemCreateListProduct"
                                 name="itemCreateListProduct" class="form-control">
                         </div>
-                        <div class="col-12 col-sm-4 form-group">
-                            <label for="baseCreateListProduct">Costo Base <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" ng-model="listProduct.base_cost"
-                                id="baseCreateListProduct" name="baseCreateListProduct">
+                        <div class="col-12 col-sm-6">
+                            <label for="sku">SKU:</label>
+                            <input type="text" ng-model="listProduct.sku" id="sku"
+                                name="sku" class="form-control">
                         </div>
-                        <div class="col-12  form-group">
-                            <label for="IvaCreateListProduct">IVA <span class="text-danger">*</span></label>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="baseCreateListProduct">Costo Base *</label>
+                            <input type="text" class="form-control" ng-model="listProduct.base_cost"
+                                id="baseCreateListProduct" name="baseCreateListProduct" required>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="IvaCreateListProduct">Costo + IVA *</label>
                             <input type="text" ng-model="listProduct.iva_cost" id="IvaCreateListProduct"
                                 name="IvaCreateListProduct" class="form-control" required>
                         </div>
                         <div class="col-12  form-group">
-                            <label for="protectionCreateListProduct">Proteccion <span
-                                    class="text-danger">*</span></label>
+                            <label for="protectionCreateListProduct">Proteccion</label>
                             <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
-                                ng-model="listProduct.protection" class="form-control" required>
+                                ng-model="listProduct.protection" class="form-control">
                         </div>
                         <div class="col-12  form-group">
-                            <label for="minToleranceCreateListProduct">Valor min <span
-                                    class="text-danger">*</span></label>
+                            <label for="minToleranceCreateListProduct">Valor min</label>
                             <input type="text" id="minToleranceCreateListProduct" name="minToleranceCreateListProduct"
-                                ng-model="listProduct.min_tolerance" class="form-control" required>
+                                ng-model="listProduct.min_tolerance" class="form-control">
                         </div>
                         <div class="col-12  form-group">
-                            <label for="maxToleranceCreateListProduct">Valor max <span
-                                    class="text-danger">*</span></label>
+                            <label for="maxToleranceCreateListProduct">Valor max</label>
                             <input type="text" id="maxToleranceCreateListProduct" name="maxToleranceCreateListProduct"
-                                ng-model="listProduct.max_tolerance" class="form-control" required>
+                                ng-model="listProduct.max_tolerance" class="form-control">
                         </div>
                     </div>
                     <div class="text-right mt-2">

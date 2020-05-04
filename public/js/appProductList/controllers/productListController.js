@@ -1,6 +1,6 @@
 
 app.controller('productListController', function ($scope, $http, $rootScope) {
-	$scope.tabs = 3;
+	$scope.tabs = 1;
 	$scope.q = {
 		'q': '',
 		'page': 30,
@@ -310,7 +310,6 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.createListProduct = function () {
-		console.log($scope.listProduct)
 		$http({
 			method: 'POST',
 			url: '/api/listProducts',
@@ -320,10 +319,11 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 				if (response.data == "23000") {
 					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 					$("#alertListProduct").show();
-				} else if (response.data == true) {
-					$scope.listProduct = "";
+				} else{
+					$scope.listProduct = {};
+					$scope.listProducts = [];
 					$("#addListProductModal").modal("hide");
-					$scope.search();
+					$scope.getListProduct();
 				}
 			}
 		}, function errorCallback(response) {

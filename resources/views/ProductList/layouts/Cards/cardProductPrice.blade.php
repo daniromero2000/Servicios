@@ -34,15 +34,6 @@
                                         <label class="productlist-card-subtitle">Valor 12 cuotas sin bono:</label> <span class="productlist-card-price">$@{{ price.traditional_credit_bond_price | number:0 }}</span>
                                     </div>
                                 </div>
-                                <div class="card text-white bg-dark mb-3">
-                                    <div class="card-header">
-                                        <span class="productlist-card-titleCard">Tarjeta Black</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <label class="productlist-card-subtitle" style="color: white">Precio público Black A.F:</label> <span class="productlist-card-price">$@{{ price.black_public_price | number:0 }}</span>
-                                        <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas Black sin bono:</label> <span class="productlist-card-price">$@{{ price.black_bond_price | number:0 }}</span>
-                                    </div>
-                                </div>
                                 <div class="card text-white bg-primary mb-3">
                                     <div class="card-header">
                                         <span class="productlist-card-titleCard">Tarjeta Blue</span>
@@ -50,6 +41,15 @@
                                     <div class="card-body">
                                         <label class="productlist-card-subtitle" style="color: white">Precio público Blue A.F:</label> <span class="productlist-card-price">$@{{ price.blue_public_price | number:0 }}</span>
                                         <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas Blue sin bono:</label> <span class="productlist-card-price">$@{{ price.blue_bond_price | number:0 }}</span>
+                                    </div>
+                                </div>
+                                <div class="card text-white bg-dark mb-3">
+                                    <div class="card-header">
+                                        <span class="productlist-card-titleCard">Tarjeta Black</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <label class="productlist-card-subtitle" style="color: white">Precio público Black A.F:</label> <span class="productlist-card-price">$@{{ price.black_public_price | number:0 }}</span>
+                                        <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas Black sin bono:</label> <span class="productlist-card-price">$@{{ price.black_bond_price | number:0 }}</span>
                                     </div>
                                 </div>
                             </div>
