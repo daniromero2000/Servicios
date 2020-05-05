@@ -21,19 +21,34 @@
 @endsection()
 
 @section('content')
+@php
+$images = $product->images()->get(['src']);
+$imagenes = [];
+$productImages =[];
+array_push($productImages, $product->cover);
+foreach ( $images as $key => $value) {
+
+array_push($productImages, $images[$key]->src );
+
+}
+foreach ( $productImages as $key => $value) {
+array_push($imagenes, [$productImages[$key], $key]);
+}
+// dd($imagenes);
+@endphp
 
 <div class="my-3 padding-reset" style="max-width: 1300px;margin: 0px auto;">
     <div class="row mr-0 justify-content-center">
         <div class="col-12">
-            <h5 class="breadcrumb-product">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti quo
-                voluptatem </h5>
+            <h5 class="breadcrumb-product">Oportunidades Servicios > Crédito Electrodomésticos >
+                {{ $product->reference }} </h5>
         </div>
         <div class="col-lg-7 px-0" style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
             <div class="w-100 padding-reset">
-                <p class="reference-product">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <h4 class="name-product"> Lorem ipsum dolor sit amet consectetur </h4>
+                <p class="reference-product">{{ $product->reference}}.</p>
+                <h4 class="name-product"> {{ $product->name}} </h4>
                 <ul class="description-product">
-                    <li>Lorem ipsum</li>
+                    <li>{{ $product->description}}</li>
                     <li>Lorem ipsum</li>
                     <li>Lorem ipsum</li>
                     <li>Lorem ipsum</li>
@@ -42,41 +57,18 @@
             </div>
             <div class="" style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
                 <div class="carousel-container position-relative row">
-                    <!-- Sorry! Lightbox doesn't work - yet. -->
                     <div class="row mx-auto">
                         <div class="container">
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active" data-slide-number="0">
-                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-01.jpg')}}"
-                                            class="img-principal-carousel" alt="..."
-                                            data-remote="https://source.unsplash.com/Pn6iimgM-wo/" data-type="image"
-                                            data-toggle="lightbox" data-gallery="example-gallery">
+                                    @foreach($imagenes as $image)
+                                    <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item"
+                                        @endif data-slide-number="{{$image[1]}}">
+                                        <img src="{{asset('storage/'.$image[0])}}" class="img-principal-carousel"
+                                            alt="..." data-type="image" data-toggle="lightbox"
+                                            data-gallery="example-gallery">
                                     </div>
-                                    <div class="carousel-item" data-slide-number="1">
-                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-06.jpg')}}"
-                                            class="img-principal-carousel" alt="..."
-                                            data-remote="https://source.unsplash.com/tXqVe7oO-go/" data-type="image"
-                                            data-toggle="lightbox" data-gallery="example-gallery">
-                                    </div>
-                                    <div class="carousel-item" data-slide-number="2">
-                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-03.jpg')}}"
-                                            class="img-principal-carousel" alt="..."
-                                            data-remote="https://source.unsplash.com/qlYQb7B9vog/" data-type="image"
-                                            data-toggle="lightbox" data-gallery="example-gallery">
-                                    </div>
-                                    <div class="carousel-item" data-slide-number="3">
-                                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-05.jpg')}}"
-                                            class="img-principal-carousel" alt="..."
-                                            data-remote="https://source.unsplash.com/QfEfkWk1Uhk/" data-type="image"
-                                            data-toggle="lightbox" data-gallery="example-gallery">
-                                    </div>
-                                    <div class="carousel-item" data-slide-number="4">
-                                        <img src="https://source.unsplash.com/CSIcgaLiFO0/1600x900/"
-                                            class="img-principal-carousel" alt="..."
-                                            data-remote="https://source.unsplash.com/CSIcgaLiFO0/" data-type="image"
-                                            data-toggle="lightbox" data-gallery="example-gallery">
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -86,36 +78,15 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row mx-0">
-                                <div id="carousel-selector-0" class="thumb col-4 col-sm-3 px-0 py-2 selected"
-                                    data-target="#myCarousel" data-slide-to="0">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-01.jpg')}}"
-                                        class="img-fluid" alt="...">
+                                @foreach($imagenes as $image)
+
+                                <div id="carousel-selector-{{$image[1]}}" @if ($image[1]==0)
+                                    class="thumb col-4 col-sm-3 px-0 py-2 selected" @else
+                                    class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
+                                    data-slide-to="{{$image[1]}}">
+                                    <img src="{{asset('storage/'.$image[0])}}" class="img-fluid" alt="...">
                                 </div>
-                                <div id="carousel-selector-1" class="thumb col-4 col-sm-3 px-0 py-2"
-                                    data-target="#myCarousel" data-slide-to="1">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-06.jpg')}}"
-                                        class="img-fluid" alt="...">
-                                </div>
-                                <div id="carousel-selector-2" class="thumb col-4 col-sm-3 px-0 py-2"
-                                    data-target="#myCarousel" data-slide-to="2">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-03.jpg')}}"
-                                        class="img-fluid" alt="...">
-                                </div>
-                                <div id="carousel-selector-3" class="thumb col-4 col-sm-3 px-0 py-2"
-                                    data-target="#myCarousel" data-slide-to="3">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-05.jpg')}}"
-                                        class="img-fluid" alt="...">
-                                </div>
-                                <div id="carousel-selector-2" class="thumb col-4 col-sm-3 px-0 py-2"
-                                    data-target="#myCarousel" data-slide-to="2">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-03.jpg')}}"
-                                        class="img-fluid" alt="...">
-                                </div>
-                                <div id="carousel-selector-3" class="thumb col-4 col-sm-3 px-0 py-2"
-                                    data-target="#myCarousel" data-slide-to="3">
-                                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-05.jpg')}}"
-                                        class="img-fluid" alt="...">
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -40,6 +40,10 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Entities\Brands\Repositories\BrandRepositoryInterface;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\Products\Transformations\ProductTransformable;
+use App\Entities\Products\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +52,9 @@ use Illuminate\Support\Carbon;
 
 class OportuyaV2Controller extends Controller
 {
+
+	use ProductTransformable;
+
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -56,7 +63,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface;
+	private $ubicaInterface, $productRepo, $brandRepo;
 	private $assessorInterface;
 
 	public function __construct(
@@ -85,7 +92,9 @@ class OportuyaV2Controller extends Controller
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
-		AssessorRepositoryInterface $AssessorRepositoryInterface
+		AssessorRepositoryInterface $AssessorRepositoryInterface,
+		ProductRepositoryInterface $productRepository,
+		BrandRepositoryInterface $brandRepository
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -113,6 +122,8 @@ class OportuyaV2Controller extends Controller
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
 		$this->assessorInterface                 = $AssessorRepositoryInterface;
+		$this->productRepo = $productRepository;
+		$this->brandRepo = $brandRepository;
 	}
 
 	public function index()
@@ -127,20 +138,33 @@ class OportuyaV2Controller extends Controller
 
 	public function catalog()
 	{
+		$list = $this->productRepo->listProducts('id');
+
+		$products = $list->map(function (Product $item) {
+			return $this->transformProduct($item);
+		})->all();
 		$images = Imagenes::selectRaw('*')
 			->where('category', '=', '1')
 			->where('isSlide', '=', '1')
 			->get();
-		return view('oportuya.catalog', ['images' => $images]);
+		return view('oportuya.catalog', [
+			'images' => $images,
+			'products' => $products,
+			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+		]);
 	}
 
-	public function show()
+	public function show($slug)
 	{
+		$product = $this->productRepo->findProductBySlug($slug);
+		// $product = $this->transformProduct($list)->all();
+
 		$images = Imagenes::selectRaw('*')
 			->where('category', '=', '1')
 			->where('isSlide', '=', '1')
 			->get();
-		return view('oportuya.product.show', ['images' => $images]);
+		return view('oportuya.product.show', ['images' => $images, 'product' => $product]);
 	}
 
 

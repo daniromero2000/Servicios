@@ -81,10 +81,10 @@ class ProductRepository implements ProductRepositoryInterface
         return DB::table('product_images')->where('src', $src)->delete();
     }
 
-    public function findProductBySlug(array $slug): Product
+    public function findProductBySlug($slug): Product
     {
         try {
-            return $this->model->findOneByOrFail($slug);
+            return $this->model->where('slug', $slug)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             throw new ProductNotFoundException($e);
         }

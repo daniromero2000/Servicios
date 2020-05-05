@@ -296,6 +296,34 @@
     }
 }
 
+@media screen and (min-width: 990px) and (max-width: 1175px) {
+    .card-products-img {
+        max-height: 230px;
+    }
+    .height-container-img-product {
+        min-height: 230px;
+    }
+    .card-products {
+        min-width: 328px !important;
+    }
+    .card-products-title {
+        font-size: 17px;
+    }
+    .card-products-new-price {
+        font-size: 22px;
+    }
+    .card-products-discount {
+        width: 44px;
+        top: 12%;
+        right: 30px;
+        font-size: 14px;
+    }
+    .card-products-card-black {
+        width: 40px;
+        right: 28px;
+    }
+}
+
 @media screen and (min-width: 900px) and (max-width: 1104px) {
     .container-text-baner-initial {
         left: 4%;
