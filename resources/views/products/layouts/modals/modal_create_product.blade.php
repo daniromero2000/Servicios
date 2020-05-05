@@ -76,7 +76,7 @@
 
                                 <div class="col-12 px-0">
                                     <label for="description">Descripción <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="description" id="description" rows="6"
+                                    <textarea class="form-control ckeditor" name="description" id="description" rows="6"
                                         required>{{ old('description') }}</textarea>
                                 </div>
 

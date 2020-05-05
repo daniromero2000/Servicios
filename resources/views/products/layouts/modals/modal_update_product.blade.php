@@ -104,7 +104,7 @@
                                 <div class="col-12 px-0">
                                     <label for="description_update{{ $product->id }}">Descripción <span
                                             class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="description"
+                                    <textarea class="form-control ckeditor" name="description"
                                         id="description_update{{ $product->id }}" rows="4"
                                         required>{{ $product->description }}</textarea>
                                 </div>

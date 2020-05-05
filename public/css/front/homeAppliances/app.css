@@ -296,6 +296,34 @@
     }
 }
 
+@media screen and (min-width: 990px) and (max-width: 1175px) {
+    .card-products-img {
+        max-height: 230px;
+    }
+    .height-container-img-product {
+        min-height: 230px;
+    }
+    .card-products {
+        min-width: 328px !important;
+    }
+    .card-products-title {
+        font-size: 17px;
+    }
+    .card-products-new-price {
+        font-size: 22px;
+    }
+    .card-products-discount {
+        width: 44px;
+        top: 12%;
+        right: 30px;
+        font-size: 14px;
+    }
+    .card-products-card-black {
+        width: 40px;
+        right: 28px;
+    }
+}
+
 @media screen and (min-width: 900px) and (max-width: 1104px) {
     .container-text-baner-initial {
         left: 4%;
@@ -621,7 +649,7 @@
     position: absolute;
     width: 55px;
     top: 3%;
-    right: 73px;
+    right: 103px;
 }
 
 .container-ol-steps-deal-product {
@@ -725,14 +753,26 @@
     max-height: 74px;
 }
 
+.img-description-product {
+    max-height: 400px;
+}
+
+.container-desc-deal {
+    max-width: 250px;
+}
+
+.container-price-deal {
+    margin-right: 20%;
+}
+
 @media only screen and (min-width: 576px) and (max-width: 994px) {
     .number-img-step-cards {
-        left: 10%;
+        left: 12%;
     }
 }
 
 .img-principal-carousel {
-    max-height: 400px;
+    max-height: 450px;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -812,6 +852,52 @@
     }
     .number-contact-deal-product {
         font-size: 29px;
+    }
+}
+
+@media screen and (min-width: 771px) and (max-width: 900px) {
+    .title-card-step {
+        font-size: 28px;
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 770px) {
+    .title-card-step {
+        font-size: 24px;
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+    .icon-step-cards {
+        max-height: 60px;
+    }
+    .number-img-step-cards {
+        max-height: 55px;
+    }
+}
+
+@media screen and (min-width: 305px) and (max-width: 499px) {
+    .title-card-step {
+        font-size: 23px;
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+    .icon-step-cards {
+        max-height: 50px;
+    }
+    .number-img-step-cards {
+        max-height: 50px;
+    }
+    .number-img-step-cards {
+        position: absolute;
+        left: 12%;
+        top: 1px;
+        max-height: 51px;
+    }
+    .padding-responsive {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
     }
 }
 
@@ -948,7 +1034,10 @@
         font-size: 20px;
     }
     .description-product {
-        font-size: 14px;
+        font-size: 13px;
+    }
+    .container-price-deal {
+        margin-right: 2%;
     }
 }
 
