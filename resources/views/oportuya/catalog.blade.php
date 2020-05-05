@@ -118,11 +118,14 @@
                     <img src="{{asset("storage/$product->cover")}}" class="card-products-img" alt="...">
                 </div>
                 <div class="card-body pt-0 pr-4 pl-4">
-
+                    @php
+                    $desc = ($product->price - $product->sale_price);
+                    $desc= round(($desc / $product->price)*100 );
+                    @endphp
                     <h5 class="card-title card-products-title">{{ $product->reference}} </h5>
                     <div class="relative">
                         <div class="card-products-discount">
-                            <p>26%</p>
+                            <p>{{$desc}}%</p>
                             <p>Dcto</p>
                         </div>
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
@@ -133,6 +136,8 @@
 
                         <p class="card-text card-products-new-price mb-0">$ {{ number_format($product->sale_price)}}
                         </p>
+
+
                         <p class="card-text card-products-label mb-3">Precio ahora</p>
 
                         <p class="card-text card-products-text">Llévalo a <b> {{$product->months}}

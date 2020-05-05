@@ -27,35 +27,34 @@ $imagenes = [];
 $productImages =[];
 array_push($productImages, $product->cover);
 foreach ( $images as $key => $value) {
-
 array_push($productImages, $images[$key]->src );
-
 }
 foreach ( $productImages as $key => $value) {
 array_push($imagenes, [$productImages[$key], $key]);
 }
-// dd($imagenes);
 @endphp
 
-<div class="my-3 padding-reset" style="max-width: 1300px;margin: 0px auto;">
+<div class="my-3 padding-reset" style="max-width: 1300px;margin: 0px auto; margin-bottom: 5% !important;">
     <div class="row mr-0 justify-content-center">
         <div class="col-12">
             <h5 class="breadcrumb-product">Oportunidades Servicios > Crédito Electrodomésticos >
                 {{ $product->reference }} </h5>
         </div>
-        <div class="col-lg-7 px-0" style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
+        <div class="col-lg-7 mt-3 px-0"
+            style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
             <div class="w-100 padding-reset">
                 <p class="reference-product">{{ $product->reference}}.</p>
                 <h4 class="name-product"> {{ $product->name}} </h4>
-                <ul class="description-product">
+                {{ $product->description}}
+                {{-- <ul class="description-product">
                     <li>{{ $product->description}}</li>
-                    <li>Lorem ipsum</li>
-                    <li>Lorem ipsum</li>
-                    <li>Lorem ipsum</li>
-                </ul>
+                <li>Lorem ipsum</li>
+                <li>Lorem ipsum</li>
+                <li>Lorem ipsum</li>
+                </ul> --}}
 
             </div>
-            <div class="" style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
+            <div class="" style="border-radius: 21px; margin-top: 5%;">
                 <div class="carousel-container position-relative row">
                     <div class="row mx-auto">
                         <div class="container">
@@ -134,16 +133,42 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="row">
                 <div class="card border-0 container-deal-product">
                     <div class="card-body pt-0 pr-4 pl-4">
+                        @php
+                        $desc = ($product->price - $product->sale_price);
+                        $desc= round(($desc / $product->price)*100 );
+                        @endphp
+                        <div class="relative text-center  container-desc-deal">
 
+                            <div class="card-products-discount">
+                                <p>{{$desc}}%</p>
+                                <p>Dcto</p>
+                            </div>
+                            <div class="container-price-deal">
+                                <p class="card-text card-products-old-price mb-0"> <del>$
+                                        {{ number_format($product->price)}}
+                                    </del></p>
+                                <p class="card-text card-products-label mb-1">Precio antes</p>
+
+                                <p class="card-text card-products-new-price mb-0">$
+                                    {{ number_format($product->sale_price)}}
+                                </p>
+                                <p class="card-text card-products-label mb-3">Precio ahora</p>
+                            </div>
+
+                        </div>
                         <div class="relative">
+
                             <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                                 class="img-card-deal-product">
-                            <p class="card-text term-deal-product">Llévalo a <b> 15
+
+
+
+                            <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
                                     meses </b> con tu tarjeta oportuya:
                             </p>
                             <div class="container-dues-deal-product">
                                 <p class="card-text card-products-price">
-                                    $ 31.100
+                                    $ {{ number_format($product->pays)}}
                                 </p>
                                 <p class="card-text text-dues-deal-product">* Cuota semanal</p>
                                 <a href="#" class="btn card-products-button card-products-button-apply">Solicitar
@@ -187,7 +212,7 @@ array_push($imagenes, [$productImages[$key], $key]);
     </div>
 </div>
 
-<div style="max-width: 1300px;margin: 0px auto;">
+<div style="max-width: 1300px;margin: 0px auto;margin-bottom: 5%;">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -198,45 +223,35 @@ array_push($imagenes, [$productImages[$key], $key]);
                 aria-selected="false">Especificaciones</a>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content padding-responsive" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="card">
-                <div class="card-body">
-                    <div class="container mt-2">
-                        <div class="row justify-content-center ">
-                            <div class="col-10 col-sm-6  p-0"> <img
-                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe1.png') }}"
-                                    class="img-fluid img-responsive">
-                            </div>
-                            <div class="col-10 col-sm-6  p-0"> <img
-                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe2.png') }}"
-                                    class="img-fluid img-responsive">
-                            </div>
-                            <div class="col-10 col-sm-6  p-0"> <img
-                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe3.png') }}"
-                                    class="img-fluid img-responsive">
-                            </div>
-                            <div class="col-10 col-sm-6  p-0"> <img
-                                    src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Espe4.png') }}"
-                                    class="img-fluid img-responsive">
-                            </div>
+            <div class="card border-0 padding-responsive padding-reset"
+                style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
+                <div class="card-body padding-responsive">
+                    <div class="row justify-content-center ">
+                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image1)}}"
+                                class="img-fluid img-description-product img-responsive">
+                        </div>
+                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image2)}}"
+                                class="img-fluid img-description-product img-responsive">
+                        </div>
+                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image3)}}"
+                                class="img-fluid img-description-product img-responsive">
+                        </div>
+                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image4)}}"
+                                class="img-fluid img-description-product img-responsive">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="card">
-                <div class="card-body">
-                    <div class="container mt-2 ">
-                        <div class="card">
-                            <img class="img-fluid"
-                                src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/especificaciones1.png') }}"
-                                alt="">
-
-                        </div>
-                    </div>
-
+            <div class="card border-0 padding-reset padding-responsive"
+                style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
+                <div class="card-body padding-responsive">
+                    <a data-toggle="modal" data-target="#exampleModal">
+                        <img class="img-fluid" src="{{asset('storage/'.$product->specification_image)}}" alt="">
+                    </a>
                 </div>
             </div>
         </div>
@@ -244,6 +259,20 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                style=" margin-left: auto; margin-right: 6px; ">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <img class="img-fluid" src="{{asset('storage/'.$product->specification_image)}}" alt="">
+
+        </div>
+    </div>
+</div>
 
 
 <div class="container mt-5 mb-5 pt-5  border-0 mx-auto  shadow p-3 mb-5 bg-white rounded" style="margin top: 0%">
@@ -319,5 +348,4 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 @section('scriptsJs')
 <script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
-
 @endsection
