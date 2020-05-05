@@ -68,7 +68,7 @@ class BrandRepository implements BrandRepositoryInterface
     public function dissociateProducts()
     {
         $this->model->products()->each(function (Product $product) {
-            $product->brands_id = null;
+            $product->brand_id = null;
             $product->save();
         });
     }

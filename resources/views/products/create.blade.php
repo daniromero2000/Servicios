@@ -162,12 +162,12 @@
                     </div>
                     @if(!$brands->isEmpty())
                     <div class="form-group">
-                        <label for="brands_id">Marca </label>
+                        <label for="brand_id">Marca </label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-building-o "></i>
                             </div>
-                            <select name="brands_id" id="brands_id" class="form-control select2">
+                            <select name="brand_id" id="brand_id" class="form-control select2">
                                 @foreach($brands as $brand)
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach

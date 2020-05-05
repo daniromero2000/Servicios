@@ -42,7 +42,7 @@
                                         <tr>
                                             <td>{{ $product->sku }}</td>
                                             <td> {{ $product->name }} </td>
-                                            <td>{{ $product->brands_id->name }}</td>
+                                            <td>{{ $product->brand_id->name }}</td>
                                             <td>$ {{ number_format($product->price, 0, '.', ',') }}</td>
                                             <td>
                                                 @if ($product->status == 1)
@@ -181,8 +181,8 @@
 </script>
 <script type="text/javascript">
     $( document ).ready(function() {
-    $("[rel='tooltip']").tooltip();    
- 
+    $("[rel='tooltip']").tooltip();
+
     $('.thumbnail').hover(
         function(){
             $(this).find('.caption').slideDown(250); //.fadeIn(250)
@@ -190,7 +190,7 @@
         function(){
             $(this).find('.caption').slideUp(250); //.fadeOut(205)
         }
-    ); 
+    );
 });
 </script>
 @endsection
