@@ -33,7 +33,7 @@ trait ProductTransformable
         $prod->pays = $product->pays;
         $prod->sale_price = $product->sale_price;
         $brandsRepo = new BrandRepository(new Brand());
-        $prod->brands_id = $brandsRepo->findBrandById($product->brands_id);
+        $prod->brand_id = $brandsRepo->findBrandById($product->brand_id);
         return $prod;
     }
 }

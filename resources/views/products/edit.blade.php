@@ -216,11 +216,11 @@
                                 </div>
                                 @if(!$brands->isEmpty())
                                 <div class="form-group">
-                                    <label for="brands_id">Marca </label>
-                                    <select name="brands_id" id="brands_id" class="form-control select2">
+                                    <label for="brand_id">Marca </label>
+                                    <select name="brand_id" id="brand_id" class="form-control select2">
                                         <option value=""></option>
                                         @foreach($brands as $brand)
-                                        <option @if($brand->id == $product->brands_id->id) selected="selected"
+                                        <option @if($brand->id == $product->brand_id->id) selected="selected"
                                             @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                         @endforeach
                                     </select>
