@@ -120,9 +120,12 @@ Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
+Route::get('catalogo', 'Admin\OportuyaV2Controller@catalog');
 Route::resource('libranza', 'Admin\LibranzaController');
 Route::resource('leads', 'Admin\LeadsController');
-
+Route::get('/view-products', function () {
+    return view('oportuya.viewProducts');
+});
 
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
@@ -200,7 +203,6 @@ Route::group(['prefix' => 'api/'], function () {
     Route::group(['prefix' => 'listProducts'], function () {
         Route::resource('/', 'Admin\ListProducts\ListProductController');
         Route::get('/getDataPriceProduct/{product_id}', 'Admin\ListProducts\ListProductController@getDataPriceProduct');
-
     });
     Route::group(['prefix' => 'productList'], function () {
         Route::resource('/', 'Admin\ProductList\ProductListController');

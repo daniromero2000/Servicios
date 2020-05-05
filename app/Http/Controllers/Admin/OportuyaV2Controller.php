@@ -124,6 +124,26 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
 
+
+	public function catalog()
+	{
+		$images = Imagenes::selectRaw('*')
+			->where('category', '=', '1')
+			->where('isSlide', '=', '1')
+			->get();
+		return view('oportuya.catalog', ['images' => $images]);
+	}
+
+	public function show()
+	{
+		$images = Imagenes::selectRaw('*')
+			->where('category', '=', '1')
+			->where('isSlide', '=', '1')
+			->get();
+		return view('oportuya.product.show', ['images' => $images]);
+	}
+
+
 	public function getPageDeniedTr()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDeniedTr();
@@ -507,7 +527,7 @@ class OportuyaV2Controller extends Controller
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
-		if($checkCustomerCodeVerified == 'false'){
+		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
 		}
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
@@ -1029,7 +1049,7 @@ class OportuyaV2Controller extends Controller
 
 		// 5 Definiciones cliente
 
-		if($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA'){
+		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
 			$customer->ESTADO = 'PREAPROBADO';
 			$customer->save();
 			$customerIntention->TARJETA          = 'Crédito Tradicional';

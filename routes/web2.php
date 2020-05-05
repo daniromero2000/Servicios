@@ -150,7 +150,6 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/intentions/directors', 'IntentionDirectorController@dashboard')->name('intentions_director_dashboard');
     });
 
-
     /*Community Leads Resource*/
     Route::resource('communityleads', 'CommunityController');
     Route::get('/Administrator/dashboard/communitymanager', 'CommunityController@dashboard')->name('community_dashboard');

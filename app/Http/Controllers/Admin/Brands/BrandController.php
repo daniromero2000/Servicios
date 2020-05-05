@@ -46,7 +46,7 @@ class BrandController extends Controller
 
         $this->brandRepo->createBrand($data);
 
-        return redirect()->route('brands.index')->with('message', 'Create brand successful!');
+        return redirect()->route('products.index')->with('message', 'Create brand successful!');
     }
 
     public function edit($id)
@@ -77,7 +77,7 @@ class BrandController extends Controller
 
         $brandRepo->updateBrand($data);
 
-        return redirect()->route('brands.edit', $id)->with('message', 'Actualización Exitosa!');
+        return redirect()->route('products.index')->with('message', 'Actualización Exitosa!');
     }
 
     public function destroy($id)
@@ -87,6 +87,6 @@ class BrandController extends Controller
         $brandRepo->dissociateProducts();
         $brandRepo->deleteBrand();
 
-        return redirect()->route('brands.index')->with('message', 'Eliminado Satisfactoriamente');
+        return redirect()->route('products.index')->with('message', 'Eliminado Satisfactoriamente');
     }
 }

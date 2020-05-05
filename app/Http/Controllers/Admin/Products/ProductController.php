@@ -40,9 +40,10 @@ class ProductController extends Controller
         $products = $list->map(function (Product $item) {
             return $this->transformProduct($item);
         })->all();
-
         return view('products.list', [
             'products' => $products,
+            'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+            'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')
         ]);
     }
 
@@ -95,7 +96,7 @@ class ProductController extends Controller
             $productRepo->saveProductImages(collect($request->file('image')));
         }
 
-        return redirect()->route('products.edit', $product->id)->with('message', 'Creación Exitosa');
+        return redirect()->route('products.index')->with('message', 'Creación Exitosa');
     }
 
     public function show(int $id)
@@ -139,8 +140,7 @@ class ProductController extends Controller
 
         $productRepo->updateProduct($data);
 
-        return redirect()->route('products.edit', $id)
-            ->with('message', 'Actualización Exitosa!');
+        return redirect()->route('products.index')->with('message', 'Actualización Exitosa!');
     }
 
     public function destroy($id)

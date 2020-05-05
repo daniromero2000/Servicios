@@ -15,6 +15,7 @@ trait ProductTransformable
     {
         $prod = new Product;
         $prod->id = (int) $product->id;
+        $prod->reference = $product->reference;
         $prod->name = $product->name;
         $prod->sku = $product->sku;
         $prod->slug = $product->slug;
