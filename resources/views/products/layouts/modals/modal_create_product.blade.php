@@ -76,7 +76,7 @@
 
                                 <div class="col-12 px-0">
                                     <label for="description">Descripción <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="description" id="description" rows="6"
+                                    <textarea class="form-control ckeditor" name="description" id="description" rows="6"
                                         required>{{ old('description') }}</textarea>
                                 </div>
 
@@ -122,7 +122,8 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input" name="image[]"
                                                             id="image" multiple required>
-                                                        <label class="custom-file-label" for="image">Seleccionar
+                                                        <label class="custom-file-label" for="image"
+                                                            style="overflow: hidden;">Seleccionar
                                                             imagenes</label>
                                                     </div>
                                                 </div>

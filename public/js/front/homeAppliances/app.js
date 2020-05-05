@@ -14,16 +14,18 @@ $(document).ready(function () {
         var id = parseInt(id_selector.substr(id_selector.lastIndexOf('-') + 1));
         $('#myCarousel').carousel(id);
     });
+    if ($(window).width() > 575) {
+        if ($('#carousel-thumbs .carousel-item .row .thumb').length > 4) {
+            $('#carousel-thumbs .row div:nth-child(5)').each(function () {
+                var rowBoundary = $(this);
+                $('<div class="row mx-0">').insertAfter(rowBoundary.parent()).append(rowBoundary.nextAll().addBack());
+            });
+            $('#carousel-thumbs .carousel-item .row:nth-child(even)').each(function () {
+                var boundary = $(this);
+                $('<div class="carousel-item">').insertAfter(boundary.parent()).append(boundary.nextAll().addBack());
+            });
 
-    if ($('#carousel-thumbs .carousel-item .row .thumb').length > 4) {
-        $('#carousel-thumbs .row div:nth-child(5)').each(function () {
-            var rowBoundary = $(this);
-            $('<div class="row mx-0">').insertAfter(rowBoundary.parent()).append(rowBoundary.nextAll().addBack());
-        });
-        $('#carousel-thumbs .carousel-item .row:nth-child(even)').each(function () {
-            var boundary = $(this);
-            $('<div class="carousel-item">').insertAfter(boundary.parent()).append(boundary.nextAll().addBack());
-        });
+        }
     }
 
     if ($(window).width() < 575) {

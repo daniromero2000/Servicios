@@ -106,48 +106,51 @@
     </div>
 
 </div>
-
 <div style=" margin-top: 5%;">
     <div class=" row justify-content-center container-card-products">
-        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+        @foreach ($products as $product)
+        <div class="col-12 col-md-6 col-lg-4">
             <div class="card shadow border-0 text-center card-products">
                 <div class="w-100 card-container-products-logo">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
-                        class="card-products-logo">
+                    <img src="{{asset('storage/'.$product->brands_id->cover)}}" class="card-products-logo">
                 </div>
-                <div>
-                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Desktop-zoom-1600x1062-01.jpg')}}"
-                        class="card-products-img" alt="...">
+                <div class="height-container-img-product">
+                    <img src="{{asset("storage/$product->cover")}}" class="card-products-img" alt="...">
                 </div>
-
                 <div class="card-body pt-0 pr-4 pl-4">
-
-                    <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit. Minima </h5>
+                    @php
+                    $desc = ($product->price - $product->sale_price);
+                    $desc= round(($desc / $product->price)*100 );
+                    @endphp
+                    <h5 class="card-title card-products-title">{{ $product->reference}} </h5>
                     <div class="relative">
                         <div class="card-products-discount">
-                            <p>26%</p>
+                            <p>{{$desc}}%</p>
                             <p>Dcto</p>
                         </div>
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                             class="card-products-card-black">
-                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+                        <p class="card-text card-products-old-price mb-0"> <del>$ {{ number_format($product->price)}}
+                            </del></p>
                         <p class="card-text card-products-label mb-1">Precio antes</p>
 
-                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+                        <p class="card-text card-products-new-price mb-0">$ {{ number_format($product->sale_price)}}
+                        </p>
+
+
                         <p class="card-text card-products-label mb-3">Precio ahora</p>
 
-                        <p class="card-text card-products-text">Llévalo a <b> 15
+                        <p class="card-text card-products-text">Llévalo a <b> {{$product->months}}
                                 meses </b> con
                             <br>
                             tu tarjeta black
                         </p>
                         <p class="card-text card-products-price">
-                            $ 31.100
+                            $ {{ number_format($product->pays)}}
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more"
-                            style="">Ver
+                        <a href="/oportuya/{{ $product->slug}}"
+                            class="btn card-products-button card-products-button-see-more" style="">Ver
                             más</a>
                         <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>
@@ -156,104 +159,104 @@
                 </div>
             </div>
         </div>
+        @endforeach
 
-        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+
+        {{-- <div class="col-12 col-md-6 col-lg-4">
             <div class="card shadow border-0 text-center card-products">
                 <div class="w-100 card-container-products-logo">
                     <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
-                        class="card-products-logo">
-                </div>
-                <div>
-                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/LAVADORA MABE/mabe-lavadora-7kg-blanco-LMD7023PBAB0-frente.jpg')}}"
-                        class="card-products-img" alt="...">
-                </div>
+        class="card-products-logo">
+    </div>
+    <div class="height-container-img-product">
+        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/LAVADORA MABE/mabe-lavadora-7kg-blanco-LMD7023PBAB0-frente.jpg')}}"
+            class="card-products-img" alt="...">
+    </div>
 
-                <div class="card-body pt-0 pr-4 pl-4">
+    <div class="card-body pt-0 pr-4 pl-4">
 
-                    <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit. Minima </h5>
-                    <div class="relative">
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
-                            class="card-products-card-black">
-                        <div class="card-products-discount">
-                            <p>26%</p>
-                            <p>Dcto</p>
-                        </div>
-                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
-                        <p class="card-text card-products-label mb-1">Precio antes</p>
-
-                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
-                        <p class="card-text card-products-label mb-3">Precio ahora</p>
-
-
-                        <p class="card-text card-products-text">Llévalo a <b> 15
-                                meses </b> con
-                            <br>
-                            tu tarjeta black
-                        </p>
-                        <p class="card-text card-products-price">
-                            $ 31.100
-                        </p>
-                        <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more"
-                            style="">Ver
-                            más</a>
-                        <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
-                    </div>
-
-
-                </div>
+        <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
+            consectetur adipisicing elit. Minima </h5>
+        <div class="relative">
+            <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
+                class="card-products-card-black">
+            <div class="card-products-discount">
+                <p>26%</p>
+                <p>Dcto</p>
             </div>
+            <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+            <p class="card-text card-products-label mb-1">Precio antes</p>
+
+            <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+            <p class="card-text card-products-label mb-3">Precio ahora</p>
+
+
+            <p class="card-text card-products-text">Llévalo a <b> 15
+                    meses </b> con
+                <br>
+                tu tarjeta black
+            </p>
+            <p class="card-text card-products-price">
+                $ 31.100
+            </p>
+            <p class="card-text card-products-label">* Cuota semanal</p>
+            <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more" style="">Ver
+                más</a>
+            <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
-            <div class="card shadow border-0 text-center card-products">
-                <div class="w-100 card-container-products-logo">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
-                        class="card-products-logo">
+
+    </div>
+</div>
+</div>
+
+<div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow border-0 text-center card-products">
+        <div class="w-100 card-container-products-logo">
+            <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/LogoLG.png')}}"
+                class="card-products-logo">
+        </div>
+        <div class="height-container-img-product">
+            <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/NEVERA MABE RMP400/nevera-mabe--2-puertas--400l-rmp400fycu-1.jpg')}}"
+                class="card-products-img" alt="...">
+        </div>
+
+        <div class="card-body pt-0 pr-4 pl-4">
+
+            <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Minima </h5>
+            <div class="relative">
+                <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
+                    class="card-products-card-black">
+                <div class="card-products-discount">
+                    <p>26%</p>
+                    <p>Dcto</p>
                 </div>
-                <div>
-                    <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/NEVERA MABE RMP400/nevera-mabe--2-puertas--400l-rmp400fycu-1.jpg')}}"
-                        class="card-products-img" alt="...">
-                </div>
+                <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
+                <p class="card-text card-products-label mb-1">Precio antes</p>
 
-                <div class="card-body pt-0 pr-4 pl-4">
+                <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
+                <p class="card-text card-products-label mb-3">Precio ahora</p>
 
-                    <h5 class="card-title card-products-title"> Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit. Minima </h5>
-                    <div class="relative">
-                        <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
-                            class="card-products-card-black">
-                        <div class="card-products-discount">
-                            <p>26%</p>
-                            <p>Dcto</p>
-                        </div>
-                        <p class="card-text card-products-old-price mb-0"> <del>$ 1.751.800 </del></p>
-                        <p class="card-text card-products-label mb-1">Precio antes</p>
-
-                        <p class="card-text card-products-new-price mb-0">$ 1.751.800 </p>
-                        <p class="card-text card-products-label mb-3">Precio ahora</p>
-
-                        <p class="card-text card-products-text">Llévalo a <b> 15
-                                meses </b> con
-                            <br>
-                            tu tarjeta black
-                        </p>
-                        <p class="card-text card-products-price">
-                            $ 31.100
-                        </p>
-                        <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more"
-                            style="">Ver
-                            más</a>
-                        <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
-                    </div>
-
-
-                </div>
+                <p class="card-text card-products-text">Llévalo a <b> 15
+                        meses </b> con
+                    <br>
+                    tu tarjeta black
+                </p>
+                <p class="card-text card-products-price">
+                    $ 31.100
+                </p>
+                <p class="card-text card-products-label">* Cuota semanal</p>
+                <a href="/oportuya/1" class="btn card-products-button card-products-button-see-more" style="">Ver
+                    más</a>
+                <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
             </div>
+
+
         </div>
     </div>
+</div> --}}
+</div>
 </div>
 
 <div style=" margin-bottom: 5%; ">

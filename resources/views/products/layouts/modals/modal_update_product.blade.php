@@ -104,7 +104,7 @@
                                 <div class="col-12 px-0">
                                     <label for="description_update{{ $product->id }}">Descripción <span
                                             class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="description"
+                                    <textarea class="form-control ckeditor" name="description"
                                         id="description_update{{ $product->id }}" rows="4"
                                         required>{{ $product->description }}</textarea>
                                 </div>
@@ -168,8 +168,8 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="image[]"
                                                     id="image_update{{ $product->id }}" multiple>
-                                                <label class="custom-file-label"
-                                                    for="image_update{{ $product->id }}">Cambiar magenes</label>
+                                                <label class="custom-file-label" for="image_update{{ $product->id }}"
+                                                    style="overflow: hidden;">Cambiar magenes</label>
                                             </div>
                                         </div>
                                     </div>

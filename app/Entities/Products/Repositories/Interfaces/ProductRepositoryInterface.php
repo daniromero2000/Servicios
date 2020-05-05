@@ -25,7 +25,7 @@ interface ProductRepositoryInterface
 
     public function deleteThumb(string $src): bool;
 
-    public function findProductBySlug(array $slug): Product;
+    public function findProductBySlug($slug): Product;
 
     public function searchProduct(string $text): Collection;
 
