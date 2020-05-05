@@ -378,7 +378,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					}else{
 						$timeout(function() {
 							$scope.reNewToken = true;
-						}, 15000);
+						}, 100000);
 						$('#confirmCodeVerification').modal('show');
 					}
 				}
