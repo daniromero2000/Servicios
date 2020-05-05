@@ -168,8 +168,8 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="image[]"
                                                     id="image_update{{ $product->id }}" multiple>
-                                                <label class="custom-file-label"
-                                                    for="image_update{{ $product->id }}">Cambiar magenes</label>
+                                                <label class="custom-file-label" for="image_update{{ $product->id }}"
+                                                    style="overflow: hidden;">Cambiar magenes</label>
                                             </div>
                                         </div>
                                     </div>

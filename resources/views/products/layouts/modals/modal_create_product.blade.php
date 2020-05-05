@@ -122,7 +122,8 @@
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input" name="image[]"
                                                             id="image" multiple required>
-                                                        <label class="custom-file-label" for="image">Seleccionar
+                                                        <label class="custom-file-label" for="image"
+                                                            style="overflow: hidden;">Seleccionar
                                                             imagenes</label>
                                                     </div>
                                                 </div>

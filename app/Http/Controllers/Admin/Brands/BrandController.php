@@ -37,7 +37,7 @@ class BrandController extends Controller
     {
         $data = $request->except(
             '_token',
-            '_method',
+            '_method'
         );
 
         if ($request->hasFile('cover') && $request->file('cover') instanceof UploadedFile) {
@@ -68,7 +68,7 @@ class BrandController extends Controller
             '_token',
             '_method',
             'default',
-            'image',
+            'image'
         );
 
         if ($request->hasFile('cover')) {
