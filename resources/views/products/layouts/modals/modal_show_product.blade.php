@@ -41,8 +41,8 @@
                                 <div class="col-4">
                                     @if(!$brands->isEmpty())
 
-                                    <label for="brands_id_show{{ $product->id }}">Marca </label>
-                                    <select name="brands_id" id="brands_id_show{{ $product->id }}"
+                                    <label for="brand_id_show{{ $product->id }}">Marca </label>
+                                    <select name="brand_id" id="brand_id_show{{ $product->id }}"
                                         class=" form-control ">
                                         <option value=""></option>
                                         @foreach($brands as $brand)

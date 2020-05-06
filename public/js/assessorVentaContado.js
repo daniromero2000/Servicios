@@ -374,11 +374,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 						alert('Código generado exitosamente');
 						$timeout(function() {
 							$scope.reNewToken = true;
-						}, 15000);
+						}, 100000);
 					}else{
 						$timeout(function() {
 							$scope.reNewToken = true;
-						}, 15000);
+						}, 100000);
 						$('#confirmCodeVerification').modal('show');
 					}
 				}

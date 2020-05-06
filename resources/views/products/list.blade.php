@@ -170,8 +170,8 @@
 </script>
 <script type="text/javascript">
     $( document ).ready(function() {
-    $("[rel='tooltip']").tooltip();    
- 
+    $("[rel='tooltip']").tooltip();
+
     $('.thumbnail').hover(
         function(){
             $(this).find('.caption').slideDown(250); //.fadeIn(250)
@@ -179,7 +179,7 @@
         function(){
             $(this).find('.caption').slideUp(250); //.fadeOut(205)
         }
-    ); 
+    );
 });
 </script>
 @endsection

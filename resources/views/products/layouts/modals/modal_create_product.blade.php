@@ -38,8 +38,8 @@
                                     <div class="col-4">
                                         @if(!$brands->isEmpty())
 
-                                        <label for="brands_id">Marca </label>
-                                        <select name="brands_id" id="brands_id" class=" form-control " required>
+                                        <label for="brand_id">Marca </label>
+                                        <select name="brand_id" id="brand_id" class=" form-control " required>
                                             <option value=""> Seleccione</option>
                                             @foreach($brands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
