@@ -138,7 +138,7 @@ class OportuyaV2Controller extends Controller
 
 	public function catalog()
 	{
-		$list = $this->productRepo->listProducts('id');
+		$list = $this->productRepo->listFrontProducts('id');
 
 		$products = $list->map(function (Product $item) {
 			return $this->transformProduct($item);
