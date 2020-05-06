@@ -57,164 +57,165 @@ array_push($imagenes, [$productImages[$key], $key]);
                         <div class="container">
 
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                <div style="height: 20px;">
-                                    <img src="{{asset('storage/'.$product->brand->cover)}}"
-                                        class="card-products-deal-logo" style=" z-index: 99; ">
-                                </div>
-                                <div class="carousel-inner">
+                                {{-- <div style="height: 20px;">
+                                    <img loading="lazy" src="{{asset('storage/'.$product->brand->cover)}}"
+                                class="card-products-deal-logo" style=" z-index: 99; ">
+                            </div> --}}
+                            <div class="carousel-inner">
 
-                                    @foreach($imagenes as $image)
-                                    <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item"
-                                        @endif data-slide-number="{{$image[1]}}">
-                                        <img src="{{asset('storage/'.$image[0])}}" class="img-principal-carousel"
-                                            alt="..." data-type="image" data-toggle="lightbox"
-                                            data-gallery="example-gallery">
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="carousel-thumbs" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row mx-0">
                                 @foreach($imagenes as $image)
-
-                                <div id="carousel-selector-{{$image[1]}}" @if ($image[1]==0)
-                                    class="thumb col-4 col-sm-3 px-0 py-2 selected" @else
-                                    class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
-                                    data-slide-to="{{$image[1]}}">
-                                    <img src="{{asset('storage/'.$image[0])}}" class="img-fluid" alt="...">
+                                <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item" @endif
+                                    data-slide-number="{{$image[1]}}">
+                                    <img loading="lazy" src="{{asset('storage/'.$image[0])}}"
+                                        class="img-principal-carousel" alt="..." data-type="image"
+                                        data-toggle="lightbox" data-gallery="example-gallery">
                                 </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#carousel-thumbs" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel-thumbs" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
+            </div>
+            <div id="carousel-thumbs" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row mx-0">
+                            @foreach($imagenes as $image)
+
+                            <div id="carousel-selector-{{$image[1]}}" @if ($image[1]==0)
+                                class="thumb col-4 col-sm-3 px-0 py-2 selected" @else
+                                class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
+                                data-slide-to="{{$image[1]}}">
+                                <img loading="lazy" src="{{asset('storage/'.$image[0])}}" class="img-fluid" alt="...">
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carousel-thumbs" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-thumbs" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
-        <div class="col-lg-5 container-deal">
-            <div class="row mx-0 container-steps-products justify-content-center text-center">
-                <div class="col-4">
-                    <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}" alt=""
-                            class="img-step-product">
-                    </div>
-                    <div class="mt-2 text-step-product">
-                        Envio gratis para ciudades con tienda fisica
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}" alt=""
-                            class="img-step-product">
-                    </div>
-                    <div class="mt-2 text-step-product">
-                        Crédito sujeto a aprobación de politicas
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div>
-                        <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}" alt=""
-                            class="img-step-product">
-                    </div>
-                    <div class="mt-2 text-step-product">
-                        Crédito aplica para ubicación en tienda fisica
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card border-0 container-deal-product">
-                    <div class="card-body pt-0 pr-4 pl-4">
-                        @php
-                        $desc = ($product->price - $product->sale_price);
-                        $desc= round(($desc / $product->price)*100 );
-                        @endphp
-                        <div class="relative text-center  container-desc-deal">
-
-                            <div class="card-products-discount">
-                                <p>{{$desc}}%</p>
-                                <p>Dcto</p>
-                            </div>
-                            <div class="container-price-deal">
-                                <p class="card-text card-products-old-price mb-0"> <del>$
-                                        {{ number_format($product->price)}}
-                                    </del></p>
-                                <p class="card-text card-products-label mb-1">Precio antes</p>
-
-                                <p class="card-text card-products-new-price mb-0">$
-                                    {{ number_format($product->sale_price)}}
-                                </p>
-                                <p class="card-text card-products-label mb-3">Precio ahora</p>
-                            </div>
-
-                        </div>
-                        <div class="relative">
-
-                            <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
-                                class="img-card-deal-product">
-
-
-
-                            <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
-                                    meses </b> con tu tarjeta oportuya:
-                            </p>
-                            <div class="container-dues-deal-product">
-                                <p class="card-text card-products-price">
-                                    $ {{ number_format($product->pays)}}
-                                </p>
-                                <p class="card-text text-dues-deal-product">* Cuota semanal</p>
-                                <a href="/step1" class="btn card-products-button card-products-button-apply">Solicitar
-                                    aqui</a>
-                            </div>
-
-                        </div>
-
-                        <div class="relative">
-                            <ol class="container-ol-steps-deal-product">
-                                <li>Diligencia la solicitud de crédito en linea</li>
-                                <li>Recibiras un SMS con un token de confirmación</li>
-                                <li>Una vez aprobado tu crédito uno de nuestros asesores se comunicará contigo </li>
-                                <li>Nuestro personal se encargara de recoger la documentación firmada</li>
-                                <li>Realizaremos la entrega del articulo en la puerta de tu casa</li>
-                            </ol>
-                        </div>
-
-                        <div class="relative">
-                            <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
-                            <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}" alt=""
-                                class="first-img-contact-deal-product">
-                            <img src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}" alt=""
-                                class="second-img-contact-deal-product">
-                            <div class="container-text-contact-deal-product">
-                                <p>Preguntale a nuestros asesores:</p>
-                            </div>
-                            <h4 class="number-contact-deal-product text-center">311 5195753</h4>
-                            <div class="text-center">
-                                <a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito de electrodomésticos."
-                                    target="_blank" class="button-contact-deal-product" type="button">Whatsapp
-                                    Directo</a>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
     </div>
+    <div class="col-lg-5 container-deal">
+        <div class="row mx-0 container-steps-products justify-content-center text-center">
+            <div class="col-4">
+                <div>
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}" alt=""
+                        class="img-step-product">
+                </div>
+                <div class="mt-2 text-step-product">
+                    Envio gratis para ciudades con tienda fisica
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}"
+                        alt="" class="img-step-product">
+                </div>
+                <div class="mt-2 text-step-product">
+                    Crédito sujeto a aprobación de politicas
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}" alt=""
+                        class="img-step-product">
+                </div>
+                <div class="mt-2 text-step-product">
+                    Crédito aplica para ubicación en tienda fisica
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card border-0 container-deal-product">
+                <div class="card-body pt-0 pr-4 pl-4">
+                    @php
+                    $desc = ($product->price - $product->sale_price);
+                    $desc= round(($desc / $product->price)*100 );
+                    @endphp
+                    <div class="relative text-center  container-desc-deal">
+
+                        <div class="card-products-discount">
+                            <p>{{$desc}}%</p>
+                            <p>Dcto</p>
+                        </div>
+                        <div class="container-price-deal">
+                            <p class="card-text card-products-old-price mb-0"> <del>$
+                                    {{ number_format($product->price)}}
+                                </del></p>
+                            <p class="card-text card-products-label mb-1">Precio antes</p>
+
+                            <p class="card-text card-products-new-price mb-0">$
+                                {{ number_format($product->sale_price)}}
+                            </p>
+                            <p class="card-text card-products-label mb-3">Precio ahora</p>
+                        </div>
+
+                    </div>
+                    <div class="relative">
+
+                        <img loading="lazy"
+                            src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
+                            class="img-card-deal-product">
+
+
+
+                        <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
+                                meses </b> con tu tarjeta oportuya:
+                        </p>
+                        <div class="container-dues-deal-product">
+                            <p class="card-text card-products-price">
+                                $ {{ number_format($product->pays)}}
+                            </p>
+                            <p class="card-text text-dues-deal-product">* Cuota semanal</p>
+                            <a href="/step1" class="btn card-products-button card-products-button-apply">Solicitar
+                                aqui</a>
+                        </div>
+
+                    </div>
+
+                    <div class="relative">
+                        <ol class="container-ol-steps-deal-product">
+                            <li>Diligencia la solicitud de crédito en linea</li>
+                            <li>Recibiras un SMS con un token de confirmación</li>
+                            <li>Una vez aprobado tu crédito uno de nuestros asesores se comunicará contigo </li>
+                            <li>Nuestro personal se encargara de recoger la documentación firmada</li>
+                            <li>Realizaremos la entrega del articulo en la puerta de tu casa</li>
+                        </ol>
+                    </div>
+
+                    <div class="relative">
+                        <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
+                        <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
+                            alt="" class="first-img-contact-deal-product">
+                        <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}"
+                            alt="" class="second-img-contact-deal-product">
+                        <div class="container-text-contact-deal-product">
+                            <p>Preguntale a nuestros asesores:</p>
+                        </div>
+                        <h4 class="number-contact-deal-product text-center">311 5195753</h4>
+                        <div class="text-center">
+                            <a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito de electrodomésticos."
+                                target="_blank" class="button-contact-deal-product" type="button">Whatsapp
+                                Directo</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 </div>
 
 <div style="max-width: 1300px;margin: 0px auto;margin-bottom: 5%;">
@@ -234,16 +235,20 @@ array_push($imagenes, [$productImages[$key], $key]);
                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                 <div class="card-body padding-responsive">
                     <div class="row justify-content-center ">
-                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image1)}}"
+                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
+                                src="{{asset('storage/'.$product->description_image1)}}"
                                 class="img-fluid img-description-product img-responsive">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image2)}}"
+                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
+                                src="{{asset('storage/'.$product->description_image2)}}"
                                 class="img-fluid img-description-product img-responsive">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image3)}}"
+                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
+                                src="{{asset('storage/'.$product->description_image3)}}"
                                 class="img-fluid img-description-product img-responsive">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img src="{{asset('storage/'.$product->description_image4)}}"
+                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
+                                src="{{asset('storage/'.$product->description_image4)}}"
                                 class="img-fluid img-description-product img-responsive">
                         </div>
                     </div>
@@ -286,9 +291,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}" alt=""
-                        class="number-img-step-cards">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}" alt=""
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}"
+                        alt="" class="number-img-step-cards">
+                    <img loading="lazy"
+                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}" alt=""
                         class="icon-step-cards">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Ingresa nuestra solicitud de crédito para comenzar
@@ -299,9 +305,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}" alt=""
-                        class="number-img-step-cards">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}" alt=""
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}"
+                        alt="" class="number-img-step-cards">
+                    <img loading="lazy"
+                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}" alt=""
                         class="icon-step-cards">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Deja tus datos completos según la solicitud de crédito que
@@ -314,9 +321,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}" alt=""
-                        class="number-img-step-cards">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}" alt=""
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}"
+                        alt="" class="number-img-step-cards">
+                    <img loading="lazy"
+                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}" alt=""
                         class="icon-step-cards">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">En el intermedio del proceso recibirás un token de
@@ -329,9 +337,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}" alt=""
-                        class="number-img-step-cards">
-                    <img src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}" alt=""
+                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}"
+                        alt="" class="number-img-step-cards">
+                    <img loading="lazy"
+                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}" alt=""
                         class="icon-step-cards">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Una vez haya sido aprobada tu solicitud de crédito. Un
@@ -349,7 +358,7 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 
 @section('scriptsJs')
-<script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
+<script src="{{asset('js/front/homeAppliances/app.min.js')}}"></script>
 <script>
     $(document).ready(function(){
             $("#description-product ul").addClass("description-product");
