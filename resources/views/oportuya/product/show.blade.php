@@ -45,7 +45,11 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="w-100 padding-reset">
                 <p class="reference-product">{{ $product->reference}}.</p>
                 <h4 class="name-product"> {{ $product->name}} </h4>
-                {{ $product->description}}
+                <div class="description-produc">
+
+                    {!!html_entity_decode($product->description)!!}
+                </div>
+
                 {{-- <ul class="description-product">
                     <li>{{ $product->description}}</li>
                 <li>Lorem ipsum</li>

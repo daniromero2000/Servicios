@@ -33,7 +33,7 @@ class Product extends Model
         'description_image4',
         'specification_image',
         'price',
-        'brands_id',
+        'brand_id',
         'status',
         'months',
         'pays',

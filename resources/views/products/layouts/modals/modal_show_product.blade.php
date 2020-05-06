@@ -46,7 +46,7 @@
                                         class=" form-control ">
                                         <option value=""></option>
                                         @foreach($brands as $brand)
-                                        <option @if($brand->id == $product->brands_id->id) selected="selected"
+                                        <option @if($brand->id == $product->brand_id->id) selected="selected"
                                             @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                         @endforeach
                                     </select>

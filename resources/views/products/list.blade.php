@@ -38,11 +38,12 @@
                                         </tr>
                                     </thead>
                                     <tbody class="body-table">
+                                        @if ($products)
                                         @foreach ($products as $product)
                                         <tr>
                                             <td>{{ $product->sku }}</td>
                                             <td> {{ $product->name }} </td>
-                                            <td>{{ $product->brands_id->name }}</td>
+                                            <td>{{ $product->brand_id->name }}</td>
                                             <td>$ {{ number_format($product->price, 0, '.', ',') }}</td>
                                             <td>
                                                 @if ($product->status == 1)
@@ -67,7 +68,7 @@
                                         @include('products.layouts.modals.modal_show_product')
 
                                         @endforeach
-
+                                        @endif
                                     </tbody>
                                 </table>
                                 @endif
@@ -102,6 +103,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="body-table">
+                                        @if ($brands)
                                         @foreach ($brands as $brand)
 
                                         <tr>
@@ -113,20 +115,6 @@
                                                     data-target="#deletebrand{{ $brand->id }}"></i>
                                                 <i class="fas fa-edit cursor" data-toggle="modal"
                                                     data-target="#updatebrand{{ $brand->id }}"></i>
-                                                {{-- <form action="{{ route('brands.destroy', $brand->id) }}"
-                                                method="post"
-                                                class="form-horizontal">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="_method" value="delete">
-                                                <div class="btn-group">
-                                                    <a href="{{ route('brands.edit', $brand->id) }}"
-                                                        class="btn btn-primary btn-sm"><i class="fa fa-edit"
-                                                            aria-hidden="true"></i> Editar</a>
-                                                    <button onclick="return confirm('¿Estás Seguro?')" type="submit"
-                                                        class="btn btn-danger btn-sm"><i class="fa fa-times"
-                                                            aria-hidden="true"></i> Borrar</button>
-                                                </div>
-                                                </form> --}}
                                             </td>
                                         </tr>
                                         <div>
@@ -137,6 +125,8 @@
 
                                         </div>
                                         @endforeach
+                                        @endif
+
 
                                     </tbody>
                                 </table>
@@ -149,8 +139,7 @@
                             @endif
                             <div class="text-right mt-2">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addbrand">Agregar
-                                    Producto</button>
+                                    data-target="#addbrand">Agregar Marca</button>
                             </div>
                         </div>
                     </div>
