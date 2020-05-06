@@ -45,21 +45,24 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="w-100 padding-reset">
                 <p class="reference-product">{{ $product->reference}}.</p>
                 <h4 class="name-product"> {{ $product->name}} </h4>
-                {{ $product->description}}
-                {{-- <ul class="description-product">
-                    <li>{{ $product->description}}</li>
-                <li>Lorem ipsum</li>
-                <li>Lorem ipsum</li>
-                <li>Lorem ipsum</li>
-                </ul> --}}
+                <div id="description-product">
 
+                    {!!html_entity_decode($product->description)!!}
+                </div>
             </div>
-            <div class="" style="border-radius: 21px; margin-top: 5%;">
+            <div style="border-radius: 21px; margin-top: 5%;">
                 <div class="carousel-container position-relative row">
                     <div class="row mx-auto">
+
                         <div class="container">
+
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <div style="height: 20px;">
+                                    <img src="{{asset('storage/'.$product->brand->cover)}}"
+                                        class="card-products-deal-logo" style=" z-index: 99; ">
+                                </div>
                                 <div class="carousel-inner">
+
                                     @foreach($imagenes as $image)
                                     <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item"
                                         @endif data-slide-number="{{$image[1]}}">
@@ -171,7 +174,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                     $ {{ number_format($product->pays)}}
                                 </p>
                                 <p class="card-text text-dues-deal-product">* Cuota semanal</p>
-                                <a href="#" class="btn card-products-button card-products-button-apply">Solicitar
+                                <a href="/step1" class="btn card-products-button card-products-button-apply">Solicitar
                                     aqui</a>
                             </div>
 
@@ -198,7 +201,9 @@ array_push($imagenes, [$productImages[$key], $key]);
                             </div>
                             <h4 class="number-contact-deal-product text-center">311 5195753</h4>
                             <div class="text-center">
-                                <button class="button-contact-deal-product" type="button">Whatsapp Directo</button>
+                                <a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito de electrodomésticos."
+                                    target="_blank" class="button-contact-deal-product" type="button">Whatsapp
+                                    Directo</a>
                             </div>
                         </div>
 
@@ -215,12 +220,12 @@ array_push($imagenes, [$productImages[$key], $key]);
 <div style="max-width: 1300px;margin: 0px auto;margin-bottom: 5%;">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Descripción del producto</a>
+            <a class="nav-link link-nav-description active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                aria-controls="home" aria-selected="true">Descripción del producto</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Especificaciones</a>
+            <a class="nav-link link-nav-description" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                aria-controls="profile" aria-selected="false">Especificaciones</a>
         </li>
     </ul>
     <div class="tab-content padding-responsive" id="myTabContent">
@@ -259,21 +264,18 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                style=" margin-left: auto; margin-right: 6px; ">
+                style=" margin-left: auto;margin-right: 9px;margin-top: 5px; ">
                 <span aria-hidden="true">&times;</span>
             </button>
             <img class="img-fluid" src="{{asset('storage/'.$product->specification_image)}}" alt="">
-
         </div>
     </div>
 </div>
-
 
 <div class="container mt-5 mb-5 pt-5  border-0 mx-auto  shadow p-3 mb-5 bg-white rounded" style="margin top: 0%">
     <div class="card    border-0 mx-auto" style="center">
@@ -348,4 +350,9 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 @section('scriptsJs')
 <script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
+<script>
+    $(document).ready(function(){
+            $("#description-product ul").addClass("description-product");
+    });
+</script>
 @endsection

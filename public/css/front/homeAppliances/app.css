@@ -37,8 +37,8 @@
     right: 7%;
     font-size: 29px !important;
     font-weight: bold !important;
-    padding-left: 37px !important;
-    padding-right: 37px !important;
+    padding-left: 44px !important;
+    padding-right: 44px !important;
     border-radius: 31px !important;
     background-color: #ffff00;
     border-color: #ffff00 !important;
@@ -132,7 +132,7 @@
 
 .card-container-products-logo {
     position: relative;
-    height: 40px;
+    height: 50px;
 }
 
 .card-products-logo {
@@ -464,7 +464,7 @@
         max-height: 30px;
     }
     .card-container-products-logo {
-        height: 24px;
+        height: 42px;
     }
     .card-products-img {
         max-height: 200px;
@@ -610,6 +610,7 @@
     line-height: 18px;
     margin-bottom: 4px;
     font-size: 15px;
+    font-family: sans-serif;
 }
 
 .container-steps-products {
@@ -726,6 +727,19 @@
     border-color: #28a745;
     font-weight: bold;
     cursor: pointer;
+}
+
+.card-products-deal-logo {
+    position: absolute;
+    max-height: 50px;
+    top: -6px;
+    right: 20px;
+}
+
+.link-nav-description {
+    font-size: 21px;
+    font-weight: 600;
+    background: #d9dbde45;
 }
 
 .title-card-step {
@@ -853,6 +867,9 @@
     .number-contact-deal-product {
         font-size: 29px;
     }
+    .link-nav-description {
+        font-size: 17px;
+    }
 }
 
 @media screen and (min-width: 771px) and (max-width: 900px) {
@@ -874,6 +891,12 @@
     }
     .number-img-step-cards {
         max-height: 55px;
+    }
+    .card-products-deal-logo {
+        position: absolute;
+        max-height: 40px;
+        top: -9px;
+        right: 20px;
     }
 }
 
@@ -898,6 +921,15 @@
     .padding-responsive {
         padding-left: 0px !important;
         padding-right: 0px !important;
+    }
+    .card-products-deal-logo {
+        position: absolute;
+        max-height: 30px;
+        top: -9px;
+        right: 20px;
+    }
+    .link-nav-description {
+        font-size: 14px;
     }
 }
 
@@ -1015,7 +1047,7 @@
     .container-text-contact-deal-product {
         font-size: 15px;
         top: 17%;
-        right: -18%;
+        right: -3%;
     }
     .number-contact-deal-product {
         font-size: 24px;
@@ -1038,6 +1070,9 @@
     }
     .container-price-deal {
         margin-right: 2%;
+    }
+    .container-text-contact-deal-product {
+        max-width: 172px;
     }
 }
 
