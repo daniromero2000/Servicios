@@ -31,7 +31,7 @@
         <h4 class="text-baner-initial">Comprar tus <br>electrodomésticos <br> a crédito jamás
             <br> fue tan facil</h4>
     </div>
-    <a href="" class="btn button-baner-initial">
+    <a href="/step1" class="btn button-baner-initial">
         <div>
             Solicita tu crédito
         </div>
@@ -52,7 +52,7 @@
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Solicita tu <b>crédito</b> llenando el formulario</p>
-                    <button class="btn first-step-cards-button" type="button">Solicitar</button>
+                    <a href="/step1" class="btn first-step-cards-button" type="button">Solicitar</a>
 
                 </div>
             </div>
@@ -153,7 +153,7 @@
                         <a href="/oportuya/{{ $product->slug}}"
                             class="btn card-products-button card-products-button-see-more" style="">Ver
                             más</a>
-                        <a href="#" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
+                        <a href="/step1" class="btn card-products-button card-products-button-apply">Solicitar aqui</a>
                     </div>
 
 

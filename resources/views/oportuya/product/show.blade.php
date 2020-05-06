@@ -174,7 +174,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                     $ {{ number_format($product->pays)}}
                                 </p>
                                 <p class="card-text text-dues-deal-product">* Cuota semanal</p>
-                                <a href="#" class="btn card-products-button card-products-button-apply">Solicitar
+                                <a href="/step1" class="btn card-products-button card-products-button-apply">Solicitar
                                     aqui</a>
                             </div>
 
@@ -201,7 +201,9 @@ array_push($imagenes, [$productImages[$key], $key]);
                             </div>
                             <h4 class="number-contact-deal-product text-center">311 5195753</h4>
                             <div class="text-center">
-                                <button class="button-contact-deal-product" type="button">Whatsapp Directo</button>
+                                <a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito de electrodomésticos."
+                                    target="_blank" class="button-contact-deal-product" type="button">Whatsapp
+                                    Directo</a>
                             </div>
                         </div>
 
