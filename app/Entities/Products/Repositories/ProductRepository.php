@@ -26,9 +26,14 @@ class ProductRepository implements ProductRepositoryInterface
         $this->model = $product;
     }
 
-    public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection
+    public function listProducts(): Collection
     {
-        return $this->model->all($columns, $order, $sort);
+        return $this->model->all();
+    }
+
+    public function listFrontProducts(): Collection
+    {
+        return $this->model->where('status', 1)->get();
     }
 
     public function createProduct(array $data): Product
