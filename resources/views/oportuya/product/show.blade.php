@@ -348,7 +348,7 @@ array_push($imagenes, [$productImages[$key], $key]);
 
 
 @section('scriptsJs')
-<script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
+<script src="{{asset('js/front/homeAppliances/app.min.js')}}"></script>
 <script>
     $(document).ready(function(){
             $("#description-product ul").addClass("description-product");
