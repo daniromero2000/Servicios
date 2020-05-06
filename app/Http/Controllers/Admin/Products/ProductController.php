@@ -85,11 +85,6 @@ class ProductController extends Controller
         }
 
         $product = $this->productRepo->createProduct($data);
-        $productRepo = new ProductRepository($product);
-
-        if ($request->hasFile('image')) {
-            $productRepo->saveProductImages(collect($request->file('image')));
-        }
 
         $productRepo = new ProductRepository($product);
         if ($request->hasFile('image')) {
