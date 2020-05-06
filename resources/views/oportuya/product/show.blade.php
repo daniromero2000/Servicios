@@ -58,7 +58,7 @@ array_push($imagenes, [$productImages[$key], $key]);
 
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                 {{-- <div style="height: 20px;">
-                                    <img loading="lazy" src="{{asset('storage/'.$product->brand->cover)}}"
+                                    <img src="{{asset('storage/'.$product->brand->cover)}}"
                                 class="card-products-deal-logo" style=" z-index: 99; ">
                             </div> --}}
                             <div class="carousel-inner">
@@ -66,8 +66,8 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 @foreach($imagenes as $image)
                                 <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item" @endif
                                     data-slide-number="{{$image[1]}}">
-                                    <img loading="lazy" src="{{asset('storage/'.$image[0])}}"
-                                        class="img-principal-carousel" alt="..." data-type="image"
+                                    <img class="img-principal-carousel lazy" alt="..."
+                                        data-src="{{asset('storage/'.$image[0])}}" src="blank.jpg" data-type="image"
                                         data-toggle="lightbox" data-gallery="example-gallery">
                                 </div>
                                 @endforeach
@@ -76,6 +76,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                     </div>
                 </div>
             </div>
+
             <div id="carousel-thumbs" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -86,7 +87,8 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 class="thumb col-4 col-sm-3 px-0 py-2 selected" @else
                                 class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
                                 data-slide-to="{{$image[1]}}">
-                                <img loading="lazy" src="{{asset('storage/'.$image[0])}}" class="img-fluid" alt="...">
+                                <img data-src="{{asset('storage/'.$image[0])}}" src="blank.jpg" class="img-fluid lazy"
+                                    alt="...">
                             </div>
                             @endforeach
                         </div>
@@ -107,8 +109,8 @@ array_push($imagenes, [$productImages[$key], $key]);
         <div class="row mx-0 container-steps-products justify-content-center text-center">
             <div class="col-4">
                 <div>
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}" alt=""
-                        class="img-step-product">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}" src="blank.jpg"
+                        alt="" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
                     Envio gratis para ciudades con tienda fisica
@@ -116,8 +118,9 @@ array_push($imagenes, [$productImages[$key], $key]);
             </div>
             <div class="col-4">
                 <div>
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}"
-                        alt="" class="img-step-product">
+                    <img src="blank.jpg"
+                        data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}" alt=""
+                        class="img-step-product lazy ">
                 </div>
                 <div class="mt-2 text-step-product">
                     Crédito sujeto a aprobación de politicas
@@ -125,8 +128,8 @@ array_push($imagenes, [$productImages[$key], $key]);
             </div>
             <div class="col-4">
                 <div>
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}" alt=""
-                        class="img-step-product">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}" src="blank.jpg"
+                        alt="" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
                     Crédito aplica para ubicación en tienda fisica
@@ -161,9 +164,8 @@ array_push($imagenes, [$productImages[$key], $key]);
                     </div>
                     <div class="relative">
 
-                        <img loading="lazy"
-                            src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
-                            class="img-card-deal-product">
+                        <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
+                            src="blank.jpg" class="img-card-deal-product lazy">
 
 
 
@@ -193,10 +195,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
                     <div class="relative">
                         <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
-                        <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
-                            alt="" class="first-img-contact-deal-product">
-                        <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}"
-                            alt="" class="second-img-contact-deal-product">
+                        <img alt="" data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
+                            src="blank.jpg" class="first-img-contact-deal-product lazy">
+                        <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}"
+                            src="blank.jpg" alt="" class="second-img-contact-deal-product lazy">
                         <div class="container-text-contact-deal-product">
                             <p>Preguntale a nuestros asesores:</p>
                         </div>
@@ -235,21 +237,21 @@ array_push($imagenes, [$productImages[$key], $key]);
                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                 <div class="card-body padding-responsive">
                     <div class="row justify-content-center ">
-                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
-                                src="{{asset('storage/'.$product->description_image1)}}"
-                                class="img-fluid img-description-product img-responsive">
+                        <div class="col-12 col-sm-6  p-0">
+                            <img class="img-fluid img-description-product img-responsive lazy" src="blank.jpg"
+                                data-src="{{asset('storage/'.$product->description_image1)}}">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
-                                src="{{asset('storage/'.$product->description_image2)}}"
-                                class="img-fluid img-description-product img-responsive">
+                        <div class="col-12 col-sm-6  p-0">
+                            <img class="img-fluid img-description-product img-responsive lazy"
+                                data-src="{{asset('storage/'.$product->description_image2)}}" src="blank.jpg">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
-                                src="{{asset('storage/'.$product->description_image3)}}"
-                                class="img-fluid img-description-product img-responsive">
+                        <div class="col-12 col-sm-6  p-0">
+                            <img class="img-fluid img-description-product img-responsive lazy"
+                                data-src="{{asset('storage/'.$product->description_image3)}}" src="blank.jpg">
                         </div>
-                        <div class="col-12 col-sm-6  p-0"> <img loading="lazy"
-                                src="{{asset('storage/'.$product->description_image4)}}"
-                                class="img-fluid img-description-product img-responsive">
+                        <div class="col-12 col-sm-6  p-0">
+                            <img class="img-fluid img-description-product img-responsive lazy"
+                                data-src="{{asset('storage/'.$product->description_image4)}}" src="blank.jpg">
                         </div>
                     </div>
                 </div>
@@ -260,7 +262,8 @@ array_push($imagenes, [$productImages[$key], $key]);
                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                 <div class="card-body padding-responsive">
                     <a data-toggle="modal" data-target="#exampleModal">
-                        <img class="img-fluid" src="{{asset('storage/'.$product->specification_image)}}" alt="">
+                        <img class="img-fluid lazy" data-src="{{asset('storage/'.$product->specification_image)}}"
+                            src="blank.jpg" alt="">
                     </a>
                 </div>
             </div>
@@ -268,7 +271,6 @@ array_push($imagenes, [$productImages[$key], $key]);
     </div>
 
 </div>
-
 <div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog"
     aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -277,7 +279,8 @@ array_push($imagenes, [$productImages[$key], $key]);
                 style=" margin-left: auto;margin-right: 9px;margin-top: 5px; ">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <img class="img-fluid" src="{{asset('storage/'.$product->specification_image)}}" alt="">
+            <img class="img-fluid lazy" data-src="{{asset('storage/'.$product->specification_image)}}" src="blank.jpg"
+                alt="">
         </div>
     </div>
 </div>
@@ -291,11 +294,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}"
-                        alt="" class="number-img-step-cards">
-                    <img loading="lazy"
-                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}" alt=""
-                        class="icon-step-cards">
+                    <img alt="" data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}"
+                        src="blank.jpg" class="number-img-step-cards lazy">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}"
+                        src="blank.jpg" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Ingresa nuestra solicitud de crédito para comenzar
                         </p>
@@ -305,11 +307,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}"
-                        alt="" class="number-img-step-cards">
-                    <img loading="lazy"
-                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}" alt=""
-                        class="icon-step-cards">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}"
+                        src="blank.jpg" alt="" class="number-img-step-cards lazy">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}"
+                        src="blank.jpg" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Deja tus datos completos según la solicitud de crédito que
                             estés dilifenciando. De la calidad de la información dependerá la velocidad en el resultado.
@@ -321,11 +322,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}"
-                        alt="" class="number-img-step-cards">
-                    <img loading="lazy"
-                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}" alt=""
-                        class="icon-step-cards">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}"
+                        src="blank.jpg" alt="" class="number-img-step-cards lazy">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}"
+                        src="blank.jpg" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">En el intermedio del proceso recibirás un token de
                             confirmación para verificar la existencia de tu número telefónico; no lo elimines, el
@@ -337,11 +337,10 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img loading="lazy" src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}"
-                        alt="" class="number-img-step-cards">
-                    <img loading="lazy"
-                        src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}" alt=""
-                        class="icon-step-cards">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}"
+                        src="blank.jpg" alt="" class="number-img-step-cards lazy">
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}"
+                        src="blank.jpg" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Una vez haya sido aprobada tu solicitud de crédito. Un
                             asesor se comunicará contigo para finalizar el proceso.
@@ -363,5 +362,80 @@ array_push($imagenes, [$productImages[$key], $key]);
     $(document).ready(function(){
             $("#description-product ul").addClass("description-product");
     });
+</script>
+<script type="text/javascript">
+    !function(window){
+  var $q = function(q, res){
+        if (document.querySelectorAll) {
+          res = document.querySelectorAll(q);
+        } else {
+          var d=document
+            , a=d.styleSheets[0] || d.createStyleSheet();
+          a.addRule(q,'f:b');
+          for(var l=d.all,b=0,c=[],f=l.length;b<f;b++)
+            l[b].currentStyle.f && c.push(l[b]);
+
+          a.removeRule(0);
+          res = c;
+        }
+        return res;
+      }
+    , addEventListener = function(evt, fn){
+        window.addEventListener
+          ? this.addEventListener(evt, fn, false)
+          : (window.attachEvent)
+            ? this.attachEvent('on' + evt, fn)
+            : this['on' + evt] = fn;
+      }
+    , _has = function(obj, key) {
+        return Object.prototype.hasOwnProperty.call(obj, key);
+      }
+    ;
+
+  function loadImage (el, fn) {
+    var img = new Image()
+      , src = el.getAttribute('data-src');
+    img.onload = function() {
+      if (!! el.parent)
+        el.parent.replaceChild(img, el)
+      else
+        el.src = src;
+
+      fn? fn() : null;
+    }
+    img.src = src;
+  }
+
+  function elementInViewport(el) {
+    var rect = el.getBoundingClientRect()
+
+    return (
+       rect.top    >= 0
+    && rect.left   >= 0
+    && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+    )
+  }
+
+    var images = new Array()
+      , query = $q('img.lazy')
+      , processScroll = function(){
+          for (var i = 0; i < images.length; i++) {
+            if (elementInViewport(images[i])) {
+              loadImage(images[i], function () {
+                images.splice(i, i);
+              });
+            }
+          };
+        }
+      ;
+    // Array.prototype.slice.call is not callable under our lovely IE8 
+    for (var i = 0; i < query.length; i++) {
+      images.push(query[i]);
+    };
+
+    processScroll();
+    addEventListener('scroll',processScroll);
+
+}(this);
 </script>
 @endsection
