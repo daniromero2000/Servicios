@@ -9,7 +9,9 @@ use Illuminate\Support\Collection;
 
 interface ProductRepositoryInterface
 {
-    public function listProducts(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection;
+    public function listProducts(): Collection;
+
+    public function listFrontProducts(): Collection;
 
     public function createProduct(array $data): Product;
 

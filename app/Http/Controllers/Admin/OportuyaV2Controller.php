@@ -138,7 +138,7 @@ class OportuyaV2Controller extends Controller
 
 	public function catalog()
 	{
-		$list = $this->productRepo->listProducts('id');
+		$list = $this->productRepo->listFrontProducts('id');
 
 		$products = $list->map(function (Product $item) {
 			return $this->transformProduct($item);
@@ -155,7 +155,7 @@ class OportuyaV2Controller extends Controller
 		]);
 	}
 
-	public function show($slug)
+	public function product($slug)
 	{
 		$product = $this->productRepo->findProductBySlug($slug);
 		// $product = $this->transformProduct($list)->all();
