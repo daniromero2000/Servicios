@@ -178,7 +178,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                             </p>
                             <p class="card-text text-dues-deal-product">* Cuota semanal</p>
                             <a href="/step1" class="btn card-products-button btn-primary"
-                                style="margin-left: 11px;">Solicitar
+                                style="margin-left: 15px;">Solicitar
                                 aqui</a>
                         </div>
 
