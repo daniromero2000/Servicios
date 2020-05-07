@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 @php
-$activeOportuya = ($_SERVER['REQUEST_URI'] == '/credito-electrodomesticos') ? 'activeMenu' : '' ;
-$barraOportuya = ($_SERVER['REQUEST_URI'] == '/credito-electrodomesticos') ? 'activeMenuOportuya' : '' ;
+$activeOportuya = ($_SERVER['REQUEST_URI'] == '/credito-electrodomesticos/catalogo') ? 'activeMenu' : '' ;
+$barraOportuya = ($_SERVER['REQUEST_URI'] == '/credito-electrodomesticos/catalogo') ? 'activeMenuOportuya' : '' ;
 $activeMotos = ($_SERVER['REQUEST_URI'] == '/motos') ? 'activeMenu' : '' ;
 $activeAvance = ($_SERVER['REQUEST_URI'] == '/avance') ? 'activeMenu' : '' ;
 $activeSeguros = ($_SERVER['REQUEST_URI'] == '/seguros') ? 'activeMenu' : '' ;
@@ -181,7 +181,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 					<div class="header-containerItemsResponsive header-item1" id="navbarNavAltMarkup">
 						<div class="navbar-nav header-menu">
 							<a class="nav-item nav-link header-item header-item1"
-								href="{{url('credito-electrodomesticos')}}">
+								href="{{url('credito-electrodomesticos/catalogo')}}">
 								<span class="header-textoItem">Crédito Electrodomésticos</span>
 							</a>
 							<a class="nav-item nav-link header-item header-item1" href="/libranza">
@@ -205,7 +205,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 						<div class="collapse navbar-collapse header-containerItems" id="navbarNavAltMarkup">
 							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp">
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp"
-									href="/credito-electrodomesticos">
+									href="/credito-electrodomesticos/catalogo">
 									<span class="header-textoItem">Crédito Electrodomésticos</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp"
