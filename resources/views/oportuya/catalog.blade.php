@@ -151,7 +151,7 @@
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
                         <a href="/credito-electrodomesticos/{{ $product->slug}}"
-                            class="btn card-products-button card-products-button-see-more" style="">Ver
+                            class="btn card-products-button btn-primary" style="">Ver
                             más</a>
                         <a href="/step1" class="btn card-products-button btn-danger">Solicitar aqui</a>
                     </div>
