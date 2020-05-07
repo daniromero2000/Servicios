@@ -28,6 +28,11 @@
 <script src="{{ asset('js/appProductList/app.js') }}"></script>
 <script src="{{ asset('js/appProductList/services/myService.js') }}"></script>
 <script src="{{ asset('js/appProductList/controllers/productListController.js') }}"></script>
+<script src="{{ asset('js/libsJs/flow.js') }}"></script>
+<script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
+<script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
+<script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
+<script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
     @section('scriptsJs')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/3.0.0/angucomplete-alt.min.js"></script>
     @endsection

@@ -6,16 +6,17 @@
                     Productos
                 </h4>
             </div>
-            <!--<div class=" col-7 col-sm-4 col-md-4">
-                <div class="input-group input-group-sm">
-                    <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
-                        aria-describedby="searchIcon" placeholder="Buscar">
-                    <div class="input-group-append">
-                        <button type="button" ng-click="search()" class="btn btn-default"><i
-                                class="fas fa-search"></i></button>
+            <div class=" col-7 col-sm-4 col-md-4">
+                <form ng-submit="createListProduct()">
+                    <div flow-init
+                        flow-files-submitted="$flow.upload()"
+                        flow-file-success="$file.msg = $message"
+                        flow-name="product.list">
+                        <span class="btn" flow-btn>Upload File</span>
                     </div>
-                </div>
-            </div>-->
+                    <button type="submit">Subir archivo</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="card-body">
