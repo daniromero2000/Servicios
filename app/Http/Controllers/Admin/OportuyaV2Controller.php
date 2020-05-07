@@ -155,7 +155,7 @@ class OportuyaV2Controller extends Controller
 		]);
 	}
 
-	public function show($slug)
+	public function product($slug)
 	{
 		$product = $this->productRepo->findProductBySlug($slug);
 		// $product = $this->transformProduct($list)->all();
