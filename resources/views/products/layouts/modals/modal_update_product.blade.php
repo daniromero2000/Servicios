@@ -43,12 +43,12 @@
                                     <div class="col-4">
                                         @if(!$brands->isEmpty())
 
-                                        <label for="brands_id_update{{ $product->id }}">Marca </label>
-                                        <select name="brands_id" id="brands_id_update{{ $product->id }}"
+                                        <label for="brand_id_update{{ $product->id }}">Marca </label>
+                                        <select name="brand_id" id="brand_id_update{{ $product->id }}"
                                             class=" form-control ">
                                             <option value=""></option>
                                             @foreach($brands as $brand)
-                                            <option @if($brand->id == $product->brands_id->id) selected="selected"
+                                            <option @if($brand->id == $product->brand_id->id) selected="selected"
                                                 @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                             @endforeach
                                         </select>
@@ -108,16 +108,11 @@
                                         id="description_update{{ $product->id }}" rows="4"
                                         required>{{ $product->description }}</textarea>
                                 </div>
-                                <input type="hidden" name="status" id="status_update{{ $product->id }}"
-                                    class="form-control" value="1">
-
                             </div>
                         </div>
                         <div class="col-lg-5 col-xl-6">
                             <div class="w-100">
                                 <h5>Imagenes</h5>
-
-
                                 <div class="card collapsed-card">
                                     <div class="card-header bg-primary ">
                                         <h3 class="card-title">Imagenes del producto</h3>
@@ -129,7 +124,6 @@
                                         </div>
                                     </div>
                                     <div class="card-body " style="display: none;">
-
                                         <label for="cover_update{{ $product->id }}">Cover Principal <span
                                                 class="text-danger">*</span></label>
                                         <div>
@@ -144,11 +138,8 @@
                                                     for="cover_update{{ $product->id }}">Cambiar imagen</label>
                                             </div>
                                         </div>
-
-
                                         <label for="image_update{{ $product->id }}">Images secundarias <span
                                                 class="text-danger">*</span></label>
-
                                         <div style="max-height: 100px;overflow: auto;">
                                             <div class="row mx-0">
                                                 @foreach($product->images()->get(['src']) as $image)
@@ -161,9 +152,7 @@
                                                 </div>
                                                 @endforeach
                                             </div>
-
                                         </div>
-
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name="image[]"
@@ -174,11 +163,9 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card collapsed-card">
                                     <div class="card-header bg-success ">
                                         <h3 class="card-title">Imagenes de descripción</h3>
-
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                                     class="fas fa-plus text-white"></i>
