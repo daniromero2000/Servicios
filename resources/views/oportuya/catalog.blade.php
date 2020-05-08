@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front.app')
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 @section('metaTags')
 <meta name="googlebot" content="noindex">
