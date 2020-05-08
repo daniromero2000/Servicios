@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front.app')
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 @section('metaTags')
 <meta name="googlebot" content="noindex">
@@ -45,10 +45,10 @@
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center first-step-cards step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.jpg') }}" alt=""
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.jpg') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Solicita tu <b>crédito</b> llenando el formulario</p>
@@ -61,9 +61,9 @@
 
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center step-cards border-0">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.jpg') }}" alt=""
                     class="first-img-step-cards">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.jpg') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Uno de nuestros asesores se comunicará contigo para que
@@ -77,10 +77,10 @@
         <div class="col-md-4 col-sm-6 col-10 ">
             <div class="card text-center step-cards last-step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.jpg') }}" alt=""
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.jpg') }}" alt=""
                     class="second-img-step-cards">
 
                 <div class="card-body card-body-view">

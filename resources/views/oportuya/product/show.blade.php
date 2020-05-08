@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front.app')
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 @section('metaTags')
 <meta name="googlebot" content="noindex">
@@ -109,7 +109,7 @@ array_push($imagenes, [$productImages[$key], $key]);
         <div class="row mx-0 container-steps-products justify-content-center text-center">
             <div class="col-4">
                 <div>
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
@@ -119,7 +119,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="col-4">
                 <div>
                     <img src="{{ asset('images/blank.jpg')}}"
-                        data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.png') }}" alt=""
+                        data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.jpg') }}" alt=""
                         class="img-step-product lazy ">
                 </div>
                 <div class="mt-2 text-step-product">
@@ -128,7 +128,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             </div>
             <div class="col-4">
                 <div>
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
@@ -164,7 +164,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                     </div>
                     <div class="relative">
 
-                        <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
+                        <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.jpg')}}"
                             src="{{ asset('images/blank.jpg')}}" class="img-card-deal-product lazy">
 
 
@@ -299,9 +299,9 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img alt="" data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.png') }}"
+                    <img alt="" data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/1.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" class="number-img-step-cards lazy">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_1.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Ingresa nuestra solicitud de crédito para comenzar
@@ -312,9 +312,9 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/2.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="number-img-step-cards lazy">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_2.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Deja tus datos completos según la solicitud de crédito que
@@ -327,9 +327,9 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/3.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="number-img-step-cards lazy">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_3.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">En el intermedio del proceso recibirás un token de
@@ -342,9 +342,9 @@ array_push($imagenes, [$productImages[$key], $key]);
 
             <div class="col-md-6 col-sm-8 col-10 ">
                 <div class="card text-center step-cards-product  border-0 mx-auto">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/4.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="number-img-step-cards lazy">
-                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.png') }}"
+                    <img data-src="{{ asset('images/Front/OportuyaCustomers/PaginaInterna/Snipet/Image_4.jpg') }}"
                         src="{{ asset('images/blank.jpg')}}" alt="" class="icon-step-cards lazy">
                     <div class="card-body card-body-view">
                         <p class="card-text text-step-cards">Una vez haya sido aprobada tu solicitud de crédito. Un
