@@ -614,7 +614,7 @@
 }
 
 .container-steps-products {
-    max-width: 460px;
+    max-width: 434px;
 }
 
 .img-step-product {
@@ -642,15 +642,18 @@
     font-size: 18px;
     color: #0d70ac;
     line-height: 18px;
-    margin-right: 42%;
-    text-align: center;
+    margin-right: 30%;
+    margin-left: auto;
+        text-align: center;
+        max-width: 177px;
+
 }
 
 .img-card-deal-product {
     position: absolute;
     width: 55px;
     top: 3%;
-    right: 103px;
+    right: 47px;
 }
 
 .container-ol-steps-deal-product {
@@ -662,7 +665,6 @@
 
 .container-dues-deal-product {
     text-align: center;
-    margin-right: 42%;
     margin-bottom: 6%;
 }
 
@@ -772,7 +774,8 @@
 }
 
 .container-desc-deal {
-    max-width: 250px;
+    max-width: 273px;
+    margin-left: 22%;
 }
 
 .container-price-deal {
@@ -951,11 +954,13 @@
     .img-card-deal-product {
         width: 52px;
         top: 3%;
-        right: 64px;
+        right: 27px;
     }
     .term-deal-product {
         font-size: 16px;
-        margin-right: 42%;
+        margin-right: 30%;
+        max-width: 166px;
+
     }
     .container-ol-steps-deal-product {
         font-size: 13px;
@@ -993,6 +998,9 @@
     .description-product {
         font-size: 14px;
     }
+    .container-desc-deal {
+        margin-left: 17%;
+    }
 }
 
 @media screen and (max-width: 372px) {
@@ -1021,7 +1029,7 @@
     .img-card-deal-product {
         width: 46px;
         top: 4%;
-        right: 7px;
+        right: 32px;    
     }
     .container-dues-deal-product {
         text-align: center;
@@ -1030,7 +1038,8 @@
     }
     .term-deal-product {
         font-size: 15px;
-        margin-right: 22%;
+        max-width: 147px;
+        margin-right: 31%;
     }
     .container-ol-steps-deal-product {
         font-size: 13px;
@@ -1074,6 +1083,11 @@
     .container-text-contact-deal-product {
         max-width: 172px;
     }
+    .container-desc-deal {
+        max-width: 292px;
+        margin-left: 1%;
+    }
+   
 }
 
 @media all and (max-width: 767px) {
