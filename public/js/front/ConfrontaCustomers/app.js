@@ -3,9 +3,6 @@ $(document).ready(function () {
     $('#updateData').hide();
     $('#updateDataFailed').hide();
     // $('#updateDataFailed').show();
-
-
-
     $(function () {
         var typeNotification = $('#notification').val();
 

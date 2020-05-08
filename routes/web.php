@@ -203,6 +203,7 @@ Route::group(['prefix' => 'api/'], function () {
     Route::resource('productList', 'Admin\ProductList\ProductListController');
     Route::group(['prefix' => 'listProducts'], function () {
         Route::resource('/', 'Admin\ListProducts\ListProductController');
+        Route::put('/{id}', 'Admin\ListProducts\ListProductController@update');
         Route::get('/getDataPriceProduct/{product_id}', 'Admin\ListProducts\ListProductController@getDataPriceProduct');
     });
     Route::group(['prefix' => 'productList'], function () {

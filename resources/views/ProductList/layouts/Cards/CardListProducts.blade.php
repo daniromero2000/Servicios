@@ -23,6 +23,7 @@
                         <th scope="col">Proteccion</th>
                         <th scope="col">Valor min</th>
                         <th scope="col">Valor max</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -34,6 +35,9 @@
                         <td>$@{{ listProduct.protection | number:0 }}</td>
                         <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
                         <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
+                        <td>
+                            <i alt="Editar Producto" title="Editar Producto" ng-click="showUpdateDialogListProduct(listProduct)" class="far fa-edit cursor"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>

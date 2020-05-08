@@ -47,14 +47,23 @@ class ListProductController extends Controller
                     $listProduct =  $this->listProductInterface->createlistProduct($product);
                 }
             }
-            dd($listProduct);
+            return response()->json($listProduct);
         }else{
             $data = $request->input();
 
             $listProduct =  $this->listProductInterface->createlistProduct($data);
-    
+
             return response()->json($listProduct);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->input();
+
+        $listProduct =  $this->listProductInterface->updateListProduct($data);
+
+        return response()->json($listProduct);
     }
 
     public function getDataPriceProduct($product_id)
