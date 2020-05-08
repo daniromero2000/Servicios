@@ -46,3 +46,20 @@
 .productlist-card-titleCard{
     font-size: 13px;
 }
+
+.productList-file-icon{
+    font-size: 50px;
+    color: green;
+}
+
+.productList-file-text{
+    font-size: 13px;
+    font-style: italic;
+    color: #5d5d5d;
+}
+
+.productList-file-cancel{
+    cursor: pointer;
+    font-style: italic;
+    color: #5d5d5d;
+}

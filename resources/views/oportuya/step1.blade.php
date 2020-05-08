@@ -14,7 +14,11 @@
 
 @section('content')
 	 {!! NoCaptcha::renderJs() !!}
-	<div id="step1" ng-app="appStep1" ng-controller="step1Ctrl">
+	 @if (isset($_GET['productId']))
+		 <div id="step1" ng-app="appStep1" ng-controller="step1Ctrl" ng-init="leadInfo.productId = {{ $_GET['productId'] }}">
+	@else
+		<div id="step1" ng-app="appStep1" ng-controller="step1Ctrl" ng-init="leadInfo.productId = 0">
+	@endif
 		<div class="row resetRow container-header-forms">
 			<div class="form-container-logoHeader">
 				<img src="{{ asset('images/formsLogoOportuya.png') }}" class="img-fluid" alt="Oportuya" />
