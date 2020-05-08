@@ -309,9 +309,11 @@ angular.module('appStep1', ['moment-picker'])
 				if (response.data == "1") {
 					$scope.encryptText();
 				}
+
 				if(response.data == "-1"){
 					$scope.deniedLeadForFecExp("2");
 				}
+
 				if (response.data == "-3" || response.data == "-4") {
 					$scope.totalErrorData ++;
 					$scope.showWarningErrorData = true;

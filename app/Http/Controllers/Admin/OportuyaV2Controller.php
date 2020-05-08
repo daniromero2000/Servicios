@@ -298,7 +298,11 @@ class OportuyaV2Controller extends Controller
 			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
-
+			$data = [
+				'CEDULA' => $identificationNumber,
+				'product_id' => ($request->get('productId') == 0) ? '' : $request->get('productId')
+			];
+			$customerIntention =  $this->intentionInterface->createIntention($data);
 			return "1";
 		}
 
@@ -738,18 +742,17 @@ class OportuyaV2Controller extends Controller
 		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
 		$idDef = "";
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
-		$data = ['CEDULA' => $identificationNumber];
-		$customerIntention =  $this->intentionInterface->createIntention($data);
+		$customer          = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerScore     = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
 				$customerStatusDenied = true;
-				$idDef = '8';
-				$perfilCrediticio = 'TIPO NE';
+				$idDef                = '8';
+				$perfilCrediticio     = 'TIPO NE';
 				return ['resp' => "false"];
 			}
 
