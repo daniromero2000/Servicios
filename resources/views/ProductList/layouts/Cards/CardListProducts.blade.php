@@ -7,20 +7,12 @@
                 </h4>
             </div>
             <div class=" col-7 col-sm-4 col-md-4">
-                <form ng-submit="createListProduct()">
-                    <div flow-init
-                        flow-files-submitted="$flow.upload()"
-                        flow-file-success="$file.msg = $message"
-                        flow-name="product.list">
-                        <span class="btn" flow-btn>Upload File</span>
-                    </div>
-                    <button type="submit">Subir archivo</button>
-                </form>
+                
             </div>
         </div>
     </div>
     <div class="card-body">
-        <div class="table table-responsive">
+        <div class="table table-responsive" style="max-height: 400px">
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads small">
                     <tr>
@@ -54,6 +46,7 @@
             </div>
         </div>
         <div class="text-right mt-2">
+            <button class="btn btn-success btn-sm" ng-click="addMassiveListProduct()">Agregar Masivamente</button>
             <button class="btn btn-primary btn-sm" ng-click="addListProduct()">Agregar Producto</button>
         </div>
     </div>

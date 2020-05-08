@@ -9,7 +9,7 @@ use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInter
 use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class ListProductController extends Controller
 {
@@ -38,15 +38,23 @@ class ListProductController extends Controller
 
     public function store(Request $request)
     {
-        $products = [];
-        $handle = fopen($request->file('listProduct'), "r") or die("Unable to open file!");
-        while ( ($data = fgetcsv($handle, 0, ";") ) !== FALSE ) {
-            if($data[0] != 'CODIGO' && $data[1] != 'NOMBRE'){
-                $product = ['sku' => $data[0], 'item' => $data[1], 'base_cost' => $data[2], 'iva_cost' => $data[3], 'protection' => $data[4], 'min_tolerance' => $data[5], 'max_tolerance' => $data[6]];
-                $listProduct =  $this->listProductInterface->createlistProduct($product);
+        if($request->type == 'massive'){
+            DB::table('list_products')->truncate();
+            $handle = fopen($request->file('listProduct'), "r") or die("Unable to open file!");
+            while ( ($data = fgetcsv($handle, 0, ";") ) !== FALSE ) {
+                if($data[0] != 'CODIGO' && $data[1] != 'NOMBRE'){
+                    $product = ['sku' => $data[0], 'item' => $data[1], 'base_cost' => $data[2], 'iva_cost' => $data[3], 'protection' => $data[4], 'min_tolerance' => $data[5], 'max_tolerance' => $data[6]];
+                    $listProduct =  $this->listProductInterface->createlistProduct($product);
+                }
             }
+            dd($listProduct);
+        }else{
+            $data = $request->input();
+
+            $listProduct =  $this->listProductInterface->createlistProduct($data);
+    
+            return response()->json($listProduct);
         }
-        dd($listProduct);
     }
 
     public function getDataPriceProduct($product_id){

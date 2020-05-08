@@ -285,6 +285,12 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		$("#alertListProduct").hide();
 	};
 
+	$scope.addMassiveListProduct = function () {
+		$scope.listProduct = {};
+		$("#addMassiveListProductModal").modal("show");
+		$("#alertListProduct").hide();
+	};
+
 	// query of faqs index and with filter 
 	$scope.getListProduct = function () {
 		showLoader();
@@ -310,17 +316,12 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.createListProduct = function () {
-		var formData = new FormData();
-		$scope.product.list.upload();
-		console.log($scope.product.list);
-		formData.append('listProduct',$scope.product.list.files[0].file);
-
-		$http.post('/api/listProducts',formData,{
-			transformRequest: angular.identity,
-			headers: {'Content-Type': undefined}
+		$http({
+			method: 'POST',
+			url: '/api/listProducts',
+			data: $scope.listProduct
 		}).then(function successCallback(response) {
-			console.log(response);
-			/*if (response.data != false) {
+			if (response.data != false) {
 				if (response.data == "23000") {
 					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 					$("#alertListProduct").show();
@@ -330,7 +331,21 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 					$("#addListProductModal").modal("hide");
 					$scope.getListProduct();
 				}
-			}*/
+			}
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.createMassiveListProduct = function () {
+		var formData = new FormData();
+		$scope.product.list.upload();
+		formData.append('listProduct',$scope.product.list.files[0].file);
+		formData.append('type','massive');
+
+		$http.post('/api/listProducts',formData,{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).then(function successCallback(response) {
 		}, function errorCallback(response) {
 		});
 	};
