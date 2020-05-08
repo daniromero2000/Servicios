@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.front.app')
 @section('title', 'Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta.')
 @section('metaTags')
 <meta name="googlebot" content="noindex">
 <meta name="robots" content="noindex">
-<link rel="canonical" href="https://www.serviciosoportunidades.com/credito-electrodomesticos" />
+<link rel="canonical" href="https://www.serviciosoportunidades.com/credito-electrodomesticos/catalogo" />
 <meta name="description"
     content="Tarjeta Oportuya, nuestro cupo de tarjeta de crédito con el que podrás obtener todos los beneficios de ser un cliente Oportunidades.">
 <meta name="keywords"
     content="Tarjeta de credito, Tarjeta de crédito, solicitar tarjeta de credito, solicitar tarjeta de crédito, tarjeta de credito online, tarjeta de crédito online, su tarjeta de crédito, su tarjeta de credito, como sacar una tarjeta de credito, como sacar una tarjeta de crédito, como tramitar una tarjeta de credito, como tramitar una tarjeta de crédito, requisitos para tarjeta de crédito, requisitos para tarjeta de credito, obtén una tarjeta de credito, obtén una tarjeta de crédito, requisitos tarjeta de credito, requisitos tarjeta de crédito, quiero una tarjeta de credito, quiero una tarjeta de crédito, tarjeta oportunidades, oportunidades, tarjeta con credito para compras, tarjeta con crédito para compras, credito en tarjeta, crédito en tarjeta.">
 <meta property="og:title" content="Tarjeta de Crédito Oportuya, los mejores descuentos con tarjeta." />
-<meta property="og:url" content="https://www.serviciosoportunidades.com/credito-electrodomesticos" />
+<meta property="og:url" content="https://www.serviciosoportunidades.com/credito-electrodomesticos/catalogo" />
 <meta property="og:type" content="Website" />
 <meta property="og:image" content="{{ asset('images/OportuyaPortadaOg.png') }}" />
 <meta property="og:image:width" content="1200" />
@@ -45,10 +45,10 @@
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center first-step-cards step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.jpg') }}" alt=""
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.jpg') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Solicita tu <b>crédito</b> llenando el formulario</p>
@@ -61,9 +61,9 @@
 
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center step-cards border-0">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.jpg') }}" alt=""
                     class="first-img-step-cards">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.jpg') }}" alt=""
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Uno de nuestros asesores se comunicará contigo para que
@@ -77,10 +77,10 @@
         <div class="col-md-4 col-sm-6 col-10 ">
             <div class="card text-center step-cards last-step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.jpg') }}" alt=""
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.png') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.jpg') }}" alt=""
                     class="second-img-step-cards">
 
                 <div class="card-body card-body-view">
@@ -150,7 +150,7 @@
                             $ {{ number_format($product->pays)}}
                         </p>
                         <p class="card-text card-products-label">* Cuota semanal</p>
-                        <a href="/credito-electrodomesticos/{{ $product->slug}}"
+                        <a href="/credito-electrodomesticos/catalogo/{{ $product->slug}}"
                             class="btn card-products-button btn-primary" style="">Ver
                             más</a>
                         <a href="/step1" class="btn card-products-button btn-danger">Solicitar aqui</a>

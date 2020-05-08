@@ -61,38 +61,19 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	@yield('metaTags')
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
 	@yield('linkStyleSheets')
+	<link rel="stylesheet" href="{{ asset('css/front/app/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/front/app/fontawesomev5.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/slick-theme.css')}}">
-	<link rel="stylesheet" href="{{ asset('css/slick.css')}}">
-	<link href="{{ asset('editor/contentbuilder/codemirror/lib/codemirror.css')}}" rel="stylesheet" type="text/css" />
-	<link href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/master/angular-material.css">
 	<link rel="stylesheet" href="{{ asset('css/app2.css') }}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{asset('js/front/app/jquery.v3.min.js')}}"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-animate.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-aria.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-messages.min.js"></script>
-	<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-
-
-	<!-- Angular Material Library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
-
-	<script type="text/javascript" src="{{ asset('js/slick.min.js')}}"></script>
-	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
-	</script>
-	<link href="{{ asset('editor/contentbuilder/contentbuilder.css')}}" rel="stylesheet" type="text/css" />
-	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script type="text/javascript" src="{{asset('js/front/app/bootstrap.min.js')}}"></script>
+	<link rel="stylesheet" href="{{ asset('css/front/app/fontawesomev4.min.css') }}">
 	<link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/oportunidadesServicios.ico') }}' />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+	<link rel="stylesheet" href="{{ asset('css/front/app/animate.min.css') }}">
+
 	<script>
 		function hideLoader(){
 				
@@ -203,7 +184,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 					</div>
 					<nav class="navbar header-menu navbar-expand-lg navbar-light navBarHide">
 						<div class="collapse navbar-collapse header-containerItems" id="navbarNavAltMarkup">
-							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp">
+							<div class="navbar-nav header-menu @php echo $barraOportuya @endphp ">
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp"
 									href="/credito-electrodomesticos/catalogo">
 									<span class="header-textoItem">Crédito Electrodomésticos</span>
@@ -348,203 +329,10 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		</div>
 	</div>
 	</div>
-	<script src="{{ asset('editor/contentbuilder/jquery-ui.min.js')}}" type="text/javascript"></script>
-	<script src="{{ asset('editor/contentbuilder/contentbuilder.js')}}" type="text/javascript"></script>
-	<script type="text/javascript" src="{{ asset('js/libranza.js') }}"></script>
-	<script type="text/javascript" src="{{asset('js/validateV2.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 	@yield('scriptsJs')
-	<link href="{{ asset('editor/contentbuilder/contentbuilder.css')}}" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-		jQuery(document).ready(function ($) {
-				editorInit('test1','http://localhost:8000/editor/assets/minimalist-basic/snippets-bootstrap.html');
-				var contentCardHeight=$('.contentCards').height();
-				$('.oportuyaCardsContent').height(contentCardHeight);
-				
-			});
-			 function view() {
-				/* This is how to get the HTML (for saving into a database) */
-				 var sHTML = $('#contentarea').data('contentbuilder').viewHtml();
-			 }
-	</script>
+
 
 </body>
-<script type="text/javascript">
-	$(function() {
-   // For card rotation
-   $(".btn-rotate").click(function() {
-      $(".card-front").toggleClass(" rotate-card-front");
-      $(".card-back").toggleClass(" rotate-card-back");
-   });
-   $(".btn-rotate-second").click(function() {
-      $(".card-front-second").toggleClass(" rotate-card-front-second");
-      $(".card-back-second").toggleClass(" rotate-card-back-second");
-   });
-   $(".btn-rotate-third").click(function() {
-      $(".card-front-third").toggleClass(" rotate-card-front-third");
-      $(".card-back-third").toggleClass(" rotate-card-back-third");
-   });
-   $(".btn-rotate-four").click(function() {
-      $(".card-front-four").toggleClass(" rotate-card-front-four");
-      $(".card-back-four").toggleClass(" rotate-card-back-four");
-   });
-});
-
-window.sr = ScrollReveal();
-
-    sr.reveal('.container-first-sector-text', {
-      duration: 1000,
-	  origin: 'right',
-	  distance: '30%',
- 	  delay: 1000,
-    });
-
-    sr.reveal('.container-second-sector-text', {
-      duration: 2000,
-      origin: 'right',
-	  distance: '30%',
- 	  delay: 2000,
-	});
-	
-	sr.reveal('#thankPageInsurances', {
-      duration: 2000,
-      origin: 'right',
-	  distance: '30%',
- 	  delay: 1000,
-    });
-
-
-    sr.reveal('#cardsInsurance', {
-      duration: 1000,
-      origin: 'left',
-      distance: '300px',
-      viewFactor: 0.2
-    });
-
-	$('#oportuyaSlider').slick({
-			autoplay: true,
-			autoplaySpeed: 15000,
-			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
-			prevArrow: '<i class="fa fa-chevron-right slidePrev"></i>',
-			responsive: [
-				{
-					breakpoint: 768,
-					settings: {
-						arrows: false,
-					}
-				}
-			]
-		});
-
-		$('#warrantySlider').slick({
-			autoplay: true,
-			autoplaySpeed: 15000,
-			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
-			prevArrow: '<i class="fa fa-chevron-right slidePrev"></i>',
-			responsive: [
-				{
-					breakpoint: 768,
-					settings: {
-						arrows: false,
-					}
-				}
-			]
-		});
-
-		$('#warrantyBrandsSlider').slick({
-			slidesToShow: 5,
-			arrows:false,
-			responsive: [
-				{
-					breakpoint: 768,
-					settings: {
-						infinite: true,
-						autoplay: true,
-						autoplaySpeed: 3000,
-						slidesToShow : 1,
-						slidesToScroll : 1,
-					}
-				}
-			]
-		});
-
-		/*$('#sliderPrincipalLibranza').slick({
-			autoplay: true,
-			autoplaySpeed: 15000,
-			nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
-			prevArrow: '<i class="fa fa-chevron-right slidePrev"></i>',
-			responsive: [
-				{
-					breakpoint: 768,
-					settings: {
-						arrows: false,
-					}
-				}
-			]
-		});*/
-
-		$('#creditoLibranza-slider').slick({
-			slidesToShow : 3,
-			slidesToScroll : 1,
-			autoplay: true,
-			autoplaySpeed: 5000,
-			responsive: [
-				{
-					breakpoint : 1300,
-					settings: {
-						slidesToShow: 2,
-					}
-				},
-				{
-					breakpoint: 768,
-					settings: {
-						arrows: false,
-						slidesToShow: 1,
-					}
-				}
-			]
-		});
-
-
-		$('.sliderOffer').slick({
-            autoplay: true,
-            autoplaySpeed: 15000,
-            slidesToShow: 2,
-            slidesToScroll: 1,
-            nextArrow: '<i class="fa fa-chevron-left slideNext"></i>',
-            prevArrow: '<i class="fa fa-chevron-right slidePrev"></i>',
-            responsive: [
-                {
-                breakpoint: 991,
-                settings: 
-                	{
-	                    arrows: false,
-	                    slidesToShow: 1,
-	                    slidesToScroll: 1,
-                    }
-                }
-            ],
-            
-        });
-
-		$(".multiple-items-motos").slick({
-          
-		  infinite: true,
-		  slidesToShow: 3,
-		  slidesToScroll:3,
-		  vertical: true,
-	      verticalSwiping: true,
-	      asNavFor: '.single-item-motos',
-	      centerMode: true,
-		  focusOnSelect: true,
-		  nextArrow: '<img src="/images/motos/arrow2.png" class="img-fluid not-shadow">',
-          prevArrow: '<img src="/images/motos/arrow.png" class="img-fluid not-shadow">',
-        });
-        $('.single-item-motos').slick({
-			arrows: false,
-			asNavFor: '.multiple-items-motos', 
-		});
-		
-</script>
 
 </html>

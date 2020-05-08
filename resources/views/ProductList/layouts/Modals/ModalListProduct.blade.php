@@ -55,6 +55,60 @@
     </div>
 </div>
 
+<div class="modal fade" id="addMassiveListProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-2">
+                <h5 class="modal-title">Cargar productos masivamente</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <a href="/productsTemplate/plantilla_productos.csv">
+                            <i class="far fa-file-excel productList-file-icon"></i>
+                            <br>
+                            <span class="productList-file-text">Descargue la plantila</span>
+                        </a>
+                    </div>
+                </div>
+
+                <form ng-submit="createMassiveListProduct()">
+                    <div flow-init
+                    flow-files-submitted="$flow.upload()"
+                    flow-file-added="!!{csv:1}[$file.getExtension()]"
+                    flow-name="product.list">
+                        <div class="row mb-2" g-class="dropClass">
+                            <div class="col-12 text-center">
+                                <span ng-hide="$flow.files[0]" class="btn  btn-outline-primary" flow-btn>Añadir Archivo</span>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div ng-repeat="file in $flow.files" class="col-12 test-center">
+                                <span class="title">@{{file.name}}</span>
+                                <div class="progress progress-bar-striped mb-1" ng-class="{active: file.isUploading()}">
+                                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                                            aria-valuenow="@{{file.progress() * 100}}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                            ng-style="{width: (file.progress() * 100) + '%'}">
+                                        <span class="sr-only">@{{file.progress()}}% Complete</span>
+                                    </div>
+                                </div>
+                                <a class="productList-file-cancel" ng-click="file.cancel()">Cancelar archivo</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button ng-disabled="$flow.files[0].progress() < 1" type="submit" class="btn btn-primary">Subir Archivo</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal DELETE-->
 <div class="modal fade" id="DeleteListProduct" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
