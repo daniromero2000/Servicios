@@ -298,10 +298,16 @@ class OportuyaV2Controller extends Controller
 			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
-			$data = [
-				'CEDULA' => $identificationNumber,
-				'product_id' => ($request->get('productId') == 0) ? '' : $request->get('productId')
-			];
+			if($request->get('productId') == 0){
+				$data = [
+					'CEDULA' => $identificationNumber,
+				];
+			}else{
+				$data = [
+					'CEDULA' => $identificationNumber,
+					'product_id' => $request->get('productId')
+				];
+			}
 			$customerIntention =  $this->intentionInterface->createIntention($data);
 			return "1";
 		}
