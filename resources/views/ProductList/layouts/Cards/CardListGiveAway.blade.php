@@ -1,24 +1,13 @@
-<div class="card bg-white shadow border-0">
+<div class="card card-primary">
     <div class="card-header">
-        <div class="row resetRow">
-            <div class=" col-5 col-sm-8 col-md-8">
-                <h4 class="mb-2">
-                    Obsequios
-                </h4>
-            </div>
-            <!--<div class=" col-7 col-sm-4 col-md-4">
-                <div class="input-group input-group-sm">
-                    <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
-                        aria-describedby="searchIcon" placeholder="Buscar">
-                    <div class="input-group-append">
-                        <button type="button" ng-click="search()" class="btn btn-default"><i
-                                class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </div>-->
+        <h3 class="card-title"> Obsequios </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus color-black"></i>
+            </button>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="display: block;">
         <div class="table table-responsive">
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads small">
@@ -26,6 +15,7 @@
                         <th scope="col">Base de Obsequio</th>
                         <th scope="col">Incremento</th>
                         <th scope="col">Total</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -33,6 +23,15 @@
                         <td>@{{ listGiveAway.base_give_aways }}</td>
                         <td>@{{ listGiveAway.increment }}</td>
                         <td>@{{ listGiveAway.total }}</td>
+                        <td>
+                            <i class="fas fa-eye cursor" title="Ver"
+                                ng-click="showDialogListGiveAway(listGiveAway)"></i>
+                            <i class="fas fa-edit cursor" title="Actualizar"
+                                ng-click="showUpdateDialogListGiveAway(listGiveAway)"></i>
+                            <i class="fas fa-times cursor" title="Eliminar"
+                                ng-click="showDialogDeleteListGiveAway(listGiveAway)" ng-if="activ"></i>
+
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -48,5 +47,29 @@
             <button class="btn btn-primary btn-sm" ng-click="addListGiveAway()">Agregar Obsequio</button>
         </div>
     </div>
-
 </div>
+{{-- 
+<div class="card bg-white shadow border-0">
+    <div class="card-header">
+        <div class="row resetRow">
+            <div class=" col-5 col-sm-8 col-md-8">
+                <h4 class="mb-2">
+                </h4>
+            </div>
+            <!--<div class=" col-7 col-sm-4 col-md-4">
+                <div class="input-group input-group-sm">
+                    <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
+                        aria-describedby="searchIcon" placeholder="Buscar">
+                    <div class="input-group-append">
+                        <button type="button" ng-click="search()" class="btn btn-default"><i
+                                class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="card-body">
+
+    </div>
+
+</div> --}}

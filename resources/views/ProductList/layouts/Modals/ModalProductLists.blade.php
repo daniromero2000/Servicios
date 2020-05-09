@@ -104,7 +104,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Actualizar Perfil</h5>
+                <h5 class="modal-title">Actualizar Lista</h5>
             </div>
             <div class="modal-body">
                 <form ng-submit="UpdateProductList()">
