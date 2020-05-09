@@ -81,7 +81,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             // 2040 Ubica Pruebas
             $port = config('portsWs.ubica');
-            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->ConsultaUbicaPlus($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
