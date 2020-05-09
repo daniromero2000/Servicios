@@ -322,15 +322,9 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 			data: $scope.listProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				if (response.data == "23000") {
-					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
-					$("#alertListProduct").show();
-				} else{
-					$scope.listProduct = {};
-					$scope.listProducts = [];
-					$("#addListProductModal").modal("hide");
-					$scope.getListProduct();
-				}
+				$("#addListProductModal").modal("hide");
+				showAlert('success', 'Producto creado exitosamente');
+				$scope.resetDataListProduct();
 			}
 		}, function errorCallback(response) {
 		});
@@ -379,6 +373,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				$("#updateListProduct").modal('hide');
+				showAlert('success', 'Producto actualizado exitosamente');
 				$scope.resetDataListProduct();
 			}
 		}, function errorCallback(response) {
