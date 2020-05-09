@@ -1,5 +1,6 @@
 
 app.controller('productListController', function ($scope, $http, $rootScope) {
+	
 	$scope.tabs = 1;
 	$scope.q = {
 		'q': '',
@@ -202,7 +203,6 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.createFactor = function () {
-		console.log($scope.factor)
 		$http({
 			method: 'POST',
 			url: '/api/factors',
@@ -285,6 +285,12 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		$("#alertListProduct").hide();
 	};
 
+	$scope.addMassiveListProduct = function () {
+		$scope.listProduct = {};
+		$("#addMassiveListProductModal").modal("show");
+		$("#alertListProduct").hide();
+	};
+
 	// query of faqs index and with filter 
 	$scope.getListProduct = function () {
 		showLoader();
@@ -330,6 +336,28 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		});
 	};
 
+	$scope.createMassiveListProduct = function () {
+		var formData = new FormData();
+		$scope.product.list.upload();
+		formData.append('listProduct',$scope.product.list.files[0].file);
+		formData.append('type','massive');
+
+		$http.post('/api/listProducts',formData,{
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		}).then(function successCallback(response) {
+			$("#addMassiveListProductModal").modal('hide');
+			showAlert('success', 'Archivo migrado exitosamente');
+			$scope.resetDataListProduct();
+		}, function errorCallback(response) {
+		});
+	};
+
+	$scope.resetDataListProduct = function(){
+		$scope.listProducts = [];
+		$scope.getListProduct();
+	};
+
 
 	$scope.showDialogListProduct = function (listProduct) {
 		$("#ShowListProduct").modal("show");
@@ -339,26 +367,19 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 
 	$scope.showUpdateDialogListProduct = function (listProduct) {
 		$("#alertUpdateListProduct").hide();
-		$("#UpdateListProduct").modal("show");
+		$("#updateListProduct").modal("show");
 		$scope.listProduct = angular.extend({}, listProduct);
 	};
 
-	$scope.UpdateListProduct = function () {
+	$scope.updateListProduct = function () {
 		$http({
 			method: 'PUT',
 			url: '/api/listProducts/' + $scope.listProduct.id,
 			data: $scope.listProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				if (response.data == "23000") {
-					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.listProduct.name + "</b>  ya esta registrada en la base de datos";
-					$("#alertUpdate").show();
-				} else if (response.data == true) {
-					$scope.listProduct.name = "";
-					$("#Update").modal("hide");
-					$scope.listProduct = {};
-					$scope.search();
-				}
+				$("#updateListProduct").modal('hide');
+				$scope.resetDataListProduct();
 			}
 		}, function errorCallback(response) {
 		});

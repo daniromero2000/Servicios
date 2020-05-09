@@ -7,8 +7,8 @@
             </button>
         </div>
     </div>
-    <div class="card-body" style="display: block;">
-        <div class="table table-responsive">
+    <div class="card-body">
+        <div class="table table-responsive" style="max-height: 400px">
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads small">
                     <tr>
@@ -20,7 +20,6 @@
                         <th scope="col">Valor min</th>
                         <th scope="col">Valor max</th>
                         <th scope="col">Opciones</th>
-
                     </tr>
                 </thead>
                 <tbody class="small">
@@ -49,6 +48,7 @@
             </div>
         </div>
         <div class="text-right mt-2">
+            <button class="btn btn-success btn-sm" ng-click="addMassiveListProduct()">Agregar Masivamente</button>
             <button class="btn btn-primary btn-sm" ng-click="addListProduct()">Agregar Producto</button>
         </div>
     </div>

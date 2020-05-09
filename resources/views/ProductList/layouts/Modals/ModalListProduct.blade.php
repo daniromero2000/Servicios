@@ -127,36 +127,15 @@
     </div>
 </div>
 
-<!-- Modal show -->
-<div class="modal fade" id="ShowListProduct" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Articulo</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="listProduct.item"
-                        readonly></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Update -->
-<div class="modal fade" id="UpdateListProduct" tabindex="-1" role="dialog">
+<div class="modal fade" id="updateListProduct" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Actualizar Producto</h5>
             </div>
             <div class="modal-body">
-                <form ng-submit="UpdateListProduct()">
+                <form ng-submit="updateListProduct()">
                     <div class="alert alert-danger" role="alert" id="alertUpdateListProduct"><span id="update"></span>
                     </div>
                     <div class=" row pl-0 pr-0">
