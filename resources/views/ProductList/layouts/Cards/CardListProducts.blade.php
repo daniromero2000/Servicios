@@ -1,4 +1,59 @@
-<div class="card bg-white shadow border-0">
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title"> Productos </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus color-black"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body" style="display: block;">
+        <div class="table table-responsive">
+            <table class="table table-hover table-stripped leadTable">
+                <thead class="headTableLeads small">
+                    <tr>
+                        <th scope="col">Articulo</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Costo Base</th>
+                        <th scope="col">Costo + IVA</th>
+                        <th scope="col">Proteccion</th>
+                        <th scope="col">Valor min</th>
+                        <th scope="col">Valor max</th>
+                        <th scope="col">Opciones</th>
+
+                    </tr>
+                </thead>
+                <tbody class="small">
+                    <tr ng-repeat="listProduct in listProducts">
+                        <td>@{{ listProduct.item }}</td>
+                        <td>@{{ listProduct.sku }}</td>
+                        <td>$@{{ listProduct.base_cost | number:0}}</td>
+                        <td>$@{{ listProduct.iva_cost | number:0 }}</td>
+                        <td>$@{{ listProduct.protection | number:0 }}</td>
+                        <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
+                        <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
+                        <td>
+                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialogListProduct(listProduct)"></i>
+                            <i class="fas fa-edit cursor" title="Actualizar"
+                                ng-click="showUpdateDialogListProduct(listProduct)"></i>
+                            <i class="fas fa-times cursor" title="Eliminar"
+                                ng-click="showDialogDeleteListProduct(listProduct)" ng-if="activ"></i>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+            </div>
+        </div>
+        <div class="text-right mt-2">
+            <button class="btn btn-primary btn-sm" ng-click="addListProduct()">Agregar Producto</button>
+        </div>
+    </div>
+</div>
+{{-- <div class="card bg-white shadow border-0">
     <div class="card-header">
         <div class="row resetRow">
             <div class=" col-5 col-sm-8 col-md-8">
@@ -19,42 +74,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table table-responsive">
-            <table class="table table-hover table-stripped leadTable">
-                <thead class="headTableLeads small">
-                    <tr>
-                        <th scope="col">Articulo</th>
-                        <th scope="col">SKU</th>
-                        <th scope="col">Costo Base</th>
-                        <th scope="col">Costo + IVA</th>
-                        <th scope="col">Proteccion</th>
-                        <th scope="col">Valor min</th>
-                        <th scope="col">Valor max</th>
-                    </tr>
-                </thead>
-                <tbody class="small">
-                    <tr ng-repeat="listProduct in listProducts">
-                        <td>@{{ listProduct.item }}</td>
-                        <td>@{{ listProduct.sku }}</td>
-                        <td>$@{{ listProduct.base_cost | number:0}}</td>
-                        <td>$@{{ listProduct.iva_cost | number:0 }}</td>
-                        <td>$@{{ listProduct.protection | number:0 }}</td>
-                        <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
-                        <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
-                    </tr>
-                </tbody>
-            </table>
 
-        </div>
-        <div class="row">
-            <div class="col-12 text-center">
-                {{-- <button class="btn btn-secondary btn-sm" ng-disabled="cargando" ng-click="moreRegister()">Cargar
-            Más</button> --}}
-            </div>
-        </div>
-        <div class="text-right mt-2">
-            <button class="btn btn-primary btn-sm" ng-click="addListProduct()">Agregar Producto</button>
-        </div>
     </div>
 
-</div>
+</div> --}}

@@ -28,13 +28,14 @@ class ProductListController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->input());
+        dd('hola');
         $data = $request->input();
         $data['creation_user_id'] = auth()->user()->id;
-        dd($data);
+        // dd($data);
 
         $productList =  $this->productListInterface->createProductList($data);
-        dd($productList);
+        return $productList;
+        // dd($productList);
     }
 
     public function update(Request $request, $id)
@@ -45,7 +46,7 @@ class ProductListController extends Controller
     {
     }
 
-    public function getDataPriceProduct($productId){
-        
+    public function getDataPriceProduct($productId)
+    {
     }
 }
