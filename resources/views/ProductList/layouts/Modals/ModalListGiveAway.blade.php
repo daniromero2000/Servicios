@@ -94,6 +94,7 @@
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
 
                 </form>
             </div>

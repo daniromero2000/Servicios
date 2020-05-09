@@ -33,13 +33,10 @@
                         </div>
                         <div class="col-12  form-group">
                             <label for="name">Fecha de inicio <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" data-inputmask-alias="datetime"
-                                ng-model="productList.start_date" id="start_date" name="start_date" required
-                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
-                            {{-- 
                             <input type="text" class="form-control" id="start_date" name="start_date"
                                 data-inputmask-alias="datetime" ng-model="productList.start_date"
-                                data-inputmask-inputformat="yyyy-mm-dd" data-mask> --}}
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask required>
+
                         </div>
                         <div class="col-12  form-group">
                             <label for="end_date">Fecha de Finalización <span class="text-danger">*</span></label>
@@ -65,20 +62,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">¿Desea eliminar este perfil?</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <textarea class="form-control textareaReadOnly" name="question" ng-model="productList.name"
-                        readonly></textarea>
-                </div>
+                <h5 class="modal-title">¿Desea eliminar esta Lista?</h5>
             </div>
             <div class="modal-footer">
-                <form ng-submit="deleteProductList(productList.id)">
-
-                    <button class="btn btn-danger">Eliminar</button>
-                </form>
+                <button ng-click="deleteProductList(productList.id)" class="btn btn-danger">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -109,8 +96,7 @@
                         <div class="col-12  form-group">
                             <label for="zoneUpdateProductList">Zona <span class="text-danger">*</span></label>
                             <select ng-model="productList.zone" id="zoneUpdateProductList" name="zoneUpdateProductList"
-                                class="form-control select2" required>
-                                <option selected value> Selecciona Zona </option>
+                                class="form-control" required>
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
@@ -119,23 +105,23 @@
                         <div class="col-12  form-group">
                             <label for="start_dateUpdateProductList">Fecha de inicio <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="start_dateUpdateProductList"
-                                data-inputmask-alias="
-                                datetime" ng-model="productList.start_date" id=" start_dateUpdateProductList"
-                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                            <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                id=" start_dateUpdateProductList" name="start_dateUpdateProductList"
+                                ng-model="productList.start_date" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
                         <div class="col-12  form-group">
                             <label for="end_dateProductList">Fecha de Finalización <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="end_dateProductList" data-inputmask-alias="
-                                datetime" ng-model="productList.end_date" id="end_dateProductList"
-                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                            <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                id="end_dateProductList" name="end_dateUpdateProductList"
+                                ng-model="productList.end_date" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
 
                     </div>
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
 
                 </form>
             </div>

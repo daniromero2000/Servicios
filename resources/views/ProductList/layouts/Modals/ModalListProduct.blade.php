@@ -16,8 +16,7 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="sku">SKU:</label>
-                            <input type="text" ng-model="listProduct.sku" id="sku"
-                                name="sku" class="form-control">
+                            <input type="text" ng-model="listProduct.sku" id="sku" name="sku" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
                             <label for="baseCreateListProduct">Costo Base *</label>
@@ -73,13 +72,12 @@
                 </div>
 
                 <form ng-submit="createMassiveListProduct()">
-                    <div flow-init
-                    flow-files-submitted="$flow.upload()"
-                    flow-file-added="!!{csv:1}[$file.getExtension()]"
-                    flow-name="product.list">
+                    <div flow-init flow-files-submitted="$flow.upload()"
+                        flow-file-added="!!{csv:1}[$file.getExtension()]" flow-name="product.list">
                         <div class="row mb-2" g-class="dropClass">
                             <div class="col-12 text-center">
-                                <span ng-hide="$flow.files[0]" class="btn  btn-outline-primary" flow-btn>Añadir Archivo</span>
+                                <span ng-hide="$flow.files[0]" class="btn  btn-outline-primary" flow-btn>Añadir
+                                    Archivo</span>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -87,10 +85,8 @@
                                 <span class="title">@{{file.name}}</span>
                                 <div class="progress progress-bar-striped mb-1" ng-class="{active: file.isUploading()}">
                                     <div class="progress-bar progress-bar-striped" role="progressbar"
-                                            aria-valuenow="@{{file.progress() * 100}}"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100"
-                                            ng-style="{width: (file.progress() * 100) + '%'}">
+                                        aria-valuenow="@{{file.progress() * 100}}" aria-valuemin="0" aria-valuemax="100"
+                                        ng-style="{width: (file.progress() * 100) + '%'}">
                                         <span class="sr-only">@{{file.progress()}}% Complete</span>
                                     </div>
                                 </div>
@@ -99,7 +95,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button ng-disabled="$flow.files[0].progress() < 1" type="submit" class="btn btn-primary">Subir Archivo</button>
+                                <button ng-disabled="$flow.files[0].progress() < 1" type="submit"
+                                    class="btn btn-primary">Subir Archivo</button>
                             </div>
                         </div>
                     </div>
@@ -173,6 +170,7 @@
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
 
                 </form>
             </div>
