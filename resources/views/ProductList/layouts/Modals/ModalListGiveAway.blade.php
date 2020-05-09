@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header pb-2">
-                <h5 class="modal-title">Nuevo Producto</h5>
+                <h5 class="modal-title">Nuevo Obsequio</h5>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert" id="alertListGiveAway"><span id="p"></span></div>
@@ -40,38 +40,14 @@
 </div>
 
 <!-- Modal DELETE-->
-<div class="modal fade" id="DeleteListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="deleteListGiveAway" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">¿Desea eliminar este Producto?</h5>
             </div>
             <div class="modal-footer">
-                <form ng-submit="deletelistGiveAway(listGiveAway.id)">
-
-                    <button class="btn btn-danger">Eliminar</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal show -->
-<div class="modal fade" id="ShowListGiveAway" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Articulo</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="listGiveAway.base_give_aways"
-                        readonly></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
+                <button ng-click="deleteListGiveAway(listGiveAway.id)" class="btn btn-danger">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -79,14 +55,14 @@
 </div>
 
 <!-- Modal Update -->
-<div class="modal fade" id="UpdateListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="updateListGiveAway" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Actualizar Producto</h5>
+                <h5 class="modal-title">Actualizar Obsequio</h5>
             </div>
             <div class="modal-body">
-                <form ng-submit="UpdateListGiveAway()">
+                <form ng-submit="updateListGiveAway()">
                     <div class="alert alert-danger" role="alert" id="alertUpdateListGiveAway"><span id="update"></span>
                     </div>
                     <div class=" row pl-0 pr-0">

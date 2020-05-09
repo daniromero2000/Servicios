@@ -32,7 +32,6 @@
                         <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
                         <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
                         <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialogListProduct(listProduct)"></i>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialogListProduct(listProduct)"></i>
                             <i class="fas fa-times cursor" title="Eliminar"

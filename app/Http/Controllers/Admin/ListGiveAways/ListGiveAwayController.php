@@ -29,9 +29,24 @@ class ListGiveAwayController extends Controller
         // dd($request->input());
         $data = $request->input();
         $data['creation_user_id'] = auth()->user()->id;
-        dd($data);
 
         $listGiveAway =  $this->listGiveAwayInterface->createlistGiveAway($data);
-        dd($listGiveAway);
+        return response()->json($listGiveAway);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->input();
+
+        $listGiveAway =  $this->listGiveAwayInterface->updateListGiveAway($data);
+
+        return response()->json($listGiveAway);
+    }
+
+    public function destroy($id)
+    {
+        $listGiveAway =  $this->listGiveAwayInterface->deleteListGiveAway($id);
+
+        return response()->json($listGiveAway);
     }
 }

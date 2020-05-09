@@ -66,6 +66,13 @@ class ListProductController extends Controller
         return response()->json($listProduct);
     }
 
+    public function destroy($id)
+    {
+        $listProduct =  $this->listProductInterface->deleteListProduct($id);
+
+        return response()->json($listProduct);
+    }
+
     public function getDataPriceProduct($product_id)
     {
         $dataProduct = [];
