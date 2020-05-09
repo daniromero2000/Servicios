@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header pb-2">
-                <h5 class="modal-title">Nuevo Producto</h5>
+                <h5 class="modal-title">Nuevo Obsequio</h5>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert" id="alertListGiveAway"><span id="p"></span></div>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Modal DELETE-->
-<div class="modal fade" id="DeleteListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="deleteListGiveAway" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,14 +60,14 @@
 
 
 <!-- Modal Update -->
-<div class="modal fade" id="UpdateListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="updateListGiveAway" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Actualizar Producto</h5>
+                <h5 class="modal-title">Actualizar Obsequio</h5>
             </div>
             <div class="modal-body">
-                <form ng-submit="UpdateListGiveAway()">
+                <form ng-submit="updateListGiveAway()">
                     <div class="alert alert-danger" role="alert" id="alertUpdateListGiveAway"><span id="update"></span>
                     </div>
                     <div class=" row pl-0 pr-0">

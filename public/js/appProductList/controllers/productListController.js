@@ -322,6 +322,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 			data: $scope.listProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
+<<<<<<< HEAD
 				if (response.data == "23000") {
 					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 					$("#alertListProduct").show();
@@ -331,6 +332,11 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 					$("#addListProductModal").modal("hide");
 					$scope.getListProduct();
 				}
+=======
+				$("#addListProductModal").modal("hide");
+				showAlert('success', 'Producto creado exitosamente');
+				$scope.resetDataListProduct();
+>>>>>>> b7f05642366931aaab16bfe69b6c801e76c259a4
 			}
 		}, function errorCallback(response) {
 		});
@@ -379,6 +385,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		}).then(function successCallback(response) {
 			if (response.data != false) {
 				$("#updateListProduct").modal('hide');
+				showAlert('success', 'Producto actualizado exitosamente');
 				$scope.resetDataListProduct();
 			}
 		}, function errorCallback(response) {
@@ -386,7 +393,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.showDialogDeleteListProduct = function (listProduct) {
-		$("#DeleteListProduct").modal("show");
+		$("#deleteListProduct").modal("show");
 		$scope.listProduct = listProduct;
 	};
 
@@ -396,8 +403,8 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 			url: '/api/listProducts/' + idListProduct
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				$("#DeleteListProduct").modal("hide");
-				$scope.search();
+				$("#deleteListProduct").modal("hide");
+				$scope.resetDataListProduct();
 			}
 		}, function errorCallback(response) {
 
@@ -440,62 +447,51 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	};
 
 	$scope.createListGiveAway = function () {
-		console.log($scope.listGiveAway)
 		$http({
 			method: 'POST',
 			url: '/api/listGiveAways',
 			data: $scope.listGiveAway
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				if (response.data == "23000") {
-					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listGiveAway.name + "</b>  ya se encuentra registrado en la base de datos";
-					$("#alertListGiveAway").show();
-				} else if (response.data == true) {
-					$scope.listGiveAway = "";
-					$("#addListGiveAwayModal").modal("hide");
-					$scope.search();
-				}
+				$scope.listGiveAway = "";
+				$("#addListGiveAwayModal").modal("hide");
+				showAlert('success', 'Obsequio creado exitosamente');
+				$scope.resetDataListGiveAway();
 			}
 		}, function errorCallback(response) {
 		});
 	};
 
-
-	$scope.showDialogListGiveAway = function (listGiveAway) {
-		$("#ShowListGiveAway").modal("show");
-		$scope.listGiveAway = listGiveAway;
+	$scope.resetDataListGiveAway = function() {
+		$scope.listGiveAways = [];
+		$scope.getListGiveAway();
 	};
 
 
 	$scope.showUpdateDialogListGiveAway = function (listGiveAway) {
 		$("#alertUpdateListGiveAway").hide();
-		$("#UpdateListGiveAway").modal("show");
+		$("#updateListGiveAway").modal("show");
 		$scope.listGiveAway = angular.extend({}, listGiveAway);
 	};
 
-	$scope.UpdateListGiveAway = function () {
+	$scope.updateListGiveAway = function () {
 		$http({
 			method: 'PUT',
 			url: '/api/listGiveAways/' + $scope.listGiveAway.id,
 			data: $scope.listGiveAway
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				if (response.data == "23000") {
-					document.getElementById('update').innerHTML = "La linea  <b>" + $scope.listGiveAway.name + "</b>  ya esta registrada en la base de datos";
-					$("#alertUpdate").show();
-				} else if (response.data == true) {
-					$scope.listGiveAway.name = "";
-					$("#Update").modal("hide");
-					$scope.listGiveAway = {};
-					$scope.search();
-				}
+				$scope.listGiveAway.name = "";
+				$("#updateListGiveAway").modal("hide");
+				showAlert("success", "Obsequio actualizado exitosamente");
+				$scope.resetDataListGiveAway();
 			}
 		}, function errorCallback(response) {
 		});
 	};
 
 	$scope.showDialogDeleteListGiveAway = function (listGiveAway) {
-		$("#DeleteListGiveAway").modal("show");
+		$("#deleteListGiveAway").modal("show");
 		$scope.listGiveAway = listGiveAway;
 	};
 
@@ -505,8 +501,9 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 			url: '/api/listGiveAways/' + idListGiveAway
 		}).then(function successCallback(response) {
 			if (response.data != false) {
-				$("#DeleteListGiveAway").modal("hide");
-				$scope.search();
+				$("#deleteListGiveAway").modal("hide");
+				showAlert("success", "Obsequio eliminado exitosamente");
+				$scope.resetDataListGiveAway();
 			}
 		}, function errorCallback(response) {
 

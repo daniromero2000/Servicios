@@ -24,7 +24,6 @@
                         <td>@{{ listGiveAway.increment }}</td>
                         <td>@{{ listGiveAway.total }}</td>
                         <td>
-
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialogListGiveAway(listGiveAway)"></i>
                             <i class="fas fa-times cursor" title="Eliminar"
