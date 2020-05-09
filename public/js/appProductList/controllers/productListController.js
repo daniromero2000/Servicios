@@ -1,6 +1,6 @@
 
 app.controller('productListController', function ($scope, $http, $rootScope) {
-	
+
 	$scope.tabs = 1;
 	$scope.q = {
 		'q': '',
@@ -325,7 +325,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 				if (response.data == "23000") {
 					document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 					$("#alertListProduct").show();
-				} else{
+				} else {
 					$scope.listProduct = {};
 					$scope.listProducts = [];
 					$("#addListProductModal").modal("hide");
@@ -339,12 +339,12 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 	$scope.createMassiveListProduct = function () {
 		var formData = new FormData();
 		$scope.product.list.upload();
-		formData.append('listProduct',$scope.product.list.files[0].file);
-		formData.append('type','massive');
+		formData.append('listProduct', $scope.product.list.files[0].file);
+		formData.append('type', 'massive');
 
-		$http.post('/api/listProducts',formData,{
+		$http.post('/api/listProducts', formData, {
 			transformRequest: angular.identity,
-			headers: {'Content-Type': undefined}
+			headers: { 'Content-Type': undefined }
 		}).then(function successCallback(response) {
 			$("#addMassiveListProductModal").modal('hide');
 			showAlert('success', 'Archivo migrado exitosamente');
@@ -353,7 +353,7 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		});
 	};
 
-	$scope.resetDataListProduct = function(){
+	$scope.resetDataListProduct = function () {
 		$scope.listProducts = [];
 		$scope.getListProduct();
 	};
@@ -513,12 +513,12 @@ app.controller('productListController', function ($scope, $http, $rootScope) {
 		});
 	};
 
-	$scope.selectedProduct = function(productObject){
+	$scope.selectedProduct = function (productObject) {
 		$scope.product = productObject.originalObject;
 		$scope.getDataPriceProduct($scope.product.id);
 	};
 
-	$scope.getDataPriceProduct = function(productId){
+	$scope.getDataPriceProduct = function (productId) {
 		$http({
 			method: 'GET',
 			url: '/api/listProducts/getDataPriceProduct/' + productId

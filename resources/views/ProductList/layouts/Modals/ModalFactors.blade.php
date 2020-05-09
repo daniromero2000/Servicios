@@ -68,25 +68,7 @@
     </div>
 </div>
 
-<!-- Modal show -->
-<div class="modal fade" id="ShowFactor" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="factor.name" readonly></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Modal Update -->
 <div class="modal fade" id="UpdateFactor" tabindex="-1" role="dialog">

@@ -57,26 +57,7 @@
     </div>
 </div>
 
-<!-- Modal show -->
-<div class="modal fade" id="ShowListGiveAway" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Articulo</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="listGiveAway.base_give_aways"
-                        readonly></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Modal Update -->
 <div class="modal fade" id="UpdateListGiveAway" tabindex="-1" role="dialog">

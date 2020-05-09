@@ -24,20 +24,28 @@
                             <label for="name">Zona <span class="text-danger">*</span></label>
                             <select ng-model="productList.zone" id="zone" name="zone" class="form-control select2"
                                 required>
-                                <option selected value> Selecciona Ciudad </option>
-                                <option value="1"> Zona 1 </option>
+                                <option selected value> Selecciona Zona </option>
+                                <option value="ALTA"> ALTA </option>
+                                <option value="MEDIA"> MEDIA </option>
+                                <option value="BAJA"> BAJA </option>
 
                             </select>
                         </div>
                         <div class="col-12  form-group">
                             <label for="name">Fecha de inicio <span class="text-danger">*</span></label>
-                            <input type="date" ng-model="productList.start_date" id="start_date" name="start_date"
-                                class="form-control" required>
+                            <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                ng-model="productList.start_date" id="start_date" name="start_date" required
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                            {{-- 
+                            <input type="text" class="form-control" id="start_date" name="start_date"
+                                data-inputmask-alias="datetime" ng-model="productList.start_date"
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask> --}}
                         </div>
                         <div class="col-12  form-group">
                             <label for="end_date">Fecha de Finalización <span class="text-danger">*</span></label>
-                            <input type="date" id="end_date" name="end_date" ng-model="productList.end_date"
-                                class="form-control" required>
+                            <input type="text" class="form-control" name="end_date" data-inputmask-alias="datetime"
+                                ng-model="productList.end_date" id="end_date" data-inputmask-inputformat="yyyy-mm-dd"
+                                data-mask>
                         </div>
 
                     </div>
@@ -77,28 +85,6 @@
     </div>
 </div>
 
-<!-- Modal show -->
-
-<div class="modal fade" id="Show" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil</h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <textarea rows="2" class="form-control textareaReadOnly" ng-model="productList.name"
-                        readonly></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Update -->
 <div class="modal fade" id="Update" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -124,22 +110,26 @@
                             <label for="zoneUpdateProductList">Zona <span class="text-danger">*</span></label>
                             <select ng-model="productList.zone" id="zoneUpdateProductList" name="zoneUpdateProductList"
                                 class="form-control select2" required>
-                                <option selected value> Selecciona Ciudad </option>
-                                <option value="1"> Zona 1 </option>
-
+                                <option selected value> Selecciona Zona </option>
+                                <option value="ALTA"> ALTA </option>
+                                <option value="MEDIA"> MEDIA </option>
+                                <option value="BAJA"> BAJA </option>
                             </select>
                         </div>
                         <div class="col-12  form-group">
                             <label for="start_dateUpdateProductList">Fecha de inicio <span
                                     class="text-danger">*</span></label>
-                            <input type="date" ng-model="productList.start_date" id="start_dateUpdateProductList"
-                                name="start_dateUpdateProductList" class="form-control" required>
+                            <input type="text" class="form-control" name="start_dateUpdateProductList"
+                                data-inputmask-alias="
+                                datetime" ng-model="productList.start_date" id=" start_dateUpdateProductList"
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
                         <div class="col-12  form-group">
                             <label for="end_dateProductList">Fecha de Finalización <span
                                     class="text-danger">*</span></label>
-                            <input type="date" id="end_dateProductList" name="end_dateProductList"
-                                ng-model="productList.end_date" class="form-control" required>
+                            <input type="text" class="form-control" name="end_dateProductList" data-inputmask-alias="
+                                datetime" ng-model="productList.end_date" id="end_dateProductList"
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
 
                     </div>

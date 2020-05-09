@@ -30,7 +30,6 @@
                         <td>@{{ productList.end_date }}</td>
                         <td>@{{ productList.zone }}</td>
                         <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(productList)"></i>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialog(productList)"></i>
                             <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(productList)"
