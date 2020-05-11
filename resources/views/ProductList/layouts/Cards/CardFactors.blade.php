@@ -36,7 +36,7 @@
                                 <span class="badge badge-danger badge-reset"> Inactivo </span>
                             </span>
                         </td>
-                        <td>@{{ factor.checked_user_id }}</td>
+                        <td>@{{ factor.user_checked.name }}</td>
                         <td>@{{ factor.start_date }}</td>
                         <td>@{{ factor.end_date }}</td>
                         <td>

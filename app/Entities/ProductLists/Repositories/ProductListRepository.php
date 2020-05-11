@@ -44,7 +44,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getAllProductLists()
     {
         try {
-            return $this->model->get();
+            return $this->model->with('userChecked')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

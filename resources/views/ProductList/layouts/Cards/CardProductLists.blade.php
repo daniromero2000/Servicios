@@ -32,7 +32,7 @@
                                 <span class="badge badge-danger badge-reset"> Inactivo </span>
                             </span>
                         </td>
-                        <td>@{{ productList.checked_user_id }}</td>
+                        <td>@{{ productList.user_checked.name }}</td>
                         <td>@{{ productList.start_date }}</td>
                         <td>@{{ productList.end_date }}</td>
                         <td>@{{ productList.zone }}</td>
