@@ -67,3 +67,15 @@
     font-style: italic;
     color: #5d5d5d;
 }
+
+.card-download-excel{
+    max-width: 180px;
+    padding: 10px;
+    border-radius: 10px;
+
+} 
+.card-download-excel:hover{
+    color: white;
+    opacity: 0.6;
+    background-color: #d6f1d7;
+}} 

@@ -41,10 +41,10 @@
                     <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
                         aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-md-6 col-lg-7">
                                 @include('ProductList.layouts.Cards.CardListProducts')
                             </div>
-                            <div class="col-5">
+                            <div class="col-md-6 col-lg-5">
                                 @include('ProductList.layouts.Cards.CardProductLists')
                             </div>
                         </div>
@@ -53,10 +53,10 @@
                     <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
                         aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 @include('ProductList.layouts.Cards.CardListGiveAway')
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 @include('ProductList.layouts.Cards.CardFactors')
                             </div>
                         </div>

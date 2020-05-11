@@ -10,38 +10,39 @@
                 <form ng-submit="createListProduct()">
                     <div class=" row pl-0 pr-0">
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="itemCreateListProduct">Articulo</label>
+                            <label for="itemCreateListProduct">Articulo <span class="text-danger">*</span></label>
                             <input type="text" ng-model="listProduct.item" id="itemCreateListProduct"
                                 name="itemCreateListProduct" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label for="sku">SKU:</label>
+                            <label for="sku">SKU <span class="text-danger">*</span></label>
                             <input type="text" ng-model="listProduct.sku" id="sku" name="sku" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="baseCreateListProduct">Costo Base *</label>
+                            <label for="baseCreateListProduct">Costo Base <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" ng-model="listProduct.base_cost"
                                 id="baseCreateListProduct" name="baseCreateListProduct" required>
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="IvaCreateListProduct">Costo + IVA *</label>
+                            <label for="IvaCreateListProduct">Costo + IVA <span class="text-danger">*</span></label>
                             <input type="text" ng-model="listProduct.iva_cost" id="IvaCreateListProduct"
                                 name="IvaCreateListProduct" class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label for="minToleranceCreateListProduct">Valor min </label>
+                            <input type="text" id="minToleranceCreateListProduct" name="minToleranceCreateListProduct"
+                                ng-model="listProduct.min_tolerance" class="form-control">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label for="maxToleranceCreateListProduct">Valor max</label>
+                            <input type="text" id="maxToleranceCreateListProduct" name="maxToleranceCreateListProduct"
+                                ng-model="listProduct.max_tolerance" class="form-control">
                         </div>
                         <div class="col-12  form-group">
                             <label for="protectionCreateListProduct">Proteccion</label>
                             <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
                                 ng-model="listProduct.protection" class="form-control">
-                        </div>
-                        <div class="col-12  form-group">
-                            <label for="minToleranceCreateListProduct">Valor min</label>
-                            <input type="text" id="minToleranceCreateListProduct" name="minToleranceCreateListProduct"
-                                ng-model="listProduct.min_tolerance" class="form-control">
-                        </div>
-                        <div class="col-12  form-group">
-                            <label for="maxToleranceCreateListProduct">Valor max</label>
-                            <input type="text" id="maxToleranceCreateListProduct" name="maxToleranceCreateListProduct"
-                                ng-model="listProduct.max_tolerance" class="form-control">
                         </div>
                     </div>
                     <div class="text-right mt-2">
@@ -62,11 +63,12 @@
             </div>
             <div class="modal-body">
                 <div class="row mb-4">
-                    <div class="col-12 text-center">
+                    <div class="text-center mx-auto card-download-excel">
                         <a href="/productsTemplate/plantilla_productos.csv">
-                            <i class="far fa-file-excel productList-file-icon"></i>
+                            <img src="https://image.flaticon.com/icons/svg/732/732220.svg" alt=""
+                                style="max-width: 48px;">
                             <br>
-                            <span class="productList-file-text">Descargue la plantila</span>
+                            <span class="productList-file-text">Descargue la plantila aqui</span>
                         </a>
                     </div>
                 </div>
@@ -74,12 +76,7 @@
                 <form ng-submit="createMassiveListProduct()">
                     <div flow-init flow-files-submitted="$flow.upload()"
                         flow-file-added="!!{csv:1}[$file.getExtension()]" flow-name="product.list">
-                        <div class="row mb-2" g-class="dropClass">
-                            <div class="col-12 text-center">
-                                <span ng-hide="$flow.files[0]" class="btn  btn-outline-primary" flow-btn>Añadir
-                                    Archivo</span>
-                            </div>
-                        </div>
+
                         <div class="row mb-2">
                             <div ng-repeat="file in $flow.files" class="col-12 test-center">
                                 <span class="title">@{{file.name}}</span>
@@ -93,10 +90,14 @@
                                 <a class="productList-file-cancel" ng-click="file.cancel()">Cancelar archivo</a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
+                        <div class="row mb-2 justify-content-center" g-class="dropClass">
+                            <div class="btn-group mr-2" role="group" aria-label="Basic example">
+                                <button ng-hide="$flow.files[0]" type="button" class="btn btn-secondary" flow-btn>Añadir
+                                    Archivo</button>
+                            </div>
+                            <div class="btn-group " role="group" aria-label="Basic example">
                                 <button ng-disabled="$flow.files[0].progress() < 1" type="submit"
-                                    class="btn btn-primary">Subir Archivo</button>
+                                    class="btn  btn-outline-success ">Subir Archivo</button>
                             </div>
                         </div>
                     </div>
@@ -144,27 +145,28 @@
                                 id="baseUpdateListProduct" name="baseUpdateListProduct">
                         </div>
                         <div class="col-12  form-group">
-                            <label for="IvaUpdateListProduct">IVA <span class="text-danger">*</span></label>
+                            <label for="IvaUpdateListProduct">Costo + IVA <span class="text-danger">*</span></label>
                             <input type="text" ng-model="listProduct.iva_cost" id="IvaUpdateListProduct"
                                 name="IvaUpdateListProduct" class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-6  form-group">
+                            <label for="minToleranceUpdateListProduct">Valor min <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="minToleranceUpdateListProduct" name="minToleranceUpdateListProduct"
+                                ng-model="listProduct.min_tolerance" class="form-control" required>
+                        </div>
+                        <div class="col-sm-6  form-group">
+                            <label for="maxToleranceUpdateListProduct">Valor max <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="maxToleranceUpdateListProduct" name="maxToleranceUpdateListProduct"
+                                ng-model="listProduct.max_tolerance" class="form-control" required>
                         </div>
                         <div class="col-12  form-group">
                             <label for="protectionUpdateListProduct">Proteccion <span
                                     class="text-danger">*</span></label>
                             <input type="text" id="protectionUpdateListProduct" name="protectionUpdateListProduct"
                                 ng-model="listProduct.protection" class="form-control" required>
-                        </div>
-                        <div class="col-12  form-group">
-                            <label for="minToleranceUpdateListProduct">Valor min <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" id="minToleranceUpdateListProduct" name="minToleranceUpdateListProduct"
-                                ng-model="listProduct.min_tolerance" class="form-control" required>
-                        </div>
-                        <div class="col-12  form-group">
-                            <label for="maxToleranceUpdateListProduct">Valor max <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" id="maxToleranceUpdateListProduct" name="maxToleranceUpdateListProduct"
-                                ng-model="listProduct.max_tolerance" class="form-control" required>
                         </div>
                     </div>
                     <div class="text-right mt-2">

@@ -10,7 +10,7 @@
                 <form ng-submit="createListGiveAway()">
                     <div class=" row pl-0 pr-0">
                         <div class="col-12 col-sm-8 form-group">
-                            <label for="base_give_awaysCreateListGiveAway">Base de Obsequio< <span class="text-danger">
+                            <label for="base_give_awaysCreateListGiveAway">Base de Obsequio <span class="text-danger">
                                     *</span>
                             </label>
                             <input type="text" ng-model="listGiveAway.base_give_aways"

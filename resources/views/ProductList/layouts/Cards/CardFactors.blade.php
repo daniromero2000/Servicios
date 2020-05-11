@@ -25,7 +25,9 @@
                 <tbody class="small">
                     <tr ng-repeat="factor in factors">
                         <td>@{{ factor.name }}</td>
-                        <td>@{{ factor.value }}</td>
+                        <td>
+                            <span> @{{ factor.value }}%</span>
+                        </td>
                         <td>
                             <span ng-if="factor.checked == '1'">
                                 <span class="badge badge-success badge-reset"> Activo </span>
