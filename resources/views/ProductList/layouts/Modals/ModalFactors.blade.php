@@ -22,14 +22,16 @@
                         <div class="col-12  form-group">
                             <label for="start_date_create_factor">Fecha de inicio <span
                                     class="text-danger">*</span></label>
-                            <input type="text" ng-model="factor.start_date" id="start_date_create_factor"
-                                name="start_date_create_factor" class="form-control" required>
+                            <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                id="start_date_create_factor" name="start_date_create_factor"
+                                ng-model="factor.start_date" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
                         <div class="col-12  form-group">
                             <label for="end_date_create_factor">Fecha de Finalización <span
                                     class="text-danger">*</span></label>
-                            <input type="text" id="end_date_create_factor" name="end_date_create_factor"
-                                ng-model="factor.end_date" class="form-control" required>
+                            <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                id="end_date_create_factor" name="end_date_create_factor" ng-model="factor.end_date"
+                                data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
 
                     </div>

@@ -29,10 +29,9 @@ class ProductListController extends Controller
     public function store(Request $request)
     {
         $data = $request->input();
-        // dd($data);
         $data['creation_user_id'] = auth()->user()->id;
-
         $productList =  $this->productListInterface->createProductList($data);
+        // dd($data);
         return $productList;
     }
 

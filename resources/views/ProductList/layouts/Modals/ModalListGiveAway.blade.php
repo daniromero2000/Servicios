@@ -40,17 +40,14 @@
 </div>
 
 <!-- Modal DELETE-->
-<div class="modal fade" id="deleteListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="deleteListGiveAwayModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">¿Desea eliminar este Producto?</h5>
+                <h5 class="modal-title">¿Desea eliminar este Obsequio?</h5>
             </div>
             <div class="modal-footer">
-                <form ng-submit="deletelistGiveAway(listGiveAway.id)">
-
-                    <button class="btn btn-danger">Eliminar</button>
-                </form>
+                <button ng-click="deleteListGiveAway(listGiveAway.id)" class="btn btn-danger">Eliminar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

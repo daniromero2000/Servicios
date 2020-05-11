@@ -6,8 +6,6 @@
                 <h5 class="modal-title">Nueva Lista</h5>
             </div>
             <div class="modal-body">
-                {{-- <input type="text" ng-model="productList.creation_user_id" id="creation_user_id" value="{{ auth()->user()->id}}"
-                hidden name="creation_user_id"> --}}
                 <div class="alert alert-danger" role="alert" id="alertProductList"><span id="p"></span></div>
                 <form ng-submit="createProductList()">
                     <div class=" row pl-0 pr-0">
@@ -28,10 +26,45 @@
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
-
                             </select>
                         </div>
-                        <div class="col-12  form-group">
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_traditional">Bono tradicional <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_traditional" id="bond_traditional"
+                                name="bond_traditional" class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="cash_margin">Margen contado <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.cash_margin" id="cash_margin" name="cash_margin"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="percentage_credit_card_blue">Porcentaje tarjeta blue <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_credit_card_blue"
+                                id="percentage_credit_card_blue" name="percentage_credit_card_blue"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_blue">Bono tarjeta blue <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_blue" id="bond_blue" name="bond_blue"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="percentage_credit_card_black">Porcentaje tarjeta black <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_credit_card_black"
+                                id="percentage_credit_card_black" name="percentage_credit_card_black"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_black">Bono tarjeta black <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_black" id="bond_black" name="bond_black"
+                                class="form-control">
+                        </div>
+
+                        <div class="col-12 form-group">
                             <label for="name">Fecha de inicio <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="start_date" name="start_date"
                                 data-inputmask-alias="datetime" ng-model="productList.start_date"
@@ -44,7 +77,6 @@
                                 ng-model="productList.end_date" id="end_date" data-inputmask-inputformat="yyyy-mm-dd"
                                 data-mask>
                         </div>
-
                     </div>
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -102,6 +134,42 @@
                                 <option value="BAJA"> BAJA </option>
                             </select>
                         </div>
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_traditional">Bono tradicional <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_traditional" id="bond_traditional_update"
+                                name="bond_traditional" class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="cash_margin">Margen contado <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.cash_margin" id="cash_margin_update"
+                                name="cash_margin" class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="percentage_credit_card_blue">Porcentaje tarjeta blue <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_credit_card_blue"
+                                id="percentage_credit_card_blue_update" name="percentage_credit_card_blue"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_blue">Bono tarjeta blue <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_blue" id="bond_blue_update" name="bond_blue"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="percentage_credit_card_black">Porcentaje tarjeta black <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_credit_card_black"
+                                id="percentage_credit_card_black_update" name="percentage_credit_card_black"
+                                class="form-control">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                            <label for="bond_black">Bono tarjeta black <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.bond_black" id="bond_black_update"
+                                name="bond_black" class="form-control">
+                        </div>
+
                         <div class="col-12  form-group">
                             <label for="start_dateUpdateProductList">Fecha de inicio <span
                                     class="text-danger">*</span></label>

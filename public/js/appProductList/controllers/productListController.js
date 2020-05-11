@@ -99,8 +99,6 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 
 
 		$scope.createProductList = function () {
-			$scope.productList.cash_margin = 0;
-			$scope.productList.percentage_credit_card_blue = 0;
 			$http({
 				method: 'POST',
 				url: '/api/productList',
@@ -110,7 +108,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 					if (response.data == "23000") {
 						document.getElementById('p').innerHTML = "La lista <b>" + $scope.productList.name + "</b>  ya se encuentra registrado en la base de datos";
 						$("#alertProductList").show();
-					} else if (response.data == true) {
+					} else if (response.data) {
 						$scope.productList = "";
 						$scope.resetDataProductList();
 						$("#addProductListModal").modal("hide");
@@ -213,7 +211,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 					if (response.data == "23000") {
 						document.getElementById('p').innerHTML = "La lista <b>" + $scope.factor.name + "</b>  ya se encuentra registrado en la base de datos";
 						$("#alertFactor").show();
-					} else if (response.data == true) {
+					} else if (response.data) {
 						$scope.factor = "";
 						$scope.resetDataFactor();
 						$("#addFactorModal").modal("hide");
@@ -481,17 +479,18 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 		};
 
 		$scope.showDialogDeleteListGiveAway = function (listGiveAway) {
-			$("#deleteListGiveAway").modal("show");
+			$("#deleteListGiveAwayModal").modal("show");
 			$scope.listGiveAway = listGiveAway;
 		};
 
 		$scope.deleteListGiveAway = function (idListGiveAway) {
+			console.log('hola');
 			$http({
 				method: 'DELETE',
 				url: '/api/listGiveAways/' + idListGiveAway
 			}).then(function successCallback(response) {
-				if (response.data != false) {
-					$("#deleteListGiveAway").modal("hide");
+				if (response.data) {
+					$("#deleteListGiveAwayModal").modal("hide");
 					showAlert("success", "Obsequio eliminado exitosamente");
 					$scope.resetDataListGiveAway();
 				}
