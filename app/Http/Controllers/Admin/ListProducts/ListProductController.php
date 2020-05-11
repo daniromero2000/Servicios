@@ -38,17 +38,17 @@ class ListProductController extends Controller
 
     public function store(Request $request)
     {
-        if($request->type == 'massive'){
+        if ($request->type == 'massive') {
             DB::table('list_products')->truncate();
             $handle = fopen($request->file('listProduct'), "r") or die("Unable to open file!");
-            while ( ($data = fgetcsv($handle, 0, ";") ) !== FALSE ) {
-                if($data[0] != 'CODIGO' && $data[1] != 'NOMBRE'){
+            while (($data = fgetcsv($handle, 0, ";")) !== FALSE) {
+                if ($data[0] != 'CODIGO' && $data[1] != 'NOMBRE') {
                     $product = ['sku' => $data[0], 'item' => $data[1], 'base_cost' => $data[2], 'iva_cost' => $data[3], 'protection' => $data[4], 'min_tolerance' => $data[5], 'max_tolerance' => $data[6]];
                     $listProduct =  $this->listProductInterface->createlistProduct($product);
                 }
             }
             return response()->json($listProduct);
-        }else{
+        } else {
             $data = $request->input();
 
             $listProduct =  $this->listProductInterface->createlistProduct($data);

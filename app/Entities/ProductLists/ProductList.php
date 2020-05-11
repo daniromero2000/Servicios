@@ -18,7 +18,12 @@ class ProductList extends Model
         'checked_user_id',
         'start_date',
         'end_date',
-        'zone'
+        'zone',
+        'bond_traditional',
+        'percentage_credit_card_blue',
+        'bond_blue',
+        'percentage_credit_card_black',
+        'bond_black'
     ];
 
     protected $dates = [

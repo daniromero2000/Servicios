@@ -29,9 +29,25 @@ class FactorController extends Controller
         // dd($request->input());
         $data = $request->input();
         $data['creation_user_id'] = auth()->user()->id;
-        dd($data);
+        // dd($data);
 
         $factor =  $this->factorInterface->createFactor($data);
-        dd($factor);
+        return $factor;
+        // dd($factor);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->input();
+
+        $factor =  $this->factorInterface->updateFactor($data);
+
+        return response()->json($factor);
+    }
+
+    public function destroy($id)
+    {
+        $factor =  $this->factorInterface->deleteFactor($id);
+        return response()->json($factor);
     }
 }

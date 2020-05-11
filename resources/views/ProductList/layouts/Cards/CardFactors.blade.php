@@ -26,12 +26,18 @@
                     <tr ng-repeat="factor in factors">
                         <td>@{{ factor.name }}</td>
                         <td>@{{ factor.value }}</td>
-                        <td>@{{ factor.checked }}</td>
+                        <td>
+                            <span ng-if="factor.checked == '1'">
+                                <span class="badge badge-success badge-reset"> Activo </span>
+                            </span>
+                            <span ng-if="factor.checked == '0'">
+                                <span class="badge badge-danger badge-reset"> Inactivo </span>
+                            </span>
+                        </td>
                         <td>@{{ factor.checked_user_id }}</td>
                         <td>@{{ factor.start_date }}</td>
                         <td>@{{ factor.end_date }}</td>
                         <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialogFactor(factor)"></i>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialogFactor(factor)"></i>
                             <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDeleteFactor(factor)"
