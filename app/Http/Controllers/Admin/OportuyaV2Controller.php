@@ -40,6 +40,10 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use App\Entities\Brands\Repositories\BrandRepositoryInterface;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\Products\Transformations\ProductTransformable;
+use App\Entities\Products\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +52,9 @@ use Illuminate\Support\Carbon;
 
 class OportuyaV2Controller extends Controller
 {
+
+	use ProductTransformable;
+
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -56,7 +63,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface;
+	private $ubicaInterface, $productRepo, $brandRepo;
 	private $assessorInterface;
 
 	public function __construct(
@@ -85,7 +92,9 @@ class OportuyaV2Controller extends Controller
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
-		AssessorRepositoryInterface $AssessorRepositoryInterface
+		AssessorRepositoryInterface $AssessorRepositoryInterface,
+		ProductRepositoryInterface $productRepository,
+		BrandRepositoryInterface $brandRepository
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -113,6 +122,8 @@ class OportuyaV2Controller extends Controller
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
 		$this->assessorInterface                 = $AssessorRepositoryInterface;
+		$this->productRepo = $productRepository;
+		$this->brandRepo = $brandRepository;
 	}
 
 	public function index()
@@ -123,6 +134,39 @@ class OportuyaV2Controller extends Controller
 			->get();
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
+
+
+	public function catalog()
+	{
+		$list = $this->productRepo->listFrontProducts('id');
+
+		$products = $list->map(function (Product $item) {
+			return $this->transformProduct($item);
+		})->all();
+		$images = Imagenes::selectRaw('*')
+			->where('category', '=', '1')
+			->where('isSlide', '=', '1')
+			->get();
+		return view('oportuya.catalog', [
+			'images' => $images,
+			'products' => $products,
+			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+		]);
+	}
+
+	public function product($slug)
+	{
+		$product = $this->productRepo->findProductBySlug($slug);
+		// $product = $this->transformProduct($list)->all();
+
+		$images = Imagenes::selectRaw('*')
+			->where('category', '=', '1')
+			->where('isSlide', '=', '1')
+			->get();
+		return view('oportuya.product.show', ['images' => $images, 'product' => $product]);
+	}
+
 
 	public function getPageDeniedTr()
 	{
@@ -193,8 +237,8 @@ class OportuyaV2Controller extends Controller
 			$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 			$usuarioCreacion      = (string) $assessorCode;
 
-			$clienteWeb = ($customer->CLIENTE_WEB != '') ? $customer->CLIENTE_WEB : 1;
-			$usuarioCreacion = ($customer->USUARIO_CREACION != '') ? $customer->USUARIO_CREACION : (string) $assessorCode;
+			$clienteWeb = (isset($customer->CLIENTE_WEB)) ? $customer->CLIENTE_WEB : 1;
+			$usuarioCreacion = (isset($customer->USUARIO_CREACION)) ? $customer->USUARIO_CREACION : (string) $assessorCode;
 			$usuarioActualizacion = (string) $assessorCode;
 
 			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
@@ -254,7 +298,17 @@ class OportuyaV2Controller extends Controller
 			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
-
+			if($request->get('productId') == 0){
+				$data = [
+					'CEDULA' => $identificationNumber,
+				];
+			}else{
+				$data = [
+					'CEDULA' => $identificationNumber,
+					'product_id' => $request->get('productId')
+				];
+			}
+			$customerIntention =  $this->intentionInterface->createIntention($data);
 			return "1";
 		}
 
@@ -507,7 +561,7 @@ class OportuyaV2Controller extends Controller
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
-		if($checkCustomerCodeVerified == 'false'){
+		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
 		}
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
@@ -694,18 +748,17 @@ class OportuyaV2Controller extends Controller
 		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
 		$idDef = "";
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
-		$data = ['CEDULA' => $identificationNumber];
-		$customerIntention =  $this->intentionInterface->createIntention($data);
+		$customer          = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerScore     = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
 				$customerStatusDenied = true;
-				$idDef = '8';
-				$perfilCrediticio = 'TIPO NE';
+				$idDef                = '8';
+				$perfilCrediticio     = 'TIPO NE';
 				return ['resp' => "false"];
 			}
 
@@ -1029,7 +1082,7 @@ class OportuyaV2Controller extends Controller
 
 		// 5 Definiciones cliente
 
-		if($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA'){
+		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
 			$customer->ESTADO = 'PREAPROBADO';
 			$customer->save();
 			$customerIntention->TARJETA          = 'Crédito Tradicional';

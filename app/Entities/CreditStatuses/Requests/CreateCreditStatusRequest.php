@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shop\CreditStatuses\Requests;
+namespace App\Entities\CreditStatuses\Requests;
 
-use App\Shop\Base\BaseFormRequest;
+use App\Entities\Base\BaseFormRequest;
 
 class CreateCreditStatusRequest extends BaseFormRequest
 {

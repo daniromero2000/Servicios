@@ -42,6 +42,7 @@ class Intention extends Model
         'CREDIT_DECISION',
         'ASESOR',
         'FECHA_INTENCION',
+        'product_id',
         'deleted_at'
     ];
 

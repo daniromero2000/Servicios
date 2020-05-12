@@ -63,15 +63,15 @@
   <link rel="stylesheet" href="{{ asset('css/front/loader.css') }}" id="link">
   <link rel="stylesheet" href="{{ asset('css/layouts/show.css') }}">
   <link rel="stylesheet" href="{{ asset('css/front/main.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-  <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
@@ -140,6 +140,10 @@
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('js/validateV2.js') }}"></script>
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('js/sweetAlert.js') }}"></script>
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>

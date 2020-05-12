@@ -46,6 +46,10 @@ $(document).ready(function () {
 					case 'age':
 						validateAge(inputs[i]);
 						break;
+
+					case 'date':
+						validateDate(inputs[i]);
+						break;
 				}
 			}
 		}
@@ -106,10 +110,15 @@ $(document).ready(function () {
 		};
 		/* Identification Number */
 		function validateIdentificationNumber(input) {
-
 			var patt = "[0-9]{5,10}";
 			setAttributePatternInput(input, patt);
 		};
+
+		function validateDate(input){
+			var patt = "[1-2][0-9][0-9][0-9][\\-][0-3][0-9][\\-][0-3][0-9]";
+			setAttributePatternInput(input, patt);
+		}
+
 		/* Age */
 		function validateAge(input) {
 			input.setAttribute('min', '1');

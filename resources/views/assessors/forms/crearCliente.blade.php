@@ -63,7 +63,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
+                                        <input type="text" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_EXP" id="FEC_EXP" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <div ng-hide="lead.CEL_VAL">
-                                        <label class="ventaContado-label">Celular</label>
+                                        <label class="ventaContado-label">Celular*</label>
                                         <input class="inputs" ng-blur="checkIfExistNum()" ng-model="lead.CELULAR"
                                             validation-pattern="telephone" required />
                                         <div class="alert alert-danger" role="alert" ng-show="showAlertCel" style="margin-top: 10px;">
@@ -93,14 +93,14 @@
                                         </div>
                                     </div>
                                     <div ng-show="lead.CEL_VAL">
-                                        <label class="ventaContado-label">Celular</label>
+                                        <label class="ventaContado-label">Celular*</label>
                                         <input class="inputs" ng-model="CELULAR" readonly ng-disabled="true" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col-12 col-md-4">
-                                    <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal</label>
+                                    <label class="ventaContado-label" for="ciud_ubi">Ciudad de sucursal*</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubi"
                                         ng-options="city.value as city.label for city in citiesUbi" ng-required="true"></select>
                                     <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbi" style="margin-top: 10px;">
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <label class="ventaContado-label labels" for="actividad">Ocupación</label>
+                                    <label class="ventaContado-label labels" for="actividad">Ocupación*</label>
                                     <select class="inputs form-control select2bs4" ng-model="lead.ACTIVIDAD" id="actividad"
                                         ng-options="actividad.value as actividad.label for actividad in occupations"></select>
                                 </div>
@@ -223,7 +223,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
+                                        <input type="text" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -327,7 +327,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                    <label class="ventaContado-label" for="ciud_ubi2">Ciudad de sucursal</label>
+                                    <label class="ventaContado-label" for="ciud_ubi2">Ciudad de sucursal*</label>
                                     <select ng-disabled="true" class="inputs form-control" ng-model="lead.CIUD_UBI" id="ciud_ubi2"
                                         ng-options="city.value as city.label for city in citiesUbi"></select>
                                 </div>
@@ -744,7 +744,7 @@
                         <input class="inputs" ng-model="lead.DIRECCION" type="text" />
                     </div>
                     <div class="col-12 col-sm-6">
-                        <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de sucursal</label>
+                        <label class="ventaContado-label" for="ciud_ubiContado">Ciudad de sucursal*</label>
                         <select class="inputs form-control select2bs4" ng-model="lead.CIUD_UBI" id="ciud_ubiContado"
                             ng-options="city.value as city.label for city in citiesUbi"></select>
                         <div class="alert alert-danger" role="alert" ng-show="showAlertCiudUbiContado" style="margin-top: 10px;">

@@ -114,23 +114,65 @@ use App\Entities\Departments\Repositories\DepartmentRepository;
 use App\Entities\Departments\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\Ruafs\Repositories\RuafRepository;
+use App\Entities\Factors\Repositories\FactorRepository;
+use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
+use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
+use App\Entities\ProductLists\Repositories\ProductListRepository;
+use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
+use App\Entities\ListProducts\Repositories\ListProductRepository;
+use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
+use App\Entities\ListGiveAways\Repositories\ListGiveAwayRepository;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\SecondCodebtorRepository;
 use App\Entities\UbicaAddresses\Repositories\Interfaces\UbicaAddressRepositoryInterface;
 use App\Entities\UbicaAddresses\Repositories\UbicaAddressRepository;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\UbicaCellPhoneRepository;
+use App\Entities\Brands\Repositories\BrandRepository;
+use App\Entities\Brands\Repositories\BrandRepositoryInterface;
+use App\Entities\Products\Repositories\ProductRepository;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+        $this->app->bind(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
+        );
+
+        $this->app->bind(
+            BrandRepositoryInterface::class,
+            BrandRepository::class
+        );
+
+        $this->app->bind(
+            ListGiveAwayRepositoryInterface::class,
+            ListGiveAwayRepository::class
+        );
+
+        $this->app->bind(
+            ListProductRepositoryInterface::class,
+            ListProductRepository::class
+        );
+
+        $this->app->bind(
+            ProductListRepositoryInterface::class,
+            ProductListRepository::class
+        );
+
+        $this->app->bind(
+            FactorRepositoryInterface::class,
+            FactorRepository::class
+        );
 
         $this->app->bind(
             UbicaCellPhoneRepositoryInterface::class,
             UbicaCellPhoneRepository::class
         );
+
 
         $this->app->bind(
             UbicaAddressRepositoryInterface::class,

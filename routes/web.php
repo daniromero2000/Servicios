@@ -12,7 +12,7 @@ Route::resource('confrontInHouse', 'ConfrontController');
 
 Route::get('/', function () {
     $sliders = collect([
-        ['img' => 'tarjetaCreditoOportuya.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Obtén beneficios que otros no tienen con <br /> nuestra tarjeta de crédito Oportuya</p>', 'textoBoton' => 'Solicita tu tarjeta ya', 'title' => 'Tarjeta Oportuya', 'color' => '#1d84c3', 'position_text' => 'bottom', 'enlace' => '/oportuya'],
+        ['img' => 'tarjetaCreditoOportuya.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Obtén beneficios que otros no tienen con <br /> nuestra tarjeta de crédito Oportuya</p>', 'textoBoton' => 'Solicita tu tarjeta ya', 'title' => 'Tarjeta Oportuya', 'color' => '#1d84c3', 'position_text' => 'bottom', 'enlace' => '/credito-electrodomesticos/catalogo'],
         ['img' => 'creditoMotos.jpg', 'texto' => '<h1 class="sliderPrincipal-titleSlider">Crédito <strong>Motos</strong></h1><p class="sliderPrincipal-textSlider">Te damos crédito para que pongas a rodar tus aventuras.</p>', 'textoBoton' => 'Obtener mi moto Ya', 'title' => 'Crédito Motos', 'color' => '#ec2d35', 'position_text' => 'left', 'enlace' => '/motos'],
         ['img' => 'creditoLibranza.jpg', 'texto' => '<h1 class="sliderPrincipal-titleSlider">Crédito <strong>Libranza</strong></h1><p class="sliderPrincipal-textSlider">¡Porque es momento de disfrutar la vida!</p>', 'textoBoton' => 'Solicitar crédito', 'title' => 'Crédito Libranza', 'color' => '#fdbf3c', 'position_text' => 'left', 'enlace' => 'libranza'],
         ['img' => 'seguros.jpg', 'texto' => '<p class="sliderPrincipal-textSlider">Asegura tu patrimonio y el bienestar <br /> de quienes están a tu lado</p>', 'textoBoton' => 'Asegúrate Ya', 'title' => 'Seguros', 'color' => '#2aace0', 'position_text' => 'bottom', 'enlace' => '/seguros']
@@ -120,9 +120,13 @@ Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
+Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@catalog');
+Route::get('credito-electrodomesticos/catalogo/{product}', 'Admin\OportuyaV2Controller@product');
 Route::resource('libranza', 'Admin\LibranzaController');
 Route::resource('leads', 'Admin\LeadsController');
-
+Route::get('/view-products', function () {
+    return view('oportuya.viewProducts');
+});
 
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
@@ -130,6 +134,9 @@ Route::resource('faqs', 'Admin\FaqsController');
 Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
+Route::resource('api/factors', 'Admin\Factors\FactorController');
+Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
+
 Route::resource('products', 'Admin\ProductsController');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}', 'Admin\OportuyaV2Controller@encrypt');
@@ -193,6 +200,16 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
+    Route::resource('productList', 'Admin\ProductList\ProductListController');
+    Route::group(['prefix' => 'listProducts'], function () {
+        Route::resource('/', 'Admin\ListProducts\ListProductController');
+        Route::put('/{id}', 'Admin\ListProducts\ListProductController@update');
+        Route::delete('/{id}', 'Admin\ListProducts\ListProductController@destroy');
+        Route::get('/getDataPriceProduct/{product_id}', 'Admin\ListProducts\ListProductController@getDataPriceProduct');
+    });
+    Route::group(['prefix' => 'productList'], function () {
+        Route::resource('/', 'Admin\ProductList\ProductListController');
+    });
 
     // Dashboard
     Route::get('dashBoard/getModules', 'Admin\DashboardController@getModulesDashboard');
@@ -278,6 +295,7 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
     Route::resource('/temporaryCustomer', 'Admin\TemporaryCustomer\TemporaryCustomerController', [
         'only' => ['store', 'destroy']
     ]);
+
     Route::get('/analisis', function () {
         return view('assessors.forms.analisis');
     })->name('assessorAnalisis');
@@ -408,6 +426,22 @@ Route::group(['prefix' => '/Administrator', 'middleware' => 'auth'], function ()
 
         Route::get('/admin', function () {
             return view('profilesAdmin.admin');
+        });
+    });
+
+    // Administrador de Listas
+    Route::group(['prefix' => '/ProductList/'], function () {
+
+        Route::get("/", function () {
+            return view('ProductList.index');
+        });
+
+        Route::get('/admin', function () {
+            return view('ProductList.admin');
+        });
+
+        Route::get('/products', function () {
+            return view('ProductList.admin');
         });
     });
 
