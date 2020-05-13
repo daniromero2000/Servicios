@@ -77,10 +77,10 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
         $totalVector = 0;
         foreach ($respQueryComporFin as $value) {
             $totalVector = 0;
-            if ($value->fdapert == '') {
+            if ($value->fdcorte == '') {
                 break;
             }
-            $fechaComporFin = $value->fdapert;
+            $fechaComporFin = $value->fdcorte;
             $fechaComporFin = explode('/', $fechaComporFin);
             $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
             $dateNow = date('Y-m-d');
