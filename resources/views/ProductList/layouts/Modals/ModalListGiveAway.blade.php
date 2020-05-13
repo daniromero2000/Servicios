@@ -10,7 +10,7 @@
                 <form ng-submit="createListGiveAway()">
                     <div class=" row pl-0 pr-0">
                         <div class="col-12 col-sm-8 form-group">
-                            <label for="base_give_awaysCreateListGiveAway">Base de Obsequio< <span class="text-danger">
+                            <label for="base_give_awaysCreateListGiveAway">Base de Obsequio <span class="text-danger">
                                     *</span>
                             </label>
                             <input type="text" ng-model="listGiveAway.base_give_aways"
@@ -40,11 +40,11 @@
 </div>
 
 <!-- Modal DELETE-->
-<div class="modal fade" id="deleteListGiveAway" tabindex="-1" role="dialog">
+<div class="modal fade" id="deleteListGiveAwayModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">¿Desea eliminar este Producto?</h5>
+                <h5 class="modal-title">¿Desea eliminar este Obsequio?</h5>
             </div>
             <div class="modal-footer">
                 <button ng-click="deleteListGiveAway(listGiveAway.id)" class="btn btn-danger">Eliminar</button>
@@ -53,6 +53,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- Modal Update -->
 <div class="modal fade" id="updateListGiveAway" tabindex="-1" role="dialog">
@@ -89,6 +91,7 @@
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
 
                 </form>
             </div>

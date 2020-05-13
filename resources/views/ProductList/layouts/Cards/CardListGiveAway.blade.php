@@ -20,9 +20,15 @@
                 </thead>
                 <tbody class="small">
                     <tr ng-repeat="listGiveAway in listGiveAways">
-                        <td>@{{ listGiveAway.base_give_aways }}</td>
-                        <td>@{{ listGiveAway.increment }}</td>
-                        <td>@{{ listGiveAway.total }}</td>
+                        <td>
+                            <span> $@{{ listGiveAway.base_give_aways | number:0}}</span>
+                        </td>
+                        <td>
+                            <span> $@{{ listGiveAway.increment | number:0}}</span>
+                        </td>
+                        <td>
+                            <span> $@{{ listGiveAway.total | number:0}}</span>
+                        </td>
                         <td>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialogListGiveAway(listGiveAway)"></i>

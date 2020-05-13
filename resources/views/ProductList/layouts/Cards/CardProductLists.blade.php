@@ -24,13 +24,19 @@
                 <tbody class="small">
                     <tr ng-repeat="productList in productLists">
                         <td>@{{ productList.name }}</td>
-                        <td>@{{ productList.checked }}</td>
-                        <td>@{{ productList.checked_user_id }}</td>
+                        <td>
+                            <span ng-if="productList.checked == '1'">
+                                <span class="badge badge-success badge-reset"> Activo </span>
+                            </span>
+                            <span ng-if="productList.checked == '0'">
+                                <span class="badge badge-danger badge-reset"> Inactivo </span>
+                            </span>
+                        </td>
+                        <td>@{{ productList.user_checked.name }}</td>
                         <td>@{{ productList.start_date }}</td>
                         <td>@{{ productList.end_date }}</td>
                         <td>@{{ productList.zone }}</td>
                         <td>
-                            <i class="fas fa-eye cursor" title="Ver" ng-click="showDialog(productList)"></i>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialog(productList)"></i>
                             <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(productList)"
@@ -53,28 +59,3 @@
         </div>
     </div>
 </div>
-{{-- <div class="card bg-white shadow border-0">
-    <div class="card-header">
-        <div class="row resetRow">
-            <div class=" col-5 col-sm-8 col-md-8">
-                <h4 class="mb-2">
-
-                </h4>
-            </div>
-            <div class=" col-7 col-sm-4 col-md-4">
-                <!--<div class="input-group input-group-sm">
-                    <input type="text" ng-model="q.q" name="table_search" class="form-control float-right"
-                        aria-describedby="searchIcon" placeholder="Buscar">
-                    <div class="input-group-append">
-                        <button type="button" ng-click="search()" class="btn btn-default"><i
-                                class="fas fa-search"></i></button>
-                    </div>
-                </div>-->
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-
-    </div>
-
-</div> --}}

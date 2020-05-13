@@ -64,7 +64,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             $port = config('portsWs.creditVision');
             // 2801 CreditVision Produccion, 2020 CreditVision Pruebas
-            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->ConsultarInformacionComercial($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
@@ -81,7 +81,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             // 2040 Ubica Pruebas
             $port = config('portsWs.ubica');
-            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->ConsultaUbicaPlus($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
@@ -114,7 +114,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             // 2040 Ubica Pruebas
             $port = config('portsWs.confronta');
-            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->obtenerCuestionario($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
@@ -122,7 +122,8 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         }
     }
 
-    public function execMigrateCustomer($identificationNumber){
+    public function execMigrateCustomer($identificationNumber)
+    {
         $obj = new \stdClass();
         $obj->cedula = trim($identificationNumber);
         try {

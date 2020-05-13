@@ -18,7 +18,12 @@ class ProductListRepository implements ProductListRepositoryInterface
         'checked_user_id',
         'start_date',
         'end_date',
-        'zone'
+        'zone',
+        'bond_traditional',
+        'percentage_credit_card_blue',
+        'bond_blue',
+        'percentage_credit_card_black',
+        'bond_black'
     ];
 
     public function __construct(
@@ -39,7 +44,7 @@ class ProductListRepository implements ProductListRepositoryInterface
     public function getAllProductLists()
     {
         try {
-            return $this->model->get();
+            return $this->model->with('userChecked')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
@@ -73,7 +78,8 @@ class ProductListRepository implements ProductListRepositoryInterface
         return [];
     }
 
-    public function getAllCurrentProductLists(){
+    public function getAllCurrentProductLists()
+    {
         $dateNow = date("Y-m-d");
         try {
             return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();

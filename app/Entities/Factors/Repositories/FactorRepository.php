@@ -37,7 +37,7 @@ class FactorRepository implements FactorRepositoryInterface
     public function getAllFactors()
     {
         try {
-            return $this->model->get();
+            return $this->model->with('userChecked')->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

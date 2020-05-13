@@ -71,9 +71,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
@@ -126,19 +124,15 @@
 </script>
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
-<script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
 <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
-<script src="{{ asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
 <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
-<script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('js/validateV2.js') }}"></script>
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
@@ -166,6 +160,9 @@
       $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
       //Datemask2 mm/dd/yyyy
       $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask3').inputmask('yyyy/mm/dd', { 'placeholder': 'mm/dd/yyyy' })
+
       //Money Euro
       $('[data-mask]').inputmask()
   
