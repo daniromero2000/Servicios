@@ -7,6 +7,7 @@ use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\TemporaryCustomers\TemporaryCustomer;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -24,6 +25,7 @@ class CustomerController extends Controller
         FosygaRepositoryInterface $fosygaRepositoryInterface,
         RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
         WebServiceRepositoryInterface $WebServiceRepositoryInterface,
+        RuafRepositoryInterface $RuafRepositoryInterface,
         Request $request
     ) {
         $this->customerInterface      = $customerRepositoryInterface;
@@ -32,6 +34,7 @@ class CustomerController extends Controller
         $this->registraduriaInterface = $registraduriaRepositoryInterface;
         $this->request                = $request;
         $this->webServiceInterface    = $WebServiceRepositoryInterface;
+        $this->RuafInterface          = $RuafRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -116,10 +119,13 @@ class CustomerController extends Controller
         $customerSteps          = $this->customerInterface->countCustomersSteps($from, $to);
         $customersFosygas       = $this->fosygaInterface->countCustomersfosygasConsultatios($from, $to);
         $customerRegistradurias = $this->registraduriaInterface->countCustomersRegistraduriaConsultations($from, $to);
+        $customersRuafs         = $this->RuafInterface->countCustomersRuafsConsultatios($from, $to);
+
 
         if (request()->has('from')) {
             $customerSteps          = $this->customerInterface->countCustomersSteps(request()->input('from'), request()->input('to'));
             $customersFosygas       = $this->fosygaInterface->countCustomersfosygasConsultatios(request()->input('from'), request()->input('to'));
+            $customersRuafs       = $this->RuafInterface->countCustomersRuafsConsultatios(request()->input('from'), request()->input('to'));
             $customerRegistradurias = $this->registraduriaInterface->countCustomersRegistraduriaConsultations(request()->input('from'), request()->input('to'));
         }
 
@@ -127,6 +133,7 @@ class CustomerController extends Controller
         $totalRegistradurias = $customerRegistradurias->sum('total');
         $customerSteps          = $this->toolsInterface->getDataPercentage($customerSteps);
         $customersFosygas       = $this->toolsInterface->getDataPercentage($customersFosygas);
+        $customersRuafs         = $this->toolsInterface->getDataPercentage($customersRuafs);
         $customerRegistradurias = $this->toolsInterface->getDataPercentage($customerRegistradurias);
         $customerSteps          = $this->toolsInterface->extractValuesToArray($customerSteps);
 
@@ -144,6 +151,14 @@ class CustomerController extends Controller
             array_push($customerFosygaValues, trim($customersFosyga['total']));
         }
 
+        $customerRuafNames  = [];
+        $customerRuafValues = [];
+        foreach ($customersRuafs as $customersRuaf) {
+            array_push($customerRuafNames, trim($customersRuaf['fuenteFallo']));
+            array_push($customerRuafValues, trim($customersRuaf['total']));
+        }
+
+
         $customerRegistraduriaNames  = [];
         $customerRegistraduriaValues = [];
         foreach ($customerRegistradurias as $customerRegistraduria) {
@@ -156,11 +171,14 @@ class CustomerController extends Controller
             'customerStepsValues'         => $customerStepsValues,
             'customerFosygaNames'         => $customerFosygaNames,
             'customerFosygaValues'        => $customerFosygaValues,
+            'customerRuafNames'           => $customerRuafNames,
+            'customerRuafValues'          => $customerRuafValues,
             'customerRegistraduriaNames'  => $customerRegistraduriaNames,
             'customerRegistraduriaValues' => $customerRegistraduriaValues,
             'customerSteps'               => $customerSteps,
             'customersFosygas'            => $customersFosygas,
             'customerRegistradurias'      => $customerRegistradurias,
+            'customersRuafs'              => $customersRuafs,
             'totalStatuses'               => array_sum($customerStepsValues),
             'totalFosygas'                => $totalFosygas,
             'totalRegistradurias'         => $totalRegistradurias,
