@@ -40,7 +40,7 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
                 ->where('extlincre', '!=', 'STEL')
                 ->where('extlincre', '!=', 'SPUB')
                 ->where('extlincre', '!=', 'FITC')
-                ->get(['extcompor', 'exttermin', 'extapert']);
+                ->get(['extcompor', 'exttermin', 'extcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;

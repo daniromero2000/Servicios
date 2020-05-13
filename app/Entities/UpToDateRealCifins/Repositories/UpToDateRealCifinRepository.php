@@ -40,7 +40,7 @@ class UpToDateRealCifinRepository implements UpToDateRealCifinRepositoryInterfac
                 ->where('rdlincre', '!=', 'STEL')
                 ->where('rdlincre', '!=', 'SPUB')
                 ->where('rdlincre', '!=', 'FITC')
-                ->get(['rdcompor', 'rdapert']);
+                ->get(['rdcompor', 'rdcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;

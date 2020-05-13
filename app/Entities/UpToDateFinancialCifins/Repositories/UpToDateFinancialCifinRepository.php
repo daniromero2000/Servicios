@@ -40,7 +40,7 @@ class UpToDateFinancialCifinRepository implements UpToDateFinancialCifinReposito
                 ->where('fdlincre', '!=', 'STEL')
                 ->where('fdlincre', '!=', 'SPUB')
                 ->where('fdlincre', '!=', 'FITC')
-                ->get(['fdcompor', 'fdapert']);
+                ->get(['fdcompor', 'fdcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
