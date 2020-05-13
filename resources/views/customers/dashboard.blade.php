@@ -104,8 +104,8 @@
               <div class="col-12 d-flex justify-content-center">
                 @foreach ($customersRuafs as $customersRuaf)
                 <div class="col-6 header-table mt-2">
-                  <p><span @if ($customersRuaf['fuenteFallo']=='SI' ) class="badge badge-primary" @else
-                      class="badge badge-success" @endif>
+                  <p><span @if ($customersRuaf['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                      class="badge badge-primary" @endif>
                       {{ number_format ($customersRuaf['percentage']) }} % </span>
                     {{$customersRuaf['fuenteFallo']}}
                     Falló</p>

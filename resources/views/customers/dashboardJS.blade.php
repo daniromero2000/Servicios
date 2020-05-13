@@ -495,7 +495,7 @@ var estadosFosyga = [];
   datasets: [
   {
   data: valuesRuaf,
-  backgroundColor : ['#008F00','#215ACE','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+  backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
   }
   ]
   }
