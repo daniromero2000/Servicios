@@ -17,26 +17,26 @@ class RuafRepository implements RuafRepositoryInterface
 
     public function createRuaf(array $infoRuaf)
     {
-        if($infoRuaf['fuenteFallo'] == 'SI'){
+        if ($infoRuaf['fuenteFallo'] == 'SI') {
             $ruaf['cedula'] = $infoRuaf['personaVO']['numeroDocumento'];
             $ruaf['fuenteFallo'] = $infoRuaf['fuenteFallo'];
-        }else{
+        } else {
             $dataSalud = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblSL']['tblSLGrpSLCollection']['tblSLGrpSL'];
             $dataPensiones = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblPensiones']['tblPensionesGrpPensionesCollection']['tblPensionesGrpPensiones'];
             $dataCompensacionFamiliar = $infoRuaf['reportVO']['lstPensionados']['lstPensionadosDetailsGroup'][0]['tblCompensacionFamiliar']['tblCompensacionFamiliarGrpCompensacionFamiliarCollection']['tblCompensacionFamiliarGrpCompensacionFamiliar'];
             $ruaf['cedula'] = $infoRuaf['personaVO']['numeroDocumento'];
             $ruaf['nombres'] = $infoRuaf['personaVO']['nombres']['RUAF']['primerNombre'];
-            $ruaf['regimen_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['regimenSL'] : '';
-            $ruaf['administradora_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['administradoraSL'] : '';
-            $ruaf['estado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['estadoAfiliadoSL'] : '';
-            $ruaf['tipo_afiliado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['tipoAfiliadoSL'] : '';
-            $ruaf['ciudad_afiliacion'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud)-1]['ubicacionAfiliacion'] : '';
-            $ruaf['regimen_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['regimen']: '' ;
-            $ruaf['administradora_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['administradora']: '' ;
-            $ruaf['estado_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones)-1]['estadoAfiliacion']: '' ;
-            $ruaf['tipo_afiliacion_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['tipoAfiliadoCF'] : '' ;
-            $ruaf['administradora_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['administradora'] : '' ;
-            $ruaf['estado_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar)-1]['estadoAfiliacion'] : '' ;
+            $ruaf['regimen_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud) - 1]['regimenSL'] : '';
+            $ruaf['administradora_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud) - 1]['administradoraSL'] : '';
+            $ruaf['estado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud) - 1]['estadoAfiliadoSL'] : '';
+            $ruaf['tipo_afiliado_salud'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud) - 1]['tipoAfiliadoSL'] : '';
+            $ruaf['ciudad_afiliacion'] = (count($dataSalud) >= 1) ? $dataSalud[count($dataSalud) - 1]['ubicacionAfiliacion'] : '';
+            $ruaf['regimen_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones) - 1]['regimen'] : '';
+            $ruaf['administradora_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones) - 1]['administradora'] : '';
+            $ruaf['estado_pension'] = (count($dataPensiones) >= 1) ? $dataPensiones[count($dataPensiones) - 1]['estadoAfiliacion'] : '';
+            $ruaf['tipo_afiliacion_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar) - 1]['tipoAfiliadoCF'] : '';
+            $ruaf['administradora_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar) - 1]['administradora'] : '';
+            $ruaf['estado_compensacion_familiar'] = (count($dataCompensacionFamiliar) >= 1) ? $dataCompensacionFamiliar[count($dataCompensacionFamiliar) - 1]['estadoAfiliacion'] : '';
             $ruaf['fuenteFallo'] = $infoRuaf['fuenteFallo'];
         }
         $data = $ruaf;
@@ -59,7 +59,8 @@ class RuafRepository implements RuafRepositoryInterface
         }
     }
 
-    public function getLastRuafConsultationPolicy($identificationNumber){
+    public function getLastRuafConsultationPolicy($identificationNumber)
+    {
         try {
             return $this->model->where('cedula', $identificationNumber)
                 ->orderBy('id', 'desc')->get()->first();

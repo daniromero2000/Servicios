@@ -320,6 +320,9 @@ var estadosFosyga = [];
   var estadosFosyga = [<?php echo '"'.implode('","', $customerFosygaNames).'"' ?>];
   var valuesFosyga = [<?php echo '"'.implode('","', $customerFosygaValues).'"' ?>];
 
+  var estadosRuaf = [<?php echo '"'.implode('","', $customerRuafNames).'"' ?>];
+  var valuesRuaf = [<?php echo '"'.implode('","', $customerRuafValues).'"' ?>];
+
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -479,6 +482,55 @@ var estadosFosyga = [];
 
 
 // //-------------
+
+
+
+//-------------
+  //- DONUT CHART -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var donutChartCanvas = $('#donutChart4').get(0).getContext('2d')
+  var donutData4 = {
+  labels: estadosRuaf,
+  datasets: [
+  {
+  data: valuesRuaf,
+  backgroundColor : ['#215ACE', '#E62E08','#008F00','#F00909','#FF9100','#007BFF',  '#9E0097', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+  }
+  ]
+  }
+  var donutOptions = {
+  maintainAspectRatio : false,
+  responsive : true,
+  }
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  var donutChart = new Chart(donutChartCanvas, {
+  type: 'doughnut',
+  data: donutData4,
+  options: donutOptions
+  })
+
+  //-------------
+  //- PIE CHART -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var pieChartCanvas4 = $('#pieChart4').get(0).getContext('2d')
+  var pieData = donutData4;
+  var pieOptions = {
+  maintainAspectRatio : false,
+  responsive : true,
+  }
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  var pieChart = new Chart(pieChartCanvas4, {
+  type: 'pie',
+  data: pieData,
+  options: pieOptions
+  })
+
+
+
 // //- DONUT CHART -
 // //-------------
 // // Get context with jQuery - using jQuery's .get() method.
