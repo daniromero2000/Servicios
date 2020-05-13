@@ -18,6 +18,7 @@ use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\ExtintFinancialCifins\ExtintFinancialCifin;
 use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
+use App\Entities\Ruafs\Ruaf;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\Intentions\Intention;
 use App\Entities\Registradurias\Registraduria;
@@ -234,6 +235,11 @@ class Customer extends Model
     public function cliCell()
     {
         return $this->hasOne(cliCel::class, 'IDENTI');
+    }
+
+    public function fosygaRuaf()
+    {
+        return $this->hasMany(Ruaf::class, 'cedula');
     }
 
     public function cifinReals()

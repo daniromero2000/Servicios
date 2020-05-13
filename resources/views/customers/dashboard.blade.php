@@ -71,6 +71,51 @@
           </div>
         </div>
         @endforeach
+        <div class="col-12 p-3">
+          <div hidden class="card card-danger">
+            <div class="card-header">
+              <h3 class="card-title">Donut Chart</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="donutChart4" style="height:230px; min-height:230px"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"> <span class="badge badge-primary">{{ $totalRuafs}}</span> Consultas
+                RUAF<br> ¿Falló Consulta?</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <canvas id="pieChart4" style="height:200px; min-height:auto"></canvas>
+            </div>
+            <div class="row text-center">
+              <div class="col-12 d-flex justify-content-center">
+                @foreach ($customersRuafs as $customersRuaf)
+                <div class="col-6 header-table mt-2">
+                  <p><span @if ($customersRuaf['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                      class="badge badge-primary" @endif>
+                      {{ number_format ($customersRuaf['percentage']) }} % </span>
+                    {{$customersRuaf['fuenteFallo']}}
+                    Falló</p>
+                </div>
+                @endforeach
+
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">
