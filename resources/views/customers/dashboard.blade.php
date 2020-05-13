@@ -104,8 +104,8 @@
               <div class="col-12 d-flex justify-content-center">
                 @foreach ($customerRegistradurias as $customerRegistraduria)
                 <div class="col-6 header-table mt-2">
-                  <p><span @if ($customerRegistraduria['fuenteFallo']=='SI' ) class="badge badge-danger" @else
-                      class="badge badge-primary" @endif>
+                  <p><span @if ($customerRegistraduria['fuenteFallo']=='SI' ) class="badge badge-primary" @else
+                      class="badge badge-success" @endif>
                       {{ number_format ($customerRegistraduria['percentage']) }} % </span>
                     {{$customerRegistraduria['fuenteFallo']}}
                     Falló</p>
