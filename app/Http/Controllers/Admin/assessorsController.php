@@ -602,12 +602,12 @@ class assessorsController extends Controller
 			$consultaRuaf = 1;
 		}
 
-		$validateConsultaRuaf = 0;
-		if ($consultaRuaf > 0) {
+		$validateConsultaRuaf = 1;
+		/*if ($consultaRuaf > 0) {
 			$validateConsultaRuaf = $this->ruafInterface->validateConsultaRuaf($identificationNumber, trim($name)." ".trim($lastName));
 		} else {
 			$validateConsultaRuaf = 1;
-		}
+		}*/
 
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
