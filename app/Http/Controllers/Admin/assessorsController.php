@@ -665,7 +665,7 @@ class assessorsController extends Controller
 			if ($customerScore <= -8) {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$perfilCrediticio                     = 'TIPO NE';
+				$perfilCrediticio                     = 'TIPO 7';
 				$customerIntention->ID_DEF            = '8';
 				$customerIntention->ESTADO_INTENCION  = '1';
 				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
