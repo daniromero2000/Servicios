@@ -131,6 +131,7 @@ class CustomerController extends Controller
 
         $totalFosygas        = $customersFosygas->sum('total');
         $totalRegistradurias = $customerRegistradurias->sum('total');
+        $totalRuafs          = $customersRuafs->sum('total');
         $customerSteps          = $this->toolsInterface->getDataPercentage($customerSteps);
         $customersFosygas       = $this->toolsInterface->getDataPercentage($customersFosygas);
         $customersRuafs         = $this->toolsInterface->getDataPercentage($customersRuafs);
@@ -182,6 +183,7 @@ class CustomerController extends Controller
             'totalStatuses'               => array_sum($customerStepsValues),
             'totalFosygas'                => $totalFosygas,
             'totalRegistradurias'         => $totalRegistradurias,
+            'totalRuafs'                  => $totalRuafs
         ]);
     }
 

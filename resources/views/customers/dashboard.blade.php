@@ -88,7 +88,7 @@
           </div>
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"> <span class="badge badge-primary">{{ $totalRegistradurias}}</span> Consultas
+              <h3 class="card-title"> <span class="badge badge-primary">{{ $totalRuafs}}</span> Consultas
                 RUAF<br> ¿Falló Consulta?</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -102,15 +102,16 @@
             </div>
             <div class="row text-center">
               <div class="col-12 d-flex justify-content-center">
-                @foreach ($customerRegistradurias as $customerRegistraduria)
+                @foreach ($customersRuafs as $customersRuaf)
                 <div class="col-6 header-table mt-2">
-                  <p><span @if ($customerRegistraduria['fuenteFallo']=='SI' ) class="badge badge-primary" @else
+                  <p><span @if ($customersRuaf['fuenteFallo']=='SI' ) class="badge badge-primary" @else
                       class="badge badge-success" @endif>
-                      {{ number_format ($customerRegistraduria['percentage']) }} % </span>
-                    {{$customerRegistraduria['fuenteFallo']}}
+                      {{ number_format ($customersRuaf['percentage']) }} % </span>
+                    {{$customersRuaf['fuenteFallo']}}
                     Falló</p>
                 </div>
                 @endforeach
+
               </div>
             </div>
           </div>
@@ -280,12 +281,12 @@
             </div>
             <div class="row text-center">
               <div class="col-12 d-flex justify-content-center">
-                @foreach ($customersRuafs as $customersRuaf)
+                @foreach ($customerRegistradurias as $customerRegistraduria)
                 <div class="col-6 header-table mt-2">
-                  <p><span @if ($customersRuaf['fuenteFallo']=='SI' ) class="badge badge-danger" @else
+                  <p><span @if ($customerRegistraduria['fuenteFallo']=='SI' ) class="badge badge-danger" @else
                       class="badge badge-primary" @endif>
-                      {{ number_format ($customersRuaf['percentage']) }} % </span>
-                    {{$customersRuaf['fuenteFallo']}}
+                      {{ number_format ($customerRegistraduria['percentage']) }} % </span>
+                    {{$customerRegistraduria['fuenteFallo']}}
                     Falló</p>
                 </div>
                 @endforeach
