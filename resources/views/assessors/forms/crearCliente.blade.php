@@ -75,7 +75,9 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
+                                        <input type="text" class="form-control" validation-pattern="date"
+                                            data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC"
+                                            data-inputmask-inputformat="yyyy-mm-dd" required data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -264,13 +266,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                         </div>
-<<<<<<< HEAD
-                                        <input type="text" class="form-control" validation-pattern="date"
-                                            data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC"
-                                            required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
-=======
-                                        <input type="text" ng-disabled="true" class="form-control" validation-pattern="date" data-inputmask-alias="datetime" ng-model="lead.FEC_NAC" id="FEC_NAC" required data-inputmask-inputformat="yyyy-mm-dd" data-mask>
->>>>>>> ea51f395e6e7a0f9727536d0c98c60ba7cf3512a
+                                        <input type="text" ng-disabled="true" class="form-control"
+                                            validation-pattern="date" data-inputmask-alias="datetime"
+                                            ng-model="lead.FEC_NAC" id="FEC_NAC" required
+                                            data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -286,6 +285,7 @@
                                         ng-model="lead.ESTUDIOS"
                                         ng-options="scolarity.value as scolarity.label for scolarity in scolarities"></select>
                                 </div>
+
                                 <div class="col-12 col-sm-4">
                                     <label for="PROFESION" class="labels">Profesión</label>
                                     <select id="PROFESION" class="inputs form-control select2bs4"
