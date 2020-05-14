@@ -17,6 +17,7 @@
           <th class="text-center" scope="col">Mora</th>
           <th class="text-center" scope="col">Cuota</th>
           <th class="text-center" scope="col">Vector</th>
+          <th class="text-center" scope="col">Fecha de Corte</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -47,6 +48,7 @@
             @endif
           </td>
           <td class="text-center">{{ $cifin_fin->fincompor }}</td>
+          <td class="text-center">{{ $cifin_fin->fincorte }}</td>
         </tr>
         @endforeach
       </tbody>

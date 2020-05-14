@@ -17,6 +17,7 @@
           <th class="text-center" scope="col">Mora</th>
           <th class="text-center" scope="col">Cuota</th>
           <th class="text-center" scope="col">Vector</th>
+          <th class="text-center" scope="col">Fecha de Corte</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -35,6 +36,7 @@
           <td class="text-center"> @if (!empty($cifin_uptodate_fin->fdvrcuot))
             {{ number_format (($cifin_uptodate_fin->fdvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_uptodate_fin->fdcompor }}</td>
+          <td class="text-center">{{ $cifin_uptodate_fin->fdcorte }}</td>
         </tr>
         @endforeach
       </tbody>

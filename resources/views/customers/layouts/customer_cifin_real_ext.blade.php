@@ -17,6 +17,7 @@
           <th class="text-center" scope="col">Mora</th>
           <th class="text-center" scope="col">Cuota</th>
           <th class="text-center" scope="col">Vector</th>
+          <th class="text-center" scope="col">Fecha de Corte</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -37,6 +38,7 @@
           <td class="text-center"> @if (!empty($cifin_real_extint->rexvrcuot))
             {{ number_format (($cifin_real_extint->rexvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_real_extint->rexcompor }}</td>
+          <td class="text-center">{{ $cifin_real_extint->rexcorte }}</td>
         </tr>
         @endforeach
       </tbody>

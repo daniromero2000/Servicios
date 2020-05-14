@@ -14,6 +14,7 @@
             </thead>
             <tbody class="body-table">
                 @foreach ($cifinWebServices as $cifinWebService)
+
                 <tr>
                     <td class="text-center"><a href="" data-toggle="modal"
                             data-target="#customerDataCifin{{$cifinWebService->consec}}">

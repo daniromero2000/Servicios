@@ -17,6 +17,7 @@
           <th class="text-center" scope="col">Mora</th>
           <th class="text-center" scope="col">Cuota</th>
           <th class="text-center" scope="col">Vector</th>
+          <th class="text-center" scope="col">Fecha de Corte</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -36,6 +37,7 @@
             @if (!empty($cifin_fin_extint->extvrcuot)){{ number_format (($cifin_fin_extint->extvrcuot*1000)) }} @endif 0
           </td>
           <td class="text-center">{{ $cifin_fin_extint->extcompor }}</td>
+          <td class="text-center">{{ $cifin_fin_extint->extcorte }}</td>
         </tr>
         @endforeach
       </tbody>

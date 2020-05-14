@@ -17,6 +17,7 @@
           <th class="text-center" scope="col">Mora</th>
           <th class="text-center" scope="col">Cuota</th>
           <th class="text-center" scope="col">Vector</th>
+          <th class="text-center" scope="col">Fecha de Corte</th>
         </tr>
       </thead>
       <tbody class="body-table">
@@ -35,6 +36,7 @@
           <td class="text-center"> @if (!empty($cifin_real->rmvrcuot))
             {{ number_format (($cifin_real->rmvrcuot*1000)) }} @endif 0</td>
           <td class="text-center">{{ $cifin_real->rmcompor }}</td>
+          <td class="text-center">{{ $cifin_real->rmcorte }}</td>
         </tr>
         @endforeach
       </tbody class="body-table">
