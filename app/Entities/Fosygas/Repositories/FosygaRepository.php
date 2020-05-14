@@ -109,7 +109,9 @@ class FosygaRepository implements FosygaRepositoryInterface
     public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition)
     {
         $respBdua = $this->getLastFosygaConsultation($identificationNumber);
-
+        if($respBdua->primerNombre == '' || empty($respBdua->primerNombre) || $respBdua->fechaAfiliacion == '0000-00-00 00:00:00'){
+            return 1;
+        }
         $nameDataLead = explode(" ", $names);
         $nameBdua = explode(" ", $respBdua->primerNombre);
         $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
