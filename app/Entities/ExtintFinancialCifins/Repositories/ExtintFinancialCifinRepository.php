@@ -40,7 +40,7 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
                 ->where('extlincre', '!=', 'STEL')
                 ->where('extlincre', '!=', 'SPUB')
                 ->where('extlincre', '!=', 'FITC')
-                ->get(['extcompor', 'exttermin', 'extapert']);
+                ->get(['extcompor', 'exttermin', 'extcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -76,10 +76,10 @@ class ExtintFinancialCifinRepository implements ExtintFinancialCifinRepositoryIn
         $historialCrediticio = 0;
         foreach ($respQueryComporFinExt as $value) {
             $totalVector = 0;
-            if ($value->exttermin == '' && $value->extapert == '') {
+            if ($value->extcorte == '' && $value->extapert == '') {
                 break;
             }
-            $fechaComporFin = ($value->exttermin != '') ? $value->exttermin : $value->extapert;
+            $fechaComporFin = ($value->extcorte != '') ? $value->extcorte : $value->extapert;
             $fechaComporFin = explode('/', $fechaComporFin);
             $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
             $dateNow = date('Y-m-d');

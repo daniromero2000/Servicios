@@ -40,7 +40,7 @@ class UpToDateRealCifinRepository implements UpToDateRealCifinRepositoryInterfac
                 ->where('rdlincre', '!=', 'STEL')
                 ->where('rdlincre', '!=', 'SPUB')
                 ->where('rdlincre', '!=', 'FITC')
-                ->get(['rdcompor', 'rdapert']);
+                ->get(['rdcompor', 'rdcorte']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
@@ -77,8 +77,8 @@ class UpToDateRealCifinRepository implements UpToDateRealCifinRepositoryInterfac
         $historialCrediticio = 0;
 
         foreach ($respQueryComporFinExt as $value) {
-            if (!empty($value->rdapert)) {
-                $fechaComporFin = $value->rdapert;
+            if (!empty($value->rdcorte)) {
+                $fechaComporFin = $value->rdcorte;
                 $fechaComporFin = explode('/', $fechaComporFin);
                 $fechaComporFin = $fechaComporFin[2] . "-" . $fechaComporFin[1] . "-" . $fechaComporFin[0];
                 $dateNow = date('Y-m-d');
