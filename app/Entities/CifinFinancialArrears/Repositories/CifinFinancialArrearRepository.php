@@ -19,9 +19,9 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         try {
             return  $this->model->where('fincedula', $identificationNumber)
                 ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
-                ->where('fincalid', '!=', 'CODE')
+                ->where('fincalid', 'PRIN')
                 ->where('fintipocon', '!=', 'SRV')
-                ->where('finestob', 'VIGE')
+                ->where('finestob', '!=', '')
                 ->where('finvrmora', '!=', '')
                 ->get(['finvrmora']);
         } catch (QueryException $e) {
@@ -75,7 +75,8 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         return $charTrim;
     }
 
-    public function getCustomerEntityName($identificationNumber){
+    public function getCustomerEntityName($identificationNumber)
+    {
         try {
             return $this->model->where('fincedula', $identificationNumber)->where('finlincre', 'TCR')->groupBy('finnoment')->orderByRaw("RAND()")->get(['finnoment']);
         } catch (QueryException $e) {
@@ -84,16 +85,18 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         }
     }
 
-    public function getNameEntities($nameEntities){
+    public function getNameEntities($nameEntities)
+    {
         try {
-            return  $this->model->where('finlincre', 'TCR')->whereNotIn('finnoment',$nameEntities)->groupBy('finnoment')->orderByRaw("RAND()")->limit(4)->get(['finnoment']);
+            return  $this->model->where('finlincre', 'TCR')->whereNotIn('finnoment', $nameEntities)->groupBy('finnoment')->orderByRaw("RAND()")->limit(4)->get(['finnoment']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
         }
     }
 
-    public function getCustomerEntityNameHousingCredit($identificationNumber){
+    public function getCustomerEntityNameHousingCredit($identificationNumber)
+    {
         try {
             return $this->model->where('fincedula', $identificationNumber)->where('finlincre', 'VIVI')->groupBy('finnoment')->orderByRaw("RAND()")->get(['finnoment']);
         } catch (QueryException $e) {
@@ -102,9 +105,10 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         }
     }
 
-    public function getNameEntitiesHousingCredit($nameEntities){
+    public function getNameEntitiesHousingCredit($nameEntities)
+    {
         try {
-            return  $this->model->where('finlincre', 'VIVI')->whereNotIn('finnoment',$nameEntities)->groupBy('finnoment')->orderByRaw("RAND()")->limit(4)->get(['finnoment']);
+            return  $this->model->where('finlincre', 'VIVI')->whereNotIn('finnoment', $nameEntities)->groupBy('finnoment')->orderByRaw("RAND()")->limit(4)->get(['finnoment']);
         } catch (QueryException $e) {
             dd($e);
             //throw $th;
