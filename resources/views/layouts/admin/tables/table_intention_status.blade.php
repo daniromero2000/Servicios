@@ -43,10 +43,12 @@
                     @if ($data->ESTADO_OBLIGACIONES === 0)En Mora @endif
                     @if ($data->ESTADO_OBLIGACIONES === null)Sin Datos @endif
                 </td>
-                <td> @if($data->customer && $data->customer->latestCifinScore)
+                <td> @if (auth()->user()->idProfile == 5)
+                    @if($data->customer && $data->customer->latestCifinScore)
                     @if ($data->customer->latestCifinScore['score'] == '')Sin
                     Datos
                     @endif{{ $data->customer->latestCifinScore['score']}} @endif
+                    @endif
                 </td>
                 <td>@if ($data->PERFIL_CREDITICIO == '')Sin Datos @endif{{ $data->PERFIL_CREDITICIO}}</td>
                 <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
