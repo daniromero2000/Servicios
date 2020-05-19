@@ -531,7 +531,19 @@ class assessorsController extends Controller
 		);
 
 
-		if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
+		if($consultasFosyga == "-1"){
+			$dataIntention = [
+				'CEDULA'           => $identificationNumber,
+				'ESTADO_INTENCION' => 1,
+				'ID_DEF'           => 2
+			];
+
+			$this->intentionInterface->createIntention($dataIntention);
+			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			return ['resp' => $consultasFosyga, 'infoLead' => $dataIntention->definition];
+		}
+
+		if ($consultasFosyga == "-3") {
 			return ['resp' => $consultasFosyga];
 		}
 
