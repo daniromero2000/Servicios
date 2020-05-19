@@ -97,8 +97,8 @@
             <div role="tabpanel" class="tab-pane container-fluid" id="queries">
                 @include('customers.layouts.customer_fosyga', ['fosygas' =>
                 $customer->customerFosygas , 'intentions'=> $customer->customerIntentions])
-                @include('customers.layouts.customer_fosygaRuafs', ['fosygaRuafs' => $customer->fosygaRuaf ,
-                'intentions'=> $customer->customerIntentions])
+                {{-- @include('customers.layouts.customer_fosygaRuafs', ['fosygaRuafs' => $customer->fosygaRuaf ,
+                'intentions'=> $customer->customerIntentions]) --}}
                 @include('customers.layouts.customer_registraduria', ['registradurias' =>
                 $customer->customerRegistraduria])
                 @include('customers.layouts.customer_confronta', ['confrontaCustomers' =>
