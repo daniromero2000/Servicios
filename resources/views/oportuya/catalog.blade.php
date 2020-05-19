@@ -153,7 +153,8 @@
                         <a href="/credito-electrodomesticos/catalogo/{{ $product->slug}}"
                             class="btn card-products-button btn-primary" style="">Ver
                             más</a>
-                        <a href="/step1?{{ $product->id}}" class="btn card-products-button btn-danger">Solicitar
+                        <a href="/step1?productId={{ $product->id}}"
+                            class="btn card-products-button btn-danger">Solicitar
                             aqui</a>
                     </div>
 
