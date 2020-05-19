@@ -547,10 +547,10 @@ class assessorsController extends Controller
 			];
 
 			$this->intentionInterface->createIntention($dataIntention);
-			$policyCredit = [
+			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
-				'resp'                 => 'true'
+				'resp'                 => -5
 			];
 		} else {
 			$policyCredit = [

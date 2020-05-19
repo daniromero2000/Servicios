@@ -1230,12 +1230,7 @@
                             ng-if="estadoCliente == 'SIN COMERCIAL'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                <b>La solicitud</b> está siendo revisada <br>
-                                por el área de fábrica de créditos.
-                            </p>
-                            <p class="textModalNumSolic text-center">
-                                El número de solicitud es <strong
-                                    style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong>
+                                <b>El aplicativo, está presentado un error, <br /> por favor inténtalo de nuevo más tarde</b>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">
@@ -1243,6 +1238,10 @@
                             <p class="textTnakYouModal">
                                 <b>Lo sentimos,</b> en esta ocasión <br>
                                 no tenemos una aprobación para ti.
+                            </p>
+                            <p class="textModalNumSolic text-center">
+                                <strong
+                                    style="font-size:13px; font-style: italic;color: #1b8acc">* @{{ infoLead.DESCRIPCION }}</strong>
                             </p>
                         </div>
                     </div>

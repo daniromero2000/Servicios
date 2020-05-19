@@ -597,6 +597,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 				if (response.data.resp == 'false') {
 					$scope.estadoCliente = "NEGADO";
+					$scope.infoLead = response.data.infoLead;
+					setTimeout(() => {
+						$('#congratulations').modal('show');
+					}, 1800);
+				}
+
+				if(response.data.resp == -5){
+					$scope.estadoCliente = "SIN COMERCIAL";
 					setTimeout(() => {
 						$('#congratulations').modal('show');
 					}, 1800);
