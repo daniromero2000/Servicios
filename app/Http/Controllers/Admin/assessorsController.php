@@ -547,10 +547,10 @@ class assessorsController extends Controller
 			];
 
 			$this->intentionInterface->createIntention($dataIntention);
-			$policyCredit = [
+			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
-				'resp'                 => 'true'
+				'resp'                 => -5
 			];
 		} else {
 			$policyCredit = [
@@ -592,23 +592,6 @@ class assessorsController extends Controller
 			$validateConsultaFosyga = 1;
 		}
 
-		//Ruaf
-		$dateConsultaRuaf = $this->ruafInterface->validateDateConsultaRuaf($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaRuaf == "true") {
-			$infoRuaf = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '46784765', $typeDocument, "2012-10-03");
-			$infoRuaf = (array) $infoRuaf;
-			$consultaRuaf =  $this->ruafInterface->createRuaf($infoRuaf['original'], $identificationNumber);
-		} else {
-			$consultaRuaf = 1;
-		}
-
-		$validateConsultaRuaf = 1;
-		/*if ($consultaRuaf > 0) {
-			$validateConsultaRuaf = $this->ruafInterface->validateConsultaRuaf($identificationNumber, trim($name)." ".trim($lastName));
-		} else {
-			$validateConsultaRuaf = 1;
-		}*/
-
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
 		if ($dateConsultaRegistraduria == "true") {
@@ -630,7 +613,7 @@ class assessorsController extends Controller
 			return -1;
 		}
 
-		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0 || $validateConsultaRuaf < 0)) {
+		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0 )) {
 			return "-3";
 		}
 
@@ -947,21 +930,6 @@ class assessorsController extends Controller
 			}
 		} else {
 			$estadoCliente = "PREAPROBADO";
-		}
-
-		if($fuenteFallo == "true"){
-			$getDataRuaf = $this->ruafInterface->getLastRuafConsultationPolicy($identificationNumber);
-			if (!empty($getDataRuaf)) {
-				if ($getDataRuaf->fuenteFallo == 'SI') {
-					$fuenteFallo = "true";
-				} elseif (empty($getDataRuaf->regimen_salud) || empty($getDataRuaf->estado_salud) || empty($getDataRuaf->tipo_afiliado_salud)) {
-					$fuenteFallo = "true";
-				}else{
-					$fuenteFallo = "false";
-				}
-			} else {
-				$estadoCliente = "PREAPROBADO";
-			}
 		}
 
 		// 4.6 Tipo 5 Especial

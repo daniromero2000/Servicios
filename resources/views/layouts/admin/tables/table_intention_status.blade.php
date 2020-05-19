@@ -2,9 +2,27 @@
     <table class="table table-head-fixed">
         <thead class="text-center header-table">
             <tr>
-                @foreach ($headers as $header)
-                <th scope="col">{{ $header }}</th>
-                @endforeach
+                <th scope="col">Fecha</th>
+                <th scope="col">Intención</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Asesor</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Actividad</th>
+                <th scope="col">Estado Obligaciones</th>
+                @if (auth()->user()->idProfile == 5)
+                <th scope="col">Score</th>
+                @endif
+                <th scope="col">Perfil Crediticio</th>
+                <th scope="col">Historial Crediticio</th>
+                <th scope="col">Crédito</th>
+                <th scope="col">Decisión</th>
+                <th scope="col">Riesgo Zona</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Tiempo en Labor</th>
+                <th scope="col">Tipo 5 Especial</th>
+                <th scope="col">Inspección Ocular</th>
+                <th scope="col">Definición</th>
             </tr>
         </thead>
 
@@ -37,17 +55,21 @@
                 </td>
                 <td><a href="{{ route('customers.show', $data->CEDULA) }}" data-toggle="tooltip"
                         title="Ver Cliente">{{ $data->CEDULA}}</a></td>
-                <td> {{ $data->customer['ACTIVIDAD']}}</td>
+                <td>@if ($data->customer) {{ $data->customer['ACTIVIDAD']}}@endif</td>
                 <td>
                     @if ($data->ESTADO_OBLIGACIONES == 1)Normal @endif
                     @if ($data->ESTADO_OBLIGACIONES === 0)En Mora @endif
                     @if ($data->ESTADO_OBLIGACIONES === null)Sin Datos @endif
                 </td>
-                <td> @if($data->customer && $data->customer->latestCifinScore)
+                @if (auth()->user()->idProfile == 5)
+                <td>
+                    @if($data->customer && $data->customer->latestCifinScore)
                     @if ($data->customer->latestCifinScore['score'] == '')Sin
                     Datos
                     @endif{{ $data->customer->latestCifinScore['score']}} @endif
+
                 </td>
+                @endif
                 <td>@if ($data->PERFIL_CREDITICIO == '')Sin Datos @endif{{ $data->PERFIL_CREDITICIO}}</td>
                 <td>@if ($data->HISTORIAL_CREDITO == 1)Con Historial @endif
                     @if ($data->HISTORIAL_CREDITO == 0)Sin Historial @endif</td>
