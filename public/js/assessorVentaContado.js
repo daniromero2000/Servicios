@@ -584,7 +584,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					$scope.step++;
 				}
 
-				if ($scope.resp.resp == -3 || $scope.resp.resp == -4 || $scope.resp.resp == -1) {
+				if ($scope.resp.resp == -3 || $scope.resp.resp == -4) {
 					$scope.totalErrorData++;
 					$scope.showWarningErrorData = true;
 					$scope.disabledButton = false;
@@ -595,8 +595,16 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					}
 				}
 
-				if (response.data.resp == 'false') {
+				if (response.data.resp == 'false' || response.data.resp == -1) {
 					$scope.estadoCliente = "NEGADO";
+					$scope.infoLead = response.data.infoLead;
+					setTimeout(() => {
+						$('#congratulations').modal('show');
+					}, 1800);
+				}
+
+				if(response.data.resp == -5){
+					$scope.estadoCliente = "SIN COMERCIAL";
 					setTimeout(() => {
 						$('#congratulations').modal('show');
 					}, 1800);
