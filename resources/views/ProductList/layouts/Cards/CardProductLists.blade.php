@@ -10,7 +10,9 @@
     <div class="card-body" style="display: block;">
         <div class="row">
             <div class="col-12">
-                <tags-input ng-model="tags"></tags-input>
+                {{-- <tags-input ng-model="tags"></tags-input> --}}
+
+
             </div>
         </div>
         <div class="table table-responsive">
@@ -46,7 +48,8 @@
                                 ng-click="showUpdateDialog(productList)"></i>
                             <i class="fas fa-times cursor" title="Eliminar" ng-click="showDialogDelete(productList)"
                                 ng-if="activ"></i>
-                            <i class="fas fa-eye cursor" title="Ver Lista" ng-click="showDialogViewProductList(productList)"></i>
+                            <i class="fas fa-eye cursor" title="Ver Lista"
+                                ng-click="showDialogViewProductList(productList)"></i>
 
                         </td>
                     </tr>

@@ -204,7 +204,9 @@
                 <h5 class="modal-title">Actualizar Lista</h5>
             </div>
             <div class="modal-body">
-                
+                <tags-input ng-model="tags" add-on-paste="true">
+                    <auto-complete source="listTags"></auto-complete>
+                </tags-input>
             </div>
         </div>
     </div>
