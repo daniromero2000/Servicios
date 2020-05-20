@@ -2,6 +2,8 @@
 
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
@@ -82,6 +84,7 @@
 @section('scriptsJs')
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angucomplete-alt/3.0.0/angucomplete-alt.min.js"></script>
+<script src="{{ asset('js/libsJs/ng-tags-input.min.js') }}"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular-sanitize.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
 <script src="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
@@ -93,7 +96,6 @@
 <script src="{{ asset('js/libsJs/flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
-<script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
 
 @endsection
