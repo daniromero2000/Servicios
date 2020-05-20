@@ -565,16 +565,13 @@ class OportuyaV2Controller extends Controller
 		if ($getCode) {
 			$dateNow = Carbon::now();
 			$diffeDates = $getCode->created_at->diffInMinutes($dateNow);
-		} else {
-			$diffeDates = 16;
+			if ($diffeDates < 15) {
+				return 'true';
+			}
 		}
 
 		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
-		}
-
-		if ($diffeDates < 15) {
-			return 'true';
 		}
 
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
