@@ -3,8 +3,8 @@
         <thead class="text-center header-table">
             <tr>
                 <th scope="col">Fecha</th>
-                <th scope="col">Intención</th>
                 <th scope="col">Origen</th>
+                <th scope="col">Sucursal</th>
                 <th scope="col">Asesor</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Cliente</th>
@@ -32,9 +32,8 @@
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->FECHA_INTENCION}}</td>
-                <td><a href="{{ route('intentions.show', $data->id) }}" data-toggle="tooltip"
-                        title="Ver Intención">{{ $data->id}}</a></td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
+                <td>@if($data->assessor){{($data->assessor->SUCURSAL)}} @endif</td>
                 <td>@if($data->assessor){{($data->assessor->NOMBRE)}} @endif</td>
 
                 <td><span @if ($data->intentionStatus)
