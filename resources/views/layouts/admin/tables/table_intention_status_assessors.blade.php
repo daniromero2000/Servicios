@@ -2,9 +2,26 @@
     <table class="table table-head-fixed">
         <thead class="text-center header-table">
             <tr>
-                @foreach ($headers as $header)
-                <th scope="col">{{ $header }}</th>
-                @endforeach
+                <th scope="col">Fecha</th>
+                <th scope="col">Sucursal</th>
+                <th scope="col">Asesor</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Actividad</th>
+                <th scope="col">Estado Obligaciones</th>
+                @if (auth()->user()->idProfile == 5)
+                <th scope="col">Score</th>
+                @endif
+                <th scope="col">Perfil Crediticio</th>
+                <th scope="col">Historial Crediticio</th>
+                <th scope="col">Crédito</th>
+                <th scope="col">Decisión</th>
+                <th scope="col">Riesgo Zona</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Tiempo en Labor</th>
+                <th scope="col">Tipo 5 Especial</th>
+                <th scope="col">Inspección Ocular</th>
+                <th scope="col">Definición</th>
             </tr>
         </thead>
 
@@ -14,8 +31,7 @@
             @foreach($datas as $data)
             <tr>
                 <td>{{ $data->FECHA_INTENCION}}</td>
-                <td><a href="{{ route('intentions.show', $data->id) }}" data-toggle="tooltip"
-                        title="Ver Intención">{{ $data->id}}</a></td>
+                <td>@if($data->assessor){{($data->assessor->SUCURSAL)}} @endif</td>
                 <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
                 <td> @if ($data->assessor)
                     {{$data->assessor->NOMBRE}}
