@@ -559,7 +559,7 @@ class OportuyaV2Controller extends Controller
 
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		/*$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
 		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
 		if ($getCode) {
@@ -572,7 +572,7 @@ class OportuyaV2Controller extends Controller
 
 		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
-		}
+		}*/
 
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerificationOportudata                         = [];
@@ -581,10 +581,18 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata['telephone']            = $celNumber;
 		$codeUserVerificationOportudata['type']                 = $type;
 
-		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
+		$codeVerification = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
+		$date = $codeVerification->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
-		return $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
+		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
+		$codeVerification['sms_status'] = ''; // groupName
+		$codeVerification['sms_response'] = ''; // name
+		$codeVerification['sms_send_description'] = ''; // description
+		$codeVerification['sms_id'] = ''; // messageId
+		$codeVerification = $codeVerification->toArray();
+		$this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
+		return "true";
 	}
 
 	public function verificationCode($code, $identificationNumber)

@@ -13,12 +13,17 @@ class CustomerVerificationCode extends Model
     protected $primaryKey = 'identificador';
 
     protected $fillable = [
+        'identificador',
         'token',
         'identificationNumber',
         'telephone',
         'created_at',
         'state',
-        'type'
+        'type',
+        'sms_status',
+        'sms_response',
+        'sms_send_description',
+        'sms_id'
     ];
 
 protected $dates = [

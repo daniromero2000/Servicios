@@ -80,7 +80,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         curl_close($curl);
 
-        
+        return $response;
     }
 
     public function execConsultaComercial($identificationNumber, $typeDocument)
