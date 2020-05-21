@@ -28,6 +28,8 @@ use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterfa
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
 use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
+use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
+use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
@@ -1299,7 +1301,9 @@ class assessorsController extends Controller
 		];
 
 		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic;
-
+		$debtor= new DebtorInsuranceOportuya;
+		$debtor->CEDULA = $identificationNumber;
+		$debtor->save();
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
@@ -1497,6 +1501,10 @@ class assessorsController extends Controller
 				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 			}
 		} elseif ($estadoSolic == "EN SUCURSAL") {
+			$debtor= new DebtorInsurance();
+			$debtor->CEDULA = $identificationNumber;
+			$debtor->SOLIC = $numSolic->SOLICITUD;
+			$debtor->save();
 			$estadoResult = "PREAPROBADO";
 		} else {
 			$estadoResult = "PREAPROBADO";
