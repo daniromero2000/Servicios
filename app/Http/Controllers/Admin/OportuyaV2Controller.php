@@ -298,11 +298,11 @@ class OportuyaV2Controller extends Controller
 			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
-			if($request->get('productId') == 0){
+			if ($request->get('productId') == 0) {
 				$data = [
 					'CEDULA' => $identificationNumber,
 				];
-			}else{
+			} else {
 				$data = [
 					'CEDULA' => $identificationNumber,
 					'product_id' => $request->get('productId')
@@ -561,9 +561,19 @@ class OportuyaV2Controller extends Controller
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
+		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
+		if ($getCode) {
+			$dateNow = Carbon::now();
+			$diffeDates = $getCode->created_at->diffInMinutes($dateNow);
+			if ($diffeDates < 15) {
+				return 'true';
+			}
+		}
+
 		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
 		}
+
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerificationOportudata                         = [];
 		$codeUserVerificationOportudata['token']                = $code;

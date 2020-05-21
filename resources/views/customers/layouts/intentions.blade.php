@@ -5,9 +5,9 @@
       <thead class="text-center header-table">
         <tr>
           <th scope="col">Fecha</th>
-          <th scope="col">Intención</th>
-          <th scope="col">Origen</th>
+          <th scope="col">Sucursal</th>
           <th scope="col">Asesor</th>
+          <th scope="col">Origen</th>
           <th scope="col">Estado</th>
           <th scope="col">Actividad</th>
           <th scope="col">Estado Obligaciones</th>
@@ -30,9 +30,9 @@
         @foreach($datas as $data)
         <tr>
           <td>{{ $data->FECHA_INTENCION}}</td>
-          <td>{{ $data->id}}</td>
-          <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
+          <td>@if($data->assessor){{($data->assessor->SUCURSAL)}} @endif</td>
           <td>@if($data->assessor){{($data->assessor->NOMBRE)}} @endif</td>
+          <td> @if($data->customer){{ $data->customer->ORIGEN}} @endif</td>
           <td>@if ($data->intentionStatus)
             <span @if ($data->intentionStatus['NAME'] == "PREAPROBADO")
               class="badge badge-warning"

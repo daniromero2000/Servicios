@@ -2,6 +2,8 @@
 
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
@@ -94,7 +96,7 @@
 <script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
 <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
-<script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
+<script src="{{ asset('js/libsJs/ng-tags-input.min.js') }}"></script>
 
 @endsection
 @stop

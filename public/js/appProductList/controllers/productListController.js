@@ -1,7 +1,22 @@
 
-angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize'])
+angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize', 'ngTagsInput'])
 	.controller('productListController', function ($scope, $http, $timeout) {
 		$scope.tabs = 1;
+		$scope.tags = [
+			{ text: 'Tag1' },
+			{ text: 'Tag2' },
+			{ text: 'Tag3' }
+		];
+
+		$scope.listTags = [
+			{ "text": "Tag1" },
+			{ "text": "Tag2" },
+			{ "text": "Tag3" },
+			{ "text": "Tag4" },
+			{ "text": "Tag5" },
+			{ "text": "Tag6" },
+			{ "text": "Tag7" }
+		];
 		$scope.q = {
 			'q': '',
 			'page': 30,
@@ -124,6 +139,10 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$("#Update").modal("show");
 			$scope.productList = angular.extend({}, productList);
 		};
+
+		$scope.showDialogViewProductList = function () {
+			$("#viewProductList").modal('show')
+		}
 
 		$scope.UpdateProductList = function () {
 			$http({
