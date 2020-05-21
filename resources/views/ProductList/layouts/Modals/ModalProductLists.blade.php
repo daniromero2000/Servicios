@@ -205,7 +205,8 @@
             </div>
             <div class="modal-body">
                 <tags-input ng-model="tags" add-on-paste="true">
-                    <auto-complete source="listTags"></auto-complete>
+                    <auto-complete max-results-to-show="200" min-length="1" source="leodSubsidaries($query)">
+                    </auto-complete>
                 </tags-input>
             </div>
         </div>

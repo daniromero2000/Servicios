@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\DebtorInsurancesOportuya;
 
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
+use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -36,7 +37,9 @@ class DebtorOportuyaController extends Controller
             'state' => 'A'
         ];
 
-        $save = DebtorInsuranceOportuya::findOrfail($dataOportudata['CEDULA'])->update($dataOportudata);
+        // $save = DebtorInsuranceOportuya::findOrfail($dataOportudata['CEDULA'])->update($dataOportudata);
+        $save = DebtorInsuranceOportuya::updateOrCreate(['CEDULA' => $dataOportudata['CEDULA']], $dataOportudata);
+
         $oportudataLog = OportudataLog::create($data);
         $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
         return redirect()->back();

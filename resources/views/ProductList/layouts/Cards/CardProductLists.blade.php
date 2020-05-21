@@ -9,11 +9,6 @@
     </div>
     <div class="card-body" style="display: block;">
         <div class="row">
-            <div class="col-12">
-                {{-- <tags-input ng-model="tags"></tags-input> --}}
-
-
-            </div>
         </div>
         <div class="table table-responsive">
             <table class="table table-hover table-stripped leadTable">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\DebtorInsurances;
 
 use App\Entities\DebtorInsurances\DebtorInsurance;
+use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Intentions\Intention;
 use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
@@ -61,14 +62,15 @@ class DebtorInsuranceController extends Controller
             'state' => 'A'
         ];
 
-        $save = DebtorInsurance::where('SOLIC', $dataOportudata['SOLIC'])->get()->first();
-        if (!empty($save)) {
-            $oportudataLog = OportudataLog::create($data);
-            $save = $save->update($dataOportudata);
-            $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
-        } else {
-            $request->session()->flash('error', 'No existe benefeciario para esta Solicitud');
-        };
+        $save = DebtorInsurance::updateOrCreate(['CEDULA' => $dataOportudata['CEDULA']], $dataOportudata)->get()->first();
+        $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
+
+        //     if (!empty($save)) {
+        //     $oportudataLog = OportudataLog::create($data);
+        //     $save = $save->update($dataOportudata);
+        // } else {
+        //         $request->session()->flash('error', 'No existe benefeciario para esta Solicitud');
+        //     };
         return redirect()->back()->with('hola');
     }
 }

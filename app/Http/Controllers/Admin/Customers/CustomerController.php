@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Customers;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
+use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
@@ -209,5 +210,10 @@ class CustomerController extends Controller
         // $this->customerInterface->findCustomerById($identificationNumber);
         // return $customer;
         return $customer->first();
+    }
+    public function searchCustomer($solic)
+    {
+        $customer =  FactoryRequest::findOrFail($solic);
+        return $customer->CLIENTE;
     }
 }

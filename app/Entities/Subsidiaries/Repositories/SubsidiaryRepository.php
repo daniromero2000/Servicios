@@ -68,6 +68,18 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
+    public function getSubsidiares()
+    {
+        try {
+            return  $this->model
+                ->where('STATE', 'A')
+                ->orderBy('CODIGO', 'asc')
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function findSubsidiaryByIdFull(int $id): Subsidiary
     {
         try {

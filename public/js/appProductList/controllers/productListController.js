@@ -3,20 +3,10 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 	.controller('productListController', function ($scope, $http, $timeout) {
 		$scope.tabs = 1;
 		$scope.tags = [
-			{ text: 'Tag1' },
-			{ text: 'Tag2' },
-			{ text: 'Tag3' }
+			{ 'text': 'tag1' }
 		];
 
-		$scope.listTags = [
-			{ "text": "Tag1" },
-			{ "text": "Tag2" },
-			{ "text": "Tag3" },
-			{ "text": "Tag4" },
-			{ "text": "Tag5" },
-			{ "text": "Tag6" },
-			{ "text": "Tag7" }
-		];
+		$scope.listTags = [];
 		$scope.q = {
 			'q': '',
 			'page': 30,
@@ -69,6 +59,36 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$("#addProductListModal").modal("show");
 			$("#alertProductList").hide();
 		};
+
+
+
+		$scope.getSubsidiaries = function () {
+			$http({
+				method: 'GET',
+				url: '/api/subsidiaries/'
+			}).then(function successCallback(response) {
+				if (response) {
+					angular.forEach(response.data, function (value) {
+						console.log(value.CODIGO);
+						$scope.listTags.push((value.CODIGO));
+					});
+				}
+			}, function errorCallback(response) {
+			});
+		};
+
+		$scope.leodSubsidaries = function (query) {
+			$http({
+				method: 'GET',
+				url: '/api/subsidiaries/' + query
+			}).then(function successCallback(response) {
+				if (response) {
+					return response.data;
+				}
+			}, function errorCallback(response) {
+			});
+		};
+
 
 		$scope.getProductList = function () {
 			showLoader();
@@ -537,7 +557,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			});
 		};
 
-
+		$scope.getSubsidiaries();
 		$scope.getProductList();
 		$scope.getFactor();
 		$scope.getListProduct();
