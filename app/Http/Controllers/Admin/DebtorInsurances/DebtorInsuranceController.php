@@ -63,14 +63,8 @@ class DebtorInsuranceController extends Controller
         ];
 
         $save = DebtorInsurance::updateOrCreate(['CEDULA' => $dataOportudata['CEDULA']], $dataOportudata)->get()->first();
-        $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
-
-        //     if (!empty($save)) {
-        //     $oportudataLog = OportudataLog::create($data);
-        //     $save = $save->update($dataOportudata);
-        // } else {
-        //         $request->session()->flash('error', 'No existe benefeciario para esta Solicitud');
-        //     };
-        return redirect()->back()->with('hola');
+        $oportudataLog = OportudataLog::create($data);
+        $notification = 1;
+        return view('customers.updatePolicyDebtor', ['notification' => $notification]);
     }
 }

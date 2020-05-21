@@ -41,7 +41,8 @@ class DebtorOportuyaController extends Controller
         $save = DebtorInsuranceOportuya::updateOrCreate(['CEDULA' => $dataOportudata['CEDULA']], $dataOportudata);
 
         $oportudataLog = OportudataLog::create($data);
-        $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
-        return redirect()->back();
+        // $request->session()->flash('message', 'Actualización de beneficiario Exitosa!');
+        $notification = 1;
+        return view('customers.updatePolicyDebtor', ['notification' => $notification]);
     }
 }

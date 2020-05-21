@@ -194,7 +194,8 @@ class CustomerController extends Controller
         if (request()->has('identification')) {
             $customer = $this->customerInterface->findCustomerByIdFull(request()->input('identification'));
         }
-        return view('customers.updatePolicyDebtor', ['customer' => $customer]);
+        $notification = 2;
+        return view('customers.updatePolicyDebtor', ['customer' => $customer, 'notification' => $notification]);
     }
 
     public function getPoliceDebtors($identificationNumber)

@@ -1,9 +1,24 @@
 $(function () {
     $("#debtor").click(ontypeServiceSelectedProductEditModal);
+
+    console.log($('#notification').val())
+    if ($('#notification').val() == 1) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+        });
+        Toast.fire({
+            type: 'success',
+            title: 'Actualización de beneficiario exitosa.'
+        })
+    }
 });
+
 $(function () {
     $("#debtorOportuya").click(ontypedebtorOportuya);
 });
+
 
 function ontypeServiceSelectedProductEditModal() {
 
