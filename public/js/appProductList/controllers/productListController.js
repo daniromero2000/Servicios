@@ -1,13 +1,12 @@
 
-angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize'])
+angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize', 'ngTagsInput'])
 	.controller('productListController', function ($scope, $http, $timeout) {
 		$scope.tabs = 1;
 		$scope.tags = [
-            { text: 'just' },
-            { text: 'some' },
-            { text: 'cool' },
-            { text: 'tags' }
-        ];
+			{ 'text': 'tag1' }
+		];
+
+		$scope.listTags = [];
 		$scope.q = {
 			'q': '',
 			'page': 30,
@@ -60,6 +59,36 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$("#addProductListModal").modal("show");
 			$("#alertProductList").hide();
 		};
+
+
+
+		$scope.getSubsidiaries = function () {
+			$http({
+				method: 'GET',
+				url: '/api/subsidiaries/'
+			}).then(function successCallback(response) {
+				if (response) {
+					angular.forEach(response.data, function (value) {
+						console.log(value.CODIGO);
+						$scope.listTags.push((value.CODIGO));
+					});
+				}
+			}, function errorCallback(response) {
+			});
+		};
+
+		$scope.leodSubsidaries = function (query) {
+			$http({
+				method: 'GET',
+				url: '/api/subsidiaries/' + query
+			}).then(function successCallback(response) {
+				if (response) {
+					return response.data;
+				}
+			}, function errorCallback(response) {
+			});
+		};
+
 
 		$scope.getProductList = function () {
 			showLoader();
@@ -131,7 +160,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$scope.productList = angular.extend({}, productList);
 		};
 
-		$scope.showDialogViewProductList = function(){
+		$scope.showDialogViewProductList = function () {
 			$("#viewProductList").modal('show')
 		}
 
@@ -528,7 +557,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			});
 		};
 
-
+		$scope.getSubsidiaries();
 		$scope.getProductList();
 		$scope.getFactor();
 		$scope.getListProduct();

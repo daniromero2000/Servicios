@@ -127,6 +127,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
+        Route::get('/api/subsidiaries/', 'SubsidiaryController@getSubsidiaries');
     });
 
     Route::namespace('FactoryRequests')->group(function () {
@@ -192,6 +193,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/customer/execFosygaConsultation/{identificationNumber}', 'CustomerController@execFosygaConsultation')->name('customer_fosygaConsult');
         Route::get('/Administrator/customer/execRegistraduriaConsultation/{identificationNumber}', 'CustomerController@execRegistraduriaConsultation')->name('customer_registraduriaConsult');
         Route::get('/getPoliceDebtors/{id}', 'CustomerController@getPoliceDebtors');
+        Route::get('/searchCustomer/{id}', 'CustomerController@searchCustomer');
         Route::get('/getPoliceDebtorOportuyas/{id}', 'CustomerController@getPoliceDebtorOportuyas');
     });
 

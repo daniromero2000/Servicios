@@ -35,6 +35,18 @@ class SubsidiaryController extends Controller
     ]);
   }
 
+  public function getSubsidiaries(Request $request)
+  {
+
+    if (request()->has('q')) {
+      $list = $this->customerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'));
+    }
+
+    $subsidiaries = $this->subsidiaryinterface->getSubsidiares();
+
+    return $subsidiaries;
+  }
+
   public function show($id)
   {
     // $customer = $this->subsidiaryinterface->findSubsidiaryByIdFull($id);

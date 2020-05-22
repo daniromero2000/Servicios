@@ -209,7 +209,9 @@
                 <!-- /.card -->
             </div>
         </div>
-
+        @if ($notification)
+        <input type="hidden" id="notification" value="{{$notification}}">
+        @endif
 
 
     </div>

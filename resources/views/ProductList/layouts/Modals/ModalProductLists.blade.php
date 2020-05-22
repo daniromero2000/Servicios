@@ -204,7 +204,10 @@
                 <h5 class="modal-title">Actualizar Lista</h5>
             </div>
             <div class="modal-body">
-                
+                <tags-input ng-model="tags" add-on-paste="true">
+                    <auto-complete max-results-to-show="200" min-length="1" source="leodSubsidaries($query)">
+                    </auto-complete>
+                </tags-input>
             </div>
         </div>
     </div>
