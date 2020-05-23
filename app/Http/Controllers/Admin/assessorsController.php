@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Analisis;
-use App\cliCel;
-use App\DatosCliente;
+use App\Analisis, App\Entities\CliCels\CliCel, App\DatosCliente, App\TurnosOportuya;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -16,21 +14,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
 use App\Entities\CifinRealArrears\Repositories\Interfaces\CifinRealArrearRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
-use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\CommercialConsultations\Repositories\Interfaces\CommercialConsultationRepositoryInterface;
-use App\Entities\ConfirmationMessages\Repositories\Interfaces\ConfirmationMessageRepositoryInterface;
 use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\CustomerProfessions\Repositories\Interfaces\CustomerProfessionRepositoryInterface;
-use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerificationCodeRepositoryInterface;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
-use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
 use App\Entities\FactoryRequests\FactoryRequest;
@@ -38,7 +31,6 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
 use App\Entities\Kinships\Repositories\Interfaces\KinshipRepositoryInterface;
-use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
@@ -46,7 +38,6 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use App\TurnosOportuya;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 
 class assessorsController extends Controller
@@ -54,14 +45,13 @@ class assessorsController extends Controller
 	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface;
-	private $fosygaInterface, $registraduriaInterface, $webServiceInterface, $ruafInterface;
+	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $commercialConsultationInterface, $customerProfessionInterface;
-	private $creditCardInterface, $customerVerificationCodeInterface;
-	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
+	private $creditCardInterface, $cifinRealArrearsInterface;
+	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
-
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -90,7 +80,6 @@ class assessorsController extends Controller
 		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
-		CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
@@ -118,13 +107,10 @@ class assessorsController extends Controller
 		$this->extintFinancialCifinInterface   = $extintFinancialCifinRepositoryInterface;
 		$this->UpToDateRealCifinInterface      = $upToDateRealCifinsRepositoryInterface;
 		$this->extinctRealCifinInterface       = $extintRealCifinRepositoryInterface;
-		$this->cifinBasicDataInterface         = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
 		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->middleware('auth');
 	}
-
-
 
 	public function index(Request $request)
 	{
@@ -227,28 +213,31 @@ class assessorsController extends Controller
 
 	public function store(Request $request)
 	{
-		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
-		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
+
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
-		$sucursal = trim($request->get('CIUD_UBI'));
+		$sucursal     = trim($request->get('CIUD_UBI'));
+
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$leadOportudata  = new Customer;
 		$usuarioCreacion = $assessorCode;
-		$clienteCelular  = new CliCel;
 		$clienteWeb      = 1;
 		$getExistLead    = Customer::find($request->CEDULA);
+
 		if (!empty($getExistLead)) {
 			$clienteWeb      = $getExistLead->CLIENTE_WEB;
 			$usuarioCreacion = $getExistLead->USUARIO_CREACION;
 		}
+
+		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
+		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
 		if ($request->tipoCliente == 'CONTADO') {
 			$cityName     = $this->getCity(trim($request->get('CIUD_UBI')));
 			$getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
@@ -330,8 +319,10 @@ class assessorsController extends Controller
 			];
 
 			unset($dataOportudata['tipoCliente']);
+			$leadOportudata  = new Customer;
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
+			$clienteCelular  = new CliCel;
 			if ($queryExistCel[0]->total == 0) {
 				$clienteCelular          = new CliCel;
 				$clienteCelular->IDENTI  = trim($request->get('CEDULA'));

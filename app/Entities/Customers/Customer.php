@@ -2,8 +2,7 @@
 
 namespace App\Entities\Customers;
 
-use App\cliCel;
-use App\Entities\CifinBasicDatas\CifinBasicData;
+use App\Entities\CliCels\CliCel;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
@@ -11,7 +10,6 @@ use App\Entities\CifinScores\CifinScore;
 use App\Entities\CifinWebServices\CifinWebService;
 use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
-use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
@@ -141,7 +139,6 @@ class Customer extends Model
 
     protected $hidden = [];
 
-
     protected $searchable = [
         'columns' => [
             'CLIENTE_FAB.CEDULA'   => 10,
@@ -224,17 +221,20 @@ class Customer extends Model
     {
         return $this->hasMany(ConfrontaFootprint::class, 'cedula');
     }
+
     public function DebtorInsurance()
     {
         return $this->hasMany(DebtorInsurance::class, 'CEDULA')->orderBy('FECHA', 'DESC');
     }
+
     public function DebtorInsuranceOportuya()
     {
         return $this->hasMany(DebtorInsuranceOportuya::class, 'CEDULA')->orderBy('FECHA', 'DESC');
     }
+
     public function cliCell()
     {
-        return $this->hasOne(cliCel::class, 'IDENTI');
+        return $this->hasOne(CliCel::class, 'Identi');
     }
 
     public function fosygaRuaf()
