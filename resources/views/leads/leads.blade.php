@@ -137,7 +137,7 @@
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
                                 </td>
-                               <td ng-if="lead.sku != null">@{{ lead.product_id }}</td>
+                               <td ng-if="lead.sku != null">@{{ lead.sku }}</td>
                                 <td ng-if="lead.sku == null"> Sin Producto</td>
                                 <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHASOL }}</td>
@@ -375,7 +375,7 @@
                                         ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>@{{ lead.DESCRIPCION }}</td>
-                                <td ng-if="lead.sku != null">@{{ lead.product_id }}</td>
+                                <td ng-if="lead.sku != null">@{{ lead.sku }}</td>
                                 <td ng-if="lead.sku == null"> Sin Producto</td>
                                 <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHA_INTENCION }}</td>
