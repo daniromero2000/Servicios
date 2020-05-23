@@ -42,4 +42,9 @@ class Subsidiary extends Model
   {
     return $this->hasMany(Assessor::class, 'CODIGO', 'SUCURSAL');
   }
+  protected $searchable = [
+    'columns' => [
+      'SUCURSALES.CODIGO'   => 10
+    ],
+  ];
 }
