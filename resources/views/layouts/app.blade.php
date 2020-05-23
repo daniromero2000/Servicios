@@ -14,11 +14,18 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 <html>
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
+	{{-- <!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
 	<script>
 		window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823'); 
+	</script> --}}
+
+	<!-- Global site tag (gtag.js) - Google Ads: 631154682 -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-631154682"></script>
+	<script>
+		window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-631154682'); 
 	</script>
+
 	@yield('eventTag')
 	<!-- Google Tag Manager -->
 	<script>
@@ -29,6 +36,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		})(window,document,'script','dataLayer','GTM-KV55LLG');
 	</script>
 	<!-- End Google Tag Manager -->
+
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KV55LLG" height="0" width="0"
 			style="display:none;visibility:hidden"></iframe></noscript>
@@ -187,9 +195,9 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 							<a class="nav-item nav-link header-item header-item1" href="/libranza">
 								<span class="header-textoItem">Libranza</span>
 							</a>
-							<a class="nav-item nav-link header-item header-item1" href="/motos">
+							{{-- <a class="nav-item nav-link header-item header-item1" href="/motos">
 								<span class="header-textoItem">Crédito motos</span>
-							</a>
+							</a> --}}
 							<a class="nav-item nav-link header-item header-item1" href="/avance">
 								<span class="header-textoItem">Avances</span>
 							</a>
@@ -208,12 +216,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 									href="/credito-electrodomesticos/catalogo">
 									<span class="header-textoItem">Crédito Electrodomésticos</span>
 								</a>
-								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp"
-									href="/motos">
-									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú"
-										class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito
-										motos</span>
-								</a>
+
 								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp "
 									href="/libranza">
 									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú"

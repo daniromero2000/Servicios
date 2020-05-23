@@ -22,10 +22,12 @@ class MotosController extends Controller
 
     public function index()
     {
-        return view('motos.index', [
-            'images' => Imagenes::all(),
-            'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
-        ]);
+
+        return redirect()->back();
+        // return view('motos.index', [
+        //     'images' => Imagenes::all(),
+        //     'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
+        // ]);
     }
 
     public function store(Request $request)

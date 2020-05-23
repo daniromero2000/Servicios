@@ -90,13 +90,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-currency/1.2.7/ng-currency.min.js"></script>
 {{-- <script src="{{ asset('js/appProductList/app.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/appProductList/services/myService.js') }}"></script> --}}
-<script src="{{ asset('js/appProductList/controllers/productListController.js') }}"></script>
-<script src="{{ asset('js/appProductList/services/myService.js') }}"></script>
 <script src="{{ asset('js/libsJs/flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/fusty-flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/fusty-flow-factory.js') }}"></script>
 <script src="{{ asset('js/libsJs/ng-flow.js') }}"></script>
 <script src="{{ asset('js/libsJs/ng-tags-input.min.js') }}"></script>
-
+<script src="{{ asset('js/appProductList/controllers/productListController.js') }}"></script>
+<script src="{{ asset('js/appProductList/services/myService.js') }}"></script>
 @endsection
 @stop

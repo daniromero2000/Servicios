@@ -65,7 +65,7 @@
 	<h2 class="conoce-title">Conoce todos los servicios <br> que tenemos para ti</h2>
 	<div class="row resetRow scroll-animations">
 		<div
-			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-2 conoce-containTarjeta text-center animated">
+			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-1 col-xl-2 offset-xl-3 conoce-containTarjeta text-center animated">
 			<div class="conoce-TarjetaOportuya">
 				<h3 class="conoce-titleTarjeta">Tarjeta de <strong>crédito Oportuya</strong></h3>
 				<img src="/images/servicios_CreditoOportuyaIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
@@ -81,7 +81,7 @@
 			<img src="/images/conoce-oportuyaImagen.png" alt="Conoce nuestra tarjeta OportuYa" class="img-fluid" />
 		</div>
 
-		<div
+		{{-- <div
 			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-0 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
 			<div class="conoce-creditoMotos">
 				<h3 class="conoce-titleTarjetaMotos">Crédito <strong>motos</strong></h3>
@@ -96,7 +96,7 @@
 				<a href="/motos" class="conoce-button button-creditoMotos">Conoce más</a>
 			</div>
 			<img src="/images/conoce-motoImagen.png" alt="Conoce nuestros créditos para motos" class="img-fluid" />
-		</div>
+		</div> --}}
 
 		<div
 			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
@@ -116,7 +116,7 @@
 		</div>
 
 		<div
-			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-0 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
+			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
 			<div class="conoce-seguros">
 				<h3 class="conoce-titleTarjetaSeguros"><strong>Seguros</strong></h3>
 				<img src="/images/servicios_segurosIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
