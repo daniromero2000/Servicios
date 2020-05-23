@@ -51,24 +51,18 @@ use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 
 class assessorsController extends Controller
 {
-	private $kinshipInterface;
+	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
 	private $daysToIncrement, $consultationValidityInterface;
-	private $subsidiaryInterface;
 	private $fosygaInterface, $registraduriaInterface, $webServiceInterface, $ruafInterface;
 	private $commercialConsultationInterface, $customerProfessionInterface;
 	private $creditCardInterface, $customerVerificationCodeInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface;
-	private $assessorInterface;
-	private $codebtorInterface, $secondCodebtorInterface;
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
+	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
+
+
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
 		CodebtorRepositoryInterface $codebtorRepositoryInterface,
@@ -131,11 +125,7 @@ class assessorsController extends Controller
 	}
 
 
-	/**
-	 * Show the application dashboard.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function index(Request $request)
 	{
 		$to = Carbon::now();
@@ -219,7 +209,7 @@ class assessorsController extends Controller
 			$statusesPendientesValues +=  $statusesPendientesValue[$key];
 		}
 		$factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
-		$listCount = $listCount->count();
+		$listCount            = $listCount->count();
 
 		return view('assessors.assessors.list', [
 			'factoryRequests'     		   => $list,
@@ -228,10 +218,10 @@ class assessorsController extends Controller
 			'listCount'           		   => $listCount,
 			'skip'                		   => $skip,
 			'factoryRequestsTotal'		   => $factoryRequestsTotal,
-			'statusesAprobadosValues' 	   => $statusesAprobadosValues,
-			'statusesNegadosValues' 	   => $statusesNegadosValues,
-			'statusesDesistidosValues'      => $statusesDesistidosValues,
-			'statusesPendientesValues'     => $statusesPendientesValues
+			'statusesAprobadosValues'  => $statusesAprobadosValues,
+			'statusesNegadosValues' 	  => $statusesNegadosValues,
+			'statusesDesistidosValues' => $statusesDesistidosValues,
+			'statusesPendientesValues' => $statusesPendientesValues
 		]);
 	}
 
@@ -253,8 +243,8 @@ class assessorsController extends Controller
 		$leadOportudata  = new Customer;
 		$usuarioCreacion = $assessorCode;
 		$clienteCelular  = new CliCel;
-		$clienteWeb = 1;
-		$getExistLead = Customer::find($request->CEDULA);
+		$clienteWeb      = 1;
+		$getExistLead    = Customer::find($request->CEDULA);
 		if (!empty($getExistLead)) {
 			$clienteWeb      = $getExistLead->CLIENTE_WEB;
 			$usuarioCreacion = $getExistLead->USUARIO_CREACION;
@@ -263,46 +253,46 @@ class assessorsController extends Controller
 			$cityName     = $this->getCity(trim($request->get('CIUD_UBI')));
 			$getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
 			$dataOportudata = [
-				'TIPO_DOC'    			=> trim($request->get('TIPO_DOC')),
-				'CEDULA'      			=> trim($request->get('CEDULA')),
-				'FEC_EXP'     			=> '1980-01-01',
-				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
-				'APELLIDOS'   			=> ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
-				'EMAIL'       			=> trim($request->get('EMAIL')),
-				'TELFIJO'     			=> ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO'))  : '0',
-				'CELULAR'     			=> trim($request->get('CELULAR')),
-				'PROFESION'   			=> 'NO APLICA',
-				'PERSONAS'  			=>  0,
-				'TIPOV'       			=> '',
-				'TIEMPO_VIV'  			=> '',
-				'PROPIETARIO' 			=> '',
-				'VRARRIENDO'  			=> 	0,
-				'ESTUDIOS'  			=> '',
-				'ESTRATO'     			=> '',
-				'SEXO'        			=> trim($request->get('SEXO')),
-				'DIRECCION'   			=> ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
-				'VCON_NOM1'   			=> ($request->get('VCON_NOM1') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM1')))) : 'NA',
-				'VCON_CED1'   			=> ($request->get('VCON_CED1') != '') ? trim($request->get('VCON_CED1')) : 'NA',
-				'VCON_TEL1'   			=> ($request->get('VCON_TEL1') != '') ? trim($request->get('VCON_TEL1')) : 'NA',
-				'VCON_NOM2'   			=> ($request->get('VCON_NOM2') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM2')))) : 'NA',
-				'VCON_CED2'   			=> ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
-				'VCON_TEL2'   			=> ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
-				'VCON_DIR'   			=> ($request->get('VCON_DIR') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_DIR')))) : 'NA',
-				'TRAT_DATOS'  			=> trim($request->get('TRAT_DATOS')),
-				'TIPOCLIENTE' 			=> 'NUEVO',
-				'SUBTIPO'     			=> 'NUEVO',
-				'FEC_NAC'	  			=> '1900-01-01',
-				'EDAD'        			=> 0,
-				'CIUD_UBI'    			=> trim($cityName[0]->CIUDAD),
-				'DEPTO'       			=> trim(strtoupper($cityName[0]->DEPARTAMENTO)),
-				'ID_CIUD_UBI' 			=> trim($getIdcityUbi[0]->ID_DIAN),
-				'ID_CIUD_EXP' 			=> '',
-				'MEDIO_PAGO'  			=> 00,
-				'CIUD_EXP'    			=> '',
-				'ORIGEN'      			=> 'ASESORES-CONTADO',
-				'CLIENTE_WEB' 			=> $clienteWeb,
-				'SUC'         			=> $sucursal,
-				'PASO'        			=> '',
+				'TIPO_DOC'    			       => trim($request->get('TIPO_DOC')),
+				'CEDULA'      			       => trim($request->get('CEDULA')),
+				'FEC_EXP'     			       => '1980-01-01',
+				'NOMBRES'   			         => ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
+				'APELLIDOS'   			       => ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
+				'EMAIL'       			       => trim($request->get('EMAIL')),
+				'TELFIJO'     			       => ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO'))  : '0',
+				'CELULAR'     			       => trim($request->get('CELULAR')),
+				'PROFESION'   			       => 'NO APLICA',
+				'PERSONAS'  			         => 0,
+				'TIPOV'       			       => '',
+				'TIEMPO_VIV'  			       => '',
+				'PROPIETARIO' 			       => '',
+				'VRARRIENDO'  			       => 0,
+				'ESTUDIOS'  			         => '',
+				'ESTRATO'     			       => '',
+				'SEXO'        			       => trim($request->get('SEXO')),
+				'DIRECCION'   			       => ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
+				'VCON_NOM1'   			       => ($request->get('VCON_NOM1') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM1')))) : 'NA',
+				'VCON_CED1'   			       => ($request->get('VCON_CED1') != '') ? trim($request->get('VCON_CED1')) : 'NA',
+				'VCON_TEL1'   			       => ($request->get('VCON_TEL1') != '') ? trim($request->get('VCON_TEL1')) : 'NA',
+				'VCON_NOM2'   			       => ($request->get('VCON_NOM2') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM2')))) : 'NA',
+				'VCON_CED2'   			       => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
+				'VCON_TEL2'   			       => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
+				'VCON_DIR'   			        => ($request->get('VCON_DIR') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_DIR')))) : 'NA',
+				'TRAT_DATOS'  			       => trim($request->get('TRAT_DATOS')),
+				'TIPOCLIENTE' 			       => 'NUEVO',
+				'SUBTIPO'     			       => 'NUEVO',
+				'FEC_NAC'	  			         => '1900-01-01',
+				'EDAD'        			       => 0,
+				'CIUD_UBI'    			       => trim($cityName[0]->CIUDAD),
+				'DEPTO'       			       => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+				'ID_CIUD_UBI' 			       => trim($getIdcityUbi[0]->ID_DIAN),
+				'ID_CIUD_EXP' 			       => '',
+				'MEDIO_PAGO'  			       => 00,
+				'CIUD_EXP'    			       => '',
+				'ORIGEN'      			       => 'ASESORES-CONTADO',
+				'CLIENTE_WEB' 			       => $clienteWeb,
+				'SUC'         			       => $sucursal,
+				'PASO'        			       => '',
 				'ESTADOCIVIL'           => '',
 				'NIT_EMP'               => '',
 				'RAZON_SOC'             => '',
@@ -315,7 +305,7 @@ class assessorsController extends Controller
 				'ANTIG'                 => '',
 				'SUELDO'                => '',
 				'TIPO_CONT'             => '',
-				'PLACA' 				=> 'NA',
+				'PLACA' 				            => 'NA',
 				'OTROS_ING'             => '',
 				'CAMARAC'               => 'NO',
 				'NIT_IND'               => '',
@@ -327,18 +317,18 @@ class assessorsController extends Controller
 				'BANCOP'                => 'NA',
 				'USUARIO_CREACION'      => $usuarioCreacion,
 				'USUARIO_ACTUALIZACION' => $assessorCode,
-				'EPS_CONYU' 			=> '',
-				'CEDULA_C' 				=> '',
-				'DIRECCION4'			=> 'NA',
-				'TRABAJO_CONYU' 		=> '',
-				'CARGO_CONYU' 			=> '',
-				'NOMBRE_CONYU' 			=> '',
-				'PROFESION_CONYU'		=> '',
-				'SALARIO_CONYU' 		=> '',
-				'CELULAR_CONYU' 		=> '',
-				'STATE' 				=> 'A'
-
+				'EPS_CONYU' 			         => '',
+				'CEDULA_C' 				         => '',
+				'DIRECCION4'			         => 'NA',
+				'TRABAJO_CONYU' 		      => '',
+				'CARGO_CONYU' 			       => '',
+				'NOMBRE_CONYU' 			      => '',
+				'PROFESION_CONYU'		     => '',
+				'SALARIO_CONYU' 		      => '',
+				'CELULAR_CONYU' 		      => '',
+				'STATE' 				            => 'A'
 			];
+
 			unset($dataOportudata['tipoCliente']);
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
@@ -533,7 +523,7 @@ class assessorsController extends Controller
 		);
 
 
-		if($consultasFosyga == "-1"){
+		if ($consultasFosyga == "-1") {
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
@@ -627,7 +617,7 @@ class assessorsController extends Controller
 			return -1;
 		}
 
-		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0 )) {
+		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0)) {
 			return "-3";
 		}
 
@@ -1301,7 +1291,7 @@ class assessorsController extends Controller
 		];
 
 		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic;
-		$debtor= new DebtorInsuranceOportuya;
+		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
@@ -1497,11 +1487,11 @@ class assessorsController extends Controller
 			$estadoResult = "APROBADO";
 			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 			if ($existCard == true) {
-			}else{
+			} else {
 				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 			}
 		} elseif ($estadoSolic == "EN SUCURSAL") {
-			$debtor= new DebtorInsurance();
+			$debtor = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
 			$debtor->SOLIC = $numSolic->SOLICITUD;
 			$debtor->save();
@@ -2044,5 +2034,4 @@ class assessorsController extends Controller
 			'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
 		]);
 	}
-
 }

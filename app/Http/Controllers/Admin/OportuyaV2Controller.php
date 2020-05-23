@@ -122,8 +122,8 @@ class OportuyaV2Controller extends Controller
 		$this->cifinBasicDataInterface           = $cifinBasicDataRepositoryInterface;
 		$this->ubicaInterface                    = $ubicaRepositoryInterface;
 		$this->assessorInterface                 = $AssessorRepositoryInterface;
-		$this->productRepo = $productRepository;
-		$this->brandRepo = $brandRepository;
+		$this->productRepo                       = $productRepository;
+		$this->brandRepo                         = $brandRepository;
 	}
 
 	public function index()
@@ -143,57 +143,66 @@ class OportuyaV2Controller extends Controller
 		$products = $list->map(function (Product $item) {
 			return $this->transformProduct($item);
 		})->all();
+
 		$images = Imagenes::selectRaw('*')
 			->where('category', '=', '1')
 			->where('isSlide', '=', '1')
 			->get();
+
 		return view('oportuya.catalog', [
-			'images' => $images,
+			'images'   => $images,
 			'products' => $products,
-			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
-			'brands' => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')
 		]);
 	}
 
 	public function product($slug)
 	{
-		$product = $this->productRepo->findProductBySlug($slug);
-		// $product = $this->transformProduct($list)->all();
-
 		$images = Imagenes::selectRaw('*')
 			->where('category', '=', '1')
 			->where('isSlide', '=', '1')
 			->get();
-		return view('oportuya.product.show', ['images' => $images, 'product' => $product]);
+		return view('oportuya.product.show', [
+			'images'  => $images,
+			'product' => $this->productRepo->findProductBySlug($slug)
+		]);
 	}
-
 
 	public function getPageDeniedTr()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDeniedTr();
 
-		return view('advance.pageDeniedTradicional', ['mensaje' => $mensaje->MSJ]);
+		return view('advance.pageDeniedTradicional', [
+			'mensaje' => $mensaje->MSJ
+		]);
 	}
 
 	public function getPageDeniedAl()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDeniedAl();
 
-		return view('advance.pageDeniedAlmacen', ['mensaje' => $mensaje->MSJ]);
+		return view('advance.pageDeniedAlmacen', [
+			'mensaje' => $mensaje->MSJ
+		]);
 	}
 
 	public function getPageDeniedSH()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDeniedSH();
 
-		return view('advance.pageDeniedSinHistorial', ['mensaje' => $mensaje->MSJ]);
+		return view('advance.pageDeniedSinHistorial', [
+			'mensaje' => $mensaje->MSJ
+		]);
 	}
 
 	public function getPageDenied()
 	{
 		$mensaje = $this->confirmationMessageInterface->getPageDenied();
 
-		return view('advance.pageDeniedAdvance', ['mensaje' => $mensaje->MSJ]);
+		return view('advance.pageDeniedAdvance', [
+			'mensaje' => $mensaje->MSJ
+		]);
 	}
 
 	public function validateEmail()
