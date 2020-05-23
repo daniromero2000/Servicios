@@ -117,6 +117,7 @@
                                 <th scope="col">Origen</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Cupo Producto/Avance</th>
+                                <th scope="col">Producto ID</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col" style="width: 10%;">Fecha registro</th>
                                 <th scope="col">Acciones</th>
@@ -136,7 +137,9 @@
                                 <td>
                                     $ @{{ lead.CUP_COMPRA | number:0 }} <br> / $ @{{ lead.CUPO_EFEC | number:0 }}
                                 </td>
-                                <td>@{{ lead.product_id }}</td>
+                                <td ng-if="lead.product_id != null">@{{ lead.product_id }}</td>
+                                <td ng-if="lead.product_id == null"> Sin Producto</td>
+                                <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHASOL }}</td>
                                 <td>
                                     <i ng-if="lead.ASESOR_DIG != NULL" class="fas fa-comment cursor"
@@ -356,6 +359,7 @@
                                 <th scope="col">Origen</th>
                                 <th scope="col">Ciudad</th>
                                 <th scope="col">Definición</th>
+                                <th scope="col">Producto ID</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Fecha Intención</th>
                                 <th scope="col">Score</th>
@@ -371,7 +375,9 @@
                                         ng-if="lead.ORIGEN == 'SEGUROS'"><b>@{{ " / " + lead.PLACA }}</b></span> </td>
                                 <td>@{{ lead.CIUD_UBI }}</td>
                                 <td>@{{ lead.DESCRIPCION }}</td>
-                                <td>@{{ lead.product_id }}</td>
+                                <td ng-if="lead.product_id != null">@{{ lead.product_id }}</td>
+                                <td ng-if="lead.product_id == null"> Sin Producto</td>
+                                <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHA_INTENCION }}</td>
                                 <td>@{{ lead.score }}</td>
                             </tr>
@@ -512,7 +518,8 @@
                                         style="color: #ffffff; background-color: pink"
                                         class="btn btn-info btn-block">Cotizado</span>
                                     <span class="text-center badge" ng-if="leadCM.state == 8"
-                                        style="color: #ffffff; background-color: green" class="btn btn-info btn-block">En
+                                        style="color: #ffffff; background-color: green"
+                                        class="btn btn-info btn-block">En
                                         Gestión</span>
                                 </td>
                                 <td>
