@@ -39,7 +39,8 @@ class SubsidiaryController extends Controller
   {
 
     if (request()->has('q')) {
-      $list = $this->customerInterface->searchCustomers(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('step'));
+      $subsidiaries = $this->subsidiaryinterface->searchSubsidiares(request()->input('q'));
+      return  $subsidiaries;
     }
 
     $subsidiaries = $this->subsidiaryinterface->getSubsidiares();

@@ -60,27 +60,10 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$("#alertProductList").hide();
 		};
 
-
-
-		$scope.getSubsidiaries = function () {
+		$scope.leodSubsidaries = function ($query) {
 			$http({
 				method: 'GET',
-				url: '/api/subsidiaries/'
-			}).then(function successCallback(response) {
-				if (response) {
-					angular.forEach(response.data, function (value) {
-						console.log(value.CODIGO);
-						$scope.listTags.push((value.CODIGO));
-					});
-				}
-			}, function errorCallback(response) {
-			});
-		};
-
-		$scope.leodSubsidaries = function (query) {
-			$http({
-				method: 'GET',
-				url: '/api/subsidiaries/' + query
+				url: '/api/subsidiaries?q=' + $query
 			}).then(function successCallback(response) {
 				if (response) {
 					return response.data;
@@ -88,7 +71,6 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			}, function errorCallback(response) {
 			});
 		};
-
 
 		$scope.getProductList = function () {
 			showLoader();
@@ -557,7 +539,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			});
 		};
 
-		$scope.getSubsidiaries();
+		// $scope.getSubsidiaries();
 		$scope.getProductList();
 		$scope.getFactor();
 		$scope.getListProduct();

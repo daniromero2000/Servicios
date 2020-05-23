@@ -6,6 +6,7 @@ use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as Support;
 
 class SubsidiaryRepository implements SubsidiaryRepositoryInterface
@@ -79,6 +80,15 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function searchSubsidiares(string $text): Collection
+    {
+        $query = $this->model->select('CODIGO')->where('CODIGO', 'LIKE', '%' . $text . '%')->where('STATE', 'A')->orderBy('CODIGO', 'asc')
+            ->get();
+        return $query;
+    }
+
+
 
     public function findSubsidiaryByIdFull(int $id): Subsidiary
     {
