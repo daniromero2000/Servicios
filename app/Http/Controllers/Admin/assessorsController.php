@@ -365,7 +365,7 @@ class assessorsController extends Controller
 			}
 
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
-				$getIdcityNac = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
+				$getIdcityNac = $this->cityInterface->getCityByName(trim($request->get('CIUD_NAC')));
 			}
 
 			$antig = $request->get('ANTIG');
@@ -470,7 +470,7 @@ class assessorsController extends Controller
 				'STATE'            		=> 'A',
 				'MEDIO_PAGO'            => ($request->get('MEDIO_PAGO') != '') ? trim($request->get('MEDIO_PAGO')) : '',
 				'ID_CIUD_EXP'           => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp->ID_DIAN) : '',
-				'ID_CIUD_NAC'           => ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') ? trim($getIdcityNac[0]->ID_DIAN) : '',
+				'ID_CIUD_NAC'           => ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') ? trim($getIdcityNac->ID_DIAN) : '',
 				'ID_CIUD_UBI'           => trim($city->ID_DIAN),
 				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
 				'CLIENTE_WEB'           => $clienteWeb,
@@ -1776,14 +1776,6 @@ class assessorsController extends Controller
 		} else {
 			return view('assessors.login');
 		}
-	}
-
-	private function getIdcityUbi($city)
-	{
-		$queryCity = sprintf('SELECT `ID_DIAN` FROM `CIUDADES` WHERE `NOMBRE` = "%s" ', $city);
-		$resp = DB::connection('oportudata')->select($queryCity);
-
-		return $resp;
 	}
 
 	public function getInfoLead($identificationNumber)
