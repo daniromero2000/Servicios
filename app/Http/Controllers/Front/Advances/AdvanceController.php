@@ -60,7 +60,6 @@ class AdvanceController extends Controller
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
         $this->ubica = $ubicaRepositoryInterface;
         $this->webServiceInterface = $webServiceRepositoryInterface;
-        $this->cliCelInterface = $cliCelRepositoryInterface;
         $this->cityInterface = $cityRepositoryInterface;
     }
 
