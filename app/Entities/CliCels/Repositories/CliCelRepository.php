@@ -3,7 +3,7 @@
 namespace App\Entities\CliCels\Repositories;
 
 use App\Entities\CliCels\CliCel;
-use App\Entities\CliCels\Repositories\Interfaces\CLiCelRepositoryInterface;
+use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 
 class CliCelRepository implements CliCelRepositoryInterface
 {
