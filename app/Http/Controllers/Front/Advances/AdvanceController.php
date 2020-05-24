@@ -21,10 +21,12 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Support\Carbon;
+use App\Entities\CliCels\CliCel;
+use App\Entities\CLiCels\Repositories\Interfaces\CLiCelRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface, $customerInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -39,7 +41,8 @@ class AdvanceController extends Controller
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
-        WebServiceRepositoryInterface $webServiceRepositoryInterface
+        WebServiceRepositoryInterface $webServiceRepositoryInterface,
+        CLiCelRepositoryInterface $cliCelRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -55,10 +58,12 @@ class AdvanceController extends Controller
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
         $this->ubica = $ubicaRepositoryInterface;
         $this->webServiceInterface = $webServiceRepositoryInterface;
+        $this->cliCelInterface = $cliCelRepositoryInterface;
     }
 
     public function index()
     {
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

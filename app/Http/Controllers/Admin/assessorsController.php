@@ -227,6 +227,7 @@ class assessorsController extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
+		$leadOportudata  = new Customer;
 		$usuarioCreacion = $assessorCode;
 		$clienteWeb      = 1;
 		$getExistLead    = Customer::find($request->CEDULA);
@@ -319,19 +320,18 @@ class assessorsController extends Controller
 			];
 
 			unset($dataOportudata['tipoCliente']);
-			$leadOportudata  = new Customer;
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
-			$clienteCelular  = new CliCel;
-			if ($queryExistCel[0]->total == 0) {
-				$clienteCelular          = new CliCel;
-				$clienteCelular->IDENTI  = trim($request->get('CEDULA'));
-				$clienteCelular->NUM     = trim($request->get('CELULAR'));
-				$clienteCelular->TIPO    = 'CEL';
-				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
-				$clienteCelular->save();
+			if ($this->cliCelInterface->checkIfCelNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
+				$data = [
+					'IDENTI'  => trim($request->get('CEDULA')),
+					'NUM'     => trim($request->get('CELULAR')),
+					'TIPO'    => 'CEL',
+					'CEL_VAL' => 0,
+					'FECHA'   => date("Y-m-d H:i:s")
+				];
+				$this->cliCelInterface->createCliCel($data);
 			}
+
 			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
 			if ($queryExistTelFijo[0]->total == 0) {
 				$clienteCelular          = new CliCel;

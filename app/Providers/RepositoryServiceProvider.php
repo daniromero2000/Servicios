@@ -132,12 +132,19 @@ use App\Entities\Brands\Repositories\BrandRepository;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 use App\Entities\Products\Repositories\ProductRepository;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\CliCels\Repositories\CliCelRepository;
+use App\Entities\CLiCels\Repositories\Interfaces\CLiCelRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+        $this->app->bind(
+            CLiCelRepositoryInterface::class,
+            CliCelRepository::class
+        );
+
         $this->app->bind(
             ProductRepositoryInterface::class,
             ProductRepository::class
