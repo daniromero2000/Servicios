@@ -781,6 +781,7 @@ class OportuyaV2Controller extends Controller
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
 				$customerStatusDenied = true;
+				$idDef = '8';
 				$customerIntention->ID_DEF            = '8';
 				$customerIntention->ESTADO_INTENCION  = '1';
 				$customerIntention->PERFIL_CREDITICIO = 'TIPO 7';
