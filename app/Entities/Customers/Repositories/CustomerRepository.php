@@ -269,4 +269,11 @@ class CustomerRepository implements CustomerRepositoryInterface
         $date = date('Y-m-d', strtotime($date));
         return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now());
     }
+
+    public function calculateCustomerCompanyTime($fechaIngreso)
+    {
+        $fechaActual = date("Y-m-d");
+        $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
+        return $dateDiff;
+    }
 }

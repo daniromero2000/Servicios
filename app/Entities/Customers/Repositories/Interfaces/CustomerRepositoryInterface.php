@@ -32,4 +32,6 @@ interface CustomerRepositoryInterface
   public function findCustomerByIdFull($identificationNumber): Customer;
 
   public function calculateCustomerAge($date);
+
+  public function calculateCustomerCompanyTime($fechaIngreso);
 }
