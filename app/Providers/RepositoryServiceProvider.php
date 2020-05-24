@@ -134,12 +134,19 @@ use App\Entities\Products\Repositories\ProductRepository;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Entities\CliCels\Repositories\CliCelRepository;
 use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
+use App\Entities\Policies\Repositories\PolicyRepository;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+        $this->app->bind(
+            PolicyRepositoryInterface::class,
+            PolicyRepository::class
+        );
+
         $this->app->bind(
             CLiCelRepositoryInterface::class,
             CliCelRepository::class

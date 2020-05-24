@@ -41,6 +41,7 @@ use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterfa
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -54,7 +55,7 @@ class assessorsController extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
-	private $cityInterface, $cliCelInterface;
+	private $cityInterface, $cliCelInterface, $policyInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -85,7 +86,8 @@ class assessorsController extends Controller
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
 		CityRepositoryInterface $cityRepositoryInterface,
-		CliCelRepositoryInterface $cliCelRepositoryInterface
+		CliCelRepositoryInterface $cliCelRepositoryInterface,
+		PolicyRepositoryInterface $policyRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -116,6 +118,7 @@ class assessorsController extends Controller
 		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->cityInterface                   = $cityRepositoryInterface;
 		$this->cliCelInterface                 = $cliCelRepositoryInterface;
+		$this->policyInterface                 = $policyRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -652,27 +655,7 @@ class assessorsController extends Controller
 				$perfilCrediticio = 'TIPO D';
 			}
 
-			if ($customerScore >= -7 && $customerScore <= 0) {
-				$perfilCrediticio = 'TIPO 5';
-			}
-
-			if ($customerScore >= 275 && $customerScore <= 527) {
-				$perfilCrediticio = 'TIPO D';
-			}
-
-			if ($customerScore >= 528 && $customerScore <= 624) {
-				$perfilCrediticio = 'TIPO C';
-			}
-
-			if ($customerScore >= 625 && $customerScore <= 674) {
-				$perfilCrediticio = 'TIPO B';
-			}
-
-			if ($customerScore >= 675 && $customerScore <= 1000) {
-				$perfilCrediticio = 'TIPO A';
-			}
-
-			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+			$customerIntention->PERFIL_CREDITICIO = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerIntention->save();
 		}
 
