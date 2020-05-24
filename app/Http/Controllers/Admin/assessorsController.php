@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Analisis, App\Entities\CliCels\CliCel, App\DatosCliente, App\TurnosOportuya;
+use App\Analisis, App\DatosCliente, App\TurnosOportuya;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -1290,7 +1290,7 @@ class assessorsController extends Controller
 
 		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
 		if (!empty($telConsultaUbica)) {
-			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+			$aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
 			$aprobo = 0;
 		}
@@ -1300,7 +1300,7 @@ class assessorsController extends Controller
 			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
 				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
 				if (!empty($telEmpConsultaUbica)) {
-					$aprobo = $this->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
+					$aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
 				} else {
 					$aprobo = 0;
 				}
@@ -1314,29 +1314,12 @@ class assessorsController extends Controller
 			if ($customer->EMAIL != '') {
 				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $customer->EMAIL]);
 				if (!empty($emailConsultaUbica)) {
-					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
+					$aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
 				}
 			} else {
 				$aprobo = 0;
 			}
 		}
-		return $aprobo;
-	}
-
-	private function validateDateUbica($fecha)
-	{
-		$fechaTelConsultaUbica = explode("/", $fecha);
-		$fechaTelConsultaUbica = "20" . $fechaTelConsultaUbica[2] . "-" . $fechaTelConsultaUbica[1] . "-" . $fechaTelConsultaUbica[0];
-		$fechaTelConsultaUbica = strtotime($fechaTelConsultaUbica);
-		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- 12 month", strtotime($dateNow));
-		$dateNew = date('Y-m-d', $dateNew);
-		if ($fechaTelConsultaUbica < strtotime($dateNew)) {
-			$aprobo = 1;
-		} else {
-			$aprobo = 0;
-		}
-
 		return $aprobo;
 	}
 
