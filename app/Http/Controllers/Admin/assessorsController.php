@@ -655,7 +655,8 @@ class assessorsController extends Controller
 				$perfilCrediticio = 'TIPO D';
 			}
 
-			$customerIntention->PERFIL_CREDITICIO = $this->policyInterface->CheckScorePolicy($customerScore);
+			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 			$customerIntention->save();
 		}
 
