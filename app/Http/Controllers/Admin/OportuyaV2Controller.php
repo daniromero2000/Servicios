@@ -49,6 +49,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -64,7 +65,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo;
-	private $assessorInterface;
+	private $assessorInterface, $policyInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -94,7 +95,8 @@ class OportuyaV2Controller extends Controller
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
 		AssessorRepositoryInterface $AssessorRepositoryInterface,
 		ProductRepositoryInterface $productRepository,
-		BrandRepositoryInterface $brandRepository
+		BrandRepositoryInterface $brandRepository,
+		PolicyRepositoryInterface $policyRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -124,6 +126,7 @@ class OportuyaV2Controller extends Controller
 		$this->assessorInterface                 = $AssessorRepositoryInterface;
 		$this->productRepo                       = $productRepository;
 		$this->brandRepo                         = $brandRepository;
+		$this->policyInterface                 = $policyRepositoryInterface;
 	}
 
 	public function index()
@@ -791,26 +794,7 @@ class OportuyaV2Controller extends Controller
 				$perfilCrediticio = 'TIPO D';
 			}
 
-			if ($customerScore >= -7 && $customerScore <= 0) {
-				$perfilCrediticio = 'TIPO 5';
-			}
-
-			if ($customerScore >= 275 && $customerScore <= 527) {
-				$perfilCrediticio = 'TIPO D';
-			}
-
-			if ($customerScore >= 528 && $customerScore <= 624) {
-				$perfilCrediticio = 'TIPO C';
-			}
-
-			if ($customerScore >= 625 && $customerScore <= 674) {
-				$perfilCrediticio = 'TIPO B';
-			}
-
-			if ($customerScore >= 675 && $customerScore <= 1000) {
-				$perfilCrediticio = 'TIPO A';
-			}
-
+			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 			$customerIntention->save();
 		}
