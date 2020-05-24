@@ -3,7 +3,7 @@
 namespace App\Entities\CLiCels\Repositories\Interfaces;
 
 
-interface CLiCelRepositoryInterface
+interface CliCelRepositoryInterface
 {
   public function checkIfPhoneNumExists($identificationNumber, $num);
 

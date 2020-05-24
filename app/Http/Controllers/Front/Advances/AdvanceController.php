@@ -43,7 +43,7 @@ class AdvanceController extends Controller
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
         WebServiceRepositoryInterface $webServiceRepositoryInterface,
-        CLiCelRepositoryInterface $cliCelRepositoryInterface,
+        CliCelRepositoryInterface $cliCelRepositoryInterface,
         CityRepositoryInterface $cityRepositoryInterface
 
     ) {

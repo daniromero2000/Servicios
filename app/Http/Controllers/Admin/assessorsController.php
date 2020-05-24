@@ -85,7 +85,7 @@ class assessorsController extends Controller
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
 		CityRepositoryInterface $cityRepositoryInterface,
-		CLiCelRepositoryInterface $cLiCelRepositoryInterface
+		CliCelRepositoryInterface $cliCelRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
