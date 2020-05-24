@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\CliCels \Repositories\Interfaces;
+namespace App\Entities\CliCels\Repositories\Interfaces;
 
 
 interface CliCelRepositoryInterface

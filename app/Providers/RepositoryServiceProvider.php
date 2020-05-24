@@ -132,8 +132,8 @@ use App\Entities\Brands\Repositories\BrandRepository;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 use App\Entities\Products\Repositories\ProductRepository;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
-use App\Entities\CliCels \Repositories\CliCelRepository;
-use App\Entities\CliCels \Repositories\Interfaces\CliCelRepositoryInterface;
+use App\Entities\CliCels\Repositories\CliCelRepository;
+use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
