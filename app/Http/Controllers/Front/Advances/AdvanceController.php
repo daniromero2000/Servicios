@@ -66,18 +66,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $city = 25001;
-
-        $queryCity = sprintf("SELECT `NOMBRE` FROM `CIUDADES` WHERE `CODIGO` = %s ", $city);
-
-        $resp = DB::connection('oportudata')->select($queryCity);
-
-        $cityCode = $this->cityInterface->getCityByCode($city);
-
-        DD($cityCode);
-
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
