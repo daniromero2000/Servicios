@@ -115,7 +115,7 @@ class assessorsController extends Controller
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
 		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->cityInterface                   = $cityRepositoryInterface;
-		$this->cliCelInterface                 = $cLiCelRepositoryInterface;
+		$this->cliCelInterface                 = $cliCelRepositoryInterface;
 		$this->middleware('auth');
 	}
 
