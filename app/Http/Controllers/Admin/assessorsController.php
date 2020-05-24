@@ -40,6 +40,7 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CLiCels\Repositories\Interfaces\CLiCelRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -53,7 +54,7 @@ class assessorsController extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
-	private $cityInterface;
+	private $cityInterface, $cliCelInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -83,7 +84,8 @@ class assessorsController extends Controller
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
 		UbicaRepositoryInterface $ubicaRepositoryInterface,
-		CityRepositoryInterface $cityRepositoryInterface
+		CityRepositoryInterface $cityRepositoryInterface,
+		CLiCelRepositoryInterface $cLiCelRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -113,6 +115,7 @@ class assessorsController extends Controller
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
 		$this->ruafInterface                   = $ruafRepositoryInterface;
 		$this->cityInterface                   = $cityRepositoryInterface;
+		$this->cliCelInterface                 = $cLiCelRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -244,6 +247,17 @@ class assessorsController extends Controller
 		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
 		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
 
+		if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('TELFIJO'))) == 0) {
+			$data = [
+				'IDENTI'  => trim($request->get('CEDULA')),
+				'NUM'     => trim($request->get('TELFIJO')),
+				'TIPO'    => 'FIJO',
+				'CEL_VAL' => 0,
+				'FECHA'   => date("Y-m-d H:i:s")
+			];
+			$this->cliCelInterface->createCliCel($data);
+		}
+
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
 		if ($request->tipoCliente == 'CONTADO') {
@@ -337,16 +351,6 @@ class assessorsController extends Controller
 				$this->cliCelInterface->createCliCel($data);
 			}
 
-			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('TELFIJO'))) == 0) {
-				$data = [
-					'IDENTI'  => trim($request->get('CEDULA')),
-					'NUM'     => trim($request->get('TELFIJO')),
-					'TIPO'    => 'FIJO',
-					'CEL_VAL' => 0,
-					'FECHA'   => date("Y-m-d H:i:s")
-				];
-				$this->cliCelInterface->createCliCel($data);
-			}
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			if ($request->get('CIUD_EXP') != '') {
@@ -361,8 +365,10 @@ class assessorsController extends Controller
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
 			}
+
 			$antig            = $request->get('ANTIG');
 			$indp             = $request->get('EDAD_INDP');
+
 			if (trim($request->get('ACTIVIDAD')) == 'EMPLEADO' || trim($request->get('ACTIVIDAD')) == 'SOLDADO-MILITAR-POLICÍA' || trim($request->get('ACTIVIDAD')) == 'PRESTACIÓN DE SERVICIOS') {
 				$antig = $this->calculateTimeCompany(trim($request->get('FEC_ING')) . "-01");
 			} else {
@@ -471,26 +477,18 @@ class assessorsController extends Controller
 			];
 
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			$queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('CELULAR'))]);
-			if ($request->get('CEL_VAL') == 0 && $queryExistCel[0]->total == 0) {
-				$clienteCelular          = new CliCel;
-				$clienteCelular->IDENTI  = trim($request->get('CEDULA'));
-				$clienteCelular->NUM     = trim($request->get('CELULAR'));
-				$clienteCelular->TIPO    = 'CEL';
-				$clienteCelular->CEL_VAL = 1;
-				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
-				$clienteCelular->save();
+
+			if ($request->get('CEL_VAL') == 0  && $this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
+				$data = [
+					'IDENTI'  => trim($request->get('CEDULA')),
+					'NUM'     => trim($request->get('CELULAR')),
+					'TIPO'    => 'CEL',
+					'CEL_VAL' => 1,
+					'FECHA'   => date("Y-m-d H:i:s")
+				];
+				$this->cliCelInterface->createCliCel($data);
 			}
-			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
-			if ($queryExistTelFijo[0]->total == 0) {
-				$clienteCelular          = new CliCel;
-				$clienteCelular->IDENTI  = trim($request->get('CEDULA'));
-				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
-				$clienteCelular->TIPO    = 'FIJO';
-				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
-				$clienteCelular->save();
-			}
+
 			$lastName = explode(" ", trim($request->get('APELLIDOS')));
 			$fechaExpIdentification = strtotime(trim($request->get('FEC_EXP')));
 			$fechaExpIdentification = date("d/m/Y", $fechaExpIdentification);
