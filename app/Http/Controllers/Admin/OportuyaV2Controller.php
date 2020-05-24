@@ -775,9 +775,13 @@ class OportuyaV2Controller extends Controller
 			return ['resp' => "false"];
 		} else {
 			if ($customerScore <= -8) {
+				$customer->ESTADO = 'NEGADO';
+				$customer->save();
 				$customerStatusDenied = true;
-				$idDef                = '8';
-				$perfilCrediticio     = 'TIPO NE';
+				$customerIntention->ID_DEF            = '8';
+				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->PERFIL_CREDITICIO = 'TIPO 7';
+				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 
