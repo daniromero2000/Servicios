@@ -12,7 +12,6 @@ use Carbon\Carbon;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
-
     private $columns = [
         'CREACION',
         'CEDULA',
@@ -26,7 +25,6 @@ class CustomerRepository implements CustomerRepositoryInterface
         'ESTADO',
         'SUC'
     ];
-
 
     public function __construct(
         Customer $customer
@@ -53,6 +51,16 @@ class CustomerRepository implements CustomerRepositoryInterface
             ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
     }
 
+    public function findCustomerByIdForFosyga($identificationNumber): Customer
+    {
+        try {
+            return $this->model->findOrFail($identificationNumber);
+        } catch (QueryException $e) {
+            dd($e);
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function findCustomerById($identificationNumber): Customer
     {
         try {
@@ -65,6 +73,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
     public function findCustomerByIdForConfronta($identificationNumber)
     {
         try {

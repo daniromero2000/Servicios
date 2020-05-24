@@ -339,7 +339,7 @@ class assessorsController extends Controller
 			];
 
 			unset($dataOportudata['tipoCliente']);
-			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
 				$data = [
 					'IDENTI'  => trim($request->get('CEDULA')),
@@ -475,7 +475,7 @@ class assessorsController extends Controller
 				'USUARIO_ACTUALIZACION' => $assessorCode
 			];
 
-			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
 
 			if ($request->get('CEL_VAL') == 0  && $this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
 				$data = [
@@ -497,21 +497,17 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
-		FROM `CLIENTE_FAB`
-		WHERE `CEDULA` = :cedula", ['cedula' => $identificationNumber]);
-
-		$lastName = explode(" ", $oportudataLead[0]->APELLIDOS);
-
-		$dateExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
+		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+		$lastName = explode(" ", $oportudataLead->APELLIDOS);
+		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
 		$consultasFosyga = $this->execConsultaFosygaLead(
 			$identificationNumber,
-			$oportudataLead[0]->TIPO_DOC,
-			$oportudataLead[0]->FEC_EXP,
-			$oportudataLead[0]->NOMBRES,
-			$oportudataLead[0]->APELLIDOS
+			$oportudataLead->TIPO_DOC,
+			$oportudataLead->FEC_EXP,
+			$oportudataLead->NOMBRES,
+			$oportudataLead->APELLIDOS
 		);
 
 		if ($consultasFosyga == "-1") {
@@ -530,7 +526,7 @@ class assessorsController extends Controller
 			return ['resp' => $consultasFosyga];
 		}
 
-		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead[0]->TIPO_DOC);
+		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";

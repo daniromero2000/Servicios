@@ -66,6 +66,24 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+        $identificationNumber = 1087994442;
+
+        $oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
+		FROM `CLIENTE_FAB`
+        WHERE `CEDULA` = :cedula", ['cedula' => $identificationNumber]);
+
+
+
+
+
+        $customer = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+
+        $lastName = explode(" ", $customer->APELLIDOS);
+
+        dd($lastName);
+
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

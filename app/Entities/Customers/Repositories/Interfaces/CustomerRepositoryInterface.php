@@ -17,6 +17,8 @@ interface CustomerRepositoryInterface
 
   public function findCustomerByIdForConfronta($identificationNumber);
 
+  public function findCustomerByIdForFosyga($identificationNumber): Customer;
+
   public function listCustomersTotal($from, $to);
 
   public function checkIfExists($identificationNumber);
