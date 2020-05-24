@@ -23,10 +23,11 @@ use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterfa
 use Illuminate\Support\Carbon;
 use App\Entities\CliCels\CliCel;
 use App\Entities\CLiCels\Repositories\Interfaces\CLiCelRepositoryInterface;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -42,7 +43,8 @@ class AdvanceController extends Controller
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
         WebServiceRepositoryInterface $webServiceRepositoryInterface,
-        CLiCelRepositoryInterface $cliCelRepositoryInterface
+        CLiCelRepositoryInterface $cliCelRepositoryInterface,
+        CityRepositoryInterface $cityRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -59,11 +61,11 @@ class AdvanceController extends Controller
         $this->ubica = $ubicaRepositoryInterface;
         $this->webServiceInterface = $webServiceRepositoryInterface;
         $this->cliCelInterface = $cliCelRepositoryInterface;
+        $this->cityInterface = $cityRepositoryInterface;
     }
 
     public function index()
     {
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

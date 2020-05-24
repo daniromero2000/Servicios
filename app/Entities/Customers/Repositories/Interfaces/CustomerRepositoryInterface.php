@@ -30,4 +30,6 @@ interface CustomerRepositoryInterface
   public function countCustomersForCallSteps($from, $to);
 
   public function findCustomerByIdFull($identificationNumber): Customer;
+
+  public function calculateCustomerAge($date);
 }

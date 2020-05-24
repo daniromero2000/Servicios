@@ -46,7 +46,6 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
-
     public function getSubsidiaryRiskZone($customerSubsidiary)
     {
         try {
@@ -83,12 +82,13 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
 
     public function searchSubsidiares(string $text): Collection
     {
-        $query = $this->model->select('CODIGO')->where('CODIGO', 'LIKE', '%' . $text . '%')->where('STATE', 'A')->orderBy('CODIGO', 'asc')
+        $query = $this->model->select('CODIGO')
+            ->where('CODIGO', 'LIKE', '%' . $text . '%')
+            ->where('STATE', 'A')
+            ->orderBy('CODIGO', 'asc')
             ->get();
         return $query;
     }
-
-
 
     public function findSubsidiaryByIdFull(int $id): Subsidiary
     {

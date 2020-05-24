@@ -39,6 +39,7 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -52,6 +53,7 @@ class assessorsController extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
+	private $cityInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -80,7 +82,8 @@ class assessorsController extends Controller
 		ExtintFinancialCifinRepositoryInterface $extintFinancialCifinRepositoryInterface,
 		UpToDateRealCifinRepositoryInterface $upToDateRealCifinsRepositoryInterface,
 		ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
-		UbicaRepositoryInterface $ubicaRepositoryInterface
+		UbicaRepositoryInterface $ubicaRepositoryInterface,
+		CityRepositoryInterface $cityRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -109,6 +112,7 @@ class assessorsController extends Controller
 		$this->extinctRealCifinInterface       = $extintRealCifinRepositoryInterface;
 		$this->ubicaInterface                  = $ubicaRepositoryInterface;
 		$this->ruafInterface                   = $ruafRepositoryInterface;
+		$this->cityInterface                   = $cityRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -237,11 +241,12 @@ class assessorsController extends Controller
 			$usuarioCreacion = $getExistLead->USUARIO_CREACION;
 		}
 
+		$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('CIUD_UBI'))->CIUDAD;
+		$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
+
 		$search = ['ñ', 'á', 'é', 'í', 'ó', 'ú'];
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
 		if ($request->tipoCliente == 'CONTADO') {
-			$cityName     = $this->getCity(trim($request->get('CIUD_UBI')));
-			$getIdcityUbi = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
 			$dataOportudata = [
 				'TIPO_DOC'    			       => trim($request->get('TIPO_DOC')),
 				'CEDULA'      			       => trim($request->get('CEDULA')),
@@ -273,9 +278,9 @@ class assessorsController extends Controller
 				'SUBTIPO'     			       => 'NUEVO',
 				'FEC_NAC'	  			         => '1900-01-01',
 				'EDAD'        			       => 0,
-				'CIUD_UBI'    			       => trim($cityName[0]->CIUDAD),
-				'DEPTO'       			       => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
-				'ID_CIUD_UBI' 			       => trim($getIdcityUbi[0]->ID_DIAN),
+				'CIUD_UBI'    			       => trim($subsidiaryCityName),
+				'DEPTO'       			       => trim($city->DEPARTAMENTO),
+				'ID_CIUD_UBI' 			       => trim($city->ID_DIAN),
 				'ID_CIUD_EXP' 			       => '',
 				'MEDIO_PAGO'  			       => 00,
 				'CIUD_EXP'    			       => '',
@@ -321,7 +326,7 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$createOportudaLead = $leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
-			if ($this->cliCelInterface->checkIfCelNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
+			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
 				$data = [
 					'IDENTI'  => trim($request->get('CEDULA')),
 					'NUM'     => trim($request->get('CELULAR')),
@@ -332,28 +337,27 @@ class assessorsController extends Controller
 				$this->cliCelInterface->createCliCel($data);
 			}
 
-			$queryExistTelFijo = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => trim($request->get('CEDULA')), 'telefono' => trim($request->get('TELFIJO'))]);
-			if ($queryExistTelFijo[0]->total == 0) {
-				$clienteCelular          = new CliCel;
-				$clienteCelular->IDENTI  = trim($request->get('CEDULA'));
-				$clienteCelular->NUM     = trim($request->get('TELFIJO'));
-				$clienteCelular->TIPO    = 'FIJO';
-				$clienteCelular->CEL_VAL = 0;
-				$clienteCelular->FECHA   = date("Y-m-d H:i:s");
-				$clienteCelular->save();
+			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('TELFIJO'))) == 0) {
+				$data = [
+					'IDENTI'  => trim($request->get('CEDULA')),
+					'NUM'     => trim($request->get('TELFIJO')),
+					'TIPO'    => 'FIJO',
+					'CEL_VAL' => 0,
+					'FECHA'   => date("Y-m-d H:i:s")
+				];
+				$this->cliCelInterface->createCliCel($data);
 			}
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
-			$cityName         = $this->getCity(trim($request->get('CIUD_UBI')));
-			$getIdcityUbi     = $this->getIdcityUbi(trim($cityName[0]->CIUDAD));
 			if ($request->get('CIUD_EXP') != '') {
 				$getNameCiudadExp = $this->getNameCiudadExp(trim($request->get('CIUD_EXP')));
 				$getIdcityExp     = $this->getIdcityUbi(trim($getNameCiudadExp[0]->NOMBRE));
 			}
-			if ($request->get('FEC_NAC') != '' && $request->get('FEC_NAC') != '1900-01-01') {
 
-				$age = $this->calculateAgeFromDate($request->get('FEC_NAC'));
+			if ($request->get('FEC_NAC') != '' && $request->get('FEC_NAC') != '1900-01-01') {
+				$age = $this->customerInterface->calculateCustomerAge($request->get('FEC_NAC'));
 			}
+
 			if ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') {
 				$getIdcityNac     = $this->getIdcityUbi(trim($request->get('CIUD_NAC')));
 			}
@@ -391,9 +395,9 @@ class assessorsController extends Controller
 				'TELFIJO'   			=> ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO')) : '0',
 				'CELULAR'   			=> ($request->get('CELULAR') != '') ? trim($request->get('CELULAR')) : '0',
 				'TIEMPO_VIV'   			=> ($request->get('TIEMPO_VIV') != '') ? trim($request->get('TIEMPO_VIV')) : '0',
-				'CIUD_UBI'   			=> ($request->get('CIUD_UBI') != '') ?  trim($cityName[0]->CIUDAD) : '',
+				'CIUD_UBI'   			=> ($request->get('CIUD_UBI') != '') ?  trim($subsidiaryCityName) : '',
 				'EMAIL'   				=> ($request->get('EMAIL') != '') ? trim($request->get('EMAIL')) : '',
-				'DEPTO'                 => trim(strtoupper($cityName[0]->DEPARTAMENTO)),
+				'DEPTO'                 => trim(strtoupper($city->DEPARTAMENTO)),
 				'ACTIVIDAD'             => trim($request->get('ACTIVIDAD')),
 				'ACT_ECO'   			=> ($request->get('ACT_ECO') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('ACT_ECO')))) : 'NA',
 				'NIT_EMP'   			=> ($request->get('NIT_EMP') != '') ? trim($request->get('NIT_EMP')) : '0',
@@ -459,7 +463,7 @@ class assessorsController extends Controller
 				'MEDIO_PAGO'            => ($request->get('MEDIO_PAGO') != '') ? trim($request->get('MEDIO_PAGO')) : '',
 				'ID_CIUD_EXP'           => ($request->get('CIUD_EXP') != '') ? trim($getIdcityExp[0]->ID_DIAN) : '',
 				'ID_CIUD_NAC'           => ($request->get('CIUD_NAC') != '' && $request->get('CIUD_NAC') != 'NA') ? trim($getIdcityNac[0]->ID_DIAN) : '',
-				'ID_CIUD_UBI'           => trim($getIdcityUbi[0]->ID_DIAN),
+				'ID_CIUD_UBI'           => trim($city->ID_DIAN),
 				'TRAT_DATOS'            => trim($request->get('TRAT_DATOS')),
 				'CLIENTE_WEB'           => $clienteWeb,
 				'USUARIO_CREACION'      => $usuarioCreacion,
@@ -1830,26 +1834,6 @@ class assessorsController extends Controller
 		$resp = DB::connection('oportudata')->select($queryCity);
 
 		return $resp;
-	}
-
-	private function calculateAge($fecha)
-	{
-		$time = strtotime($fecha);
-		$now  = time();
-		$age  = ($now - $time) / (60 * 60 * 24 * 365.25);
-		$age  = floor($age);
-
-		return $age;
-	}
-
-	private function calculateAgeFromDate($date)
-	{
-		$expeditionDate = date('Y-m-d', strtotime($date));
-		$dateExpeditionCustomer = Carbon::createFromFormat('Y-m-d', $expeditionDate);
-		$dateNow = Carbon::now();
-		$age = $dateExpeditionCustomer->diffInYears($dateNow);
-
-		return $age;
 	}
 
 	private function calculateTimeCompany($fechaIngreso)

@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -261,5 +262,11 @@ class CustomerRepository implements CustomerRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
+    }
+
+    public function calculateCustomerAge($date)
+    {
+        $date = date('Y-m-d', strtotime($date));
+        return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now());
     }
 }

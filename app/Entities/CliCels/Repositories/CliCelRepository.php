@@ -13,7 +13,7 @@ class CliCelRepository implements CliCelRepositoryInterface
         $this->model = $cliCel;
     }
 
-    public function checkIfCelNumExists($identificationNumber, $num)
+    public function checkIfPhoneNumExists($identificationNumber, $num)
     {
         try {
             return $this->model->where('IDENTI', $identificationNumber)
