@@ -21,8 +21,8 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Support\Carbon;
-use App\Entities\CliCels\CliCel;
-use App\Entities\CLiCels\Repositories\Interfaces\CLiCelRepositoryInterface;
+use App\Entities\CliCels \CliCel;
+use App\Entities\CliCels \Repositories\Interfaces\CLiCelRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 
 class AdvanceController extends Controller

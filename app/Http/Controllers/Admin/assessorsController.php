@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Analisis, App\Entities\CliCels\CliCel, App\DatosCliente, App\TurnosOportuya;
+use App\Analisis, App\Entities\CliCels \CliCel, App\DatosCliente, App\TurnosOportuya;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -40,7 +40,7 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Ruafs\Repositories\Interfaces\RuafRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
-use App\Entities\CLiCels\Repositories\Interfaces\CliCelRepositoryInterface;
+use App\Entities\CliCels \Repositories\Interfaces\CliCelRepositoryInterface;
 
 class assessorsController extends Controller
 {
