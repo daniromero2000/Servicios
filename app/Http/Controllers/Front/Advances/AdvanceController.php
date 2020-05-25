@@ -22,10 +22,11 @@ use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRep
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Support\Carbon;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -41,7 +42,8 @@ class AdvanceController extends Controller
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
         WebServiceRepositoryInterface $webServiceRepositoryInterface,
-        CityRepositoryInterface $cityRepositoryInterface
+        CityRepositoryInterface $cityRepositoryInterface,
+        CifinScoreRepositoryInterface $cifinScoreRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -58,6 +60,7 @@ class AdvanceController extends Controller
         $this->ubica = $ubicaRepositoryInterface;
         $this->webServiceInterface = $webServiceRepositoryInterface;
         $this->cityInterface = $cityRepositoryInterface;
+        $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
     }
 
     public function index()

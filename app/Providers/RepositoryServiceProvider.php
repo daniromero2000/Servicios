@@ -136,12 +136,19 @@ use App\Entities\CliCels\Repositories\CliCelRepository;
 use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 use App\Entities\Policies\Repositories\PolicyRepository;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\OportuyaTurns\Repositories\OportuyaTurnRepository;
+use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
+        $this->app->bind(
+            OportuyaTurnRepositoryInterface::class,
+            OportuyaTurnRepository::class
+        );
+
+
         $this->app->bind(
             PolicyRepositoryInterface::class,
             PolicyRepository::class

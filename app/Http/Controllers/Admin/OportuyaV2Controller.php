@@ -1921,24 +1921,22 @@ class OportuyaV2Controller extends Controller
 
 	private function addTurnos($identificationNumber, $numSolic)
 	{
-		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
-		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+		$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
+		$respScoreLead = $oportudataLead->latestCifinScore->score;
 		$scoreLead = 0;
+		if (!empty($respScoreLead)) {
+			$scoreLead = $respScoreLead->score;
+		}
 
+		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead->CIUD_UBI)->CODIGO;
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
-		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
-		$sucursal = $sucursal[0]->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
-		}
-		if (!empty($respScoreLead)) {
-			$scoreLead = $respScoreLead[0]->score;
 		}
 
 		$turnosOportuya            = new Turnos;
@@ -1971,21 +1969,19 @@ class OportuyaV2Controller extends Controller
 
 	private function addTurnosOportuya($identificationNumber, $numSolic)
 	{
-		$queryScoreLead = sprintf("SELECT `score` FROM `cifin_score` WHERE `scocedula` = %s ORDER BY `scoconsul` DESC LIMIT 1 ", $identificationNumber);
-		$respScoreLead = DB::connection('oportudata')->select($queryScoreLead);
+		$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
+		$respScoreLead = $oportudataLead->latestCifinScore->score;
 		$scoreLead = 0;
 		if (!empty($respScoreLead)) {
-			$scoreLead = $respScoreLead[0]->score;
+			$scoreLead = $respScoreLead->score;
 		}
 
+		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead->CIUD_UBI)->CODIGO;
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
-		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
-		$sucursal = $sucursal[0]->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);

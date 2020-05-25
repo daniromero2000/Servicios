@@ -46,6 +46,17 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
+    public function getSubsidiaryCodeByCity($city)
+    {
+        try {
+            return $this->model->where('CIUDAD', $city)
+                ->where('PRINCIPAL', 1)
+                ->get(['CODIGO'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getSubsidiaryRiskZone($customerSubsidiary)
     {
         try {
