@@ -504,7 +504,7 @@ class assessorsController extends Controller
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
-		$consultasFosyga = $this->execConsultaFosygaLead(
+		$consultasRegistraduria = $this->execConsultaRegistraduriaLead(
 			$identificationNumber,
 			$oportudataLead->TIPO_DOC,
 			$oportudataLead->FEC_EXP,
@@ -512,7 +512,7 @@ class assessorsController extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
-		if ($consultasFosyga == "-1") {
+		if ($consultasRegistraduria == "-1") {
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
@@ -521,8 +521,21 @@ class assessorsController extends Controller
 
 			$this->intentionInterface->createIntention($dataIntention);
 			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			return ['resp' => $consultasFosyga, 'infoLead' => $dataIntention->definition];
+			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
 		}
+
+		if ($consultasRegistraduria == "-3") {
+			return ['resp' => $consultasRegistraduria];
+		}
+
+		$consultasFosyga = $this->execConsultaFosygaLead(
+			$identificationNumber,
+			$oportudataLead->TIPO_DOC,
+			$oportudataLead->FEC_EXP,
+			$oportudataLead->NOMBRES,
+			$oportudataLead->APELLIDOS
+		);
+
 
 		if ($consultasFosyga == "-3") {
 			return ['resp' => $consultasFosyga];
@@ -564,27 +577,9 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+
+	private function execConsultaRegistraduriaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
 	{
-		// Fosyga
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaFosyga == "true") {
-			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
-			$infoBdua = (array) $infoBdua;
-			$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
-		} else {
-			$consultaFosyga = 1;
-		}
-
-		$validateConsultaFosyga = 0;
-
-		if ($consultaFosyga > 0) {
-			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-		} else {
-			$validateConsultaFosyga = 1;
-		}
-
 		// Registraduria
 		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
 		if ($dateConsultaRegistraduria == "true") {
@@ -606,7 +601,36 @@ class assessorsController extends Controller
 			return -1;
 		}
 
-		if ($validateConsultaRegistraduria < 0 || ($validateConsultaFosyga < 0)) {
+		if ($validateConsultaRegistraduria < 0) {
+			return "-3";
+		}
+
+		return "true";
+	}
+
+
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	{
+		// Fosyga
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
+		if ($dateConsultaFosyga == "true") {
+			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
+			$infoBdua = (array) $infoBdua;
+			$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
+		} else {
+			$consultaFosyga = 1;
+		}
+
+		$validateConsultaFosyga = 0;
+
+		if ($consultaFosyga > 0) {
+			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
+		} else {
+			$validateConsultaFosyga = 1;
+		}
+
+		if (($validateConsultaFosyga < 0)) {
 			return "-3";
 		}
 
