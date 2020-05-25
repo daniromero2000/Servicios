@@ -323,7 +323,6 @@ class OportuyaV2Controller extends Controller
 				return "-3";
 			}
 
-
 			if ($request->get('productId') == 0) {
 				$data = [
 					'CEDULA' => $identificationNumber,
@@ -417,7 +416,6 @@ class OportuyaV2Controller extends Controller
 
 			// Update/save information in CLIENTE_FAB table
 			$oportudataLead->update($dataLead);
-
 			$fechaExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
 			$dataDatosCliente = [
@@ -588,7 +586,6 @@ class OportuyaV2Controller extends Controller
 	public function getContactData($identificationNumber)
 	{
 		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", trim($identificationNumber));
-
 		$resp = DB::connection('oportudata')->select($query);
 
 		return response()->json($resp[0]);
@@ -1055,7 +1052,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 5 Definiciones cliente
-
 		if ($customer->ACTIVIDAD == 'SOLDADO-MILITAR-POLICÍA') {
 			$customer->ESTADO = 'PREAPROBADO';
 			$customer->save();
@@ -1401,8 +1397,6 @@ class OportuyaV2Controller extends Controller
 		return $aprobo;
 	}
 
-
-
 	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
@@ -1539,7 +1533,6 @@ class OportuyaV2Controller extends Controller
 
 		return "true";
 	}
-
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
@@ -1686,10 +1679,8 @@ class OportuyaV2Controller extends Controller
 		return $consultaComercial;
 	}
 
-
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
-
 		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$dataDatosCliente = [
@@ -1795,7 +1786,6 @@ class OportuyaV2Controller extends Controller
 	private function addDatosCliente($data = [])
 	{
 		$datosCliente             = new DatosCliente;
-
 		$datosCliente->CEDULA     = $data['identificationNumber'];
 		$datosCliente->SOLICITUD  = $data['numSolic']->SOLICITUD;
 		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
@@ -2067,7 +2057,6 @@ class OportuyaV2Controller extends Controller
 	public function getDataStep1()
 	{
 		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 AND STATE='A' ORDER BY CIUDAD ASC";
-
 		$resp = DB::connection('oportudata')->select($query);
 
 		return $resp;
@@ -2076,16 +2065,11 @@ class OportuyaV2Controller extends Controller
 	public function getDataStep2($identificationNumber)
 	{
 		$data = [];
-
 		$query2 = "SELECT `CODIGO` as value, `NOMBRE` as label FROM `CIUDADES` WHERE `STATE` = 'A' ORDER BY NOMBRE ";
-
 		$queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
-
 		$respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 		$resp2 = DB::connection('oportudata')->select($query2);
-
 		$digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
-
 		$data['digitalAnalyst'] = $digitalAnalysts[0];
 		$data['cities'] = $resp2;
 		$data['oportudataLead'] = $respOportudataLead[0];
@@ -2095,14 +2079,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Get data from step two form
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string $identificationNumber
-	 * @return array
 	 */
 	public function getDataStep3($identificationNumber)
 	{
@@ -2125,14 +2103,9 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * calculate the age through birth day
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
 	 *
-	 *
-	 * @param  string $fecha
-	 * @return string age
 	 */
 	private function calculateAge($fecha)
 	{
@@ -2146,14 +2119,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Send a city array,digital analist image and name to step1 view
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  none
-	 * @return view
 	 */
 	public function step1()
 	{
@@ -2164,14 +2131,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Return step2 view with identificationNumber decrypt
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string
-	 * @return view
 	 */
 	public function step2($string)
 	{
@@ -2183,14 +2144,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Return step3 view with identificationNumber decrypt
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string
-	 * @return view
 	 */
 	public function step3($string)
 	{
@@ -2201,14 +2156,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Encrypt the identificationNumber
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string
-	 * @return string
 	 */
 	public function encrypt($string)
 	{
@@ -2223,14 +2172,8 @@ class OportuyaV2Controller extends Controller
 
 	/**
 	 * Decrypt the identificationNumber
-	 *
-	 *
 	 * @author Sebastian Ormaza
 	 * @email  desarrollo@lagobo.com
-	 *
-	 *
-	 * @param  string
-	 * @return string
 	 */
 	public function decrypt($string)
 	{
