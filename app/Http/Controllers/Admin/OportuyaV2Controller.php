@@ -1734,10 +1734,8 @@ class OportuyaV2Controller extends Controller
 
 			$this->addTurnosOportuya($customer, $scoreLead, $numSolic);
 		}
-		$dataLead = [
-			'ESTADO' => $estadoResult,
-		];
-		$response = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', ' = ', $identificationNumber)->update($dataLead);
+		$customer->ESTADO = $estadoResult;
+		$customer->save();
 		$infoLead = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
@@ -1764,8 +1762,7 @@ class OportuyaV2Controller extends Controller
 		$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 
 		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
-		$sucursal = DB::connection('oportudata')->select(sprintf("SELECT `CODIGO` FROM `SUCURSALES` WHERE `CIUDAD` = '%s' AND `PRINCIPAL` = 1 ", $oportudataLead[0]->CIUD_UBI));
-		$sucursal = $sucursal[0]->CODIGO;
+		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead[0]->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
