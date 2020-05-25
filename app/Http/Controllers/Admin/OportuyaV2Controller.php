@@ -462,54 +462,6 @@ class OportuyaV2Controller extends Controller
 		}
 	}
 
-	// private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
-	// {
-	// 	// Fosyga
-	// 	$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-	// 	$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
-	// 	if ($dateConsultaFosyga == "true") {
-	// 		$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
-	// 		$infoBdua = (array) $infoBdua;
-	// 		$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
-	// 	} else {
-	// 		$consultaFosyga = 1;
-	// 	}
-
-	// 	$validateConsultaFosyga = 0;
-	// 	if ($consultaFosyga > 0) {
-	// 		$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-	// 	} else {
-	// 		$validateConsultaFosyga = 1;
-	// 	}
-
-	// 	// Registraduria
-	// 	$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
-	// 	if ($dateConsultaRegistraduria == "true") {
-	// 		$infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $typeDocument, $dateDocument);
-	// 		$infoEstadoCedula = (array) $infoEstadoCedula;
-	// 		$consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
-	// 	} else {
-	// 		$consultaRegistraduria = 1;
-	// 	}
-
-	// 	$validateConsultaRegistraduria = 0;
-	// 	if ($consultaRegistraduria > 0) {
-	// 		$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
-	// 	} else {
-	// 		$validateConsultaRegistraduria = 1;
-	// 	}
-
-	// 	if ($validateConsultaRegistraduria == -1) {
-	// 		return -1;
-	// 	}
-
-	// 	if ($validateConsultaRegistraduria < 0 || $validateConsultaFosyga < 0) {
-	// 		return "-3";
-	// 	}
-
-	// 	return "true";
-	// }
-
 	public function checkIfExistNum($cellPhone, $identificationNumber)
 	{
 		return $this->customerCellPhoneInterface->checkIfExistNum($cellPhone, $identificationNumber);
@@ -1588,67 +1540,6 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-
-
-
-
-	// public function execConsultasleadAsesores($identificationNumber)
-	// {
-	// 	$oportudataLead = DB::connection('oportudata')->select("SELECT `CEDULA`, `TIPO_DOC`, `NOMBRES`, `APELLIDOS`, `FEC_EXP`
-	// 	FROM `CLIENTE_FAB`
-	// 	WHERE `CEDULA` = :cedula", ['cedula' => $identificationNumber]);
-
-	// 	$lastName = explode(" ", $oportudataLead[0]->APELLIDOS);
-
-	// 	$dateExpIdentification = explode("-", $oportudataLead[0]->FEC_EXP);
-	// 	$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
-
-	// 	$consultasFosyga = $this->execConsultaFosygaLead(
-	// 		$identificationNumber,
-	// 		$oportudataLead[0]->TIPO_DOC,
-	// 		$oportudataLead[0]->FEC_EXP,
-	// 		$oportudataLead[0]->NOMBRES,
-	// 		$oportudataLead[0]->APELLIDOS
-	// 	);
-
-	// 	if ($consultasFosyga == "-1" || $consultasFosyga == "-3") {
-	// 		return ['resp' => $consultasFosyga];
-	// 	}
-
-	// 	$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead[0]->TIPO_DOC);
-	// 	if ($consultaComercial == 0) {
-	// 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-	// 		$customer->ESTADO = "SIN COMERCIAL";
-	// 		$customer->save();
-
-	// 		$dataIntention = [
-	// 			'CEDULA' => $identificationNumber,
-	// 			'ESTADO_INTENCION' => 3
-	// 		];
-
-	// 		$this->intentionInterface->createIntention($dataIntention);
-	// 		$policyCredit = [
-	// 			'quotaApprovedProduct' => 0,
-	// 			'quotaApprovedAdvance' => 0,
-	// 			'resp' => 'true'
-	// 		];
-	// 	} else {
-	// 		$policyCredit = [
-	// 			'quotaApprovedProduct' => 0,
-	// 			'quotaApprovedAdvance' => 0
-	// 		];
-
-	// 		$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
-	// 		$infoLead     = [];
-	// 		$infoLead     = $this->getInfoLeadCreate($identificationNumber);
-	// 		return [
-	// 			'resp'     => $policyCredit['resp'],
-	// 			'quotaApprovedProduct' => (isset($policyCredit['quotaApprovedProduct'])) ? $policyCredit['quotaApprovedProduct'] : 0,
-	// 			'quotaApprovedAdvance' => (isset($policyCredit['quotaApprovedAdvance'])) ? $policyCredit['quotaApprovedAdvance'] : 0,
-	// 			'infoLead' => $infoLead
-	// 		];
-	// 	}
-	// }
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
