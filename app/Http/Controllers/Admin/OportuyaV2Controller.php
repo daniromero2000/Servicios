@@ -50,6 +50,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -65,7 +66,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo;
-	private $assessorInterface, $policyInterface;
+	private $assessorInterface, $policyInterface, $OportuyaTurnInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -96,7 +97,9 @@ class OportuyaV2Controller extends Controller
 		AssessorRepositoryInterface $AssessorRepositoryInterface,
 		ProductRepositoryInterface $productRepository,
 		BrandRepositoryInterface $brandRepository,
-		PolicyRepositoryInterface $policyRepositoryInterface
+		PolicyRepositoryInterface $policyRepositoryInterface,
+		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface
+
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -127,6 +130,7 @@ class OportuyaV2Controller extends Controller
 		$this->productRepo                       = $productRepository;
 		$this->brandRepo                         = $brandRepository;
 		$this->policyInterface                 = $policyRepositoryInterface;
+		$this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
 	}
 
 	public function index()
@@ -1709,22 +1713,26 @@ class OportuyaV2Controller extends Controller
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic->SOLICITUD;
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		if ($estadoSolic == "APROBADO") {
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
-
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
-
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} elseif ($estadoSolic == "EN SUCURSAL") {
 			$estadoResult = "PREAPROBADO";
 		} else {
 			$estadoResult = "PREAPROBADO";
-			$turnos = $this->addTurnosOportuya($identificationNumber, $numSolic);
+			$respScoreLead = $customer->latestCifinScore;
+			$scoreLead = 0;
+			if (!empty($respScoreLead)) {
+				$scoreLead = $respScoreLead->score;
+			}
+
+			$this->addTurnosOportuya($customer, $scoreLead, $numSolic);
 		}
 		$dataLead = [
 			'ESTADO' => $estadoResult,
@@ -1967,16 +1975,9 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function addTurnosOportuya($identificationNumber, $numSolic)
+	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
 	{
-		$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-		$respScoreLead = $oportudataLead->latestCifinScore->score;
-		$scoreLead = 0;
-		if (!empty($respScoreLead)) {
-			$scoreLead = $respScoreLead->score;
-		}
-
-		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead->CIUD_UBI)->CODIGO;
+		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
@@ -1987,30 +1988,14 @@ class OportuyaV2Controller extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$turnosOportuya            = new TurnosOportuya;
-		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
-		$turnosOportuya->CEDULA    = $identificationNumber;
-		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
-		$turnosOportuya->SUC       = $sucursal;
-		$turnosOportuya->USUARIO   = '';
-		$turnosOportuya->PRIORIDAD = '2';
-		$turnosOportuya->ESTADO    = 'ANALISIS';
-		$turnosOportuya->TIPO      = 'OPORTUYA';
-		$turnosOportuya->SUB_TIPO  = 'WEB';
-		$turnosOportuya->FEC_RET   = '1994-09-30 00:00:00';
-		$turnosOportuya->FEC_FIN   = '1994-09-30 00:00:00';
-		$turnosOportuya->VALOR     = '0';
-		$turnosOportuya->FEC_ASIG  = '1994-09-30 00:00:00';
-		$turnosOportuya->SCORE     = $scoreLead;
-		$turnosOportuya->TIPO_CLI  = '';
-		$turnosOportuya->CED_COD1  = '';
-		$turnosOportuya->SCO_COD1  = '0';
-		$turnosOportuya->TIPO_COD1 = '';
-		$turnosOportuya->CED_COD2  = '';
-		$turnosOportuya->SCO_COD2  = '0';
-		$turnosOportuya->TIPO_COD2 = '';
-		$turnosOportuya->STATE     = 'A';
-		$turnosOportuya->save();
+		$turnData = [
+			'SOLICITUD' => $numSolic->SOLICITUD,
+			'CEDULA'    => $customer->CEDULA,
+			'SUC'       => $sucursal,
+			'SCORE'     => $scoreLead,
+		];
+
+		$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
 
 		return "true";
 	}

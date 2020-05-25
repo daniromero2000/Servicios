@@ -23,10 +23,13 @@ use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterfa
 use Illuminate\Support\Carbon;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
+use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
+    private $OportuyaTurnInterface;
+
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -43,7 +46,8 @@ class AdvanceController extends Controller
         UbicaRepositoryInterface $ubicaRepositoryInterface,
         WebServiceRepositoryInterface $webServiceRepositoryInterface,
         CityRepositoryInterface $cityRepositoryInterface,
-        CifinScoreRepositoryInterface $cifinScoreRepositoryInterface
+        CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
+        OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -61,10 +65,26 @@ class AdvanceController extends Controller
         $this->webServiceInterface = $webServiceRepositoryInterface;
         $this->cityInterface = $cityRepositoryInterface;
         $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
+        $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
     }
 
     public function index()
     {
+
+        $turnData = [
+            'SOLICITUD' => 666666,
+            'CEDULA'    => 1087994442,
+            'SUC'       => 125,
+            'SCORE'     => 521,
+
+        ];
+
+
+        $turn = $this->OportuyaTurnInterface->addOportuyaTurn($turnData);
+
+        dd($turn);
+
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
