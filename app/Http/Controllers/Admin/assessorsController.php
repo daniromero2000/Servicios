@@ -630,33 +630,33 @@ class assessorsController extends Controller
 	{
 		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
-		$idDef = "";
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
-		$data = ['CEDULA' => $identificationNumber];
-		$customerIntention =  $this->intentionInterface->createIntention($data);
+		$idDef                = "";
+		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerScore        = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$data                 = ['CEDULA' => $identificationNumber];
+		$customerIntention    = $this->intentionInterface->createIntention($data);
 
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			if ($customerScore <= -8) {
+			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
+
+			if ($customerScore >= 1 && $customerScore <= 275) {
+				$customerStatusDenied = true;
+				$idDef                = '5';
+				$perfilCrediticio     = 'TIPO D';
+			}
+
+			if ($perfilCrediticio == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
 				$idDef = '8';
 				$customerIntention->ID_DEF            = '8';
 				$customerIntention->ESTADO_INTENCION  = '1';
-				$customerIntention->PERFIL_CREDITICIO = 'TIPO 7';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
 
-			if ($customerScore >= 1 && $customerScore <= 275) {
-				$customerStatusDenied = true;
-				$idDef = '5';
-				$perfilCrediticio = 'TIPO D';
-			}
-
-			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 			$customerIntention->save();
 		}
@@ -684,7 +684,7 @@ class assessorsController extends Controller
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {
 					$customerStatusDenied = true;
-					$idDef = "6";
+					$idDef                = "6";
 				}
 				$customerIntention->ESTADO_OBLIGACIONES = 0;
 				$customerIntention->save();
@@ -695,7 +695,7 @@ class assessorsController extends Controller
 			if ($customerFinDoubtful[0]->finsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {
 					$customerStatusDenied = true;
-					$idDef = "6";
+					$idDef                = "6";
 				}
 				$customerIntention->ESTADO_OBLIGACIONES = 0;
 				$customerIntention->save();
@@ -719,8 +719,10 @@ class assessorsController extends Controller
 		}
 
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+
 		//4.1 Zona de riesgo
 		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
+
 		// 4.2 Tipo de cliente
 		$tipoCliente = '';
 		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
@@ -844,14 +846,14 @@ class assessorsController extends Controller
 		}
 
 		// 3.6 Tarjeta Black
-		$tarjeta = '';
-		$aprobado = false;
+		$tarjeta              = '';
+		$aprobado             = false;
 		$quotaApprovedProduct = 0;
 		$quotaApprovedAdvance = 0;
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1) {
 			$aprobado =  $this->UpToDateFinancialCifinInterface->check12MonthsPaymentVector($identificationNumber);
 			if ($aprobado == true) {
-				$tarjeta = "Tarjeta Black";
+				$tarjeta              = "Tarjeta Black";
 				$quotaApprovedProduct = 1900000;
 				$quotaApprovedAdvance = 500000;
 			}
@@ -860,8 +862,8 @@ class assessorsController extends Controller
 		// 3.7 Tarjeta Gray
 		if ($perfilCrediticio == 'TIPO A' && $historialCrediticio == 1 && $aprobado == false) {
 			if ($customer->ACTIVIDAD == 'PENSIONADO' || $customer->ACTIVIDAD == 'EMPLEADO') {
-				$aprobado = true;
-				$tarjeta = "Tarjeta Gray";
+				$aprobado             = true;
+				$tarjeta              = "Tarjeta Gray";
 				$quotaApprovedProduct = 1600000;
 				$quotaApprovedAdvance = 200000;
 			}
@@ -1261,7 +1263,6 @@ class assessorsController extends Controller
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
-
 	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -1271,7 +1272,6 @@ class assessorsController extends Controller
 		} else {
 			$consultaUbica = 1;
 		}
-
 		return $consultaUbica;
 	}
 
@@ -1282,7 +1282,6 @@ class assessorsController extends Controller
 		$consec = $customerUbicaConsultation->consec;
 		$aprobo = 0;
 		$celLead = 0;
-
 		$customerPhone =  $customer->checkedPhone;
 		if (!empty($customerPhone)) {
 			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
@@ -1339,7 +1338,6 @@ class assessorsController extends Controller
 			$form[$value->secuencia_preg]['consec'] = $value->consec;
 			$form[$value->secuencia_preg]['opciones'][] = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
 		}
-
 		return $form;
 	}
 

@@ -33,5 +33,9 @@ class PolicyRepository implements PolicyRepositoryInterface
         if ($customerScore >= 675 && $customerScore <= 1000) {
             return $perfilCrediticio = 'TIPO A';
         }
+
+        if ($customerScore <= -8) {
+            return $perfilCrediticio = 'TIPO 7';
+        }
     }
 }
