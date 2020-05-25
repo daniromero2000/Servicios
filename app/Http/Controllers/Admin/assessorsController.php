@@ -581,7 +581,6 @@ class assessorsController extends Controller
 		}
 	}
 
-
 	private function execConsultaRegistraduriaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
 	{
 		// Registraduria

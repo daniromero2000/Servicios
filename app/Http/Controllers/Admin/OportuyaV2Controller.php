@@ -50,6 +50,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -64,7 +65,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface, $cifinRealArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
-	private $ubicaInterface, $productRepo, $brandRepo;
+	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface;
 
 	public function __construct(
@@ -97,7 +98,8 @@ class OportuyaV2Controller extends Controller
 		ProductRepositoryInterface $productRepository,
 		BrandRepositoryInterface $brandRepository,
 		PolicyRepositoryInterface $policyRepositoryInterface,
-		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface
+		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
+		DatosClienteRepositoryInterface $datosClienteRepositoryInterface
 
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
@@ -128,8 +130,9 @@ class OportuyaV2Controller extends Controller
 		$this->assessorInterface                 = $AssessorRepositoryInterface;
 		$this->productRepo                       = $productRepository;
 		$this->brandRepo                         = $brandRepository;
-		$this->policyInterface                 = $policyRepositoryInterface;
-		$this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
+		$this->policyInterface                   = $policyRepositoryInterface;
+		$this->datosClienteInterface             = $datosClienteRepositoryInterface;
+		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 	}
 
 	public function index()
@@ -1685,7 +1688,8 @@ class OportuyaV2Controller extends Controller
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$numSolic = $factoryRequest->SOLICITUD;
 		if (!empty($data)) {
 			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,
@@ -1706,7 +1710,7 @@ class OportuyaV2Controller extends Controller
 			];
 		}
 
-		$this->addDatosCliente($dataDatosCliente);
+		$this->datosClienteInterface->addDatosCliente($dataDatosCliente);
 		$this->addAnalisis($numSolic, $identificationNumber);
 		$infoLead           = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
@@ -1740,6 +1744,7 @@ class OportuyaV2Controller extends Controller
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
+		$infoLead->ESTADO = $factoryRequest->ESTADO;
 
 		return [
 			'estadoCliente'        => $estadoResult,
@@ -1776,70 +1781,9 @@ class OportuyaV2Controller extends Controller
 			'ESTADO'        => $estado,
 		];
 
-		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData)->SOLICITUD;
+		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
 
 		return $customerFactoryRequest;
-	}
-
-	private function addDatosCliente($data = [])
-	{
-		$datosCliente             = new DatosCliente;
-		$datosCliente->CEDULA     = $data['identificationNumber'];
-		$datosCliente->SOLICITUD  = $data['numSolic'];
-		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
-		$datosCliente->DIR_REFPER = 'NA';
-		$datosCliente->BAR_REFPER = 'NA';
-		$datosCliente->TEL_REFPER = trim($data['TEL_REFPER']);
-		$datosCliente->CIU_REFPER = 'NA';
-		$datosCliente->NOM_REFPE2 = 'NA';
-		$datosCliente->DIR_REFPE2 = 'NA';
-		$datosCliente->BAR_REFPE2 = 'NA';
-		$datosCliente->TEL_REFPE2 = 0;
-		$datosCliente->CIU_REFPE2 = " ";
-		$datosCliente->NOM_REFFAM = trim($data['NOM_REFFAM']);
-		$datosCliente->DIR_REFFAM = 'NA';
-		$datosCliente->BAR_REFFAM = 'NA';
-		$datosCliente->TEL_REFFAM = trim($data['TEL_REFFAM']);
-		$datosCliente->PARENTESCO = " ";
-		$datosCliente->NOM_REFFA2 = 'NA';
-		$datosCliente->DIR_REFFA2 = 'NA';
-		$datosCliente->BAR_REFFA2 = 'NA';
-		$datosCliente->TEL_REFFA2 = 0;
-		$datosCliente->PARENTESC2 = " ";
-		$datosCliente->NOM_REFCOM = 'NA';
-		$datosCliente->TEL_REFCOM = 'NA';
-		$datosCliente->NOM_REFCO2 = 'NA';
-		$datosCliente->TEL_REFCO2 = 'NA';
-		$datosCliente->NOM_CONYUG = 'NA';
-		$datosCliente->CED_CONYUG = 'NA';
-		$datosCliente->DIR_CONYUG = 'NA';
-		$datosCliente->PROF_CONYU = " ";
-		$datosCliente->EMP_CONYUG = 'NA';
-		$datosCliente->CARGO_CONY = 'NA';
-		$datosCliente->EPS_CONYUG = 'NA';
-		$datosCliente->TEL_CONYUG = 'NA';
-		$datosCliente->ING_CONYUG = 0;
-		$datosCliente->CON_CLI1   = " ";
-		$datosCliente->CON_CLI2   = " ";
-		$datosCliente->CON_CLI3   = " ";
-		$datosCliente->CON_CLI4   = " ";
-		$datosCliente->EDIT_RFCLI = " ";
-		$datosCliente->EDIT_RFCL2 = " ";
-		$datosCliente->EDIT_RFCL3 = " ";
-		$datosCliente->INFORMA1   = 'NA';
-		$datosCliente->CARGO_INF1 = 'NA';
-		$datosCliente->FEC_COM1   = 'NA';
-		$datosCliente->FEC_COM2   = 'NA';
-		$datosCliente->ART_COM1   = 'NA';
-		$datosCliente->ART_COM2   = 'NA';
-		$datosCliente->CUOT_COM1  = 'NA';
-		$datosCliente->CUOT_COM2  = "Al Dia";
-		$datosCliente->HABITO1    = "Al Dia";
-		$datosCliente->HABITO2    = "Al Dia";
-		$datosCliente->STATE      = "A";
-		$createData = $datosCliente->save();
-
-		return "true";
 	}
 
 	private function addAnalisis($numSolic, $identificationNumber)
