@@ -357,7 +357,7 @@ class assessorsController extends Controller
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			if ($request->get('CIUD_EXP') != '') {
-				$getNameCiudadExp = $this->cityInterface->getCityByCode($city);
+				$getNameCiudadExp = $this->cityInterface->getCityByName($city);
 			}
 
 			if ($request->get('FEC_NAC') != '' && $request->get('FEC_NAC') != '1900-01-01') {

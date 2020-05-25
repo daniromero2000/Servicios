@@ -62,6 +62,12 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+
+        $getNameCiudadExp = $this->cityInterface->getCityByCode(50001);
+
+        dd($getNameCiudadExp);
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
