@@ -1685,7 +1685,8 @@ class OportuyaV2Controller extends Controller
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
-		$numSolic = $this->addSolicFab($identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,
@@ -1713,7 +1714,6 @@ class OportuyaV2Controller extends Controller
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic->SOLICITUD;
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		if ($estadoSolic == "APROBADO") {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
@@ -1751,7 +1751,7 @@ class OportuyaV2Controller extends Controller
 		];
 	}
 
-	private function addSolicFab($identificationNumber, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
+	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
 	{
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
@@ -1760,9 +1760,7 @@ class OportuyaV2Controller extends Controller
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 		$queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $assessorCode);
 		$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
-
-		$oportudataLead = DB::connection('oportudata')->table('CLIENTE_FAB')->where('CEDULA', '=', $identificationNumber)->get();
-		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead[0]->CIUD_UBI)->CODIGO;
+		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
@@ -1771,7 +1769,7 @@ class OportuyaV2Controller extends Controller
 		$solic_fab                = new FactoryRequest;
 		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
 		$solic_fab->PRODUC_W      = $quotaApprovedProduct;
-		$solic_fab->CLIENTE       = $identificationNumber;
+		$solic_fab->CLIENTE       = $customer->CEDULA;
 		$solic_fab->CODASESOR     = $assessorCode;
 		$solic_fab->id_asesor     = $assessorCode;
 		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
@@ -1783,7 +1781,7 @@ class OportuyaV2Controller extends Controller
 		$solic_fab->GRAN_TOTAL    = 0;
 		$solic_fab->SOLICITUD_WEB = 1;
 		$solic_fab->save();
-		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($identificationNumber);
+		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($customer->CEDULA);
 
 		return $numSolic;
 	}
