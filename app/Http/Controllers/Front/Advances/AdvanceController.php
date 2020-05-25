@@ -73,14 +73,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $identificationNumber = 1087994442;
-
-        $queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
-        $respQueryTemp = DB::connection('oportudata')->select($queryTemp);
-
-        dd($respQueryTemp);
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
