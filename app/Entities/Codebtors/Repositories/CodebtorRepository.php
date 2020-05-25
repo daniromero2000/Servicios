@@ -35,7 +35,7 @@ class CodebtorRepository implements CodebtorRepositoryInterface
         try {
             $data = [
                 'CEDULA'     => '',
-                'SOLICITUD'  => $request->SOLICITUD,
+                'SOLICITUD'  => $request,
                 'NOM_REFPER' => '',
                 'DIR_REFPER' => '',
                 'BAR_REFPER' => '',
@@ -93,5 +93,4 @@ class CodebtorRepository implements CodebtorRepositoryInterface
             return $e;
         }
     }
-
 }

@@ -1713,7 +1713,7 @@ class OportuyaV2Controller extends Controller
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
-		$infoLead->numSolic = $numSolic->SOLICITUD;
+		$infoLead->numSolic = $numSolic;
 		if ($estadoSolic == "APROBADO") {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
@@ -1721,7 +1721,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
-			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} elseif ($estadoSolic == "EN SUCURSAL") {
 			$estadoResult = "PREAPROBADO";
 		} else {
@@ -1740,7 +1740,7 @@ class OportuyaV2Controller extends Controller
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
-		$infoLead->numSolic = $numSolic->SOLICITUD;
+		$infoLead->numSolic = $numSolic;
 
 		return [
 			'estadoCliente'        => $estadoResult,
@@ -1766,31 +1766,27 @@ class OportuyaV2Controller extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$solic_fab                = new FactoryRequest;
-		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
-		$solic_fab->PRODUC_W      = $quotaApprovedProduct;
-		$solic_fab->CLIENTE       = $customer->CEDULA;
-		$solic_fab->CODASESOR     = $assessorCode;
-		$solic_fab->id_asesor     = $assessorCode;
-		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
-		$solic_fab->FECHASOL      = date("Y-m-d H:i:s");
-		$solic_fab->SUCURSAL      = $sucursal;
-		$solic_fab->ESTADO        = $estado;
-		$solic_fab->FTP           = 0;
-		$solic_fab->STATE         = "A";
-		$solic_fab->GRAN_TOTAL    = 0;
-		$solic_fab->SOLICITUD_WEB = 1;
-		$solic_fab->save();
-		$numSolic = $this->factoryRequestInterface->getCustomerFactoryRequest($customer->CEDULA);
+		$requestData = [
+			'AVANCE_W'      => $quotaApprovedAdvance,
+			'PRODUC_W'      => $quotaApprovedProduct,
+			'CLIENTE'       => $customer->CEDULA,
+			'CODASESOR'     => $assessorCode,
+			'id_asesor'     => $assessorCode,
+			'ID_EMPRESA'    => $IdEmpresa[0]->ID_EMPRESA,
+			'SUCURSAL'      => $sucursal,
+			'ESTADO'        => $estado,
+		];
 
-		return $numSolic;
+		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData)->SOLICITUD;
+
+		return $customerFactoryRequest;
 	}
 
 	private function addDatosCliente($data = [])
 	{
 		$datosCliente             = new DatosCliente;
 		$datosCliente->CEDULA     = $data['identificationNumber'];
-		$datosCliente->SOLICITUD  = $data['numSolic']->SOLICITUD;
+		$datosCliente->SOLICITUD  = $data['numSolic'];
 		$datosCliente->NOM_REFPER = trim($data['NOM_REFPER']);
 		$datosCliente->DIR_REFPER = 'NA';
 		$datosCliente->BAR_REFPER = 'NA';
@@ -1853,7 +1849,7 @@ class OportuyaV2Controller extends Controller
 		$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
 
 		$analisis               = new Analisis;
-		$analisis->solicitud    = $numSolic->SOLICITUD;
+		$analisis->solicitud    = $numSolic;
 		$analisis->ini_analis   = date("Y-m-d H:i:s");
 		$analisis->fec_datacli  = "1900-01-01 00:00:00";
 		$analisis->fec_datacod1 = "1900-01-01 00:00:00";
@@ -1943,7 +1939,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$turnosOportuya            = new Turnos;
-		$turnosOportuya->SOLICITUD = $numSolic->SOLICITUD;
+		$turnosOportuya->SOLICITUD = $numSolic;
 		$turnosOportuya->CEDULA    = $identificationNumber;
 		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
 		$turnosOportuya->SUC       = $sucursal;
@@ -1984,7 +1980,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$turnData = [
-			'SOLICITUD' => $numSolic->SOLICITUD,
+			'SOLICITUD' => $numSolic,
 			'CEDULA'    => $customer->CEDULA,
 			'SUC'       => $sucursal,
 			'SCORE'     => $scoreLead,

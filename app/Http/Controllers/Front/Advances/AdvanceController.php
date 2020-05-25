@@ -24,11 +24,12 @@ use Illuminate\Support\Carbon;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface;
+    private $OportuyaTurnInterface, $factoryInterface;
 
 
     public function __construct(
@@ -47,7 +48,8 @@ class AdvanceController extends Controller
         WebServiceRepositoryInterface $webServiceRepositoryInterface,
         CityRepositoryInterface $cityRepositoryInterface,
         CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
-        OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface
+        OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
+        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -66,25 +68,11 @@ class AdvanceController extends Controller
         $this->cityInterface = $cityRepositoryInterface;
         $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
         $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
+        $this->factoryInterface = $factoryRequestRepositoryInterface;
     }
 
     public function index()
     {
-
-        $turnData = [
-            'SOLICITUD' => 666666,
-            'CEDULA'    => 1087994442,
-            'SUC'       => 125,
-            'SCORE'     => 521,
-
-        ];
-
-
-        $turn = $this->OportuyaTurnInterface->addOportuyaTurn($turnData);
-
-        dd($turn);
-
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

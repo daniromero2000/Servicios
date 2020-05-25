@@ -1423,7 +1423,6 @@ class assessorsController extends Controller
 	{
 		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-
 		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		if (!empty($data)) {
 			$data['identificationNumber'] = $identificationNumber;
@@ -1445,7 +1444,7 @@ class assessorsController extends Controller
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
-		$infoLead->numSolic = $numSolic->SOLICITUD;
+		$infoLead->numSolic = $numSolic;
 		if ($estadoSolic == "APROBADO") {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
@@ -1456,12 +1455,12 @@ class assessorsController extends Controller
 			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 			if ($existCard == true) {
 			} else {
-				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic->SOLICITUD, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 			}
 		} elseif ($estadoSolic == "EN SUCURSAL") {
 			$debtor = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
-			$debtor->SOLIC = $numSolic->SOLICITUD;
+			$debtor->SOLIC = $numSolic;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
 		} else {
@@ -1480,7 +1479,7 @@ class assessorsController extends Controller
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
-		$infoLead->numSolic = $numSolic->SOLICITUD;
+		$infoLead->numSolic = $numSolic;
 
 		return [
 			'estadoCliente'        => $estadoResult,
@@ -1506,32 +1505,28 @@ class assessorsController extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$solic_fab                = new FactoryRequest;
-		$solic_fab->AVANCE_W      = $quotaApprovedAdvance;
-		$solic_fab->PRODUC_W      = $quotaApprovedProduct;
-		$solic_fab->CLIENTE       = $customer->CEDULA;
-		$solic_fab->CODASESOR     = $assessorCode;
-		$solic_fab->id_asesor     = $assessorCode;
-		$solic_fab->ID_EMPRESA    = $IdEmpresa[0]->ID_EMPRESA;
-		$solic_fab->FECHASOL      = date("Y-m-d H:i:s");
-		$solic_fab->SUCURSAL      = $sucursal;
-		$solic_fab->ESTADO        = $estado;
-		$solic_fab->FTP           = 0;
-		$solic_fab->STATE         = "A";
-		$solic_fab->GRAN_TOTAL    = 0;
-		$solic_fab->SOLICITUD_WEB = 1;
-		$solic_fab->save();
-		$numSolic = $this->factoryInterface->getCustomerFactoryRequest($customer->CEDULA);
-		$this->codebtorInterface->createCodebtor($numSolic);
-		$this->secondCodebtorInterface->createSecondCodebtor($numSolic);
-		return $numSolic;
+		$requestData = [
+			'AVANCE_W'      => $quotaApprovedAdvance,
+			'PRODUC_W'      => $quotaApprovedProduct,
+			'CLIENTE'       => $customer->CEDULA,
+			'CODASESOR'     => $assessorCode,
+			'id_asesor'     => $assessorCode,
+			'ID_EMPRESA'    => $IdEmpresa[0]->ID_EMPRESA,
+			'SUCURSAL'      => $sucursal,
+			'ESTADO'        => $estado,
+		];
+
+		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;
+		$this->codebtorInterface->createCodebtor($customerFactoryRequest);
+		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
+		return $customerFactoryRequest;
 	}
 
 	private function addDatosCliente($data = [])
 	{
 		$datosCliente             = new DatosCliente();
 		$datosCliente->CEDULA     = (isset($data['identificationNumber']) && $data['identificationNumber'] != '') ? $data['identificationNumber'] : 'NA';
-		$datosCliente->SOLICITUD  = (isset($data['numSolic']->SOLICITUD) && $data['numSolic']->SOLICITUD != '') ? $data['numSolic']->SOLICITUD : 'NA';
+		$datosCliente->SOLICITUD  = (isset($data['numSolic']) && $data['numSolic'] != '') ? $data['numSolic'] : 'NA';
 		$datosCliente->NOM_REFPER = (isset($data['NOM_REFPER']) && $data['NOM_REFPER'] != '') ? $data['NOM_REFPER'] : 'NA';
 		$datosCliente->DIR_REFPER = (isset($data['DIR_REFPER']) && $data['DIR_REFPER'] != '') ? $data['DIR_REFPER'] : 'NA';
 		$datosCliente->BAR_REFPER = (isset($data['BAR_REFPER']) && $data['BAR_REFPER'] != '') ? $data['BAR_REFPER'] : 'NA';
@@ -1594,7 +1589,7 @@ class assessorsController extends Controller
 		$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
 
 		$analisis               = new Analisis;
-		$analisis->solicitud    = $numSolic->SOLICITUD;
+		$analisis->solicitud    = $numSolic;
 		$analisis->ini_analis   = date("Y-m-d H:i:s");
 		$analisis->fec_datacli  = "1900-01-01 00:00:00";
 		$analisis->fec_datacod1 = "1900-01-01 00:00:00";
@@ -1677,7 +1672,7 @@ class assessorsController extends Controller
 		}
 
 		$turnData = [
-			'SOLICITUD' => $numSolic->SOLICITUD,
+			'SOLICITUD' => $numSolic,
 			'CEDULA'    => $customer->CEDULA,
 			'SUC'       => $sucursal,
 			'SCORE'     => $scoreLead,
