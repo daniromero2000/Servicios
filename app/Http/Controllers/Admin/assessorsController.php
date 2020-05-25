@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Analisis, App\DatosCliente, App\TurnosOportuya;
+use App\Analisis;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -26,7 +26,6 @@ use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
-use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
@@ -43,6 +42,7 @@ use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -54,7 +54,7 @@ class assessorsController extends Controller
 	private $creditCardInterface, $cifinRealArrearsInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
-	private $UpToDateRealCifinInterface, $extinctRealCifinInterface;
+	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
 
@@ -89,7 +89,8 @@ class assessorsController extends Controller
 		CityRepositoryInterface $cityRepositoryInterface,
 		CliCelRepositoryInterface $cliCelRepositoryInterface,
 		PolicyRepositoryInterface $policyRepositoryInterface,
-		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface
+		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
+		DatosClienteRepositoryInterface $datosClienteRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -121,7 +122,8 @@ class assessorsController extends Controller
 		$this->cityInterface                   = $cityRepositoryInterface;
 		$this->cliCelInterface                 = $cliCelRepositoryInterface;
 		$this->policyInterface                 = $policyRepositoryInterface;
-		$this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
+		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
+		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1438,9 +1440,9 @@ class assessorsController extends Controller
 			];
 		}
 
-		$addDatosCliente = $this->addDatosCliente($data);
-		$addAnalisis        = $this->addAnalisis($numSolic, $identificationNumber);
-		$infoLead           = (object) [];
+		$this->datosClienteInterface->addDatosCliente($data);
+		$this->addAnalisis($numSolic, $identificationNumber);
+		$infoLead        = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
@@ -1455,18 +1457,25 @@ class assessorsController extends Controller
 			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 			if ($existCard == true) {
 			} else {
-				$tarjeta = $this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+				$tarjeta = $this->creditCardInterface->createCreditCard(
+					$numSolic,
+					$identificationNumber,
+					$policyCredit['quotaApprovedProduct'],
+					$policyCredit['quotaApprovedAdvance'],
+					$infoLead->SUC,
+					$infoLead->TARJETA
+				);
 			}
 		} elseif ($estadoSolic == "EN SUCURSAL") {
-			$debtor = new DebtorInsurance();
+			$debtor         = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
-			$debtor->SOLIC = $numSolic;
+			$debtor->SOLIC  = $numSolic;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
 		} else {
-			$estadoResult = "PREAPROBADO";
+			$estadoResult  = "PREAPROBADO";
 			$respScoreLead = $customer->latestCifinScore;
-			$scoreLead = 0;
+			$scoreLead     = 0;
 			if (!empty($respScoreLead)) {
 				$scoreLead = $respScoreLead->score;
 			}
@@ -1522,66 +1531,6 @@ class assessorsController extends Controller
 		return $customerFactoryRequest;
 	}
 
-	private function addDatosCliente($data = [])
-	{
-		$datosCliente             = new DatosCliente();
-		$datosCliente->CEDULA     = (isset($data['identificationNumber']) && $data['identificationNumber'] != '') ? $data['identificationNumber'] : 'NA';
-		$datosCliente->SOLICITUD  = (isset($data['numSolic']) && $data['numSolic'] != '') ? $data['numSolic'] : 'NA';
-		$datosCliente->NOM_REFPER = (isset($data['NOM_REFPER']) && $data['NOM_REFPER'] != '') ? $data['NOM_REFPER'] : 'NA';
-		$datosCliente->DIR_REFPER = (isset($data['DIR_REFPER']) && $data['DIR_REFPER'] != '') ? $data['DIR_REFPER'] : 'NA';
-		$datosCliente->BAR_REFPER = (isset($data['BAR_REFPER']) && $data['BAR_REFPER'] != '') ? $data['BAR_REFPER'] : 'NA';
-		$datosCliente->TEL_REFPER = (isset($data['TEL_REFPER']) && $data['TEL_REFPER'] != '') ? $data['TEL_REFPER'] : 'NA';
-		$datosCliente->CIU_REFPER = (isset($data['CIU_REFPER']) && $data['CIU_REFPER'] != '') ? $data['CIU_REFPER'] : 'NA';
-		$datosCliente->NOM_REFPE2 = (isset($data['NOM_REFPE2']) && $data['NOM_REFPE2'] != '') ? $data['NOM_REFPE2'] : 'NA';
-		$datosCliente->DIR_REFPE2 = (isset($data['DIR_REFPE2']) && $data['DIR_REFPE2'] != '') ? $data['DIR_REFPE2'] : 'NA';
-		$datosCliente->BAR_REFPE2 = (isset($data['BAR_REFPE2']) && $data['BAR_REFPE2'] != '') ? $data['BAR_REFPE2'] : 'NA';
-		$datosCliente->TEL_REFPE2 = (isset($data['TEL_REFPE2']) && $data['TEL_REFPE2'] != '') ? $data['TEL_REFPE2'] : 'NA';
-		$datosCliente->CIU_REFPE2 = (isset($data['CIU_REFPE2']) && $data['CIU_REFPE2'] != '') ? $data['CIU_REFPE2'] : 'NA';
-		$datosCliente->NOM_REFFAM = (isset($data['NOM_REFFAM']) && $data['NOM_REFFAM'] != '') ? $data['NOM_REFFAM'] : 'NA';
-		$datosCliente->DIR_REFFAM = (isset($data['DIR_REFFAM']) && $data['DIR_REFFAM'] != '') ? $data['DIR_REFFAM'] : 'NA';
-		$datosCliente->BAR_REFFAM = (isset($data['BAR_REFFAM']) && $data['BAR_REFFAM'] != '') ? $data['BAR_REFFAM'] : 'NA';
-		$datosCliente->TEL_REFFAM = (isset($data['TEL_REFFAM']) && $data['TEL_REFFAM'] != '') ? $data['TEL_REFFAM'] : 'NA';
-		$datosCliente->PARENTESCO = (isset($data['PARENTESCO']) && $data['PARENTESCO'] != '') ? $data['PARENTESCO'] : 'NA';
-		$datosCliente->NOM_REFFA2 = (isset($data['NOM_REFFA2']) && $data['NOM_REFFA2'] != '') ? $data['NOM_REFFA2'] : 'NA';
-		$datosCliente->DIR_REFFA2 = (isset($data['DIR_REFFA2']) && $data['DIR_REFFA2'] != '') ? $data['DIR_REFFA2'] : 'NA';
-		$datosCliente->BAR_REFFA2 = (isset($data['BAR_REFFA2']) && $data['BAR_REFFA2'] != '') ? $data['BAR_REFFA2'] : 'NA';
-		$datosCliente->TEL_REFFA2 = (isset($data['TEL_REFFA2']) && $data['TEL_REFFA2'] != '') ? $data['TEL_REFFA2'] : 'NA';
-		$datosCliente->PARENTESC2 = (isset($data['PARENTESC2']) && $data['PARENTESC2'] != '') ? $data['PARENTESC2'] : 'NA';
-		$datosCliente->NOM_REFCOM = 'NA';
-		$datosCliente->TEL_REFCOM = 'NA';
-		$datosCliente->NOM_REFCO2 = 'NA';
-		$datosCliente->TEL_REFCO2 = 'NA';
-		$datosCliente->NOM_CONYUG = 'NA';
-		$datosCliente->CED_CONYUG = 'NA';
-		$datosCliente->DIR_CONYUG = 'NA';
-		$datosCliente->PROF_CONYU = " ";
-		$datosCliente->EMP_CONYUG = 'NA';
-		$datosCliente->CARGO_CONY = 'NA';
-		$datosCliente->EPS_CONYUG = 'NA';
-		$datosCliente->TEL_CONYUG = 'NA';
-		$datosCliente->ING_CONYUG = 0;
-		$datosCliente->CON_CLI1   = '';
-		$datosCliente->CON_CLI2   = '';
-		$datosCliente->CON_CLI3   = '';
-		$datosCliente->CON_CLI4   = '';
-		$datosCliente->EDIT_RFCLI = '';
-		$datosCliente->EDIT_RFCL2 = '';
-		$datosCliente->EDIT_RFCL3 = " ";
-		$datosCliente->INFORMA1   = 'NA';
-		$datosCliente->CARGO_INF1 = 'NA';
-		$datosCliente->FEC_COM1   = 'NA';
-		$datosCliente->FEC_COM2   = 'NA';
-		$datosCliente->ART_COM1   = 'NA';
-		$datosCliente->ART_COM2   = 'NA';
-		$datosCliente->CUOT_COM1  = 'NA';
-		$datosCliente->CUOT_COM2  = "Al Dia";
-		$datosCliente->HABITO1    = "Al Dia";
-		$datosCliente->HABITO2    = "Al Dia";
-		$datosCliente->STATE      = "A";
-		$createData = $datosCliente->save();
-
-		return "true";
-	}
 
 	private function addAnalisis($numSolic, $identificationNumber)
 	{

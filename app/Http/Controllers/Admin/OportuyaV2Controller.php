@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
-use App\DatosCliente;
+use App\Entities\DatosClientes\DatosCliente;
 use App\Intenciones;
 use App\ResultadoPolitica;
 use App\Entities\CreditCards\CreditCard;
 use App\Turnos;
-use App\TurnosOportuya;
 use App\Analisis;
 use App\CodeUserVerification;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
@@ -1707,8 +1706,8 @@ class OportuyaV2Controller extends Controller
 			];
 		}
 
-		$addDatosCliente = $this->addDatosCliente($dataDatosCliente);
-		$addAnalisis        = $this->addAnalisis($numSolic, $identificationNumber);
+		$this->addDatosCliente($dataDatosCliente);
+		$this->addAnalisis($numSolic, $identificationNumber);
 		$infoLead           = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);

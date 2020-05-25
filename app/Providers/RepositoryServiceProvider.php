@@ -138,11 +138,18 @@ use App\Entities\Policies\Repositories\PolicyRepository;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\OportuyaTurnRepository;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\DatosClienteRepository;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            DatosClienteRepositoryInterface::class,
+            DatosClienteRepository::class
+        );
+
         $this->app->bind(
             OportuyaTurnRepositoryInterface::class,
             OportuyaTurnRepository::class
