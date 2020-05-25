@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Imagenes;
-use App\Entities\DatosClientes\DatosCliente;
 use App\Intenciones;
 use App\ResultadoPolitica;
-use App\Entities\CreditCards\CreditCard;
-use App\Turnos;
 use App\Analisis;
 use App\CodeUserVerification;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
@@ -51,6 +48,7 @@ use Illuminate\Support\Carbon;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
+use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -66,7 +64,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
-	private $assessorInterface, $policyInterface, $OportuyaTurnInterface;
+	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -99,7 +97,8 @@ class OportuyaV2Controller extends Controller
 		BrandRepositoryInterface $brandRepository,
 		PolicyRepositoryInterface $policyRepositoryInterface,
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
-		DatosClienteRepositoryInterface $datosClienteRepositoryInterface
+		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
+		TurnRepositoryInterface $turnRepositoryInterface
 
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
@@ -133,6 +132,7 @@ class OportuyaV2Controller extends Controller
 		$this->policyInterface                   = $policyRepositoryInterface;
 		$this->datosClienteInterface             = $datosClienteRepositoryInterface;
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
+		$this->turnInterface                     = $turnRepositoryInterface;
 	}
 
 	public function index()
@@ -1881,30 +1881,14 @@ class OportuyaV2Controller extends Controller
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
-		$turnosOportuya            = new Turnos;
-		$turnosOportuya->SOLICITUD = $numSolic;
-		$turnosOportuya->CEDULA    = $identificationNumber;
-		$turnosOportuya->FECHA     = date("Y-m-d H:i:s");
-		$turnosOportuya->SUC       = $sucursal;
-		$turnosOportuya->USUARIO   = '';
-		$turnosOportuya->PRIORIDAD = '2';
-		$turnosOportuya->ESTADO    = 'EN SUCURSAL';
-		$turnosOportuya->TIPO      = 'NUEVO';
-		$turnosOportuya->SUB_TIPO  = 'NUEVO';
-		$turnosOportuya->FEC_RET   = '1994-09-30 00:00:00';
-		$turnosOportuya->FEC_FIN   = '1994-09-30 00:00:00';
-		$turnosOportuya->VALOR     = '0';
-		$turnosOportuya->FEC_ASIG  = '1994-09-30 00:00:00';
-		$turnosOportuya->SCORE     = $scoreLead;
-		$turnosOportuya->TIPO_CLI  = '';
-		$turnosOportuya->CED_COD1  = '';
-		$turnosOportuya->SCO_COD1  = '0';
-		$turnosOportuya->TIPO_COD1 = '';
-		$turnosOportuya->CED_COD2  = '';
-		$turnosOportuya->SCO_COD2  = '0';
-		$turnosOportuya->TIPO_COD2 = '';
-		$turnosOportuya->STATE     = 'A';
-		$turnosOportuya->save();
+		$turnData = [
+			'SOLICITUD' => $numSolic,
+			'CEDULA'    => $oportudataLead->CEDULA,
+			'SUC'       => $sucursal,
+			'SCORE'     => $scoreLead,
+		];
+
+		$this->turnInterface->addTurn($turnData);
 
 		return "true";
 	}
