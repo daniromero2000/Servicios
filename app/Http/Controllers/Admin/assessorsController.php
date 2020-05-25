@@ -163,8 +163,8 @@ class assessorsController extends Controller
 			)->sortByDesc('FECHASOL');
 		}
 
-		$estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
-		$estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+		$estadosAprobados  = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+		$estadosNegados    = $this->toolsInterface->extractValuesToArray($estadosNegados);
 		$estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
 		$estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
 
@@ -185,7 +185,6 @@ class assessorsController extends Controller
 		foreach ($statusesNegadosValue as $key => $status) {
 			$statusesNegadosValues +=  $statusesNegadosValue[$key];
 		}
-
 
 		$statusesDesistidosValue = [];
 		foreach ($estadosDesistidos as $estadosDesistido) {
