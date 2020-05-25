@@ -536,7 +536,6 @@ class assessorsController extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
-
 		if ($consultasFosyga == "-3") {
 			return ['resp' => $consultasFosyga];
 		}
@@ -607,7 +606,6 @@ class assessorsController extends Controller
 
 		return "true";
 	}
-
 
 	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
 	{
