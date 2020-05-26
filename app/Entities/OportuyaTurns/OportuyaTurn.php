@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Entities\OportuyaTurns;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Turnos extends Model
+class OportuyaTurn extends Model
 {
-    protected $table = 'TURNOS';
+    protected $table = 'TURNOS_OPORTUYA';
 
     protected $primaryKey = 'NUMERO';
 

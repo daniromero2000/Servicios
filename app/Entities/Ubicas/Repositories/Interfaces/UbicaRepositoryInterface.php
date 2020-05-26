@@ -13,4 +13,6 @@ interface UbicaRepositoryInterface
     public function validateConsultaUbica($identificationNumber, $names, $lastName, $dateExpedition);
 
     public function validateDateConsultaUbica($identificationNumber, $daysToIncrement);
+
+    public function validateDateUbica($fecha);
 }

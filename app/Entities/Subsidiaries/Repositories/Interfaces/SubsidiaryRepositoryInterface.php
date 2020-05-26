@@ -11,6 +11,8 @@ interface SubsidiaryRepositoryInterface
 
     public function getSubsidiaryCityByCode($code);
 
+    public function getSubsidiaryCodeByCity($city);
+
     public function getSubsidiaryRiskZone($customerSubsidiary);
 
     public function listSubsidiares($totalView): Support;

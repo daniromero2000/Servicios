@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Entities\Turnos;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +9,8 @@ class Turno extends Model
     protected $table = 'TURNOS';
 
     protected $primaryKey = 'NUMERO';
+
+    protected $connection = 'oportudata';
 
     public $timestamps = false;
 

@@ -21,10 +21,19 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use Illuminate\Support\Carbon;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
+use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
+use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 
 class AdvanceController extends Controller
 {
-    private $leadInterface, $subsidiaryInterface, $customerInterface;
+    private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
+
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -39,7 +48,14 @@ class AdvanceController extends Controller
         ExtintRealCifinRepositoryInterface $extintRealCifinRepositoryInterface,
         CifinBasicDataRepositoryInterface $cifinBasicDataRepositoryInterface,
         UbicaRepositoryInterface $ubicaRepositoryInterface,
-        WebServiceRepositoryInterface $webServiceRepositoryInterface
+        WebServiceRepositoryInterface $webServiceRepositoryInterface,
+        CityRepositoryInterface $cityRepositoryInterface,
+        CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
+        OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
+        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
+        AssessorRepositoryInterface $assessorRepositoryInterface,
+        FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
+        AnalisisRepositoryInterface $analisisRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -55,6 +71,13 @@ class AdvanceController extends Controller
         $this->cifinBasic = $cifinBasicDataRepositoryInterface;
         $this->ubica = $ubicaRepositoryInterface;
         $this->webServiceInterface = $webServiceRepositoryInterface;
+        $this->cityInterface = $cityRepositoryInterface;
+        $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
+        $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
+        $this->factoryInterface = $factoryRequestRepositoryInterface;
+        $this->assessorInterface = $assessorRepositoryInterface;
+        $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
+        $this->AnalisisInterface = $analisisRepositoryInterface;
     }
 
     public function index()

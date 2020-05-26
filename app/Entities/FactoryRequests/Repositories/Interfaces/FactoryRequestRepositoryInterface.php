@@ -8,6 +8,8 @@ use Illuminate\Support\Collection as Support;
 
 interface FactoryRequestRepositoryInterface
 {
+  public function addFactoryRequest($data);
+
   public function findFactoryRequestById(int $id): FactoryRequest;
 
   public function findFactoryRequestByIdFull(int $id): FactoryRequest;

@@ -38,7 +38,7 @@ class AssessorRepository implements AssessorRepositoryInterface
     {
         try {
             return $this->model->findOrFail($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
@@ -50,7 +50,7 @@ class AssessorRepository implements AssessorRepositoryInterface
                 ->with('creditCard')
                 ->with('customer')
                 ->findOrFail($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
@@ -60,28 +60,10 @@ class AssessorRepository implements AssessorRepositoryInterface
         try {
             return $this->model->where('Cliente', $identificationNumber)
                 ->orderBy('SOLICITUD', 'desc')->get(['SOLICITUD'])->first();
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
-
-    // public function listAssessorsDigitalChannel()
-    // {
-    //     try {
-    //         return $this->model->with([
-    //             'customer',
-    //             'creditCard'
-    //         ])->has('hasCustomer')
-    //             ->has('creditCard')
-    //             ->where('ESTADO', 'APROBADO')
-    //             ->where('GRAN_TOTAL', 0)
-    //             ->where('SOLICITUD_WEB', 1)
-    //             ->latest('SOLICITUD')
-    //             ->get(['SOLICITUD', 'ASESOR_DIG', 'FECHASOL']);
-    //     } catch (\Throwable $th) {
-    //         //throw $th;
-    //     }
-    // }
 
     public function checkCustomerHasAssessor($identificationNumber, $timeRejectedVigency)
     {
@@ -111,19 +93,6 @@ class AssessorRepository implements AssessorRepositoryInterface
             $e;
         }
     }
-
-    // public function listAssessors($totalView): Support
-    // {
-    //     try {
-    //         return  $this->model
-    //             ->orderBy('SOLICITUD', 'desc')
-    //             ->skip($totalView)
-    //             ->take(30)
-    //             ->get($this->columns);
-    //     } catch (QueryException $e) {
-    //         abort(503, $e->getMessage());
-    //     }
-    // }
 
     public function countAssessorsStatuses($from, $to)
     {

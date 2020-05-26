@@ -1,40 +1,40 @@
 @extends('layouts.app')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Nuestras tiendas.','page_path':'/Nuestras-tiendas'});
-</script>
+@include('layouts.front.layouts.googleAds')
 @section('title', 'Oportunidades Sevicios - Nuestras tiendas.')
 
 @section('content')
-	<div id="ourStores">
-		<h1 class="menuItem-title text-center">Nuestras Tiendas</h1>
-		<div class="container">
-			<div class="row resetRow">
-				<div class="col-12 col-sm-8 offset-sm-2">
-					<div id="acorddion">
-						@foreach($stores as $store)
-							<div class="card">
-								<div class="card-header" id="heading{{ $store['number'] }}">
-									<h5 class="mb-0">
-									<button class="btn btn-link ourStores-titleStore" data-toggle="collapse" data-target="#store{{ $store['number'] }}" aria-expanded="false" aria-controls="store{{ $store['number'] }}">
-										{{ $store['name'] }}
-									</button>
-									</h5>
-								</div>
+<div id="ourStores">
+	<h1 class="menuItem-title text-center">Nuestras Tiendas</h1>
+	<div class="container">
+		<div class="row resetRow">
+			<div class="col-12 col-sm-8 offset-sm-2">
+				<div id="acorddion">
+					@foreach($stores as $store)
+					<div class="card">
+						<div class="card-header" id="heading{{ $store['number'] }}">
+							<h5 class="mb-0">
+								<button class="btn btn-link ourStores-titleStore" data-toggle="collapse"
+									data-target="#store{{ $store['number'] }}" aria-expanded="false"
+									aria-controls="store{{ $store['number'] }}">
+									{{ $store['name'] }}
+								</button>
+							</h5>
+						</div>
 
-								<div id="store{{ $store['number'] }}" class="collapse @if($store['number'] == 1) show @endif" aria-labelledby="heading{{ $store['number'] }}" data-parent="#acorddion">
-									<div class="card-body">
-										{{ $store['name'] }} <br>
-										{{ $store['addres'] }} <br>
-										{{ $store['city'] }} <br>
-										{{ $store['telephone'] }}
-									</div>
-								</div>
+						<div id="store{{ $store['number'] }}" class="collapse @if($store['number'] == 1) show @endif"
+							aria-labelledby="heading{{ $store['number'] }}" data-parent="#acorddion">
+							<div class="card-body">
+								{{ $store['name'] }} <br>
+								{{ $store['addres'] }} <br>
+								{{ $store['city'] }} <br>
+								{{ $store['telephone'] }}
 							</div>
-						@endforeach
+						</div>
 					</div>
+					@endforeach
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 @endsection()
