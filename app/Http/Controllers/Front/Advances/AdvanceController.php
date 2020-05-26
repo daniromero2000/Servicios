@@ -26,11 +26,13 @@ use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterfa
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface;
 
 
     public function __construct(
@@ -51,7 +53,9 @@ class AdvanceController extends Controller
         CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
         OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
-        AssessorRepositoryInterface $assessorRepositoryInterface
+        AssessorRepositoryInterface $assessorRepositoryInterface,
+        FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
+        AnalisisRepositoryInterface $analisisRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -72,10 +76,31 @@ class AdvanceController extends Controller
         $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
         $this->factoryInterface = $factoryRequestRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
+        $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
+        $this->AnalisisInterface = $analisisRepositoryInterface;
     }
 
     public function index()
     {
+
+        $queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", 1087994442);
+        $respQueryTemp = DB::connection('oportudata')->select($queryTemp);
+
+        $fosygaTemp = $this->fosygaTempInterface->getLastFosygaTempConsultation(1087994442);
+        $customer = $this->customerInterface->findCustomerById(1087994442);
+
+        $analisisData = [
+            'solicitud'      => 666668,
+        ];
+
+        if ($fosygaTemp) {
+            $analisisData['paz_cli']  = $fosygaTemp->paz_cli;
+            $analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
+        }
+
+        $analisis = $this->AnalisisInterface->addAnalisis($analisisData);
+        dd($analisis);
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

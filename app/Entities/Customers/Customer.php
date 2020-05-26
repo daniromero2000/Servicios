@@ -18,6 +18,7 @@ use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Ruafs\Ruaf;
 use App\Entities\Fosygas\Fosyga;
+use App\Entities\FosygaTemps\FosygaTemp;
 use App\Entities\Intentions\Intention;
 use App\Entities\Registradurias\Registraduria;
 use App\Entities\Ubicas\Ubica;
@@ -205,6 +206,11 @@ class Customer extends Model
     public function customerFosygas()
     {
         return $this->hasMany(Fosyga::class, 'cedula')->orderBy('fechaConsulta', 'DESC');
+    }
+
+    public function customerFosygaTemps()
+    {
+        return $this->hasMany(FosygaTemp::class, 'cedula')->orderBy('id', 'DESC');
     }
 
     public function customerRegistraduria()

@@ -142,11 +142,25 @@ use App\Entities\DatosClientes\Repositories\DatosClienteRepository;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Turnos\Repositories\TurnRepository;
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
+use App\Entities\FosygaTemps\Repositories\FosygaTempRepository;
+use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
+use App\Entities\Analisis\Repositories\AnalisisRepository;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            AnalisisRepositoryInterface::class,
+            AnalisisRepository::class
+        );
+
+        $this->app->bind(
+            FosygaTempRepositoryInterface::class,
+            FosygaTempRepository::class
+        );
+
         $this->app->bind(
             TurnRepositoryInterface::class,
             TurnRepository::class

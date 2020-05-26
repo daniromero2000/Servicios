@@ -43,15 +43,17 @@ use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
+use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 
 class assessorsController extends Controller
 {
 	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
 	private $customerInterface, $toolsInterface, $factoryInterface, $temporaryCustomerInterface;
-	private $daysToIncrement, $consultationValidityInterface;
+	private $daysToIncrement, $consultationValidityInterface, $AnalisisInterface;
 	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $commercialConsultationInterface, $customerProfessionInterface;
-	private $creditCardInterface, $cifinRealArrearsInterface;
+	private $creditCardInterface, $cifinRealArrearsInterface,  $fosygaTempInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
@@ -90,7 +92,9 @@ class assessorsController extends Controller
 		CliCelRepositoryInterface $cliCelRepositoryInterface,
 		PolicyRepositoryInterface $policyRepositoryInterface,
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
-		DatosClienteRepositoryInterface $datosClienteRepositoryInterface
+		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
+		FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
+		AnalisisRepositoryInterface $analisisRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -124,6 +128,8 @@ class assessorsController extends Controller
 		$this->policyInterface                 = $policyRepositoryInterface;
 		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
 		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
+		$this->fosygaTempInterface = $fosygaTempRepositoryInterface;
+		$this->AnalisisInterface = $analisisRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1487,7 +1493,7 @@ class assessorsController extends Controller
 		}
 
 		$this->datosClienteInterface->addDatosCliente($data);
-		$this->addAnalisis($numSolic, $identificationNumber);
+		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
 		$infoLead        = (object) [];
 		if ($estadoSolic != 'ANALISIS') {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
@@ -1575,79 +1581,18 @@ class assessorsController extends Controller
 		return $customerFactoryRequest;
 	}
 
-	private function addAnalisis($numSolic, $identificationNumber)
+	private function addAnalisis($numSolic, $fosygaTemp)
 	{
-		$queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", $identificationNumber);
-		$respQueryTemp = DB::connection('oportudata')->select($queryTemp);
+		$analisisData = [
+			'solicitud'      => $numSolic,
+		];
 
-		$analisis               = new Analisis;
-		$analisis->solicitud    = $numSolic;
-		$analisis->ini_analis   = date("Y-m-d H:i:s");
-		$analisis->fec_datacli  = "1900-01-01 00:00:00";
-		$analisis->fec_datacod1 = "1900-01-01 00:00:00";
-		$analisis->fec_datacod2 = "1900-01-01 00:00:00";
-		$analisis->ini_ref      = "1900-01-01 00:00:00";
-		$analisis->valor        = "0";
-		$analisis->rf_fpago     = "1900-01-01 00:00:00";
-		$analisis->fin_analis   = "1900-01-01 00:00:00";
-		$analisis->fin_analis   = "1900-01-01 00:00:00";
-		$analisis->Fin_ref      = "1900-01-01 00:00:00";
-		$analisis->autoriz      = "0";
-		$analisis->fact_aur     = "0";
-		$analisis->ini_def      = "1900-01-01 00:00:00";
-		$analisis->fin_def      = "1900-01-01 00:00:00";
-		$analisis->fec_aur      = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli1   = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli3   = "1900-01-01 00:00:00";
-		$analisis->aurfe_cli3   = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod1   = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod12  = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod13  = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod2   = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod21  = "1900-01-01 00:00:00";
-		$analisis->aurfe_cod22  = "1900-01-01 00:00:00";
-		$analisis->aurcu_cli1   = "0";
-		$analisis->aurcu_cli2   = "0";
-		$analisis->aurcu_cli3   = "0";
-		$analisis->aurcu_cod1   = "0";
-		$analisis->aurcu_cod12  = "0";
-		$analisis->aurcu_cod13  = "0";
-		$analisis->aurcu_cod2   = "0";
-		$analisis->scor_cli     = "0";
-		$analisis->scor_cod1    = "0";
-		$analisis->scor_cod2    = "0";
-		$analisis->data_cli     = "0";
-		$analisis->data_cod1    = "0";
-		$analisis->data_cod2    = "0";
-		$analisis->rec_cod1     = "0";
-		$analisis->rec_cod2     = "0";
-		$analisis->io_cod1      = "0";
-		$analisis->io_cod2      = "0";
-		$analisis->aurcu_cod21  = "0";
-		$analisis->aurcu_cod22  = "0";
-		$analisis->vcu_cli1     = "0";
-		$analisis->vcu_cli2     = "0";
-		$analisis->vcu_cli3     = "0";
-		$analisis->vcu_cod1     = "0";
-		$analisis->vcu_cod12    = "0";
-		$analisis->vcu_cod13    = "0";
-		$analisis->vcu_cod2     = "0";
-		$analisis->vcu_cod21    = "0";
-		$analisis->vcu_cod22    = "0";
-		$analisis->aurcre_cli1  = "0";
-		$analisis->aurcre_cli2  = "0";
-		$analisis->aurcre_cli3  = "0";
-		$analisis->aurcre_cod1  = "0";
-		$analisis->aurcre_cod12 = "0";
-		$analisis->aurcre_cod13 = "0";
-		$analisis->aurcre_cod2  = "0";
-		$analisis->aurcre_cod21 = "0";
-		$analisis->aurcre_cod22 = "0";
-		if (count($respQueryTemp) > 0) {
-			$analisis->paz_cli     = $respQueryTemp[0]->paz_cli;
-			$analisis->fos_cliente = $respQueryTemp[0]->fos_cliente;
+		if ($fosygaTemp) {
+			$analisisData['paz_cli']  = $fosygaTemp->paz_cli;
+			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
-		$analisis->save();
+
+		$this->AnalisisInterface->addAnalisis($analisisData);
 	}
 
 	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
