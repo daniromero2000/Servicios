@@ -114,7 +114,6 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         }
 
         if ($respEstadoCedula->estado != 'VIGENTE') {
-            DB::connection('oportudata')->select('UPDATE `CLIENTE_FAB` SET `ESTADO` = "NEGADO" WHERE `CEDULA` = :identificationNumber', ['identificationNumber' => $identificationNumber]);
             return -1; // Cedula no vigente
         }
 

@@ -510,7 +510,6 @@ class assessorsController extends Controller
 	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$lastName = explode(" ", $oportudataLead->APELLIDOS);
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
@@ -526,6 +525,9 @@ class assessorsController extends Controller
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
+			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->save();
+
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
@@ -550,9 +552,8 @@ class assessorsController extends Controller
 
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
-			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->save();
+			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA' => $identificationNumber,
