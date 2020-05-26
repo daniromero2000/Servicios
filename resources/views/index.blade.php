@@ -1,8 +1,5 @@
 @extends('layouts.app')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Home','page_path':'/'});
-</script>
+@include('layouts.front.layouts.googleAds')
 @section('title', 'Servicios Financieros Oportunidades - Crédito para todo')
 
 @section('metaTags')

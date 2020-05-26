@@ -1,12 +1,9 @@
 @extends('layouts.app')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-	window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Avances','page_path':'/avance'});
-</script>
+@include('layouts.front.layouts.googleAds')
 @section('title', 'Avances')
 
 @section('metaTags')
-	{{-- <meta name="description" content="">
+{{-- <meta name="description" content="">
 	<meta name="keywords" content="">
 	<meta property="og:title" content="" />
 	<meta property="og:url" content="" />
@@ -17,50 +14,50 @@
 @section('content')
 <div id="oportuyaSlider">
 	@foreach($images as $slider)
-		<div class="containImg">
-			<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
-			<div class="avanceSliderContent text-center">
-				<div class="avanceSliderTitle">
+	<div class="containImg">
+		<img src="/images/{{ $slider['img'] }}" class="img-fluid img-responsive" title="{{ $slider['title'] }}" />
+		<div class="avanceSliderContent text-center">
+			<div class="avanceSliderTitle">
+				@php
+				$titleChunk=explode("-",$slider['title'],2);
+				$chunkOne= @$titleChunk[0];
+				$chunkTwo= @$titleChunk[1];
+				$chunkOneExplode= explode("_", $chunkOne,2);
+				$chunkTwoExplode= explode("_",$chunkTwo,2);
+				$chunkExplodeOne=@$chunkOneExplode[0];
+				$chunkExplodeTwo=@$chunkOneExplode[1];
+				$chunkExplodeThree=@$chunkTwoExplode[0];
+				$chunkExplodeFour=@$chunkTwoExplode[1];
+				@endphp
+				<p>
+					@php
+					echo $chunkExplodeOne.' <span class="textTitleSliderPink">'.$chunkExplodeTwo.'</span>';
+					@endphp
+				</p>
+				<p>
+					@php
+					echo $chunkExplodeThree.' <span class="textTitleSliderBlue">'.$chunkExplodeFour.'</span>';
+					@endphp
+				</p>
+			</div>
+			<br>
+			<br>
+			<div class="avanceSliderButton">
+				<p>
+					<a href="/avance/step1" alt="Realizar Solicitud de Crédito">
 						@php
-							$titleChunk=explode("-",$slider['title'],2);								
-							$chunkOne= @$titleChunk[0];
-							$chunkTwo= @$titleChunk[1];
-							$chunkOneExplode= explode("_", $chunkOne,2);
-							$chunkTwoExplode= explode("_",$chunkTwo,2);
-							$chunkExplodeOne=@$chunkOneExplode[0];
-							$chunkExplodeTwo=@$chunkOneExplode[1];
-							$chunkExplodeThree=@$chunkTwoExplode[0];
-							$chunkExplodeFour=@$chunkTwoExplode[1];
+						echo $slider['textButton'];
 						@endphp
-					<p>
-						@php
-							echo $chunkExplodeOne.' <span class="textTitleSliderPink">'.$chunkExplodeTwo.'</span>';
-						@endphp							
-					</p>
-					<p>
-						@php
-							echo $chunkExplodeThree.' <span class="textTitleSliderBlue">'.$chunkExplodeFour.'</span>';
-						@endphp							
-					</p>
-				</div>
-				<br>
-				<br>
-				<div class="avanceSliderButton">
-					<p>
-						<a href="/avance/step1" alt="Realizar Solicitud de Crédito">
-							@php
-								echo $slider['textButton'];
-							@endphp
-						</a>
-					</p>
-				</div>
+					</a>
+				</p>
 			</div>
 		</div>
+	</div>
 	@endforeach
 </div>
 <div id="requisitos-avances">
 	<div class="container text-center">
-		<h3><span>Confiamos en ti</span>, te prestamos <br> efectivo con estos requisitos.	</h3>
+		<h3><span>Confiamos en ti</span>, te prestamos <br> efectivo con estos requisitos. </h3>
 	</div>
 </div>
 <div id="requisitos-avaces-iconos">
@@ -87,7 +84,7 @@
 					<span>Ingresos <br> verificables</span>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 <div id="obtener-avance">
@@ -96,15 +93,16 @@
 		<p>Obtén tu <span>avance</span> en efectivo</p>
 		<p>en menos de <span>15 minutos.</span></p>
 		<br>
-		<a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20en%20obtener%20informaci%C3%B3n%20acerca%20de%20Avances%20Oportunidades." target="_blank">Escribenos por Whatsapp <i class="fab fa-whatsapp"></i></a>
+		<a href="https://api.whatsapp.com/send?phone=573115195753&text=Estoy%20interesado%20en%20obtener%20informaci%C3%B3n%20acerca%20de%20Avances%20Oportunidades."
+			target="_blank">Escribenos por Whatsapp <i class="fab fa-whatsapp"></i></a>
 	</div>
 </div>
 <div id="credito-online" class="no-display">
 	<img src="{{asset('images/banner3-top-avances-new.png')}}" alt="" class="img-fluid">
 	<div class="container text-center credito-online-texto">
 		<div>
-			<h3><span>Crédito Online</span>, desde la  <br> comodidad de tu casa.	</h3>
-		</div>	
+			<h3><span>Crédito Online</span>, desde la <br> comodidad de tu casa. </h3>
+		</div>
 	</div>
 	<div class="credito-online-boton">
 		<p class="textTarjeta">
@@ -128,26 +126,32 @@
 					<form action="{{route('newsletter.store')}}" method="POST">
 						{{ csrf_field() }}
 						<div class="row">
-								<div class="col-10">
-									<input type="email" name="email" class="form-control" placeholder="Ingresa tu correo electrónico">	
-								</div>
-								<div class="col-2">
-									<div class="input-group-prepend">
-										<button class="btn btn-newsletter-avances"><i class="fas fa-paper-plane"></i></button>
-									</div>
-								</div>
-								<div class="form-group">
-									<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1" required>
-									<label for="termsAndConditions" style="font-size: 10px; font-style: italic;">
-										Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition" target="_blank">términos y condiciones</a> y <a href="/Proteccion-de-datos-personales" class="linkTermAndCondition" target="_blank">política de tratamiento de datos</a>
-									</label>
+							<div class="col-10">
+								<input type="email" name="email" class="form-control"
+									placeholder="Ingresa tu correo electrónico">
+							</div>
+							<div class="col-2">
+								<div class="input-group-prepend">
+									<button class="btn btn-newsletter-avances"><i
+											class="fas fa-paper-plane"></i></button>
 								</div>
 							</div>
+							<div class="form-group">
+								<input type="checkbox" name="termsAndConditions" id="termsAndConditions" value="1"
+									required>
+								<label for="termsAndConditions" style="font-size: 10px; font-style: italic;">
+									Aceptar <a href="/Terminos-y-condiciones" class="linkTermAndCondition"
+										target="_blank">términos y condiciones</a> y <a
+										href="/Proteccion-de-datos-personales" class="linkTermAndCondition"
+										target="_blank">política de tratamiento de datos</a>
+								</label>
+							</div>
 						</div>
-					</form>	
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 @endsection
