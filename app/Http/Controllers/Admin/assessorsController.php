@@ -522,6 +522,9 @@ class assessorsController extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
 		if ($consultasRegistraduria == "-1") {
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
@@ -529,8 +532,15 @@ class assessorsController extends Controller
 				'ID_DEF'           => 2
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
-			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 1;
+				$dataIntention->ID_DEF = 2;
+				$dataIntention->save();
+			}
+
 			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
 		}
 
@@ -561,7 +571,14 @@ class assessorsController extends Controller
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 3;
+				$dataIntention->save();
+			}
+
 			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
@@ -664,7 +681,15 @@ class assessorsController extends Controller
 		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerScore        = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
 		$data                 = ['CEDULA' => $identificationNumber];
-		$customerIntention    = $this->intentionInterface->createIntention($data);
+
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
+		if ($lastIntention == "true") {
+			$customerIntention =	$this->intentionInterface->createIntention($data);
+		} else {
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		}
 
 		if (empty($customer)) {
 			return ['resp' => "false"];

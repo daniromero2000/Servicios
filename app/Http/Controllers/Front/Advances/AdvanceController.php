@@ -32,7 +32,7 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
 
 
     public function __construct(

@@ -386,4 +386,24 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
+
+    public function validateDateIntention($identificationNumber, $daysToIncrement)
+    {
+        $dateNow = date('Y-m-d');
+        $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
+        $dateNew = date('Y-m-d', $dateNew);
+        $dateLastIntention = $this->findLatestCustomerIntentionByCedula($identificationNumber);
+
+        if (empty($dateLastIntention)) {
+            return 'true';
+        } else {
+            $dateLastConsulta = $dateLastIntention->FECHA_INTENCION;
+            if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
+                return 'true';
+            } else {
+                return 'false';
+            }
+        }
+    }
 }

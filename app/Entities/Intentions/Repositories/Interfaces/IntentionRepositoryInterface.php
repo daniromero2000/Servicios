@@ -50,4 +50,6 @@ interface IntentionRepositoryInterface
   public function countListIntentionDirectors($from, $to, $subsidiaris);
 
   public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
+
+  public function validateDateIntention($identificationNumber, $daysToIncrement);
 }
