@@ -5,7 +5,7 @@
 @section('metaTags')
 <link rel="canonical" href="https://www.serviciosoportunidades.com/" />
 <meta name="description"
-	content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, crédito moto, crédito viajes, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
+	content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
 <meta name="keywords"
 	content="Credito, Crédito, solicitar credito de libranzas, solicitar crédito de libranzas, credito para motos, crédito para motos, credito para viajes, crédito para viajes, viajes, tarjeta de credito, tarjeta de crédito, prestamos, préstamos, préstamos con tarjeta, prestamos con tarjeta, credito libre inversion, crédito libre inversión, credito pensionados, crédito pensionados, motos a credito, motos a crédito, viajes a credito, viajes a crédito, electrodomesticos a credito, electrodomésticos a crédito, venta de electrodomesticos, venta de electrodomésticos, solicitar tarjeta de credito, solicitar tarjeta de crédito, credito en linea, crédito en línea, televisores a credito,televisores a crédito, lavadoras a credito, lavadoras a crédito, equipos de sonido a credito, equipos de sonido a crédito,  credito para todo, crédito para todo, pensionados, docentes, credito para docentes, crédito para docentes, militares, credito para militares, crédito para militares, crédito militares activos, credito militares activos.">
 <meta property="og:title" content="Servicios Financieros Oportunidades - Crédito para todo" />
