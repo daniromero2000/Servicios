@@ -14,14 +14,6 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 <html>
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Ads: 781153823 -->
-	{{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script> --}}
-	{{-- <script>
-		window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-781153823'); 
-	</script> --}}
-	<!-- Google Tag Manager -->
-
-
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128431645-1"></script>
 	<script>
@@ -180,9 +172,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 							<a class="nav-item nav-link header-item header-item1" href="/libranza">
 								<span class="header-textoItem">Libranza</span>
 							</a>
-							<a class="nav-item nav-link header-item header-item1" href="/motos">
-								<span class="header-textoItem">Crédito motos</span>
-							</a>
+
 							<a class="nav-item nav-link header-item header-item1" href="/avance">
 								<span class="header-textoItem">Avances</span>
 							</a>
@@ -200,12 +190,6 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 								<a class="nav-item nav-link header-item header-item1 @php echo $activeOportuya @endphp"
 									href="/credito-electrodomesticos/catalogo">
 									<span class="header-textoItem">Crédito Electrodomésticos</span>
-								</a>
-								<a class="nav-item nav-link header-item header-item2 @php echo $activeMotos @endphp"
-									href="/motos">
-									<img src="{{ asset('images/sombraMenu.png') }}" alt="Sombra Menú"
-										class="img-fluid imgSombraMenu"> <span class="header-textoItem">Crédito
-										motos</span>
 								</a>
 								<a class="nav-item nav-link header-item header-item3 @php echo $activeLibranza @endphp "
 									href="/libranza">
