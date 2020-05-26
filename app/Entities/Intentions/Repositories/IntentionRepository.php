@@ -81,6 +81,17 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+
+    public function findLatestCustomerIntentionByCedulaForPolicy($CEDULA)
+    {
+        try {
+            return $this->model
+                ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function findIntentionByIdFull(int $id): Intention
     {
         try {
@@ -393,7 +404,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         $dateNow = date('Y-m-d');
         $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
         $dateNew = date('Y-m-d', $dateNew);
-        $dateLastIntention = $this->findLatestCustomerIntentionByCedula($identificationNumber);
+        $dateLastIntention = $this->findLatestCustomerIntentionByCedulaForPolicy($identificationNumber);
 
         if (empty($dateLastIntention)) {
             return 'true';
