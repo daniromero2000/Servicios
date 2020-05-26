@@ -82,25 +82,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $queryTemp = sprintf("SELECT `paz_cli`, `fos_cliente` FROM `temp_consultaFosyga` WHERE `cedula` = '%s' ORDER BY `id` DESC LIMIT 1 ", 1087994442);
-        $respQueryTemp = DB::connection('oportudata')->select($queryTemp);
-
-        $fosygaTemp = $this->fosygaTempInterface->getLastFosygaTempConsultation(1087994442);
-        $customer = $this->customerInterface->findCustomerById(1087994442);
-
-        $analisisData = [
-            'solicitud'      => 666668,
-        ];
-
-        if ($fosygaTemp) {
-            $analisisData['paz_cli']  = $fosygaTemp->paz_cli;
-            $analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
-        }
-
-        $analisis = $this->AnalisisInterface->addAnalisis($analisisData);
-        dd($analisis);
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
