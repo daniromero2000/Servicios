@@ -88,6 +88,7 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
+          AND ti.deleted_at is null
          AND (ti.ASESOR = 998877
         OR ti.ASESOR = 1024530584
        OR ti.ASESOR =  1088302337
@@ -157,6 +158,7 @@ class LeadsController extends Controller
     products ON `TB_INTENCIONES`.product_id = products.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
+        AND `TB_INTENCIONES`.`deleted_at` is null
          AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1024530584
        OR `TB_INTENCIONES`.`ASESOR` =  1088302337
