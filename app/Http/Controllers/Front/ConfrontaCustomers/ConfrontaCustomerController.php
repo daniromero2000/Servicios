@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Front\ConfrontaCustomers;
 
-use App\cliCel;
+use App\Entities\CliCels\cliCel;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
-use App\Imagenes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\CustomerCellPhones\Repositories\Interfaces\CustomerCellPhoneRepositoryInterface;
 use App\Entities\ConfrontForms\Repositories\Interfaces\ConfrontFormRepositoryInterface;
-use App\Entities\Customers\Customer;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ConfrontaCustomerController extends Controller
@@ -30,7 +26,7 @@ class ConfrontaCustomerController extends Controller
         $this->subsidiaryInterface        = $subsidiaryRepositoryInterface;
         $this->customerInterface          = $customerRepositoryInterface;
         $this->customerCellPhoneInterface = $customerCellPhoneRepositoryInterface;
-        $this->confrontFormInterface         = $confrontFormRepositoryInterface;
+        $this->confrontFormInterface      = $confrontFormRepositoryInterface;
         $this->cityInterface              = $cityRepositoryInterface;
     }
 

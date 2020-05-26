@@ -132,12 +132,61 @@ use App\Entities\Brands\Repositories\BrandRepository;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 use App\Entities\Products\Repositories\ProductRepository;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\CliCels\Repositories\CliCelRepository;
+use App\Entities\CliCels\Repositories\Interfaces\CliCelRepositoryInterface;
+use App\Entities\Policies\Repositories\PolicyRepository;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
+use App\Entities\OportuyaTurns\Repositories\OportuyaTurnRepository;
+use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\DatosClienteRepository;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
+use App\Entities\Turnos\Repositories\TurnRepository;
+use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
+use App\Entities\FosygaTemps\Repositories\FosygaTempRepository;
+use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
+use App\Entities\Analisis\Repositories\AnalisisRepository;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
+        $this->app->bind(
+            AnalisisRepositoryInterface::class,
+            AnalisisRepository::class
+        );
+
+        $this->app->bind(
+            FosygaTempRepositoryInterface::class,
+            FosygaTempRepository::class
+        );
+
+        $this->app->bind(
+            TurnRepositoryInterface::class,
+            TurnRepository::class
+        );
+
+        $this->app->bind(
+            DatosClienteRepositoryInterface::class,
+            DatosClienteRepository::class
+        );
+
+        $this->app->bind(
+            OportuyaTurnRepositoryInterface::class,
+            OportuyaTurnRepository::class
+        );
+
+
+        $this->app->bind(
+            PolicyRepositoryInterface::class,
+            PolicyRepository::class
+        );
+
+        $this->app->bind(
+            CLiCelRepositoryInterface::class,
+            CliCelRepository::class
+        );
+
         $this->app->bind(
             ProductRepositoryInterface::class,
             ProductRepository::class
