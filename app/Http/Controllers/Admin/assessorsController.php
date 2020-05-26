@@ -617,7 +617,7 @@ class assessorsController extends Controller
 
 		$validateConsultaRegistraduria = 0;
 		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
+			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
