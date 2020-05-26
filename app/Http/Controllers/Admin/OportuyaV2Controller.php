@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Imagenes;
 use App\Intenciones;
 use App\ResultadoPolitica;
-use App\Analisis;
 use App\CodeUserVerification;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
@@ -52,9 +51,7 @@ use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
-
 	use ProductTransformable;
-
 	private $confirmationMessageInterface, $subsidiaryInterface, $cityInterface;
 	private $customerInterface, $customerCellPhoneInterface, $consultationValidityInterface;
 	private $daysToIncrement, $fosygaInterface, $registraduriaInterface, $webServiceInterface;
@@ -143,7 +140,6 @@ class OportuyaV2Controller extends Controller
 			->get();
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
-
 
 	public function catalog()
 	{

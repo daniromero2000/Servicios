@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Analisis;
 use App\Entities\Customers\Customer;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\ConsultationValidities\Repositories\Interfaces\ConsultationValidityRepositoryInterface;
@@ -53,7 +52,7 @@ class assessorsController extends Controller
 	private $daysToIncrement, $consultationValidityInterface, $AnalisisInterface;
 	private $fosygaInterface, $registraduriaInterface, $webServiceInterface;
 	private $commercialConsultationInterface, $customerProfessionInterface;
-	private $creditCardInterface, $cifinRealArrearsInterface,  $fosygaTempInterface;
+	private $creditCardInterface, $cifinRealArrearsInterface;
 	private $UpToDateFinancialCifinInterface, $CifinFinancialArrearsInterface;
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
@@ -128,8 +127,8 @@ class assessorsController extends Controller
 		$this->policyInterface                 = $policyRepositoryInterface;
 		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
 		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
-		$this->fosygaTempInterface = $fosygaTempRepositoryInterface;
-		$this->AnalisisInterface = $analisisRepositoryInterface;
+		$this->fosygaTempInterface             = $fosygaTempRepositoryInterface;
+		$this->AnalisisInterface               = $analisisRepositoryInterface;
 		$this->middleware('auth');
 	}
 
