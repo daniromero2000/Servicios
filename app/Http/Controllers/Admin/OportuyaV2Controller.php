@@ -1393,7 +1393,6 @@ class OportuyaV2Controller extends Controller
 	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$lastName = explode(" ", $oportudataLead->APELLIDOS);
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
@@ -1405,15 +1404,28 @@ class OportuyaV2Controller extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
 		if ($consultasRegistraduria == "-1") {
+			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->save();
+
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
 				'ID_DEF'           => 2
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
-			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 1;
+				$dataIntention->ID_DEF = 2;
+				$dataIntention->save();
+			}
+
 			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
 		}
 
@@ -1421,36 +1433,37 @@ class OportuyaV2Controller extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultasFosyga = $this->execConsultaFosygaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
-
-		if ($consultasFosyga == "-3") {
-			return ['resp' => $consultasFosyga];
-		}
-
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
-			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->save();
+			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA' => $identificationNumber,
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 3;
+				$dataIntention->save();
+			}
+
 			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
 				'resp'                 => -5
 			];
 		} else {
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$oportudataLead->TIPO_DOC,
+				$oportudataLead->FEC_EXP
+			);
+
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
