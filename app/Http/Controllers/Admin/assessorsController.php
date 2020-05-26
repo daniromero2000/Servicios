@@ -663,7 +663,6 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
 		$idDef                = "";
 		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
@@ -679,6 +678,7 @@ class assessorsController extends Controller
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -722,7 +722,7 @@ class assessorsController extends Controller
 		}
 
 		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
-		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
 		if ($customerRealDoubtful->isNotEmpty()) {
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {

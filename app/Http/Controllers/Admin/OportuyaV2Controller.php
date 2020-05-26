@@ -306,22 +306,7 @@ class OportuyaV2Controller extends Controller
 				$request->get('lastName')
 			);
 
-			if ($consultasRegistraduria == "-1") {
-				return "-1";
-			}
 			if ($consultasRegistraduria == "-3") {
-				return "-3";
-			}
-
-			$consultasFosyga = $this->execConsultaFosygaLead(
-				$identificationNumber,
-				$request->get('typeDocument'),
-				$request->get('dateDocumentExpedition'),
-				$request->get('name'),
-				$request->get('lastName')
-			);
-
-			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
 
@@ -372,6 +357,12 @@ class OportuyaV2Controller extends Controller
 			];
 
 			$oportudataLead->update($dataLead);
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$request->get('typeDocument'),
+				$request->get('dateDocumentExpedition')
+			);
 
 			return response()->json([true]);
 		}
@@ -1492,7 +1483,7 @@ class OportuyaV2Controller extends Controller
 
 		$validateConsultaRegistraduria = 0;
 		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
+			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
@@ -1508,7 +1499,7 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
 	{
 		// Fosyga
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -1521,16 +1512,8 @@ class OportuyaV2Controller extends Controller
 			$consultaFosyga = 1;
 		}
 
-		$validateConsultaFosyga = 0;
-
 		if ($consultaFosyga > 0) {
-			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-		} else {
-			$validateConsultaFosyga = 1;
-		}
-
-		if (($validateConsultaFosyga < 0)) {
-			return "-3";
+			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
 		}
 
 		return "true";
