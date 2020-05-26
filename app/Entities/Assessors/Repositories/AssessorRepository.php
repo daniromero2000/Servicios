@@ -38,7 +38,7 @@ class AssessorRepository implements AssessorRepositoryInterface
     {
         try {
             return $this->model->findOrFail($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
@@ -50,7 +50,7 @@ class AssessorRepository implements AssessorRepositoryInterface
                 ->with('creditCard')
                 ->with('customer')
                 ->findOrFail($id);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
@@ -60,7 +60,7 @@ class AssessorRepository implements AssessorRepositoryInterface
         try {
             return $this->model->where('Cliente', $identificationNumber)
                 ->orderBy('SOLICITUD', 'desc')->get(['SOLICITUD'])->first();
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }

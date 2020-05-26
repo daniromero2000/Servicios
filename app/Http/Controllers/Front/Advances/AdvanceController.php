@@ -25,11 +25,12 @@ use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
-    private $OportuyaTurnInterface, $factoryInterface;
+    private $OportuyaTurnInterface, $factoryInterface, $assessorInterface;
 
 
     public function __construct(
@@ -49,7 +50,8 @@ class AdvanceController extends Controller
         CityRepositoryInterface $cityRepositoryInterface,
         CifinScoreRepositoryInterface $cifinScoreRepositoryInterface,
         OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
-        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface
+        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
+        AssessorRepositoryInterface $assessorRepositoryInterface
 
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
@@ -69,6 +71,7 @@ class AdvanceController extends Controller
         $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
         $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
         $this->factoryInterface = $factoryRequestRepositoryInterface;
+        $this->assessorInterface = $assessorRepositoryInterface;
     }
 
     public function index()

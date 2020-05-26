@@ -1762,8 +1762,6 @@ class OportuyaV2Controller extends Controller
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-		$queryIdEmpresa = sprintf("SELECT `ID_EMPRESA` FROM `ASESORES` WHERE `CODIGO` = '%s'", $assessorCode);
-		$IdEmpresa = DB::connection('oportudata')->select($queryIdEmpresa);
 		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
@@ -1776,7 +1774,7 @@ class OportuyaV2Controller extends Controller
 			'CLIENTE'       => $customer->CEDULA,
 			'CODASESOR'     => $assessorCode,
 			'id_asesor'     => $assessorCode,
-			'ID_EMPRESA'    => $IdEmpresa[0]->ID_EMPRESA,
+			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $sucursal,
 			'ESTADO'        => $estado,
 		];
