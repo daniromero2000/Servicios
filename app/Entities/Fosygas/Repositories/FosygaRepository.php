@@ -107,7 +107,7 @@ class FosygaRepository implements FosygaRepositoryInterface
         return 1;
     }
 
-    public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition)
+    public function validateConsultaFosyga($identificationNumber, $dateExpedition)
     {
         $respBdua = $this->getLastFosygaConsultation($identificationNumber);
         if ($respBdua->fechaAfiliacion == '0000-00-00 00:00:00') {

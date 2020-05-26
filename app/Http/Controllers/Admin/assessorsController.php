@@ -548,18 +548,6 @@ class assessorsController extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultasFosyga = $this->execConsultaFosygaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
-
-		if ($consultasFosyga == "-3") {
-			return ['resp' => $consultasFosyga];
-		}
-
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
@@ -585,6 +573,13 @@ class assessorsController extends Controller
 				'resp'                 => -5
 			];
 		} else {
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$oportudataLead->TIPO_DOC,
+				$oportudataLead->FEC_EXP
+			);
+
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
@@ -633,7 +628,7 @@ class assessorsController extends Controller
 		return "true";
 	}
 
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
 	{
 		// Fosyga
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -646,16 +641,8 @@ class assessorsController extends Controller
 			$consultaFosyga = 1;
 		}
 
-		$validateConsultaFosyga = 0;
-
 		if ($consultaFosyga > 0) {
-			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-		} else {
-			$validateConsultaFosyga = 1;
-		}
-
-		if (($validateConsultaFosyga < 0)) {
-			return "-3";
+			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
 		}
 
 		return "true";
