@@ -557,6 +557,7 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
+	
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
 		/*$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -586,6 +587,7 @@ class OportuyaV2Controller extends Controller
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
+		return $dataCode;
 		$codeVerification['sms_status'] = ''; // groupName
 		$codeVerification['sms_response'] = ''; // name
 		$codeVerification['sms_send_description'] = ''; // description

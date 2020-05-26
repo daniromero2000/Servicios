@@ -55,26 +55,26 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         return response()->json(true);
     }
-
+    
     public function sendMessageSmsInfobip($code, $date, $celNumber){
-        $curl = curl_init();
         $text = 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 15 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date;
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://{base_url}/sms/2/text/single",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "{ \"from\":\"Oportunidades\", \"to\":\"$celNumber\", \"text\":\"$text.\" }",
-        CURLOPT_HTTPHEADER => array(
-            "accept: application/json",
-            "authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
-            "content-type: application/json"
-        ),
-        ));
+        $curl = curl_init();
 
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://4mmjrm.api.infobip.com/sms/2/text/single",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{ \"from\":\"Oportunidades\", \"to\":\"3136392833\", \"text\":\"Test SMS.\" }",
+            CURLOPT_HTTPHEADER => array(
+                "accept: application/json",
+                "authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                "content-type: application/json"
+            ),
+        ));
         $response = curl_exec($curl);
         $err = curl_error($curl);
 
