@@ -7,10 +7,7 @@
     **Date: 6/03/2019
      -->
 @extends('layouts.BasicIncludes')
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-781153823"></script>
-<script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date());gtag('config','AW-781153823',{'page_title':'Términos y condiocines, garantías','page_path':'/digitalWarranty/TermsConditions'});
-</script>
+@include('layouts.front.layouts.googleAds')
 @section('content')
 
 <div>
