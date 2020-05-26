@@ -1420,6 +1420,53 @@ class assessorsController extends Controller
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
 	}
 
+	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2)
+	{
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer->TIPOCLIENTE = "NUEVO";
+		$customer->SUBTIPO = "NUEVO";
+		$customer->save();
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tradicional';
+		$intention->save();
+		$estadoSolic = 'EN SUCURSAL';
+		$policyCredit = [
+			'quotaApprovedProduct' => 0,
+			'quotaApprovedAdvance' => 0,
+			'resp' => 'true'
+		];
+		$data = [
+			'NOM_REFPER' => $nom_refper,
+			'DIR_REFPER' => $dir_refper,
+			'BAR_REFPER' => '',
+			'TEL_REFPER' => $tel_refper,
+			'CIU_REFPER' => '',
+			'NOM_REFPE2' => $nom_refpe2,
+			'DIR_REFPE2' => $dir_refpe2,
+			'BAR_REFPE2' => '',
+			'TEL_REFPE2' => $tel_refpe2,
+			'CIU_REFPE2' => '',
+			'NOM_REFFAM' => $nom_reffam,
+			'DIR_REFFAM' => $dir_reffam,
+			'BAR_REFFAM' => '',
+			'TEL_REFFAM' => $tel_reffam,
+			'PARENTESCO' => $parentesco,
+			'NOM_REFFA2' => $nom_reffa2,
+			'DIR_REFFA2' => $dir_reffa2,
+			'BAR_REFFA2' => '',
+			'TEL_REFFA2' => $tel_reffa2,
+			'PARENTESC2' => $parentesc2,
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
+		];
+
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+	}
+
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
 	{
 		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
@@ -1529,7 +1576,6 @@ class assessorsController extends Controller
 		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
 		return $customerFactoryRequest;
 	}
-
 
 	private function addAnalisis($numSolic, $identificationNumber)
 	{
@@ -1643,53 +1689,6 @@ class assessorsController extends Controller
 		} catch (\Throwable $th) {
 			return 0;
 		}
-	}
-
-	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2)
-	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO = "NUEVO";
-		$customer->save();
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-		$intention->CREDIT_DECISION = 'Tradicional';
-		$intention->save();
-		$estadoSolic = 'EN SUCURSAL';
-		$policyCredit = [
-			'quotaApprovedProduct' => 0,
-			'quotaApprovedAdvance' => 0,
-			'resp' => 'true'
-		];
-		$data = [
-			'NOM_REFPER' => $nom_refper,
-			'DIR_REFPER' => $dir_refper,
-			'BAR_REFPER' => '',
-			'TEL_REFPER' => $tel_refper,
-			'CIU_REFPER' => '',
-			'NOM_REFPE2' => $nom_refpe2,
-			'DIR_REFPE2' => $dir_refpe2,
-			'BAR_REFPE2' => '',
-			'TEL_REFPE2' => $tel_refpe2,
-			'CIU_REFPE2' => '',
-			'NOM_REFFAM' => $nom_reffam,
-			'DIR_REFFAM' => $dir_reffam,
-			'BAR_REFFAM' => '',
-			'TEL_REFFAM' => $tel_reffam,
-			'PARENTESCO' => $parentesco,
-			'NOM_REFFA2' => $nom_reffa2,
-			'DIR_REFFA2' => $dir_reffa2,
-			'BAR_REFFA2' => '',
-			'TEL_REFFA2' => $tel_reffa2,
-			'PARENTESC2' => $parentesc2,
-			'CON_CLI1'   => '',
-			'CON_CLI2'   => '',
-			'CON_CLI3'   => '',
-			'CON_CLI4'   => '',
-			'EDIT_RFCLI' => '',
-			'EDIT_RFCL2' => ''
-		];
-
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
 	}
 
 	public function getFormVentaContado()
