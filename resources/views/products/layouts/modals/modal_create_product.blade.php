@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="col-8">
                                         <label for="reference">Referencia <span class="text-danger">*</span></label>
-                                        <input type="text" name="reference" readonly id="reference" class="form-control"
+                                        <input type="text" name="reference" id="reference" class="form-control"
                                             value="{{ old('reference') }}" required>
                                     </div>
                                     <div class="col-4">

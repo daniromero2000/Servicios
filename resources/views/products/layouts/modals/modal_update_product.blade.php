@@ -30,9 +30,8 @@
                                     <div class="col-8">
                                         <label for="reference_update{{ $product->id }}">Referencia <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" readonly name="reference"
-                                            id="reference_update{{ $product->id }}" class="form-control"
-                                            value="{{ $product->reference }}" required>
+                                        <input type="text" name="reference" id="reference_update{{ $product->id }}"
+                                            class="form-control" value="{{ $product->reference }}" required>
                                     </div>
                                     <div class="col-4">
                                         @if(!$brands->isEmpty())

@@ -10,19 +10,16 @@ $(document).ready(function () {
             $('#name').val('');
             $('#reference').val('');
             if (data[0]) {
-
                 console.log(data[0].item)
                 var nameProduct = data[0].item;
                 var referenceProduct = data[0].item + data[0].sku;
-
                 $('#name').val(nameProduct);
-                $('#reference').val(referenceProduct);
             }
         });
     }
 
-    
-    
+
+
 });
 
 function idproduct(dataId) {
@@ -44,7 +41,6 @@ function searchProductUpdate(dataId) {
             var referenceProduct = data[0].item + data[0].sku;
 
             $('#name_update' + dataId).val(nameProduct);
-            $('#reference_update' + dataId).val(referenceProduct);
         }
     });
 };
