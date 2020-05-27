@@ -213,6 +213,22 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+    public function listJarvisIntentions($totalView): Support
+    {
+
+        try {
+            return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
+                ->where('ID_DEF', null)
+                ->orderBy('id', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+
     public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {

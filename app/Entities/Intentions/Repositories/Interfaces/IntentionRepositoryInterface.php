@@ -23,6 +23,8 @@ interface IntentionRepositoryInterface
 
   public function listIntentionAssessors($totalView, $assessor): Support;
 
+  public function listJarvisIntentions($totalView): Support;
+
   public function countIntentionsCreditProfiles($from, $to);
 
   public function countIntentionAssessorCreditProfiles($from, $to, $assessor);
