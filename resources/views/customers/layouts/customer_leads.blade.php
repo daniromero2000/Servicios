@@ -23,7 +23,7 @@
       <tbody class="body-table">
         @foreach ($leads as $lead )
         <tr>
-          <td class="text-center">{{ $lead->id }}</td>
+          <td class="text-center"><a data-toggle="tooltip" title="Ver Lead" href="{{ route('digitalchannelleads.show', $lead->id) }}">{{ $lead->id }}</a></td>
           <td class="text-center">{{ date('M d, Y h:i a', strtotime($lead->created_at)) }}</td>
           <td class="text-center">{{ $lead->leadChannel->channel }}</td>
           <td class="text-center">{{ $lead->name }}</td>
