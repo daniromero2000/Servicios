@@ -18,23 +18,16 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-8">
-                                        <label for="reference">Referencia <span class="text-danger">*</span></label>
-                                        <input type="text" name="reference" id="reference" class="form-control"
-                                            value="{{ old('reference') }}" required>
-                                    </div>
                                     <div class="col-4">
-                                        <label for="sku">Código <span class="text-danger">*</span></label>
-                                        <input type="text" name="sku" id="sku" class="form-control"
+                                        <label for="skuProduct">Código <span class="text-danger">*</span></label>
+                                        <input type="text" name="sku" id="skuProduct" class="form-control"
                                             value="{{ old('sku') }}" required>
                                     </div>
-
                                     <div class="col-8">
-                                        <label for="name">Nombre <span class="text-danger">*</span></label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            value="{{ old('name') }}" required>
+                                        <label for="reference">Referencia <span class="text-danger">*</span></label>
+                                        <input type="text" name="reference" readonly id="reference" class="form-control"
+                                            value="{{ old('reference') }}" required>
                                     </div>
-
                                     <div class="col-4">
                                         @if(!$brands->isEmpty())
 
@@ -48,16 +41,13 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-6">
-                                        <label for="price">Precio <span class="text-danger">*</span></label>
-                                        <input type="text" name="price" id="price" class="form-control"
-                                            value="{{ old('price') }}" required>
+                                    <div class="col-8">
+                                        <label for="name">Nombre <span class="text-danger">*</span></label>
+                                        <input type="text" name="name" readonly id="name" class="form-control"
+                                            value="{{ old('name') }}" required>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="price">Precio de Oferta <span class="text-danger">*</span></label>
-                                        <input type="text" name="sale_price" id="sale_price" class="form-control"
-                                            value="{{ old('sale_price') }}" required>
-                                    </div>
+
+
 
                                     <div class="col-6">
                                         <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
@@ -68,9 +58,9 @@
                                         </select>
                                     </div>
                                     <div class="col-6">
-                                        <label for="pays">Valor Cuota Mensual<span class="text-danger">*</span></label>
-                                        <input type="text" name="pays" id="pays" class="form-control"
-                                            value="{{ old('pays') }}" required>
+                                        <label for="discount">% de descuento<span class="text-danger">*</span></label>
+                                        <input type="text" name="discount" id="discount" class="form-control"
+                                            value="{{ old('discount') }}" required>
                                     </div>
                                 </div>
 

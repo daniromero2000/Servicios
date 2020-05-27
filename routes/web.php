@@ -198,6 +198,8 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}', 'Admin\OportuyaV2Controller@execConsultasleadAsesores');
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
+    // Administrador de catalogo
+    Route::get('getProduct/productList/{sku}', 'Admin\ListProducts\ListProductController@getProduct');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
     Route::resource('productList', 'Admin\ProductList\ProductListController');
