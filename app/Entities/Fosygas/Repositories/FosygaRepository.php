@@ -26,7 +26,8 @@ class FosygaRepository implements FosygaRepositoryInterface
         }
     }
 
-    public function getLastFosygaConsultationPolicy($identificationNumber){
+    public function getLastFosygaConsultationPolicy($identificationNumber)
+    {
         try {
             return $this->model->where('cedula', $identificationNumber)
                 ->orderBy('idBdua', 'desc')->get()->first();
@@ -106,49 +107,40 @@ class FosygaRepository implements FosygaRepositoryInterface
         return 1;
     }
 
-    public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition)
+    public function validateConsultaFosyga($identificationNumber, $dateExpedition)
     {
         $respBdua = $this->getLastFosygaConsultation($identificationNumber);
-        if($respBdua->primerNombre == '' || empty($respBdua->primerNombre) || $respBdua->fechaAfiliacion == '0000-00-00 00:00:00'){
+        if ($respBdua->fechaAfiliacion == '0000-00-00 00:00:00') {
             return 1;
         }
-        $nameDataLead = explode(" ", $names);
-        $nameBdua = explode(" ", $respBdua->primerNombre);
-        $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 
-        $lastNameDataLead = explode(" ", $lastName);
-        $lastNameBdua = explode(" ", $respBdua->primerApellido);
-        $coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
-        DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua->tipoAfiliado]);
-
-        if ($coincideNames == 0 || $coincideLastNames == 0) {
-            DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
-            return -3; // Nombres y/o apellidos no coinciden
-        }
+        DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `fos_cliente` = :fos_cliente WHERE `cedula` = :identificationNumber  ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua->tipoAfiliado]);
 
         return 1;
     }
 
-    private function compareNamesLastNames($arrayCompare, $arrayCompareTo)
-    {
-        $search = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'á', 'é', 'í', 'ó', 'ú'];
-        $replace = ['n', 'a', 'e', 'i', 'o', 'u', 'n', 'a', 'e', 'i', 'o', 'u'];
 
-        foreach ($arrayCompareTo as $key => $value) {
-            $arrayCompareTo[$key] = strtolower(str_replace($search, $replace, $value));
-        }
+    // public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition)
+    // {
+    //     $respBdua = $this->getLastFosygaConsultation($identificationNumber);
+    //     if ($respBdua->primerNombre == '' || empty($respBdua->primerNombre) || $respBdua->fechaAfiliacion == '0000-00-00 00:00:00') {
+    //         return 1;
+    //     }
+    //     $nameDataLead = explode(" ", $names);
+    //     $nameBdua = explode(" ", $respBdua->primerNombre);
+    //     $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 
-        $coincide = 0;
-        foreach ($arrayCompare as $value) {
-            $value = strtolower(str_replace($search, $replace, $value));
-            if (in_array($value, $arrayCompareTo)) {
-                $coincide = 1;
-            } else {
-                $coincide = 0;
-                break;
-            }
-        }
+    //     $lastNameDataLead = explode(" ", $lastName);
+    //     $lastNameBdua = explode(" ", $respBdua->primerApellido);
+    //     $coincideLastNames = $this->compareNamesLastNames($lastNameDataLead, $lastNameBdua);
+    //     DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`, `fos_cliente`) VALUES (:identificationNumber, :fos_cliente)', ['identificationNumber' => $identificationNumber, 'fos_cliente' => $respBdua->tipoAfiliado]);
 
-        return $coincide;
-    }
+    //     if ($coincideNames == 0 || $coincideLastNames == 0) {
+    //         DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+    //         return -3; // Nombres y/o apellidos no coinciden
+    //     }
+
+    //     return 1;
+    // }
+
 }

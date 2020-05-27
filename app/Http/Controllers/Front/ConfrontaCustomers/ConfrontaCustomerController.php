@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front\ConfrontaCustomers;
 
-use App\cliCel;
+use App\Entities\CliCels\cliCel;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

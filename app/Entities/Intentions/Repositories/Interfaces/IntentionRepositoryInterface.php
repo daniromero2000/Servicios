@@ -23,6 +23,8 @@ interface IntentionRepositoryInterface
 
   public function listIntentionAssessors($totalView, $assessor): Support;
 
+  public function listJarvisIntentions($totalView): Support;
+
   public function countIntentionsCreditProfiles($from, $to);
 
   public function countIntentionAssessorCreditProfiles($from, $to, $assessor);
@@ -50,4 +52,6 @@ interface IntentionRepositoryInterface
   public function countListIntentionDirectors($from, $to, $subsidiaris);
 
   public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
+
+  public function validateDateIntention($identificationNumber, $daysToIncrement);
 }

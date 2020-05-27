@@ -20,10 +20,15 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
             return  $this->model->where('rmcedula', $identificationNumber)
                 ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
                 ->where('rmestob', '!=', '')
-                ->where('rmtipoent', '!=', 'COMU')
                 ->where('rmcalid', 'PRIN')
                 ->where('rmtipocon', '!=', 'SRV')
                 ->where('rmvrmora', '!=', '')
+                ->where('rmlincre', '!=', 'TELC')
+                ->where('rmlincre', '!=', 'FEQM')
+                ->where('rmlincre', '!=', 'TCEL')
+                ->where('rmlincre', '!=', 'STEL')
+                ->where('rmlincre', '!=', 'SPUB')
+                ->where('rmlincre', '!=', 'FITC')
                 ->get(['rmvrmora']);
         } catch (QueryException $e) {
             dd($e);
@@ -37,7 +42,7 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
             return  $this->model->where('rmcedula', $identificationNumber)
                 ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
                 ->where('rmtipoent', '!=', 'COMU')
-                ->where('rmcalid', '!=', 'CODE')
+                ->where('rmcalid', 'PRIN')
                 ->where('rmtipocon', '!=', 'SRV')
                 ->where(function ($query) {
                     $query->orWhere('rmestob', 'CAST')

@@ -17,6 +17,8 @@ interface CustomerRepositoryInterface
 
   public function findCustomerByIdForConfronta($identificationNumber);
 
+  public function findCustomerByIdForFosyga($identificationNumber): Customer;
+
   public function listCustomersTotal($from, $to);
 
   public function checkIfExists($identificationNumber);
@@ -30,4 +32,8 @@ interface CustomerRepositoryInterface
   public function countCustomersForCallSteps($from, $to);
 
   public function findCustomerByIdFull($identificationNumber): Customer;
+
+  public function calculateCustomerAge($date);
+
+  public function calculateCustomerCompanyTime($fechaIngreso);
 }

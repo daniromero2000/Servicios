@@ -8,10 +8,10 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
-
     private $columns = [
         'CREACION',
         'CEDULA',
@@ -25,7 +25,6 @@ class CustomerRepository implements CustomerRepositoryInterface
         'ESTADO',
         'SUC'
     ];
-
 
     public function __construct(
         Customer $customer
@@ -52,6 +51,16 @@ class CustomerRepository implements CustomerRepositoryInterface
             ->get(['NOMBRES', 'APELLIDOS', 'CELULAR', 'CIUD_UBI', 'CEDULA', 'CREACION']);
     }
 
+    public function findCustomerByIdForFosyga($identificationNumber): Customer
+    {
+        try {
+            return $this->model->findOrFail($identificationNumber);
+        } catch (QueryException $e) {
+            dd($e);
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function findCustomerById($identificationNumber): Customer
     {
         try {
@@ -64,6 +73,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
     public function findCustomerByIdForConfronta($identificationNumber)
     {
         try {
@@ -96,7 +106,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'customerRegistraduria',
                 'customerConfronta',
                 'ubicaConsultations',
-                'cifinWebService'
+                'cifinWebService',
+                'customerLeads'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
@@ -261,5 +272,18 @@ class CustomerRepository implements CustomerRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
+    }
+
+    public function calculateCustomerAge($date)
+    {
+        $date = date('Y-m-d', strtotime($date));
+        return Carbon::createFromFormat('Y-m-d', $date)->diffInYears(Carbon::now());
+    }
+
+    public function calculateCustomerCompanyTime($fechaIngreso)
+    {
+        $fechaActual = date("Y-m-d");
+        $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
+        return $dateDiff;
     }
 }

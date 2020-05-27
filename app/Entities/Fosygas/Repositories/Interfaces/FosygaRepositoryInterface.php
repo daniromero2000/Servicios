@@ -10,7 +10,7 @@ interface FosygaRepositoryInterface
 
     public function createConsultaFosyga($infoBdua, $identificationNumber);
 
-    public function validateConsultaFosyga($identificationNumber, $names, $lastName, $dateExpedition);
+    public function validateConsultaFosyga($identificationNumber, $dateExpedition);
 
     public function validateDateConsultaFosyga($identificationNumber, $daysToIncrement);
 

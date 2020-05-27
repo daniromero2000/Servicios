@@ -129,4 +129,21 @@ class UbicaRepository implements UbicaRepositoryInterface
 
         return $coincide;
     }
+
+    public function validateDateUbica($fecha)
+    {
+        $fechaTelConsultaUbica = explode("/", $fecha);
+        $fechaTelConsultaUbica = "20" . $fechaTelConsultaUbica[2] . "-" . $fechaTelConsultaUbica[1] . "-" . $fechaTelConsultaUbica[0];
+        $fechaTelConsultaUbica = strtotime($fechaTelConsultaUbica);
+        $dateNow = date('Y-m-d');
+        $dateNew = strtotime("- 12 month", strtotime($dateNow));
+        $dateNew = date('Y-m-d', $dateNew);
+        if ($fechaTelConsultaUbica < strtotime($dateNew)) {
+            $aprobo = 1;
+        } else {
+            $aprobo = 0;
+        }
+
+        return $aprobo;
+    }
 }

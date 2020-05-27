@@ -59,6 +59,12 @@
                             @include('layouts.admin.pagination.pagination_null', [$skip])
                             @endif
                         </div>
+                        <div class="card-body text-center pt-0 pb-0 ">
+                            @if($listJarvis && $assessorId == 2)
+                            @include('layouts.admin.tables.table_intention_status_assessors', [$headers, 'datas' =>
+                            $listJarvis ])
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

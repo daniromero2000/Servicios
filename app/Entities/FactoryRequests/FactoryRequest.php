@@ -19,6 +19,22 @@ class FactoryRequest extends Model
 {
     use SearchableTrait;
 
+    protected $fillable = [
+        'AVANCE_W',
+        'PRODUC_W',
+        'CLIENTE',
+        'CODASESOR',
+        'id_asesor',
+        'ID_EMPRESA',
+        'FECHASOL',
+        'SUCURSAL',
+        'ESTADO',
+        'FTP',
+        'STATE',
+        'GRAN_TOTAL',
+        'SOLICITUD_WEB',
+    ];
+
     protected $table = 'SOLIC_FAB';
 
     protected $connection = 'oportudata';
