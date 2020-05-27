@@ -28,6 +28,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $this->model = $factoryRequest;
     }
 
+    public function addFactoryRequest($data)
+    {
+        $data['FECHASOL']      = date("Y-m-d H:i:s");
+        $data['FTP']           = 0;
+        $data['STATE']         = "A";
+        $data['GRAN_TOTAL']    = 0;
+        $data['SOLICITUD_WEB'] = 1;
+
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function findFactoryRequestById(int $id): FactoryRequest
     {
         try {

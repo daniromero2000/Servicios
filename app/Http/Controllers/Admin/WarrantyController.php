@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\codeUserVerificationOportudata;
 use App\GARANTIA;
-use App\cliCel;
+use App\Entities\CliCels\cliCel;
 use App\Entities\Customers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -129,7 +129,8 @@ class WarrantyController extends Controller
     public function store(Request $request)
     {
         if (isset($request->phone)) {
-            if (DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $request->phone])) { } else {
+            if (DB::connection('oportudata')->select("SELECT `NUM`, `IDENTI` FROM `CLI_CEL` WHERE `IDENTI` = :identificationNumber AND `NUM` = :celNum", ['identificationNumber' => $request->identificationNumber, 'celNum'  => $request->phone])) {
+            } else {
                 $clienteCelular = new CliCel;
                 $clienteCelular->IDENTI = $request->identificationNumber;
                 $clienteCelular->NUM = $request->phone;

@@ -46,6 +46,16 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
         }
     }
 
+    public function getSubsidiaryCodeByCity($city)
+    {
+        try {
+            return $this->model->where('CIUDAD', $city)
+                ->where('PRINCIPAL', 1)
+                ->get(['CODIGO'])->first();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 
     public function getSubsidiaryRiskZone($customerSubsidiary)
     {
@@ -83,12 +93,13 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
 
     public function searchSubsidiares(string $text): Collection
     {
-        $query = $this->model->select('CODIGO')->where('CODIGO', 'LIKE', '%' . $text . '%')->where('STATE', 'A')->orderBy('CODIGO', 'asc')
+        $query = $this->model->select('CODIGO')
+            ->where('CODIGO', 'LIKE', '%' . $text . '%')
+            ->where('STATE', 'A')
+            ->orderBy('CODIGO', 'asc')
             ->get();
         return $query;
     }
-
-
 
     public function findSubsidiaryByIdFull(int $id): Subsidiary
     {

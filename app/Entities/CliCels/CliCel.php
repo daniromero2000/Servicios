@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entities\CliCels;
 
 use Illuminate\Database\Eloquent\Model;
 
-class cliCel extends Model
+class CliCel extends Model
 {
     protected $table = 'CLI_CEL';
 

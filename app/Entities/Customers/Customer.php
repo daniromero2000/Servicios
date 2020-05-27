@@ -2,8 +2,7 @@
 
 namespace App\Entities\Customers;
 
-use App\cliCel;
-use App\Entities\CifinBasicDatas\CifinBasicData;
+use App\Entities\CliCels\CliCel;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
 use App\Entities\CreditCards\CreditCard;
@@ -11,7 +10,6 @@ use App\Entities\CifinScores\CifinScore;
 use App\Entities\CifinWebServices\CifinWebService;
 use App\Entities\ConfrontaFootprints\ConfrontaFootprint;
 use App\Entities\ConfrontaResults\ConfrontaResult;
-use App\Entities\ConfrontaWebServices\Confronta;
 use App\Entities\CustomerCellPhones\CustomerCellPhone;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
@@ -20,7 +18,9 @@ use App\Entities\ExtintRealCifins\ExtintRealCifin;
 use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\Ruafs\Ruaf;
 use App\Entities\Fosygas\Fosyga;
+use App\Entities\FosygaTemps\FosygaTemp;
 use App\Entities\Intentions\Intention;
+use App\Entities\Leads\Lead;
 use App\Entities\Registradurias\Registraduria;
 use App\Entities\Ubicas\Ubica;
 use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
@@ -141,7 +141,6 @@ class Customer extends Model
 
     protected $hidden = [];
 
-
     protected $searchable = [
         'columns' => [
             'CLIENTE_FAB.CEDULA'   => 10,
@@ -210,6 +209,11 @@ class Customer extends Model
         return $this->hasMany(Fosyga::class, 'cedula')->orderBy('fechaConsulta', 'DESC');
     }
 
+    public function customerFosygaTemps()
+    {
+        return $this->hasMany(FosygaTemp::class, 'cedula')->orderBy('id', 'DESC');
+    }
+
     public function customerRegistraduria()
     {
         return $this->hasMany(Registraduria::class, 'cedula')->orderBy('fechaConsulta', 'DESC');
@@ -224,17 +228,20 @@ class Customer extends Model
     {
         return $this->hasMany(ConfrontaFootprint::class, 'cedula');
     }
+
     public function DebtorInsurance()
     {
         return $this->hasMany(DebtorInsurance::class, 'CEDULA')->orderBy('FECHA', 'DESC');
     }
+
     public function DebtorInsuranceOportuya()
     {
         return $this->hasMany(DebtorInsuranceOportuya::class, 'CEDULA')->orderBy('FECHA', 'DESC');
     }
+
     public function cliCell()
     {
-        return $this->hasOne(cliCel::class, 'IDENTI');
+        return $this->hasOne(CliCel::class, 'Identi');
     }
 
     public function fosygaRuaf()
@@ -285,5 +292,10 @@ class Customer extends Model
     public function customerWarranties()
     {
         return $this->hasMany(Warranty::class, 'CEDULA');
+    }
+
+    public function customerLeads()
+    {
+        return $this->hasMany(Lead::class, 'identificationNumber');
     }
 }

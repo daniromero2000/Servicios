@@ -9,7 +9,8 @@
       </div>
       <div class="col-12 mt-2">
         <h5 class="title-table"><i class="fas fa-user mr-2"></i>{{ $digitalChannelLead->name }}
-          {{ $digitalChannelLead->lastName }} ({{ $digitalChannelLead->identificationNumber }})
+          {{ $digitalChannelLead->lastName }} (<a href="{{ route('customers.show', $digitalChannelLead->identificationNumber) }}" data-toggle="tooltip"
+            title="Ver Cliente">{{ $digitalChannelLead->identificationNumber }}</a>)
           </span>
         </h5>
         <span class="text-center badge"

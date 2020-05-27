@@ -81,6 +81,17 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
+
+    public function findLatestCustomerIntentionByCedulaForPolicy($CEDULA)
+    {
+        try {
+            return $this->model
+                ->where('CEDULA', $CEDULA)->latest('FECHA_INTENCION')->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function findIntentionByIdFull(int $id): Intention
     {
         try {
@@ -201,6 +212,22 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
+    public function listJarvisIntentions($totalView): Support
+    {
+
+        try {
+            return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
+                ->where('ID_DEF', null)
+                ->orderBy('id', 'desc')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
 
     public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection
     {
@@ -384,6 +411,26 @@ class IntentionRepository implements IntentionRepositoryInterface
                 ->get();
         } catch (QueryException $e) {
             dd($e);
+        }
+    }
+
+
+    public function validateDateIntention($identificationNumber, $daysToIncrement)
+    {
+        $dateNow = date('Y-m-d');
+        $dateNew = strtotime("- $daysToIncrement day", strtotime($dateNow));
+        $dateNew = date('Y-m-d', $dateNew);
+        $dateLastIntention = $this->findLatestCustomerIntentionByCedulaForPolicy($identificationNumber);
+
+        if (empty($dateLastIntention)) {
+            return 'true';
+        } else {
+            $dateLastConsulta = $dateLastIntention->FECHA_INTENCION;
+            if (strtotime($dateLastConsulta) < strtotime($dateNew)) {
+                return 'true';
+            } else {
+                return 'false';
+            }
         }
     }
 }

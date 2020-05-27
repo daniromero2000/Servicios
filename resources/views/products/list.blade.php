@@ -48,7 +48,7 @@
                                             <td>
                                                 @if ($product->status == 1)
                                                 <span class="badge badge-success">Activo</span>
-                                                @else 
+                                                @else
                                                 <span class="badge badge-danger">Inactivo</span>
                                                 @endif
                                             </td>
@@ -56,7 +56,9 @@
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
                                                     data-target="#deleteProduct{{ $product->id }}">
                                                 </i>
-                                                <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})" data-toggle="modal" data-target="#updateProduct{{ $product->id }}"></i>
+                                                <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})"
+                                                    data-toggle="modal"
+                                                    data-target="#updateProduct{{ $product->id }}"></i>
                                                 <i class="fas fa-eye cursor" data-toggle="modal"
                                                     data-target="#showProduct{{ $product->id }}"></i>
                                             </td>
@@ -64,8 +66,8 @@
 
                                         @include('products.layouts.modals.modal_update_product')
 
-                                        {{-- @include('products.layouts.modals.modal_delete_product')
-                                        @include('products.layouts.modals.modal_show_product') --}}
+                                        @include('products.layouts.modals.modal_delete_product')
+                                        @include('products.layouts.modals.modal_show_product')
 
                                         @endforeach
                                         @endif
@@ -117,13 +119,13 @@
                                                     data-target="#updatebrand{{ $brand->id }}"></i>
                                             </td>
                                         </tr>
-                                        {{-- <div>
+                                        <div>
                                             <div>
                                                 @include('products.layouts.modals.modal_update_brand')
                                             </div>
                                             @include('products.layouts.modals.modal_delete_brand')
 
-                                        </div> --}}
+                                        </div>
                                         @endforeach
                                         @endif
 

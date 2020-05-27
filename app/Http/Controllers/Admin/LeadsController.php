@@ -76,8 +76,10 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, products.sku, products.name
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
+          LEFT JOIN
+    products ON `ti`.product_id = products.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND sb.ESTADO = 'APROBADO'
@@ -86,6 +88,7 @@ class LeadsController extends Controller
         AND sb.STATE = 'A'
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
+          AND ti.deleted_at is null
          AND (ti.ASESOR = 998877
         OR ti.ASESOR = 1024530584
        OR ti.ASESOR =  1088302337
@@ -148,12 +151,15 @@ class LeadsController extends Controller
 
     private function getLeadsTradicional($request)
     {
-        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION
-        FROM `CLIENTE_FAB` as cf, `cifin_score` as score, `TB_INTENCIONES`
+        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
+        FROM CLIENTE_FAB as cf, cifin_score as score, TB_INTENCIONES
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
+         LEFT JOIN
+    products ON `TB_INTENCIONES`.product_id = products.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
-    AND (`TB_INTENCIONES`.`ASESOR` = 998877
+        AND `TB_INTENCIONES`.`deleted_at` is null
+         AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1024530584
        OR `TB_INTENCIONES`.`ASESOR` =  1088302337
         OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
