@@ -58,23 +58,26 @@ class WebServiceRepository implements WebServiceRepositoryInterface
     
     public function sendMessageSmsInfobip($code, $date, $celNumber){
         $text = 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 15 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date;
+        $username = "Lagobo.Distribuciones";
+        $password = "Distribuciones2020";
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://4mmjrm.api.infobip.com/sms/2/text/single",
+            CURLOPT_URL => "https://nzzpz5.api.infobip.com/sms/2/text/single",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{ \"from\":\"Oportunidades\", \"to\":\"3136392833\", \"text\":\"Test SMS.\" }",
+            CURLOPT_POSTFIELDS => "{ \"from\":\"Lagobo\", \"to\":\"57$celNumber\", \"text\":\"$text\" }",
             CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
-                "authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                "authorization: Basic ". base64_encode($username . ":" . $password),
                 "content-type: application/json"
             ),
         ));
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
 

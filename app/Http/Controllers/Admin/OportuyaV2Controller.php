@@ -538,7 +538,7 @@ class OportuyaV2Controller extends Controller
 	
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
-		/*$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$checkCustomerCodeVerified = $this->customerVerificationCodeInterface->checkCustomerVerificationCode($identificationNumber, $this->daysToIncrement);
 		$getCode = $this->customerVerificationCodeInterface->checkCustomerHasCustomerVerificationCode($identificationNumber);
 		if ($getCode) {
@@ -551,7 +551,7 @@ class OportuyaV2Controller extends Controller
 
 		if ($checkCustomerCodeVerified == 'false') {
 			return -1;
-		}*/
+		}
 
 		$code                                                   = $this->customerVerificationCodeInterface->generateVerificationCode($identificationNumber);
 		$codeUserVerificationOportudata                         = [];
@@ -565,11 +565,11 @@ class OportuyaV2Controller extends Controller
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
-		return $dataCode;
-		$codeVerification['sms_status'] = ''; // groupName
-		$codeVerification['sms_response'] = ''; // name
-		$codeVerification['sms_send_description'] = ''; // description
-		$codeVerification['sms_id'] = ''; // messageId
+		$dataCode = json_decode($dataCode, true);
+		$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
+		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
+		$codeVerification['sms_send_description'] = $dataCode['messages'][0]['status']['description']; // description
+		$codeVerification['sms_id'] = $dataCode['messages'][0]['messageId']; // messageId
 		$codeVerification = $codeVerification->toArray();
 		$this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
 		return "true";

@@ -278,7 +278,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 
 		$scope.validateStep1 = function () {
-			//$scope.disabledButton = true;
+			$scope.disabledButton = true;
 			if ($scope.lead.CIUD_UBI == '' || typeof $scope.lead.CIUD_UBI == 'undefined' || $scope.lead.CIUD_UBI == null) {
 				$scope.showAlertCiudUbi = true;
 				$scope.disabledButton = false;
@@ -372,9 +372,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					method: 'GET',
 					url: '/api/oportudata/getCodeVerification/' + $scope.lead.CEDULA + '/' + $scope.lead.CELULAR + '/SOLICITUD',
 				}).then(function successCallback(response) {
-					console.log(response);
 					hideLoader();
-					/*if (response.data == true) {
+					if (response.data == true) {
 						if (renew == true) {
 							alert('Código generado exitosamente');
 							$timeout(function () {
@@ -390,7 +389,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 					if (response.data == '-1') {
 						$scope.addCliente('CREDITO');
-					}*/
+					}
 				}, function errorCallback(response) {
 					hideLoader();
 					response.url = '/api/oportudata/getCodeVerification/' + $scope.lead.CEDULA + '/' + $scope.lead.CELULAR + '/SOLICITUD';
