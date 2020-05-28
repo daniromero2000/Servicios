@@ -12,6 +12,7 @@ use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
+use App\Entities\Turnos\Turno;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -123,6 +124,10 @@ class FactoryRequest extends Model
     public function factoryRequestStatusesLogs()
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
+    }
+    public function turno()
+    {
+        return $this->belongsTo(Turno::class, 'SOLICITUD', 'SOLICITUD');
     }
     public function factoryRequestaAssessors()
     {

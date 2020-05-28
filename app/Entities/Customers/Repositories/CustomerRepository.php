@@ -106,7 +106,8 @@ class CustomerRepository implements CustomerRepositoryInterface
                 'customerRegistraduria',
                 'customerConfronta',
                 'ubicaConsultations',
-                'cifinWebService'
+                'cifinWebService',
+                'customerLeads'
             ])->findOrFail($identificationNumber);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());

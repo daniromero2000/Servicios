@@ -20,6 +20,7 @@ use App\Entities\Ruafs\Ruaf;
 use App\Entities\Fosygas\Fosyga;
 use App\Entities\FosygaTemps\FosygaTemp;
 use App\Entities\Intentions\Intention;
+use App\Entities\Leads\Lead;
 use App\Entities\Registradurias\Registraduria;
 use App\Entities\Ubicas\Ubica;
 use App\Entities\UpToDateFinancialCifins\UpToDateFinancialCifin;
@@ -291,5 +292,10 @@ class Customer extends Model
     public function customerWarranties()
     {
         return $this->hasMany(Warranty::class, 'CEDULA');
+    }
+
+    public function customerLeads()
+    {
+        return $this->hasMany(Lead::class, 'identificationNumber');
     }
 }

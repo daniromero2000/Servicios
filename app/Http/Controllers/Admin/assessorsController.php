@@ -510,7 +510,6 @@ class assessorsController extends Controller
 	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$lastName = explode(" ", $oportudataLead->APELLIDOS);
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
@@ -522,10 +521,19 @@ class assessorsController extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
+			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->save();
+
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
@@ -536,6 +544,7 @@ class assessorsController extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 1;
 				$dataIntention->ID_DEF = 2;
 				$dataIntention->save();
@@ -548,23 +557,10 @@ class assessorsController extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultasFosyga = $this->execConsultaFosygaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
-
-		if ($consultasFosyga == "-3") {
-			return ['resp' => $consultasFosyga];
-		}
-
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
-			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->save();
+			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA' => $identificationNumber,
@@ -575,6 +571,7 @@ class assessorsController extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 3;
 				$dataIntention->save();
 			}
@@ -585,6 +582,13 @@ class assessorsController extends Controller
 				'resp'                 => -5
 			];
 		} else {
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$oportudataLead->TIPO_DOC,
+				$oportudataLead->FEC_EXP
+			);
+
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
@@ -617,7 +621,7 @@ class assessorsController extends Controller
 
 		$validateConsultaRegistraduria = 0;
 		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
+			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
@@ -633,7 +637,7 @@ class assessorsController extends Controller
 		return "true";
 	}
 
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
 	{
 		// Fosyga
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -646,16 +650,8 @@ class assessorsController extends Controller
 			$consultaFosyga = 1;
 		}
 
-		$validateConsultaFosyga = 0;
-
 		if ($consultaFosyga > 0) {
-			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-		} else {
-			$validateConsultaFosyga = 1;
-		}
-
-		if (($validateConsultaFosyga < 0)) {
-			return "-3";
+			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
 		}
 
 		return "true";
@@ -675,12 +671,18 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
 		$idDef                = "";
 		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerScore        = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
 		$data                 = ['CEDULA' => $identificationNumber];
+
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$data['ASESOR'] = $assessorCode;
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
@@ -689,8 +691,11 @@ class assessorsController extends Controller
 			$customerIntention =	$this->intentionInterface->createIntention($data);
 		} else {
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ASESOR = $assessorCode;
+			$customerIntention->save();
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -734,7 +739,7 @@ class assessorsController extends Controller
 		}
 
 		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
-		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
 		if ($customerRealDoubtful->isNotEmpty()) {
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {

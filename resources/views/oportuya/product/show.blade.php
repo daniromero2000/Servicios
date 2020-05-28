@@ -66,7 +66,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 @foreach($imagenes as $image)
                                 <div @if ($image[1]==0) class="carousel-item active" @else class="carousel-item" @endif
                                     data-slide-number="{{$image[1]}}">
-                                    <img class="img-principal-carousel lazy" alt="..."
+                                    <img class="img-principal-carousel lazy" alt="{{$image[0]}}"
                                         data-src="{{asset('storage/'.$image[0])}}" src="{{ asset('images/blank.jpg')}}"
                                         data-type="image" data-toggle="lightbox" data-gallery="example-gallery">
                                 </div>
@@ -88,7 +88,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
                                 data-slide-to="{{$image[1]}}">
                                 <img data-src="{{asset('storage/'.$image[0])}}" src="{{ asset('images/blank.jpg')}}"
-                                    class="img-fluid lazy" alt="...">
+                                    class="img-fluid lazy" alt="{{$image[0]}}">
                             </div>
                             @endforeach
                         </div>
@@ -110,7 +110,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="col-4">
                 <div>
                     <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Envio.jpg') }}"
-                        src="{{ asset('images/blank.jpg')}}" alt="" class="img-step-product lazy">
+                        src="{{ asset('images/blank.jpg')}}" alt="envio" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
                     Envio gratis para ciudades con tienda fisica
@@ -119,7 +119,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="col-4">
                 <div>
                     <img src="{{ asset('images/blank.jpg')}}"
-                        data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.jpg') }}" alt=""
+                        data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icono_Credit.jpg') }}" alt="credito"
                         class="img-step-product lazy ">
                 </div>
                 <div class="mt-2 text-step-product">
@@ -129,7 +129,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             <div class="col-4">
                 <div>
                     <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Store.jpg') }}"
-                        src="{{ asset('images/blank.jpg')}}" alt="" class="img-step-product lazy">
+                        src="{{ asset('images/blank.jpg')}}" alt="tienda" class="img-step-product lazy">
                 </div>
                 <div class="mt-2 text-step-product">
                     Crédito aplica para ubicación en tienda fisica
@@ -196,10 +196,13 @@ array_push($imagenes, [$productImages[$key], $key]);
 
                     <div class="relative">
                         <h4 class="question-contact-deal-product">¿No tienes claro el procedimiento?</h4>
-                        <img alt="" data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
+                        <img alt="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
+                            data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_WhatsApp.png')}}"
                             src="{{ asset('images/blank.jpg')}}" class="first-img-contact-deal-product lazy">
                         <img data-src="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}"
-                            src="{{ asset('images/blank.jpg')}}" alt="" class="second-img-contact-deal-product lazy">
+                            src="{{ asset('images/blank.jpg')}}"
+                            alt="{{ asset('images/Front/OportuyaCustomers/iconos/Icon_Tell.png')}}"
+                            class="second-img-contact-deal-product lazy">
                         <div class="container-text-contact-deal-product">
                             <p>Preguntale a nuestros asesores:</p>
                         </div>

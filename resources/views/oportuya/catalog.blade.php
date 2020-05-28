@@ -45,10 +45,10 @@
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center first-step-cards step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.jpg') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Avances/1.jpg') }}" alt="paso1"
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.jpg') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.jpg') }}" alt="hoja"
                     class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Solicita tu <b>crédito</b> llenando el formulario</p>
@@ -61,10 +61,10 @@
 
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center step-cards border-0">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.jpg') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/2.jpg') }}" alt="paso2"
                     class="first-img-step-cards">
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.jpg') }}" alt=""
-                    class="second-img-step-cards">
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Contact_Icon.jpg') }}"
+                    alt="contacto" class="second-img-step-cards">
                 <div class="card-body card-body-view">
                     <p class="card-text text-step-cards">Uno de nuestros asesores se comunicará contigo para que
                         elijas
@@ -77,10 +77,10 @@
         <div class="col-md-4 col-sm-6 col-10 ">
             <div class="card text-center step-cards last-step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.jpg') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/3.jpg') }}" alt="paso3"
                     class="first-img-step-cards">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.jpg') }}" alt=""
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/HomeIcon.jpg') }}" alt="home"
                     class="second-img-step-cards">
 
                 <div class="card-body card-body-view">
@@ -116,7 +116,8 @@
                     <img src="{{asset('storage/'.$product->brand_id->cover)}}" class="card-products-logo">
                 </div>
                 <div class="height-container-img-product">
-                    <img src="{{asset("storage/$product->cover")}}" class="card-products-img" alt="...">
+                    <img src="{{asset("storage/$product->cover")}}" class="card-products-img"
+                        alt="{{asset("storage/$product->cover")}}">
                 </div>
                 <div class="card-body pt-0 pr-4 pl-4">
                     @php
@@ -177,7 +178,7 @@
 
                 <div class="card container-card-benefits ">
                     <img src="{{asset('images/Front/OportuyaCustomers/PageCredit/SnipetMasBeneficios/Icon_Electrodomesticos.png')}} "
-                        alt="" class="img-card">
+                        alt="electrodomesticos" class="img-card">
                     <div class="card-body">
                         <p class="card-text">Accede con facilidad a una gran variedad de <b>electrodomésticos</b>
                             para
@@ -190,7 +191,7 @@
 
                 <div class="card container-card-benefits">
                     <img src="{{asset('images/Front/OportuyaCustomers/PageCredit/SnipetMasBeneficios/Icon_Avances.png')}} "
-                        alt="" class="img-card">
+                        alt="avances" class="img-card">
                     <div class="card-body">
                         <p class="card-text">Un cupo de avances para que utilices cuando más lo necesites (desde
                             <b>$100.000</b> - hasta <b>$500.000</b>). </p>

@@ -32,10 +32,12 @@ class IntentionAssessorController extends Controller
     public function index(Request $request)
     {
         $assessor = auth()->user()->email;
+        $assessorId = auth()->user()->idProfile;
 
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->intentionInterface->listIntentionAssessors($skip * 30, $assessor);
+        $listJarvis = $this->intentionInterface->listJarvisIntentions($skip * 30);
         if (request()->has('q')) {
             $list = $this->intentionInterface->searchIntentionAssessors(
                 request()->input('q'),
@@ -57,6 +59,8 @@ class IntentionAssessorController extends Controller
             'listCount'            => $listCount,
             'skip'                 => $skip,
             'status'               => $status,
+            'listJarvis' => $listJarvis,
+            'assessorId' => $assessorId
         ]);
     }
 

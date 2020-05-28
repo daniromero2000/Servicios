@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front\ConfrontaCustomers;
 
-use App\Entities\CliCels\cliCel;
+use App\Entities\CliCels\CliCel;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -95,20 +95,14 @@ class ConfrontaCustomerController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $datas = [];
         foreach ($request->customerData as $key => $value) {
             $datas[$request->customerData[$key]['name']] = $request->customerData[$key]['value'];
         }
         $queryExistCel = DB::connection('oportudata')->select("SELECT COUNT(*) as total FROM `CLI_CEL` WHERE `IDENTI` = :cedula AND `NUM` = :telefono ", ['cedula' => $datas['CEDULA'], 'telefono' => $datas['CELULAR']]);
         if ($queryExistCel[0]->total == 0) {
-            $clienteCelular          = new cliCel;
-            $clienteCelular->IDENTI  = $datas['CEDULA'];
-            $clienteCelular->NUM     = $datas['CELULAR'];
-            $clienteCelular->TIPO    = 'CEL';
-            $clienteCelular->CEL_VAL = 0;
-            $clienteCelular->FECHA   = date("Y-m-d H:i:s");
-            $clienteCelular->save();
+            $dataCliCel = ['IDENTI' => $datas['CEDULA'], 'NUM' => $datas['CELULAR'], 'TIPO' => 'CEL', 'CEL_VAL' => '0', 'FECHA' => date("Y-m-d H:i:s")];
+            $customer = CliCel::create($dataCliCel);
         }
         $customer = $this->customerInterface->updateOrCreateCustomer($datas);
 

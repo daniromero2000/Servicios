@@ -28,11 +28,13 @@ use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositor
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
+use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
+    private $registraduriaInterface;
 
 
     public function __construct(
@@ -55,8 +57,8 @@ class AdvanceController extends Controller
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         AssessorRepositoryInterface $assessorRepositoryInterface,
         FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
-        AnalisisRepositoryInterface $analisisRepositoryInterface
-
+        AnalisisRepositoryInterface $analisisRepositoryInterface,
+        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -78,6 +80,7 @@ class AdvanceController extends Controller
         $this->assessorInterface = $assessorRepositoryInterface;
         $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
         $this->AnalisisInterface = $analisisRepositoryInterface;
+        $this->registraduriaInterface = $registraduriaRepositoryInterface;
     }
 
     public function index()

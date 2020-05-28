@@ -306,22 +306,7 @@ class OportuyaV2Controller extends Controller
 				$request->get('lastName')
 			);
 
-			if ($consultasRegistraduria == "-1") {
-				return "-1";
-			}
 			if ($consultasRegistraduria == "-3") {
-				return "-3";
-			}
-
-			$consultasFosyga = $this->execConsultaFosygaLead(
-				$identificationNumber,
-				$request->get('typeDocument'),
-				$request->get('dateDocumentExpedition'),
-				$request->get('name'),
-				$request->get('lastName')
-			);
-
-			if ($consultasFosyga == "-3") {
 				return "-3";
 			}
 
@@ -335,7 +320,14 @@ class OportuyaV2Controller extends Controller
 					'product_id' => $request->get('productId')
 				];
 			}
-			$customerIntention =  $this->intentionInterface->createIntention($data);
+
+			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+			$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
+			if ($lastIntention == "true") {
+				$customerIntention =  $this->intentionInterface->createIntention($data);
+			}
+
 			return "1";
 		}
 
@@ -372,6 +364,12 @@ class OportuyaV2Controller extends Controller
 			];
 
 			$oportudataLead->update($dataLead);
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$request->get('typeDocument'),
+				$request->get('dateDocumentExpedition')
+			);
 
 			return response()->json([true]);
 		}
@@ -1230,13 +1228,25 @@ class OportuyaV2Controller extends Controller
 
 	public function deniedLeadForFecExp($identificationNumber, $typeDenied)
 	{
+
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
 			'CEDULA' => $identificationNumber,
 			'ID_DEF' => $typeDenied,
 			'ESTADO_INTENCION' => 1
 		];
-		$this->intentionInterface->createIntention($data);
+
+		if ($lastIntention == "true") {
+			$this->intentionInterface->createIntention($data);
+		} else {
+			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$dataIntention->ESTADO_INTENCION = 1;
+			$dataIntention->ID_DEF = $typeDenied;
+			$dataIntention->save();
+		}
+
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->ESTADO = 'NEGADO';
 		$customer->save();
@@ -1412,7 +1422,6 @@ class OportuyaV2Controller extends Controller
 	public function execConsultasleadAsesores($identificationNumber)
 	{
 		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$lastName = explode(" ", $oportudataLead->APELLIDOS);
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
@@ -1424,15 +1433,28 @@ class OportuyaV2Controller extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
 		if ($consultasRegistraduria == "-1") {
+			$oportudataLead->ESTADO = "NEGADO";
+			$oportudataLead->save();
+
 			$dataIntention = [
 				'CEDULA'           => $identificationNumber,
 				'ESTADO_INTENCION' => 1,
 				'ID_DEF'           => 2
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
-			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 1;
+				$dataIntention->ID_DEF = 2;
+				$dataIntention->save();
+			}
+
 			return ['resp' => $consultasRegistraduria, 'infoLead' => $dataIntention->definition];
 		}
 
@@ -1440,36 +1462,37 @@ class OportuyaV2Controller extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultasFosyga = $this->execConsultaFosygaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
-
-		if ($consultasFosyga == "-3") {
-			return ['resp' => $consultasFosyga];
-		}
-
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
 		if ($consultaComercial == 0) {
-			$customer = $this->customerInterface->findCustomerById($identificationNumber);
-			$customer->ESTADO = "SIN COMERCIAL";
-			$customer->save();
+			$oportudataLead->ESTADO = "SIN COMERCIAL";
+			$oportudataLead->save();
 
 			$dataIntention = [
 				'CEDULA' => $identificationNumber,
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
+			if ($lastIntention == "true") {
+				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
+			} else {
+				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ESTADO_INTENCION = 3;
+				$dataIntention->save();
+			}
+
 			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
 				'resp'                 => -5
 			];
 		} else {
+
+			$this->execConsultaFosygaLead(
+				$identificationNumber,
+				$oportudataLead->TIPO_DOC,
+				$oportudataLead->FEC_EXP
+			);
+
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0
@@ -1502,7 +1525,7 @@ class OportuyaV2Controller extends Controller
 
 		$validateConsultaRegistraduria = 0;
 		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($name)), strtolower(trim($lastName)), $dateDocument);
+			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
 		} else {
 			$validateConsultaRegistraduria = 1;
 		}
@@ -1518,7 +1541,7 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
+	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
 	{
 		// Fosyga
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -1531,16 +1554,8 @@ class OportuyaV2Controller extends Controller
 			$consultaFosyga = 1;
 		}
 
-		$validateConsultaFosyga = 0;
-
 		if ($consultaFosyga > 0) {
-			$validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($name), trim($lastName), $dateDocument);
-		} else {
-			$validateConsultaFosyga = 1;
-		}
-
-		if (($validateConsultaFosyga < 0)) {
-			return "-3";
+			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
 		}
 
 		return "true";
@@ -1549,6 +1564,9 @@ class OportuyaV2Controller extends Controller
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
+
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
@@ -1560,7 +1578,10 @@ class OportuyaV2Controller extends Controller
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
+			if ($lastIntention == "true") {
+				$this->intentionInterface->createIntention($dataIntention);
+			}
+
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,

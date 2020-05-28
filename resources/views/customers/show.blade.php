@@ -65,6 +65,12 @@
                 <a class="nav-link" data-toggle="tab" href="#warranties" role="tab"
                     aria-controls="profile">Garantías</a>
             </li>
+            @if ( auth()->user()->idProfile == 2 )
+            <li class="active" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#leads" role="tab" aria-controls="arrears">Leads Canal
+                    Digital</a>
+            </li>
+            @endif
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#seguimiento" role="tab"
                     aria-controls="profile">Seguimiento</a>
@@ -115,6 +121,10 @@
             <div role="tabpanel" class="tab-pane" id="warranties">
                 @include('customers.layouts.customer_warranties', ['warranties' =>
                 $customer->customerWarranties])
+            </div>
+            <div role="tabpanel" class="tab-pane" id="leads">
+                @include('customers.layouts.customer_leads', ['leads' =>
+                $customer->customerLeads])
             </div>
             <div role="tabpanel" class="tab-pane" id="seguimiento">
                 @include('customers.layouts.commentaries', ['datas' =>
