@@ -98,7 +98,7 @@ class IntentionController extends Controller
                             ($value->TIEMPO_LABOR == '1') ? 'CUMPLE' : 'NO CUMPLE',
                             ($value->TIPO_5_ESPECIAL == '1') ? 'SI' : 'NO',
                             ($value->INSPECCION_OCULAR == '1') ? 'SI' : 'NO',
-
+                            $value->definition->DESCRIPCION
                         ];
 
                         $export = new ExportToExcel($printExcel);
