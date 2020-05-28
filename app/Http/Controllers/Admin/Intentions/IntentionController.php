@@ -81,7 +81,7 @@ class IntentionController extends Controller
                         }
                         $score = '';
 
-                        if ($value->customer->latestCifinScore->isEmpty()) {
+                        if (isEmpty($value->customer->latestCifinScore)) {
                             $score = $value->customer->latestCifinScore['score'];
                         }
 
