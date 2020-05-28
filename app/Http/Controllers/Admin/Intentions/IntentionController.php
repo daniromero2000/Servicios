@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Intentions;
 
-use App\Entities\Intentions\Intention;
 use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
-use App\Entities\Intentions\Repositories\IntentionRepository;
 use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
 use App\Entities\DataIntentionsRequest\Repositories\DataIntentionsRequestRepository;
 use App\Http\Controllers\Controller;
@@ -38,18 +36,46 @@ class IntentionController extends Controller
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
         $status = IntentionStatus::all();
-        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $skip         = $this->toolsInterface->getSkip($request->input('skip'));
         $leadsOfMonth = $this->intentionInterface->listIntentionsTotal($from, $to);
-        $list = $this->intentionInterface->listIntentions($skip * 30);
+        $list         = $this->intentionInterface->listIntentions($skip * 30);
+
         if (request()->has('q')) {
             $cont = 0;
             switch ($request->input('action')) {
                 case 'search':
-                    $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
-                    $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+                    $list = $this->intentionInterface->searchIntentions(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('creditprofile'),
+                        request()->input('status')
+                    )->sortByDesc('FECHA_INTENCION');
+
+                    $leadsOfMonth =  $this->intentionInterface->searchIntentions(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('creditprofile'),
+                        request()->input('status')
+                    )->sortByDesc('FECHA_INTENCION');
+
                     break;
                 case 'export':
-                    $list = $this->intentionInterface->exportIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+                    $list = $this->intentionInterface->exportIntentions(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('creditprofile'),
+                        request()->input('status')
+                    )->sortByDesc('FECHA_INTENCION');
+
+
+
+
 
                     foreach ($list as $key => $value) {
                         $cont++;
@@ -103,9 +129,9 @@ class IntentionController extends Controller
                             ($value->INSPECCION_OCULAR == '1') ? 'SI' : 'NO',
                             $value->definition['DESCRIPCION']
                         ];
-
-                        $export = new ExportToExcel($printExcel);
                     }
+
+                    $export = new ExportToExcel($printExcel);
                     return Excel::download($export, 'IntencionesClientes.xlsx');
                     break;
             }
@@ -133,16 +159,16 @@ class IntentionController extends Controller
         $to   = Carbon::now();
         $from = Carbon::now()->startOfMonth();
 
-        $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
-        $creditCards       = $this->intentionInterface->countIntentionsCreditCards($from, $to);
-        $intentionStatuses = $this->intentionInterface->countIntentionsStatuses($from, $to);
-        $dataIntenciosForDevices = $this->dataIntentionsRequest->countDataIntentionsForTypedevice($from, $to);
+        $creditProfiles           = $this->intentionInterface->countIntentionsCreditProfiles($from, $to);
+        $creditCards              = $this->intentionInterface->countIntentionsCreditCards($from, $to);
+        $intentionStatuses        = $this->intentionInterface->countIntentionsStatuses($from, $to);
+        $dataIntenciosForDevices  = $this->dataIntentionsRequest->countDataIntentionsForTypedevice($from, $to);
         $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles    = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards       = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
-            $intentionStatuses = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
+            $creditProfiles           = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
+            $creditCards              = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
+            $intentionStatuses        = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
             $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), request()->input('to'));
         }
 

@@ -114,6 +114,7 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
     public function listIntentions($totalView): Support
     {
         try {
@@ -242,7 +243,6 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function listIntentionAssessors($totalView, $assessor): Support
     {
-
         try {
             return  $this->model->with(['customer', 'definition'])->where('ASESOR', $assessor)
                 ->orderBy('id', 'desc')
@@ -256,7 +256,6 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function listJarvisIntentions($totalView): Support
     {
-
         try {
             return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
                 ->where('ID_DEF', null)
@@ -350,7 +349,6 @@ class IntentionRepository implements IntentionRepositoryInterface
         }
     }
 
-
     public function listIntentionDirectors($totalView, $from, $to, $subsidiaris)
     {
         try {
@@ -364,6 +362,7 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
     public function countListIntentionDirectors($from, $to, $subsidiaris)
     {
         try {
@@ -375,6 +374,7 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
+
     public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $subsidiaris): Collection
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {
@@ -401,6 +401,7 @@ class IntentionRepository implements IntentionRepositoryInterface
                 ->take(100)
                 ->get($this->columns);
         }
+
         return $this->model->searchIntentionDirector($text, null, true, true)->with(['customer', 'definition'])
             ->whereBetween('FECHA_INTENCION', [$from, $to])
             ->whereIn('ASESOR', $subsidiaris)
@@ -454,7 +455,6 @@ class IntentionRepository implements IntentionRepositoryInterface
             dd($e);
         }
     }
-
 
     public function validateDateIntention($identificationNumber, $daysToIncrement)
     {
