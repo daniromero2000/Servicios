@@ -43,7 +43,7 @@ interface IntentionRepositoryInterface
 
   public function countIntentionDirectorStatuses($from, $to, $assessor);
 
-  public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null): Collection;
+  public function searchIntentions(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null): Collection;
 
   public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
 
