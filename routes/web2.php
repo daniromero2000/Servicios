@@ -136,6 +136,10 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/factoryrequests', 'FactoryRequestController@dashboard')->name('factory_dashboard');
     });
 
+    Route::namespace('FactoryRequestTurns')->group(function () {
+        Route::resource('Administrator/factoryrequestTurns', 'FactoryRequesTurnController');
+    });
+
     Route::namespace('Intentions')->group(function () {
         Route::resource('Administrator/intentions', 'IntentionController');
         Route::get('/Administrator/dashboard/intentions', 'IntentionController@dashboard')->name('intention_dashboard');

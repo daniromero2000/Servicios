@@ -233,7 +233,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->where('state', 'A')
                 ->orderBy('FECHASOL', 'desc')
                 ->skip($totalView)
-                ->take(100)
+                ->take(50)
                 ->get($this->columns);
         }
 
@@ -249,6 +249,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
             })
             ->where('state', 'A')
+            ->skip($totalView)
+            ->take(50)
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
