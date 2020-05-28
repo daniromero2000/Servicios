@@ -79,9 +79,11 @@ class IntentionController extends Controller
                                 'DEFINICION'
                             ];
                         }
-                        $score = '';
+
 
                         if (isEmpty($value->customer->latestCifinScore)) {
+                            $score = '';
+                        } else {
                             $score = $value->customer->latestCifinScore['score'];
                         }
 
