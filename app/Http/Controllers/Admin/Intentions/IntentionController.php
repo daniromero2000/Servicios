@@ -40,8 +40,6 @@ class IntentionController extends Controller
         $status = IntentionStatus::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $leadsOfMonth = $this->intentionInterface->listIntentionsTotal($from, $to);
-
-
         $list = $this->intentionInterface->listIntentions($skip * 30);
         if (request()->has('q')) {
             $cont = 0;
@@ -51,7 +49,6 @@ class IntentionController extends Controller
                     $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
                     break;
                 case 'export':
-
                     $list = $this->intentionInterface->exportIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
 
                     foreach ($list as $key => $value) {
@@ -78,7 +75,6 @@ class IntentionController extends Controller
                                 'DEFINICION'
                             ];
                         }
-
 
                         if (empty($value->customer->latestCifinScore)) {
                             $score = '';
@@ -113,9 +109,6 @@ class IntentionController extends Controller
                     return Excel::download($export, 'IntencionesClientes.xlsx');
                     break;
             }
-
-            $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
-            $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
         }
 
         return view('intentions.list', [
