@@ -81,12 +81,12 @@ class IntentionController extends Controller
                         }
                         $printExcel[] = [
                             $value->FECHA_INTENCION,
-                            $value->customer->ORIGEN,
-                            $value->assessor->SUCURSAL,
-                            $value->assessor->NOMBRE,
+                            $value->customer['ORIGEN'],
+                            $value->assessor['SUCURSAL'],
+                            $value->assessor['NOMBRE'],
                             $value->intentionStatus['NAME'],
                             $value->CEDULA,
-                            $value->customer->ACTIVIDAD,
+                            $value->customer['ACTIVIDAD'],
                             ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
                             $value->customer->latestCifinScore['score'],
                             $value->PERFIL_CREDITICIO,
