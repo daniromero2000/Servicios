@@ -79,6 +79,12 @@ class IntentionController extends Controller
                                 'DEFINICION'
                             ];
                         }
+                        $score = '';
+
+                        if ($value->customer->latestCifinScore) {
+                            $score = $value->customer->latestCifinScore['score'];
+                        }
+
                         $printExcel[] = [
                             $value->FECHA_INTENCION,
                             $value->customer['ORIGEN'],
@@ -88,7 +94,7 @@ class IntentionController extends Controller
                             $value->CEDULA,
                             $value->customer['ACTIVIDAD'],
                             ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
-                            ($value->customer->latestCifinScore) ? $value->customer->latestCifinScore['score'] : 'NO SCORE',
+                            $score,
                             $value->PERFIL_CREDITICIO,
                             ($value->HISTORIAL_CREDITO == '1') ? 'CON HISTORIAL' : 'SIN HISTORIAL',
                             $value->TARJETA,
