@@ -88,7 +88,7 @@ class IntentionController extends Controller
                             $value->CEDULA,
                             $value->customer['ACTIVIDAD'],
                             ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
-                            $value->customer->latestCifinScore['score'],
+                            ($value->customer->latestCifinScore) ? $value->customer->latestCifinScore['score'] : 'NO SCORE',
                             $value->PERFIL_CREDITICIO,
                             ($value->HISTORIAL_CREDITO == '1') ? 'CON HISTORIAL' : 'SIN HISTORIAL',
                             $value->TARJETA,
