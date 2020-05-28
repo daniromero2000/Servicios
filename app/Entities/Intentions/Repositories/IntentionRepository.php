@@ -219,6 +219,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         try {
             return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
                 ->where('ID_DEF', null)
+                ->where('FECHA_INTENCION', '>', '2020-05-01 00:00:00')
                 ->orderBy('id', 'desc')
                 ->skip($totalView)
                 ->take(30)
