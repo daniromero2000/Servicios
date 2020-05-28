@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\Tools\Exports\ExportToExcel;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Stmt\Foreach_;
 
 class IntentionController extends Controller
@@ -42,6 +44,69 @@ class IntentionController extends Controller
 
         $list = $this->intentionInterface->listIntentions($skip * 30);
         if (request()->has('q')) {
+            $cont = 0;
+            switch ($request->input('action')) {
+                case 'search':
+                    $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+                    $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+                    break;
+                case 'export':
+
+                    $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+                    $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
+
+                    foreach ($list as $key => $value) {
+                        $cont++;
+                        if ($cont == 1) {
+                            $printExcel[] = [
+                                'FECHA INTENCION',
+                                'ORIGEN',
+                                'SUCURSAL',
+                                'ASESOR',
+                                'ESTADO',
+                                'CLIENTE',
+                                'ACTIVIDAD',
+                                'ESTADO OBLIGACIONES',
+                                'SCORE',
+                                'PERFIL CREDITICIO',
+                                'HISTORIAL CREDITICIO',
+                                'LINEA', 'DECISION',
+                                'RIESGO ZONA',
+                                'EDAD',
+                                'TIEMPO EN LABOR',
+                                'TIPO 5 ESPECIAL',
+                                'INSPECCION OCULAR',
+                                'DEFINICION'
+                            ];
+                        }
+                        $printExcel[] = [
+                            $value->FECHA_INTENCION,
+                            $value->customer->ORIGEN,
+                            $value->assessor->SUCURSAL,
+                            $value->assessor->NOMBRE,
+                            $value->intentionStatus->NAME,
+                            $value->CEDULA,
+                            $value->customer->ACTIVIDAD,
+                            ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
+                            $value->customer->latestCifinScore['score'],
+                            $value->PERFIL_CREDITICIO,
+                            ($value->HISTORIAL_CREDITO == '1') ? 'CON HISTORIAL' : 'SIN HISTORIAL',
+                            $value->TARJETA,
+                            $value->CREDIT_DECISION,
+                            $value->ZONA_RIESGO,
+                            ($value->EDAD == '1') ? 'CUMPLE' : 'NO CUMPLE',
+                            ($value->TIEMPO_LABOR == '1') ? 'CUMPLE' : 'NO CUMPLE',
+                            ($value->TIPO_5_ESPECIAL == '1') ? 'SI' : 'NO',
+                            ($value->INSPECCION_OCULAR == '1') ? 'SI' : 'NO',
+
+                        ];
+
+                        $export = new ExportToExcel($printExcel);
+                    }
+                    return Excel::download($export, 'IntencionesClientes.xlsx');
+                    break;
+            }
+
             $list = $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
             $leadsOfMonth =  $this->intentionInterface->searchIntentions(request()->input('q'), $skip, request()->input('from'), request()->input('to'), request()->input('creditprofile'), request()->input('status'))->sortByDesc('FECHA_INTENCION');
         }
