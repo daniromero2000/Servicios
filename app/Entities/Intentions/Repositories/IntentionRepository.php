@@ -220,7 +220,7 @@ class IntentionRepository implements IntentionRepositoryInterface
             return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
                 ->where('ID_DEF', null)
                 ->where('FECHA_INTENCION', '>', '2020-05-01 00:00:00')
-                ->orderBy('id', 'desc')
+                ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
                 ->take(30)
                 ->get($this->columns);
