@@ -73,8 +73,6 @@ class IntentionController extends Controller
                         request()->input('status')
                     )->sortByDesc('FECHA_INTENCION');
 
-                    ini_set('memory_limit', "4096");
-
                     foreach ($list as $key => $value) {
                         $cont++;
                         if ($cont == 1) {
