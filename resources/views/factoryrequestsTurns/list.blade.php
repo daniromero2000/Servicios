@@ -113,9 +113,9 @@
                   <div class="inner">
                     <h2 class="titleCardNumber">{{ $listCount }}</h2>
                     @if ($_GET && $_GET['from'] != '')
-                    <p class="textCardNumber">Solicitudes en este mes</p>
-                    @else
                     <p class="textCardNumber">Total de Solicitudes</p>
+                    @else
+                    <p class="textCardNumber">Solicitudes en este mes</p>
                     @endif
                   </div>
                   <div class="icon">
