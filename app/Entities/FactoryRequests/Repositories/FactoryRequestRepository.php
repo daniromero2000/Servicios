@@ -921,13 +921,14 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null): Collection
+    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine): Collection
     {
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
+
                     $arrayStatus = ['APROBADO', 'EN FACTURACION'];
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -940,6 +941,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
                             ->when($arrayStatus, function ($q, $arrayStatus) {
                                 return $q->whereIn('ESTADO', $arrayStatus);
                             })
@@ -958,6 +974,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
                         ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
                         ->when($arrayStatus, function ($q, $arrayStatus) {
                             return $q->whereIn('ESTADO', $arrayStatus);
                         })
@@ -975,9 +1006,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'PENDIENTES'):
-                    $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION'];
+                    $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
 
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -990,6 +1021,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
                             ->when($arrayStatus, function ($q, $arrayStatus) {
                                 return $q->whereNotIn('ESTADO', $arrayStatus);
                             })
@@ -1007,6 +1053,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($arrayStatus, function ($q, $arrayStatus) {
                             return $q->whereNotIn('ESTADO', $arrayStatus);
@@ -1027,7 +1088,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 case ($groupStatus == 'DESISTIDOS'):
                     $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
 
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1040,6 +1101,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
                             ->when($arrayStatus, function ($q, $arrayStatus) {
                                 return $q->whereIn('ESTADO', $arrayStatus);
                             })
@@ -1057,6 +1133,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($arrayStatus, function ($q, $arrayStatus) {
                             return $q->whereIn('ESTADO', $arrayStatus);
@@ -1074,7 +1165,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 case ($groupStatus == 'NEGADOS'):
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1087,6 +1178,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
                             ->when($groupStatus, function ($q, $groupStatus) {
                                 return $q->where('ESTADO', $groupStatus);
                             })
@@ -1104,6 +1210,99 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($groupStatus, function ($q, $groupStatus) {
+                            return $q->where('ESTADO', $groupStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->skip($totalView)
+                        ->take(50)
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+
+                case ($groupStatus == 'COMITE'):
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->where('ESTADO', $groupStatus)
+                            ->skip($totalView)
+                            ->take(30)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($groupStatus, function ($q, $groupStatus) {
+                                return $q->where('ESTADO', $groupStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->skip($totalView)
+                            ->take(50)
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($groupStatus, function ($q, $groupStatus) {
                             return $q->where('ESTADO', $groupStatus);
@@ -1121,7 +1320,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 default:
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1134,6 +1333,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
                             ->when($status, function ($q, $status) {
                                 return $q->where('ESTADO', $status);
                             })
@@ -1151,6 +1365,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($status, function ($q, $status) {
                             return $q->where('ESTADO', $status);
@@ -1168,7 +1397,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);;
             }
         }
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($groupStatus)) {
+
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus) && is_null($customerLine)) {
             return $this->model->orderBy('FECHASOL', 'desc')
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1178,10 +1408,29 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->take(30)
                 ->get($this->columns);
         }
-
+        //  dd($status);
         if (is_null($from) || is_null($to)) {
-            return $this->model->searchFactoryRequestTurns($text, null, true, true)
+            return  $this->model->searchFactoryRequestTurns($text, null, true, true)
+                ->when($customerLine, function ($q, $customerLine) {
+                    if ($customerLine == 'OPORTUYA') {
+                        return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                            if ($this->model->turnoOportuya) {
+                                return   $q->where('turnoOportuya', '!=', null);
+                            }
+                        });
+                    } else {
+                        return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                            if ($this->model->turnoTradicional) {
+                                return   $q->where('turnoTradicional', '!=', null);
+                            }
+                        });
+                    }
+                })
+                ->with('turnoTradicional', 'turnoOportuya')
                 ->when($status, function ($q, $status) {
+                    if ($status == '') {
+                        return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                    }
                     return $q->where('ESTADO', $status);
                 })
                 ->when($subsidiary, function ($q, $subsidiary) {
@@ -1199,7 +1448,25 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         return $this->model->searchFactoryRequestTurns($text, null, true, true)
             ->whereBetween('FECHASOL', [$from, $to])
+            ->when($customerLine, function ($q, $customerLine) {
+                if ($customerLine == 'OPORTUYA') {
+                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                        if ($this->model->turnoOportuya) {
+                            return   $q->where('turnoOportuya', '!=', null);
+                        }
+                    });
+                } else {
+                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                        if ($this->model->turnoTradicional) {
+                            return   $q->where('turnoTradicional', '!=', null);
+                        }
+                    });
+                }
+            })
             ->when($status, function ($q, $status) {
+                if ($status == '') {
+                    return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                }
                 return $q->where('ESTADO', $status);
             })
             ->when($subsidiary, function ($q, $subsidiary) {
@@ -1214,9 +1481,528 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);;
     }
+
+    public function searchFactoryRequestTurnsTotal(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine): Collection
+    {
+        if (!empty($groupStatus)) {
+            switch ($groupStatus) {
+                case ($groupStatus == 'APROBADOS'):
+                    $arrayStatus = ['APROBADO', 'EN FACTURACION'];
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->whereIn('ESTADO', $arrayStatus)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($arrayStatus, function ($q, $arrayStatus) {
+                                return $q->whereIn('ESTADO', $arrayStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->when($arrayStatus, function ($q, $arrayStatus) {
+                            return $q->whereIn('ESTADO', $arrayStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+
+                case ($groupStatus == 'PENDIENTES'):
+                    $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
+
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->whereNotIn('ESTADO', $arrayStatus)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($arrayStatus, function ($q, $arrayStatus) {
+                                return $q->whereNotIn('ESTADO', $arrayStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->when($arrayStatus, function ($q, $arrayStatus) {
+                            return $q->whereNotIn('ESTADO', $arrayStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+
+                case ($groupStatus == 'DESISTIDOS'):
+                    $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
+
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->whereIn('ESTADO', $arrayStatus)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($arrayStatus, function ($q, $arrayStatus) {
+                                return $q->whereIn('ESTADO', $arrayStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->when($arrayStatus, function ($q, $arrayStatus) {
+                            return $q->whereIn('ESTADO', $arrayStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+                case ($groupStatus == 'NEGADOS'):
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->where('ESTADO', $groupStatus)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($groupStatus, function ($q, $groupStatus) {
+                                return $q->where('ESTADO', $groupStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($groupStatus, function ($q, $groupStatus) {
+                            return $q->where('ESTADO', $groupStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+
+                case ($groupStatus == 'COMITE'):
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->where('ESTADO', $groupStatus)
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($groupStatus, function ($q, $groupStatus) {
+                                return $q->where('ESTADO', $groupStatus);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($groupStatus, function ($q, $groupStatus) {
+                            return $q->where('ESTADO', $groupStatus);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);
+                    break;
+                default:
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                        return $this->model->orderBy('FECHASOL', 'desc')
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })->where('state', 'A')
+                            ->where('ESTADO', '!=', 'EN SUCURSAL')
+                            ->get($this->columns);
+                    }
+
+                    if (is_null($from) || is_null($to)) {
+                        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($customerLine, function ($q, $customerLine) {
+                                if ($customerLine == 'OPORTUYA') {
+                                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                        if ($this->model->turnoOportuya) {
+                                            return   $q->where('turnoOportuya', '!=', null);
+                                        }
+                                    });
+                                } else {
+                                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                        if ($this->model->turnoTradicional) {
+                                            return   $q->where('turnoTradicional', '!=', null);
+                                        }
+                                    });
+                                }
+                            })
+                            ->when($status, function ($q, $status) {
+                                return $q->where('ESTADO', $status);
+                            })
+                            ->when($subsidiary, function ($q, $subsidiary) {
+                                return $q->where('SUCURSAL', $subsidiary);
+                            })
+                            ->when($soliWeb, function ($q, $soliWeb) {
+                                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                            })
+                            ->where('state', 'A')
+                            ->orderBy('FECHASOL', 'desc')
+                            ->get($this->columns);
+                    }
+
+                    return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($customerLine, function ($q, $customerLine) {
+                            if ($customerLine == 'OPORTUYA') {
+                                return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                                    if ($this->model->turnoOportuya) {
+                                        return   $q->where('turnoOportuya', '!=', null);
+                                    }
+                                });
+                            } else {
+                                return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                                    if ($this->model->turnoTradicional) {
+                                        return   $q->where('turnoTradicional', '!=', null);
+                                    }
+                                });
+                            }
+                        })
+                        ->whereBetween('FECHASOL', [$from, $to])
+                        ->when($status, function ($q, $status) {
+                            return $q->where('ESTADO', $status);
+                        })
+                        ->when($subsidiary, function ($q, $subsidiary) {
+                            return $q->where('SUCURSAL', $subsidiary);
+                        })
+                        ->when($soliWeb, function ($q, $soliWeb) {
+                            return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                        })
+                        ->where('state', 'A')
+                        ->orderBy('FECHASOL', 'desc')
+                        ->get($this->columns);;
+            }
+        }
+
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus)) {
+            return $this->model->orderBy('FECHASOL', 'desc')
+                ->when($soliWeb, function ($q, $soliWeb) {
+                    return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                })->where('state', 'A')
+                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                ->when($customerLine, function ($q, $customerLine) {
+                    if ($customerLine == 'OPORTUYA') {
+                        return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                            if ($this->model->turnoOportuya) {
+                                return   $q->where('turnoOportuya', '!=', null);
+                            }
+                        });
+                    } else {
+                        return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                            if ($this->model->turnoTradicional) {
+                                return   $q->where('turnoTradicional', '!=', null);
+                            }
+                        });
+                    }
+                })
+                ->when($status, function ($q, $status) {
+                    if ($status == '') {
+                        return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                    }
+                    return $q->where('ESTADO', $status);
+                })
+                ->when($subsidiary, function ($q, $subsidiary) {
+                    return $q->where('SUCURSAL', $subsidiary);
+                })
+                ->when($soliWeb, function ($q, $soliWeb) {
+                    return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+                })
+                ->where('state', 'A')
+                ->orderBy('FECHASOL', 'desc')
+                ->get($this->columns);
+        }
+
+        return $this->model->searchFactoryRequestTurns($text, null, true, true)
+            ->when($customerLine, function ($q, $customerLine) {
+                if ($customerLine == 'OPORTUYA') {
+                    return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
+                        if ($this->model->turnoOportuya) {
+                            return   $q->where('turnoOportuya', '!=', null);
+                        }
+                    });
+                } else {
+                    return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
+                        if ($this->model->turnoTradicional) {
+                            return   $q->where('turnoTradicional', '!=', null);
+                        }
+                    });
+                }
+            })
+            ->whereBetween('FECHASOL', [$from, $to])
+            ->when($status, function ($q, $status) {
+                if ($status == '') {
+                    return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                }
+                return $q->where('ESTADO', $status);
+            })
+            ->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('SUCURSAL', $subsidiary);
+            })
+            ->when($soliWeb, function ($q, $soliWeb) {
+                return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
+            })
+            ->where('state', 'A')
+            ->orderBy('FECHASOL', 'desc')
+            ->get($this->columns);;
+    }
+
     public function getFactoryRequestsTotalTurns($from, $to)
     {
         try {
+
             return $this->model->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->where('ESTADO', '!=', 'EN SUCURSAL')

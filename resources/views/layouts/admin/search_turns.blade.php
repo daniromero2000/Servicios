@@ -12,15 +12,15 @@
             </div>
             <div class="col-4 col-sm-4 col-md-12 d-flex align-items-end">
                 <div class="form-group mb-1 w-100">
-                    <label for="typeCustomer">Tipo de clientes</label>
-                    <select class="form-control  select2bs4" id="typeCustomer" name="typeCustomer" {!!
-                        request()->input('typeCustomer')!!}
+                    <label for="customerLine">Tipo de clientes</label>
+                    <select class="form-control  select2bs4" id="customerLine" name="customerLine" {!!
+                        request()->input('customerLine')!!}
                         style="width: 100%;">
                         <option selected value> Selecciona un tipo </option>
                         @if ($_GET)
-                        @if (!empty($_GET['typeCustomer']))
+                        @if (!empty($_GET['customerLine']))
                         <option selected>
-                            {{ $_GET['typeCustomer'] }}</option>
+                            {{ $_GET['customerLine'] }}</option>
                         @endif
                         @endif
                         <option>OPORTUYA</option>
