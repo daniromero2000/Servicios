@@ -7,6 +7,7 @@ use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositor
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\Turnos\Turno;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,17 +16,19 @@ use Illuminate\Http\Request;
 
 class FactoryRequesTurnController extends Controller
 {
-    private $factoryRequestInterface, $toolsInterface, $factoryRequestStatusesLogInterface;
+    private $factoryRequestInterface, $toolsInterface, $factoryRequestStatusesLogInterface, $turnInterface;
 
 
     public function __construct(
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
-        FactoryRequestStatusesLogRepositoryInterface $factoryRequestStatusesLogRepositoryInterface
+        FactoryRequestStatusesLogRepositoryInterface $factoryRequestStatusesLogRepositoryInterface,
+        TurnRepositoryInterface $turnRepositoryInterface
     ) {
         $this->factoryRequestInterface = $factoryRequestRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
         $this->factoryRequestStatusesLogInterface = $factoryRequestStatusesLogRepositoryInterface;
+        $this->turnInterface = $turnRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -35,9 +38,7 @@ class FactoryRequesTurnController extends Controller
         $from = Carbon::now()->startOfMonth();
         $factoryRequestsTotals = $this->factoryRequestInterface->getFactoryRequestsTotalTurns($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotalTurn($from, $to);
-        $analistas =  Turno::select('USUARIO')->groupBy('USUARIO')->get();
-        // dd($analistas);
-
+        $analysts   = $this->turnInterface->getListAnalysts();
         $listCount = $factoryRequestsTotals->count();
 
         $Subsidiarys = Subsidiary::all();
@@ -84,7 +85,8 @@ class FactoryRequesTurnController extends Controller
             'listCount'                   => $listCount,
             'skip'                        => $skip,
             'factoryRequestsTotal'        => $factoryRequestsTotal,
-            'Subsidiarys'                 => $Subsidiarys
+            'Subsidiarys'                 => $Subsidiarys,
+            'analysts'                    => $analysts
         ]);
     }
 

@@ -254,6 +254,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
+
     public function getFactoryRequestsTotals($from, $to)
     {
         try {
@@ -321,10 +322,10 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary)) {
             return $this->model->orderBy('FECHASOL', 'desc')
+                ->where('CODASESOR', $assessor)
                 ->where('state', 'A')
                 ->skip($totalView)
                 ->take(30)
-                ->where('CODASESOR', $assessor)
                 ->get($this->columns);
         }
 
@@ -576,24 +577,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
-
-
-
-    // public function listFactoryAssessorsTotal($from, $to, $assessor)
-    // {
-    //     try {
-    //         return  $this->model->whereBetween('FECHASOL', [$from, $to])->where('state', 'A')
-    //             ->where('CODASESOR', $assessor)
-    //             ->get();
-    //     } catch (QueryException $e) {
-    //         abort(503, $e->getMessage());
-    //     }
-    // }
-
     //Hasta aqui Asesores
 
     //Directores
-
     public function countDirectorFactoryRequestStatuses($from, $to, $director)
     {
         try {
@@ -611,7 +597,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryDirector($totalView, $director): Support
     {
         try {
-            return  $this->model->where('state', 'A')
+            return $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->where('SUCURSAL', $director)
                 ->skip($totalView)
@@ -625,7 +611,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryDirectorTotal($from, $to, $director)
     {
         try {
-            return  $this->model->where('state', 'A')
+            return $this->model->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->where('SUCURSAL', $director)
@@ -809,6 +795,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);
     }
+
     public function listFactoryDirectorZona($totalView, $director): Support
     {
         try {
@@ -823,7 +810,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-
     public function countFactoryRequestsStatusesAprobadosDirectorZona($from, $to, $director, $status)
     {
         try {
@@ -837,6 +823,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
     public function countFactoryRequestsStatusesGeneralsDirectorZona($from, $to, $director, $status)
     {
         try {
@@ -867,6 +854,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
     public function countDirectorZonaFactoryRequestStatuses($from, $to, $director)
     {
         try {
@@ -880,6 +868,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
     public function countWebDirectorZonaFactory($from, $to, $director)
     {
         try {
@@ -894,6 +883,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
     public function getDirectorZonaFactoryTotal($from, $to,  $director)
     {
         try {
@@ -973,7 +963,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
-                        ->whereBetween('FECHASOL', [$from, $to])
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -989,6 +978,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 });
                             }
                         })
+                        ->whereBetween('FECHASOL', [$from, $to])
                         ->when($arrayStatus, function ($q, $arrayStatus) {
                             return $q->whereIn('ESTADO', $arrayStatus);
                         })
@@ -1087,7 +1077,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                 case ($groupStatus == 'DESISTIDOS'):
                     $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
-
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
@@ -1447,7 +1436,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
         return $this->model->searchFactoryRequestTurns($text, null, true, true)
-            ->whereBetween('FECHASOL', [$from, $to])
             ->when($customerLine, function ($q, $customerLine) {
                 if ($customerLine == 'OPORTUYA') {
                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1463,6 +1451,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     });
                 }
             })
+            ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 if ($status == '') {
                     return $q->where('ESTADO', '!=', 'EN SUCURSAL');

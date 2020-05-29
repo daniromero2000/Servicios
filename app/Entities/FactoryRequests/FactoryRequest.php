@@ -71,10 +71,12 @@ class FactoryRequest extends Model
     {
         return self::search($term);
     }
+
     public function searchFactoryDirectorsZona($term)
     {
         return self::search($term);
     }
+
     public function searchFactoryAseessors($term)
     {
         return self::search($term);
@@ -135,14 +137,17 @@ class FactoryRequest extends Model
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
     }
+
     public function turnoTradicional()
     {
         return $this->belongsTo(Turno::class, 'SOLICITUD', 'SOLICITUD');
     }
+
     public function turnoOportuya()
     {
         return $this->belongsTo(TurnoOportuya::class, 'SOLICITUD', 'SOLICITUD');
     }
+
     public function factoryRequestaAssessors()
     {
         return $this->belongsTo(Assessor::class, 'CODASESOR', 'CODIGO');
