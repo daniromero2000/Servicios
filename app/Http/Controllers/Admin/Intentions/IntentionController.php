@@ -64,72 +64,71 @@ class IntentionController extends Controller
 
                     break;
                 case 'export':
-                    $list = $this->intentionInterface->exportIntentions(
+                    $lists =   $this->intentionInterface->exportIntentions(
                         request()->input('q'),
                         $skip,
                         request()->input('from'),
                         request()->input('to'),
                         request()->input('creditprofile'),
                         request()->input('status')
-                    )->sortByDesc('FECHA_INTENCION');
+                    )->sortByDesc('FECHA_INTENCION')->chunk(100);
 
+                    foreach ($lists as $list) {
+                        foreach ($list as $key => $value) {
+                            $cont++;
+                            if ($cont == 1) {
+                                $printExcel[] = [
+                                    'FECHA INTENCION',
+                                    'ORIGEN',
+                                    'SUCURSAL',
+                                    'ASESOR',
+                                    'ESTADO',
+                                    'CLIENTE',
+                                    'ACTIVIDAD',
+                                    'ESTADO OBLIGACIONES',
+                                    'SCORE',
+                                    'PERFIL CREDITICIO',
+                                    'HISTORIAL CREDITICIO',
+                                    'LINEA', 'DECISION',
+                                    'RIESGO ZONA',
+                                    'EDAD',
+                                    'TIEMPO EN LABOR',
+                                    'TIPO 5 ESPECIAL',
+                                    'INSPECCION OCULAR',
+                                    'DEFINICION'
+                                ];
+                            }
 
+                            if (empty($value->customer->latestCifinScore)) {
+                                $score = '';
+                            } else {
+                                $score = $value->customer->latestCifinScore['score'];
+                            }
 
-
-
-                    foreach ($list as $key => $value) {
-                        $cont++;
-                        if ($cont == 1) {
                             $printExcel[] = [
-                                'FECHA INTENCION',
-                                'ORIGEN',
-                                'SUCURSAL',
-                                'ASESOR',
-                                'ESTADO',
-                                'CLIENTE',
-                                'ACTIVIDAD',
-                                'ESTADO OBLIGACIONES',
-                                'SCORE',
-                                'PERFIL CREDITICIO',
-                                'HISTORIAL CREDITICIO',
-                                'LINEA', 'DECISION',
-                                'RIESGO ZONA',
-                                'EDAD',
-                                'TIEMPO EN LABOR',
-                                'TIPO 5 ESPECIAL',
-                                'INSPECCION OCULAR',
-                                'DEFINICION'
+                                $value->FECHA_INTENCION,
+                                $value->customer['ORIGEN'],
+                                $value->assessor['SUCURSAL'],
+                                $value->assessor['NOMBRE'],
+                                $value->intentionStatus['NAME'],
+                                $value->CEDULA,
+                                $value->customer['ACTIVIDAD'],
+                                ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
+                                $score,
+                                $value->PERFIL_CREDITICIO,
+                                ($value->HISTORIAL_CREDITO == '1') ? 'CON HISTORIAL' : 'SIN HISTORIAL',
+                                $value->TARJETA,
+                                $value->CREDIT_DECISION,
+                                $value->ZONA_RIESGO,
+                                ($value->EDAD == '1') ? 'CUMPLE' : 'NO CUMPLE',
+                                ($value->TIEMPO_LABOR == '1') ? 'CUMPLE' : 'NO CUMPLE',
+                                ($value->TIPO_5_ESPECIAL == '1') ? 'SI' : 'NO',
+                                ($value->INSPECCION_OCULAR == '1') ? 'SI' : 'NO',
+                                $value->definition['DESCRIPCION']
                             ];
                         }
-
-                        if (empty($value->customer->latestCifinScore)) {
-                            $score = '';
-                        } else {
-                            $score = $value->customer->latestCifinScore['score'];
-                        }
-
-                        $printExcel[] = [
-                            $value->FECHA_INTENCION,
-                            $value->customer['ORIGEN'],
-                            $value->assessor['SUCURSAL'],
-                            $value->assessor['NOMBRE'],
-                            $value->intentionStatus['NAME'],
-                            $value->CEDULA,
-                            $value->customer['ACTIVIDAD'],
-                            ($value->ESTADO_OBLIGACIONES == '1') ? 'NORMAL' : 'EN MORA',
-                            $score,
-                            $value->PERFIL_CREDITICIO,
-                            ($value->HISTORIAL_CREDITO == '1') ? 'CON HISTORIAL' : 'SIN HISTORIAL',
-                            $value->TARJETA,
-                            $value->CREDIT_DECISION,
-                            $value->ZONA_RIESGO,
-                            ($value->EDAD == '1') ? 'CUMPLE' : 'NO CUMPLE',
-                            ($value->TIEMPO_LABOR == '1') ? 'CUMPLE' : 'NO CUMPLE',
-                            ($value->TIPO_5_ESPECIAL == '1') ? 'SI' : 'NO',
-                            ($value->INSPECCION_OCULAR == '1') ? 'SI' : 'NO',
-                            $value->definition['DESCRIPCION']
-                        ];
                     }
+
 
                     $export = new ExportToExcel($printExcel);
                     return Excel::download($export, 'IntencionesClientes.xlsx');
