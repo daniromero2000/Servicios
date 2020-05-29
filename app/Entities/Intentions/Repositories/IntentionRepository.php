@@ -357,6 +357,7 @@ class IntentionRepository implements IntentionRepositoryInterface
                 ->whereBetween('FECHA_INTENCION', [$from, $to])
                 ->skip($totalView)
                 ->take(30)
+                ->orderby('FECHA_INTENCION', 'desc')
                 ->get();
         } catch (QueryException $e) {
             dd($e);
