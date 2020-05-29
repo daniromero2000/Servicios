@@ -91,4 +91,10 @@ interface FactoryRequestRepositoryInterface
   public function countWebDirectorZonaFactory($from, $to, $director);
 
   public function getDirectorZonaFactoryTotal($from, $to,  $director);
+
+  public function listFactoryRequestsTurns($totalView);
+
+  public function getFactoryRequestsTotalTurns($from, $to);
+
+  public function getFactoryRequestsTotalTurn($from, $to);
 }

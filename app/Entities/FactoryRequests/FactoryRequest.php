@@ -12,6 +12,7 @@ use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
+use App\Entities\TurnoOportuyas\TurnoOportuya;
 use App\Entities\Turnos\Turno;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -58,6 +59,11 @@ class FactoryRequest extends Model
     protected $dates = ['FECHASOL'];
 
     public function searchFactoryRequest($term)
+    {
+        return self::search($term);
+    }
+
+    public function searchFactoryRequestTurns($term)
     {
         return self::search($term);
     }
@@ -125,9 +131,13 @@ class FactoryRequest extends Model
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
     }
-    public function turno()
+    public function turnoTradicional()
     {
         return $this->belongsTo(Turno::class, 'SOLICITUD', 'SOLICITUD');
+    }
+    public function turnoOportuya()
+    {
+        return $this->belongsTo(TurnoOportuya::class, 'SOLICITUD', 'SOLICITUD');
     }
     public function factoryRequestaAssessors()
     {

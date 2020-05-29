@@ -12,38 +12,80 @@
             <tbody class="body-table">
                 @foreach($datas as $data)
                 <tr>
+                    <td class="text-center">{{ $data->SUCURSAL }}</td>
+                    <td class="text-center">
+                        <a data-toggle="tooltip" title="Ver Solicitud"
+                            href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a></td>
+                    <td class="text-center">{{ $data->FECHASOL }} </td>
+                    <td class="text-center"> {{ $data->ESTADO }} </td>
                     <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
                             href="{{ route('customers.show', $data->CLIENTE) }}">
                             {{ str_replace(' ', '', $data->CLIENTE) }} </a>
                     </td>
                     <td class="text-center">
-                        <a data-toggle="tooltip" title="Ver Solicitud"
-                            href="{{ route('factoryrequests.show', $data->SOLICITUD) }}">{{ $data->SOLICITUD }}</a></td>
-                    <td class="text-center">@if ($data->factoryRequestaAssessors)
-                        {{ $data->factoryRequestaAssessors->NOMBRE }}
-                        @endif </td>
-                    <td class="text-center">{{ $data->SUCURSAL }}</td>
-                    <td class="text-center">{{ $data->FECHASOL }} </td>
-                    <td class="text-center"> {{ $data->ESTADO }} </td>
-                    <td class="text-center"> $ {{ number_format  ($data->GRAN_TOTAL) }} </td>
-                    <td class="text-center">
-                        @if ($data->turno && !empty($data->turno->USUARIO)) {{ $data->turno->USUARIO }} @else NA @endif
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->TIPO))
+                        {{ $data->turnoTradicional->TIPO }}
+                        @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->TIPO))
+                        {{ $data->turnoOportuya->TIPO }}
+                        @else NA @endif @endif
                     </td>
                     <td class="text-center">
-                        @if ($data->turno && !empty($data->turno->PRIORIDAD)) {{ $data->turno->PRIORIDAD }} @else NA
-                        @endif
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->SUB_TIPO))
+                        {{ $data->turnoTradicional->SUB_TIPO }}
+                        @else @if ($data->turnoOportuya && !empty($data->turnoOportuya->SUB_TIPO))
+                        {{ $data->turnoOportuya->SUB_TIPO }}
+                        @else NA @endif @endif
                     </td>
                     <td class="text-center">
-                        @if ($data->turno && !empty($data->turno->TIPO)) {{ $data->turno->TIPO }} @else NA @endif
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->USUARIO))
+                        {{ $data->turnoTradicional->USUARIO }} @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->USUARIO))
+                        {{ $data->turnoOportuya->USUARIO }}
+                        @else NA @endif @endif
                     </td>
                     <td class="text-center">
-                        @if ($data->turno && !empty($data->turno->SUB_TIPO)) {{ $data->turno->SUB_TIPO }} @else NA
-                        @endif
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->FECHA))
+                        {{ $data->turnoTradicional->FECHA }}
+                        @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->FECHA))
+                        {{ $data->turnoOportuya->FECHA }}
+                        @else NA @endif @endif
                     </td>
                     <td class="text-center">
-                        @if ($data->turno && !empty($data->turno->FEC_ASIG)) {{ $data->turno->FEC_ASIG }} @else NA
-                        @endif
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->FEC_ASIG))
+                        {{ $data->turnoTradicional->FEC_ASIG }}
+                        @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->FEC_ASIG))
+                        {{ $data->turnoOportuya->FEC_ASIG }}
+                        @else NA @endif @endif
                     </td>
+
+                    <td class="text-center">
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->TIPO_CLI))
+                        {{ $data->turnoTradicional->TIPO_CLI }}
+                        @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->TIPO_CLI))
+                        {{ $data->turnoOportuya->TIPO_CLI }}
+                        @else NA @endif @endif
+                    </td>
+                    <td class="text-center"> ${{ number_format  ($data->GRAN_TOTAL) }} </td>
+                    <td class="text-center">
+                        @if ($data->turnoTradicional && !empty($data->turnoTradicional->PRIORIDAD))
+                        {{ $data->turnoTradicional->PRIORIDAD }} @else
+                        @if ($data->turnoOportuya && !empty($data->turnoOportuya->PRIORIDAD))
+                        {{ $data->turnoOportuya->PRIORIDAD }}
+                        @else NA @endif @endif
+                    </td>
+
+
+
+
+
+
+
+
+
 
                 </tr>
                 @endforeach

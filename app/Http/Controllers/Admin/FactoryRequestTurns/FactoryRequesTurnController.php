@@ -32,8 +32,8 @@ class FactoryRequesTurnController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        $factoryRequestsTotals = $this->factoryRequestInterface->getFactoryRequestsTotals($from, $to);
-        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
+        $factoryRequestsTotals = $this->factoryRequestInterface->getFactoryRequestsTotalTurns($from, $to);
+        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotalTurn($from, $to);
         $listCount = $factoryRequestsTotals->count();
         $assessor = '';
         $subsidiary = '';
@@ -43,7 +43,10 @@ class FactoryRequesTurnController extends Controller
         $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
+        $list = $this->factoryRequestInterface->listFactoryRequestsTurns($skip * 30);
+        if (request()->has('skip')) {
+            $list = $this->factoryRequestInterface->listFactoryRequestsTurns(request()->input('skip') * 30);
+        }
 
         if (request()->has('q') && request()->input('from') == '' && request()->input('to') == '' && request()->input('subsidiary') != '') {
             $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), request()->input('subsidiary'));
@@ -59,23 +62,25 @@ class FactoryRequesTurnController extends Controller
         }
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequest(
+            $list = $this->factoryRequestInterface->searchFactoryRequestTurns(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
                 request()->input('status'),
                 request()->input('subsidiary'),
-                request()->input('soliWeb')
+                request()->input('soliWeb'),
+                request()->input('groupStatus')
             )->sortByDesc('FECHASOL');
-            $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequest(
+            $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurns(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
                 request()->input('status'),
                 request()->input('subsidiary'),
-                request()->input('soliWeb')
+                request()->input('soliWeb'),
+                request()->input('groupStatus')
             )->sortByDesc('FECHASOL');
 
             $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
@@ -125,19 +130,20 @@ class FactoryRequesTurnController extends Controller
         $listCount = $factoryRequestsTotals->count();
 
         return view('factoryrequestsTurns.list', [
-            'factoryRequests'            => $list,
-            'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total', 'Analista', 'Prioridad', 'Tipo de Cliente', 'Subtipo de Cliente', 'Fecha de asignación'],
-            'listCount'            => $listCount,
-            'skip'                 => $skip,
-            'factoryRequestsTotal' => $factoryRequestsTotal,
-            'Subsidiarys'          => $Subsidiarys,
-            'statusesAprobadosValues'        => $statusesAprobadosValues,
-            'statusesNegadosValues'        => $statusesNegadosValues,
-            'statusesDesistidosValues'      => $statusesDesistidosValues,
-            'statusesPendientesValues'     => $statusesPendientesValues
+            'factoryRequests'             => $list,
+            'optionsRoutes'               => (request()->segment(2)),
+            'headers'                     => ['Sucursal', 'Solicitud', 'Fecha de solicitud', 'Estado', 'Cliente',  'Tipo de Cliente', 'Subtipo de Cliente', 'Analista',  'Fecha de analisis',  'Fecha de asignación', 'Calificación del cliente', 'Total',  'Prioridad'],
+            'listCount'                   => $listCount,
+            'skip'                        => $skip,
+            'factoryRequestsTotal'        => $factoryRequestsTotal,
+            'Subsidiarys'                 => $Subsidiarys,
+            'statusesAprobadosValues'     => $statusesAprobadosValues,
+            'statusesNegadosValues'       => $statusesNegadosValues,
+            'statusesDesistidosValues'    => $statusesDesistidosValues,
+            'statusesPendientesValues'    => $statusesPendientesValues
         ]);
     }
+
 
     public function show(int $id)
     {
