@@ -60,7 +60,7 @@
                                 class="btn btn-primary btn-sm-reset mt-2"><i class="fa fa-search"></i>
                                 Buscar
                             </button>
-                            @if ( auth()->user()->idProfile == 17 )
+                            @if ( auth()->user()->idProfile == 17 || auth()->user()->idProfile == 5 )
                             <button type="submit" name="action" value="export" id="search-btn"
                                 class="btn btn-primary btn-sm-reset mt-2"><i class="fa fa-search"></i>
                                 Exportar Busqueda
