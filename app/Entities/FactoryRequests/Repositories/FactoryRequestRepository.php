@@ -1473,6 +1473,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function searchFactoryRequestTurnsTotal(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine): Collection
     {
+        ini_set('memory_limit', "512M");
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
