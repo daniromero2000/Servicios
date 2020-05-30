@@ -1,4 +1,11 @@
 @extends('layouts.admin.app')
+@section('linkStyleSheets')
+<style>
+  .main-header {
+    min-width: 540px !important;
+  }
+</style>
+@endsection
 @section('content')
 <section style="min-width: 540px">
   @include('layouts.errors-and-messages')

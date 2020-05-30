@@ -40,7 +40,7 @@ class TurnRepository implements TurnRepositoryInterface
         }
     }
 
-    public function getListAnalysts($data)
+    public function getListAnalysts()
     {
         try {
             return $this->model->select('USUARIO')->groupBy('USUARIO')->get();

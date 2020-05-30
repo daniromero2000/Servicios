@@ -911,14 +911,14 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine): Collection
+    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null): Collection
     {
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
 
                     $arrayStatus = ['APROBADO', 'EN FACTURACION'];
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -931,6 +931,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -963,6 +970,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -998,7 +1012,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 case ($groupStatus == 'PENDIENTES'):
                     $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
 
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1011,6 +1025,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1043,6 +1064,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1077,7 +1105,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                 case ($groupStatus == 'DESISTIDOS'):
                     $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1090,6 +1118,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1122,6 +1157,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1154,7 +1196,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 case ($groupStatus == 'NEGADOS'):
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1167,6 +1209,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1199,6 +1248,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1232,7 +1288,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'COMITE'):
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1245,6 +1301,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1277,6 +1340,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1309,7 +1379,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 default:
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1322,6 +1392,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1354,6 +1431,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1387,7 +1471,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             }
         }
 
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus) && is_null($customerLine)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus) && is_null($customerLine) && is_null($analyst)) {
             return $this->model->orderBy('FECHASOL', 'desc')
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1397,25 +1481,31 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->take(30)
                 ->get($this->columns);
         }
-        //  dd($status);
         if (is_null($from) || is_null($to)) {
             return  $this->model->searchFactoryRequestTurns($text, null, true, true)
+                ->with('turnoTradicional', 'turnoOportuya')
+                ->when($analyst, function ($q, $analyst) {
+                    return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                        return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                    })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                        return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                    });
+                })
                 ->when($customerLine, function ($q, $customerLine) {
                     if ($customerLine == 'OPORTUYA') {
                         return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
                             if ($this->model->turnoOportuya) {
-                                return   $q->where('turnoOportuya', '!=', null);
+                                return $q->where('turnoOportuya', '!=', null);
                             }
                         });
                     } else {
                         return $this->model->with('turnoTradicional')->whereHas("turnoTradicional", function ($q) {
                             if ($this->model->turnoTradicional) {
-                                return   $q->where('turnoTradicional', '!=', null);
+                                return $q->where('turnoTradicional', '!=', null);
                             }
                         });
                     }
                 })
-                ->with('turnoTradicional', 'turnoOportuya')
                 ->when($status, function ($q, $status) {
                     if ($status == '') {
                         return $q->where('ESTADO', '!=', 'EN SUCURSAL');
@@ -1436,6 +1526,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+            ->when($analyst, function ($q, $analyst) {
+                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                });
+            })
             ->when($customerLine, function ($q, $customerLine) {
                 if ($customerLine == 'OPORTUYA') {
                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1471,14 +1568,14 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->get($this->columns);;
     }
 
-    public function searchFactoryRequestTurnsTotal(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine): Collection
+    public function searchFactoryRequestTurnsTotal(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null): Collection
     {
         ini_set('memory_limit', "512M");
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
                     $arrayStatus = ['APROBADO', 'EN FACTURACION'];
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1489,6 +1586,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1519,6 +1623,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
@@ -1552,7 +1663,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 case ($groupStatus == 'PENDIENTES'):
                     $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
 
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1563,6 +1674,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1593,6 +1711,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
@@ -1626,7 +1751,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 case ($groupStatus == 'DESISTIDOS'):
                     $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
 
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1637,6 +1762,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1667,6 +1799,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->whereBetween('FECHASOL', [$from, $to])
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
@@ -1697,7 +1836,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 case ($groupStatus == 'NEGADOS'):
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1708,6 +1847,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1738,6 +1884,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1769,7 +1922,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'COMITE'):
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1780,6 +1933,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1810,6 +1970,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1840,7 +2007,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->get($this->columns);
                     break;
                 default:
-                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)) {
+                    if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1851,6 +2018,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
                     if (is_null($from) || is_null($to)) {
                         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                            ->when($analyst, function ($q, $analyst) {
+                                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                                });
+                            })
                             ->when($customerLine, function ($q, $customerLine) {
                                 if ($customerLine == 'OPORTUYA') {
                                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1881,6 +2055,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     }
 
                     return $this->model->searchFactoryRequestTurns($text, null, true, true)
+                        ->when($analyst, function ($q, $analyst) {
+                            return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                                return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                            });
+                        })
                         ->when($customerLine, function ($q, $customerLine) {
                             if ($customerLine == 'OPORTUYA') {
                                 return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
@@ -1912,7 +2093,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             }
         }
 
-        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus)) {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine)  && is_null($groupStatus) && is_null($analyst)) {
             return $this->model->orderBy('FECHASOL', 'desc')
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
@@ -1923,7 +2104,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
         if (is_null($from) || is_null($to)) {
             return $this->model->searchFactoryRequestTurns($text, null, true, true)
-                ->when($customerLine, function ($q, $customerLine) {
+                ->when($analyst, function ($q, $analyst) {
+                    return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                        return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                    })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                        return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                    });
+                })->when($customerLine, function ($q, $customerLine) {
                     if ($customerLine == 'OPORTUYA') {
                         return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {
                             if ($this->model->turnoOportuya) {
@@ -1956,6 +2143,13 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
 
         return $this->model->searchFactoryRequestTurns($text, null, true, true)
+            ->when($analyst, function ($q, $analyst) {
+                return $this->model->with('turnoOportuya', "turnoTradicional")->whereHas("turnoOportuya", function ($q) use ($analyst) {
+                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                })->orWhereHas("turnoTradicional", function ($q) use ($analyst) {
+                    return $q->where('USUARIO', 'LIKE', '%' . $analyst . '%');
+                });
+            })
             ->when($customerLine, function ($q, $customerLine) {
                 if ($customerLine == 'OPORTUYA') {
                     return $this->model->with('turnoOportuya')->whereHas("turnoOportuya", function ($q) {

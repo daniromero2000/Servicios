@@ -30,6 +30,23 @@
             </div>
             <div class="col-4 col-sm-4 col-md-12 d-flex align-items-end">
                 <div class="form-group mb-1 w-100">
+                    <label for="analyst">Analista</label>
+                    <select class="form-control  select2bs4" id="analyst" name="analyst" {!!
+                        request()->input('analyst')!!}
+                        style="width: 100%;">
+                        <option selected value> Selecciona Analista </option>
+                        @foreach ($analysts as $analyst)
+                        <option @if ($_GET) @if (!empty($_GET['analyst'])) @if($_GET['analyst']==$analyst->
+                            CODIGO) selected
+                            @endif
+                            @endif
+                            @endif>{{ $analyst->USUARIO }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-4 col-sm-4 col-md-12 d-flex align-items-end">
+                <div class="form-group mb-1 w-100">
                     <label for="groupStatus">Grupo de estatos</label>
                     <select class="form-control  select2bs4" id="groupStatus" name="groupStatus" {!!
                         request()->input('groupStatus')!!}

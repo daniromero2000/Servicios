@@ -7,5 +7,5 @@ interface TurnRepositoryInterface
 {
     public function addTurn($data);
 
-    public function getListAnalysts($data);
+    public function getListAnalysts();
 }
