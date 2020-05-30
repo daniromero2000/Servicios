@@ -1322,7 +1322,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
-                    break;
             }
         }
 
@@ -1785,7 +1784,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->where('state', 'A')
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
-                    break;
             }
         }
 
