@@ -40,6 +40,7 @@ class FactoryRequesTurnController extends Controller
         if (request()->has('skip')) {
             $list = $this->factoryRequestInterface->listFactoryRequestsTurns(request()->input('skip') * 30);
         }
+
         if (request()->has('q')) {
             $list = $this->factoryRequestInterface->searchFactoryRequestTurns(
                 request()->input('q'),
