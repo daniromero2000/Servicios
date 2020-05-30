@@ -327,34 +327,38 @@ class FactoryRequesTurnController extends Controller
         $from = Carbon::now()->startOfMonth();
         $assessor = '';
         $subsidiary = '';
-        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
+        $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatusesTurn($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
-        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
+        $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotalTurn($from, $to);
         $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array('APROBADO', 'EN FACTURACION'));
         $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "NEGADO");
         $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "DESISTIDO");
+        $estadosComites = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "COMITE");
         $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
 
         $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
         $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
         $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
+        $valuesEstadosComites = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "COMITE", $subsidiary);
         $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
 
         if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
             $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
             $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
             $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
+            $valuesEstadosComites = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "COMITE", $subsidiary);
             $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
         }
 
 
         if (request()->has('from')) {
-            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
-            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
+            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotalTurn(request()->input('from'), request()->input('to'));
+            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatusesTurn(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
             $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array('APROBADO', 'EN FACTURACION'));
             $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "NEGADO");
             $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "DESISTIDO");
+            $estadosComites = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "COMITE");
             $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'), array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
         }
 
@@ -363,11 +367,13 @@ class FactoryRequesTurnController extends Controller
         $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
         $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
         $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+        $estadosComites = $this->toolsInterface->extractValuesToArray($estadosComites);
         $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
 
         $valuesEstadosAprobados = $this->toolsInterface->extractValuesToArray($valuesEstadosAprobados);
         $valuesEstadosNegados = $this->toolsInterface->extractValuesToArray($valuesEstadosNegados);
         $valuesEstadosDesistidos = $this->toolsInterface->extractValuesToArray($valuesEstadosDesistidos);
+        $valuesEstadosComites = $this->toolsInterface->extractValuesToArray($valuesEstadosComites);
         $valuesEstadosPendientes = $this->toolsInterface->extractValuesToArray($valuesEstadosPendientes);
 
         $statusesAprobadosValue = [];
@@ -384,12 +390,15 @@ class FactoryRequesTurnController extends Controller
             array_push($statusesNegadoValues, trim($estadosNegado['total']));
         }
 
-
         $statusesDesistidosValues = [];
         foreach ($estadosDesistidos as $estadosDesistido) {
             array_push($statusesDesistidosValues, trim($estadosDesistido['total']));
         }
 
+        $statusesComitesValues = [];
+        foreach ($estadosComites as $estadosComite) {
+            array_push($statusesComitesValues, trim($estadosComite['total']));
+        }
 
         $statusesPendientesValue = [];
         foreach ($estadosPendientes as $estadosPendiente) {
@@ -436,6 +445,16 @@ class FactoryRequesTurnController extends Controller
             $valuesOfStatusesDesistidos +=  $valuesOfStatusesDesistido[$key];
         }
 
+        $valuesOfStatusesComite = [];
+        foreach ($valuesEstadosComites as $valuesEstadosComite) {
+            array_push($valuesOfStatusesComite, trim($valuesEstadosComite['total']));
+        }
+        $valuesOfStatusesComites = 0;
+        foreach ($valuesOfStatusesComite as $key => $status) {
+            $valuesOfStatusesComites +=  $valuesOfStatusesComite[$key];
+        }
+
+
         $valuesOfStatusesPendiente = [];
         foreach ($valuesEstadosPendientes as $valuesEstadosPendiente) {
             array_push($valuesOfStatusesPendiente, trim($valuesEstadosPendiente['total']));
@@ -455,20 +474,22 @@ class FactoryRequesTurnController extends Controller
             array_push($webValues, trim($webCount['total']));
         }
         return view('factoryrequestsTurns.dashboard', [
-            'statusesNames'            => $statusesNames,
-            'statusesValues'           => $statusesValues,
-            'webValues'                => $webValues,
-            'webNames'                 => $webNames,
-            'totalWeb'                 => array_sum($webValues),
-            'totalStatuses'            => array_sum($statusesValues),
-            'factoryRequestsTotal'     => $factoryRequestsTotal,
-            'statusesAprobadosValues'  => $statusesAprobadosValues,
-            'statusesNegadoValues'     => $statusesNegadoValues,
-            'statusesPendientesValues' => $statusesPendientesValues,
-            'statusesDesistidosValues' => $statusesDesistidosValues,
-            'valuesOfStatusesAprobados' => $valuesOfStatusesAprobados,
-            'valuesOfStatusesNegados' => $valuesOfStatusesNegados,
+            'statusesNames'              => $statusesNames,
+            'statusesValues'             => $statusesValues,
+            'webValues'                  => $webValues,
+            'webNames'                   => $webNames,
+            'totalWeb'                   => array_sum($webValues),
+            'totalStatuses'              => array_sum($statusesValues),
+            'factoryRequestsTotal'       => $factoryRequestsTotal,
+            'statusesAprobadosValues'    => $statusesAprobadosValues,
+            'statusesNegadoValues'       => $statusesNegadoValues,
+            'statusesPendientesValues'   => $statusesPendientesValues,
+            'statusesDesistidosValues'   => $statusesDesistidosValues,
+            'statusesComitesValues'      => $statusesComitesValues,
+            'valuesOfStatusesAprobados'  => $valuesOfStatusesAprobados,
+            'valuesOfStatusesNegados'    => $valuesOfStatusesNegados,
             'valuesOfStatusesDesistidos' => $valuesOfStatusesDesistidos,
+            'valuesOfStatusesComites'    => $valuesOfStatusesComites,
             'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
         ]);
     }

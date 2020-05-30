@@ -13,7 +13,8 @@
       <div class="col-sm-12">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/Administrator/dashboard/">Dashboard </a></li>
-          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequests">Dashboard Solicitudes
+          <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequestTurns">Dashboard
+              Solicitudes
               Fábrica</a>
           </li>
         </ol>
@@ -174,7 +175,7 @@
                 </div>
                 <div class="text-right mr-2">
                   <span class="info-box-text text-right">
-                    <a href="/Administrator/factoryrequests" style="color: white; !important">Ver
+                    <a href="/Administrator/factoryrequestTurns" style="color: white; !important">Ver
                       Más</a></span>
                 </div>
               </div>
@@ -195,7 +196,7 @@
                 </div>
                 <div class="text-right mr-2">
                   <span class="info-box-text text-right">
-                    <a href="/Administrator/factoryrequests" style="color: white; !important">Ver
+                    <a href="/Administrator/factoryrequestTurns" style="color: white; !important">Ver
                       Más</a></span>
                 </div>
               </div>
@@ -211,7 +212,7 @@
               <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
             </div>
           </div>
-          <div class="card-body">
+          <div class="card-body px-1">
             <div class="row ">
               <div class="col-12 col-sm-6 col-md-12">
                 <!-- Card 1 -->
@@ -228,7 +229,7 @@
                             @endif</span>
                         </div>
                         <div class="col-6">
-                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
+                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequestTurns"
                               style="color: black; !important">Ver
                               Más</a></span>
                         </div>
@@ -256,7 +257,7 @@
                           </span>
                         </div>
                         <div class="col-6">
-                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
+                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequestTurns"
                               style="color: black; !important">Ver
                               Más</a></span>
                         </div>
@@ -284,7 +285,35 @@
                             @endif</span>
                         </div>
                         <div class="col-6">
-                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
+                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequestTurns"
+                              style="color: black; !important">Ver
+                              Más</a></span>
+                        </div>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-12">
+                <!-- Card 3 -->
+                <div class="col-12">
+                  <div class="info-box ">
+                    <span class="info-box-icon"><i class="fas fa-users"></i></span>
+                    <div class="info-box-content">
+                      <div class="row">
+                        <div class="col-6">
+                          <span class="info-box-text">En Comite</span>
+                          <span class="info-box-number">
+                            @if (empty($statusesComitesValues))
+                            0 @else
+                            {{ number_format($statusesComitesValues[0]) }}
+                            @endif</span>
+                        </div>
+                        <div class="col-6">
+                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequestTurns"
                               style="color: black; !important">Ver
                               Más</a></span>
                         </div>
@@ -311,7 +340,7 @@
                             @endif</span>
                         </div>
                         <div class="col-6">
-                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequests"
+                          <span class="info-box-text text-right"><a href="/Administrator/factoryrequestTurns"
                               style="color: black; !important">Ver
                               Más</a></span>
                         </div>
@@ -386,6 +415,6 @@
 
 @endsection
 @include('layouts.admin.dashboard_imports')
-@include('factoryrequests.dashboardJS')
+@include('factoryrequestsTurns.dashboardJS')
 
 @endsection

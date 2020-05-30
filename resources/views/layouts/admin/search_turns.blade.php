@@ -12,7 +12,7 @@
             </div>
             <div class="col-4 col-sm-4 col-md-12 d-flex align-items-end">
                 <div class="form-group mb-1 w-100">
-                    <label for="customerLine">Tipo de clientes</label>
+                    <label for="customerLine">Linea de clientes</label>
                     <select class="form-control  select2bs4" id="customerLine" name="customerLine" {!!
                         request()->input('customerLine')!!}
                         style="width: 100%;">
@@ -52,7 +52,8 @@
                         @endif
                         <option>APROBADOS</option>
                         <option>DESISTIDOS</option>
-                        <option>NEGADOS</option>
+                        <option>COMITE</option>
+                        <option>NEGADO</option>
                         <option>PENDIENTES</option>
                     </select>
                 </div>
@@ -100,8 +101,8 @@
                         <option selected value> Selecciona Sucursal </option>
                         @foreach ($Subsidiarys as $Subsidiary)
                         <option @if (request()->input('subsidiary') != '')
-                            @if(request()->input('subsidiary') ==$subsidiary-> CODIGO) selected @endif
-                            @endif>{{ $analyst->USUARIO }}</option>
+                            @if(request()->input('subsidiary') ==$Subsidiary->CODIGO) selected @endif
+                            @endif>{{ $Subsidiary->CODIGO }}</option>
                         @endforeach
                     </select>
                 </div>

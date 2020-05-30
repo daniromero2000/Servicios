@@ -17,9 +17,9 @@
           <div class="col-sm-9 order-sm-last">
             <ol class="breadcrumb bradcrumb-reset float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
-              <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequests">Dashboard
-                  Solicitudes Fábrica</a>
-              <li class="breadcrumb-item active"><a href="/Administrator/factoryrequests">Solicitudes Fábrica</a></li>
+              <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequestTurns">Dashboard
+                  Turnos Fábrica</a>
+              <li class="breadcrumb-item active"><a href="/Administrator/factoryrequestTurns">Turnos Fábrica</a></li>
             </ol>
           </div>
           <div class="col-sm-3 mt-2 order-sm-first">
