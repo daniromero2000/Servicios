@@ -3,6 +3,7 @@
 namespace App\Entities\FactoryRequests;
 
 use App\Assessor;
+use App\Entities\Codebtors\Codebtor;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
@@ -151,5 +152,10 @@ class FactoryRequest extends Model
     public function factoryRequestaAssessors()
     {
         return $this->belongsTo(Assessor::class, 'CODASESOR', 'CODIGO');
+    }
+
+    public function factoryRequestCodebtor1()
+    {
+        return $this->hasOne(Codebtor::class, 'SOLICITUD');
     }
 }

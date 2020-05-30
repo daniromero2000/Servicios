@@ -44,14 +44,6 @@ class FactoryRequesTurnController extends Controller
         }
 
         if (request()->has('q')) {
-
-
-
-
-
-
-
-
             $cont = 0;
             switch ($request->input('action')) {
                 case 'search':
@@ -124,7 +116,6 @@ class FactoryRequesTurnController extends Controller
                                 'SCORE',
                                 'TIPO CLIENTE',
                                 'CED_COD1',
-                                'APELLIDOS1',
                                 'NOMBRES1',
                                 'DIRECCION1',
                                 'CELULAR1',
@@ -132,7 +123,6 @@ class FactoryRequesTurnController extends Controller
                                 'SCO_COD1',
                                 'TIPO_COD1',
                                 'CED_COD2',
-                                'APELLIDOS1',
                                 'NOMBRES2',
                                 'DIRECCION2',
                                 'CELULAR2',
@@ -220,6 +210,18 @@ class FactoryRequesTurnController extends Controller
                             $tipoCliente = '';
                         }
 
+                        if (empty($value->factoryRequestCodebtor1)) {
+                            $codebtor = '';
+                            $codebtorAPELLIDOS1 = '';
+                            $codebtorDIR_REFPER1 = '';
+                            $codebtorTEL_REFPER1 = '';
+                        } else {
+                            $codebtor = $value->factoryRequestCodebtor1['CEDULA'];
+                            $codebtorAPELLIDOS1 = $value->factoryRequestCodebtor1['NOM_REFPER'];
+                            $codebtorDIR_REFPER1 = $value->factoryRequestCodebtor1['DIR_REFPER'];
+                            $codebtorTEL_REFPER1 = $value->factoryRequestCodebtor1['TEL_REFPER'];
+                        }
+
                         $printExcel[] = [
                             $value->SUCURSAL,
                             $value->SOLICITUD,
@@ -239,12 +241,11 @@ class FactoryRequesTurnController extends Controller
                             $value->GRAN_TOTAL,
                             '',
                             $score,
-                            $tipoCliente
-
-
-
-
-
+                            $tipoCliente,
+                            $codebtor,
+                            $codebtorAPELLIDOS1,
+                            $codebtorDIR_REFPER1,
+                            $codebtorTEL_REFPER1,
                         ];
                     }
 
