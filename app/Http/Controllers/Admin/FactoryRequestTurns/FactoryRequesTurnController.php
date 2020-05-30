@@ -64,6 +64,7 @@ class FactoryRequesTurnController extends Controller
                 request()->input('soliWeb'),
                 request()->input('groupStatus'),
                 request()->input('customerLine'),
+                request()->input('analyst')
             )->sortByDesc('FECHASOL');
 
             $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
