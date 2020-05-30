@@ -6,9 +6,11 @@ use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositor
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Subsidiaries\Subsidiary;
+use App\Entities\Tools\Exports\ExportToExcel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FactoryRequesTurnController extends Controller
 {
@@ -42,37 +44,218 @@ class FactoryRequesTurnController extends Controller
         }
 
         if (request()->has('q')) {
-            $list = $this->factoryRequestInterface->searchFactoryRequestTurns(
-                request()->input('q'),
-                $skip,
-                request()->input('from'),
-                request()->input('to'),
-                request()->input('status'),
-                request()->input('subsidiary'),
-                request()->input('soliWeb'),
-                request()->input('groupStatus'),
-                request()->input('customerLine'),
-                request()->input('analyst')
-            )->sortByDesc('FECHASOL');
 
-            $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurnsTotal(
-                request()->input('q'),
-                $skip,
-                request()->input('from'),
-                request()->input('to'),
-                request()->input('status'),
-                request()->input('subsidiary'),
-                request()->input('soliWeb'),
-                request()->input('groupStatus'),
-                request()->input('customerLine'),
-                request()->input('analyst')
-            )->sortByDesc('FECHASOL');
 
-            $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
+
+
+
+
+
+
+            $cont = 0;
+            switch ($request->input('action')) {
+                case 'search':
+                    $list = $this->factoryRequestInterface->searchFactoryRequestTurns(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('status'),
+                        request()->input('subsidiary'),
+                        request()->input('soliWeb'),
+                        request()->input('groupStatus'),
+                        request()->input('customerLine'),
+                        request()->input('analyst')
+                    )->sortByDesc('FECHASOL');
+
+                    $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurnsTotal(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('status'),
+                        request()->input('subsidiary'),
+                        request()->input('soliWeb'),
+                        request()->input('groupStatus'),
+                        request()->input('customerLine'),
+                        request()->input('analyst')
+                    )->sortByDesc('FECHASOL');
+
+                    $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
+
+                    break;
+                case 'export':
+                    $list = $this->factoryRequestInterface->searchFactoryRequestTurns(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('status'),
+                        request()->input('subsidiary'),
+                        request()->input('soliWeb'),
+                        request()->input('groupStatus'),
+                        request()->input('customerLine'),
+                        request()->input('analyst')
+                    )->sortByDesc('FECHASOL');
+
+                    ini_set('memory_limit', "512M");
+
+                    foreach ($list as $key => $value) {
+                        $cont++;
+                        if ($cont == 1) {
+                            $printExcel[] = [
+                                'SUCURSAL',
+                                'SOLICITUD',
+                                'CEDULA',
+                                'APELLIDOS',
+                                'NOMBRES',
+                                'DIRECCION',
+                                'CELULAR',
+                                'ACTIVIDAD',
+                                'FECHA SOLICITUD',
+                                'ESTADO',
+                                'TIPO',
+                                'SUBTIPO',
+                                'ANALISTA',
+                                'FECHA RET',
+                                'FECHA FIN',
+                                'VALOR',
+                                'FECHA ASIGNACION',
+                                'SCORE',
+                                'TIPO CLIENTE',
+                                'CED_COD1',
+                                'APELLIDOS1',
+                                'NOMBRES1',
+                                'DIRECCION1',
+                                'CELULAR1',
+                                'ACTIVIDAD1',
+                                'SCO_COD1',
+                                'TIPO_COD1',
+                                'CED_COD2',
+                                'APELLIDOS1',
+                                'NOMBRES2',
+                                'DIRECCION2',
+                                'CELULAR2',
+                                'ACTIVIDAD2',
+                                'SCO_COD2',
+                                'TIPO_COD2',
+                            ];
+                        }
+
+                        if (empty($value->customer->latestCifinScore)) {
+                            $score = '';
+                        } else {
+                            $score = $value->customer->latestCifinScore['score'];
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->TIPO)) {
+                            $tipoOportuya = trim($value->turnoTradicional->TIPO);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->TIPO)) {
+                            $tipoOportuya = trim($value->turnoOportuya->TIPO);
+                        } else {
+                            $tipoOportuya = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->SUB_TIPO)) {
+                            $subTipoOportuya = trim($value->turnoTradicional->SUB_TIPO);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->SUB_TIPO)) {
+                            $subTipoOportuya = trim($value->turnoOportuya->SUB_TIPO);
+                        } else {
+                            $subTipoOportuya = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->USUARIO)) {
+                            $analista = trim($value->turnoTradicional->USUARIO);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->USUARIO)) {
+                            $analista = trim($value->turnoOportuya->USUARIO);
+                        } else {
+                            $analista = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->USUARIO)) {
+                            $analista = trim($value->turnoTradicional->USUARIO);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->USUARIO)) {
+                            $analista = trim($value->turnoOportuya->USUARIO);
+                        } else {
+                            $analista = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FECHA)) {
+                            $fecha_ret = trim($value->turnoTradicional->FECHA);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FECHA)) {
+                            $fecha_ret = trim($value->turnoOportuya->FECHA);
+                        } else {
+                            $fecha_ret = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_ASIG)) {
+                            $fecha_fin = trim($value->turnoTradicional->FEC_ASIG);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_ASIG)) {
+                            $fecha_fin = trim($value->turnoOportuya->FEC_ASIG);
+                        } else {
+                            $fecha_fin = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_ASIG)) {
+                            $fecha_fin = trim($value->turnoTradicional->FEC_ASIG);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_ASIG)) {
+                            $fecha_fin = trim($value->turnoOportuya->FEC_ASIG);
+                        } else {
+                            $fecha_fin = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->SCORE)) {
+                            $score = trim($value->turnoTradicional->SCORE);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->SCORE)) {
+                            $score = trim($value->turnoOportuya->SCORE);
+                        } else {
+                            $score = '';
+                        }
+
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->TIPO_CLI)) {
+                            $tipoCliente = trim($value->turnoTradicional->TIPO_CLI);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->TIPO_CLI)) {
+                            $tipoCliente = trim($value->turnoOportuya->TIPO_CLI);
+                        } else {
+                            $tipoCliente = '';
+                        }
+
+                        $printExcel[] = [
+                            $value->SUCURSAL,
+                            $value->SOLICITUD,
+                            $value->CLIENTE,
+                            $value->customer['APELLIDOS'],
+                            $value->customer['NOMBRES'],
+                            $value->customer['DIRECCION'],
+                            $value->customer['CELULAR'],
+                            $value->customer['ACTIVIDAD'],
+                            $value->FECHASOL,
+                            $value->ESTADO,
+                            $tipoOportuya,
+                            $subTipoOportuya,
+                            $analista,
+                            $fecha_ret,
+                            $fecha_fin,
+                            $value->GRAN_TOTAL,
+                            '',
+                            $score,
+                            $tipoCliente
+
+
+
+
+
+                        ];
+                    }
+
+                    $export = new ExportToExcel($printExcel);
+                    return Excel::download($export, 'IntencionesClientes.xlsx');
+                    break;
+            }
         }
 
         $listCount = $factoryRequestsTotals->count();
-        // dd($list);
+
 
         return view('factoryrequestsTurns.list', [
             'factoryRequests'             => $list,

@@ -77,16 +77,6 @@
                         {{ $data->turnoOportuya->PRIORIDAD }}
                         @else NA @endif @endif
                     </td>
-
-
-
-
-
-
-
-
-
-
                 </tr>
                 @endforeach
             </tbody>
