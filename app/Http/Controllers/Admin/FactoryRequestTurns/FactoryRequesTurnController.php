@@ -292,7 +292,7 @@ class FactoryRequesTurnController extends Controller
                             $value->TIPO_COD2
                         ];
                     }
-
+                    dd($printExcel);
                     $export = new ExportToExcel($printExcel);
                     return Excel::download($export, 'IntencionesClientes.xlsx');
                     break;
