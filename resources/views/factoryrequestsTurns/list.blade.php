@@ -10,11 +10,11 @@
 <section style="min-width: 540px">
   @include('layouts.errors-and-messages')
   @if(!is_null($factoryRequests))
-  <div class="mx-auto" style="max-width: 1400px;">
+  <div class="mx-auto" style="max-width: 1450px;">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-9 order-sm-last">
             <ol class="breadcrumb bradcrumb-reset float-sm-right">
               <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
               <li class="breadcrumb-item active"><a href="/Administrator/dashboard/factoryrequests">Dashboard
@@ -22,7 +22,7 @@
               <li class="breadcrumb-item active"><a href="/Administrator/factoryrequests">Solicitudes Fábrica</a></li>
             </ol>
           </div>
-          <div class="col-12 mt-2">
+          <div class="col-sm-3 mt-2 order-sm-first">
             <a href="{{ URL::previous() }}" class="btn btn-primary ml-auto mr-3 mb-2 btn-sm-reset">Regresar</a>
           </div>
         </div><!-- /.row -->
@@ -49,7 +49,7 @@
                       <div class="small-box ">
                         <div class="inner">
                           <h2 class="titleCardNumber">{{ $listCount }}</h2>
-                          @if ($_GET && $_GET['from'] )
+                          @if (request()->input('from') != '')
                           <p class="textCardNumber">Total de Solicitudes</p>
                           @else
                           <p class="textCardNumber">Solicitudes en este mes</p>

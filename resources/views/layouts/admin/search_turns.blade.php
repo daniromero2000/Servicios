@@ -17,11 +17,8 @@
                         request()->input('customerLine')!!}
                         style="width: 100%;">
                         <option selected value> Selecciona un tipo </option>
-                        @if ($_GET)
-                        @if (!empty($_GET['customerLine']))
-                        <option selected>
-                            {{ $_GET['customerLine'] }}</option>
-                        @endif
+                        @if (request()->input('customerLine') != '')
+                        <option selected>{!! request()->input('customerLine')!!}</option>
                         @endif
                         <option>OPORTUYA</option>
                         <option>TRADICIONAL</option>
@@ -36,11 +33,9 @@
                         style="width: 100%;">
                         <option selected value> Selecciona Analista </option>
                         @foreach ($analysts as $analyst)
-                        <option @if ($_GET) @if (!empty($_GET['analyst'])) @if($_GET['analyst']==$analyst->
+                        <option @if (request()->input('analyst') != '') @if(request()->input('analyst') ==$analyst->
                             CODIGO) selected
-                            @endif
-                            @endif
-                            @endif>{{ $analyst->USUARIO }}</option>
+                            @endif @endif>{{ $analyst->USUARIO }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -52,11 +47,8 @@
                         request()->input('groupStatus')!!}
                         style="width: 100%;">
                         <option selected value> Selecciona Grupos </option>
-                        @if ($_GET)
-                        @if (!empty($_GET['groupStatus']))
-                        <option selected>
-                            {{ $_GET['groupStatus'] }}</option>
-                        @endif
+                        @if (request()->input('groupStatus') != '')
+                        <option selected>{!! request()->input('groupStatus')!!}</option>
                         @endif
                         <option>APROBADOS</option>
                         <option>DESISTIDOS</option>
@@ -71,11 +63,8 @@
                     <select class="form-control  select2bs4" id="status" name="status" {!! request()->input('status')
                         !!} style="width: 100%;">
                         <option selected value> Selecciona Estado </option>
-                        @if ($_GET)
-                        @if (!empty($_GET['status']))
-                        <option selected>
-                            {{ $_GET['status'] }}</option>
-                        @endif
+                        @if (request()->input('status') != '')
+                        <option selected>{!! request()->input('status')!!}</option>
                         @endif
                         <option>APROBADO</option>
                         <option>ANALISIS</option>
@@ -110,11 +99,9 @@
                         style="width: 100%;">
                         <option selected value> Selecciona Sucursal </option>
                         @foreach ($Subsidiarys as $Subsidiary)
-                        <option @if ($_GET) @if (!empty($_GET['subsidiary'])) @if($_GET['subsidiary']==$Subsidiary->
-                            CODIGO) selected
-                            @endif
-                            @endif
-                            @endif>{{ $Subsidiary->CODIGO }}</option>
+                        <option @if (request()->input('subsidiary') != '')
+                            @if(request()->input('subsidiary') ==$subsidiary-> CODIGO) selected @endif
+                            @endif>{{ $analyst->USUARIO }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -145,15 +132,17 @@
             <div class="col-12 d-flex align-items-end justify-content-end">
                 <div class="form-group mb-1">
                     <span class="input-group-btn btn-pr">
-                        <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
+                        <a class="btn btn-danger btn-sm mt-2" href="{{$route}}">
                             <i class="fas fa-times"></i> Restaurar filtros
                         </a>
-                        <button type="submit" name="action" value="search" id="search-btn" class="btn btn-primary mt-2 btn-sm-reset"><i
-                                class="fa fa-search"></i>
+                        <button type="submit" name="action" value="search" id="search-btn"
+                            class="btn btn-primary mt-2 btn-sm"><i class="fa fa-search"></i>
                             Buscar
                         </button>
-                        <button type="submit" name="action" value="export" id="search-btn" class="btn btn-primary mt-2 btn-sm-reset"><i class="fa fa-search"></i>
-                            Exportar
+                        <button type="submit" name="action" value="export" class="border-0 bg-white"
+                            data-toggle="tooltip" title="Exportar" id="search-btn">
+                            <img src="{{asset('images/excel-logo.jpg')}}" alt=""
+                                style=" max-width: 44px; margin-bottom: -9px; ">
                         </button>
                     </span>
                 </div>
