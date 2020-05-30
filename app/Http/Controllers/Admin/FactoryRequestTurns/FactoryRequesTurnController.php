@@ -91,7 +91,19 @@ class FactoryRequesTurnController extends Controller
                         request()->input('analyst'),
                         request()->input('action')
                     )->sortByDesc('FECHASOL');
-                    dd($list);
+                    dd($this->factoryRequestInterface->searchFactoryRequestTurns(
+                        request()->input('q'),
+                        $skip,
+                        request()->input('from'),
+                        request()->input('to'),
+                        request()->input('status'),
+                        request()->input('subsidiary'),
+                        request()->input('soliWeb'),
+                        request()->input('groupStatus'),
+                        request()->input('customerLine'),
+                        request()->input('analyst'),
+                        request()->input('action')
+                    )->sortByDesc('FECHASOL'));
                     ini_set('memory_limit', "512M");
 
                     foreach ($list as $key => $value) {
