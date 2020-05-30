@@ -2270,11 +2270,12 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             dd($e);
         }
     }
+
     public function countFactoryRequestsStatusesTurn($from, $to)
     {
         try {
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-                ->where('state', 'A')
+            ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->where('ESTADO', '!=', 'EN SUCURSAL')
                 ->groupBy('ESTADO')
