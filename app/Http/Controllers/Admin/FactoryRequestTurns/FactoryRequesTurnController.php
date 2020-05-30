@@ -116,6 +116,7 @@ class FactoryRequesTurnController extends Controller
                                 'SCORE',
                                 'TIPO CLIENTE',
                                 'CED_COD1',
+                                'APELLIDOS1',
                                 'NOMBRES1',
                                 'DIRECCION1',
                                 'CELULAR1',
@@ -123,6 +124,7 @@ class FactoryRequesTurnController extends Controller
                                 'SCO_COD1',
                                 'TIPO_COD1',
                                 'CED_COD2',
+                                'APELLIDOS2',
                                 'NOMBRES2',
                                 'DIRECCION2',
                                 'CELULAR2',
@@ -211,15 +213,35 @@ class FactoryRequesTurnController extends Controller
                         }
 
                         if (empty($value->factoryRequestCodebtor1)) {
-                            $codebtor = '';
-                            $codebtorAPELLIDOS1 = '';
-                            $codebtorDIR_REFPER1 = '';
-                            $codebtorTEL_REFPER1 = '';
+                            $codebtor1 = '';
+                            $codebtorNombres1 = '';
+                            $codebtorApellidos1 = '';
+                            $codebtorDireccion1 = '';
+                            $codebtorCelular1 = '';
+                            $codebtorActividad1 = '';
                         } else {
-                            $codebtor = $value->factoryRequestCodebtor1['CEDULA'];
-                            $codebtorAPELLIDOS1 = $value->factoryRequestCodebtor1['NOM_REFPER'];
-                            $codebtorDIR_REFPER1 = $value->factoryRequestCodebtor1['DIR_REFPER'];
-                            $codebtorTEL_REFPER1 = $value->factoryRequestCodebtor1['TEL_REFPER'];
+                            $codebtor1 = $value->factoryRequestCodebtor1['CEDULA'];
+                            $codebtorApellidos1 = $value->factoryRequestCodebtor1['APELLIDOS'];
+                            $codebtorNombres1 = $value->factoryRequestCodebtor1['NOMBRES'];
+                            $codebtorDireccion1 = $value->factoryRequestCodebtor1['DIRECCION'];
+                            $codebtorCelular1 = $value->factoryRequestCodebtor1['CELULAR'];
+                            $codebtorActividad1 = $value->factoryRequestCodebtor1['ACTIVIDAD'];
+                        }
+
+                        if (empty($value->factoryRequestCodebtor2)) {
+                            $codebtor2 = '';
+                            $codebtorNombres2 = '';
+                            $codebtorApellidos2 = '';
+                            $codebtorDireccion2 = '';
+                            $codebtorCelular2 = '';
+                            $codebtorActividad2 = '';
+                        } else {
+                            $codebtor2 = $value->factoryRequestCodebtor1['CEDULA'];
+                            $codebtorApellidos2 = $value->factoryRequestCodebtor1['APELLIDOS'];
+                            $codebtorNombres2 = $value->factoryRequestCodebtor1['NOMBRES'];
+                            $codebtorDireccion2 = $value->factoryRequestCodebtor1['DIRECCION'];
+                            $codebtorCelular2 = $value->factoryRequestCodebtor1['CELULAR'];
+                            $codebtorActividad2 = $value->factoryRequestCodebtor1['ACTIVIDAD'];
                         }
 
                         $printExcel[] = [
@@ -232,7 +254,7 @@ class FactoryRequesTurnController extends Controller
                             $value->customer['CELULAR'],
                             $value->customer['ACTIVIDAD'],
                             $value->FECHASOL,
-                            $value->ESTADO,
+                            trim($value->ESTADO),
                             $tipoOportuya,
                             $subTipoOportuya,
                             $analista,
@@ -242,10 +264,23 @@ class FactoryRequesTurnController extends Controller
                             '',
                             $score,
                             $tipoCliente,
-                            $codebtor,
-                            $codebtorAPELLIDOS1,
-                            $codebtorDIR_REFPER1,
-                            $codebtorTEL_REFPER1,
+                            $codebtor1,
+                            $codebtorApellidos1,
+                            $codebtorNombres1,
+                            $codebtorDireccion1,
+                            $codebtorCelular1,
+                            $codebtorActividad1,
+                            $value->SCO_COD1,
+                            $value->TIPO_COD1,
+                            $codebtor2,
+                            $codebtorApellidos2,
+                            $codebtorNombres2,
+                            $codebtorDireccion2,
+                            $codebtorCelular2,
+                            $codebtorActividad2,
+                            $value->SCO_COD2,
+                            $value->TIPO_COD2
+
                         ];
                     }
 

@@ -3,7 +3,6 @@
 namespace App\Entities\FactoryRequests;
 
 use App\Assessor;
-use App\Entities\Codebtors\Codebtor;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
@@ -36,6 +35,7 @@ class FactoryRequest extends Model
         'STATE',
         'GRAN_TOTAL',
         'SOLICITUD_WEB',
+        'CODEUDOR1',
     ];
 
     protected $table = 'SOLIC_FAB';
@@ -156,6 +156,11 @@ class FactoryRequest extends Model
 
     public function factoryRequestCodebtor1()
     {
-        return $this->hasOne(Codebtor::class, 'SOLICITUD');
+        return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR1');
+    }
+
+    public function factoryRequestCodebtor2()
+    {
+        return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR2');
     }
 }

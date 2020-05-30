@@ -19,7 +19,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'SUCURSAL',
         'FECHASOL',
         'ESTADO',
-        'GRAN_TOTAL'
+        'GRAN_TOTAL',
+        'CODEUDOR1'
     ];
 
     public function __construct(
