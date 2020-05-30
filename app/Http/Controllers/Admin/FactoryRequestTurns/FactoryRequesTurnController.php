@@ -71,8 +71,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('soliWeb'),
                         request()->input('groupStatus'),
                         request()->input('customerLine'),
-                        request()->input('analyst'),
-
+                        request()->input('analyst')
                     )->sortByDesc('FECHASOL');
 
                     $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
@@ -133,7 +132,7 @@ class FactoryRequesTurnController extends Controller
                                 'CELULAR2',
                                 'ACTIVIDAD2',
                                 'SCO_COD2',
-                                'TIPO_COD2',
+                                'TIPO_COD2'
                             ];
                         }
 
@@ -291,7 +290,6 @@ class FactoryRequesTurnController extends Controller
                             $codebtorActividad2,
                             $value->SCO_COD2,
                             $value->TIPO_COD2
-
                         ];
                     }
 
