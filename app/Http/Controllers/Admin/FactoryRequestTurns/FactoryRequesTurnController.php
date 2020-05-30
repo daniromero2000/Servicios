@@ -91,7 +91,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('analyst'),
                         request()->input('action')
                     )->sortByDesc('FECHASOL');
-
+                    dd($list);
                     ini_set('memory_limit', "512M");
 
                     foreach ($list as $key => $value) {
