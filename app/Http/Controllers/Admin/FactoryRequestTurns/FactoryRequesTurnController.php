@@ -91,19 +91,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('analyst'),
                         request()->input('action')
                     )->sortByDesc('FECHASOL');
-                    dd($this->factoryRequestInterface->searchFactoryRequestTurns(
-                        request()->input('q'),
-                        $skip,
-                        request()->input('from'),
-                        request()->input('to'),
-                        request()->input('status'),
-                        request()->input('subsidiary'),
-                        request()->input('soliWeb'),
-                        request()->input('groupStatus'),
-                        request()->input('customerLine'),
-                        request()->input('analyst'),
-                        request()->input('action')
-                    )->sortByDesc('FECHASOL'));
+
                     ini_set('memory_limit', "512M");
 
                     foreach ($list as $key => $value) {
@@ -304,7 +292,7 @@ class FactoryRequesTurnController extends Controller
                             $value->TIPO_COD2
                         ];
                     }
-                    dd($printExcel);
+
                     $export = new ExportToExcel($printExcel);
                     return Excel::download($export, 'IntencionesClientes.xlsx');
                     break;
