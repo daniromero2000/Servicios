@@ -912,8 +912,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
-    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null): Collection
+    public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null, $action = null): Collection
     {
+        set_time_limit(0);
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
@@ -925,8 +926,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->whereIn('ESTADO', $arrayStatus)
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -965,8 +969,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1004,8 +1011,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
                     break;
@@ -1019,8 +1029,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->whereNotIn('ESTADO', $arrayStatus)
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1059,8 +1072,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1098,8 +1114,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
                     break;
@@ -1112,8 +1131,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->whereIn('ESTADO', $arrayStatus)
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1152,8 +1174,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1190,9 +1215,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                         ->when($soliWeb, function ($q, $soliWeb) {
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
-                        ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
                     break;
@@ -1203,8 +1230,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->where('ESTADO', $groupStatus)
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1243,8 +1273,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1282,8 +1315,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
                     break;
@@ -1295,8 +1331,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->where('ESTADO', $groupStatus)
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1335,8 +1374,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1374,8 +1416,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);
                     break;
@@ -1386,8 +1431,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
                             ->where('ESTADO', '!=', 'EN SUCURSAL')
-                            ->skip($totalView)
-                            ->take(30)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1426,8 +1474,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             })
                             ->where('state', 'A')
                             ->orderBy('FECHASOL', 'desc')
-                            ->skip($totalView)
-                            ->take(50)
+                            ->when($action, function ($q) use ($totalView, $action) {
+                                if ($action != 'export') {
+                                    return $q->skip($totalView)->take(50);
+                                }
+                            })
                             ->get($this->columns);
                     }
 
@@ -1465,8 +1516,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->skip($totalView)
-                        ->take(50)
+                        ->when($action, function ($q) use ($totalView, $action) {
+                            if ($action != 'export') {
+                                return $q->skip($totalView)->take(50);
+                            }
+                        })
                         ->orderBy('FECHASOL', 'desc')
                         ->get($this->columns);;
             }
@@ -1478,8 +1532,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                 })->where('state', 'A')
                 ->where('ESTADO', '!=', 'EN SUCURSAL')
-                ->skip($totalView)
-                ->take(30)
+                ->when($action, function ($q) use ($totalView, $action) {
+                    if ($action != 'export') {
+                        return $q->skip($totalView)->take(50);
+                    }
+                })
                 ->get($this->columns);
         }
         if (is_null($from) || is_null($to)) {
@@ -1521,8 +1578,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 })
                 ->where('state', 'A')
                 ->orderBy('FECHASOL', 'desc')
-                ->skip($totalView)
-                ->take(50)
+                ->when($action, function ($q) use ($totalView, $action) {
+                    if ($action != 'export') {
+                        return $q->skip($totalView)->take(50);
+                    }
+                })
                 ->get($this->columns);
         }
 
@@ -1563,8 +1623,11 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
             })
             ->where('state', 'A')
-            ->skip($totalView)
-            ->take(50)
+            ->when($action, function ($q) use ($totalView, $action) {
+                if ($action != 'export') {
+                    return $q->skip($totalView)->take(50);
+                }
+            })
             ->orderBy('FECHASOL', 'desc')
             ->get($this->columns);;
     }

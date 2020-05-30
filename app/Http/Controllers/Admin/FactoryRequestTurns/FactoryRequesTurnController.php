@@ -57,7 +57,8 @@ class FactoryRequesTurnController extends Controller
                         request()->input('soliWeb'),
                         request()->input('groupStatus'),
                         request()->input('customerLine'),
-                        request()->input('analyst')
+                        request()->input('analyst'),
+                        request()->input('action')
                     )->sortByDesc('FECHASOL');
 
                     $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurnsTotal(
@@ -70,7 +71,8 @@ class FactoryRequesTurnController extends Controller
                         request()->input('soliWeb'),
                         request()->input('groupStatus'),
                         request()->input('customerLine'),
-                        request()->input('analyst')
+                        request()->input('analyst'),
+
                     )->sortByDesc('FECHASOL');
 
                     $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
@@ -87,7 +89,8 @@ class FactoryRequesTurnController extends Controller
                         request()->input('soliWeb'),
                         request()->input('groupStatus'),
                         request()->input('customerLine'),
-                        request()->input('analyst')
+                        request()->input('analyst'),
+                        request()->input('action')
                     )->sortByDesc('FECHASOL');
 
                     ini_set('memory_limit', "512M");
@@ -212,6 +215,14 @@ class FactoryRequesTurnController extends Controller
                             $tipoCliente = '';
                         }
 
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FECHA)) {
+                            $fechaAsignacion = trim($value->turnoTradicional->FECHA);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FECHA)) {
+                            $fechaAsignacion = trim($value->turnoOportuya->FECHA);
+                        } else {
+                            $fechaAsignacion = '';
+                        }
+
                         if (empty($value->factoryRequestCodebtor1)) {
                             $codebtor1 = '';
                             $codebtorNombres1 = '';
@@ -261,7 +272,7 @@ class FactoryRequesTurnController extends Controller
                             $fecha_ret,
                             $fecha_fin,
                             $value->GRAN_TOTAL,
-                            '',
+                            $fechaAsignacion,
                             $score,
                             $tipoCliente,
                             $codebtor1,
