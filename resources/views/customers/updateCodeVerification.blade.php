@@ -1,6 +1,13 @@
 @extends('layouts.admin.app')
 @section('linkStyleSheets')
 <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+<style>
+    @media (max-width: 600px) {
+        .tableReset {
+            font-size: 12px;
+        }
+    }
+</style>
 @endsection
 @section('content')
 <section class="content border-0">
@@ -39,20 +46,23 @@
                             </button>
                         </div>
                         <div class="modal-body text-center">
-                            <table class="table table-light">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Token</th>
-                                        <th>Cedula</th>
-                                        <th>Telefono</th>
-                                        <th>Tipo</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dataCode">
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-hover tableReset ">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Token</th>
+                                            <th>Cedula</th>
+                                            <th>Telefono</th>
+                                            <th>Tipo</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dataCode">
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
