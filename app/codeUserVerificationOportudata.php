@@ -15,8 +15,12 @@ class codeUserVerificationOportudata extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'identificador',
         'token',
-        'identification',
-        'created_at'
+        'identificationNumber',
+        'telephone',
+        'created_at',
+        'type',
+        'state'
     ];
 }

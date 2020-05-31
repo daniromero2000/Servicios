@@ -197,12 +197,12 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/Insurance/Policy/Debtors', 'CustomerController@updatePoliceDebtors');
         Route::get('/Administrator/customer/execFosygaConsultation/{identificationNumber}', 'CustomerController@execFosygaConsultation')->name('customer_fosygaConsult');
         Route::get('/Administrator/customer/execRegistraduriaConsultation/{identificationNumber}', 'CustomerController@execRegistraduriaConsultation')->name('customer_registraduriaConsult');
+        Route::get('/Administrator/customer/CodeVerification', 'CustomerController@codeVerification');
+        Route::get('/api/customer/CodeVerification/{identification}', 'CustomerController@getCodeVerification');
         Route::get('/getPoliceDebtors/{id}', 'CustomerController@getPoliceDebtors');
         Route::get('/searchCustomer/{id}', 'CustomerController@searchCustomer');
         Route::get('/getPoliceDebtorOportuyas/{id}', 'CustomerController@getPoliceDebtorOportuyas');
     });
-
-
 
     Route::namespace('CallCenter')->group(function () {
         Route::resource('/Administrator/callCenter', 'CallCenterController');

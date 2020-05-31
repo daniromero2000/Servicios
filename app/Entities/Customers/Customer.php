@@ -2,6 +2,7 @@
 
 namespace App\Entities\Customers;
 
+use App\codeUserVerificationOportudata;
 use App\Entities\CliCels\CliCel;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
@@ -297,5 +298,10 @@ class Customer extends Model
     public function customerLeads()
     {
         return $this->hasMany(Lead::class, 'identificationNumber');
+    }
+
+    public function codeUserVerification()
+    {
+        return $this->hasMany(codeUserVerificationOportudata::class, 'identificationNumber');
     }
 }
