@@ -5,7 +5,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 ">
+                    <div class="col-md-8 order-md-last">
                         <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             <li class="breadcrumb-item active"><a
@@ -16,10 +16,12 @@
                             <li class="breadcrumb-item active"><a href="">Detalle Solicitud</a></li>
                         </ol>
                     </div>
-                    <div class="col-12 mt-2">
+                    <div class="col-md-4 ">
                         <a href="{{ URL::previous() }}"
                             class="btn btn-primary btn-sm-reset ml-auto mr-3 mb-2 ">Regresar</a>
                     </div>
+
+
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -53,14 +55,8 @@
             <div class="card-body">
                 <div class="tab-content" id="custom-tabs-four-tabContent">
                     <div role="tabpanel" class="tab-pane fade container-fluid show active" id="info">
-                        <div class="row">
-                            <div class="col-sm-6 col-lg-5">
-                                @include('factoryrequests.layouts.generals')
-                            </div>
-                            <div class="col-sm-6 col-lg-7">
-                                @include('factoryrequests.layouts.creditcard')
-                            </div>
-                        </div>
+                        @include('factoryrequests.layouts.generals')
+                        @include('factoryrequests.layouts.creditcard')
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="references">
                         @include('factoryrequests.layouts.references', [ 'references' => $factoryRequest->references ])
