@@ -142,7 +142,6 @@ class FactoryRequestController extends Controller
     public function show(int $id)
     {
         $datas = $this->factoryRequestInterface->findFactoryRequestByIdFull($id)->factoryRequestStatusesLogs;
-        // dd($datas[3]->oportudataUser);
         $data = [
             'fabrica' => 0,
             'sucursal' => 0

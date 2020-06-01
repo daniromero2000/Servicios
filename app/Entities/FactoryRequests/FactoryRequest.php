@@ -121,7 +121,7 @@ class FactoryRequest extends Model
 
     public function factoryRequestNotes()
     {
-        return $this->hasMany(FactoryRequestNote::class, 'SOLICITUD');
+        return $this->hasMany(FactoryRequestNote::class, 'SOLICITUD')->orderBy('FECHA', 'DESC');
     }
 
     public function factoryRequestProducts()
@@ -136,7 +136,7 @@ class FactoryRequest extends Model
 
     public function factoryRequestStatusesLogs()
     {
-        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->orderBy('created_at', 'DESC')->with('oportudataUser');
     }
 
     public function turnoTradicional()
