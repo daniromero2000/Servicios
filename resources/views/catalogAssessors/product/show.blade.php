@@ -117,7 +117,7 @@ array_push($imagenes, [$productImages[$key], $key]);
             </div>
             <div class="row">
                 <div class="card border-0 container-deal-product">
-                    <div class="card-body pt-0 pr-4 pl-4">
+                    <div class="card-body pt-0 pr-4 pl-4" style="min-width: 437px;">
                         <div class="relative text-center  container-desc-deal">
                             {{-- @php
                             dd($prices[0])
