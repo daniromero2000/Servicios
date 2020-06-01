@@ -84,24 +84,25 @@ class CatalogController extends Controller
                     $blackPublicPrice           = round($promotionPublicPrice * ((100 - $productList['percentage_credit_card_black']) / 100));
                     $blackBondPrice             = round(($promotionPublicPrice * (1 - ($productList['bond_black'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 }
-                $dataProduct[$productList['name']] = [
-                    'normal_public_price'           => $normalPublicPrice,
-                    'cash_promotion'                => $cashPromotion,
-                    'promotion_public_price'        => $promotionPublicPrice,
-                    'traditional_credit_price'      => $traditionalCreditPrice * 12,
-                    'traditional_credit_bond_price' => $traditionalCreditBondPrice * 12,
-                    'blue_public_price'             => $bluePublicPrice,
-                    'blue_bond_price'               => $blueBondPrice * 12,
+                $dataProduct[] = [
+                    // 'normal_public_price'           => $normalPublicPrice,
+                    // 'cash_promotion'                => $cashPromotion,
+                    // 'promotion_public_price'        => $promotionPublicPrice,
+                    // 'traditional_credit_price'      => $traditionalCreditPrice * 12,
+                    // 'traditional_credit_bond_price' => $traditionalCreditBondPrice * 12,
+                    // 'blue_public_price'             => $bluePublicPrice,
+                    // 'blue_bond_price'               => $blueBondPrice * 12,
                     'black_public_price'            => $blackPublicPrice,
-                    'black_bond_price'              => $blackBondPrice * 12,
+                    // 'black_bond_price'              => $blackBondPrice * 12,
                 ];
             }
         }
 
-        return $dataProduct;
+        // return $dataProduct;
 
         return view('catalogAssessors.product.show', [
-            'product' => $this->productRepo->findProductBySlug($slug)
+            'product' => $this->productRepo->findProductBySlug($slug),
+            'prices'  => $dataProduct
         ]);
     }
 }

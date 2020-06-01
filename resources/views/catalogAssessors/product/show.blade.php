@@ -119,20 +119,23 @@ array_push($imagenes, [$productImages[$key], $key]);
                 <div class="card border-0 container-deal-product">
                     <div class="card-body pt-0 pr-4 pl-4">
                         <div class="relative text-center  container-desc-deal">
-
+                            {{-- @php
+                            dd($prices[0])
+                            @endphp --}}
+                            @if ($product->discount && $product->discount > 0)
                             <div class="card-products-discount">
-                                {{-- <p>{{$desc}}%</p> --}}
+                                <p>{{ $product->discount}}%</p>
                                 <p>Dcto</p>
                             </div>
+                            @endif
                             <div class="container-price-deal">
                                 <p class="card-text card-products-old-price mb-0"> <del>$
-                                        {{-- {{ number_format($product->price)}} --}}
+                                        {{ number_format($prices[0]['black_public_price'])}}
                                     </del></p>
                                 <p class="card-text card-products-label mb-1">Precio antes</p>
 
                                 <p class="card-text card-products-new-price mb-0">$
-                                    {{-- {{ number_format($product->sale_price)}} --}}
-                                </p>
+                                    {{ number_format($prices[0]['black_public_price'])}} </p>
                                 <p class="card-text card-products-label mb-3">Precio ahora</p>
                             </div>
 
