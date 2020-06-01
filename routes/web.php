@@ -200,7 +200,6 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
-    Route::resource('productList', 'Admin\ProductList\ProductListController');
     Route::group(['prefix' => 'listProducts'], function () {
         Route::resource('/', 'Admin\ListProducts\ListProductController');
         Route::put('/{id}', 'Admin\ListProducts\ListProductController@update');
@@ -209,6 +208,8 @@ Route::group(['prefix' => 'api/'], function () {
     });
     Route::group(['prefix' => 'productList'], function () {
         Route::resource('/', 'Admin\ProductList\ProductListController');
+        Route::get('/{id}', 'Admin\ProductList\ProductListController@show');
+        Route::put('/addSubsidiariesToProductList/{id}', 'Admin\ProductList\ProductListController@addSubsidiariesToProductList');
     });
 
     // Dashboard

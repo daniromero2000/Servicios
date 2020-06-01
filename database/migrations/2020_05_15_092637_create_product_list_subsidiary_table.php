@@ -17,7 +17,6 @@ class CreateProductListSubsidiaryTable extends Migration
             $table->increments('id');
             $table->integer('product_list_id')->unsigned();
             $table->integer('codigo')->unsigned();
-            $table->timestamps();
             $table->foreign('product_list_id')->references('id')->on('product_lists')->onDelete('cascade');
         });
     }

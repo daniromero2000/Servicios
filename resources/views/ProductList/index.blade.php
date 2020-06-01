@@ -1,10 +1,9 @@
 @extends('layouts.admin.app')
 
 @section('linkStyleSheets')
-<link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
-<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
-<link rel="stylesheet"
+    <link rel="stylesheet" href="{{ asset('css/productList/productList.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ngTags/ng-tags-input.min.css') }}">
+    <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @endsection
 
