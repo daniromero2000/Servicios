@@ -12,6 +12,8 @@ use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
+use App\Entities\TurnoOportuyas\TurnoOportuya;
+use App\Entities\Turnos\Turno;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -33,6 +35,7 @@ class FactoryRequest extends Model
         'STATE',
         'GRAN_TOTAL',
         'SOLICITUD_WEB',
+        'CODEUDOR1',
     ];
 
     protected $table = 'SOLIC_FAB';
@@ -60,10 +63,21 @@ class FactoryRequest extends Model
     {
         return self::search($term);
     }
+    public function searchFactoryRequestTurnsTotal($term)
+    {
+        return self::search($term);
+    }
+
+    public function searchFactoryRequestTurns($term)
+    {
+        return self::search($term);
+    }
+
     public function searchFactoryDirectorsZona($term)
     {
         return self::search($term);
     }
+
     public function searchFactoryAseessors($term)
     {
         return self::search($term);
@@ -124,8 +138,29 @@ class FactoryRequest extends Model
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id')->with('oportudataUser');
     }
+
+    public function turnoTradicional()
+    {
+        return $this->belongsTo(Turno::class, 'SOLICITUD', 'SOLICITUD');
+    }
+
+    public function turnoOportuya()
+    {
+        return $this->belongsTo(TurnoOportuya::class, 'SOLICITUD', 'SOLICITUD');
+    }
+
     public function factoryRequestaAssessors()
     {
         return $this->belongsTo(Assessor::class, 'CODASESOR', 'CODIGO');
+    }
+
+    public function factoryRequestCodebtor1()
+    {
+        return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR1');
+    }
+
+    public function factoryRequestCodebtor2()
+    {
+        return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR2');
     }
 }

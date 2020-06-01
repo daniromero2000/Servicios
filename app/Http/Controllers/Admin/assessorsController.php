@@ -521,6 +521,12 @@ class assessorsController extends Controller
 			$oportudataLead->APELLIDOS
 		);
 
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
@@ -538,6 +544,7 @@ class assessorsController extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 1;
 				$dataIntention->ID_DEF = 2;
 				$dataIntention->save();
@@ -564,6 +571,7 @@ class assessorsController extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 3;
 				$dataIntention->save();
 			}
@@ -669,6 +677,13 @@ class assessorsController extends Controller
 		$customerScore        = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
 		$data                 = ['CEDULA' => $identificationNumber];
 
+		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+		if (Auth::user()) {
+			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+		}
+		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$data['ASESOR'] = $assessorCode;
+
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
@@ -676,6 +691,8 @@ class assessorsController extends Controller
 			$customerIntention =	$this->intentionInterface->createIntention($data);
 		} else {
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ASESOR = $assessorCode;
+			$customerIntention->save();
 		}
 
 		// 5	Puntaje y 3.4 Calificacion Score

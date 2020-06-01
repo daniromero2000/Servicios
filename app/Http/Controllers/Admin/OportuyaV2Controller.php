@@ -320,7 +320,14 @@ class OportuyaV2Controller extends Controller
 					'product_id' => $request->get('productId')
 				];
 			}
-			$customerIntention =  $this->intentionInterface->createIntention($data);
+
+			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+			$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
+			if ($lastIntention == "true") {
+				$customerIntention =  $this->intentionInterface->createIntention($data);
+			}
+
 			return "1";
 		}
 
@@ -1211,13 +1218,25 @@ class OportuyaV2Controller extends Controller
 
 	public function deniedLeadForFecExp($identificationNumber, $typeDenied)
 	{
+
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
 			'CEDULA' => $identificationNumber,
 			'ID_DEF' => $typeDenied,
 			'ESTADO_INTENCION' => 1
 		];
-		$this->intentionInterface->createIntention($data);
+
+		if ($lastIntention == "true") {
+			$this->intentionInterface->createIntention($data);
+		} else {
+			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$dataIntention->ESTADO_INTENCION = 1;
+			$dataIntention->ID_DEF = $typeDenied;
+			$dataIntention->save();
+		}
+
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->ESTADO = 'NEGADO';
 		$customer->save();
@@ -1536,6 +1555,9 @@ class OportuyaV2Controller extends Controller
 	{
 		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $tipoDoc);
 
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
@@ -1546,7 +1568,10 @@ class OportuyaV2Controller extends Controller
 				'ESTADO_INTENCION' => 3
 			];
 
-			$this->intentionInterface->createIntention($dataIntention);
+			if ($lastIntention == "true") {
+				$this->intentionInterface->createIntention($dataIntention);
+			}
+
 			$estadoSolic = 'ANALISIS';
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,

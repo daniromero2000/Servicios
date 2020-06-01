@@ -71,14 +71,12 @@ class Codebtor extends Model
         'HABITO1',
         'HABITO2',
         'STATE',
-   ];
-
-
-    protected $hidden = [
     ];
 
-    protected $dates = [
-    ];
+
+    protected $hidden = [];
+
+    protected $dates = [];
 
     protected $searchable = [];
 }

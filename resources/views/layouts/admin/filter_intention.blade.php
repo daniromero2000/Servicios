@@ -3,12 +3,9 @@
     <div class="col-12 text-center">
         <h3 style="color: #007bff;">Filtrar</h3>
     </div>
-
     <div class="col-12 mt-2">
         <form action="{{$route}}" method="get" id="admin-search">
             <div class="input-group">
-
-
                 <div class="row w-100 d-flex justify-content-center">
                     <div class="col-12 col-sm-6 col-md-2">
                         <label for="q">Buscar</label>
@@ -32,7 +29,7 @@
                                 <option>TIPO C</option>
                                 <option>TIPO D</option>
                                 <option>TIPO 5</option>
-                                <option>TIPO NE</option>
+                                <option>TIPO 7</option>
                             </select>
                         </div>
                     </div>
@@ -59,20 +56,23 @@
                     </div>
                     <div class="col-12 col-md-9 d-flex align-items-end justify-content-end mt-3">
                         <span class="input-group-btn btn-pr">
-                            <button type="submit" id="search-btn" class="btn btn-primary btn-sm-reset mt-2"><i
-                                    class="fa fa-search"></i>
+                            <button type="submit" name="action" value="search" id="search-btn"
+                                class="btn btn-primary btn-sm-reset mt-2"><i class="fa fa-search"></i>
                                 Buscar
                             </button>
+                            @if ( auth()->user()->idProfile == 17 || auth()->user()->idProfile == 5 )
+                            <button type="submit" name="action" value="export" id="search-btn"
+                                class="btn btn-primary btn-sm-reset mt-2"><i class="fa fa-search"></i>
+                                Exportar Busqueda
+                            </button>
+                            @endif
                             <a class="btn btn-danger btn-sm-reset mt-2" href="{{$route}}">
                                 <i class="fas fa-times"></i> Restaurar filtros
                             </a>
                         </span>
                     </div>
                 </div>
-
             </div>
-
-
+        </form>
     </div>
-    </form>
 </div>

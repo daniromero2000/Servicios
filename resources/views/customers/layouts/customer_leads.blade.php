@@ -34,7 +34,9 @@
           <td> @if($lead->leadStatuses) <span class="text-center badge"
               style="color: white ; background-color: {{$lead->leadStatuses->color }}"
               class="btn btn-info btn-block">{{ $lead->leadStatuses->status}}</span> @endif</td>
-          <td class="text-center">{{ $lead->leadAssessor->name }}</td>
+          <td class="text-center">  @if ($lead->leadAssessor))
+             {{ $lead->leadAssessor->name }}
+          @endif  </td>
 
         </tr>
         @endforeach

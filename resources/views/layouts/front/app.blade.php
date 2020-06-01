@@ -24,6 +24,13 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	</script>
 	<!-- Google Tag Manager -->
 
+	<script>
+		(function(h,e,a,t,m,p) {
+	m=e.createElement(a);m.async=!0;m.src=t;
+	p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
+	})(window,document,'script','https://u.heatmap.it/log.js');
+	</script>
+
 	@yield('eventTag')
 	<script>
 		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -53,7 +60,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		t.src=v;s=b.getElementsByTagName(e)[0];
 		s.parentNode.insertBefore(t,s)}(window,document,'script',
 		'https://connect.facebook.net/en_US/fbevents.js');
-		 fbq('init', '406230336580137'); 
+		 fbq('init', '406230336580137');
 		fbq('track', 'PageView');
 	</script>
 	<noscript>
@@ -80,18 +87,18 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 
 	<script>
 		function hideLoader(){
-				
-				$('#ex-global-content').removeClass('ex-loader-blur'); 
+
+				$('#ex-global-content').removeClass('ex-loader-blur');
 				$(".ex-loader").fadeOut(1000,function(){
 					$(".ex-loader").remove();
-					
-				}); 
+
+				});
 			};
 
 			window.onload = function(){
-				hideLoader();	
+				hideLoader();
 			};
-			
+
 			$(document).ready(function($) {
 				setTimeout(function(){
 					hideLoader();
