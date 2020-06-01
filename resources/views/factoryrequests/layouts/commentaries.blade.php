@@ -1,8 +1,17 @@
-<div class="card card-table-reset">
-    <div class="card-body table-responsive pt-1">
-        <h2 class="title-table" class="title-table"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
-            Canal Digital
-        </h2>
+<div class="card card-success">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-comments" aria-hidden="true"></i> Comentarios
+            Canal Digital</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus text-dark"></i>
+            </button>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body" style="max-height: 360px; overflow: auto;">
         @if($datas->isNotEmpty())
         <table class="table table-hover table-stripped leadTable">
             <thead class="header-table">
@@ -41,4 +50,5 @@
         </table>
         @endif
     </div>
+    <!-- /.card-body -->
 </div>

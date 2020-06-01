@@ -65,13 +65,6 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-lg-8">
                                 <div class="row row-reset">
-                                    <div class="col-12 col-sm-6">
-                                        @include('factoryrequests.layouts.commentaries',['datas' =>
-                                        $factoryRequest->comments])
-                                    </div>
-                                    <div class="col-12 col-sm-6"> @include('factoryrequests.layouts.notes',['datas' =>
-                                        $factoryRequest->factoryRequestNotes])
-                                    </div>
                                     @if ($timeFactory)
                                     <div class="col-12 col-sm-6">
                                         <div class="small-box bg-info">
@@ -98,6 +91,13 @@
                                         </div>
                                     </div>
                                     @endif
+                                    <div class="col-12 col-sm-6">
+                                        @include('factoryrequests.layouts.commentaries',['datas' =>
+                                        $factoryRequest->comments])
+                                    </div>
+                                    <div class="col-12 col-sm-6"> @include('factoryrequests.layouts.notes',['datas' =>
+                                        $factoryRequest->factoryRequestNotes])
+                                    </div>
 
                                 </div>
                             </div>
