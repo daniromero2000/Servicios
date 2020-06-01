@@ -2,8 +2,10 @@
 
 namespace App\Entities\ProductLists;
 
+use App\Entities\Subsidiaries\Subsidiary;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductList extends Model
@@ -36,5 +38,10 @@ class ProductList extends Model
     public function userChecked()
     {
         return $this->belongsTo(User::class, 'checked_user_id');
+    }
+
+    public function sudsidiaries()
+    {
+        return $this->belongsToMany(Subsidiary::class, 'product_list_subsidiary', 'product_list_id', 'codigo');
     }
 }

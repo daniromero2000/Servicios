@@ -37,6 +37,7 @@ class SubsidiaryController extends Controller
 
   public function getSubsidiaries(Request $request)
   {
+    $subsidiariesReturn = [];
 
     if (request()->has('q')) {
       $subsidiaries = $this->subsidiaryinterface->searchSubsidiares(request()->input('q'));
@@ -45,7 +46,12 @@ class SubsidiaryController extends Controller
 
     $subsidiaries = $this->subsidiaryinterface->getSubsidiares();
 
-    return $subsidiaries;
+    foreach ($subsidiaries as $subsidiary){
+      $subsidiariesReturn[] = ['text' => $subsidiary['CODIGO']];
+    }
+
+
+    return $subsidiariesReturn;
   }
 
   public function show($id)
