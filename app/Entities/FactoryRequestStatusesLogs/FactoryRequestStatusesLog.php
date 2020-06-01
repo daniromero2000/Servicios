@@ -25,6 +25,6 @@ class FactoryRequestStatusesLog extends Model
 
     public function oportudataUser()
     {
-        return $this->belongsTo(OportudataUser::class, 'usuario', 'USUARIO');
+        return $this->belongsTo(OportudataUser::class, 'usuario', 'USUARIO')->where('MODULO', '009');
     }
 }
