@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Admin\Catalogs;
 
-use App\Entities\Catalogs\Catalog;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Entities\Products\Product;
 use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
 use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
 use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
 use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
-use Illuminate\Support\Facades\Validator;
 use App\Entities\Products\Transformations\ProductTransformable;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
 
 class CatalogController extends Controller
 {
     use ProductTransformable;
-    private $productRepo, $brandRepo;
+    private $productRepo, $brandRepo, $listProduct;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
@@ -29,11 +26,11 @@ class CatalogController extends Controller
         FactorRepositoryInterface $factorRepositoryInterface
     ) {
         $this->productListInterface = $productListRepositoryInterface;
-        $this->productRepo  = $productRepository;
+        $this->productRepo          = $productRepository;
         $this->listProductInterface = $listProductRepositoryInterface;
         $this->giveAwayInterface    = $listGiveAwayRepositoryInterface;
         $this->factorInterface      = $factorRepositoryInterface;
-        $this->brandRepo    = $brandRepository;
+        $this->brandRepo            = $brandRepository;
     }
 
     public function index()
@@ -43,6 +40,20 @@ class CatalogController extends Controller
         $products = $list->map(function (Product $item) {
             return $this->transformProduct($item);
         })->all();
+
+        foreach ($products as $key => $value) {
+            $dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
+            $productCatalog[$key] = $dataProduct[$key];
+            $productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
+            $dataProduct[$key] = $this->getPriceProduct($productListSku[$key][0]->id);
+            $products[$key]['price'] =  $dataProduct[$key][0]['black_public_price'];
+            // dd($products[$key]['price']);
+            $desc[$key] = $dataProduct[$key][0]['black_public_price'] - (($productCatalog[$key]->discount * $dataProduct[$key][0]['black_public_price']) / 100);
+            $products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+            $products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
+        }
+
+        // dd($products);   
 
         return view('catalogAssessors.catalog', [
             'products' => $products,
@@ -54,9 +65,42 @@ class CatalogController extends Controller
     public function show($slug)
     {
         $dataProduct = $this->productRepo->findProductBySlug($slug);
-        $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
-        $product_id = $productListSku[0]->id;
+        $productCatalog = $dataProduct;
+        // dd($dataProduct);
 
+        $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
+        // dd($productListSku);
+
+        $dataProduct = $this->getPriceProduct($productListSku[0]->id);
+        // $data = $this->listProduct->getDataPriceProduct($productListSku[0]->id);
+        // dd($data);
+        $desc = "";
+        $pays = "";
+        $desc = $dataProduct[0]['black_public_price'] - (($productCatalog->discount * $dataProduct[0]['black_public_price']) / 100);
+        $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+        $desc = round($desc, 2, PHP_ROUND_HALF_UP);
+        $images = $productCatalog->images()->get(['src']);
+        $imagenes = [];
+        $productImages = [];
+        array_push($productImages, $productCatalog->cover);
+        foreach ($images as $key => $value) {
+            array_push($productImages, $images[$key]->src);
+        }
+        foreach ($productImages as $key => $value) {
+            array_push($imagenes, [$productImages[$key], $key]);
+        }
+        // return $dataProduct;
+        return view('catalogAssessors.product.show', [
+            'product'   => $productCatalog,
+            'prices'    => $dataProduct,
+            'pays'      => $pays,
+            'desc'      => $desc,
+            'imagenes'  => $imagenes
+        ]);
+    }
+
+    public function getPriceProduct($product_id)
+    {
         $dataProduct = [];
         $product = $this->listProductInterface->findListProductById($product_id);
         $product = $product->toArray();
@@ -98,11 +142,6 @@ class CatalogController extends Controller
             }
         }
 
-        // return $dataProduct;
-
-        return view('catalogAssessors.product.show', [
-            'product' => $this->productRepo->findProductBySlug($slug),
-            'prices'  => $dataProduct
-        ]);
+        return $dataProduct;
     }
 }

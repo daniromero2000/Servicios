@@ -3,36 +3,15 @@
 <link rel="stylesheet" href="{{ asset('css/admin/catalog/app.css')}}">
 @endsection
 @section('content')
-@php
-$images = $product->images()->get(['src']);
-$imagenes = [];
-$productImages =[];
-array_push($productImages, $product->cover);
-foreach ( $images as $key => $value) {
-array_push($productImages, $images[$key]->src );
-}
-foreach ( $productImages as $key => $value) {
-array_push($imagenes, [$productImages[$key], $key]);
-}
-@endphp
-
-<div class="my-3 padding-reset" style="max-width: 1300px;margin: 0px auto; margin-bottom: 5% !important;">
+<div class="my-3 padding-reset father" style="max-width: 1300px;margin: 0px auto; margin-bottom: 5% !important;">
     <div class="row mr-0 justify-content-center">
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <h5 class="breadcrumb-product">Oportunidades Servicios > Crédito Electrodomésticos >
                 {{ $product->reference }} </h5>
         </div>
-        <div class="col-lg-8 mt-3 px-0"
-            style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px;">
-            <div class="w-100 padding-reset">
-                <p class="reference-product">{{ $product->reference}}.</p>
-                <h4 class="name-product"> {{ $product->name}} </h4>
-                <div id="description-product">
-
-                    {!!html_entity_decode($product->description)!!}
-                </div>
-            </div>
-            <div style="border-radius: 21px; margin-top: 5%;">
+        <div class="col-lg-7 col-xl-8 px-0 order-lg-last"
+            style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.05)!important;border-radius: 21px; margin-top: 5%">
+            <div style="border-radius: 21px">
                 <div class="carousel-container position-relative row">
                     <div class="row mx-auto">
 
@@ -84,7 +63,15 @@ array_push($imagenes, [$productImages[$key], $key]);
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 container-deal">
+        <div class="col-lg-5 col-xl-4 container-deal">
+            <div class="w-100">
+                <p class="reference-product">{{ $product->reference}}.</p>
+                <h4 class="name-product"> {{ $product->name}} </h4>
+                <div id="description-product">
+
+                    {!!html_entity_decode($product->description)!!}
+                </div>
+            </div>
             <div class="row mx-0 container-steps-products justify-content-center text-center">
                 <div class="col-4">
                     <div>
@@ -116,12 +103,10 @@ array_push($imagenes, [$productImages[$key], $key]);
                 </div>
             </div>
             <div class="row">
-                <div class="card border-0 container-deal-product">
-                    <div class="card-body pt-0 pr-4 pl-4" style="min-width: 437px;">
+                <div class="card border-0 container-deal-product"
+                    style="box-shadow: 0 .125rem .25rem rgba(0,0,0,.0)!important;">
+                    <div class="card-body pt-0 pr-4 pl-4" style="margin-top: 5px;">
                         <div class="relative text-center  container-desc-deal">
-                            {{-- @php
-                            dd($prices[0])
-                            @endphp --}}
                             @if ($product->discount && $product->discount > 0)
                             <div class="card-products-discount">
                                 <p>{{ $product->discount}}%</p>
@@ -135,7 +120,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 <p class="card-text card-products-label mb-1">Precio antes</p>
 
                                 <p class="card-text card-products-new-price mb-0">$
-                                    {{ number_format($prices[0]['black_public_price'])}} </p>
+                                    {{ number_format($desc)}} </p>
                                 <p class="card-text card-products-label mb-3">Precio ahora</p>
                             </div>
 
@@ -144,22 +129,29 @@ array_push($imagenes, [$productImages[$key], $key]);
 
                             <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.jpg')}}"
                                 src="{{ asset('images/blank.jpg')}}" class="img-card-deal-product lazy">
-
-
-
                             <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
                                     meses </b> con tu tarjeta oportuya:
                             </p>
                             <div class="container-dues-deal-product">
                                 <p class="card-text card-products-price">
-                                    {{-- $ {{ number_format($product->pays)}} --}}
+                                    $ {{ number_format($pays)}}
                                 </p>
-                                <p class="card-text text-dues-deal-product">* Cuota semanal</p>
+                                <p class="card-text text-dues-deal-product mb-3">* Cuota semanal</p>
                                 <a href="/step1?productId={{ $product->id}}"
-                                    class="btn card-products-button btn-primary" style="margin-left: 15px;">Solicitar
-                                    aqui</a>
+                                    class="btn card-products-button btn-success" style="margin-left: 15px;">Solicitar
+                                    aquí</a>
+                                <a href="/step1?productId={{ $product->id}}"
+                                    class="btn card-products-button btn-primary" style="margin-left: 15px;">Cotizar
+                                    aquí</a>
                             </div>
 
+                        </div>
+                        <div class="relative">
+                            <ol class="container-ol-steps-deal-product">
+                                <li>Diligencia la solicitud de crédito en linea</li>
+                                <li>Recibiras un SMS con un token de confirmación</li>
+                                <li>Realizaremos la entrega del articulo en la puerta de tu casa</li>
+                            </ol>
                         </div>
 
                     </div>
@@ -184,7 +176,7 @@ array_push($imagenes, [$productImages[$key], $key]);
     </ul>
     <div class="tab-content padding-responsive" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="card border-0 padding-responsive padding-reset"
+            <div class="card border-0 padding-responsive padding-reset-two"
                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                 <div class="card-body padding-responsive">
                     <div class="row justify-content-center ">

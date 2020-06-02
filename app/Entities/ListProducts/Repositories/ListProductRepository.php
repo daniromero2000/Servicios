@@ -55,7 +55,7 @@ class ListProductRepository implements ListProductRepositoryInterface
     public function findListProductBySku($sku)
     {
         try {
-            return $this->model->where('sku', $sku)->first()->get();
+            return $this->model->where('sku', $sku)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
