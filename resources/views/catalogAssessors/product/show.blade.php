@@ -105,7 +105,7 @@
             <div class="row">
                 <div class="card border-0 container-deal-product"
                     style="box-shadow: 0 .125rem .25rem rgba(0,0,0,.0)!important;">
-                    <div class="card-body pt-0 pr-4 pl-4" style="margin-top: 5px;">
+                    <div class="card-body pt-0 pr-4 pl-0" style="margin-top: 5px;">
                         <div class="relative text-center  container-desc-deal">
                             @if ($product->discount && $product->discount > 0)
                             <div class="card-products-discount">

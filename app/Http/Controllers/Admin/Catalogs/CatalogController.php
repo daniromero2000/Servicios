@@ -102,6 +102,8 @@ class CatalogController extends Controller
 
     public function getPriceProduct($product_id)
     {
+        // dd($product_id);
+
         $dataProduct = [];
         $product = $this->listProductInterface->findListProductById($product_id);
         $product = $product->toArray();
@@ -131,8 +133,8 @@ class CatalogController extends Controller
                 }
                 $dataProduct[] = [
                     'normal_public_price'           => $normalPublicPrice,
-                    'traditional_credit_price'      => $traditionalCreditPrice * 12,
-                    'black_public_price'            => $blackPublicPrice
+                    'traditional_credit_price'      => $traditionalCreditPrice * 12
+                    // 'black_public_price'            => $blackPublicPrice
                     // 'cash_promotion'                => $cashPromotion,
                     // 'promotion_public_price'        => $promotionPublicPrice,
                     // 'traditional_credit_bond_price' => $traditionalCreditBondPrice * 12,
@@ -142,7 +144,7 @@ class CatalogController extends Controller
                 ];
             }
         }
-
+        // dd($dataProduct);
         return $dataProduct;
     }
 }

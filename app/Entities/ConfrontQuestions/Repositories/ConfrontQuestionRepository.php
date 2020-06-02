@@ -66,7 +66,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $this->toolInterface                   = $toolRepositoryInterface;
     }
 
-    public function createConfrontQuestion($data){
+    public function createConfrontQuestion($data)
+    {
         try {
             return $this->model->create($data);
         } catch (QueryException $e) {
@@ -83,23 +84,26 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         }
     }
 
-    public function getConfrontQuestionPhoneChange(){
+    public function getConfrontQuestionPhoneChange()
+    {
         try {
-            return $this->model->where('type',1)->orWhere('type',3)->get();
+            return $this->model->where('type', 1)->orWhere('type', 3)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
 
-    public function getConfrontQuestionCreditRequest(){
+    public function getConfrontQuestionCreditRequest()
+    {
         try {
-            return $this->model->where('type',1)->orWhere('type',3)->get();
+            return $this->model->where('type', 1)->orWhere('type', 3)->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
     }
 
-    public function getDataQuestionOne($identificationNumber){
+    public function getDataQuestionOne($identificationNumber)
+    {
         // 1.	CON CUAL DE LAS SIGUIENTES ENTIDADES TIENE O HA TENIDO CUENTA DE AHORROS
         $options = [];
         $customerEntities = [];
@@ -109,7 +113,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $currentCostumerBankAccount = $this->cifinCtaVigenInterface->getCustomerEntityName($identificationNumber);
         $currentCostumerBankAccount = $currentCostumerBankAccount->toArray();
 
-        if(count($currentCostumerBankAccount) < 1){
+        if (count($currentCostumerBankAccount) < 1) {
             $currentCostumerBankAccount = [['vigentid' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCurrentCostumerBankAccount = false;
         }
@@ -121,8 +125,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $extintCustomerBankAccount = $this->cifinCtaExtInterface->getCustomerEntityName($identificationNumber);
         $extintCustomerBankAccount = $extintCustomerBankAccount->toArray();
 
-        if(count($extintCustomerBankAccount) < 1){
-            $extintCustomerBankAccount = [['cextentid'=>'NINGUNA DE LAS ANTERIORES']];
+        if (count($extintCustomerBankAccount) < 1) {
+            $extintCustomerBankAccount = [['cextentid' => 'NINGUNA DE LAS ANTERIORES']];
             $checkExtintCustomerBankAccount = false;
         }
 
@@ -141,11 +145,11 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $correctOption = ['option' => $this->toolInterface->upperCase($currentCostumerBankAccount[0]['vigentid']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
-        if($checkCurrentCostumerBankAccount){
+        if ($checkCurrentCostumerBankAccount) {
             shuffle($options);
         }
 
-        if($checkCurrentCostumerBankAccount == false){
+        if ($checkCurrentCostumerBankAccount == false) {
             $options = [];
 
             $extinctBankAccounts = $this->cifinCtaExtInterface->getNameEntities($customerEntities);
@@ -158,7 +162,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $this->toolInterface->upperCase($extintCustomerBankAccount[0]['cextentid']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if($checkExtintCustomerBankAccount){
+            if ($checkExtintCustomerBankAccount) {
                 shuffle($options);
             }
         }
@@ -167,7 +171,8 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         return $options;
     }
 
-    public function getDataQuestionTwo($identificationNumber){
+    public function getDataQuestionTwo($identificationNumber)
+    {
         // 2.	CON CUAL DE LAS SIGUIENTES ENTIDADES HA TENIDO TARJETA DE CREDITO
 
         $options = [];
@@ -179,7 +184,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $financialCustomerCreditCard = $this->upToDateFinancialCifinInterface->getCustomerEntityName($identificationNumber);
         $financialCustomerCreditCard = $financialCustomerCreditCard->toArray();
 
-        if(count($financialCustomerCreditCard) < 1){
+        if (count($financialCustomerCreditCard) < 1) {
             $financialCustomerCreditCard = [['fdnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkFinancialCustomerCreditCard = false;
         }
@@ -191,7 +196,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $arrearFinancialCustomerCreditCard = $this->cifinFinancialArrearInterface->getCustomerEntityName($identificationNumber);
         $arrearFinancialCustomerCreditCard = $arrearFinancialCustomerCreditCard->toArray();
 
-        if(count($arrearFinancialCustomerCreditCard) < 1){
+        if (count($arrearFinancialCustomerCreditCard) < 1) {
             $arrearFinancialCustomerCreditCard = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkArrearFinancialCustomerCreditCard = false;
         }
@@ -203,7 +208,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $extintnFinancialCustomerCreditCard = $this->extintFinancialCifinInterface->getCustomerEntityName($identificationNumber);
         $extintnFinancialCustomerCreditCard = $extintnFinancialCustomerCreditCard->toArray();
 
-        if(count($extintnFinancialCustomerCreditCard) < 1){
+        if (count($extintnFinancialCustomerCreditCard) < 1) {
             $extintnFinancialCustomerCreditCard = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkExtintnFinancialCustomerCreditCard = false;
         }
@@ -222,11 +227,11 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $correctOption = ['option' => $this->toolInterface->upperCase($financialCustomerCreditCard[0]['fdnoment']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
-        if($checkFinancialCustomerCreditCard){
+        if ($checkFinancialCustomerCreditCard) {
             shuffle($options);
         }
 
-        if($checkFinancialCustomerCreditCard == false){
+        if ($checkFinancialCustomerCreditCard == false) {
             $options = [];
 
             $arrearFinancialCustomerCreditCardEntities = $this->cifinFinancialArrearInterface->getNameEntities($customerEntities);
@@ -239,12 +244,12 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $this->toolInterface->upperCase($arrearFinancialCustomerCreditCard[0]['finnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if($checkArrearFinancialCustomerCreditCard){
+            if ($checkArrearFinancialCustomerCreditCard) {
                 shuffle($options);
             }
         }
 
-        if($checkArrearFinancialCustomerCreditCard == false && $checkFinancialCustomerCreditCard == false){
+        if ($checkArrearFinancialCustomerCreditCard == false && $checkFinancialCustomerCreditCard == false) {
             $options = [];
 
             $extintnFinancialCustomerCreditCardEntities = $this->extintFinancialCifinInterface->getNameEntities($customerEntities);
@@ -257,7 +262,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $this->toolInterface->upperCase($extintnFinancialCustomerCreditCard[0]['extnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if($checkExtintnFinancialCustomerCreditCard){
+            if ($checkExtintnFinancialCustomerCreditCard) {
                 shuffle($options);
             }
         }
@@ -265,38 +270,44 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         return $options;
     }
 
-    public function getDataQuestionThree($identificationNumber){
+    public function getDataQuestionThree($identificationNumber)
+    {
         // 3.	CUAL ES EL DEPARTAMENTO DE EXPEDICION DE SU DOCUMENTO DE IDENTIDAD
-        $options = [];
-        $checkDepartmentExpedition = true;
+        try {
+            $options = [];
+            $checkDepartmentExpedition = true;
 
-        $cityExpedition = $this->cifinBasicDataInterface->getCityExpedition($identificationNumber);
-        $cityExpedition = $cityExpedition->toArray();
-        if(count($cityExpedition) < 1){
-            $departmentExpedition = ['DEPARTAMENTO' => 'NINGUNA DE LAS ANTERIORES', 'correct_option' => 1];
-            $checkDepartmentExpedition = false;
-        }else{
-            $departmentExpedition = $this->cityInterface->getCityByName($cityExpedition[0]['terlugexp']);
-            $departmentExpedition = $departmentExpedition->toArray();
+            $cityExpedition = $this->cifinBasicDataInterface->getCityExpedition($identificationNumber);
+            $cityExpedition = $cityExpedition->toArray();
+            if (count($cityExpedition) < 1) {
+                $departmentExpedition = ['DEPARTAMENTO' => 'NINGUNA DE LAS ANTERIORES', 'correct_option' => 1];
+                $checkDepartmentExpedition = false;
+            } else {
+                $departmentExpedition = $this->cityInterface->getCityByName($cityExpedition[0]['terlugexp']);
+                $departmentExpedition = $departmentExpedition->toArray();
+            }
+
+
+            $departments = $this->departmentInterface->getConfrontDepartments($departmentExpedition['DEPARTAMENTO']);
+
+            foreach ($departments as $value) {
+                $options[] = ['option' => $this->toolInterface->upperCase($value['NAME']), 'correct_option' => 0];
+            }
+
+            array_push($options, ['option' => $this->toolInterface->upperCase($departmentExpedition['DEPARTAMENTO']), 'correct_option' => 1]);
+
+            if ($checkDepartmentExpedition) {
+                shuffle($options);
+            }
+
+            return $options;
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
         }
-
-
-        $departments = $this->departmentInterface->getConfrontDepartments($departmentExpedition['DEPARTAMENTO']);
-
-        foreach ($departments as $value) {
-            $options[] = ['option' => $this->toolInterface->upperCase($value['NAME']), 'correct_option' => 0];
-        }
-
-        array_push($options, ['option' => $this->toolInterface->upperCase($departmentExpedition['DEPARTAMENTO']), 'correct_option' => 1]);
-
-        if($checkDepartmentExpedition){
-            shuffle($options);
-        }
-
-        return $options;
     }
 
-    public function getDataQuestionFour($identificationNumber){
+    public function getDataQuestionFour($identificationNumber)
+    {
         //  4.	CON CUAL DE LOS SIGUIENTES BANCOS PRESENTA UN CREDITO DE VIVIENDA.
         $options                                   = [];
         $customerHousingCreditEntities             = [];
@@ -307,7 +318,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $customerFinancialHousingCredit = $this->upToDateFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
         $customerFinancialHousingCredit = $customerFinancialHousingCredit->toArray();
 
-        if(count($customerFinancialHousingCredit) < 1){
+        if (count($customerFinancialHousingCredit) < 1) {
             $customerFinancialHousingCredit = [['fdnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCustomerFinancialHousingCredit = false;
         }
@@ -319,7 +330,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $customerArrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getCustomerEntityNameHousingCredit($identificationNumber);
         $customerArrearFinancialHousingCredit = $customerArrearFinancialHousingCredit->toArray();
 
-        if(count($customerArrearFinancialHousingCredit) < 1){
+        if (count($customerArrearFinancialHousingCredit) < 1) {
             $customerArrearFinancialHousingCredit = [['finnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCustomerArrearFinancialHousingCredit = false;
         }
@@ -331,7 +342,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $customerExtintFinancialHousingCredit = $this->extintFinancialCifinInterface->getCustomerEntityNameHousingCredit($identificationNumber);
         $customerExtintFinancialHousingCredit = $customerExtintFinancialHousingCredit->toArray();
 
-        if(count($customerExtintFinancialHousingCredit) < 1){
+        if (count($customerExtintFinancialHousingCredit) < 1) {
             $customerExtintFinancialHousingCredit = [['extnoment' => 'NINGUNA DE LAS ANTERIORES']];
             $checkCustomerExtintFinancialHousingCredit = false;
         }
@@ -350,12 +361,12 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         $correctOption = ['option' => $this->toolInterface->upperCase($customerFinancialHousingCredit[0]['fdnoment']), 'correct_option' => 1];
         array_push($options, $correctOption);
 
-        if($checkCustomerFinancialHousingCredit){
+        if ($checkCustomerFinancialHousingCredit) {
             shuffle($options);
         }
 
-        if($checkCustomerFinancialHousingCredit == false){
-            $options=[];
+        if ($checkCustomerFinancialHousingCredit == false) {
+            $options = [];
 
             $arrearFinancialHousingCredit = $this->cifinFinancialArrearInterface->getNameEntitiesHousingCredit($customerHousingCreditEntities);
             $arrearFinancialHousingCredit = $arrearFinancialHousingCredit->toArray();
@@ -367,13 +378,13 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $this->toolInterface->upperCase($customerArrearFinancialHousingCredit[0]['finnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if($checkCustomerArrearFinancialHousingCredit){
+            if ($checkCustomerArrearFinancialHousingCredit) {
                 shuffle($options);
             }
         }
 
-        if($checkCustomerFinancialHousingCredit == false && $checkCustomerArrearFinancialHousingCredit == false){
-            $options=[];
+        if ($checkCustomerFinancialHousingCredit == false && $checkCustomerArrearFinancialHousingCredit == false) {
+            $options = [];
 
             $extintFinancialHousingCredit = $this->extintFinancialCifinInterface->getNameEntitiesHousingCredit($customerHousingCreditEntities);
             $extintFinancialHousingCredit = $extintFinancialHousingCredit->toArray();
@@ -385,7 +396,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
             $correctOption = ['option' => $this->toolInterface->upperCase($customerExtintFinancialHousingCredit[0]['extnoment']), 'correct_option' => 1];
             array_push($options, $correctOption);
 
-            if($checkCustomerExtintFinancialHousingCredit){
+            if ($checkCustomerExtintFinancialHousingCredit) {
                 shuffle($options);
             }
         }
@@ -393,17 +404,18 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
         return $options;
     }
 
-    public function getDataQuestionFive($identificationNumber){
+    public function getDataQuestionFive($identificationNumber)
+    {
         // 5. CON CUAL DE LAS SIGUIENTES DIRECCIONES HA TENIDO RELACION
         $options              = [];
         $checkCustomerAddress = true;
         $customerAddresses    = [];
 
         $ubicaAddress = $this->ubicaInterface->getUbicaConsultation($identificationNumber);
-        if(count($ubicaAddress->toArray()) > 1){
+        if (count($ubicaAddress->toArray()) > 1) {
             $getCustomerAddresses = $ubicaAddress[0]->ubicAddress;
             $getCustomerAddresses = $getCustomerAddresses->toArray();
-        }else{
+        } else {
             $checkCustomerAddress = false;
             $getCustomerAddresses = [['ubidireccion' => 'NINGUNA DE LAS ANTERIORES']];
         }
@@ -420,24 +432,25 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         array_push($options, ['option' => $this->toolInterface->upperCase($getCustomerAddresses[0]['ubidireccion']), 'correct_option' => 1]);
 
-        if($checkCustomerAddress){
+        if ($checkCustomerAddress) {
             shuffle($options);
         }
 
         return $options;
     }
 
-    public function getDataQuestionSix($identificationNumber){
+    public function getDataQuestionSix($identificationNumber)
+    {
         // 6. CON CUAL DE LOS SIGUIENTES NUMEROS DE TELEFONO HA TENIDO ALGUNA RELACION
         $options             = [];
         $checkCustomerCellPhones = true;
         $customerCellPhones      = [];
 
         $ubicaCellPhones = $this->ubicaInterface->getUbicaConsultation($identificationNumber);
-        if(count($ubicaCellPhones->toArray()) > 1){
+        if (count($ubicaCellPhones->toArray()) > 1) {
             $getCustomerCellPhones = $ubicaCellPhones[0]->ubicCellPhones;
             $getCustomerCellPhones = $getCustomerCellPhones->toArray();
-        }else{
+        } else {
             $checkCustomerCellPhones = false;
             $getCustomerCellPhones = [['ubicelular' => 'NINGUNA DE LAS ANTERIORES']];
         }
@@ -455,7 +468,7 @@ class ConfrontQuestionRepository implements ConfrontQuestionRepositoryInterface
 
         array_push($options, ['option' => $this->toolInterface->upperCase($getCustomerCellPhones[0]['ubicelular']), 'correct_option' => 1]);
 
-        if($checkCustomerCellPhones){
+        if ($checkCustomerCellPhones) {
             shuffle($options);
         }
 
