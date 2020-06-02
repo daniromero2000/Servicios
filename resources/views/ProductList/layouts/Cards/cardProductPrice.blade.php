@@ -52,6 +52,19 @@
                             </div>
                         </div>
 
+                        <div class="small-box bg-gradient-pink">
+                            <div class="inner">
+                                <p class="productlist-card-title text-white">Base cliente Oportuya</p>
+                                <div class="card-body">
+                                    <label class="productlist-card-subtitle" style="color: white">Precio público base:</label> <span
+                                        class="productlist-card-price">$@{{ price.base_public_price_oportuya_customer | number:0 }}</span>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-user" style="font-size: 52px;"></i>
+                            </div>
+                        </div>
+
                         <div class="small-box bg-gradient-primary">
                             <div class="inner">
                                 <p class="productlist-card-title text-white">Tarjeta Blue</p>
