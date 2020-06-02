@@ -115,13 +115,14 @@
                             @endif
                             <div class="container-price-deal">
                                 <p class="card-text card-products-old-price mb-0"> <del>$
-                                        {{ number_format($prices[0]['black_public_price'])}}
+                                        {{ number_format($prices[0]['normal_public_price'])}}
                                     </del></p>
                                 <p class="card-text card-products-label mb-1">Precio antes</p>
 
                                 <p class="card-text card-products-new-price mb-0">$
                                     {{ number_format($desc)}} </p>
                                 <p class="card-text card-products-label mb-3">Precio ahora</p>
+
                             </div>
 
                         </div>

@@ -46,9 +46,10 @@ class CatalogController extends Controller
             $productCatalog[$key] = $dataProduct[$key];
             $productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
             $dataProduct[$key] = $this->getPriceProduct($productListSku[$key][0]->id);
-            $products[$key]['price'] =  $dataProduct[$key][0]['black_public_price'];
-            // dd($products[$key]['price']);
-            $desc[$key] = $dataProduct[$key][0]['black_public_price'] - (($productCatalog[$key]->discount * $dataProduct[$key][0]['black_public_price']) / 100);
+            $products[$key]['price_old'] =  $dataProduct[$key][0]['normal_public_price'];
+            $products[$key]['price_new'] =  $dataProduct[$key][0]['traditional_credit_price'];
+            // $products[$key]['black_price'] =  $dataProduct[$key][0]['black_public_price'];
+            $desc[$key] = $dataProduct[$key][0]['normal_public_price'] - (($productCatalog[$key]->discount * $dataProduct[$key][0]['normal_public_price']) / 100);
             $products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
             $products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
         }
@@ -76,7 +77,7 @@ class CatalogController extends Controller
         // dd($data);
         $desc = "";
         $pays = "";
-        $desc = $dataProduct[0]['black_public_price'] - (($productCatalog->discount * $dataProduct[0]['black_public_price']) / 100);
+        $desc = $dataProduct[0]['normal_public_price'] - (($productCatalog->discount * $dataProduct[0]['normal_public_price']) / 100);
         $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
         $desc = round($desc, 2, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);
@@ -129,14 +130,14 @@ class CatalogController extends Controller
                     $blackBondPrice             = round(($promotionPublicPrice * (1 - ($productList['bond_black'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 }
                 $dataProduct[] = [
-                    // 'normal_public_price'           => $normalPublicPrice,
+                    'normal_public_price'           => $normalPublicPrice,
+                    'traditional_credit_price'      => $traditionalCreditPrice * 12,
+                    'black_public_price'            => $blackPublicPrice
                     // 'cash_promotion'                => $cashPromotion,
                     // 'promotion_public_price'        => $promotionPublicPrice,
-                    // 'traditional_credit_price'      => $traditionalCreditPrice * 12,
                     // 'traditional_credit_bond_price' => $traditionalCreditBondPrice * 12,
                     // 'blue_public_price'             => $bluePublicPrice,
                     // 'blue_bond_price'               => $blueBondPrice * 12,
-                    'black_public_price'            => $blackPublicPrice,
                     // 'black_bond_price'              => $blackBondPrice * 12,
                 ];
             }
