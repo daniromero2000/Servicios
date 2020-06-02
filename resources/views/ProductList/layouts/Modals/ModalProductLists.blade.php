@@ -204,10 +204,19 @@
                 <h5 class="modal-title">Actualizar Lista</h5>
             </div>
             <div class="modal-body">
-                <tags-input ng-model="tags" add-on-paste="true">
-                    <auto-complete max-results-to-show="200" min-length="1" source="leodSubsidaries($query)">
-                    </auto-complete>
-                </tags-input>
+                <div class="row">
+                    <div class="col-12">
+                        <tags-input ng-model="productListSubsidiaries" add-on-paste="true">
+                            <auto-complete max-results-to-show="200" min-length="0" source="loadSubsidaries($query)">
+                            </auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary" ng-disabled="disabledButtonAddSubsidiary" ng-click="addSubsidiariesToProductList()">Guardar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

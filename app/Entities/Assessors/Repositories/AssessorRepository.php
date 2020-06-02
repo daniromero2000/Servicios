@@ -7,6 +7,7 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class AssessorRepository implements AssessorRepositoryInterface
 {

@@ -13,8 +13,6 @@ class newsletterController extends Controller
     public function index(GeoLocation $geo, Request $request)
     {
         $ipLocation = $geo->getCity($request->ip());
-
-        dd($ipLocation);
     }
 
     public function store(Request $request)

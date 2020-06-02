@@ -2,9 +2,7 @@
 angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize', 'ngTagsInput'])
 	.controller('productListController', function ($scope, $http, $timeout) {
 		$scope.tabs = 1;
-		$scope.tags = [
-			{ 'text': 'tag1' }
-		];
+		$scope.productListSubsidiaries = [];
 
 		$scope.listTags = [];
 		$scope.q = {
@@ -53,6 +51,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 		$scope.product = {};
 		$scope.productPrices = {};
 		$scope.viewProductPrices = false;
+		$scope.disabledButtonAddSubsidiary = false;
 
 		$scope.addProductList = function () {
 			$scope.productList = {};
@@ -60,16 +59,8 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$("#alertProductList").hide();
 		};
 
-		$scope.leodSubsidaries = function ($query) {
-			$http({
-				method: 'GET',
-				url: '/api/subsidiaries?q=' + $query
-			}).then(function successCallback(response) {
-				if (response) {
-					return response.data;
-				}
-			}, function errorCallback(response) {
-			});
+		$scope.loadSubsidaries = function ($query) {
+			return $http.get('/api/subsidiaries');
 		};
 
 		$scope.getProductList = function () {
@@ -142,8 +133,10 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			$scope.productList = angular.extend({}, productList);
 		};
 
-		$scope.showDialogViewProductList = function () {
-			$("#viewProductList").modal('show')
+		$scope.showDialogViewProductList = function (productList) {
+			$("#viewProductList").modal('show');
+			$scope.productList = productList;
+			$scope.getSubsidiariesForProductList(productList.id);
 		}
 
 		$scope.UpdateProductList = function () {
@@ -163,6 +156,30 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 						showAlert('success', 'Actualizado Correctamente');
 					}
 				}
+			}, function errorCallback(response) {
+			});
+		};
+
+		$scope.addSubsidiariesToProductList = function () {
+			$scope.disabledButtonAddSubsidiary = true;
+			$http({
+				method: 'PUT',
+				url: '/api/productList/addSubsidiariesToProductList/' + $scope.productList.id,
+				data: $scope.productListSubsidiaries
+			}).then(function successCallback(response) {
+				showAlert('success', 'Sucursales asignadas correctamente');
+				$scope.disabledButtonAddSubsidiary = false;
+			}, function errorCallback(response) {
+			});
+		};
+
+		$scope.getSubsidiariesForProductList = function(productListId){
+			$scope.productListSubsidiaries = [];
+			$http({
+				method: 'GET',
+				url: '/api/productList/' + productListId
+			}).then(function successCallback(response) {
+				$scope.productListSubsidiaries = response.data;
 			}, function errorCallback(response) {
 			});
 		};
@@ -505,7 +522,6 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 		};
 
 		$scope.deleteListGiveAway = function (idListGiveAway) {
-			console.log('hola');
 			$http({
 				method: 'DELETE',
 				url: '/api/listGiveAways/' + idListGiveAway

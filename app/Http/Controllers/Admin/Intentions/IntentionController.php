@@ -100,9 +100,10 @@ class IntentionController extends Controller
                             ];
                         }
 
+                        $score = '';
                         if (empty($value->customer->latestCifinScore)) {
                             $score = '';
-                        } else {
+                        } elseif (auth()->user()->idProfile == 5) {
                             $score = $value->customer->latestCifinScore['score'];
                         }
 
