@@ -45,7 +45,7 @@
         <div class="col-md-4 col-sm-6 col-10 beforeLine">
             <div class="card text-center first-step-cards step-cards border-0">
 
-                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Avances/1.jpg') }}" alt="paso1"
+                <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/1.jpg') }}" alt="paso1"
                     class="first-img-step-cards">
 
                 <img src="{{ asset('images/Front/OportuyaCustomers/PageCredit/Snipet Pasos/Hoja.jpg') }}" alt="hoja"

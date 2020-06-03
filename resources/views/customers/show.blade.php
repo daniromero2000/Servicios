@@ -48,7 +48,7 @@
                 <a class="nav-link" data-toggle="tab" href="#webIntentions" role="tab" aria-controls="home">Intenciones
                     Web</a>
             </li>
-            @if ( auth()->user()->idProfile == 5 )
+            @if ( auth()->user()->idProfile == 5 || auth()->user()->idProfile == 24)
             <li class="active" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#comercial" role="tab" aria-controls="arrears">Historia
                     Comercial</a>
