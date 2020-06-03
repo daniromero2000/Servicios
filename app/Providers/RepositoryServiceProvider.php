@@ -146,11 +146,18 @@ use App\Entities\FosygaTemps\Repositories\FosygaTempRepository;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\AnalisisRepository;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
+use App\Entities\AssessorQuotations\Repositories\AssessorQuotationRepository;
+use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            AssessorQuotationRepositoryInterface::class,
+            AssessorQuotationRepository::class
+        );
+
         $this->app->bind(
             AnalisisRepositoryInterface::class,
             AnalisisRepository::class
