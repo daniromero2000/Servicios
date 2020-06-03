@@ -636,7 +636,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 
 		$scope.addSolic = function () {
-			$scope.disabledButtonSolic = true;
+			//$scope.disabledButtonSolic = true;
 			if ($scope.decisionCredit == 1) {
 				$scope.creditCard();
 			} else {
@@ -644,7 +644,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 			}
 		};
 
-		$scope.creditCard = function () {
+		$scope.creditCard_old = function () {
+			$scope.decisionCreditCardData = [
+				{'lead' : $scope.lead},
+				{'policyResult' : $scope.resp}
+			];
 			showLoader();
 			$http({
 				method: 'GET',
@@ -714,6 +718,48 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					+ $scope.lead.TEL_REFFA2 + '/'
 					+ $scope.lead.PARENTESC2 + '/'
 					+ $scope.resp.policy.fuenteFallo + '/';
+				hideLoader();
+				$scope.addError(response, $scope.lead.CEDULA);
+			});
+		};
+
+		$scope.creditCard = function () {
+			$scope.decisionCreditCardData = {
+				'lead' : $scope.lead,
+				'policyResult' : $scope.resp
+			};
+			showLoader();
+			$http({
+				method: 'PUT',
+				url: '/assessor/api/decisionCreditCard/'+ $scope.lead.CEDULA,
+				data: $scope.decisionCreditCardData
+			}).then(function successCallback(response) {
+				if (response.data.resp == 'true') {
+					$scope.quota = response.data.quotaApprovedProduct;
+					$scope.quotaAdvance = response.data.quotaApprovedAdvance;
+					$scope.numSolic = response.data.infoLead.numSolic;
+					$scope.estadoCliente = response.data.estadoCliente;
+					setTimeout(() => {
+						$('#confronta').modal('hide');
+					}, 800);
+					setTimeout(() => {
+						$('#proccess').modal('hide');
+						$('#congratulations').modal('show');
+					}, 1800);
+				}
+
+				if (response.data.resp == 'confronta') {
+					$scope.formConfronta = response.data.form;
+					$('#confronta').modal('show');
+					$('#proccess').modal('hide');
+				}
+				setTimeout(() => {
+					$('#proccess').modal('hide');
+				}, 1000);
+				hideLoader();
+			}, function errorCallback(response) {
+				response.url = '/assessor/api/decisionCreditCard/'+ $scope.lead.identificationNumber,
+				response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
 			});

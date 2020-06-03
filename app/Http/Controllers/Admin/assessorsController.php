@@ -1249,6 +1249,82 @@ class assessorsController extends Controller
 		return "1";
 	}
 
+	public function decisionCreditCardNew(Request $request, $identificationNumber)
+	{
+		$dataLead = $request['lead'];
+		$dataPolicy = $request['policyResult'];
+		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
+		$intention->save();
+		$tipoDoc = 1;
+		$lastName = explode(" ", $dataLead['APELLIDOS']);
+		$lastName = $lastName[0];
+		$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
+		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+		$estadoSolic = 'ANALISIS';
+		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+		$resultUbica = $this->validateConsultaUbica($identificationNumber);
+		if ($resultUbica == 0) {
+			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
+			if ($confronta == 1) {
+				$form = $this->getFormConfronta($identificationNumber);
+				if (empty($form)) {
+					$estadoSolic = "ANALISIS";
+				} else {
+					return [
+						'form' => $form,
+						'resp' => 'confronta'
+					];
+				}
+			} else {
+				$estadoSolic = 'ANALISIS';
+			}
+		} else {
+			$estadoSolic = 'APROBADO';
+		}
+
+		$policyCredit = [
+			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
+			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
+			'resp' => 'true'
+		];
+
+		$data = [
+			'NOM_REFPER' => (isset($dataLead['NOM_REFPER']) && $dataLead['NOM_REFPER'] != '') ? $dataLead['NOM_REFPER'] : '',
+			'DIR_REFPER' => (isset($dataLead['DIR_REFPER']) && $dataLead['DIR_REFPER'] != '') ? $dataLead['DIR_REFPER'] : '',
+			'TEL_REFPER' => (isset($dataLead['TEL_REFPER']) && $dataLead['TEL_REFPER'] != '') ? $dataLead['TEL_REFPER'] : '',
+			'NOM_REFPE2' => (isset($dataLead['NOM_REFPE2']) && $dataLead['NOM_REFPE2'] != '') ? $dataLead['NOM_REFPE2'] : '',
+			'DIR_REFPE2' => (isset($dataLead['DIR_REFPE2']) && $dataLead['DIR_REFPE2'] != '') ? $dataLead['DIR_REFPE2'] : '',
+			'TEL_REFPE2' => (isset($dataLead['TEL_REFPE2']) && $dataLead['TEL_REFPE2'] != '') ? $dataLead['TEL_REFPE2'] : '',
+			'NOM_REFFAM' => (isset($dataLead['NOM_REFFAM']) && $dataLead['NOM_REFFAM'] != '') ? $dataLead['NOM_REFFAM'] : '',
+			'DIR_REFFAM' => (isset($dataLead['DIR_REFFAM']) && $dataLead['DIR_REFFAM'] != '') ? $dataLead['DIR_REFFAM'] : '',
+			'TEL_REFFAM' => (isset($dataLead['TEL_REFFAM']) && $dataLead['TEL_REFFAM'] != '') ? $dataLead['TEL_REFFAM'] : '',
+			'PARENTESCO' => (isset($dataLead['PARENTESCO']) && $dataLead['PARENTESCO'] != '') ? $dataLead['PARENTESCO'] : '',
+			'NOM_REFFA2' => (isset($dataLead['NOM_REFFA2']) && $dataLead['NOM_REFFA2'] != '') ? $dataLead['NOM_REFFA2'] : '',
+			'DIR_REFFA2' => (isset($dataLead['DIR_REFFA2']) && $dataLead['DIR_REFFA2'] != '') ? $dataLead['DIR_REFFA2'] : '',
+			'TEL_REFFA2' => (isset($dataLead['TEL_REFFA2']) && $dataLead['TEL_REFFA2'] != '') ? $dataLead['TEL_REFFA2'] : '',
+			'PARENTESC2' => (isset($dataLead['PARENTESC2']) && $dataLead['PARENTESC2'] != '') ? $dataLead['PARENTESC2'] : '',
+			'BAR_REFPER' => '',
+			'CIU_REFPER' => '',
+			'BAR_REFPE2' => '',
+			'CIU_REFPE2' => '',
+			'BAR_REFFAM' => '',
+			'BAR_REFFA2' => '',
+			'CON_CLI1' => '',
+			'CON_CLI2' => '',
+			'CON_CLI3' => '',
+			'CON_CLI4' => '',
+			'EDIT_RFCLI' => '',
+			'EDIT_RFCL2' => ''
+		];
+
+		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 'ANALISIS' : $estadoSolic;
+		$debtor = new DebtorInsuranceOportuya;
+		$debtor->CEDULA = $identificationNumber;
+		$debtor->save();
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+	}
+
 	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2, $fuenteFallo)
 	{
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
