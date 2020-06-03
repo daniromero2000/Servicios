@@ -210,6 +210,7 @@ Route::group(['prefix' => 'api/'], function () {
         Route::resource('/', 'Admin\ProductList\ProductListController');
         Route::get('/{id}', 'Admin\ProductList\ProductListController@show');
         Route::put('/addSubsidiariesToProductList/{id}', 'Admin\ProductList\ProductListController@addSubsidiariesToProductList');
+        Route::put('/{id}', 'Admin\ProductList\ProductListController@update');
     });
 
     // Dashboard
