@@ -187,6 +187,10 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
     });
 
+    Route::namespace('AssessorQuotations')->group(function () {
+        Route::resource('Administrator/assessorquotations', 'AssesorQuotationController');
+    });
+
     Route::namespace('DebtorInsurancesOportuya')->group(function () {
         Route::resource('Administrator/DebtorInsuranceOportuya', 'DebtorOportuyaController');
     });

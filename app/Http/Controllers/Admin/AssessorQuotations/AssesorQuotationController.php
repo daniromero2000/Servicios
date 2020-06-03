@@ -24,6 +24,13 @@ class AssesorQuotationController extends Controller
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
+
+        $list = $this->assessorQuotationRepositoryInterface->listAssessorQuotations($from, $to);
+
+
+        return view('assessorQuotations.list', [
+            'list' => $list
+        ]);
     }
 
 
