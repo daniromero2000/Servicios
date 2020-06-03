@@ -8,9 +8,14 @@ use App\Http\Controllers\Controller;
 class AssesorQuotationController extends Controller
 {
 
+    private $assessorQuotationRepositoryInterface;
+
+    public function __construct()
+    {
+    }
+
     public function index()
     {
-        //
     }
 
 

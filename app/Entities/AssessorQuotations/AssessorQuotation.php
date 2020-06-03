@@ -18,6 +18,7 @@ class AssessorQuotation extends Model
         'email',
         'product_id',
         'product_price',
-        'termsAndConditions'
+        'termsAndConditions',
+        'assessor_id'
     ];
 }

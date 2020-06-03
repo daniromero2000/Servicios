@@ -23,6 +23,7 @@ class CreateAssesorQuotationsTable extends Migration
             $table->string('product_id');
             $table->integer('product_price');
             $table->boolean('termsAndConditions');
+            $table->integer('assessor_id');
             $table->timestamps();
             $table->softDeletes();
         });
