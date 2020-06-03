@@ -39,10 +39,15 @@
                             <input type="text" id="maxToleranceCreateListProduct" name="maxToleranceCreateListProduct"
                                 ng-model="listProduct.max_tolerance" class="form-control">
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="protectionCreateListProduct">Proteccion</label>
                             <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
                                 ng-model="listProduct.protection" class="form-control">
+                        </div>
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="protectionCreateListProduct">Contado</label>
+                            <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
+                                ng-model="listProduct.cash_cost" class="form-control">
                         </div>
                     </div>
                     <div class="text-right mt-2">
@@ -162,11 +167,17 @@
                             <input type="text" id="maxToleranceUpdateListProduct" name="maxToleranceUpdateListProduct"
                                 ng-model="listProduct.max_tolerance" class="form-control" required>
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="protectionUpdateListProduct">Proteccion <span
                                     class="text-danger">*</span></label>
                             <input type="text" id="protectionUpdateListProduct" name="protectionUpdateListProduct"
                                 ng-model="listProduct.protection" class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="protectionCreateListProduct">Contado</label>
+                            <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
+                                ng-model="listProduct.cash_cost" class="form-control">
                         </div>
                     </div>
                     <div class="text-right mt-2">

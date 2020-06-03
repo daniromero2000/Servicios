@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddApplyProtectionToProductLists extends Migration
+class AddCashCostToListProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddApplyProtectionToProductLists extends Migration
      */
     public function up()
     {
-        Schema::table('product_lists', function (Blueprint $table) {
-            $table->tinyInteger('apply_protection')->default(1)->comment('0: No aplica proteccion, 1: Aplica proteccion');;
+        Schema::table('list_products', function (Blueprint $table) {
+            $table->integer('cash_cost');
         });
     }
 
@@ -25,7 +25,7 @@ class AddApplyProtectionToProductLists extends Migration
      */
     public function down()
     {
-        Schema::table('product_list', function (Blueprint $table) {
+        Schema::table('list_products', function (Blueprint $table) {
             //
         });
     }
