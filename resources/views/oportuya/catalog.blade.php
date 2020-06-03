@@ -120,24 +120,25 @@
                         alt="{{asset("storage/$product->cover")}}">
                 </div>
                 <div class="card-body pt-0 pr-4 pl-4">
-                    @php
+
+                    {{-- @php
                     $desc = ($product->price - $product->sale_price);
                     $desc= round(($desc / $product->price)*100 );
-                    @endphp
+                    @endphp --}}
                     <h5 class="card-title card-products-title">{{ $product->reference}} </h5>
                     <div class="relative">
                         <div class="card-products-discount">
-                            <p>{{$desc}}%</p>
+                            {{-- <p>{{$desc}}%</p> --}}
                             <p>Dcto</p>
                         </div>
                         <img src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.png')}}"
                             class="card-products-card-black">
-                        <p class="card-text card-products-old-price mb-0"> <del>$ {{ number_format($product->price)}}
-                            </del></p>
+                        {{-- <p class="card-text card-products-old-price mb-0"> <del>$ {{ number_format($product->price)}}
+                        </del></p>
                         <p class="card-text card-products-label mb-1">Precio antes</p>
 
                         <p class="card-text card-products-new-price mb-0">$ {{ number_format($product->sale_price)}}
-                        </p>
+                        </p> --}}
 
 
                         <p class="card-text card-products-label mb-3">Precio ahora</p>
@@ -147,9 +148,9 @@
                             <br>
                             tu tarjeta black
                         </p>
-                        <p class="card-text card-products-price">
+                        {{-- <p class="card-text card-products-price">
                             $ {{ number_format($product->pays)}}
-                        </p>
+                        </p> --}}
                         <p class="card-text card-products-label">* Cuota semanal</p>
                         <a href="/credito-electrodomesticos/catalogo/{{ $product->slug}}"
                             class="btn card-products-button btn-primary" style="">Ver

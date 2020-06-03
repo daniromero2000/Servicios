@@ -120,9 +120,12 @@
                                 <p class="card-text card-products-label mb-1">Precio antes</p>
 
                                 <p class="card-text card-products-new-price mb-0">$
-                                    {{ number_format($desc)}} </p>
+                                    {{ number_format($priceNew)}} </p>
                                 <p class="card-text card-products-label mb-3">Precio ahora</p>
-
+                                <p class="card-text card-products-new-price mb-0">${{ number_format($desc)}}
+                                </p>
+                                <p class="card-text card-products-label mb-3">* Precio de descuento <br> con tarjeta
+                                    black</p>
                             </div>
 
                         </div>

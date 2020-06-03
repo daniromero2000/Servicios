@@ -38,7 +38,7 @@
                         <p class="card-text card-products-new-price mb-0">${{ number_format($product->price_new)}}
                         </p>
                         <p class="card-text card-products-label mb-2">* Precio ahora</p>
-                        <p class="card-text card-products-new-price mb-0">${{ number_format($product->desc)}}
+                        <p class="card-text card-products-new-price mb-0">${{ number_format($desc)}}
                         </p>
                         <p class="card-text card-products-label mb-3">* Precio de descuento <br> con tarjeta black</p>
 

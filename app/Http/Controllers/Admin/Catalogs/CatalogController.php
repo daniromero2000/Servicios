@@ -67,17 +67,12 @@ class CatalogController extends Controller
     {
         $dataProduct = $this->productRepo->findProductBySlug($slug);
         $productCatalog = $dataProduct;
-        // dd($dataProduct);
-
         $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
-        // dd($productListSku);
-
         $dataProduct = $this->getPriceProduct($productListSku[0]->id);
-        // $data = $this->listProduct->getDataPriceProduct($productListSku[0]->id);
-        // dd($data);
         $desc = "";
         $pays = "";
         $desc = $dataProduct[0]['normal_public_price'] - (($productCatalog->discount * $dataProduct[0]['normal_public_price']) / 100);
+        $priceNew = $dataProduct[0]['traditional_credit_price'] - (($productCatalog->discount * $dataProduct[0]['traditional_credit_price']) / 100);
         $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
         $desc = round($desc, 2, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);
@@ -90,13 +85,13 @@ class CatalogController extends Controller
         foreach ($productImages as $key => $value) {
             array_push($imagenes, [$productImages[$key], $key]);
         }
-        // return $dataProduct;
         return view('catalogAssessors.product.show', [
             'product'   => $productCatalog,
             'prices'    => $dataProduct,
             'pays'      => $pays,
             'desc'      => $desc,
-            'imagenes'  => $imagenes
+            'imagenes'  => $imagenes,
+            'priceNew'  => $priceNew
         ]);
     }
 
