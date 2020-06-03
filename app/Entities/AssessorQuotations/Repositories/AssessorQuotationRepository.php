@@ -16,4 +16,14 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
     ) {
         $this->model = $assessorQuotation;
     }
+
+    public function listAssessorQuotations($from, $to)
+    {
+        try {
+            return $this->model->whereBetween('created_at', [$from, $to])
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }
