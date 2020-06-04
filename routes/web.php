@@ -104,9 +104,8 @@ Route::group(['prefix' => '/assessor/'], function () {
         Route::get('ventaContado/getinfoLeadVentaContado/{CEDULA}', 'Admin\assessorsController@getinfoLeadVentaContado');
         Route::post('ventaContado/addVentaContado', 'Admin\assessorsController@store');
         Route::get('execConsultasLead/{identificationNumber}', 'Admin\assessorsController@execConsultasleadAsesores');
-        Route::get('decisionCreditCard/{lastName}/{identificationNumber}/{quotaApprovedProduct}/{quotaApprovedAdvance}/{dateExpIdentification}/{nom_refper}/{dir_refper}/{tel_refper}/{nom_refpe2}/{dir_refpe2}/{tel_refpe2}/{nom_reffam}/{dir_reffam}/{tel_reffam}/{parentesco}/{nom_reffa2}/{dir_reffa2}/{tel_reffa2}/{parentesc2}/{fuenteFallo}', 'Admin\assessorsController@decisionCreditCard');
-        Route::put('decisionCreditCard/{identificationNumber}', 'Admin\assessorsController@decisionCreditCardNew');
-        Route::get('decisionTraditionalCredit/{identificationNumber}/{nom_refper}/{dir_refper}/{tel_refper}/{nom_refpe2}/{dir_refpe2}/{tel_refpe2}/{nom_reffam}/{dir_reffam}/{tel_reffam}/{parentesco}/{nom_reffa2}/{dir_reffa2}/{tel_reffa2}/{parentesc2}/', 'Admin\assessorsController@decisionTraditionalCredit');
+        Route::put('decisionCreditCard/{identificationNumber}', 'Admin\assessorsController@decisionCreditCard');
+        Route::put('decisionTraditionalCredit/{identificationNumber}', 'Admin\assessorsController@decisionTraditionalCredit');
         Route::get('desistCredit/{identificationNumber}', 'Admin\assessorsController@desistCredit');
         Route::post('validateFormConfronta', 'Admin\assessorsController@validateFormConfronta');
     });

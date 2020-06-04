@@ -1249,7 +1249,7 @@ class assessorsController extends Controller
 		return "1";
 	}
 
-	public function decisionCreditCardNew(Request $request, $identificationNumber)
+	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
 		$dataLead = $request['lead'];
 		$dataPolicy = $request['policyResult'];
@@ -1319,80 +1319,6 @@ class assessorsController extends Controller
 		];
 
 		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 'ANALISIS' : $estadoSolic;
-		$debtor = new DebtorInsuranceOportuya;
-		$debtor->CEDULA = $identificationNumber;
-		$debtor->save();
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
-	}
-
-	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2, $fuenteFallo)
-	{
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
-		$intention->save();
-		$tipoDoc = 1;
-		$lastName = explode(" ", $lastName);
-		$lastName = $lastName[0];
-		$fechaExpIdentification = explode("-", $dateExpIdentification);
-		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		$estadoSolic = 'ANALISIS';
-		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
-		$resultUbica = $this->validateConsultaUbica($identificationNumber);
-		if ($resultUbica == 0) {
-			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
-			if ($confronta == 1) {
-				$form = $this->getFormConfronta($identificationNumber);
-				if (empty($form)) {
-					$estadoSolic = "ANALISIS";
-				} else {
-					return [
-						'form' => $form,
-						'resp' => 'confronta'
-					];
-				}
-			} else {
-				$estadoSolic = 'ANALISIS';
-			}
-		} else {
-			$estadoSolic = 'APROBADO';
-		}
-
-		$policyCredit = [
-			'quotaApprovedProduct' => $quotaApprovedProduct,
-			'quotaApprovedAdvance' => $quotaApprovedAdvance,
-			'resp' => 'true'
-		];
-
-		$data = [
-			'NOM_REFPER' => $nom_refper,
-			'DIR_REFPER' => $dir_refper,
-			'BAR_REFPER' => '',
-			'TEL_REFPER' => $tel_refper,
-			'CIU_REFPER' => '',
-			'NOM_REFPE2' => $nom_refpe2,
-			'DIR_REFPE2' => $dir_refpe2,
-			'BAR_REFPE2' => '',
-			'TEL_REFPE2' => $tel_refpe2,
-			'CIU_REFPE2' => '',
-			'NOM_REFFAM' => $nom_reffam,
-			'DIR_REFFAM' => $dir_reffam,
-			'BAR_REFFAM' => '',
-			'TEL_REFFAM' => $tel_reffam,
-			'PARENTESCO' => $parentesco,
-			'NOM_REFFA2' => $nom_reffa2,
-			'DIR_REFFA2' => $dir_reffa2,
-			'BAR_REFFA2' => '',
-			'TEL_REFFA2' => $tel_reffa2,
-			'PARENTESC2' => $parentesc2,
-			'CON_CLI1' => '',
-			'CON_CLI2' => '',
-			'CON_CLI3' => '',
-			'CON_CLI4' => '',
-			'EDIT_RFCLI' => '',
-			'EDIT_RFCL2' => ''
-		];
-
-		$estadoSolic = ($fuenteFallo == 'true') ? 'ANALISIS' : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
@@ -1479,20 +1405,20 @@ class assessorsController extends Controller
 
 	public function validateFormConfronta(Request $request)
 	{
-		$leadInfo = $request->leadInfo;
-		$confronta = $request->confronta;
-		$cedula = "";
+		$leadInfo     = $request->leadInfo;
+		$confronta    = $request->confronta;
+		$cedula       = "";
 		$cuestionario = "";
-		$consec = "";
+		$consec       = "";
 		foreach ($confronta as $pregunta) {
 			$insertSelec = DB::connection('oportudata')->select(
 				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
 			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
 				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
 			);
-			$cedula = $pregunta['cedula'];
+			$cedula       = $pregunta['cedula'];
 			$cuestionario = $pregunta['cuestionario'];
-			$consec = $pregunta['consec'];
+			$consec       = $pregunta['consec'];
 		}
 
 		$this->execEvaluarConfronta($cedula, $cuestionario);
@@ -1513,13 +1439,13 @@ class assessorsController extends Controller
 			$policyCredit = [
 				'quotaApprovedProduct' => 1900000,
 				'quotaApprovedAdvance' => 500000,
-				'resp' => 'true'
+				'resp'                 => 'true'
 			];
 		} elseif ($customerIntention->TARJETA == 'Tarjeta Gray') {
 			$policyCredit = [
 				'quotaApprovedProduct' => 1600000,
 				'quotaApprovedAdvance' => 200000,
-				'resp' => 'true'
+				'resp'                 => 'true'
 			];
 		}
 
@@ -1531,11 +1457,11 @@ class assessorsController extends Controller
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
 	}
 
-	public function decisionTraditionalCredit($identificationNumber, $nom_refper, $dir_refper, $tel_refper, $nom_refpe2, $dir_refpe2, $tel_refpe2, $nom_reffam, $dir_reffam, $tel_reffam, $parentesco, $nom_reffa2, $dir_reffa2, $tel_reffa2, $parentesc2)
+	public function decisionTraditionalCredit(Request $request, $identificationNumber)
 	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
 		$customer->TIPOCLIENTE = "NUEVO";
-		$customer->SUBTIPO = "NUEVO";
+		$customer->SUBTIPO     = "NUEVO";
 		$customer->save();
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
@@ -1544,29 +1470,29 @@ class assessorsController extends Controller
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
-			'resp' => 'true'
+			'resp'                 => 'true'
 		];
 		$data = [
-			'NOM_REFPER' => $nom_refper,
-			'DIR_REFPER' => $dir_refper,
+			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '' ,
+			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '' ,
+			'TEL_REFPER' => (isset($request['TEL_REFPER']) && $request['TEL_REFPER'] != '') ? $request['TEL_REFPER'] : '' ,
+			'NOM_REFPE2' => (isset($request['NOM_REFPE2']) && $request['NOM_REFPE2'] != '') ? $request['NOM_REFPE2'] : '' ,
+			'DIR_REFPE2' => (isset($request['DIR_REFPE2']) && $request['DIR_REFPE2'] != '') ? $request['DIR_REFPE2'] : '' ,
+			'TEL_REFPE2' => (isset($request['TEL_REFPE2']) && $request['TEL_REFPE2'] != '') ? $request['TEL_REFPE2'] : '' ,
+			'NOM_REFFAM' => (isset($request['NOM_REFFAM']) && $request['NOM_REFFAM'] != '') ? $request['NOM_REFFAM'] : '' ,
+			'DIR_REFFAM' => (isset($request['DIR_REFFAM']) && $request['DIR_REFFAM'] != '') ? $request['DIR_REFFAM'] : '' ,
+			'TEL_REFFAM' => (isset($request['TEL_REFFAM']) && $request['TEL_REFFAM'] != '') ? $request['TEL_REFFAM'] : '' ,
+			'PARENTESCO' => (isset($request['PARENTESCO']) && $request['PARENTESCO'] != '') ? $request['PARENTESCO'] : '' ,
+			'NOM_REFFA2' => (isset($request['NOM_REFFA2']) && $request['NOM_REFFA2'] != '') ? $request['NOM_REFFA2'] : '' ,
+			'DIR_REFFA2' => (isset($request['DIR_REFFA2']) && $request['DIR_REFFA2'] != '') ? $request['DIR_REFFA2'] : '' ,
+			'TEL_REFFA2' => (isset($request['TEL_REFFA2']) && $request['TEL_REFFA2'] != '') ? $request['TEL_REFFA2'] : '' ,
+			'PARENTESC2' => (isset($request['PARENTESC2']) && $request['PARENTESC2'] != '') ? $request['PARENTESC2'] : '' ,
 			'BAR_REFPER' => '',
-			'TEL_REFPER' => $tel_refper,
 			'CIU_REFPER' => '',
-			'NOM_REFPE2' => $nom_refpe2,
-			'DIR_REFPE2' => $dir_refpe2,
 			'BAR_REFPE2' => '',
-			'TEL_REFPE2' => $tel_refpe2,
 			'CIU_REFPE2' => '',
-			'NOM_REFFAM' => $nom_reffam,
-			'DIR_REFFAM' => $dir_reffam,
 			'BAR_REFFAM' => '',
-			'TEL_REFFAM' => $tel_reffam,
-			'PARENTESCO' => $parentesco,
-			'NOM_REFFA2' => $nom_reffa2,
-			'DIR_REFFA2' => $dir_reffa2,
 			'BAR_REFFA2' => '',
-			'TEL_REFFA2' => $tel_reffa2,
-			'PARENTESC2' => $parentesc2,
 			'CON_CLI1'   => '',
 			'CON_CLI2'   => '',
 			'CON_CLI3'   => '',
