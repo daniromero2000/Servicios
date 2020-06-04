@@ -31,8 +31,21 @@ class ProductListController extends Controller
         $data = $request->input();
         $data['creation_user_id'] = auth()->user()->id;
         $productList =  $this->productListInterface->createProductList($data);
-        // dd($data);
         return $productList;
+    }
+
+    public function show($id){
+        $subsidiariesReturn = [];
+
+        $productList = $this->productListInterface->findProductListById($id);
+
+        $subsidiaries = $productList->sudsidiaries;
+
+        foreach ($subsidiaries as $subsidiary){
+            $subsidiariesReturn[] = ['text' => $subsidiary['CODIGO']];
+        }
+
+        return $subsidiariesReturn;
     }
 
     public function update(Request $request, $id)
@@ -52,5 +65,15 @@ class ProductListController extends Controller
 
     public function getDataPriceProduct($productId)
     {
+    }
+
+    public function addSubsidiariesToProductList(Request $request, $id){
+        DB::table('product_list_subsidiary')->where('product_list_id', $id)->delete();
+        $productList = $this->productListInterface->findProductListById($id);
+        foreach ($request->input() as $subsidiary) {
+            $productList->sudsidiaries()->attach($subsidiary['text']);
+        }
+
+        return "true";
     }
 }

@@ -29,7 +29,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		t.src=v;s=b.getElementsByTagName(e)[0];
 		s.parentNode.insertBefore(t,s)}(window,document,'script',
 		'https://connect.facebook.net/en_US/fbevents.js');
-		 fbq('init', '406230336580137'); 
+		 fbq('init', '406230336580137');
 		fbq('track', 'PageView');
 	</script>
 	<noscript>
@@ -37,6 +37,13 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 		&noscript=1" />
 	</noscript>
 	<!-- End Facebook Pixel Code -->
+
+	<script>
+		(function(h,e,a,t,m,p) {
+	m=e.createElement(a);m.async=!0;m.src=t;
+	p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
+	})(window,document,'script','https://u.heatmap.it/log.js');
+	</script>
 
 	<title>@yield('title')</title>
 	@yield('metaTags')
@@ -74,18 +81,18 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 	<script>
 		function hideLoader(){
-				
-				$('#ex-global-content').removeClass('ex-loader-blur'); 
+
+				$('#ex-global-content').removeClass('ex-loader-blur');
 				$(".ex-loader").fadeOut(1000,function(){
 					$(".ex-loader").remove();
-					
-				}); 
+
+				});
 			};
 
 			window.onload = function(){
-				hideLoader();	
+				hideLoader();
 			};
-			
+
 			$(document).ready(function($) {
 				setTimeout(function(){
 					hideLoader();
@@ -334,7 +341,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 				editorInit('test1','http://localhost:8000/editor/assets/minimalist-basic/snippets-bootstrap.html');
 				var contentCardHeight=$('.contentCards').height();
 				$('.oportuyaCardsContent').height(contentCardHeight);
-				
+
 			});
 			 function view() {
 				/* This is how to get the HTML (for saving into a database) */
@@ -379,7 +386,7 @@ window.sr = ScrollReveal();
 	  distance: '30%',
  	  delay: 2000,
 	});
-	
+
 	sr.reveal('#thankPageInsurances', {
       duration: 2000,
       origin: 'right',
@@ -490,7 +497,7 @@ window.sr = ScrollReveal();
             responsive: [
                 {
                 breakpoint: 991,
-                settings: 
+                settings:
                 	{
 	                    arrows: false,
 	                    slidesToShow: 1,
@@ -498,11 +505,11 @@ window.sr = ScrollReveal();
                     }
                 }
             ],
-            
+
         });
 
 		$(".multiple-items-motos").slick({
-          
+
 		  infinite: true,
 		  slidesToShow: 3,
 		  slidesToScroll:3,
@@ -516,9 +523,9 @@ window.sr = ScrollReveal();
         });
         $('.single-item-motos').slick({
 			arrows: false,
-			asNavFor: '.multiple-items-motos', 
+			asNavFor: '.multiple-items-motos',
 		});
-		
+
 </script>
 
 </html>

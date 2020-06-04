@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Customers;
 
+use App\codeUserVerificationOportudata;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\DebtorInsuranceOportuyas\DebtorInsuranceOportuya;
 use App\Entities\DebtorInsurances\DebtorInsurance;
@@ -203,6 +204,21 @@ class CustomerController extends Controller
         $customer = DebtorInsurance::where('SOLIC', $identificationNumber)->orderBy('FECHA', 'DESC')->get();
         // return $customer;
         return $customer->first();
+    }
+
+    public function codeVerification()
+    {
+
+        $notification = '0';
+        return view('customers.updateCodeVerification', compact('notification'));
+    }
+    public function getCodeVerification($identificationNumber)
+    {
+        $to = Carbon::now()->endOfDay();
+        $from = Carbon::now()->startOfDay();
+        $notification = '1';
+        $code = codeUserVerificationOportudata::where('identificationNumber', $identificationNumber)->whereBetween('created_at', [$from, $to])->orderBy('created_at', 'DESC')->get();
+        return [$code];
     }
 
     public function getPoliceDebtorOportuyas($identificationNumber)

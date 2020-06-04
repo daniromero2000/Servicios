@@ -39,4 +39,12 @@ class TurnRepository implements TurnRepositoryInterface
             //throw $th;
         }
     }
+
+    public function getListAnalysts()
+    {
+        try {
+            return $this->model->select('USUARIO')->groupBy('USUARIO')->get();
+        } catch (\Throwable $th) {
+        }
+    }
 }

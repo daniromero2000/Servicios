@@ -11,7 +11,7 @@
   <!-- /.card-header -->
   <div class="card-body">
     <div class="table-responsive pt-0 header-table-responsive">
-      @if(!empty($factoryRequest->creditCard))
+      @if(!empty($customer->creditCard))
       <table class="table table-head-fixed table-hover table-stripped leadTable">
         <thead class="text-center header-table">
           <tr>
@@ -30,7 +30,7 @@
           </tr>
         </thead>
         <tbody class="body-table">
-          @include('layouts.admin.tables.noheaders_noloop_table', ['data' => $factoryRequest->creditCard])
+          @include('layouts.admin.tables.noheaders_noloop_table', ['data' => $customer->creditCard])
           {{-- @php
           dd($factoryRequest->creditCard)
           @endphp --}}

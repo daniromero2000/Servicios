@@ -141,8 +141,6 @@ class FactoryRequestController extends Controller
 
     public function show(int $id)
     {
-
-
         $datas = $this->factoryRequestInterface->findFactoryRequestByIdFull($id)->factoryRequestStatusesLogs;
         $data = [
             'fabrica' => 0,

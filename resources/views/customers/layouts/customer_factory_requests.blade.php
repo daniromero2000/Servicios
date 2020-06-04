@@ -30,5 +30,6 @@
       </tbody>
     </table>
   </div>
+  @include('customers.layouts.creditcard')
 </div>
 @endif

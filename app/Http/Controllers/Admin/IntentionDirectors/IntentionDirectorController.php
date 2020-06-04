@@ -3,31 +3,24 @@
 namespace App\Http\Controllers\Admin\IntentionDirectors;
 
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
-use App\Entities\Intentions\Intention;
 use App\Entities\IntentionStatuses\IntentionStatus;
 use App\Entities\Intentions\Repositories\Interfaces\IntentionRepositoryInterface;
-use App\Entities\Intentions\Repositories\IntentionRepository;
-use App\Entities\IntentionStatuses\Repositories\Interfaces\IntentionStatusRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Foreach_;
 
 class IntentionDirectorController extends Controller
 {
-    private $intentionStatusesInterface, $intentionInterface, $toolsInterface, $customerInterface;
+    private $intentionInterface, $toolsInterface, $customerInterface;
 
     public function __construct(
         IntentionRepositoryInterface $intentionRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
-        IntentionStatusRepositoryInterface $intentionStatusRepositoryInterface,
         AssessorRepositoryInterface $assessorRepositoryInterface
     ) {
         $this->intentionInterface = $intentionRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
-        $this->intentionStatusesInterface = $intentionStatusRepositoryInterface;
         $this->assessorInterface = $assessorRepositoryInterface;
         $this->middleware('auth');
     }
@@ -38,11 +31,11 @@ class IntentionDirectorController extends Controller
         $from = Carbon::now()->startOfMonth();
         $assessor = auth()->user()->Assessor->SUCURSAL;
 
-        $status = IntentionStatus::all();
-        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $status        = IntentionStatus::all();
+        $skip          = $this->toolsInterface->getSkip($request->input('skip'));
         $listAssessors = $this->assessorInterface->listIntentionDirector($assessor);
-        $list = $this->intentionInterface->listIntentionDirectors($skip * 30, $from, $to, $listAssessors)->sortByDesc('FECHA_INTENCION');
-        $listCount =  $this->intentionInterface->countListIntentionDirectors($from, $to, $listAssessors);
+        $list          = $this->intentionInterface->listIntentionDirectors($skip * 30, $from, $to, $listAssessors);
+        $listCount     = $this->intentionInterface->countListIntentionDirectors($from, $to, $listAssessors);
 
         if (request()->has('q')) {
             $list = $this->intentionInterface->searchIntentionDirector(
@@ -58,7 +51,6 @@ class IntentionDirectorController extends Controller
         }
 
         $listCount = count($listCount);
-
 
         return view('intentionDirectors.list', [
             'intentionAssessors'   => $list,
@@ -83,7 +75,7 @@ class IntentionDirectorController extends Controller
         $from = Carbon::now()->startOfMonth();
         $assessor = auth()->user()->Assessor->SUCURSAL;
 
-        $listAssessors = $this->assessorInterface->listIntentionDirector($assessor);
+        $listAssessors     = $this->assessorInterface->listIntentionDirector($assessor);
         $creditProfiles    = $this->intentionInterface->countIntentionDirectorCreditProfiles($from, $to, $listAssessors);
         $creditCards       = $this->intentionInterface->countIntentionDirectorCreditCards($from, $to, $listAssessors);
         $intentionStatuses = $this->intentionInterface->countIntentionDirectorStatuses($from, $to, $listAssessors);
@@ -105,7 +97,6 @@ class IntentionDirectorController extends Controller
         }
 
         $creditCards = $this->toolsInterface->getDataPercentage($creditCards);
-
         $statusPercentage = [];
         $totalStatuses    = $creditCards->sum('total');
         foreach ($intentionStatuses as $key => $value) {

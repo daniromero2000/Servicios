@@ -57,6 +57,11 @@ class Intention extends Model
         return self::search($term);
     }
 
+    public function exportIntentions($term)
+    {
+        return self::search($term);
+    }
+
     public function searchIntentionAssessors($term)
     {
         return self::search($term);

@@ -18,7 +18,7 @@
                             <input type="text" class="form-control" ng-model="productList.public_price_percentage"
                                 id="public_price_percentage" name="public_price_percentage">
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="name">Zona <span class="text-danger">*</span></label>
                             <select ng-model="productList.zone" id="zone" name="zone" class="form-control select2"
                                 required>
@@ -26,6 +26,13 @@
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="name">Aplica protección <span class="text-danger">*</span></label>
+                            <select ng-model="productList.apply_protection" id="apply_protection" name="zone" class="form-control select2"
+                                required ng-options="protection.value as protection.text for protection in protections">
                             </select>
                         </div>
 
@@ -64,14 +71,14 @@
                                 class="form-control">
                         </div>
 
-                        <div class="col-12 form-group">
+                        <div class="col-sm-6 col-12 form-group">
                             <label for="name">Fecha de inicio <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="start_date" name="start_date"
                                 data-inputmask-alias="datetime" ng-model="productList.start_date"
                                 data-inputmask-inputformat="yyyy-mm-dd" data-mask required>
 
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="end_date">Fecha de Finalización <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="end_date" data-inputmask-alias="datetime"
                                 ng-model="productList.end_date" id="end_date" data-inputmask-inputformat="yyyy-mm-dd"
@@ -125,13 +132,19 @@
                             <input type="text" class="form-control" ng-model="productList.public_price_percentage"
                                 id="public_price_percentageUpdate" name="public_price_percentageUpdate">
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="zoneUpdateProductList">Zona <span class="text-danger">*</span></label>
                             <select ng-model="productList.zone" id="zoneUpdateProductList" name="zoneUpdateProductList"
                                 class="form-control" required>
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="name">Aplica protección <span class="text-danger">*</span></label>
+                            <select ng-model="productList.apply_protection" id="apply_protection_edt" name="zone" class="form-control select2"
+                                required ng-options="protection.value as protection.text for protection in protections">
                             </select>
                         </div>
 
@@ -170,14 +183,14 @@
                                 name="bond_black" class="form-control">
                         </div>
 
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12  form-group">
                             <label for="start_dateUpdateProductList">Fecha de inicio <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" data-inputmask-alias="datetime"
                                 id=" start_dateUpdateProductList" name="start_dateUpdateProductList"
                                 ng-model="productList.start_date" data-inputmask-inputformat="yyyy-mm-dd" data-mask>
                         </div>
-                        <div class="col-12  form-group">
+                        <div class="col-sm-6 col-12 form-group">
                             <label for="end_dateProductList">Fecha de Finalización <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" data-inputmask-alias="datetime"
@@ -204,10 +217,19 @@
                 <h5 class="modal-title">Actualizar Lista</h5>
             </div>
             <div class="modal-body">
-                <tags-input ng-model="tags" add-on-paste="true">
-                    <auto-complete max-results-to-show="200" min-length="1" source="leodSubsidaries($query)">
-                    </auto-complete>
-                </tags-input>
+                <div class="row">
+                    <div class="col-12">
+                        <tags-input ng-model="productListSubsidiaries" add-on-paste="true">
+                            <auto-complete max-results-to-show="200" min-length="0" source="loadSubsidaries($query)">
+                            </auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary" ng-disabled="disabledButtonAddSubsidiary" ng-click="addSubsidiariesToProductList()">Guardar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

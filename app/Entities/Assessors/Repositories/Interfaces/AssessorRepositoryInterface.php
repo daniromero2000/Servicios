@@ -3,6 +3,7 @@
 namespace App\Entities\Assessors\Repositories\Interfaces;
 
 use App\Entities\Assessors\Assessor;
+use Illuminate\Database\Eloquent\Collection;
 
 interface AssessorRepositoryInterface
 {
@@ -27,4 +28,6 @@ interface AssessorRepositoryInterface
     public function getAssessorsTotal($from, $to);
 
     public function listIntentionDirector($director);
+
+    public function searchAssessor(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection;
 }
