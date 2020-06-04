@@ -20,16 +20,22 @@ class AssesorQuotationController extends Controller
         $this->toolsInterface = $toolRepositoryInterface;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
 
         $list = $this->assessorQuotationRepositoryInterface->listAssessorQuotations($from, $to);
+        $listCount = $list->count();
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
 
 
         return view('assessorQuotations.list', [
-            'list' => $list
+            'assessorQuotations' => $list,
+            'listCount'          => $listCount,
+            'headers'            => ['Sucursal', 'Solicitud', 'Fecha de solicitud', 'Estado', 'Cliente',  'Tipo de Cliente', 'Subtipo de Cliente', 'Analista',  'Fecha de analisis',  'Fecha de asignación', 'Calificación del cliente', 'Total',  'Prioridad'],
+            'skip'               => $skip,
+            'optionsRoutes'      => (request()->segment(2)),
         ]);
     }
 

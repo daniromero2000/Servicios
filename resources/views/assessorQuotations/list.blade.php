@@ -9,7 +9,7 @@
 @section('content')
 <section style="min-width: 540px">
   @include('layouts.errors-and-messages')
-  @if(!is_null($factoryRequests))
+  @if(!is_null($assessorQuotations))
   <div class="mx-auto" style="max-width: 1450px;">
     <div class="content-header">
       <div class="container-fluid">
@@ -64,7 +64,7 @@
                       <div class="small-box ">
                         <div class="inner">
                           <h2 class="titleCardNumber">Total</h2>
-                          <p>${{ number_format ($factoryRequestsTotal) }}</p>
+                          <p>$</p>
                         </div>
                         <div class="icon">
                           <i class="fas fa-shopping-cart"></i>
@@ -86,7 +86,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  @include('layouts.admin.search_turns', ['route' => route('factoryrequestTurns.index')])
+                  {{-- @include('layouts.admin.search_turns', ['route' => route('assessorquotations.index')]) --}}
                 </div>
               </div>
             </div>
@@ -101,9 +101,9 @@
                   </div>
                 </div>
                 <div class="card-body px-0">
-                  @if($factoryRequests)
-                  @include('layouts.admin.tables.tables_factory_request_turns_status', [$headers, 'datas' =>
-                  $factoryRequests ])
+                  @if($assessorQuotations)
+                  @include('layouts.admin.tables.tables_assessor_quotations_status', [$headers, 'datas' =>
+                  $assessorQuotations ])
                   @include('layouts.admin.pagination.pagination', [$skip])
                   @else
                   @include('layouts.admin.pagination.pagination_null', [$skip])
