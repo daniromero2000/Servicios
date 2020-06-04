@@ -636,7 +636,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 
 		$scope.addSolic = function () {
-			//$scope.disabledButtonSolic = true;
+			$scope.disabledButtonSolic = true;
 			if ($scope.decisionCredit == 1) {
 				$scope.creditCard();
 			} else {
