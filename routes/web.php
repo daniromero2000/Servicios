@@ -115,12 +115,6 @@ Route::group(['prefix' => '/assessor/'], function () {
 });
 
 
-
-
-
-
-
-
 Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 // All resource routes
