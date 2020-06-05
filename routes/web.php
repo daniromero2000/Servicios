@@ -114,6 +114,13 @@ Route::group(['prefix' => '/assessor/'], function () {
     })->name('laPipa');
 });
 
+
+
+
+
+
+
+
 Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 // All resource routes
