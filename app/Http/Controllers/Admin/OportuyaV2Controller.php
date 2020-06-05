@@ -6,6 +6,7 @@ use App\Imagenes;
 use App\Intenciones;
 use App\ResultadoPolitica;
 use App\CodeUserVerification;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
@@ -95,7 +96,8 @@ class OportuyaV2Controller extends Controller
 		PolicyRepositoryInterface $policyRepositoryInterface,
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
-		TurnRepositoryInterface $turnRepositoryInterface
+		TurnRepositoryInterface $turnRepositoryInterface,
+		AnalisisRepositoryInterface $analisisRepositoryInterface
 
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
@@ -130,6 +132,7 @@ class OportuyaV2Controller extends Controller
 		$this->datosClienteInterface             = $datosClienteRepositoryInterface;
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
+		$this->analisisInterface                 = $analisisRepositoryInterface;
 	}
 
 	public function index()
@@ -1557,7 +1560,6 @@ class OportuyaV2Controller extends Controller
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
-
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
@@ -1812,7 +1814,7 @@ class OportuyaV2Controller extends Controller
 			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
 
-		$this->AnalisisInterface->addAnalisis($analisisData);
+		$this->analisisInterface->addAnalisis($analisisData);
 	}
 
 	private function addTurnos($identificationNumber, $numSolic)

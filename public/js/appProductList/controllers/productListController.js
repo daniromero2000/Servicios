@@ -53,6 +53,17 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 		$scope.viewProductPrices = false;
 		$scope.disabledButtonAddSubsidiary = false;
 
+		$scope.protections = [
+			{
+				'value': 1,
+				'text': "Si"
+			},
+			{
+				'value': 0,
+				'text': "No"
+			}
+		];
+
 		$scope.addProductList = function () {
 			$scope.productList = {};
 			$("#addProductListModal").modal("show");
@@ -359,6 +370,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 				data: $scope.listProduct
 			}).then(function successCallback(response) {
 				if (response.data != false) {
+					showAlert('success', 'Artículo migrado exitosamente');
 					if (response.data == "23000") {
 						document.getElementById('p').innerHTML = "La lista <b>" + $scope.listProduct.name + "</b>  ya se encuentra registrado en la base de datos";
 						$("#alertListProduct").show();
@@ -435,6 +447,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			}).then(function successCallback(response) {
 				if (response.data != false) {
 					$("#deleteListProduct").modal("hide");
+					showAlert('success', 'Producto eliminado exitosamente');
 					$scope.resetDataListProduct();
 				}
 			}, function errorCallback(response) {
