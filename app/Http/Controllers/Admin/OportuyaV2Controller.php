@@ -152,7 +152,16 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
 
-	public function catalog()
+	public function getSubsidiaryCustomer(Request $request)
+	{
+		if (request()->has('city')) {
+			return redirect()->route('catalogo.zona', request()->input('city'));
+		}
+
+		$cities = $this->subsidiaryInterface->getSubsidiaryForCities();
+		return view('oportuya.getSubsidiary', compact('cities'));
+	}
+	public function catalog($zone)
 	{
 		$list = $this->productRepo->listFrontProducts('id');
 
@@ -160,34 +169,67 @@ class OportuyaV2Controller extends Controller
 			return $this->transformProduct($item);
 		})->all();
 
-		$images = Imagenes::selectRaw('*')
-			->where('category', '=', '1')
-			->where('isSlide', '=', '1')
-			->get();
-
+		foreach ($products as $key => $value) {
+			$dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
+			$productCatalog[$key] = $dataProduct[$key];
+			$productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
+			if ($productListSku[$key]) {
+				$dataProduct[$key] = $this->getPriceProduct($productListSku[$key][0]->id, $zone);
+				$products[$key]['price_old'] =  $dataProduct[$key][0]['traditional_credit_price'];
+				$products[$key]['price_new'] =  $dataProduct[$key][0]['traditional_credit_price'];
+				// $products[$key]['black_price'] =  $dataProduct[$key][0]['black_public_price'];
+				$desc[$key] = $dataProduct[$key][0]['traditional_credit_price'] - (($productCatalog[$key]->discount * $dataProduct[$key][0]['traditional_credit_price']) / 100);
+				$products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+				$products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
+			}
+		}
 		return view('oportuya.catalog', [
-			'images'   => $images,
 			'products' => $products,
 			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
-			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc'),
+			'zone'     => $zone
 		]);
 	}
 
-	public function product($slug)
+	public function product($slug, $zone)
 	{
-		$images = Imagenes::selectRaw('*')
-			->where('category', '=', '1')
-			->where('isSlide', '=', '1')
-			->get();
+		// dd($slug, $zone);
+		// $zone = auth()->user()->Assessor->subsidiary->ZONA;
+		$dataProduct = $this->productRepo->findProductBySlug($slug);
+		$productCatalog = $dataProduct;
+		$productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
+		$dataProduct = $this->getPriceProduct($productListSku[0]->id, $zone);
+		$desc = "";
+		$pays = "";
+		$desc = $dataProduct[0]['traditional_credit_price'] - (($productCatalog->discount * $dataProduct[0]['traditional_credit_price']) / 100);
+		$priceNew = $dataProduct[0]['traditional_credit_price'] - (($productCatalog->discount * $dataProduct[0]['traditional_credit_price']) / 100);
+		$pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+		$desc = round($desc, 2, PHP_ROUND_HALF_UP);
+		$images = $productCatalog->images()->get(['src']);
+		$imagenes = [];
+		$productImages = [];
+		array_push($productImages, $productCatalog->cover);
+		foreach ($images as $key => $value) {
+			array_push($productImages, $images[$key]->src);
+		}
+		foreach ($productImages as $key => $value) {
+			array_push($imagenes, [$productImages[$key], $key]);
+		}
+
+		// dd($dataProduct);
+
 		return view('oportuya.product.show', [
-			'images'  => $images,
-			'product' => $this->productRepo->findProductBySlug($slug)
+			'product'   => $productCatalog,
+			'prices'    => $dataProduct,
+			'pays'      => $pays,
+			'desc'      => $desc,
+			'imagenes'  => $imagenes,
+			'priceNew'  => $priceNew
 		]);
 	}
 
-	public function getPriceProduct($product_id)
+	public function getPriceProduct($product_id, $zone)
 	{
-		// dd($product_id);
 
 		$dataProduct = [];
 		$product = $this->listProductInterface->findListProductById($product_id);
@@ -202,7 +244,6 @@ class OportuyaV2Controller extends Controller
 		$monthlyRate = ($factors[0]['value'] / 100);
 		$bond = 1 - ($factors[1]['value'] / 100);
 		$optionalIncrement = 1 - ($factors[2]['value'] / 100);
-		$zone = auth()->user()->Assessor->subsidiary->ZONA;
 		foreach ($currentProductLists as $key => $productList) {
 			if ($productList['zone'] == $zone) {
 				$normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
@@ -229,7 +270,6 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 		}
-		// dd($dataProduct);
 		return $dataProduct;
 	}
 

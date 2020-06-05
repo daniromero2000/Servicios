@@ -120,8 +120,9 @@ Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
-Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@catalog');
-Route::get('credito-electrodomesticos/catalogo/{product}', 'Admin\OportuyaV2Controller@product');
+Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@getSubsidiaryCustomer');
+Route::get('/credito-electrodomesticos/catalogo/{zona}', 'Admin\OportuyaV2Controller@catalog')->name('catalogo.zona');
+Route::get('credito-electrodomesticos/catalogo/{product}/{zona}', 'Admin\OportuyaV2Controller@product');
 Route::resource('libranza', 'Admin\LibranzaController');
 Route::resource('leads', 'Admin\LeadsController');
 Route::get('/view-products', function () {
