@@ -141,7 +141,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         $obj->cedula = trim($identificationNumber);
         try {
             $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarCliente($obj);  // correcta
+            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
