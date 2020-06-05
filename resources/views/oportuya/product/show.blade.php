@@ -139,24 +139,21 @@ array_push($imagenes, [$productImages[$key], $key]);
         <div class="row">
             <div class="card border-0 container-deal-product">
                 <div class="card-body pt-0 pr-4 pl-4">
-                    @php
-                    $desc = ($product->price - $product->sale_price);
-                    $desc= round(($desc / $product->price)*100 );
-                    @endphp
                     <div class="relative text-center  container-desc-deal">
-
+                        @if ($product->discount && $product->discount > 0)
                         <div class="card-products-discount">
-                            <p>{{$desc}}%</p>
+                            <p>{{$product->discount}}%</p>
                             <p>Dcto</p>
                         </div>
+                        @endif
                         <div class="container-price-deal">
                             <p class="card-text card-products-old-price mb-0"> <del>$
-                                    {{ number_format($product->price)}}
+                                    {{ number_format($prices[0]['normal_public_price'])}}
                                 </del></p>
                             <p class="card-text card-products-label mb-1">Precio antes</p>
 
                             <p class="card-text card-products-new-price mb-0">$
-                                {{ number_format($product->sale_price)}}
+                                {{ number_format($desc)}}
                             </p>
                             <p class="card-text card-products-label mb-3">Precio ahora</p>
                         </div>
@@ -174,7 +171,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                         </p>
                         <div class="container-dues-deal-product">
                             <p class="card-text card-products-price">
-                                $ {{ number_format($product->pays)}}
+                                $ {{ number_format($pays)}}
                             </p>
                             <p class="card-text text-dues-deal-product">* Cuota semanal</p>
                             <a href="/step1?productId={{ $product->id}}" class="btn card-products-button btn-primary"

@@ -16,8 +16,7 @@ class UpdateProductRequest extends BaseFormRequest
     {
         return [
             'sku' => ['required'],
-            'name' => ['required', Rule::unique('products')->ignore($this->segment(3))],
-            'price' => ['required']
+            'name' => ['required']
         ];
     }
 }

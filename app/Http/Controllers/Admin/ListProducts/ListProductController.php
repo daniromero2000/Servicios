@@ -73,6 +73,14 @@ class ListProductController extends Controller
         return response()->json($listProduct);
     }
 
+    public function getProduct($sku)
+    {
+        $product = $this->listProductInterface->findListProductBySku($sku);
+
+        return $product;
+    }
+
+
     public function getDataPriceProduct($product_id)
     {
         $dataProduct = [];

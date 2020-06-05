@@ -3,6 +3,7 @@
 namespace App\Entities\Assessors;
 
 use App\Entities\Intentions\Intention;
+use App\Entities\Subsidiaries\Subsidiary;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 
@@ -46,7 +47,7 @@ class Assessor extends \Eloquent implements AuthenticatableContract
 
     public function subsidiary()
     {
-        return $this->belongsTo(Subsidiary::class);
+        return $this->belongsTo(Subsidiary::class, 'SUCURSAL');
     }
 
     public function creditCard()

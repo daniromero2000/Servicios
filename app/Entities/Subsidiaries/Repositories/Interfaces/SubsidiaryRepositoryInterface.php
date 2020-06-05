@@ -22,4 +22,6 @@ interface SubsidiaryRepositoryInterface
     public function findSubsidiaryByIdFull(int $id): Subsidiary;
 
     public function listSubsidiaryForDirector();
+
+    public function getSubsidiaryForCities();
 }

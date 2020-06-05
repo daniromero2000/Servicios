@@ -13,4 +13,6 @@ interface ListProductRepositoryInterface
     public function updateListProduct($data);
 
     public function deleteListProduct($id);
+
+    public function findListProductBySku($sku);
 }

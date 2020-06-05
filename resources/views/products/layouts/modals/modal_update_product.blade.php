@@ -20,26 +20,19 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
+                                    <div class="col-4">
+                                        <label for="sku_update{{ $product->id }}">Código <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="sku" id="sku_update{{ $product->id }}"
+                                            class="form-control" value="{{ $product->sku }}"
+                                            onfocusout="idproduct({{$product->id}})" required>
+                                    </div>
                                     <div class="col-8">
                                         <label for="reference_update{{ $product->id }}">Referencia <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="reference" id="reference_update{{ $product->id }}"
                                             class="form-control" value="{{ $product->reference }}" required>
                                     </div>
-                                    <div class="col-4">
-                                        <label for="sku_update{{ $product->id }}">Código <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="sku" id="sku_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->sku }}" required>
-                                    </div>
-
-                                    <div class="col-8">
-                                        <label for="name_update{{ $product->id }}">Nombre <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="name" id="name_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->name }}" required>
-                                    </div>
-
                                     <div class="col-4">
                                         @if(!$brands->isEmpty())
 
@@ -55,18 +48,13 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-6">
-                                        <label for="price_update{{ $product->id }}">Precio <span
+                                    <div class="col-8">
+                                        <label for="name_update{{ $product->id }}">Nombre <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" name="price" id="price_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->price }}" required>
+                                        <input type="text" name="name" id="name_update{{ $product->id }}"
+                                            class="form-control" readonly value="{{ $product->name }}" required>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="price_update{{ $product->id }}">Precio Oferta <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="sale_price" id="sale_price_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->sale_price }}" required>
-                                    </div>
+
 
                                     <div class="col-6">
                                         <label for="months_update{{ $product->id }}">Meses a Pagar<span
@@ -82,10 +70,10 @@
                                     </div>
 
                                     <div class="col-6">
-                                        <label for="pays_update{{ $product->id }}">Cuotas Mensuales<span
+                                        <label for="discount_update{{ $product->id }}">% de descuento<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" name="pays" id="pays_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->pays }}" required>
+                                        <input type="text" name="discount" id="discount_update{{ $product->id }}"
+                                            class="form-control" value="{{ $product->discount }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12 px-0">
@@ -127,7 +115,7 @@
                                         <label for="cover_update{{ $product->id }}">Cover Principal <span
                                                 class="text-danger">*</span></label>
                                         <div>
-                                            <img class="img-fluid img-show-products"
+                                            <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->cover")}}" alt="">
                                         </div>
                                         <div class="input-group">
@@ -144,7 +132,7 @@
                                             <div class="row mx-0">
                                                 @foreach($product->images()->get(['src']) as $image)
                                                 <div class="col-4">
-                                                    <img class="img-fluid img-show-products"
+                                                    <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$image->src")}}" alt="">
                                                     <a onclick="return confirm('¿Estás Seguro?')"
                                                         href="{{ route('product.remove.image', ['src' => $image->src]) }}"
@@ -179,7 +167,7 @@
                                                 <label for="description_image1_update{{ $product->id }}">Imagen de
                                                     descripcion 1<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
+                                                    <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image1")}}" alt="">
                                                 </div>
                                                 <div class="input-group">
@@ -202,7 +190,7 @@
                                                 <label for="description_image2_update{{ $product->id }}">Imagen de
                                                     descripcion 2<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
+                                                    <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image2")}}" alt="">
                                                 </div>
                                                 <div class="input-group">
@@ -224,7 +212,7 @@
                                                 <label for="description_image3_update{{ $product->id }}">Imagen de
                                                     descripcion 3<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
+                                                    <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image3")}}" alt="">
                                                 </div>
                                                 <div class="input-group">
@@ -247,7 +235,7 @@
                                                 <label for="description_image4_update{{ $product->id }}">Imagen de
                                                     descripcion 4<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
+                                                    <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image4")}}" alt="">
                                                 </div>
                                                 <div class="input-group">
@@ -279,7 +267,7 @@
                                         <label for="specification_image_update{{ $product->id }}">Imagen de
                                             especificaciones<span class="text-danger">*</span></label>
                                         <div>
-                                            <img class="img-fluid img-show-products"
+                                            <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->specification_image")}}" alt="">
                                         </div>
                                         <div class="input-group">
