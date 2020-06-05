@@ -14,6 +14,7 @@ class ListProduct extends Model
         'item',
         'base_cost',
         'iva_cost',
+        'cash_cost',
         'protection',
         'min_tolerance',
         'max_tolerance',

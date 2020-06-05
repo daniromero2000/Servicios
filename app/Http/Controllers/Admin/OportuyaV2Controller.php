@@ -6,6 +6,7 @@ use App\Imagenes;
 use App\Intenciones;
 use App\ResultadoPolitica;
 use App\CodeUserVerification;
+use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CifinBasicDatas\Repositories\Interfaces\CifinBasicDataRepositoryInterface;
 use App\Entities\CifinFinancialArrears\Repositories\Interfaces\CifinFinancialArrearRepositoryInterface;
@@ -100,10 +101,15 @@ class OportuyaV2Controller extends Controller
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		TurnRepositoryInterface $turnRepositoryInterface,
+<<<<<<< HEAD
 		ProductListRepositoryInterface $productListRepositoryInterface,
 		ListProductRepositoryInterface $listProductRepositoryInterface,
 		ListGiveAwayRepositoryInterface $listGiveAwayRepositoryInterface,
 		FactorRepositoryInterface $factorRepositoryInterface
+=======
+		AnalisisRepositoryInterface $analisisRepositoryInterface
+
+>>>>>>> ba6ec73e2b03578f3472da9e095c0eda543c353e
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -137,10 +143,14 @@ class OportuyaV2Controller extends Controller
 		$this->datosClienteInterface             = $datosClienteRepositoryInterface;
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
+<<<<<<< HEAD
 		$this->listProductInterface				 = $listProductRepositoryInterface;
 		$this->productListInterface 		     = $productListRepositoryInterface;
 		$this->giveAwayInterface   				 = $listGiveAwayRepositoryInterface;
 		$this->factorInterface      			 = $factorRepositoryInterface;
+=======
+		$this->analisisInterface                 = $analisisRepositoryInterface;
+>>>>>>> ba6ec73e2b03578f3472da9e095c0eda543c353e
 	}
 
 	public function index()
@@ -1656,7 +1666,6 @@ class OportuyaV2Controller extends Controller
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
-
 		if ($consultaComercial == 0) {
 			$customer = $this->customerInterface->findCustomerById($identificationNumber);
 			$customer->ESTADO = "SIN COMERCIAL";
@@ -1911,7 +1920,7 @@ class OportuyaV2Controller extends Controller
 			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
 
-		$this->AnalisisInterface->addAnalisis($analisisData);
+		$this->analisisInterface->addAnalisis($analisisData);
 	}
 
 	private function addTurnos($identificationNumber, $numSolic)

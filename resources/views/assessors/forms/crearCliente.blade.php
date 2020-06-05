@@ -689,11 +689,10 @@
                                                         ng-model="lead.NOM_REFPER" id="NOM_REFPER" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFPER" class="labels">Dirección (No usar # ni
-                                                        /)</label>
+                                                    <label for="DIR_REFPER" class="labels">Dirección </label>
                                                     <input type="text" class="inputs form-control"
                                                         ng-model="lead.DIR_REFPER" id="DIR_REFPER"
-                                                        validation-pattern="addres" />
+                                                        />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -712,11 +711,10 @@
                                                         ng-model="lead.NOM_REFPE2" id="NOM_REFPE2" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFPE2" class="labels">Dirección (No usar # ni
-                                                        /)</label>
+                                                    <label for="DIR_REFPE2" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
                                                         ng-model="lead.DIR_REFPE2" id="DIR_REFPE2"
-                                                        validation-pattern="addres" />
+                                                        />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -748,11 +746,10 @@
                                                         ng-model="lead.NOM_REFFAM" id="NOM_REFFAM" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFFAM" class="labels">Dirección (No usar # ni
-                                                        /)</label>
+                                                    <label for="DIR_REFFAM" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
                                                         ng-model="lead.DIR_REFFAM" id="DIR_REFFAM"
-                                                        validation-pattern="addres" />
+                                                        />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -778,11 +775,10 @@
                                                         ng-model="lead.NOM_REFFA2" id="NOM_REFFA2" required />
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <label for="DIR_REFFA2" class="labels">Dirección (No usar # ni
-                                                        /)</label>
+                                                    <label for="DIR_REFFA2" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
                                                         ng-model="lead.DIR_REFFA2" id="DIR_REFFA2"
-                                                        validation-pattern="addres" />
+                                                        />
                                                 </div>
                                             </div>
                                             <div class="row">
