@@ -85,6 +85,22 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+        $identificationNumber =  10060580;
+
+        $customerScore = 0;
+
+        if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
+            $customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+        } else {
+            $resultado = $this->webServiceInterface->ConsultarInformacionComercial($identificationNumber);
+            $customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+        }
+
+
+
+        dd($customerScore);
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

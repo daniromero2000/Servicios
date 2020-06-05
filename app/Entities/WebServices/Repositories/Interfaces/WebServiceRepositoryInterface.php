@@ -16,4 +16,6 @@ interface WebServiceRepositoryInterface
   public function execConsultaConfronta($typeDocument, $identificationNumber, $dateExpIdentification, $lastName);
 
   public function execMigrateCustomer($identificationNumber);
+
+  public function ConsultarInformacionComercial($identificationNumber);
 }
