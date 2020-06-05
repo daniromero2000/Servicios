@@ -645,30 +645,15 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		};
 
 		$scope.creditCard = function () {
+			$scope.decisionCreditCardData = {
+				'lead' : $scope.lead,
+				'policyResult' : $scope.resp
+			};
 			showLoader();
 			$http({
-				method: 'GET',
-				url: '/assessor/api/decisionCreditCard/'
-					+ $scope.lead.APELLIDOS + '/'
-					+ $scope.lead.CEDULA + '/'
-					+ $scope.resp.quotaApprovedProduct + '/'
-					+ $scope.resp.quotaApprovedAdvance + '/'
-					+ $scope.lead.FEC_EXP + '/'
-					+ $scope.lead.NOM_REFPER + '/'
-					+ $scope.lead.DIR_REFPER + '/'
-					+ $scope.lead.TEL_REFPER + '/'
-					+ $scope.lead.NOM_REFPE2 + '/'
-					+ $scope.lead.DIR_REFPE2 + '/'
-					+ $scope.lead.TEL_REFPE2 + '/'
-					+ $scope.lead.NOM_REFFAM + '/'
-					+ $scope.lead.DIR_REFFAM + '/'
-					+ $scope.lead.TEL_REFFAM + '/'
-					+ $scope.lead.PARENTESCO + '/'
-					+ $scope.lead.NOM_REFFA2 + '/'
-					+ $scope.lead.DIR_REFFA2 + '/'
-					+ $scope.lead.TEL_REFFA2 + '/'
-					+ $scope.lead.PARENTESC2 + '/'
-					+ $scope.resp.policy.fuenteFallo + '/',
+				method: 'PUT',
+				url: '/assessor/api/decisionCreditCard/'+ $scope.lead.CEDULA,
+				data: $scope.decisionCreditCardData
 			}).then(function successCallback(response) {
 				if (response.data.resp == 'true') {
 					$scope.quota = response.data.quotaApprovedProduct;
@@ -694,26 +679,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 				hideLoader();
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/decisionCreditCard/'
-					+ $scope.lead.APELLIDOS + '/'
-					+ $scope.lead.CEDULA + '/'
-					+ $scope.resp.quotaApprovedProduct + '/'
-					+ $scope.resp.quotaApprovedAdvance + '/'
-					+ $scope.lead.NOM_REFPER + '/'
-					+ $scope.lead.DIR_REFPER + '/'
-					+ $scope.lead.TEL_REFPER + '/'
-					+ $scope.lead.NOM_REFPE2 + '/'
-					+ $scope.lead.DIR_REFPE2 + '/'
-					+ $scope.lead.TEL_REFPE2 + '/'
-					+ $scope.lead.NOM_REFFAM + '/'
-					+ $scope.lead.DIR_REFFAM + '/'
-					+ $scope.lead.TEL_REFFAM + '/'
-					+ $scope.lead.PARENTESCO + '/'
-					+ $scope.lead.NOM_REFFA2 + '/'
-					+ $scope.lead.DIR_REFFA2 + '/'
-					+ $scope.lead.TEL_REFFA2 + '/'
-					+ $scope.lead.PARENTESC2 + '/'
-					+ $scope.resp.policy.fuenteFallo + '/';
+				response.url = '/assessor/api/decisionCreditCard/'+ $scope.lead.CEDULA,
+				response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
@@ -721,23 +688,9 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 		$scope.traditionalCredit = function () {
 			$http({
-				method: 'GET',
-				url: '/assessor/api/decisionTraditionalCredit/'
-					+ $scope.lead.CEDULA + '/'
-					+ $scope.lead.NOM_REFPER + '/'
-					+ $scope.lead.DIR_REFPER + '/'
-					+ $scope.lead.TEL_REFPER + '/'
-					+ $scope.lead.NOM_REFPE2 + '/'
-					+ $scope.lead.DIR_REFPE2 + '/'
-					+ $scope.lead.TEL_REFPE2 + '/'
-					+ $scope.lead.NOM_REFFAM + '/'
-					+ $scope.lead.DIR_REFFAM + '/'
-					+ $scope.lead.TEL_REFFAM + '/'
-					+ $scope.lead.PARENTESCO + '/'
-					+ $scope.lead.NOM_REFFA2 + '/'
-					+ $scope.lead.DIR_REFFA2 + '/'
-					+ $scope.lead.TEL_REFFA2 + '/'
-					+ $scope.lead.PARENTESC2 + '/'
+				method: 'PUT',
+				url: '/assessor/api/decisionTraditionalCredit/'+ $scope.lead.CEDULA,
+				data: $scope.lead
 			}).then(function successCallback(response) {
 				$scope.numSolic = response.data.infoLead.numSolic;
 				$scope.estadoCliente = "TRADICIONAL";
@@ -750,22 +703,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 				hideLoader();
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/decisionTraditionalCredit/'
-					+ $scope.lead.CEDULA + '/'
-					+ $scope.lead.NOM_REFPER + '/'
-					+ $scope.lead.DIR_REFPER + '/'
-					+ $scope.lead.TEL_REFPER + '/'
-					+ $scope.lead.NOM_REFPE2 + '/'
-					+ $scope.lead.DIR_REFPE2 + '/'
-					+ $scope.lead.TEL_REFPE2 + '/'
-					+ $scope.lead.NOM_REFFAM + '/'
-					+ $scope.lead.DIR_REFFAM + '/'
-					+ $scope.lead.TEL_REFFAM + '/'
-					+ $scope.lead.PARENTESCO + '/'
-					+ $scope.lead.NOM_REFFA2 + '/'
-					+ $scope.lead.DIR_REFFA2 + '/'
-					+ $scope.lead.TEL_REFFA2 + '/'
-					+ $scope.lead.PARENTESC2 + '/';
+				response.url = '/assessor/api/decisionTraditionalCredit/'+ $scope.lead.CEDULA,
+				response.datos = $scope.lead;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
 			});

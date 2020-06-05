@@ -26,7 +26,7 @@
 						meses</span>
 					de plazo</p>
 				<div class="text-center mt-4">
-					<a href="https://api.whatsapp.com/send?phone=573115195753&text=Quiero más información, sobre el crédito fácil de SOAT."
+					<a href="https://api.whatsapp.com/send?phone=573108220610&text=Quiero más información, sobre el crédito fácil de SOAT."
 						target="_blank" class="btn btn-first-sector mt-1">Pregunta Aquí</a>
 
 				</div>

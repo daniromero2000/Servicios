@@ -16,9 +16,8 @@
                         <th scope="col">SKU</th>
                         <th scope="col">Costo Base</th>
                         <th scope="col">Costo + IVA</th>
+                        <th scope="col">Contado</th>
                         <th scope="col">Proteccion</th>
-                        <th scope="col">Valor min</th>
-                        <th scope="col">Valor max</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -28,9 +27,8 @@
                         <td>@{{ listProduct.sku }}</td>
                         <td>$@{{ listProduct.base_cost | number:0}}</td>
                         <td>$@{{ listProduct.iva_cost | number:0 }}</td>
+                        <td>$@{{ listProduct.cash_cost | number:0 }}</td>
                         <td>$@{{ listProduct.protection | number:0 }}</td>
-                        <td>$@{{ listProduct.min_tolerance | number:0 }}</td>
-                        <td>$@{{ listProduct.max_tolerance | number:0 }}</td>
                         <td>
                             <i class="fas fa-edit cursor" title="Actualizar"
                                 ng-click="showUpdateDialogListProduct(listProduct)"></i>
