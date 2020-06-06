@@ -88,4 +88,14 @@ class ProductListRepository implements ProductListRepositoryInterface
             abort(503, $e->getMessage());
         }
     }
+
+    public function getCurrentProductListsForZone($zone)
+    {
+        $dateNow = date("Y-m-d");
+        try {
+            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

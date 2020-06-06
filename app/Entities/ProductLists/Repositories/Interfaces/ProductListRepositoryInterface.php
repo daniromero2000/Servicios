@@ -16,4 +16,6 @@ interface ProductListRepositoryInterface
 
     public function getAllCurrentProductLists();
 
+    public function getCurrentProductListsForZone($zone);
+
 }
