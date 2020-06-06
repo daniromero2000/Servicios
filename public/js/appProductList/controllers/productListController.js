@@ -395,8 +395,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 				transformRequest: angular.identity,
 				headers: { 'Content-Type': undefined }
 			}).then(function successCallback(response) {
-				console.log(response);
-				//$("#addMassiveListProductModal").modal('hide');
+				$("#addMassiveListProductModal").modal('hide');
 				showAlert('success', 'Archivo migrado exitosamente');
 				$scope.resetDataListProduct();
 			}, function errorCallback(response) {
