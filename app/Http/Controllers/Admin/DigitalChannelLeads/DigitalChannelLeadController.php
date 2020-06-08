@@ -488,6 +488,9 @@ class DigitalChannelLeadController extends Controller
 
     public function byAssessors(int $id)
     {
+        if ($id == 11) {
+            return 'Hola';
+        }
         $data = $this->UserInterface->listUser($id);
         return json_decode($data);
     }

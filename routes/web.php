@@ -8,6 +8,8 @@
     | contains the "web" middleware group. Now create something great!
 */
 
+
+
 Route::resource('confrontInHouse', 'ConfrontController');
 
 Route::get('/', function () {
@@ -113,12 +115,6 @@ Route::group(['prefix' => '/assessor/'], function () {
         return view('assessors.convenios.pipa');
     })->name('laPipa');
 });
-
-
-
-
-
-
 
 
 Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');

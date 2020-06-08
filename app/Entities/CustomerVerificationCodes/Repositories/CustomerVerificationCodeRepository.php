@@ -23,6 +23,15 @@ class CustomerVerificationCodeRepository implements CustomerVerificationCodeRepo
         }
     }
 
+    public function updateCustomerVerificationCode($data)
+    {
+        try {
+            return $this->model->updateOrCreate(['identificador' => $data['identificador']], $data);
+        } catch (QueryException $e) {
+            return $e;
+        }
+    }
+
     public function generateVerificationCode($identificationNumber)
     {
         if ($customerCode = $this->checkCustomerHasCustomerVerificationCode($identificationNumber)) {
