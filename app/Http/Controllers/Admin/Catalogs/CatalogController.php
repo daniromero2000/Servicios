@@ -45,16 +45,18 @@ class CatalogController extends Controller
             $dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
             $productCatalog[$key] = $dataProduct[$key];
             $productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
-            $dataProduct[$key] = $this->getPriceProduct($productListSku[$key][0]->id);
-            $products[$key]['price_old'] =  $dataProduct[$key][0]['normal_public_price'];
-            $products[$key]['price_new'] =  $dataProduct[$key][0]['traditional_credit_price'];
-            // $products[$key]['black_price'] =  $dataProduct[$key][0]['black_public_price'];
-            $desc[$key] = $dataProduct[$key][0]['normal_public_price'] - (($productCatalog[$key]->discount * $dataProduct[$key][0]['normal_public_price']) / 100);
+            $zone = auth()->user()->Assessor->subsidiary->ZONA;
+            $dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
+            foreach ($dataProduct[$key] as $key2 => $value2) {
+                $productList = $value2;
+            }
+            $products[$key]['price_old'] =  $productList['normal_public_price'];
+            $products[$key]['price_new'] =  $productList['traditional_credit_price'];
+            // $products[$key]['black_price'] =  $productList['black_public_price'];
+            $desc[$key] = $productList['normal_public_price'] - (($productCatalog[$key]->discount * $productList['normal_public_price']) / 100);
             $products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
             $products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
         }
-
-        // dd($products);   
 
         return view('catalogAssessors.catalog', [
             'products' => $products,
@@ -68,11 +70,16 @@ class CatalogController extends Controller
         $dataProduct = $this->productRepo->findProductBySlug($slug);
         $productCatalog = $dataProduct;
         $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
-        $dataProduct = $this->getPriceProduct($productListSku[0]->id);
+        $zone = auth()->user()->Assessor->subsidiary->ZONA;
+        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
+        foreach ($dataProduct as $key2 => $value2) {
+            $productList = $value2;
+        }
         $desc = "";
         $pays = "";
-        $desc = $dataProduct[0]['normal_public_price'] - (($productCatalog->discount * $dataProduct[0]['normal_public_price']) / 100);
-        $priceNew = $dataProduct[0]['traditional_credit_price'] - (($productCatalog->discount * $dataProduct[0]['traditional_credit_price']) / 100);
+        $desc = $productList['normal_public_price'] - (($productCatalog->discount * $productList['normal_public_price']) / 100);
+        // dd($productList);
+        $priceNew = $productList['traditional_credit_price'];
         $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
         $desc = round($desc, 2, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);
@@ -87,59 +94,11 @@ class CatalogController extends Controller
         }
         return view('catalogAssessors.product.show', [
             'product'   => $productCatalog,
-            'prices'    => $dataProduct,
+            'prices'    => $productList,
             'pays'      => $pays,
             'desc'      => $desc,
             'imagenes'  => $imagenes,
             'priceNew'  => $priceNew
         ]);
-    }
-
-    public function getPriceProduct($product_id)
-    {
-        // dd($product_id);
-
-        $dataProduct = [];
-        $product = $this->listProductInterface->findListProductById($product_id);
-        $product = $product->toArray();
-        $currentProductLists = $this->productListInterface->getAllCurrentProductLists();
-        $currentProductLists = $currentProductLists->toArray();
-        $priceGiveAway = $this->giveAwayInterface->getPriceGiveAwayProduct($product['base_cost']);
-        $priceGiveAway = $priceGiveAway->total;
-        $proteccionVat = $product['protection'] * 1.19;
-        $factors = $this->factorInterface->getAllFactors();
-        $factors = $factors->toArray();
-        $monthlyRate = ($factors[0]['value'] / 100);
-        $bond = 1 - ($factors[1]['value'] / 100);
-        $optionalIncrement = 1 - ($factors[2]['value'] / 100);
-        $zone = auth()->user()->Assessor->subsidiary->ZONA;
-        foreach ($currentProductLists as $key => $productList) {
-            if ($productList['zone'] == $zone) {
-                $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
-                $cashPromotion     = round($product['iva_cost'] / ((100 - $productList['cash_margin']) / 100));
-                if ($productList['zone'] == $zone) {
-                    $promotionPublicPrice       = $cashPromotion;
-                    $traditionalCreditPrice     = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                    $traditionalCreditBondPrice = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                    $bluePublicPrice            = round($promotionPublicPrice * ((100 - $productList['percentage_credit_card_blue']) / 100));
-                    $blueBondPrice              = round(($promotionPublicPrice * (1 - ($productList['bond_blue'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                    $blackPublicPrice           = round($promotionPublicPrice * ((100 - $productList['percentage_credit_card_black']) / 100));
-                    $blackBondPrice             = round(($promotionPublicPrice * (1 - ($productList['bond_black'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                }
-                $dataProduct[] = [
-                    'normal_public_price'           => $normalPublicPrice,
-                    'traditional_credit_price'      => $traditionalCreditPrice * 12
-                    // 'black_public_price'            => $blackPublicPrice
-                    // 'cash_promotion'                => $cashPromotion,
-                    // 'promotion_public_price'        => $promotionPublicPrice,
-                    // 'traditional_credit_bond_price' => $traditionalCreditBondPrice * 12,
-                    // 'blue_public_price'             => $bluePublicPrice,
-                    // 'blue_bond_price'               => $blueBondPrice * 12,
-                    // 'black_bond_price'              => $blackBondPrice * 12,
-                ];
-            }
-        }
-        // dd($dataProduct);
-        return $dataProduct;
     }
 }
