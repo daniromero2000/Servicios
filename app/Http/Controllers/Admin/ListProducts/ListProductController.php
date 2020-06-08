@@ -77,8 +77,6 @@ class ListProductController extends Controller
 
     public function getDataPriceProduct($product_id)
     {
-        $prices = ['normal_public_price', 'cash_promotion'];
-
-        return $this->listProductInterface->getPriceProductForZoneEspecifiedPrices($product_id, 'BAJA', $prices);
+        return $this->listProductInterface->getPriceProductForAllCurrentList($product_id);
     }
 }
