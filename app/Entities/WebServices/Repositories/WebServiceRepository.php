@@ -55,6 +55,36 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         return response()->json(true);
     }
+    
+    public function sendMessageSmsInfobip($code, $date, $celNumber){
+        $text = 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 15 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date;
+        $username = "Lagobo.Distribuciones";
+        $password = "Distribuciones2020";
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://nzzpz5.api.infobip.com/sms/2/text/single",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{ \"from\":\"Lagobo\", \"to\":\"57$celNumber\", \"text\":\"$text\" }",
+            CURLOPT_HTTPHEADER => array(
+                "accept: application/json",
+                "authorization: Basic ". base64_encode($username . ":" . $password),
+                "content-type: application/json"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        return $response;
+    }
 
     public function execConsultaComercial($identificationNumber, $typeDocument)
     {
@@ -129,6 +159,20 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             $ws = new \SoapClient("http://10.238.14.151:2816/Conector.svc?singleWsdl", array()); //correcta
             $result = $ws->ConsultarCliente($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
+
+    public function ConsultarInformacionComercial($identificationNumber)
+    {
+        $obj = new \stdClass();
+        $obj->typeDocument = 1;
+        $obj->identificationNumber = trim($identificationNumber);
+        try {
+            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;

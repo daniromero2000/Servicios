@@ -8,6 +8,8 @@
     | contains the "web" middleware group. Now create something great!
 */
 
+
+
 Route::resource('confrontInHouse', 'ConfrontController');
 
 Route::get('/', function () {
