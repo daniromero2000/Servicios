@@ -101,15 +101,12 @@ class OportuyaV2Controller extends Controller
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		TurnRepositoryInterface $turnRepositoryInterface,
-<<<<<<< HEAD
+		AnalisisRepositoryInterface $analisisRepositoryInterface,
 		ProductListRepositoryInterface $productListRepositoryInterface,
 		ListProductRepositoryInterface $listProductRepositoryInterface,
 		ListGiveAwayRepositoryInterface $listGiveAwayRepositoryInterface,
 		FactorRepositoryInterface $factorRepositoryInterface
-=======
-		AnalisisRepositoryInterface $analisisRepositoryInterface
 
->>>>>>> ba6ec73e2b03578f3472da9e095c0eda543c353e
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -143,14 +140,11 @@ class OportuyaV2Controller extends Controller
 		$this->datosClienteInterface             = $datosClienteRepositoryInterface;
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
-<<<<<<< HEAD
+		$this->analisisInterface                 = $analisisRepositoryInterface;
 		$this->listProductInterface				 = $listProductRepositoryInterface;
 		$this->productListInterface 		     = $productListRepositoryInterface;
 		$this->giveAwayInterface   				 = $listGiveAwayRepositoryInterface;
 		$this->factorInterface      			 = $factorRepositoryInterface;
-=======
-		$this->analisisInterface                 = $analisisRepositoryInterface;
->>>>>>> ba6ec73e2b03578f3472da9e095c0eda543c353e
 	}
 
 	public function index()
