@@ -127,8 +127,9 @@
                                         <label for="cover_update{{ $product->id }}">Cover Principal <span
                                                 class="text-danger">*</span></label>
                                         <div>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->cover")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->cover")}}" alt="">
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -144,8 +145,9 @@
                                             <div class="row mx-0">
                                                 @foreach($product->images()->get(['src']) as $image)
                                                 <div class="col-4">
-                                                    <img class="img-fluid img-show-products"
-                                                        src="{{asset("storage/$image->src")}}" alt="">
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$image->src")}}" alt="">
                                                     <a onclick="return confirm('¿Estás Seguro?')"
                                                         href="{{ route('product.remove.image', ['src' => $image->src]) }}"
                                                         class="btn btn-danger btn-sm btn-block">¿Eliminar?</a><br />
@@ -179,8 +181,10 @@
                                                 <label for="description_image1_update{{ $product->id }}">Imagen de
                                                     descripcion 1<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
-                                                        src="{{asset("storage/$product->description_image1")}}" alt="">
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image1")}}"
+                                                        alt="">
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -202,8 +206,10 @@
                                                 <label for="description_image2_update{{ $product->id }}">Imagen de
                                                     descripcion 2<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
-                                                        src="{{asset("storage/$product->description_image2")}}" alt="">
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image2")}}"
+                                                        alt="">
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -224,8 +230,10 @@
                                                 <label for="description_image3_update{{ $product->id }}">Imagen de
                                                     descripcion 3<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
-                                                        src="{{asset("storage/$product->description_image3")}}" alt="">
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image3")}}"
+                                                        alt="">
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -247,8 +255,10 @@
                                                 <label for="description_image4_update{{ $product->id }}">Imagen de
                                                     descripcion 4<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class="img-fluid img-show-products"
-                                                        src="{{asset("storage/$product->description_image4")}}" alt="">
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image4")}}"
+                                                        alt="">
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -279,8 +289,9 @@
                                         <label for="specification_image_update{{ $product->id }}">Imagen de
                                             especificaciones<span class="text-danger">*</span></label>
                                         <div>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->specification_image")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->specification_image")}}" alt="">
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">
