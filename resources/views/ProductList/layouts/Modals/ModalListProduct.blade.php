@@ -40,7 +40,7 @@
                                 ng-model="listProduct.max_tolerance" class="form-control">
                         </div>
                         <div class="col-sm-6 col-12  form-group">
-                            <label for="protectionCreateListProduct">Proteccion</label>
+                            <label for="protectionCreateListProduct">Protección sin IVA</label>
                             <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
                                 ng-model="listProduct.protection" class="form-control">
                         </div>
@@ -168,7 +168,7 @@
                                 ng-model="listProduct.max_tolerance" class="form-control" required>
                         </div>
                         <div class="col-sm-6 col-12  form-group">
-                            <label for="protectionUpdateListProduct">Proteccion <span
+                            <label for="protectionUpdateListProduct">Proteccion sin IVA <span
                                     class="text-danger">*</span></label>
                             <input type="text" id="protectionUpdateListProduct" name="protectionUpdateListProduct"
                                 ng-model="listProduct.protection" class="form-control" required>
