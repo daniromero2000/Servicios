@@ -285,7 +285,6 @@ class DigitalChannelLeadController extends Controller
             $leadPriceTotalSold        = $this->LeadPriceInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPrice                 = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
 
-
             $leadServiceInsurances     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
             $leadServiceWarranties     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
             $leadServiceOportuyas      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 6);
@@ -459,8 +458,6 @@ class DigitalChannelLeadController extends Controller
             }
         }
         return ($array);
-        // $data = $this->leadProductInterface->getLeadProductForService($id);
-        // return json_decode($data);
     }
 
     public function byStatus(int $id)
