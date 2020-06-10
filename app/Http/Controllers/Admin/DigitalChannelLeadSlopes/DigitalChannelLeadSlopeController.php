@@ -6,9 +6,7 @@ use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\LeadAreas\LeadArea;
 use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
-use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
@@ -17,14 +15,9 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use App\Entities\Leads\Repositories\LeadRepository;
-use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
-use App\Liquidator;
-use App\Product;
-use Illuminate\Support\Facades\DB;
 
 class DigitalChannelLeadSlopeController extends Controller
 {
@@ -105,6 +98,7 @@ class DigitalChannelLeadSlopeController extends Controller
 
         $listCount = $list->count();
         $leadsOfMonth = $leadsOfMonth->count();
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
         $profile = 2;
 
         return view('digitalchannelleadSlopes.list', [
@@ -121,7 +115,8 @@ class DigitalChannelLeadSlopeController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($profile)
+            'listAssessors'       => $this->UserInterface->listUser($profile),
+            'subsidaries'        => $subsidary
         ]);
     }
 }

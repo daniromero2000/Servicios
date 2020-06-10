@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin\LeadWarranties;
+namespace App\Http\Controllers\Admin\LeadAssessors;
 
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
-use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
+use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 
-class LeadWarrantyController extends Controller
+class LeadsAssessorsController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface;
+    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -39,7 +39,6 @@ class LeadWarrantyController extends Controller
         UserRepositoryInterface $UserRepositoryInterface,
         LeadAreaRepository $LeadAreaRepositoryInterface,
         CityRepositoryInterface $CityRepositoryInterface
-
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -59,24 +58,25 @@ class LeadWarrantyController extends Controller
 
     public function index(Request $request)
     {
-        $area = 3;
+
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
-        $leadsOfMonth = $this->leadInterface->customListleadsTotal($from, $to, $area);
-
+        $assessor = auth()->user()->id;
+        $leadsOfMonth = $this->leadInterface->countLeadsAssessors($from, $to, $assessor);
 
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->customListleads($skip * 30, $area);
+        $list = $this->leadInterface->listLeadAssessors($skip * 30, $assessor);
         if (request()->has('q')) {
-            $list = $this->leadInterface->searchCustomLeads(
+            $list = $this->leadInterface->searchLeads(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
-                request()->input('state'),
-                request()->input('assessor_id'),
+                12,
+                $assessor,
+                request()->input('channel'),
                 request()->input('city'),
-                $area,
+                request()->input('lead_area_id'),
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
@@ -85,26 +85,28 @@ class LeadWarrantyController extends Controller
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
-                request()->input('state'),
-                request()->input('assessor_id'),
+                12,
+                $assessor,
+                request()->input('channel'),
                 request()->input('city'),
-                $area,
+                request()->input('lead_area_id'),
                 request()->input('typeService'),
                 request()->input('typeProduct')
 
             );
         }
-        $listCount = $leadsOfMonth->count();
+
+        $listCount = $list->count();
+        $leadsOfMonth = $leadsOfMonth->count();
+        $profile = 2;
         $subsidary   = $this->subsidiaryInterface->getSubsidiares();
-        $pricesTotal = 0;
 
 
-        $listAssessors = 18;
-        return view('leadwarranties.list', [
-            'pricesTotal'         => $pricesTotal,
+        return view('leadAssessors.list', [
+            'leadsOfMonth'        => $leadsOfMonth,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
-            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
@@ -114,7 +116,7 @@ class LeadWarrantyController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($listAssessors),
+            'listAssessors'       => $this->UserInterface->listUser($profile),
             'subsidaries'        => $subsidary
         ]);
     }

@@ -183,6 +183,10 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/DigitalChannelLeadSlopes', 'DigitalChannelLeadSlopeController');
     });
 
+    Route::namespace('LeadAssessors')->group(function () {
+        Route::resource('Administrator/leadAssessors', 'LeadsAssessorsController');
+    });
+
     Route::namespace('DebtorInsurances')->group(function () {
         Route::resource('Administrator/DebtorInsuranceController', 'DebtorInsuranceController');
     });

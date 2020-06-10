@@ -87,7 +87,9 @@ class LeadOportuyaController extends Controller
             );
         }
         $listCount = $leadsOfMonth->count();
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
         $listAssessors = 18;
+
         return view('leadoportuya.list', [
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
@@ -101,7 +103,8 @@ class LeadOportuyaController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($listAssessors)
+            'listAssessors'       => $this->UserInterface->listUser($listAssessors),
+            'subsidaries'         => $subsidary
         ]);
     }
 }

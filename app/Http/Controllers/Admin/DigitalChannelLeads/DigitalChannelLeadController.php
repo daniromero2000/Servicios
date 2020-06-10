@@ -18,21 +18,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Leads\Repositories\LeadRepository;
-use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Events\LeadNotification;
 use App\Liquidator;
-use App\Product;
-use Illuminate\Support\Facades\DB;
+use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 
 class DigitalChannelLeadController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
+    private $leadProductInterface, $UserInterface, $LeadPriceInterface, $assessorInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -47,7 +45,8 @@ class DigitalChannelLeadController extends Controller
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
         UserRepositoryInterface $UserRepositoryInterface,
         LeadAreaRepository $LeadAreaRepositoryInterface,
-        CityRepositoryInterface $CityRepositoryInterface
+        CityRepositoryInterface $CityRepositoryInterface,
+        AssessorRepositoryInterface $AssessorRepositoryInterface
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
@@ -62,22 +61,21 @@ class DigitalChannelLeadController extends Controller
         $this->UserInterface         = $UserRepositoryInterface;
         $this->LeadAreaInterface     = $LeadAreaRepositoryInterface;
         $this->cityInterface         = $CityRepositoryInterface;
+        $this->assessorInterface     = $AssessorRepositoryInterface;
         $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
 
-        $to = Carbon::now();
-        $from = Carbon::now()->startOfMonth();
-
-        $leadsOfMonth = $this->leadInterface->countLeadTotal($from, $to);
+        $to                 = Carbon::now();
+        $from               = Carbon::now()->startOfMonth();
+        $skip               = $this->toolsInterface->getSkip($request->input('skip'));
+        $list               = $this->leadInterface->listLeads($skip * 30);
+        $leadsOfMonth       = $this->leadInterface->countLeadTotal($from, $to);
         $leadPriceTotalSold = $this->LeadPriceInterface->getLeadPriceTotal($from, $to);
-        $leadsOfMonthTotal = 0;
-        $leadsOfMonthTotal = $leadPriceTotalSold->sum('lead_price');
-
-        $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->listLeads($skip * 30);
+        $leadsOfMonthTotal  = 0;
+        $leadsOfMonthTotal  = $leadPriceTotalSold->sum('lead_price');
         if (request()->has('q')) {
             $list = $this->leadInterface->searchLeads(
                 request()->input('q'),
@@ -111,9 +109,10 @@ class DigitalChannelLeadController extends Controller
             }
         }
 
-        $listCount = $list->count();
+        $listCount    = $list->count();
         $leadsOfMonth = $leadsOfMonth->count();
-        $profile = 2;
+        $profile      = 2;
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
 
         return view('digitalchannelleads.list', [
             'leadsOfMonthTotal'   => $leadsOfMonthTotal,
@@ -130,7 +129,8 @@ class DigitalChannelLeadController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($profile)
+            'listAssessors'       => $this->UserInterface->listUser($profile),
+            'subsidaries'        => $subsidary
         ]);
     }
     public function store(Request $request)
@@ -166,6 +166,8 @@ class DigitalChannelLeadController extends Controller
         }
         $leadPriceStatus = LeadPriceStatus::all();
 
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
+
         $liquidators = Liquidator::selectRaw('pagaduria.name as pagaduriaName,libranza_profiles.name as customerType, libranza_lines.name as creditLineName , liquidator.age, liquidator.creditLine,liquidator.pagaduria,liquidator.fee,liquidator.rate , liquidator.salary, liquidator.amount , liquidator.timeLimit, leads.id,leads.identificationNumber,leads.name ,leads.lastName ,leads.email ,leads.telephone ,leads.city ,leads.typeService ,leads.typeProduct ,leads.state ,leads.channel ,leads.created_at ,leads.termsAndConditions ,leads.typeDocument ,leads.identificationNumber ,leads.occupation')
             ->leftJoin('leads', 'liquidator.idLead', '=', 'leads.id')
             ->leftJoin('pagaduria', 'liquidator.idPagaduria', '=', 'pagaduria.id')
@@ -190,7 +192,8 @@ class DigitalChannelLeadController extends Controller
             'lead_products'      => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'      => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
             'leadPriceStatus'    => $leadPriceStatus,
-            'liquidators'        => $liquidators
+            'liquidators'        => $liquidators,
+            'subsidaries'        => $subsidary
         ]);
     }
 
@@ -281,7 +284,6 @@ class DigitalChannelLeadController extends Controller
             $leadProductDigitalChanels = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 1);
             $leadPriceTotalSold        = $this->LeadPriceInterface->getLeadPriceTotal(request()->input('from'), request()->input('to'));
             $leadPrice                 = $this->LeadPriceInterface->getPriceDigitalChanel(request()->input('from'), request()->input('to'), 1);
-
 
             $leadServiceInsurances     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
             $leadServiceWarranties     = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
@@ -380,7 +382,7 @@ class DigitalChannelLeadController extends Controller
 
         $leadpriceTotals = $leadPrice->sum('lead_price');
 
-        return view('digitalchannelleads.dashboard', [
+        return view('digitalchannelleads.dashboardDigitalChanel', [
             'pricesTotal'               => $pricesTotal,
             'leadChannelNames'          => $leadChannelNames,
             'leadChannelValues'         => $leadChannelValues,
@@ -456,8 +458,6 @@ class DigitalChannelLeadController extends Controller
             }
         }
         return ($array);
-        // $data = $this->leadProductInterface->getLeadProductForService($id);
-        // return json_decode($data);
     }
 
     public function byStatus(int $id)
@@ -488,6 +488,9 @@ class DigitalChannelLeadController extends Controller
 
     public function byAssessors(int $id)
     {
+        if (request()->has('subsidiary')) {
+            return $this->assessorInterface->listAsessorssForSubsidiaries(request()->input('subsidiary'));
+        }
         $data = $this->UserInterface->listUser($id);
         return json_decode($data);
     }
