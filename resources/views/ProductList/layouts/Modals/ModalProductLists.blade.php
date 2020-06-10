@@ -9,10 +9,17 @@
                 <div class="alert alert-danger" role="alert" id="alertProductList"><span id="p"></span></div>
                 <form ng-submit="createProductList()">
                     <div class=" row pl-0 pr-0">
-                        <div class="col-12 col-sm-8 form-group">
+                        <div class="col-12 col-sm-4 form-group">
                             <label for="name">Nombre <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.name" id="name" name="name" class="form-control">
                         </div>
+
+                        <div class="col-sm-4 col-12">
+                            <label for="priority">Prioridad <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.priority" id="priority"
+                                name="bond_traditional" class="form-control" required>
+                        </div>
+
                         <div class="col-12 col-sm-4 form-group">
                             <label for="public_price_percentage">% P.P <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" ng-model="productList.public_price_percentage"
@@ -30,43 +37,55 @@
                         </div>
 
                         <div class="col-sm-6 col-12  form-group">
-                            <label for="name">Aplica protección <span class="text-danger">*</span></label>
+                            <label for="apply_protection">Aplica protección <span class="text-danger">*</span></label>
                             <select ng-model="productList.apply_protection" id="apply_protection" name="zone" class="form-control select2"
                                 required ng-options="protection.value as protection.text for protection in protections">
                             </select>
                         </div>
 
+                        <div class="col-sm-6 col-12">
+                            <label for="percentage_public_price_promotion">% Precio público promoción <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_public_price_promotion" id="percentage_public_price_promotion"
+                                name="bond_traditional" class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-6 col-12">
+                            <label for="percentage_base_oportuya_customer">% Base cliente oportuya <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_base_oportuya_customer" id="percentage_base_oportuya_customer"
+                                name="bond_traditional" class="form-control" required>
+                        </div>
+
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_traditional">Bono tradicional <span class="text-danger">*</span> </label>
+                            <label for="bond_traditional">% Bono tradicional <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_traditional" id="bond_traditional"
                                 name="bond_traditional" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="cash_margin">Margen contado <span class="text-danger">*</span> </label>
+                            <label for="cash_margin">% Margen contado <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.cash_margin" id="cash_margin" name="cash_margin"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_blue">Porcentaje tarjeta blue <span
+                            <label for="percentage_credit_card_blue">% Tarjeta blue <span
                                     class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.percentage_credit_card_blue"
                                 id="percentage_credit_card_blue" name="percentage_credit_card_blue"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_blue">Bono tarjeta blue <span class="text-danger">*</span> </label>
+                            <label for="bond_blue">% Bono tarjeta blue <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_blue" id="bond_blue" name="bond_blue"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_black">Porcentaje tarjeta black <span
+                            <label for="percentage_credit_card_black">% Tarjeta black <span
                                     class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.percentage_credit_card_black"
                                 id="percentage_credit_card_black" name="percentage_credit_card_black"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_black">Bono tarjeta black <span class="text-danger">*</span> </label>
+                            <label for="bond_black">% Bono tarjeta black <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_black" id="bond_black" name="bond_black"
                                 class="form-control">
                         </div>
@@ -122,10 +141,15 @@
                 <form ng-submit="UpdateProductList()">
                     <div class="alert alert-danger" role="alert" id="alertUpdate"><span id="update"></span></div>
                     <div class=" row pl-0 pr-0">
-                        <div class="col-12 col-sm-8 form-group">
+                        <div class="col-12 col-sm-4 form-group">
                             <label for="nameUpdateProductList">Nombre <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.name" id="nameUpdateProductList"
                                 name="nameUpdateProductList" class="form-control">
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <label for="priority_update">Prioridad <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.priority" id="priority_update"
+                                name="bond_traditional" class="form-control" required>
                         </div>
                         <div class="col-12 col-sm-4 form-group">
                             <label for="public_price_percentageUpdate">% P.P <span class="text-danger">*</span></label>
@@ -148,37 +172,49 @@
                             </select>
                         </div>
 
+                        <div class="col-sm-6 col-12">
+                            <label for="percentage_public_price_promotion_update">% Precio público promoción <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_public_price_promotion" id="percentage_public_price_promotion_update"
+                                name="bond_traditional" class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-6 col-12">
+                            <label for="percentage_base_oportuya_customer_update">% Base cliente oportuya <span class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_base_oportuya_customer" id="percentage_base_oportuya_customer_update"
+                                name="bond_traditional" class="form-control" required>
+                        </div>
+
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_traditional">Bono tradicional <span class="text-danger">*</span> </label>
+                            <label for="bond_traditional">% Bono tradicional <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_traditional" id="bond_traditional_update"
                                 name="bond_traditional" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="cash_margin">Margen contado <span class="text-danger">*</span> </label>
+                            <label for="cash_margin">% Margen contado <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.cash_margin" id="cash_margin_update"
                                 name="cash_margin" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_blue">Porcentaje tarjeta blue <span
+                            <label for="percentage_credit_card_blue">% Tarjeta blue <span
                                     class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.percentage_credit_card_blue"
                                 id="percentage_credit_card_blue_update" name="percentage_credit_card_blue"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_blue">Bono tarjeta blue <span class="text-danger">*</span> </label>
+                            <label for="bond_blue">% Bono tarjeta blue <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_blue" id="bond_blue_update" name="bond_blue"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_black">Porcentaje tarjeta black <span
+                            <label for="percentage_credit_card_black">% Tarjeta black <span
                                     class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.percentage_credit_card_black"
                                 id="percentage_credit_card_black_update" name="percentage_credit_card_black"
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="bond_black">Bono tarjeta black <span class="text-danger">*</span> </label>
+                            <label for="bond_black">% Bono tarjeta black <span class="text-danger">*</span> </label>
                             <input type="text" ng-model="productList.bond_black" id="bond_black_update"
                                 name="bond_black" class="form-control">
                         </div>
