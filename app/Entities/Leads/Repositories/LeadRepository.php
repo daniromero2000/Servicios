@@ -30,7 +30,8 @@ class LeadRepository implements LeadRepositoryInterface
         'assessor_id',
         'identificationNumber',
         'lead_area_id',
-        'expirationDateSoat'
+        'expirationDateSoat',
+        'subsidiary_id'
     ];
 
 
@@ -155,6 +156,15 @@ class LeadRepository implements LeadRepositoryInterface
         }
     }
 
+    public function countLeadsAssessors($from, $to, $assessor)
+    {
+        try {
+            return  $this->model->whereBetween('created_at', [$from, $to])->where('assessor_id', $assessor)->orderBy('id', 'desc')->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function listleadSlopes($totalView, $assessor): Support
     {
         try {
@@ -170,6 +180,29 @@ class LeadRepository implements LeadRepositoryInterface
                 'LeadArea'
             ])->orderBy('id', 'desc')
                 ->where('state', 12)
+                ->where('assessor_id', $assessor)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function listLeadAssessors($totalView, $assessor): Support
+    {
+        try {
+            return  $this->model->with([
+                'leadStatusesLogs',
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct',
+                'leadPrices',
+                'LeadArea'
+            ])->orderBy('id', 'desc')
                 ->where('assessor_id', $assessor)
                 ->skip($totalView)
                 ->take(30)

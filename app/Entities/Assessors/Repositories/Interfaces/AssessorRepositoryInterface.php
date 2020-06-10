@@ -29,5 +29,7 @@ interface AssessorRepositoryInterface
 
     public function listIntentionDirector($director);
 
+    public function listAsessorssForSubsidiaries($subsidiary);
+
     public function searchAssessor(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null): Collection;
 }
