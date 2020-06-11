@@ -12,6 +12,7 @@ use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
@@ -30,6 +31,7 @@ class LeadInsuranceController extends Controller
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
@@ -41,6 +43,7 @@ class LeadInsuranceController extends Controller
         $this->toolsInterface        = $toolRepositoryInterface;
         $this->channelInterface      = $channelRepositoryInterface;
         $this->serviceInterface      = $serviceRepositoryInterface;
+        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
         $this->campaignInterface     = $campaignRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;

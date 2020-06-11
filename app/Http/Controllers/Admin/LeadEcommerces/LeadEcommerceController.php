@@ -8,6 +8,7 @@ use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterf
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -30,6 +31,7 @@ class LeadEcommerceController extends Controller
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
@@ -41,6 +43,7 @@ class LeadEcommerceController extends Controller
         $this->toolsInterface        = $toolRepositoryInterface;
         $this->channelInterface      = $channelRepositoryInterface;
         $this->serviceInterface      = $serviceRepositoryInterface;
+        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
         $this->campaignInterface     = $campaignRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;

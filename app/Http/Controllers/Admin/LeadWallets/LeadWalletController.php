@@ -8,6 +8,7 @@ use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterf
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use Carbon\Carbon;
@@ -28,6 +29,7 @@ class LeadWalletController extends Controller
         ToolRepositoryInterface $toolRepositoryInterface,
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
@@ -43,6 +45,7 @@ class LeadWalletController extends Controller
         $this->serviceInterface      = $serviceRepositoryInterface;
         $this->campaignInterface     = $campaignRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
+        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
         $this->UserInterface         = $UserRepositoryInterface;

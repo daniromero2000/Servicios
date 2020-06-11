@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin\LeadAdvancedUnits;
 
-use App\Entities\LeadPrices\LeadPrice;
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
-use App\Entities\LeadPriceStatuses\LeadPriceStatus;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
@@ -17,8 +15,6 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
-use App\Entities\Leads\Repositories\LeadRepository;
-use App\Entities\Leads\Requests\CreateLeadRequest;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
