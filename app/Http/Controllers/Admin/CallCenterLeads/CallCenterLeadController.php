@@ -158,7 +158,7 @@ class CallCenterLeadController extends Controller
         $leadProductJuridicales     = $this->leadInterface->countLeadProductGenerals($from, $to, 9);
         $leadProductLibranzas       = $this->leadInterface->countLeadProductGenerals($from, $to, 7);
         $leadProductEcommerces      = $this->leadInterface->countLeadProductGenerals($from, $to, 8);
-        $leadProductSubsidiary      = $this->leadInterface->countLeadProductSubsidiary($from, $to);
+        $leadProductSubsidiary      = $this->leadInterface->countLeadProductGenerals($from, $to, 11);
 
         $leadServiceDigitalChanels  = $this->leadInterface->countLeadServicesGenerals($from, $to, 1);
         $leadServiceInsurances      = $this->leadInterface->countLeadServicesGenerals($from, $to, 2);
@@ -170,7 +170,7 @@ class CallCenterLeadController extends Controller
         $leadServiceJuridicales     = $this->leadInterface->countLeadServicesGenerals($from, $to, 9);
         $leadServiceLibranzas       = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
         $leadServiceEcommerces      = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
-        $leadServiceSubsidiary      = $this->leadInterface->countLeadServicesSubsidiary($from, $to);
+        $leadServiceSubsidiary      = $this->leadInterface->countLeadServicesGenerals($from, $to, 11);
 
         $leadStatusDigitalChanels   = $this->leadInterface->countLeadStatusGenerals($from, $to, 1);
         $leadStatusInsurances       = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
@@ -182,7 +182,7 @@ class CallCenterLeadController extends Controller
         $leadStatusJuridicales      = $this->leadInterface->countLeadStatusGenerals($from, $to, 9);
         $leadStatusLibranzas        = $this->leadInterface->countLeadStatusGenerals($from, $to, 7);
         $leadStatusEcommerces       = $this->leadInterface->countLeadStatusGenerals($from, $to, 8);
-        $leadStatusSubsidiary       = $this->leadInterface->countLeadStatusSubsidiary($from, $to);
+        $leadStatusSubsidiary       = $this->leadInterface->countLeadStatusGenerals($from, $to, 11);
         $leadSubsidiary             = $this->leadInterface->countSubsidiary($from, $to);
 
         if (request()->has('from')) {
@@ -203,7 +203,7 @@ class CallCenterLeadController extends Controller
             $leadProductLibranzas       = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 7);
             $leadProductEcommerces      = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 8);
             $leadProductDigitalChanels  = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 1);
-            $leadProductSubsidiary      = $this->leadInterface->countLeadProductSubsidiary(request()->input('from'), request()->input('to'));
+            $leadProductSubsidiary      = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 11);
 
             $leadServiceInsurances      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 2);
             $leadServiceWarranties      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 3);
@@ -215,7 +215,7 @@ class CallCenterLeadController extends Controller
             $leadServiceLibranzas       = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 7);
             $leadServiceEcommerces      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 8);
             $leadServiceDigitalChanels  = $this->leadInterface->countLeadProductGenerals(request()->input('from'), request()->input('to'), 1);
-            $leadServiceSubsidiary      = $this->leadInterface->countLeadServicesSubsidiary(request()->input('from'), request()->input('to'));
+            $leadServiceSubsidiary      = $this->leadInterface->countLeadServicesGenerals(request()->input('from'), request()->input('to'), 11);
 
             $leadStatusDigitalChanels   = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 1);
             $leadStatusInsurances       = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 2);
@@ -227,7 +227,7 @@ class CallCenterLeadController extends Controller
             $leadStatusJuridicales      = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 9);
             $leadStatusLibranzas        = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 7);
             $leadStatusEcommerces       = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 8);
-            $leadStatusSubsidiary       = $this->leadInterface->countLeadStatusSubsidiary(request()->input('from'), request()->input('to'));
+            $leadStatusSubsidiary       = $this->leadInterface->countLeadStatusGenerals(request()->input('from'), request()->input('to'), 11);
             $leadSubsidiary             = $this->leadInterface->countSubsidiary(request()->input('from'), request()->input('to'));
         }
 
