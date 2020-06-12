@@ -16,6 +16,10 @@
                   aria-controls="custom-tabs-three-settings" aria-selected="true">Canal Digital</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" id="assessors-tab" data-toggle="pill" href="#assessors" role="tab"
+                  aria-controls="assessors" aria-selected="false">Asesores</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" id="insurances-tab" data-toggle="pill" href="#insurances" role="tab"
                   aria-controls="insurances" aria-selected="false">Seguros</a>
               </li>
@@ -199,6 +203,29 @@
                   </div>
                 </div>
               </div>
+              <div class="tab-pane fade" id="assessors" role="tabpanel" aria-labelledby="assessors-tab">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              @include('callcenterleads.layouts.card_total_leads_subsidiary')
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @include('digitalchannelleads.layouts.pie_subsidiary')
+                    @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_subsidiary')
+                  </div>
+                  <div class="col-12 col-md-8">
+                    @include('digitalchannelleads.layouts.pie_services.pie_serviceSubsidiary')
+                    @include('digitalchannelleads.layouts.pie_products.pie_products_subsidiary')
+                  </div>
+                </div>
+              </div>
               <div class="tab-pane fade" id="oportuyas" role="tabpanel" aria-labelledby="oportuyas-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">
@@ -338,5 +365,5 @@
 </div>
 @endsection
 @include('layouts.admin.dashboard_imports')
-@include('digitalchannelleads.dashboardJS')
+@include('callcenterleads.dashboardJS')
 @endsection

@@ -88,7 +88,8 @@ class DigitalChannelLeadController extends Controller
                 request()->input('city'),
                 request()->input('lead_area_id'),
                 request()->input('typeService'),
-                request()->input('typeProduct')
+                request()->input('typeProduct'),
+                request()->input('subsidiary_id')
             );
             $leadsOfMonth = $this->leadInterface->searchLeads(
                 request()->input('q'),
@@ -101,8 +102,8 @@ class DigitalChannelLeadController extends Controller
                 request()->input('city'),
                 request()->input('lead_area_id'),
                 request()->input('typeService'),
-                request()->input('typeProduct')
-
+                request()->input('typeProduct'),
+                request()->input('subsidiary_id')
             );
             foreach ($leadsOfMonth as $key => $status) {
                 $leadsOfMonthTotal +=  $leadsOfMonth[$key]->leadPrices->sum('lead_price');
@@ -130,7 +131,7 @@ class DigitalChannelLeadController extends Controller
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
             'listAssessors'       => $this->UserInterface->listUser($profile),
-            'subsidaries'        => $subsidary
+            'subsidaries'         => $subsidary
         ]);
     }
     public function store(Request $request)
@@ -246,7 +247,6 @@ class DigitalChannelLeadController extends Controller
         $leadServiceLibranzas      = $this->leadInterface->countLeadServicesGenerals($from, $to, 7);
         $leadServiceEcommerces     = $this->leadInterface->countLeadServicesGenerals($from, $to, 8);
 
-
         $leadStatusDigitalChanels = $this->leadInterface->countLeadStatusGenerals($from, $to, 1);
         $leadStatusInsurances     = $this->leadInterface->countLeadStatusGenerals($from, $to, 2);
         $leadStatusWarranties     = $this->leadInterface->countLeadStatusGenerals($from, $to, 3);
@@ -257,6 +257,8 @@ class DigitalChannelLeadController extends Controller
         $leadStatusJuridicales    = $this->leadInterface->countLeadStatusGenerals($from, $to, 9);
         $leadStatusLibranzas      = $this->leadInterface->countLeadStatusGenerals($from, $to, 7);
         $leadStatusEcommerces     = $this->leadInterface->countLeadStatusGenerals($from, $to, 8);
+
+
 
 
         $leadServices       = $this->leadInterface->countLeadServices($from, $to);

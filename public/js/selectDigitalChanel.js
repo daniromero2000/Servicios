@@ -15,11 +15,8 @@ if ($('#typeAreaSelectCreate').val() == 11) {
 } else {
     $('#SubsidiaryCreate').hide();
 }
-
 function ontypeAreaSelectCreate() {
     var typeServiceCreateSelected_id = $("#typeAreaSelectCreate").val();
-    console.log(typeServiceCreateSelected_id)
-
     if (typeServiceCreateSelected_id == 11) {
         $('#SubsidiaryCreate').show();
     } else {
@@ -55,8 +52,6 @@ function ontypeAreaSelectCreate() {
 
         var subsidary = $('#subsidary').val();
         $.get('/getAssessors/' + typeServiceCreateSelected_id + '?q=&subsidiary=' + subsidary, function (data) {
-
-            console.log(data)
             var html_selectEdit = '<option data-select3-id=""  selected value>  Selecciona Asesor  </option>'
             for (var i = 0; i < data.length; i++) {
                 html_selectEdit += '<option value="' + data[i].user.id + '">' + data[i].user.name + '</option>';
@@ -191,8 +186,19 @@ function ontypeServiceSelectedProductEditModal(dataId) {
 $(function () {
     $("#typeAreaSelectFilter").on('change', ontypeAreaSelectFilter)
 });
+
+$(function () {
+    $("#subsidiaryCode").on('change', ontypeAreaSelectFilter)
+});
+
+if ($('#typeAreaSelectFilter').val() == 11) {
+    $('#subsidiaryFilter').show();
+    ontypeAreaSelectFilter();
+} else {
+    $('#subsidiaryFilter').hide();
+}
 function ontypeAreaSelectFilter() {
-    var typeAreaSelectFilter_id = $(this).val();
+    var typeAreaSelectFilter_id = $('#typeAreaSelectFilter').val();
     if (!typeAreaSelectFilter_id) {
         $('#stateSelectFilter').html('<option value="">  Selecciona Producto  </option>');
     }
@@ -218,13 +224,31 @@ function ontypeAreaSelectFilter() {
         $('#typeProductFilter').html(html_selectEdit);
     });
 
-    $.get('/getAssessors/' + typeAreaSelectFilter_id + '', function (data) {
-        var html_selectEdit = '<option selected value>  Selecciona Asesor  </option>';
-        for (var i = 0; i < data.length; i++) {
-            html_selectEdit += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-        }
-        $('#assessorSelectFilter').html(html_selectEdit);
-    });
+    if ($('#typeAreaSelectFilter').val() == 11) {
+        $('#subsidiaryFilter').show();
+    } else {
+        $('#subsidiaryFilter').hide();
+    }
+    if (typeAreaSelectFilter_id == 11 && $('#subsidiaryCode').val() != '') {
+
+        var subsidary = $('#subsidiaryCode').val();
+        $.get('/getAssessors/' + typeAreaSelectFilter_id + '?q=&subsidiary=' + subsidary, function (data) {
+            var html_selectEdit = '<option data-select3-id=""  selected value>  Selecciona Asesor  </option>'
+            for (var i = 0; i < data.length; i++) {
+                html_selectEdit += '<option value="' + data[i].user.id + '">' + data[i].user.name + '</option>';
+            }
+            $('#assessorSelectFilter').html(html_selectEdit);
+        });
+    } else {
+        $.get('/getAssessors/' + typeAreaSelectFilter_id + '', function (data) {
+            var html_selectEdit = '<option data-select3-id=""  selected value>  Selecciona Asesor  </option>'
+
+            for (var i = 0; i < data.length; i++) {
+                html_selectEdit += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+            }
+            $('#assessorSelectFilter').html(html_selectEdit);
+        });
+    }
 };
 
 function loadLead() {
