@@ -568,6 +568,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             $datas =  $this->model->with('leadProduct')
                 ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', 11)
                 ->where('subsidiary_id', '!=', '')
                 ->get(['typeProduct'])->groupBy('leadProduct.lead_product');
 
@@ -595,6 +596,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             $datas =  $this->model->with('leadService')
                 ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', 11)
                 ->where('subsidiary_id', '!=', '')
                 ->get(['typeService'])->groupBy('leadService.service');
 
@@ -621,6 +623,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             $datas =  $this->model->with('leadStatuses')
                 ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', 11)
                 ->where('subsidiary_id', '!=', '')
                 ->get(['state'])->groupBy('leadStatuses.status');
 
@@ -648,6 +651,7 @@ class LeadRepository implements LeadRepositoryInterface
         try {
             $datas =  $this->model->with('subsidiary')
                 ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', 11)
                 ->where('subsidiary_id', '!=', '')
                 ->get(['subsidiary_id'])->groupBy('subsidiary.CODIGO');
 
