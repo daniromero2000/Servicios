@@ -795,6 +795,14 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
+    public function countLeadsSubsidiaries($from, $to)
+    {
+        try {
+            return  $this->model->whereBetween('created_at', [$from, $to])->where('lead_area_id', 11)->where('subsidiary_id', '!=', '')->orderBy('id', 'desc')->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
     public function listLeadSubsidiary($totalView, $subsidiary): Support
     {
         try {
@@ -816,5 +824,96 @@ class LeadRepository implements LeadRepositoryInterface
         } catch (QueryException $e) {
             dd($e);
         }
+    }
+    public function listLeadSubsidiaries($totalView, $subsidiary): Support
+    {
+        try {
+            return  $this->model->with([
+                'leadStatusesLogs',
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct',
+                'leadPrices',
+                'LeadArea'
+            ])->orderBy('id', 'desc')
+                ->where('lead_area_id', 11)
+                ->where('subsidiary_id', '!=', '')
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function searchLeadsSubsidiaries(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $channel = null, $city = null, $area = null, $service = null, $product = null, $subsidiary = null): Collection
+    {
+        if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($assessor) && is_null($channel) && is_null($city) && is_null($area)  && is_null($service)  && is_null($product) && is_null($subsidiary)) {
+            return $this->model->orderBy('created_at', 'desc')
+                ->skip($totalView)
+                ->where('lead_area_id', 11)
+                ->take(30)
+                ->get($this->columns);
+        }
+
+        if (is_null($from) || is_null($to)) {
+            return $this->model->searchLeadsSubsidiaries($text, null, true, true)->with([
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct'
+            ])->when($status, function ($q, $status) {
+                return $q->where('state', $status);
+            })->when($assessor, function ($q, $assessor) {
+                return $q->where('assessor_id', $assessor);
+            })->when($channel, function ($q, $channel) {
+                return $q->where('channel', $channel);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', 11);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
+            })->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('subsidiary_id', $subsidiary);
+            })->orderBy('created_at', 'desc')
+                ->skip($totalView)
+                ->take(100)
+                ->get($this->columns);
+        }
+
+        return $this->model->searchLeadsSubsidiaries($text, null, true, true)->with([
+            'leadStatus',
+            'leadAssessor',
+            'leadService',
+            'leadCampaign',
+            'comments',
+            'leadProduct'
+        ])->whereBetween('created_at', [$from, $to])
+            ->when($status, function ($q, $status) {
+                return $q->where('state', $status);
+            })->when($assessor, function ($q, $assessor) {
+                return $q->where('assessor_id', $assessor);
+            })->when($channel, function ($q, $channel) {
+                return $q->where('channel', $channel);
+            })->when($city, function ($q, $city) {
+                return $q->where('city', $city);
+            })->when($area, function ($q, $area) {
+                return $q->where('lead_area_id', 11);
+            })->when($service, function ($q, $service) {
+                return $q->where('typeService', $service);
+            })->when($product, function ($q, $product) {
+                return $q->where('typeProduct', $product);
+            })->when($subsidiary, function ($q, $subsidiary) {
+                return $q->where('subsidiary_id', $subsidiary);
+            })->orderBy('created_at', 'desc')
+            ->get($this->columns);
     }
 }
