@@ -388,7 +388,7 @@
         </p>
         <p class="menuItem-text" align="justify">
             Página web: <a href="http://www.oportunidades.com.co"> <u>www.oportunidades.com.co</u></a> <br>
-            Línea gratuita nacional:01 8000 18 05 20 <br>
+            Línea gratuita nacional: 01 8000 18 05 20 <br>
             Correo electrónico: <u> notificaciones@lagobo.com</u> <br>
             Línea telefónica: (6) 3358557 de la ciudad de Pereira. <br>
             Directamente en cada establecimiento de comercio <b> ALMACENES OPORTUNIDADES Y/O ELECTROFERTAS. </b> <br>

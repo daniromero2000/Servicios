@@ -250,7 +250,7 @@
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
 										<br>Para más información comunicate  <br>
-										a la línea <strong>01 8000 18 05 20</strong>
+										a la línea <strong> 01 8000 18 05 20</strong>
 									</p>
 									<div class="text-center">
 										<a class="btn btn-danger buttonBackCardExist" href="/">Regresar</a>
