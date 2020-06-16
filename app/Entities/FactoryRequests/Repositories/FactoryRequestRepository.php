@@ -90,7 +90,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 'creditCard'
             ])->has('hasCustomer')
                 ->has('creditCard')
-                ->where('ESTADO', 'APROBADO')
+                ->where('ESTADO', 19)
                 ->where('GRAN_TOTAL', 0)
                 ->where('SOLICITUD_WEB', 1)
                 ->latest('SOLICITUD')
@@ -141,8 +141,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countFactoryRequestsStatuses($from, $to)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
-                ->where('state', 'A')
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO',  DB::raw('count(*) as total'))->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->groupBy('ESTADO')
                 ->get();
@@ -197,7 +196,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countWebFactoryRequests($from, $to)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('SOLICITUD_WEB', 1)
                 ->where('STATE', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
@@ -902,7 +901,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->where('state', 'A')
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
@@ -919,7 +918,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
 
-                    $arrayStatus = ['APROBADO', 'EN FACTURACION'];
+                    $arrayStatus = [19, 20];
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
@@ -1021,7 +1020,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'PENDIENTES'):
-                    $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
+                    $arrayStatus = [13, 15, 19, 16, 20, 14, 1];
 
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
@@ -1124,7 +1123,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'DESISTIDOS'):
-                    $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
+                    $arrayStatus = [15, 13];
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
@@ -1331,7 +1330,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                 })->where('state', 'A')
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->when($action, function ($q) use ($totalView, $action) {
                     if ($action != 'export') {
                         return $q->skip($totalView)->take(50);
@@ -1366,7 +1365,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 })
                 ->when($status, function ($q, $status) {
                     if ($status == '') {
-                        return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                        return $q->where('ESTADO', '!=', 1);
                     }
                     return $q->where('ESTADO', $status);
                 })
@@ -1412,7 +1411,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 if ($status == '') {
-                    return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                    return $q->where('ESTADO', '!=', 1);
                 }
                 return $q->where('ESTADO', $status);
             })
@@ -1438,7 +1437,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         if (!empty($groupStatus)) {
             switch ($groupStatus) {
                 case ($groupStatus == 'APROBADOS'):
-                    $arrayStatus = ['APROBADO', 'EN FACTURACION'];
+                    $arrayStatus = [19, 20];
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->select('SOLICITUD', 'GRAN_TOTAL')->orderBy('FECHASOL', 'desc')
                             ->when($soliWeb, function ($q, $soliWeb) {
@@ -1525,7 +1524,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'PENDIENTES'):
-                    $arrayStatus = ['SIN RESPUESTA', 'DESISTIDO', 'APROBADO', 'NEGADO', 'EN FACTURACION', 'COMITE', 'EN SUCURSAL'];
+                    $arrayStatus = [13, 15, 19, 16, 20, 14, 1];
 
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')->select('SOLICITUD', 'GRAN_TOTAL')
@@ -1613,7 +1612,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     break;
 
                 case ($groupStatus == 'DESISTIDOS'):
-                    $arrayStatus = ['DESISTIDO', 'SIN RESPUESTA'];
+                    $arrayStatus = [15, 13];
 
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
                         return $this->model->orderBy('FECHASOL', 'desc')->select('SOLICITUD', 'GRAN_TOTAL')
@@ -1794,7 +1793,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->when($soliWeb, function ($q, $soliWeb) {
                     return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                 })->where('state', 'A')
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->get($this->columns);
         }
 
@@ -1823,7 +1822,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 })
                 ->when($status, function ($q, $status) {
                     if ($status == '') {
-                        return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                        return $q->where('ESTADO', '!=', 1);
                     }
                     return $q->where('ESTADO', $status);
                 })
@@ -1864,7 +1863,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             ->whereBetween('FECHASOL', [$from, $to])
             ->when($status, function ($q, $status) {
                 if ($status == '') {
-                    return $q->where('ESTADO', '!=', 'EN SUCURSAL');
+                    return $q->where('ESTADO', '!=', 1);
                 }
                 return $q->where('ESTADO', $status);
             })
@@ -1885,7 +1884,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
             return $this->model->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->get();
         } catch (QueryException $e) {
             dd($e);
@@ -1896,7 +1895,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         try {
             return $this->model->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->sum('GRAN_TOTAL');
         } catch (QueryException $e) {
             dd($e);
@@ -1908,7 +1907,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->whereBetween('FECHASOL', [$from, $to])
-                ->where('ESTADO', '!=', 'EN SUCURSAL')
+                ->where('ESTADO', '!=', 1)
                 ->groupBy('ESTADO')
                 ->get();
         } catch (QueryException $e) {

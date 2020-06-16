@@ -13,7 +13,8 @@
         @foreach($datas as $data)
         <tr>
           <td class="text-center"><a data-toggle="tooltip" title="Ver Cliente"
-              href="{{ route('customers.show', $data->CLIENTE) }}"> {{ str_replace(' ', '', $data->CLIENTE) }} </a>
+              href="{{ route('customers.show', $data->CLIENTE) }}">
+              {{ str_replace(' ', '', $data->CLIENTE) }} </a>
           </td>
           <td class="text-center">
             <a data-toggle="tooltip" title="Ver Solicitud"
@@ -23,7 +24,9 @@
             @endif </td>
           <td class="text-center">{{ $data->SUCURSAL }}</td>
           <td class="text-center">{{ $data->FECHASOL }} </td>
-          <td class="text-center"> {{ $data->ESTADO }} </td>
+          @if ($data->factoryRequestStatus)
+          <td class="text-center"> {{ $data->factoryRequestStatus->name }} </td>
+          @endif
           <td class="text-center"> $ {{ number_format  ($data->GRAN_TOTAL) }} </td>
         </tr>
         @endforeach

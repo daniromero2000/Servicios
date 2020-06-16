@@ -10,6 +10,7 @@ use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\TurnoOportuyas\TurnoOportuya;
@@ -91,7 +92,7 @@ class FactoryRequest extends Model
     public function hasCustomer()
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')
-            ->where('ESTADO', 'APROBADO');
+            ->where('ESTADO', 19);
     }
 
     public function customer()
@@ -127,6 +128,11 @@ class FactoryRequest extends Model
     public function factoryRequestProducts()
     {
         return $this->hasMany(FactoryRequestProduct::class, 'SOLICITUD');
+    }
+
+    public function factoryRequestStatus()
+    {
+        return $this->belongsTo(FactoryRequestStatus::class, 'ESTADO');
     }
 
     public function factoryRequestProducts2()

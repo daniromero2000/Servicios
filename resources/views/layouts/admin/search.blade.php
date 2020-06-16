@@ -19,35 +19,12 @@
                             <label for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
                                 request()->input('status') !!} style="width: 100%;">
-                                <option selected value> -- Selecciona Estado -- </option>
-                                @if ($_GET)
-                                @if (!empty($_GET['status']))
-                                <option selected>
-                                    {{ $_GET['status'] }}</option>
-                                @endif
-                                @endif
-                                <option>APROBADO</option>
-                                <option>ANALISIS</option>
-                                <option>ANULADA</option>
-                                <option>ANULADO</option>
-                                <option>CAMBIO CODEUDOR</option>
-                                <option>COMITE</option>
-                                <option>DEFINICION</option>
-                                <option>DESISTIDO</option>
-                                <option>EN ANALISIS</option>
-                                <option>EN FACTURACION</option>
-                                <option>EN SUCURSAL</option>
-                                <option>NEGADO</option>
-                                <option>PREACTIVO</option>
-                                <option>PREAPROBADO</option>
-                                <option>PROBLEMAS EN REFERENCIACION</option>
-                                <option>PROBLEMAS EN ANALISIS</option>
-                                <option>PROBLEMAS EN DEFINICION</option>
-                                <option>REQUIERE 1 CODEUDOR</option>
-                                <option>REQUIERE 2 CODEUDORES</option>
-                                <option>SIN RESPUESTA</option>
-                                <option>SUCURSAL</option>
-                                <option>REFERENCIACION</option>
+                                <option selected value> Selecciona Estado </option>
+                                @foreach ($statuses as $status)
+                                <option value="{{$status->id}}" @if(request()->input('status') == $status->id) selected
+                                    @endif
+                                    > {{ $status->name }} </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -65,7 +42,7 @@
                             <label for="subsidiary">Sucursal</label>
                             <select class="form-control  select2bs4" id="subsidiary" name="subsidiary" {!!
                                 request()->input('subsidiary')!!} style="width: 100%;">
-                                <option selected value> -- Selecciona Sucursal -- </option>
+                                <option selected value> Selecciona Sucursal </option>
                                 @foreach ($Subsidiarys as $Subsidiary)
                                 <option @if ($_GET) @if (!empty($_GET['subsidiary']))
                                     @if($_GET['subsidiary']==$Subsidiary->CODIGO) selected
