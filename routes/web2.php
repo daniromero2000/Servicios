@@ -185,6 +185,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('LeadAssessors')->group(function () {
         Route::resource('Administrator/leadAssessors', 'LeadsAssessorsController');
+        Route::get('Administrator/leads/director', 'LeadsAssessorsController@listLeadsDirector');
     });
 
     Route::namespace('DebtorInsurances')->group(function () {

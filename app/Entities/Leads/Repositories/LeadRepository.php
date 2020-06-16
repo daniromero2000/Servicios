@@ -673,4 +673,148 @@ class LeadRepository implements LeadRepositoryInterface
             dd($e);
         }
     }
+
+    public function countLeadForSubsidiary($from, $to, $subsidiary)
+    {
+        try {
+            $datas =  $this->model->with('subsidiary')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', 11)
+                ->where('subsidiary_id', $subsidiary)
+                ->get(['subsidiary_id'])->groupBy('subsidiary.CODIGO');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin datos' : $key;
+                $datas[] = ['subsidiary' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $leadSubsidiaryNames  = [];
+            $leadSubsidiaryValues  = [];
+            foreach ($datas as $leadSubsidiary) {
+                array_push($leadSubsidiaryNames, trim($leadSubsidiary['subsidiary']));
+                array_push($leadSubsidiaryValues, trim($leadSubsidiary['total']));
+            }
+
+            return [$leadSubsidiaryNames, $leadSubsidiaryValues];
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countLeadProductForSubsidiary($from, $to, $area, $subsidiary)
+    {
+        try {
+            $datas =  $this->model->with('leadProduct')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', $area)
+                ->where('subsidiary_id', $subsidiary)
+                ->get(['typeProduct'])->groupBy('leadProduct.lead_product');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin Producto' : $key;
+                $datas[] = ['typeProduct' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $leadDatalNames  = [];
+            $leadDatalValues  = [];
+            foreach ($datas as $leadDatal) {
+                array_push($leadDatalNames, trim($leadDatal['typeProduct']));
+                array_push($leadDatalValues, trim($leadDatal['total']));
+            }
+
+            return [$leadDatalNames, $leadDatalValues];
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countLeadServicesForSubsidiary($from, $to, $area, $subsidiary)
+    {
+        try {
+            $datas =  $this->model->with('leadService')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', $area)
+                ->where('subsidiary_id', $subsidiary)
+                ->get(['typeService'])->groupBy('leadService.service');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin Servicio' : $key;
+                $datas[] = ['Service' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $leadDatalNames  = [];
+            $leadDatalValues  = [];
+            foreach ($datas as $leadDatal) {
+                array_push($leadDatalNames, trim($leadDatal['Service']));
+                array_push($leadDatalValues, trim($leadDatal['total']));
+            }
+
+            return [$leadDatalNames, $leadDatalValues];
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countLeadStatusForSubsidiary($from, $to, $area, $subsidiary)
+    {
+        try {
+            $datas =  $this->model->with('leadStatuses')
+                ->whereBetween('created_at', [$from, $to])
+                ->where('lead_area_id', $area)
+                ->where('subsidiary_id', $subsidiary)
+                ->get(['state'])->groupBy('leadStatuses.status');
+
+            foreach ($datas as $key => $status) {
+                $option = ($key == '') ? 'Sin Estado' : $key;
+                $datas[] = ['state' => $option, 'total' => count($datas[$key])];
+                unset($datas[$key]);
+            }
+
+            $totalStatusesGenerals = $datas->sum('total');
+
+            $leadDatalNames  = [];
+            $leadDatalValues  = [];
+            foreach ($datas as $leadDatal) {
+                array_push($leadDatalNames, trim($leadDatal['state']));
+                array_push($leadDatalValues, trim($leadDatal['total']));
+            }
+            return [$leadDatalNames, $leadDatalValues, $totalStatusesGenerals];
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function countLeadsSubsidiary($from, $to, $subsidiary)
+    {
+        try {
+            return  $this->model->whereBetween('created_at', [$from, $to])->where('subsidiary_id', $subsidiary)->orderBy('id', 'desc')->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+    public function listLeadSubsidiary($totalView, $subsidiary): Support
+    {
+        try {
+            return  $this->model->with([
+                'leadStatusesLogs',
+                'leadStatus',
+                'leadAssessor',
+                'leadService',
+                'leadCampaign',
+                'comments',
+                'leadProduct',
+                'leadPrices',
+                'LeadArea'
+            ])->orderBy('id', 'desc')
+                ->where('subsidiary_id', $subsidiary)
+                ->skip($totalView)
+                ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

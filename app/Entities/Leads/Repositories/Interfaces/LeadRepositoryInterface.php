@@ -71,4 +71,16 @@ interface LeadRepositoryInterface
     public function searchLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null,  $channel = null, $city = null, $area = null, $service = null, $product = null): Collection;
 
     public function searchCustomLeads(string $text = null, $totalView,  $from = null,  $to = null, $status = null, $assessor = null, $city = null, $area = null, $service = null, $product = null): Collection;
+
+    public function countLeadForSubsidiary($from, $to, $subsidiary);
+
+    public function countLeadProductForSubsidiary($from, $to, $area, $subsidiary);
+
+    public function countLeadServicesForSubsidiary($from, $to, $area, $subsidiary);
+
+    public function countLeadStatusForSubsidiary($from, $to, $area, $subsidiary);
+
+    public function countLeadsSubsidiary($from, $to, $subsidiary);
+
+    public function listLeadSubsidiary($totalView, $subsidiary);
 }
