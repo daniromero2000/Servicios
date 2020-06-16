@@ -112,7 +112,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 			<div class="container-itemsPreHeader">
 				<a class="preHeader-item  borderLeftItems" href="/quienes-somos">Quiénes somos</a>
 				<a class="preHeader-item  borderLeftItems" href="/Nuestras-tiendas">Oficinas</a>
-				<a class="preHeader-item  borderLeftItems" href="#">01 8000 11 77 87 o (1) 484 2122 en Bogotá</a>
+				<a class="preHeader-item  borderLeftItems" href="#">01 8000 18 05 20 o (1) 484 2122 en Bogotá</a>
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
 				@if(Auth::guard('web')->check())
 				<div class="logoutButton mr-2">
