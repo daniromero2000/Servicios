@@ -105,7 +105,7 @@
 							<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 						</div>
 						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
-							Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente 018000117787
+							Si deseas cambiar el número de celular por favor comunícate con la línea de atención al cliente01 8000 18 05 20
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
@@ -125,7 +125,7 @@
 				</div>
 				@if(!(Auth::guard('assessor')->check()))
 				{!! NoCaptcha::display(['data-callback' => 'enableBtn']) !!}
-				@endif				
+				@endif
 				<div class="form-group">
 					<input type="checkbox" ng-model="leadInfo.termsAndConditions" id="termsAndConditions" value="1" required>
 					<label for="termsAndConditions" style="font-size: 13px; font-style: italic;">
@@ -140,12 +140,12 @@
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit" id="button1">
 						Siguiente
 					</button>
-					@else	
+					@else
 					<button type="submit" class="btn btn-primary buttonFormModal buttonFormModalSubmit">
 						Siguiente
 					</button>
-					@endif	
-					
+					@endif
+
 					<a href="/oportuya" class=" btn btn-danger buttonFormModal" data-dismiss="modal" aria-label="Close">
 						Volver
 					</a>
@@ -177,7 +177,7 @@
 								<input ng-hide="leadInfo.CEL_VAL" type="text" ng-model="leadInfo.telephone" validation-pattern="telephone" class="form-control inputsSteps inputText" id="telephone" required="true" ng-disabled="leadInfo.CEL_VAL" />
 								<input ng-show="leadInfo.CEL_VAL" ng-model="telephone" ng-disabled="true" type="text" readonly class="form-control inputsSteps inputText">
 								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
-									Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente 018000117787
+									Si deseas cambiar el número de celular, por favor comunícate con la línea de atención al cliente01 8000 18 05 20
 								</div>
 							</div>
 							<div class="col-12 text-center form-group">
@@ -245,7 +245,7 @@
 									<div class="offset-5 col-7">
 									<p>
 										Actualmente ya cuentas <br>
-										con una tarjeta <strong> Oportuya.</strong> 
+										con una tarjeta <strong> Oportuya.</strong>
 										<br>
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
@@ -261,7 +261,7 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
-								
+
 							</div>
 						</div>
 					</div>
@@ -322,7 +322,7 @@
 							<div class="col-10">
 								Descuentos en SOAT y otros seguros para que estés protegido siempre.
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 				<br>
@@ -343,8 +343,8 @@
 					<div class="col-12 border-bottom pasos-oportuya">
 						<div class="row">
 							<div class="col-2 col-md-1 text-center paso-oportuya-numero"> <span>2</span></div>
-							<div class="col-10 col-md-8"> <p>Deja tus datos completos según la solicitud de crédito 
-												que estés diligenciando.De la calidad de la información 
+							<div class="col-10 col-md-8"> <p>Deja tus datos completos según la solicitud de crédito
+												que estés diligenciando.De la calidad de la información
 												dependerá la velocidad en el resultado.
 												Además recuerda que todos los datos son verificados.</p>
 							</div>
@@ -356,9 +356,9 @@
 					<div class="col-12 border-bottom pasos-oportuya">
 						<div class="row">
 							<div class="col-md-1 col-2 text-center paso-oportuya-numero"> <span>3</span></div>
-							<div class="col-md-8 col-10"> <p>En el intermedio del proceso recibirás un token de 
-												confirmación para verificar la existencia de tu número 
-												telefónico;no lo elimines, el proceso te lo exigirá para 
+							<div class="col-md-8 col-10"> <p>En el intermedio del proceso recibirás un token de
+												confirmación para verificar la existencia de tu número
+												telefónico;no lo elimines, el proceso te lo exigirá para
 												continuar con tu solicitud.</p>
 							</div>
 							<div class="col-md-3 col-12	 text-center">
@@ -387,7 +387,7 @@
 						<p>Avances  aplica para las tres tarjetas <br>
 						Black, Blue y Gray: <br>
 						<span>Blue y Black:</span>hasta $500.000<br>
-						<span>Gray:</span>hasta $200.000	
+						<span>Gray:</span>hasta $200.000
 						</p>
 					</div>
 				</div>

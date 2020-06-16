@@ -142,7 +142,7 @@
 						</div>
 						<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
 							Si deseas cambiar el número de celular por favor comunícate con la línea de atención al
-							cliente 018000117787
+							cliente01 8000 18 05 20
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
@@ -236,7 +236,7 @@
 									readonly class="form-control inputsSteps inputText">
 								<div class="alert alert-warning" ng-show="leadInfo.CEL_VAL">
 									Si deseas cambiar el número de celular, por favor comunícate con la línea de
-									atención al cliente 018000117787
+									atención al cliente01 8000 18 05 20
 								</div>
 							</div>
 							<div class="col-12 text-center form-group">
