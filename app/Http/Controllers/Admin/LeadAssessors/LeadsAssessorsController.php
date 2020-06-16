@@ -120,4 +120,69 @@ class LeadsAssessorsController extends Controller
             'subsidaries'        => $subsidary
         ]);
     }
+
+    public function listLeadsDirector(Request $request)
+    {
+
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+        $director = auth()->user()->Assessor->SUCURSAL;
+        $leadsOfMonth = $this->leadInterface->countLeadsSubsidiary($from, $to, $director);
+
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->leadInterface->listLeadSubsidiary($skip * 30, $director);
+        if (request()->has('q')) {
+            $list = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                12,
+                $director,
+                request()->input('channel'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
+            );
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                12,
+                $director,
+                request()->input('channel'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
+
+            );
+        }
+
+        $listCount = $list->count();
+        $leadsOfMonth = $leadsOfMonth->count();
+        $profile = 2;
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
+
+
+        return view('leadAssessors.list', [
+            'leadsOfMonth'        => $leadsOfMonth,
+            'digitalChannelLeads' => $list,
+            'optionsRoutes'       => (request()->segment(2)),
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'listCount'           => $listCount,
+            'skip'                => $skip,
+            'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
+            'channels'            => $this->channelInterface->getAllChannelNames(),
+            'services'            => $this->serviceInterface->getAllServiceNames(),
+            'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
+            'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'listAssessors'       => $this->UserInterface->listUser($profile),
+            'subsidaries'         => $subsidary
+        ]);
+    }
 }

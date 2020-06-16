@@ -177,9 +177,11 @@
                     <div class="col-12">
                         <div class="col-12 d-flex ">
                             <span class="input-group-btn ml-auto btn-pr">
+                                @if (auth()->user()->idProfile != 15)
                                 <a class="btn btn-danger" href="{{$route}}">
                                     <i class="fas fa-times"></i> Restaurar filtros
                                 </a>
+                                @endif
                                 <button type="submit" id="search-btn" class="btn btn-primary"><i
                                         class="fa fa-search"></i>
                                     Buscar

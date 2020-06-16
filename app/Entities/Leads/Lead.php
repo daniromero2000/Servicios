@@ -70,6 +70,11 @@ class Lead extends Model
         return self::search($term);
     }
 
+    public function searchLeadsSubsidiaries($term)
+    {
+        return self::search($term);
+    }
+
     public function searchCustomLeads($term)
     {
         return self::search($term);
