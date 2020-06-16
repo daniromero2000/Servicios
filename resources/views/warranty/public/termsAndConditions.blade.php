@@ -51,7 +51,7 @@
         <p class="menuItem-text" align="justify">
             • En caso de presentarse algún problema, acérquese directamente al almacén para el registro, seguimiento y
             control del proceso de garantía, con el fin de que no sufra inconvenientes de retrasos con el fabricante. Si
-            la compra se realizó por la página web, comuníquese a la línea01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
+            la compra se realizó por la página web, comuníquese a la línea 01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
             Pereira.
         </p>
         <p class="menuItem-text" align="justify">
@@ -143,7 +143,7 @@
             aditamentos y accesorios necesarios para el funcionamiento del electrodoméstico adquirido.
         </p>
         <p class="menuItem-text" align="justify">
-            • En caso de inquietudes usted podrá comunicarse a la línea01 8000 18 05 20 o (6) 3358557 en Pereira, también
+            • En caso de inquietudes usted podrá comunicarse a la línea 01 8000 18 05 20 o (6) 3358557 en Pereira, también
             podrá escribir al correo electrónico servicioalcliente@lagobo.com
         </p>
         <p class="menuItem-text" align="justify">
@@ -263,7 +263,7 @@
         </p>
         <p class="menuItem-text" align="justify">
             • Si la compra fue presencial, usted debe ir al almacén y solicitar la garantía, en caso de haber realizado
-            la compra por la página web, debe comunicarse a la línea01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
+            la compra por la página web, debe comunicarse a la línea 01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
             Pereira.
         </p>
         <p class="menuItem-text" align="justify">
