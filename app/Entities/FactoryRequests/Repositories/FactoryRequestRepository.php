@@ -282,7 +282,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countAssessorFactoryRequestStatuses($from, $to, $assessor)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->whereBetween('FECHASOL', [$from, $to])
@@ -393,7 +393,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, $status)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->where('ESTADO', $status)
@@ -408,7 +408,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, $status)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->whereIn('ESTADO', $status)->whereBetween('FECHASOL', [$from, $to])
@@ -422,7 +422,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, $status)
     {
         try {
-            return  $this->model->select('ESTADO', DB::raw('count(*) as total'))
+            return  $this->model->with('factoryRequestStatus')->select('ESTADO', DB::raw('count(*) as total'))
                 ->where('state', 'A')
                 ->where('CODASESOR', $assessor)
                 ->whereNotIn('ESTADO', $status)
@@ -597,7 +597,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryDirector($totalView, $director): Support
     {
         try {
-            return $this->model->where('state', 'A')
+            return $this->model->with('factoryRequestStatus')->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->where('SUCURSAL', $director)
                 ->skip($totalView)
@@ -611,7 +611,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryDirectorTotal($from, $to, $director)
     {
         try {
-            return $this->model->where('state', 'A')
+            return $this->model->with('factoryRequestStatus')->where('state', 'A')
                 ->orderBy('SOLICITUD', 'desc')
                 ->whereBetween('FECHASOL', [$from, $to])
                 ->where('SUCURSAL', $director)

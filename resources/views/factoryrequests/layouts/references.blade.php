@@ -106,7 +106,7 @@
                 <th class="text-center" scope="col">Dirección</th>
                 <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
-                <th class="text-center" scope="col">Ciudad</th>
+                <th class="text-center" scope="col">Parentesco</th>
               </tr>
             </thead>
             <tbody class="body-table">
@@ -149,7 +149,7 @@
                 <th class="text-center" scope="col">Dirección</th>
                 <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
-                <th class="text-center" scope="col">Ciudad</th>
+                <th class="text-center" scope="col">Parentesco</th>
 
               </tr>
             </thead>

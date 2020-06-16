@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\FactoryRequestTurns;
 
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Subsidiaries\Subsidiary;
@@ -300,7 +301,7 @@ class FactoryRequesTurnController extends Controller
         }
 
         $listCount = $factoryRequestsTotals->count();
-
+        $statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
 
         return view('factoryrequestsTurns.list', [
             'factoryRequests'             => $list,
@@ -310,7 +311,8 @@ class FactoryRequesTurnController extends Controller
             'skip'                        => $skip,
             'factoryRequestsTotal'        => $factoryRequestsTotal,
             'Subsidiarys'                 => $Subsidiarys,
-            'analysts'                    => $analysts
+            'analysts'                    => $analysts,
+            'statuses'                    => $statuses
         ]);
     }
 
@@ -360,6 +362,17 @@ class FactoryRequesTurnController extends Controller
             $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array(15, 13));
             $estadosComites = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), 14);
             $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'), array(13, 15, 19, 16, 20, 14, 1));
+        }
+        foreach ($estadosNames as $key => $status) {
+            if ($estadosNames[$key]->factoryRequestStatus) {
+                $estadosNames[$key]['ESTADO'] =  $estadosNames[$key]->factoryRequestStatus->name;
+            }
+        }
+
+        foreach ($webCounts as $key => $status) {
+            if ($webCounts[$key]->factoryRequestStatus) {
+                $webCounts[$key]['ESTADO'] =  $webCounts[$key]->factoryRequestStatus->name;
+            }
         }
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);

@@ -48,13 +48,24 @@
                         style="width: 100%;">
                         <option selected value> Selecciona Grupos </option>
                         @if (request()->input('groupStatus') != '')
-                        <option selected>{!! request()->input('groupStatus')!!}</option>
-                        @endif
+                        <option @if (request()->input('groupStatus') == 'APROBADOS')
+                            selected @endif>APROBADOS</option>
+                        <option @if (request()->input('groupStatus') == 'DESISTIDOS')
+                            selected @endif>DESISTIDOS</option>
+                        <option @if (request()->input('groupStatus') == 'COMITE')
+                            selected @endif>COMITE</option>
+                        <option @if (request()->input('groupStatus') == 'NEGADO')
+                            selected @endif>NEGADO</option>
+                        <option @if (request()->input('groupStatus') == 'PENDIENTES')
+                            selected @endif>PENDIENTES</option>
+                        @else
                         <option>APROBADOS</option>
                         <option>DESISTIDOS</option>
                         <option>COMITE</option>
                         <option>NEGADO</option>
                         <option>PENDIENTES</option>
+                        @endif
+
                     </select>
                 </div>
             </div>
@@ -64,31 +75,11 @@
                     <select class="form-control  select2bs4" id="status" name="status" {!! request()->input('status')
                         !!} style="width: 100%;">
                         <option selected value> Selecciona Estado </option>
-                        @if (request()->input('status') != '')
-                        <option selected>{!! request()->input('status')!!}</option>
-                        @endif
-                        <option>APROBADO</option>
-                        <option>ANALISIS</option>
-                        <option>ANULADA</option>
-                        <option>ANULADO</option>
-                        <option>CAMBIO CODEUDOR</option>
-                        <option>COMITE</option>
-                        <option>DEFINICION</option>
-                        <option>DESISTIDO</option>
-                        <option>EN ANALISIS</option>
-                        <option>EN FACTURACION</option>
-                        <option>EN SUCURSAL</option>
-                        <option>NEGADO</option>
-                        <option>PREACTIVO</option>
-                        <option>PREAPROBADO</option>
-                        <option>PROBLEMAS EN REFERENCIACION</option>
-                        <option>PROBLEMAS EN ANALISIS</option>
-                        <option>PROBLEMAS EN DEFINICION</option>
-                        <option>REQUIERE 1 CODEUDOR</option>
-                        <option>REQUIERE 2 CODEUDORES</option>
-                        <option>SIN RESPUESTA</option>
-                        <option>SUCURSAL</option>
-                        <option>REFERENCIACION</option>
+                        @foreach ($statuses as $status)
+                        <option value="{{$status->id}}" @if(request()->input('status') == $status->id) selected
+                            @endif
+                            > {{ $status->name }} </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
