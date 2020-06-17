@@ -265,7 +265,7 @@ class FactoryRequesTurnController extends Controller
                             $value->customer['CELULAR'],
                             $value->customer['ACTIVIDAD'],
                             $value->FECHASOL,
-                            trim($value->ESTADO),
+                            trim($value->FactoryRequestStatus->name),
                             $tipoOportuya,
                             $subTipoOportuya,
                             $analista,
