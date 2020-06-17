@@ -177,10 +177,17 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('CallCenterLeads')->group(function () {
         Route::resource('Administrator/callcenterleads', 'CallCenterLeadController');
         Route::get('/Administrator/dashboard/CallCenterleads', 'CallCenterLeadController@dashboard')->name('CallCenterleads_dashboard');
+        Route::get('Administrator/dashboard/lead/subsidiary', 'CallCenterLeadController@dashboardSubsidiary');
+        Route::get('Administrator/leadSubsidiary', 'CallCenterLeadController@listLeadsSubsidiary')->name('leadSubsidiary.index');
     });
 
     Route::namespace('DigitalChannelLeadSlopes')->group(function () {
         Route::resource('Administrator/DigitalChannelLeadSlopes', 'DigitalChannelLeadSlopeController');
+    });
+
+    Route::namespace('LeadAssessors')->group(function () {
+        Route::resource('Administrator/leadAssessors', 'LeadsAssessorsController');
+        Route::get('Administrator/leads/director', 'LeadsAssessorsController@listLeadsDirector');
     });
 
     Route::namespace('DebtorInsurances')->group(function () {

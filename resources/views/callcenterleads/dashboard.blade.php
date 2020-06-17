@@ -7,7 +7,8 @@
         <div class="card card-primary card-outline card-outline-tabs">
           <div class="card-header p-0 border-bottom-0">
             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-              <li class="nav-item">
+              @if (auth()->user()->idProfile != 17)
+              <li class="nav-item @if (auth()->user()->idProfile != 17) active  @endif">
                 <a class="nav-link active" id="generals-tab" data-toggle="pill" href="#generals" role="tab"
                   aria-controls="generals" aria-selected="false">General</a>
               </li>
@@ -15,6 +16,13 @@
                 <a class="nav-link " id="digitalChanels-tab" data-toggle="pill" href="#digitalChanels" role="tab"
                   aria-controls="custom-tabs-three-settings" aria-selected="true">Canal Digital</a>
               </li>
+              @endif
+              <li class="nav-item @if (auth()->user()->idProfile == 17) active show @endif">
+                <a class="nav-link @if (auth()->user()->idProfile == 17) active show @endif" id="assessors-tab"
+                  data-toggle="pill" href="#assessors" role="tab" aria-controls="assessors"
+                  aria-selected="false">Asesores</a>
+              </li>
+              @if (auth()->user()->idProfile != 17)
               <li class="nav-item">
                 <a class="nav-link" id="insurances-tab" data-toggle="pill" href="#insurances" role="tab"
                   aria-controls="insurances" aria-selected="false">Seguros</a>
@@ -51,8 +59,7 @@
                 <a class="nav-link" id="libranzas-tab" data-toggle="pill" href="#libranzas" role="tab"
                   aria-controls="libranzas" aria-selected="false">Libranzas</a>
               </li>
-
-
+              @endif
             </ul>
           </div>
           <div class="card-body">
@@ -60,7 +67,8 @@
               <div class="tab-pane fade" id="custom-tabs-three-home" role="tabpanel"
                 aria-labelledby="custom-tabs-three-home-tab">
               </div>
-              <div class="tab-pane fade active show" id="generals" role="tabpanel" aria-labelledby="generals-tab">
+              <div class="tab-pane fade @if (auth()->user()->idProfile != 17) active show @endif" id="generals"
+                role="tabpanel" aria-labelledby="generals-tab">
                 <div class="row mt-3">
                   <div class="col-sm-12 col-md-5 col-lg-4">
                     <div class="col-12 col-sm-12">
@@ -196,6 +204,43 @@
                   <div class="col-12 col-md-8">
                     @include('digitalchannelleads.layouts.pie_services.pie_serviceCallCenter')
                     @include('digitalchannelleads.layouts.pie_products.pie_products_callCenter')
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade @if (auth()->user()->idProfile == 17) active show @endif" id="assessors"
+                role="tabpanel" aria-labelledby="assessors-tab">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <div class="col-12 col-sm-12">
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-12 ">
+                          <div class="row">
+                            <div class="col-12 ">
+                              <div class="small-box bg-primary">
+                                <div class="inner">
+                                  <h2>{{ $leadStatusSubsidiary[2] }}</h2>
+                                  <p style="margin-bottom: -4px !important;">Leads en este mes</p>
+                                </div>
+                                <div class="icon mt-3">
+                                  <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <div class="text-right mr-2">
+                                  <span class="info-box-text text-right">
+                                    <a href="/Administrator/leadSubsidiary" style="color: white; !important">Ver
+                                      Más</a></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    @include('digitalchannelleads.layouts.pie_subsidiary')
+                    @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_subsidiary')
+                  </div>
+                  <div class="col-12 col-md-8">
+                    @include('digitalchannelleads.layouts.pie_services.pie_serviceSubsidiary')
+                    @include('digitalchannelleads.layouts.pie_products.pie_products_subsidiary')
                   </div>
                 </div>
               </div>
@@ -338,5 +383,5 @@
 </div>
 @endsection
 @include('layouts.admin.dashboard_imports')
-@include('digitalchannelleads.dashboardJS')
+@include('callcenterleads.dashboardJS')
 @endsection

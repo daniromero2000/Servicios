@@ -13,14 +13,13 @@
                         <ol class="breadcrumb bradcrumb-reset float-sm-right">
                             <li class="breadcrumb-item"><a href="/Administrator/dashboard">Dashboard</a></li>
                             @if (auth()->user()->idProfile != 15)
-                            <li class="breadcrumb-item active"><a
-                                    href="/Administrator/dashboard/CallCenterleads">Dashboard
-                                    Leads Call Center</a></li>
+                            <li class="breadcrumb-item active"><a href="/Administrator/leadSubsidiary">Dashboard Leads
+                                    Sucursales </a></li>
                             @else
                             <li class="breadcrumb-item active"><a href="/Administrator/dashboard/director">Dashboard
                                     Directors</a></li>
                             @endif
-                            <li class="breadcrumb-item active"><a href="/Administrator/callcenterleads">Leads</a>
+                            <li class="breadcrumb-item active"><a href="/Administrator/leadSubsidiary">Leads</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -41,7 +40,7 @@
                     <div class="col-12">
                         <div class="card-header">
                             @include('layouts.admin.filter_digital_channel_leads', ['route' =>
-                            route('callcenterleads.index')])
+                            route('leadSubsidiary.index')])
                         </div>
                         <div class=" mt-2 col-12 col-sm-12 col-md-12">
                             <div class="row">

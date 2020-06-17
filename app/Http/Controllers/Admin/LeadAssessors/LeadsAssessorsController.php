@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin\LeadOportuyas;
+namespace App\Http\Controllers\Admin\LeadAssessors;
 
 use App\Entities\Campaigns\Repositories\Interfaces\CampaignRepositoryInterface;
 use App\Entities\Channels\Repositories\Interfaces\ChannelRepositoryInterface;
 use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterface;
+use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
+use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
-use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,11 +19,11 @@ use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\LeadPrices\Repositories\Interfaces\LeadPriceRepositoryInterface;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 
-class LeadOportuyaController extends Controller
+class LeadsAssessorsController extends Controller
 {
     private $LeadStatusesInterface, $leadInterface, $toolsInterface, $subsidiaryInterface;
     private $channelInterface, $serviceInterface, $campaignInterface, $customerInterface;
-    private $leadProductInterface;
+    private $leadProductInterface, $UserInterface, $LeadPriceInterface;
 
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
@@ -31,6 +32,7 @@ class LeadOportuyaController extends Controller
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
+        CustomerRepositoryInterface $customerRepositoryInterface,
         LeadProductRepositoryInterface $leadProductRepositoryInterface,
         LeadStatusRepositoryInterface $leadStatusRepositoryInterface,
         LeadPriceRepositoryInterface $LeadPriceRepositoryInterface,
@@ -44,6 +46,7 @@ class LeadOportuyaController extends Controller
         $this->channelInterface      = $channelRepositoryInterface;
         $this->serviceInterface      = $serviceRepositoryInterface;
         $this->campaignInterface     = $campaignRepositoryInterface;
+        $this->customerInterface     = $customerRepositoryInterface;
         $this->leadProductInterface  = $leadProductRepositoryInterface;
         $this->LeadStatusesInterface = $leadStatusRepositoryInterface;
         $this->LeadPriceInterface    = $LeadPriceRepositoryInterface;
@@ -55,23 +58,25 @@ class LeadOportuyaController extends Controller
 
     public function index(Request $request)
     {
-        $area = 6;
+
         $to = Carbon::now();
         $from = Carbon::now()->startOfMonth();
+        $assessor = auth()->user()->id;
+        $leadsOfMonth = $this->leadInterface->countLeadsAssessors($from, $to, $assessor);
 
-        $leadsOfMonth = $this->leadInterface->customListleadsTotal($from, $to, $area);
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
-        $list = $this->leadInterface->customListleads($skip * 30, $area);
+        $list = $this->leadInterface->listLeadAssessors($skip * 30, $assessor);
         if (request()->has('q')) {
-            $list = $this->leadInterface->searchCustomLeads(
+            $list = $this->leadInterface->searchLeads(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
-                request()->input('state'),
-                request()->input('assessor_id'),
+                12,
+                $assessor,
+                request()->input('channel'),
                 request()->input('city'),
-                $area,
+                request()->input('lead_area_id'),
                 request()->input('typeService'),
                 request()->input('typeProduct')
             );
@@ -80,23 +85,28 @@ class LeadOportuyaController extends Controller
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
-                request()->input('state'),
-                request()->input('assessor_id'),
+                12,
+                $assessor,
+                request()->input('channel'),
                 request()->input('city'),
-                $area,
+                request()->input('lead_area_id'),
                 request()->input('typeService'),
                 request()->input('typeProduct')
 
             );
         }
-        $listCount = $leadsOfMonth->count();
-        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
-        $listAssessors = 18;
 
-        return view('leadoportuya.list', [
+        $listCount = $list->count();
+        $leadsOfMonth = $leadsOfMonth->count();
+        $profile = 2;
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
+
+
+        return view('leadAssessors.list', [
+            'leadsOfMonth'        => $leadsOfMonth,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
-            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
@@ -106,7 +116,72 @@ class LeadOportuyaController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($listAssessors),
+            'listAssessors'       => $this->UserInterface->listUser($profile),
+            'subsidaries'        => $subsidary
+        ]);
+    }
+
+    public function listLeadsDirector(Request $request)
+    {
+
+        $to = Carbon::now();
+        $from = Carbon::now()->startOfMonth();
+        $director = auth()->user()->Assessor->SUCURSAL;
+        $leadsOfMonth = $this->leadInterface->countLeadsSubsidiary($from, $to, $director);
+
+        $skip = $this->toolsInterface->getSkip($request->input('skip'));
+        $list = $this->leadInterface->listLeadSubsidiary($skip * 30, $director);
+        if (request()->has('q')) {
+            $list = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                12,
+                $director,
+                request()->input('channel'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
+            );
+            $leadsOfMonth = $this->leadInterface->searchLeads(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                12,
+                $director,
+                request()->input('channel'),
+                request()->input('city'),
+                request()->input('lead_area_id'),
+                request()->input('typeService'),
+                request()->input('typeProduct')
+
+            );
+        }
+
+        $listCount = $list->count();
+        $leadsOfMonth = $leadsOfMonth->count();
+        $profile = 2;
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
+
+
+        return view('leadAssessors.list', [
+            'leadsOfMonth'        => $leadsOfMonth,
+            'digitalChannelLeads' => $list,
+            'optionsRoutes'       => (request()->segment(2)),
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'listCount'           => $listCount,
+            'skip'                => $skip,
+            'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),
+            'cities'              => $this->cityInterface->getCityByLabel(),
+            'channels'            => $this->channelInterface->getAllChannelNames(),
+            'services'            => $this->serviceInterface->getAllServiceNames(),
+            'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
+            'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
+            'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
+            'listAssessors'       => $this->UserInterface->listUser($profile),
             'subsidaries'         => $subsidary
         ]);
     }

@@ -5,23 +5,24 @@ namespace App\Http\Controllers\Admin\Directors;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
+use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class DirectorController extends Controller
 {
-  private $toolsInterface, $factoryInterface, $SubsidiaryInterface;
+  private $toolsInterface, $factoryInterface, $SubsidiaryInterface, $leadInterface;
 
   public function __construct(
+    LeadRepositoryInterface $LeadRepositoryInterface,
     FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
     ToolRepositoryInterface $toolRepositoryInterface,
     SubsidiaryRepositoryInterface $SubsidiaryRepositoryInterface
   ) {
-    $this->factoryInterface = $factoryRequestRepositoryInterface;
-    $this->toolsInterface = $toolRepositoryInterface;
+    $this->leadInterface       = $LeadRepositoryInterface;
+    $this->factoryInterface    = $factoryRequestRepositoryInterface;
+    $this->toolsInterface      = $toolRepositoryInterface;
     $this->SubsidiaryInterface = $SubsidiaryRepositoryInterface;
     $this->middleware('auth')->except('logout');
   }
@@ -31,7 +32,6 @@ class DirectorController extends Controller
     $to = Carbon::now();
     $from = Carbon::now()->startOfMonth();
     $assessor = '';
-
     $director = auth()->user()->Assessor->SUCURSAL;
     $skip     = $this->toolsInterface->getSkip($request->input('skip'));
     $list     = $this->factoryInterface->listFactoryDirector($skip * 30, $director);
@@ -145,6 +145,10 @@ class DirectorController extends Controller
 
     $rand  = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
     $color = '#' . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)] . $rand[rand(0, 15)];
+    $leadSubsidiary   = $this->leadInterface->countLeadForSubsidiary($from, $to, $director);
+    $leadProductSubsidiary  = $this->leadInterface->countLeadProductForSubsidiary($from, $to, 11, $director);
+    $leadServiceSubsidiary  = $this->leadInterface->countLeadServicesForSubsidiary($from, $to, 11, $director);
+    $leadStatusSubsidiary   = $this->leadInterface->countLeadStatusForSubsidiary($from, $to, 11, $director);
 
     $estadosNamesDirector   = $this->factoryInterface->countDirectorFactoryRequestStatuses($from, $to, $director);
     $webDirectorCounts      = $this->factoryInterface->countWebDirectorFactory($from, $to, $director);
@@ -167,13 +171,17 @@ class DirectorController extends Controller
     }
 
     if (request()->has('from')) {
-      $estadosNamesDirector         = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);
-      $webDirectorCounts            = $this->factoryInterface->countWebDirectorFactory(request()->input('from'), request()->input('to'), $director);
-      $factoryRequestsTotal = $this->factoryInterface->getDirectorFactoryTotal(request()->input('from'), request()->input('to'), $director);
-      $estadosAprobados = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector(request()->input('from'), request()->input('to'), $director, array('APROBADO', 'EN FACTURACION'));
-      $estadosNegados = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "NEGADO");
-      $estadosDesistidos = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "DESISTIDO");
-      $estadosPendientes = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector(request()->input('from'), request()->input('to'), $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+      $estadosNamesDirector   = $this->factoryInterface->countDirectorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $director);
+      $webDirectorCounts      = $this->factoryInterface->countWebDirectorFactory(request()->input('from'), request()->input('to'), $director);
+      $factoryRequestsTotal   = $this->factoryInterface->getDirectorFactoryTotal(request()->input('from'), request()->input('to'), $director);
+      $estadosAprobados       = $this->factoryInterface->countFactoryRequestsStatusesAprobadosDirector(request()->input('from'), request()->input('to'), $director, array('APROBADO', 'EN FACTURACION'));
+      $estadosNegados         = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "NEGADO");
+      $estadosDesistidos      = $this->factoryInterface->countFactoryRequestsStatusesGeneralsDirector(request()->input('from'), request()->input('to'), $director, "DESISTIDO");
+      $estadosPendientes      = $this->factoryInterface->countFactoryRequestsStatusesPendientesDirector(request()->input('from'), request()->input('to'), $director, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+      $leadProductSubsidiary  = $this->leadInterface->countLeadProductForSubsidiary(request()->input('from'), request()->input('to'), 11, $director);
+      $leadServiceSubsidiary  = $this->leadInterface->countLeadServicesForSubsidiary(request()->input('from'), request()->input('to'), 11, $director);
+      $leadStatusSubsidiary   = $this->leadInterface->countLeadStatusForSubsidiary(request()->input('from'), request()->input('to'), 11, $director);
+      $leadSubsidiary         = $this->leadInterface->countLeadForSubsidiary(request()->input('from'), request()->input('to'), $director);
     }
 
     $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
@@ -281,23 +289,27 @@ class DirectorController extends Controller
     }
 
     return view('director.dashboard', [
-      'statusesDirectorNames'    => $statusesDirectorNames,
-      'statusesValues'           => $statusesDirectorValues,
-      'statusesColors'           => $statusesDirectorColors,
-      'webValues'                => $webValues,
-      'webNames'                 => $webNames,
-      'webColors'                => $webColors,
-      'totalWeb'                 => array_sum($webValues),
-      'totalStatuses'            => array_sum($statusesDirectorValues),
-      'factoryRequestsTotal'     => $factoryRequestsTotal,
-      'statusesAprobadosValues'  => $statusesAprobadosValues,
-      'statusesNegadoValues'     => $statusesNegadoValues,
-      'statusesPendientesValues' => $statusesPendientesValues,
-      'statusesDesistidosValues' => $statusesDesistidosValues,
-      'valuesOfStatusesAprobados' => $valuesOfStatusesAprobados,
-      'valuesOfStatusesNegados' => $valuesOfStatusesNegados,
-      'valuesOfStatusesDesistidos' => $valuesOfStatusesDesistidos,
-      'valuesOfStatusesPendientes' => $valuesOfStatusesPendientes
+      'statusesDirectorNames'       => $statusesDirectorNames,
+      'statusesValues'              => $statusesDirectorValues,
+      'statusesColors'              => $statusesDirectorColors,
+      'webValues'                   => $webValues,
+      'webNames'                    => $webNames,
+      'webColors'                   => $webColors,
+      'totalWeb'                    => array_sum($webValues),
+      'totalStatuses'               => array_sum($statusesDirectorValues),
+      'factoryRequestsTotal'        => $factoryRequestsTotal,
+      'statusesAprobadosValues'     => $statusesAprobadosValues,
+      'statusesNegadoValues'        => $statusesNegadoValues,
+      'statusesPendientesValues'    => $statusesPendientesValues,
+      'statusesDesistidosValues'    => $statusesDesistidosValues,
+      'valuesOfStatusesAprobados'   => $valuesOfStatusesAprobados,
+      'valuesOfStatusesNegados'     => $valuesOfStatusesNegados,
+      'valuesOfStatusesDesistidos'  => $valuesOfStatusesDesistidos,
+      'valuesOfStatusesPendientes'  => $valuesOfStatusesPendientes,
+      'leadServiceSubsidiary'       => $leadServiceSubsidiary,
+      'leadProductSubsidiary'       => $leadProductSubsidiary,
+      'leadStatusSubsidiary'        => $leadStatusSubsidiary,
+      'leadSubsidiary'              => $leadSubsidiary
     ]);
   }
 

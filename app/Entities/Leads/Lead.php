@@ -11,6 +11,7 @@ use App\Entities\LeadProducts\LeadProduct;
 use App\Entities\LeadStatuses\LeadStatus;
 use App\Entities\LeadStatusesLogs\LeadStatusesLog;
 use App\Entities\Services\Service;
+use App\Entities\Subsidiaries\Subsidiary;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,7 +40,8 @@ class Lead extends Model
         'assessor_id',
         'description',
         'lead_area_id',
-        'expirationDateSoat'
+        'expirationDateSoat',
+        'subsidiary_id'
     ];
 
     protected $guarded = [
@@ -64,6 +66,11 @@ class Lead extends Model
 
 
     public function searchLeads($term)
+    {
+        return self::search($term);
+    }
+
+    public function searchLeadsSubsidiaries($term)
     {
         return self::search($term);
     }
@@ -127,8 +134,14 @@ class Lead extends Model
     {
         return $this->belongsTo(LeadArea::class);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'assessor_id');
+    }
+
+    public function subsidiary()
+    {
+        return $this->belongsTo(Subsidiary::class, 'subsidiary_id');
     }
 }
