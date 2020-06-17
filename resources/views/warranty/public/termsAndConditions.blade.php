@@ -1,7 +1,7 @@
 <!--
     **Project: SERVICIOS FINANCIEROS
     **Case of use: MODULO GARANTIAS
-    **Author: Luis David Giraldo Grajales 
+    **Author: Luis David Giraldo Grajales
     **Email: desarrolladorjunior@lagobo.com
     **Description: public view to warranty terms and conditions
     **Date: 6/03/2019
@@ -51,7 +51,7 @@
         <p class="menuItem-text" align="justify">
             • En caso de presentarse algún problema, acérquese directamente al almacén para el registro, seguimiento y
             control del proceso de garantía, con el fin de que no sufra inconvenientes de retrasos con el fabricante. Si
-            la compra se realizó por la página web, comuníquese a la línea 018000117787 y/o (6) 3358557 en la ciudad de
+            la compra se realizó por la página web, comuníquese a la línea 01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
             Pereira.
         </p>
         <p class="menuItem-text" align="justify">
@@ -143,7 +143,7 @@
             aditamentos y accesorios necesarios para el funcionamiento del electrodoméstico adquirido.
         </p>
         <p class="menuItem-text" align="justify">
-            • En caso de inquietudes usted podrá comunicarse a la línea 018000117787 o (6) 3358557 en Pereira, también
+            • En caso de inquietudes usted podrá comunicarse a la línea 01 8000 18 05 20 o (6) 3358557 en Pereira, también
             podrá escribir al correo electrónico servicioalcliente@lagobo.com
         </p>
         <p class="menuItem-text" align="justify">
@@ -263,7 +263,7 @@
         </p>
         <p class="menuItem-text" align="justify">
             • Si la compra fue presencial, usted debe ir al almacén y solicitar la garantía, en caso de haber realizado
-            la compra por la página web, debe comunicarse a la línea 018000117787 y/o (6) 3358557 en la ciudad de
+            la compra por la página web, debe comunicarse a la línea 01 8000 18 05 20 y/o (6) 3358557 en la ciudad de
             Pereira.
         </p>
         <p class="menuItem-text" align="justify">
@@ -292,7 +292,7 @@
         </p>
         <p class="menuItem-text" align="justify">
             • En caso de tener algún inconveniente con su garantía o demora en el servicio se puede comunicar a la línea
-            telefónica 018000117787 y/o (6) 3358557 en la ciudad de Pereira.
+            telefónica01 8000 18 05 20 y/o (6) 3358557 en la ciudad de Pereira.
         </p>
         <p class="menuItem-text" align="justify">
             • Si es de su preferencia también puede solicitar y tramitar su servicio de garantía por la plataforma
@@ -388,7 +388,7 @@
         </p>
         <p class="menuItem-text" align="justify">
             Página web: <a href="http://www.oportunidades.com.co"> <u>www.oportunidades.com.co</u></a> <br>
-            Línea gratuita nacional: 018000117787 <br>
+            Línea gratuita nacional: 01 8000 18 05 20 <br>
             Correo electrónico: <u> notificaciones@lagobo.com</u> <br>
             Línea telefónica: (6) 3358557 de la ciudad de Pereira. <br>
             Directamente en cada establecimiento de comercio <b> ALMACENES OPORTUNIDADES Y/O ELECTROFERTAS. </b> <br>

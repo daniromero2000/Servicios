@@ -617,7 +617,7 @@
 		</p>
 		<p class="menuItem-text">
 			Para ello se podrá dirigir correo electrónico a oficialdecumplimiento@lagobo.com.co, o comunicarse desde
-			cualquier teléfono fijo a nivel nacional a la línea gratuita 018000117787 opción 5 (Línea ética) o marcando
+			cualquier teléfono fijo a nivel nacional a la línea gratuita01 8000 18 05 20 opción 5 (Línea ética) o marcando
 			al teléfono fijo en Pereira 3358557 ext. 125. A través de estos canales toda solicitud será atendida por una
 			persona profesional responsable específicamente del cumplimiento ético de la compañía, de acuerdo al
 			presente código de ética, las normas legales, y demás practicas consideradas socialmente como apropiadas.
