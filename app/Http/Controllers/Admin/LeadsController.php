@@ -86,7 +86,7 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
         AND sb.STATE = 'A'
-        AND (cf.`ESTADO` = 19 OR cf.`ESTADO` = 17)
+        AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
           AND ti.deleted_at is null
          AND (ti.ASESOR = 998877
