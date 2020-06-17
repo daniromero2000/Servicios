@@ -44,6 +44,7 @@ use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInt
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 
 class assessorsController extends Controller
 {
@@ -215,18 +216,21 @@ class assessorsController extends Controller
 		}
 		$factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 		$listCount            = $listCount->count();
+		$statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
 
 		return view('assessors.assessors.list', [
-			'factoryRequests'     		   => $list,
-			'optionsRoutes'       		   => (request()->segment(2)),
-			'headers'             		   => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-			'listCount'           		   => $listCount,
-			'skip'                		   => $skip,
-			'factoryRequestsTotal'		   => $factoryRequestsTotal,
-			'statusesAprobadosValues'  => $statusesAprobadosValues,
-			'statusesNegadosValues' 	  => $statusesNegadosValues,
-			'statusesDesistidosValues' => $statusesDesistidosValues,
-			'statusesPendientesValues' => $statusesPendientesValues
+			'factoryRequests'                => $list,
+			'optionsRoutes'                  => (request()->segment(2)),
+			'headers'                        => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+			'listCount'                      => $listCount,
+			'skip'                           => $skip,
+			'factoryRequestsTotal'           => $factoryRequestsTotal,
+			'statusesAprobadosValues'         => $statusesAprobadosValues,
+			'statusesNegadosValues'        => $statusesNegadosValues,
+			'statusesDesistidosValues'        => $statusesDesistidosValues,
+			'statusesPendientesValues'     => $statusesPendientesValues,
+			'statuses'                     => $statuses
+
 		]);
 	}
 
@@ -1694,34 +1698,33 @@ class assessorsController extends Controller
 		$to         = Carbon::now();
 		$from       = Carbon::now()->startOfMonth();
 		$subsidiary = '';
-
 		$estadosAssessors        = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
 		$webAssessorsCounts      = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
 		$factoryAssessorsTotal   = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
-		$estadosAprobados        = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
-		$estadosNegados          = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
-		$estadosDesistidos       = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
-		$estadosPendientes       = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
-		$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-		$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-		$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-		$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+		$estadosAprobados        = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array(19, 20));
+		$estadosNegados          = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, 16);
+		$estadosDesistidos       = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, 15);
+		$estadosPendientes       = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20));
+		$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+		$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+		$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+		$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-			$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-			$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
-			$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
-			$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+			$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+			$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+			$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+			$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20), $subsidiary);
 		}
 
 		if (request()->has('from')) {
 			$estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
 			$webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory(request()->input('from'), request()->input('to'), $assessor);
 			$factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal(request()->input('from'), request()->input('to'), $assessor);
-			$estadosAprobados      = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
-			$estadosNegados        = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
-			$estadosDesistidos     = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
-			$estadosPendientes     = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+			$estadosAprobados      = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20));
+			$estadosNegados        = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16);
+			$estadosDesistidos     = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15);
+			$estadosPendientes     = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20));
 		}
 
 		$valuesEstadosAprobados  = $this->toolsInterface->extractValuesToArray($valuesEstadosAprobados);
@@ -1732,6 +1735,18 @@ class assessorsController extends Controller
 		$estadosNegados          = $this->toolsInterface->extractValuesToArray($estadosNegados);
 		$estadosDesistidos       = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
 		$estadosPendientes       = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+		foreach ($estadosAssessors as $key => $status) {
+			if ($estadosAssessors[$key]->factoryRequestStatus) {
+				$estadosAssessors[$key]['ESTADO'] =  $estadosAssessors[$key]->factoryRequestStatus->name;
+			}
+		}
+
+		foreach ($webAssessorsCounts as $key => $status) {
+			if ($webAssessorsCounts[$key]->factoryRequestStatus) {
+				$webAssessorsCounts[$key]['ESTADO'] =  $webAssessorsCounts[$key]->factoryRequestStatus->name;
+			}
+		}
 
 		$estadosAssessors     = $estadosAssessors->toArray();
 		$webAssessorsCounts   = $webAssessorsCounts->toArray();
