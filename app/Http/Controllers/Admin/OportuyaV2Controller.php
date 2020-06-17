@@ -566,6 +566,7 @@ class OportuyaV2Controller extends Controller
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
+		$this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
 		$dataCode = json_decode($dataCode, true);
 		$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
 		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
