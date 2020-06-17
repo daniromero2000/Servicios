@@ -141,16 +141,16 @@ class assessorsController extends Controller
 		$skip         = $this->toolsInterface->getSkip($request->input('skip'));
 		$list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 		$listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-			$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
-			$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
-			$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+			$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+			$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+			$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20), $subsidiary);
 		}
 		if (request()->has('q')) {
 			$list = $this->factoryInterface->searchFactoryAseessors(
@@ -1268,7 +1268,7 @@ class assessorsController extends Controller
 		$lastName = $lastName[0];
 		$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		$estadoSolic = 'ANALISIS';
+		$estadoSolic = 3;
 		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 		$resultUbica = $this->validateConsultaUbica($identificationNumber);
 		if ($resultUbica == 0) {
@@ -1276,7 +1276,7 @@ class assessorsController extends Controller
 			if ($confronta == 1) {
 				$form = $this->getFormConfronta($identificationNumber);
 				if (empty($form)) {
-					$estadoSolic = "ANALISIS";
+					$estadoSolic = 3;
 				} else {
 					return [
 						'form' => $form,
@@ -1284,10 +1284,10 @@ class assessorsController extends Controller
 					];
 				}
 			} else {
-				$estadoSolic = 'ANALISIS';
+				$estadoSolic = 3;
 			}
 		} else {
-			$estadoSolic = 'APROBADO';
+			$estadoSolic = 19;
 		}
 
 		$policyCredit = [
@@ -1325,7 +1325,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 'ANALISIS' : $estadoSolic;
+		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
@@ -1435,9 +1435,9 @@ class assessorsController extends Controller
 		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
 
 		if ($getResultConfronta[0]->cod_resp == 1) {
-			$estadoSolic = "APROBADO";
+			$estadoSolic = 19;
 		} else {
-			$estadoSolic = "ANALISIS";
+			$estadoSolic = 3;
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
@@ -1458,7 +1458,7 @@ class assessorsController extends Controller
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
-		$estado = ($estadoSolic == "APROBADO") ? "APROBADO" : "PREAPROBADO";
+		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
 		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -1473,7 +1473,7 @@ class assessorsController extends Controller
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 'EN SUCURSAL';
+		$estadoSolic = 1;
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
@@ -1533,11 +1533,11 @@ class assessorsController extends Controller
 		$this->datosClienteInterface->addDatosCliente($data);
 		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
 		$infoLead        = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
-		if ($estadoSolic == "APROBADO") {
+		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
@@ -1556,7 +1556,7 @@ class assessorsController extends Controller
 					$infoLead->TARJETA
 				);
 			}
-		} elseif ($estadoSolic == "EN SUCURSAL") {
+		} elseif ($estadoSolic == 1) {
 			$debtor         = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
 			$debtor->SOLIC  = $numSolic;
@@ -1575,7 +1575,7 @@ class assessorsController extends Controller
 		$customer->ESTADO = $estadoResult;
 		$customer->save();
 		$infoLead = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
