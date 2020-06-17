@@ -95,40 +95,40 @@ class assessorsController extends Controller
 		FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
 		AnalisisRepositoryInterface $analisisRepositoryInterface
 	) {
-		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
-		$this->codebtorInterface               = $codebtorRepositoryInterface;
-		$this->kinshipInterface                = $kinshipRepositoryInterface;
-		$this->temporaryCustomerInterface      = $temporaryCustomerRepositoryInterface;
-		$this->customerProfessionInterface     = $customerProfessionRepositoryInterface;
-		$this->assessorInterface               = $AssessorRepositoryInterface;
-		$this->factoryInterface                = $factoryRequestRepositoryInterface;
-		$this->toolsInterface                  = $toolRepositoryInterface;
-		$this->consultationValidityInterface   = $consultationValidityRepositoryInterface;
-		$this->customerInterface               = $customerRepositoryInterface;
-		$this->subsidiaryInterface             = $subsidiaryRepositoryInterface;
-		$this->customerCellPhoneInterface      = $customerCellPhoneRepositoryInterface;
-		$this->fosygaInterface                 = $fosygaRepositoryInterface;
-		$this->webServiceInterface             = $WebServiceRepositoryInterface;
-		$this->registraduriaInterface          = $registraduriaRepositoryInterface;
-		$this->commercialConsultationInterface = $commercialConsultationRepositoryInterface;
-		$this->creditCardInterface             = $creditCardRepositoryInterface;
-		$this->UpToDateFinancialCifinInterface = $UpToDateFinancialCifinRepositoryInterface;
-		$this->CifinFinancialArrearsInterface  = $CifinFinancialArrearRepositoryInterface;
-		$this->cifinRealArrearsInterface       = $cifinRealArrearRepositoryInterface;
-		$this->cifinScoreInterface             = $cifinScoreRepositoryInterface;
-		$this->intentionInterface              = $intentionRepositoryInterface;
-		$this->extintFinancialCifinInterface   = $extintFinancialCifinRepositoryInterface;
-		$this->UpToDateRealCifinInterface      = $upToDateRealCifinsRepositoryInterface;
-		$this->extinctRealCifinInterface       = $extintRealCifinRepositoryInterface;
-		$this->ubicaInterface                  = $ubicaRepositoryInterface;
-		$this->ruafInterface                   = $ruafRepositoryInterface;
-		$this->cityInterface                   = $cityRepositoryInterface;
-		$this->cliCelInterface                 = $cliCelRepositoryInterface;
-		$this->policyInterface                 = $policyRepositoryInterface;
-		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
-		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
-		$this->fosygaTempInterface             = $fosygaTempRepositoryInterface;
-		$this->AnalisisInterface               = $analisisRepositoryInterface;
+		$this->secondCodebtorInterface            = $secondCodebtorRepositoryInterface;
+		$this->codebtorInterface                  = $codebtorRepositoryInterface;
+		$this->kinshipInterface                   = $kinshipRepositoryInterface;
+		$this->temporaryCustomerInterface         = $temporaryCustomerRepositoryInterface;
+		$this->customerProfessionInterface        = $customerProfessionRepositoryInterface;
+		$this->assessorInterface                  = $AssessorRepositoryInterface;
+		$this->factoryInterface                   = $factoryRequestRepositoryInterface;
+		$this->toolsInterface                     = $toolRepositoryInterface;
+		$this->consultationValidityInterface      = $consultationValidityRepositoryInterface;
+		$this->customerInterface                  = $customerRepositoryInterface;
+		$this->subsidiaryInterface                = $subsidiaryRepositoryInterface;
+		$this->customerCellPhoneInterface         = $customerCellPhoneRepositoryInterface;
+		$this->fosygaInterface                    = $fosygaRepositoryInterface;
+		$this->webServiceInterface                = $WebServiceRepositoryInterface;
+		$this->registraduriaInterface             = $registraduriaRepositoryInterface;
+		$this->commercialConsultationInterface    = $commercialConsultationRepositoryInterface;
+		$this->creditCardInterface                = $creditCardRepositoryInterface;
+		$this->UpToDateFinancialCifinInterface    = $UpToDateFinancialCifinRepositoryInterface;
+		$this->CifinFinancialArrearsInterface     = $CifinFinancialArrearRepositoryInterface;
+		$this->cifinRealArrearsInterface          = $cifinRealArrearRepositoryInterface;
+		$this->cifinScoreInterface                = $cifinScoreRepositoryInterface;
+		$this->intentionInterface                 = $intentionRepositoryInterface;
+		$this->extintFinancialCifinInterface      = $extintFinancialCifinRepositoryInterface;
+		$this->UpToDateRealCifinInterface         = $upToDateRealCifinsRepositoryInterface;
+		$this->extinctRealCifinInterface          = $extintRealCifinRepositoryInterface;
+		$this->ubicaInterface                     = $ubicaRepositoryInterface;
+		$this->ruafInterface                      = $ruafRepositoryInterface;
+		$this->cityInterface                      = $cityRepositoryInterface;
+		$this->cliCelInterface                    = $cliCelRepositoryInterface;
+		$this->policyInterface                    = $policyRepositoryInterface;
+		$this->OportuyaTurnInterface              = $oportuyaTurnRepositoryInterface;
+		$this->datosClienteInterface              = $datosClienteRepositoryInterface;
+		$this->fosygaTempInterface                = $fosygaTempRepositoryInterface;
+		$this->AnalisisInterface                  = $analisisRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1616,6 +1616,8 @@ class assessorsController extends Controller
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;
 		$this->codebtorInterface->createCodebtor($customerFactoryRequest);
 		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
+		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
+		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
 		return $customerFactoryRequest;
 	}
 

@@ -10,6 +10,7 @@ use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\TurnoOportuyas\TurnoOportuya;
@@ -162,5 +163,10 @@ class FactoryRequest extends Model
     public function factoryRequestCodebtor2()
     {
         return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR2');
+    }
+
+    public function states()
+    {
+        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id');
     }
 }
