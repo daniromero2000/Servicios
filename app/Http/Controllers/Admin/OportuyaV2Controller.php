@@ -1809,7 +1809,8 @@ class OportuyaV2Controller extends Controller
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
-
+		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
+		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
 		return $customerFactoryRequest;
 	}
 
