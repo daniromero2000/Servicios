@@ -82,11 +82,11 @@ class LeadsController extends Controller
     products ON `ti`.product_id = products.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
-        AND sb.ESTADO = 'APROBADO'
+        AND sb.ESTADO = 19
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
         AND sb.STATE = 'A'
-        AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
+        AND (cf.`ESTADO` = 19 OR cf.`ESTADO` = 17)
         AND ti.CEDULA = cf.CEDULA
           AND ti.deleted_at is null
          AND (ti.ASESOR = 998877
@@ -161,7 +161,9 @@ class LeadsController extends Controller
         AND `TB_INTENCIONES`.`deleted_at` is null
          AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1024530584
+        OR `TB_INTENCIONES`.`ASESOR` = 1088315168
        OR `TB_INTENCIONES`.`ASESOR` =  1088302337
+       OR `TB_INTENCIONES`.`ASESOR` =  1088308622
         OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
