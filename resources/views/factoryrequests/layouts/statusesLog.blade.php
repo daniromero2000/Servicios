@@ -14,7 +14,7 @@
                         style="@if($data->factoryRequestStatus['color']== '#ffff00')color:#5e5252 @else color: white @endif ; background-color: {{$data->factoryRequestStatus['color'] }}"
                         class="btn btn-info btn-block">{{ $data->factoryRequestStatus['name']}}</span> </h3>
                 <div class="timeline-body">
-                    <i class="fa fa-user"></i> {{$data->usuario}}
+                    <i class="fa fa-user"></i> {{$data->oportudataUser->NOMBRE}}
                 </div>
                 <div class="timeline-body">
                     {{$data->created_at->format('M d, Y h:i a')}}
