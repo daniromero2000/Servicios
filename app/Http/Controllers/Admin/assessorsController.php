@@ -1621,7 +1621,7 @@ class assessorsController extends Controller
 		$this->codebtorInterface->createCodebtor($customerFactoryRequest);
 		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
 		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
-		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
+		$factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
 		return $customerFactoryRequest;
 	}
 
