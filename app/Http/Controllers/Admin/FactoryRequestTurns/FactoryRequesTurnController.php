@@ -295,7 +295,7 @@ class FactoryRequesTurnController extends Controller
                     }
 
                     $export = new ExportToExcel($printExcel);
-                    return Excel::download($export, 'IntencionesClientes.xlsx');
+                    return Excel::download($export, 'SolicitudesClientes.xlsx');
                     break;
             }
         }
