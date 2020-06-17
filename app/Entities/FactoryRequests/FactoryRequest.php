@@ -169,4 +169,9 @@ class FactoryRequest extends Model
     {
         return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR2');
     }
+
+    public function states()
+    {
+        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id');
+    }
 }

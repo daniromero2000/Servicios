@@ -14,9 +14,13 @@ class FactoryRequestStatusesLog extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'estadosolicitudes_id',
+        'solic_fab_id',
+        'usuario'
+    ];
 
-    protected $dates = ['created_at'];
+    protected $dates = ['created_at', 'updated_at'];
 
     public function factoryRequestStatus()
     {
