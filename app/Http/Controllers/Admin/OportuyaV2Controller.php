@@ -435,6 +435,14 @@ class OportuyaV2Controller extends Controller
 				return $consultasLead;
 			}
 
+			if ($consultasLead['resp'] == '-5') {
+				return -5;
+			}
+
+			if ($consultasLead['resp'] == '-6') {
+				return -5;
+			}
+
 			if (isset($consultasLead['resp']['resp'])) {
 				if ($consultasLead['resp']['resp'] == 'false') {
 					return -2;
@@ -565,18 +573,16 @@ class OportuyaV2Controller extends Controller
 		$date = $codeVerification->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
-		// $dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
+		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
 		$data = $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
-		// $data = json_decode($data, true);
-		// dd($data);
-		// $dataCode = json_decode($dataCode, true);
-		// dd($dataCode);
-		// $codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
-		// $codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
-		// $codeVerification['sms_send_description'] = $dataCode['messages'][0]['status']['description']; // description
-		// $codeVerification['sms_id'] = $dataCode['messages'][0]['messageId']; // messageId
-		// $codeVerification = $codeVerification->toArray();
-		// $this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
+		$data = json_decode($data, true);
+		$dataCode = json_decode($dataCode, true);
+		$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
+		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
+		$codeVerification['sms_send_description'] = $dataCode['messages'][0]['status']['description']; // description
+		$codeVerification['sms_id'] = $dataCode['messages'][0]['messageId']; // messageId
+		$codeVerification = $codeVerification->toArray();
+		$this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
 		return "true";
 	}
 
@@ -1019,8 +1025,10 @@ class OportuyaV2Controller extends Controller
 		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
-			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
-				return ['resp' => "false"];
+			if ($getDataFosyga->fuenteFallo == 'SI') {
+				return ['resp' => -6];
+			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+				return ['resp' => -6];
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
 					$statusAfiliationCustomer = false;
@@ -1042,7 +1050,9 @@ class OportuyaV2Controller extends Controller
 		//3.1 Estado de documento
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
 		if (!empty($getDataRegistraduria)) {
-			if (!empty($getDataRegistraduria->estado)) {
+			if ($getDataRegistraduria->fuenteFallo == 'SI') {
+				return ['resp' => -6];
+			} elseif (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO                     = 'NEGADO';
 					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
@@ -1589,10 +1599,10 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 3;
-			$policyCredit = [
+			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
-				'resp' => 'true'
+				'resp'                 => -5
 			];
 		} else {
 			$policyCredit = [
@@ -1603,6 +1613,10 @@ class OportuyaV2Controller extends Controller
 			$policyCredit = $this->validatePolicyCredit_new($identificationNumber);
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
+
+			if($policyCredit['resp'] == '-6'){
+				return ['resp' => -6];
+			}
 
 			if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
 				return [
