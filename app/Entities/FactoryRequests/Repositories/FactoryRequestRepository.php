@@ -1023,7 +1023,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     $arrayStatus = [13, 15, 19, 16, 20, 14, 1];
 
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
-                        return $this->model->orderBy('FECHASOL', 'desc')
+                        return $this->model->orderBy('FECHASOL', 'asc')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
@@ -1070,7 +1070,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })
                             ->where('state', 'A')
-                            ->orderBy('FECHASOL', 'desc')
+                            ->orderBy('FECHASOL', 'asc')
                             ->when($action, function ($q) use ($totalView, $action) {
                                 if ($action != 'export') {
                                     return $q->skip($totalView)->take(50);
@@ -1118,7 +1118,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->skip($totalView)->take(50);
                             }
                         })
-                        ->orderBy('FECHASOL', 'desc')
+                        ->orderBy('FECHASOL', 'asc')
                         ->get($this->columns);
                     break;
 
@@ -1527,7 +1527,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                     $arrayStatus = [13, 15, 19, 16, 20, 14, 1];
 
                     if (is_null($text) && is_null($from) && is_null($to) && is_null($status) && is_null($subsidiary) && is_null($soliWeb) && is_null($customerLine) && is_null($analyst)) {
-                        return $this->model->orderBy('FECHASOL', 'ASC')->select('SOLICITUD', 'GRAN_TOTAL')
+                        return $this->model->orderBy('FECHASOL', 'asc')->select('SOLICITUD', 'GRAN_TOTAL')
                             ->when($soliWeb, function ($q, $soliWeb) {
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })->where('state', 'A')
@@ -1569,7 +1569,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                                 return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                             })
                             ->where('state', 'A')
-                            ->orderBy('FECHASOL', 'ASC')
+                            ->orderBy('FECHASOL', 'asc')
                             ->get($this->columns);
                     }
 
@@ -1607,7 +1607,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                             return $q->where('SOLICITUD_WEB', $soliWeb)->where('STATE', 'A');
                         })
                         ->where('state', 'A')
-                        ->orderBy('FECHASOL', 'ASC')
+                        ->orderBy('FECHASOL', 'asc')
                         ->get($this->columns);
                     break;
 
