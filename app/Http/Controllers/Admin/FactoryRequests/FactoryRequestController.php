@@ -148,10 +148,11 @@ class FactoryRequestController extends Controller
             'fabrica' => 0,
             'sucursal' => 0
         ];
+
         foreach ($datas as $key => $value) {
-            $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key]->created_at);
+            $date1 =  $datas[$key]->created_at;
             if (isset($datas[$key + 1]->created_at)) {
-                $date2 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key + 1]->created_at);
+                $date2 =  $datas[$key + 1]->created_at;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                     $data['fabrica'] += $date1->diffInSeconds($date2);
                 } else {
