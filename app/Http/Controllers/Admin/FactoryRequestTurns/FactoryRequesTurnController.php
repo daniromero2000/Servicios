@@ -60,7 +60,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('customerLine'),
                         request()->input('analyst'),
                         request()->input('action')
-                    )->sortByDesc('FECHASOL');
+                    );
 
                     $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurnsTotal(
                         request()->input('q'),
