@@ -1,6 +1,7 @@
 $(function () {
     $("#typeAreaSelectCreate").on('change', ontypeAreaSelectCreate)
 });
+
 $(function () {
     $("#subsidary").on('change', ontypeAreaSelectCreate)
 });
@@ -75,7 +76,13 @@ $(function () {
 });
 
 function dataLead(dataId) {
+    user = $("#idProfile").val();
+    if (user != 16 || user != 4) {
+        $("#typeAreaSelectEdit" + dataId).prop("disabled", true);
+        $("#channel" + dataId).prop("disabled", true);
+    }
     ontypeServiceSelectedProductEditModal(dataId)
+
 }
 
 function ontypeServiceSelectedProductEditModal(dataId) {
