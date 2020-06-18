@@ -153,22 +153,20 @@ class LeadsController extends Controller
         $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
         FROM CLIENTE_FAB as cf, cifin_score as score, TB_INTENCIONES
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
-        LEFT JOIN SOLIC_FAB ON SOLIC_FAB.CLIENTE = cf.CEDULA
-        LEFT JOIN products ON `TB_INTENCIONES`.product_id = products.id
+        LEFT JOIN    products ON `TB_INTENCIONES`.product_id = products.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
         AND `TB_INTENCIONES`.`deleted_at` is null
-        AND (`TB_INTENCIONES`.`ASESOR` = 998877
+         AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1024530584
         OR `TB_INTENCIONES`.`ASESOR` = 1088315168
-        OR `TB_INTENCIONES`.`ASESOR` =  1088302337
-        OR `TB_INTENCIONES`.`ASESOR` =  1088308622
+       OR `TB_INTENCIONES`.`ASESOR` =  1088302337
+       OR `TB_INTENCIONES`.`ASESOR` =  1088308622
         OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
         AND score.`scocedula` = cf.`CEDULA`
         AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
-        AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)
-        AND SOLIC_FAB.FECHASOL = (SELECT MAX('FECHASOL') FROM SOLIC_FAB WHERE CLIENTE = cf.CEDULA)";
+        AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
         if ($request['q'] != '') {
             $queryTradicional .= sprintf(
@@ -185,12 +183,12 @@ class LeadsController extends Controller
 
         if ($request['qfechaInicialTR'] != '') {
             $request['qfechaInicialTR'] .= " 00:00:00";
-            $queryTradicional .= sprintf(" AND (SOLIC_FAB.FECHASOL >= '%s') ", $request['qfechaInicialTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` >= '%s') ", $request['qfechaInicialTR']);
         }
 
         if ($request['qfechaFinalTR'] != '') {
             $request['qfechaFinalTR'] .= " 23:59:59";
-            $queryTradicional .= sprintf(" AND (SOLIC_FAB.FECHASOL <= '%s') ", $request['qfechaFinalTR']);
+            $queryTradicional .= sprintf(" AND (TB_INTENCIONES.`FECHA_INTENCION` <= '%s') ", $request['qfechaFinalTR']);
         }
 
         if ($request['qOrigenTR'] != '') {
@@ -198,7 +196,7 @@ class LeadsController extends Controller
         }
 
         $respTotalLeadsTradicional = DB::connection('oportudata')->select($queryTradicional);
-        $queryTradicional .= "ORDER BY SOLIC_FAB.FECHASOL DESC ";
+        $queryTradicional .= "ORDER BY `FECHA_INTENCION` DESC ";
         $queryTradicional .= sprintf(" LIMIT %s,30", $request['initFromTR']);
 
         return [
