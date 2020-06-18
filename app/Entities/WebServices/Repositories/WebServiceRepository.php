@@ -70,7 +70,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{\r\n\t\"bulkId\":\"$code\",\r\n\t\"messages\":[\r\n\t\t{\r\n\t\t\t\"from\":\"InfoSMS\",\r\n\t\t\t\"destinations\":[\r\n\t\t\t\t{\r\n\t\t\t\t\t\"to\":\"57$celNumber\",\r\n\t\t\t\t\t\"messageId\":\"$code\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"text\":\"$text\",\r\n\t\t\t\"flash\":false,\r\n\t\t\t\"intermediateReport\":false,\r\n\t\t\t\"validityPeriod\": 720\r\n\t\t}\r\n\t],\r\n\t\"tracking\":{\r\n\t\t\"track\":\"SMS\",\r\n\t\t\"type\":\"MY_CAMPAIGN\"\r\n\t}\r\n}",
+            CURLOPT_POSTFIELDS => "{\r\n\t\"bulkId\":\"$code\",\r\n\t\"messages\":[\r\n\t\t{\r\n\t\t\t\"from\":\"InfoSMS\",\r\n\t\t\t\"destinations\":[\r\n\t\t\t\t{\r\n\t\t\t\t\t\"to\":\"57$celNumber\",\r\n\t\t\t\t\t\"messageId\":\"$code\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"text\":\"$text\",\r\n\t\t\t\"flash\":false,\r\n\t\t\t\"intermediateReport\":false,\r\n\t\t\t\"validityPeriod\": 15\r\n\t\t}\r\n\t],\r\n\t\"tracking\":{\r\n\t\t\"track\":\"SMS\",\r\n\t\t\"type\":\"MY_CAMPAIGN\"\r\n\t}\r\n}",
             CURLOPT_HTTPHEADER => array(
               "accept: application/json",
               "authorization: Basic ". base64_encode($username . ":" . $password),
