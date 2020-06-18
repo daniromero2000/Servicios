@@ -7,8 +7,8 @@
         <div class="card card-primary card-outline card-outline-tabs">
           <div class="card-header p-0 border-bottom-0">
             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-              @if (auth()->user()->idProfile != 17)
-              <li class="nav-item @if (auth()->user()->idProfile != 17) active  @endif">
+              @if (auth()->user()->idProfile != 23)
+              <li class="nav-item @if (auth()->user()->idProfile != 23) active  @endif">
                 <a class="nav-link active" id="generals-tab" data-toggle="pill" href="#generals" role="tab"
                   aria-controls="generals" aria-selected="false">General</a>
               </li>
@@ -17,12 +17,12 @@
                   aria-controls="custom-tabs-three-settings" aria-selected="true">Canal Digital</a>
               </li>
               @endif
-              <li class="nav-item @if (auth()->user()->idProfile == 17) active show @endif">
-                <a class="nav-link @if (auth()->user()->idProfile == 17) active show @endif" id="assessors-tab"
+              <li class="nav-item @if (auth()->user()->idProfile == 23) active show @endif">
+                <a class="nav-link @if (auth()->user()->idProfile == 23) active show @endif" id="assessors-tab"
                   data-toggle="pill" href="#assessors" role="tab" aria-controls="assessors"
                   aria-selected="false">Asesores</a>
               </li>
-              @if (auth()->user()->idProfile != 17)
+              @if (auth()->user()->idProfile != 23)
               <li class="nav-item">
                 <a class="nav-link" id="insurances-tab" data-toggle="pill" href="#insurances" role="tab"
                   aria-controls="insurances" aria-selected="false">Seguros</a>
@@ -67,7 +67,7 @@
               <div class="tab-pane fade" id="custom-tabs-three-home" role="tabpanel"
                 aria-labelledby="custom-tabs-three-home-tab">
               </div>
-              <div class="tab-pane fade @if (auth()->user()->idProfile != 17) active show @endif" id="generals"
+              <div class="tab-pane fade @if (auth()->user()->idProfile != 23) active show @endif" id="generals"
                 role="tabpanel" aria-labelledby="generals-tab">
                 <div class="row mt-3">
                   <div class="col-sm-12 col-md-5 col-lg-4">
@@ -207,7 +207,7 @@
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade @if (auth()->user()->idProfile == 17) active show @endif" id="assessors"
+              <div class="tab-pane fade @if (auth()->user()->idProfile == 23) active show @endif" id="assessors"
                 role="tabpanel" aria-labelledby="assessors-tab">
                 <div class="row">
                   <div class="col-12 col-md-4">

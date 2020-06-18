@@ -259,11 +259,6 @@ function loadLead() {
             $("#nameCreate").val(data.name);
             $("#lastNameCreate").val(data.lastName);
             $("#emailCreate").val(data.email);
-        } else {
-            $("#identificationNumberCreate").val("");
-            $("#nameCreate").val("");
-            $("#lastNameCreate").val("");
-            $("#emailCreate").val("");
-        };
+        }
     });
 };
