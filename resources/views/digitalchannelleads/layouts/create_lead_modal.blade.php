@@ -181,8 +181,8 @@
 
                     <div class="col-12 col-sm-12 form-group">
                       <label for="description">Observación</label>
-                      <input type="textarea" ng-model="lead.nearbyCity" validation-pattern="text" id="descriptionCreate"
-                        name="description" cols="10" class="form-control">
+                      <textarea validation-pattern="text" id="descriptionCreate" name="description" cols="10"
+                        class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
