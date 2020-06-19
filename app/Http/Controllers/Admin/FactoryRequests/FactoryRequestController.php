@@ -149,17 +149,45 @@ class FactoryRequestController extends Controller
             'sucursal' => 0
         ];
 
+
+
+
         foreach ($datas as $key => $value) {
             $date1 =  $datas[$key]->created_at;
+
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
+                $secondsDays = $date1->diffInSeconds($date2) / 28800;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
-                    $data['fabrica'] += $date1->diffInSeconds($date2);
+                    if ($secondsDays > 1) {
+                        $removeSeconds = $secondsDays * 57600;
+                        $data['fabrica'] += $date1->diffInSeconds($date2);
+                        $data['fabrica'] -= $removeSeconds;
+                    } else {
+                        $data['fabrica'] += $date1->diffInSeconds($date2);
+                    }
                 } else {
-                    $data['sucursal'] += $date1->diffInSeconds($date2);
+                    if ($secondsDays > 1) {
+                        $removeSeconds = $secondsDays * 57600;
+                        $data['sucursal'] += $date1->diffInSeconds($date2);
+                        $data['sucursal'] -= $removeSeconds;
+                    } else {
+                        $data['sucursal'] += $date1->diffInSeconds($date2);
+                    }
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+
 
         $timeFactory =  Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true);
         $timeSubsidiary =  Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true);
