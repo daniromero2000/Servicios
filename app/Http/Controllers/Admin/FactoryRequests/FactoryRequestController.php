@@ -154,9 +154,9 @@ class FactoryRequestController extends Controller
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
                 $secondsDays = $date1->diffInSeconds($date2) / 28800;
-                $removeSeconds = $secondsDays * 57600;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                     if ($secondsDays > 1) {
+                        $removeSeconds = $secondsDays * 28800;
                         $data['fabrica'] += $date1->diffInSeconds($date2);
                         $data['fabrica'] = $data['fabrica'] - $removeSeconds;
                     } else {
@@ -164,6 +164,7 @@ class FactoryRequestController extends Controller
                     }
                 } else {
                     if ($secondsDays > 1) {
+                        $removeSeconds = $secondsDays * 28800;
                         $data['sucursal'] += $date1->diffInSeconds($date2);
                         $data['sucursal'] = $data['sucursal'] - $removeSeconds;
                     } else {
