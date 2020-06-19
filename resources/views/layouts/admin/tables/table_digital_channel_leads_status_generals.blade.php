@@ -113,34 +113,34 @@ use Carbon\Carbon;
                             <div class="card-body">
                               <div class="row">
                                 <div class="col-12 col-sm-6 no-padding-right">
-                                  <label for="lastName">Cédula </label>
-                                  <input type="text" name="identificationNumber" id="identificationNumber"
+                                  <label for="lastName{{$data->id}}">Cédula </label>
+                                  <input type="text" name="identificationNumber" id="identificationNumber{{$data->id}}"
                                     class="form-control"
                                     value="{!! $data->identificationNumber ?: old('lastName')  !!}">
                                 </div>
-                                <input hidden type="text" id="valueModal" value="{{$data->id}}">
+                                <input hidden type="text" id="valueModal{{$data->id}}" value="{{$data->id}}">
                                 <div class="col-12 col-sm-6 no-padding-right">
                                   <label for="name">Nombre <span class="text-danger">*</span></label>
-                                  <input type="text" name="name" id="name" validation-pattern="name"
+                                  <input type="text" name="name" id="name{{$data->id}}" validation-pattern="name"
                                     placeholder="Nombre" class="form-control"
                                     value="{!! $data->name ?: old('name')  !!}" required>
                                 </div>
                                 <div class="col-12 col-sm-6 no-padding-right">
                                   <label for="lastName">Apellido <span class="text-danger">*</span></label>
-                                  <input type="text" name="lastName" id="lastName" validation-pattern="name"
-                                    placeholder="Apellido" class="form-control"
+                                  <input type="text" name="lastName" id="lastName{{$data->id}}"
+                                    validation-pattern="name" placeholder="Apellido" class="form-control"
                                     value="{!! $data->lastName ?: old('lastName')  !!}" required>
                                 </div>
                                 <div class="col-12 col-sm-6 no-padding-right">
                                   <label for="email">email </label>
-                                  <input type="text" name="email" id="email" validation-pattern="email"
+                                  <input type="text" name="email" id="email{{$data->id}}" validation-pattern="email"
                                     placeholder="Email" class="form-control"
                                     value="{!! $data->email ?: old('email')  !!}">
                                 </div>
                                 <div class="col-12 col-sm-6 no-padding-right">
                                   <label for="telephone">Teléfono </label>
-                                  <input type="text" name="telephone" id="telephone" validation-pattern="phone"
-                                    placeholder="Teléfono" class="form-control"
+                                  <input type="text" name="telephone" id="telephone{{$data->id}}"
+                                    validation-pattern="phone" placeholder="Teléfono" class="form-control"
                                     value="{!! $data->telephone ?: old('telephone')  !!}">
                                 </div>
                                 <div class="col-12 col-sm-6 no-padding-right">
@@ -159,8 +159,8 @@ use Carbon\Carbon;
                                 <div class="col-12 col-sm-6 no-padding-right">
                                   <div class="form-group w-100">
                                     <label for="name">Ciudad aledaña</label>
-                                    <input type="text" name="nearbyCity" id="nearbyCity" validation-pattern="text"
-                                      placeholder="Ciudad Aledaña" class="form-control"
+                                    <input type="text" name="nearbyCity" id="nearbyCity{{$data->id}}"
+                                      validation-pattern="text" placeholder="Ciudad Aledaña" class="form-control"
                                       value="{!! $data->nearbyCity ?: old('nearbyCity')  !!}">
                                   </div>
                                 </div>
@@ -283,9 +283,9 @@ use Carbon\Carbon;
                                 </div>
 
                                 <div class="col-12 col-sm-6 no-padding-right">
-                                  <label for="telephone">Observación </label>
-                                  <input type="textarea" name="description" id="description" validation-pattern="text"
-                                    placeholder="Observación" class="form-control"
+                                  <label for="telephone{{$data->id}}">Observación </label>
+                                  <input type="textarea" name="description" id="description{{$data->id}}"
+                                    validation-pattern="text" placeholder="Observación" class="form-control"
                                     value="{!! $data->description ?: old('description')  !!}">
                                 </div>
 
@@ -348,12 +348,12 @@ use Carbon\Carbon;
                 <form action="{{ route('Comments.store') }}" method="post" class="form" enctype="multipart/form-data">
                   <div class="box-body">
                     @csrf
-                    <input name="idLead" id="idLead" hidden value="{{ $data->id }}">
+                    <input name="idLead" id="idLead{{$data->id}}" hidden value="{{ $data->id }}">
                     <div class="form-group">
 
                       <label for="comment">Comentario <span class="text-danger">*</span></label>
-                      <input type="text" name="comment" validation-pattern="text" id="comment" placeholder="Comentario"
-                        class="form-control" value="{{ old('comment') }}" required autofocus>
+                      <input type="text" name="comment" validation-pattern="text" id="comment{{$data->id}}"
+                        placeholder="Comentario" class="form-control" value="{{ old('comment') }}" required autofocus>
                     </div>
                   </div>
                   <div class="box-footer">

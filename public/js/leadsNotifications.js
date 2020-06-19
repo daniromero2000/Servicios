@@ -1,15 +1,9 @@
 
 $(document).ready(function () {
-    // console.log("ready!");
     userArea = $("#authUserAreaId").val();
-    // console.log($("#authUserAreaId").val())
-
     if (userArea != 0) {
-
-        // console.log($("#authUserId").val())
         user = $("#authUserId").val();
         $.get('/getLeadNotifications/' + user + '', function (data) {
-            // console.log(data);
             var html_notification = '';
             if (data.expirationDateSoat != '') {
                 for (var i = 0; i < data.expirationDateSoat.length; i++) {
@@ -17,15 +11,11 @@ $(document).ready(function () {
                 }
             }
             if (data.danger != '') {
-                // console.log(data.danger);
                 for (var i = 0; i < data.danger.length; i++) {
                     html_notification += '<a href="/Administrator/digitalchannelleads/' + data.danger[i].lead_id + '" class="dropdown-item"> <div class="media"><div class="media-body"> <h3 class="dropdown-item-title"> ' + data.danger[i].nameLead + ' <span class="float-right text-sm text-danger" > <i class="fas fa-star"></i></span ></h3 > <p class="text-sm"> Ultima Actualización </p><p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> Hace ' + data.danger[i].diference + '</p> </div > </div > </a > ';
                 }
-                // console.log(data.danger);
-
             }
             if (data.warning != '') {
-                // console.log(data.warning);
                 for (var i = 0; i < data.warning.length; i++) {
                     html_notification += '<a href="/Administrator/digitalchannelleads/' + data.warning[i].lead_id + '" class="dropdown-item"> <div class="media"><div class="media-body"> <h3 class="dropdown-item-title"> ' + data.warning[i].nameLead + ' <span class="float-right text-sm text-warning" > <i class="fas fa-star"></i></span ></h3 > <p class="text-sm"> Ultima Actualización </p><p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> Hace ' + data.warning[i].diference + '</p> </div > </div > </a > ';
                 }

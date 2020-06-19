@@ -484,6 +484,20 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function countFactoryRequestsTotalGeneralsTurns($from, $to, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                ->where('state', 'A')
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor = null, $status, $subsidiary = null)
     {
         try {
@@ -905,6 +919,21 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
                 ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
                 ->take(30)
+                ->get($this->columns);
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
+    public function listFactoryRequestsRecovering(): Support
+    {
+        try {
+            return  $this->model->whereHas('recoveringStates', function ($query) {
+                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
+            })->where('state', 'A')
+                ->where('ESTADO', 8)
+                ->orWhere('ESTADO', 18)
                 ->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
