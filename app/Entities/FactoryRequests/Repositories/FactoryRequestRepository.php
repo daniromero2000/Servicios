@@ -900,7 +900,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequestsTurns($totalView): Support
     {
         try {
-            return  $this->model->with('recoveringStates')->where('state', 'A')
+            return  $this->model->where('state', 'A')
                 ->where('ESTADO', '!=', 1)
                 ->orderBy('SOLICITUD', 'desc')
                 ->skip($totalView)
@@ -912,16 +912,15 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     }
 
 
-    public function listFactoryRequestsRecovering($totalView): Support
+    public function listFactoryRequestsRecovering(): Support
     {
         try {
             return  $this->model->whereHas('recoveringStates', function ($query) {
-                $query->where('estadosolicitudes_id', 8);
+                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
             })->where('state', 'A')
-                ->where('ESTADO', '!=', 1)
+                ->where('ESTADO', 8)
+                ->orWhere('ESTADO', 18)
                 ->orderBy('SOLICITUD', 'desc')
-                ->skip($totalView)
-                ->take(30)
                 ->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
