@@ -149,6 +149,17 @@ class FactoryRequestController extends Controller
             'sucursal' => 0
         ];
 
+        // $from = Carbon::createFromFormat('Y-m-d H:i:s', '2020-06-17 16:46:00');
+        // $to =
+        //     Carbon::createFromFormat('Y-m-d H:i:s', '2020-06-18 11:05:00');
+
+
+
+        // $seguntosTotal = $to->diffInSeconds($from);
+
+        // $secondsDays = ($from->diffInSeconds($to)) / 86400;
+        // $removeSeconds = $secondsDays * 57600;
+        // $seguntosTotalFinal = $seguntosTotal - $removeSeconds;
 
 
 
@@ -157,7 +168,7 @@ class FactoryRequestController extends Controller
 
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
-                $secondsDays = $date1->diffInSeconds($date2) / 28800;
+                $secondsDays = $date1->diffInSeconds($date2) / 86400;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                     if ($secondsDays > 1) {
                         $removeSeconds = $secondsDays * 57600;
