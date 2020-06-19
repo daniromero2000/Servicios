@@ -366,7 +366,7 @@ class assessorsController extends Controller
 				];
 				$this->cliCelInterface->createCliCel($data);
 			}
-
+			$this->webServiceInterface->execMigrateCustomer($identificationNumber);
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			if ($request->get('CIUD_EXP') != '') {
