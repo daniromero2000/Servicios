@@ -79,7 +79,7 @@
                                             <div class="small-box bg-info">
                                                 <div class="inner">
                                                     <h3 class="text-lg">Tiempo en Fábrica</h3>
-                                                    <p> {{$timeFactory[0]}} {{$timeFactory[1]}}</p>
+                                                    <p> {{$timeFactory}} </p>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="ion ion-clock"></i>
@@ -92,7 +92,7 @@
                                             <div class="small-box bg-success">
                                                 <div class="inner">
                                                     <h3 class="text-lg">Tiempo en Sucursal</h3>
-                                                    <p> {{$timeSubsidiary[0]}} {{$timeSubsidiary[1]}}</p>
+                                                    <p> {{$timeSubsidiary}} </p>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="ion ion-clock"></i>

@@ -149,48 +149,20 @@ class FactoryRequestController extends Controller
             'sucursal' => 0
         ];
 
-        $labourHours = 8;
-
         foreach ($datas as $key => $value) {
             $date1 =  $datas[$key]->created_at;
-
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
-                $secondsDays = $date1->diffInSeconds($date2) / 28800;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
-                    if ($secondsDays > 1) {
-                        $removeSeconds = $secondsDays * 57600;
-                        $data['fabrica'] += $date1->diffInSeconds($date2);
-                        $data['fabrica'] -= $removeSeconds;
-                    } else {
-                        $data['fabrica'] += $date1->diffInSeconds($date2);
-                    }
+                    $data['fabrica'] += $date1->diffInSeconds($date2);
                 } else {
-                    if ($secondsDays > 1) {
-                        $removeSeconds = $secondsDays * 57600;
-                        $data['sucursal'] += $date1->diffInSeconds($date2);
-                        $data['sucursal'] -= $removeSeconds;
-                    } else {
-                        $data['sucursal'] += $date1->diffInSeconds($date2);
-                    }
+                    $data['sucursal'] += $date1->diffInSeconds($date2);
                 }
             }
         }
 
-        if (($data['fabrica'] / 60) / 60 > 1) {
-            $timeFactory = [$data['fabrica'] / 60 / 60, 'Horas'];
-        } else {
-            $timeFactory = [$data['fabrica'] / 60, 'Minutos'];
-        }
-        if (($data['sucursal'] / 60) / 60 > 1) {
-            $timeSubsidiary = [$data['sucursal'] / 60 / 60, 'Horas'];
-        } else {
-            $timeSubsidiary = [$data['sucursal'] / 60, 'Minutos'];
-        }
-
-        $timeFactory[0] = round($timeFactory[0], 1);
-
-        $timeSubsidiary[0] = round($timeSubsidiary[0], 1);
+        $timeFactory =  Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true);
+        $timeSubsidiary =  Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true);
 
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
