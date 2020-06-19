@@ -920,7 +920,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
             })->where('state', 'A')
                 ->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
-                ->orderBy('SOLICITUD', 'ASC')
                 ->get($this->columns);
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
