@@ -484,6 +484,20 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function countFactoryRequestsTotalGeneralsTurns($from, $to, $status)
+    {
+        try {
+            return  $this->model->select('ESTADO', DB::raw('sum(GRAN_TOTAL) as total'))
+                ->where('state', 'A')
+                ->whereIn('ESTADO', $status)
+                ->whereBetween('FECHASOL', [$from, $to])
+                ->groupBy('ESTADO')
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor = null, $status, $subsidiary = null)
     {
         try {
