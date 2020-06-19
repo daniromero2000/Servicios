@@ -151,10 +151,9 @@ class FactoryRequestController extends Controller
 
         foreach ($datas as $key => $value) {
             $date1 =  $datas[$key]->created_at;
-
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
-                $secondsDays = $date1->diffInSeconds($date2) / 86400;
+                $secondsDays = $date1->diffInSeconds($date2) / 28800;
                 $removeSeconds = $secondsDays * 57600;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                     if ($secondsDays > 1) {
@@ -174,13 +173,10 @@ class FactoryRequestController extends Controller
             }
         }
 
-        $timeFactory =  Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true);
-        $timeSubsidiary =  Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true);
-
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
-            'timeFactory' => $timeFactory,
-            'timeSubsidiary' => $timeSubsidiary
+            'timeFactory' => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true),
+            'timeSubsidiary' =>  Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true)
         ]);
     }
 
