@@ -154,7 +154,7 @@ class FactoryRequestController extends Controller
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
                 $secondsDays = $date1->diffInSeconds($date2) / 28800;
-                $removeSeconds = $secondsDays * 57600;
+                $removeSeconds = $secondsDays * 28800;
                 if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
                     if ($secondsDays > 1) {
                         $data['fabrica'] += $date1->diffInSeconds($date2);
