@@ -143,10 +143,20 @@ class FactoryRequestController extends Controller
 
     public function show(int $id)
     {
+
         $datas = $this->factoryRequestInterface->findFactoryRequestByIdFull($id)->factoryRequestStatusesLogs;
         $data = [
             'fabrica' => 0,
             'sucursal' => 0
+        ];
+        $weekMap = [
+            0 => 'SU',
+            1 => 'MO',
+            2 => 'TU',
+            3 => 'WE',
+            4 => 'TH',
+            5 => 'FR',
+            6 => 'SA',
         ];
 
         foreach ($datas as $key => $value) {
@@ -154,23 +164,25 @@ class FactoryRequestController extends Controller
             if (isset($datas[$key + 1]->created_at)) {
                 $date2 =  $datas[$key + 1]->created_at;
                 $secondsDays = $date1->diffInSeconds($date2) / 28800;
-                if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
-                    if ($secondsDays > 1 && $secondsDays < 3) {
-                        $secondsDays = $secondsDays - 1;
-                        $removeSeconds = $secondsDays * 28800;
-                        $data['fabrica'] += $date1->diffInSeconds($date2);
-                        $data['fabrica'] = $data['fabrica'] - $removeSeconds;
+                if ($weekMap[$date1->dayOfWeek] != 'SU') {
+                    if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
+                        if ($secondsDays > 1 && $secondsDays < 3) {
+                            $secondsDays = $secondsDays - 1;
+                            $removeSeconds = $secondsDays * 28800;
+                            $data['fabrica'] += $date1->diffInSeconds($date2);
+                            $data['fabrica'] = $data['fabrica'] - $removeSeconds;
+                        } else {
+                            $data['fabrica'] += $date1->diffInSeconds($date2);
+                        }
                     } else {
-                        $data['fabrica'] += $date1->diffInSeconds($date2);
-                    }
-                } else {
-                    if ($secondsDays > 1 && $secondsDays < 3) {
-                        $secondsDays = $secondsDays - 1;
-                        $removeSeconds = $secondsDays * 28800;
-                        $data['sucursal'] += $date1->diffInSeconds($date2);
-                        $data['sucursal'] = $data['sucursal'] - $removeSeconds;
-                    } else {
-                        $data['sucursal'] += $date1->diffInSeconds($date2);
+                        if ($secondsDays > 1 && $secondsDays < 3) {
+                            $secondsDays = $secondsDays - 1;
+                            $removeSeconds = $secondsDays * 28800;
+                            $data['sucursal'] += $date1->diffInSeconds($date2);
+                            $data['sucursal'] = $data['sucursal'] - $removeSeconds;
+                        } else {
+                            $data['sucursal'] += $date1->diffInSeconds($date2);
+                        }
                     }
                 }
             }
@@ -178,8 +190,8 @@ class FactoryRequestController extends Controller
 
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
-            'timeFactory' => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true),
-            'timeSubsidiary' =>  Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true)
+            'timeFactory'    => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true),
+            'timeSubsidiary' => Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true)
         ]);
     }
 
