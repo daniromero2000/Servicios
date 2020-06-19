@@ -110,6 +110,27 @@
                   @endif
                 </div>
               </div>
+
+              <div class="col-md-8 col-xl-9">
+                <div class="card card-default">
+                  <div class="card-header">
+                    <h3 class="card-title">Pendientes</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    </div>
+                  </div>
+                  <div class="card-body px-0">
+
+                    @if($recovering)
+                    @include('layouts.admin.tables.tables_factory_request_turns_status', [$headers, 'datas' =>
+                    $recovering ])
+                    @include('layouts.admin.pagination.pagination', [$skip])
+                    @else
+                    @include('layouts.admin.pagination.pagination_null', [$skip])
+                    @endif
+                  </div>
+                </div>
             </div>
 
           </div>

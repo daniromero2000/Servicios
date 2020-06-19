@@ -22,4 +22,14 @@ class FactoryRequestStatusesLogRepository implements FactoryRequestStatusesLogRe
             dd($e);
         }
     }
+
+    public function listRecovering()
+    {
+
+        try {
+            return $this - model->where();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

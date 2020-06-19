@@ -99,4 +99,6 @@ interface FactoryRequestRepositoryInterface
   public function getFactoryRequestsTotalTurn($from, $to);
 
   public function countFactoryRequestsStatusesTurn($from, $to);
+
+  public function listFactoryRequestsRecovering($totalView): Support;
 }

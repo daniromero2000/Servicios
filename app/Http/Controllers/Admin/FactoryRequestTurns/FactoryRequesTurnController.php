@@ -40,6 +40,10 @@ class FactoryRequesTurnController extends Controller
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequestsTurns($skip * 30);
+
+        $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 30);
+
+
         if (request()->has('skip')) {
             $list = $this->factoryRequestInterface->listFactoryRequestsTurns(request()->input('skip') * 30);
         }
@@ -60,7 +64,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('customerLine'),
                         request()->input('analyst'),
                         request()->input('action')
-                    );
+                    )->sortByDesc('FECHASOL');
 
                     $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequestTurnsTotal(
                         request()->input('q'),
@@ -73,7 +77,7 @@ class FactoryRequesTurnController extends Controller
                         request()->input('groupStatus'),
                         request()->input('customerLine'),
                         request()->input('analyst')
-                    );
+                    )->sortByDesc('FECHASOL');
 
                     $factoryRequestsTotal = $factoryRequestsTotals->sum('GRAN_TOTAL');
 
@@ -312,7 +316,8 @@ class FactoryRequesTurnController extends Controller
             'factoryRequestsTotal'        => $factoryRequestsTotal,
             'Subsidiarys'                 => $Subsidiarys,
             'analysts'                    => $analysts,
-            'statuses'                    => $statuses
+            'statuses'                    => $statuses,
+            'recovering' => $recovering
         ]);
     }
 
