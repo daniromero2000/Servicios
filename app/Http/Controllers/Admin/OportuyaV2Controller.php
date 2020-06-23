@@ -454,7 +454,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estado = $consultasLead['infoLead']->ESTADO;
-			if ($estado == 'PREAPROBADO' || $estado == 'SIN COMERCIAL' || $estado == 'APROBADO') {
+			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
 				$quotaApprovedAdvance = $consultasLead['quotaApprovedAdvance'];
 				return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $consultasLead['infoLead']->numSolic, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -1827,7 +1827,7 @@ class OportuyaV2Controller extends Controller
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
-		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
+		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
 		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
 		return $customerFactoryRequest;
 	}
