@@ -125,7 +125,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $traditionalCreditBondPrice      = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $basePublicPriceOportuyaCustomer = round(($product['iva_cost'] - $protectionVat)/((100 - $productList['percentage_base_oportuya_customer']) / 100));
                 $bluePublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
-                $blueBondPrice                   = round(($basePublicPriceOportuyaCustomer * (1 - ($productList['bond_blue'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $blueBondPrice                   = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $blackPublicPrice                = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $blackBondPrice                  = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
             } elseif ($productList['zone'] == 'BAJA') {
@@ -136,7 +136,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $traditionalCreditBondPrice      = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
                 $bluePublicPrice                 = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
-                $blueBondPrice                   = round(($basePublicPriceOportuyaCustomer * (1 - ($productList['bond_blue'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
+                $blueBondPrice                   = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
                 $blackPublicPrice                = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100) * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $blackBondPrice                  = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
             } else {
@@ -146,7 +146,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $traditionalCreditBondPrice      = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
                 $bluePublicPrice                 = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
-                $blueBondPrice                   = round(($basePublicPriceOportuyaCustomer * (1 - ($productList['bond_blue'] / 100))) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
+                $blueBondPrice                   = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
                 $blackPublicPrice                = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100) * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $blackBondPrice                  = round($blackPublicPrice * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
             }
