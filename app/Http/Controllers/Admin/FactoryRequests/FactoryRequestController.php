@@ -188,10 +188,12 @@ class FactoryRequestController extends Controller
             }
         }
 
+
+
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
-            'timeFactory'    => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true),
-            'timeSubsidiary' => Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true)
+            'timeFactory'    => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true, true, 3),
+            'timeSubsidiary' => Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true, true, 3)
         ]);
     }
 
@@ -199,6 +201,7 @@ class FactoryRequestController extends Controller
     {
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
         $factoryRequest->ASESOR_DIG = auth()->user()->id;
+        $factoryRequest->CODASESOR = auth()->user()->id;
         return response()->json($factoryRequest->save());
     }
 
