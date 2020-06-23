@@ -85,6 +85,7 @@ class LeadsController extends Controller
         AND sb.`GRAN_TOTAL` = 0
         AND sb.SOLICITUD_WEB = 1
         AND sb.STATE = 'A'
+AND sb.ASESOR_DIG is null
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
         AND ti.CEDULA = cf.CEDULA
           AND ti.deleted_at is null
@@ -150,8 +151,8 @@ class LeadsController extends Controller
 
     private function getLeadsTradicional($request)
     {
-        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, score.`score`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
-        FROM CLIENTE_FAB as cf, cifin_score as score, TB_INTENCIONES
+        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.`PERFIL_CREDITICIO`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
+        FROM CLIENTE_FAB as cf,  TB_INTENCIONES
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         LEFT JOIN    products ON `TB_INTENCIONES`.product_id = products.id
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
@@ -163,8 +164,6 @@ class LeadsController extends Controller
        OR `TB_INTENCIONES`.`ASESOR` =  1088302337
        OR `TB_INTENCIONES`.`ASESOR` =  1088308622
         OR `TB_INTENCIONES`.`ASESOR` =  1004995477)
-        AND score.`scocedula` = cf.`CEDULA`
-        AND score.`scoconsul` = (SELECT MAX(`scoconsul`) FROM `cifin_score` WHERE `scocedula` = cf.`CEDULA` )
         AND cf.`CIUD_UBI` != 'BOGOTÁ'
         AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
 
