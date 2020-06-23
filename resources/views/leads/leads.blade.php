@@ -362,7 +362,7 @@
                                 <th scope="col">Producto ID</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Fecha Intención</th>
-                                <th scope="col">Score</th>
+                                <th scope="col">Perfil Crediticio</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -379,7 +379,7 @@
                                 <td ng-if="lead.sku == null"> Sin Producto</td>
                                 <td>@{{ lead.name }}</td>
                                 <td>@{{ lead.FECHA_INTENCION }}</td>
-                                <td>@{{ lead.score }}</td>
+                                <td>@{{ lead.PERFIL_CREDITICIO }}</td>
                             </tr>
                         </tbody>
                     </table>
