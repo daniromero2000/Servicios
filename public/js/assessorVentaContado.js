@@ -603,8 +603,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 					}, 1800);
 				}
 
-				if(response.data.resp == -5){
+				if (response.data.resp == -5) {
 					$scope.estadoCliente = "SIN COMERCIAL";
+					var request = [];
+					request.data.message = response.data.resp
+					request.data.file = "";
+					request.data.line = "";
+					request.datos = "";
+					$scope.addError(request, $scope.lead.CEDULA);
 					setTimeout(() => {
 						$('#congratulations').modal('show');
 					}, 1800);
@@ -646,13 +652,13 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 		$scope.creditCard = function () {
 			$scope.decisionCreditCardData = {
-				'lead' : $scope.lead,
-				'policyResult' : $scope.resp
+				'lead': $scope.lead,
+				'policyResult': $scope.resp
 			};
 			showLoader();
 			$http({
 				method: 'PUT',
-				url: '/assessor/api/decisionCreditCard/'+ $scope.lead.CEDULA,
+				url: '/assessor/api/decisionCreditCard/' + $scope.lead.CEDULA,
 				data: $scope.decisionCreditCardData
 			}).then(function successCallback(response) {
 				if (response.data.resp == 'true') {
@@ -679,8 +685,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1000);
 				hideLoader();
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/decisionCreditCard/'+ $scope.lead.CEDULA,
-				response.datos = $scope.decisionCreditCardData;
+				response.url = '/assessor/api/decisionCreditCard/' + $scope.lead.CEDULA,
+					response.datos = $scope.decisionCreditCardData;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
@@ -689,7 +695,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		$scope.traditionalCredit = function () {
 			$http({
 				method: 'PUT',
-				url: '/assessor/api/decisionTraditionalCredit/'+ $scope.lead.CEDULA,
+				url: '/assessor/api/decisionTraditionalCredit/' + $scope.lead.CEDULA,
 				data: $scope.lead
 			}).then(function successCallback(response) {
 				$scope.numSolic = response.data.infoLead.numSolic;
@@ -703,8 +709,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				}, 1800);
 				hideLoader();
 			}, function errorCallback(response) {
-				response.url = '/assessor/api/decisionTraditionalCredit/'+ $scope.lead.CEDULA,
-				response.datos = $scope.lead;
+				response.url = '/assessor/api/decisionTraditionalCredit/' + $scope.lead.CEDULA,
+					response.datos = $scope.lead;
 				hideLoader();
 				$scope.addError(response, $scope.lead.CEDULA);
 			});

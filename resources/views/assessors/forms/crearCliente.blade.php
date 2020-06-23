@@ -691,8 +691,7 @@
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPER" class="labels">Dirección </label>
                                                     <input type="text" class="inputs form-control"
-                                                        ng-model="lead.DIR_REFPER" id="DIR_REFPER"
-                                                        />
+                                                        ng-model="lead.DIR_REFPER" id="DIR_REFPER" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -713,8 +712,7 @@
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFPE2" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
-                                                        ng-model="lead.DIR_REFPE2" id="DIR_REFPE2"
-                                                        />
+                                                        ng-model="lead.DIR_REFPE2" id="DIR_REFPE2" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -748,8 +746,7 @@
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFAM" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
-                                                        ng-model="lead.DIR_REFFAM" id="DIR_REFFAM"
-                                                        />
+                                                        ng-model="lead.DIR_REFFAM" id="DIR_REFFAM" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -777,8 +774,7 @@
                                                 <div class="col-12 col-sm-6">
                                                     <label for="DIR_REFFA2" class="labels">Dirección</label>
                                                     <input type="text" class="inputs form-control"
-                                                        ng-model="lead.DIR_REFFA2" id="DIR_REFFA2"
-                                                        />
+                                                        ng-model="lead.DIR_REFFA2" id="DIR_REFFA2" />
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -1157,9 +1153,8 @@
                                     error.</h3>
                                 <div>
                                     <p style="margin: 0px;">
-                                        Puedes comunicate con el area de desarrollo y darle este <strong
-                                            style="font-size:20px; color: #1b8acc">@{{ numError }}</strong> número de
-                                        error.
+                                        Puedes comunicate con el area de desarrollo y darle este número de error<strong
+                                            style="font-size:20px; color: #1b8acc">@{{ numError }}</strong>.
                                     </p>
                                     <p class="text-right m-0">
                                         <a href="/Administrator/crearCliente"
@@ -1226,7 +1221,8 @@
                             ng-if="estadoCliente == 'SIN COMERCIAL'">
                             <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
                             <p class="textTnakYouModal">
-                                <b>El aplicativo, está presentado un error, <br /> por favor inténtalo de nuevo más tarde</b>
+                                <b>El aplicativo, está presentado un error, <br /> por favor inténtalo de nuevo más
+                                    tarde</b>
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'NEGADO'">
@@ -1236,8 +1232,8 @@
                                 no tenemos una aprobación para ti.
                             </p>
                             <p class="textModalNumSolic text-center">
-                                <strong
-                                    style="font-size:13px; font-style: italic;color: #1b8acc">* @{{ infoLead.DESCRIPCION }}</strong>
+                                <strong style="font-size:13px; font-style: italic;color: #1b8acc">*
+                                    @{{ infoLead.DESCRIPCION }}</strong>
                             </p>
                         </div>
                     </div>
