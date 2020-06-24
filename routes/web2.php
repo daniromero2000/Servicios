@@ -220,6 +220,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/dashboard/callCenter', 'CallCenterController@dashboard')->name('callCenter_dashboard');
     });
 
+    Route::namespace('CreditLiquidator')->group(function () {
+        Route::resource('/Administrator/creditLiquidator', 'CreditLiquidatorController');
+        Route::resource('/api/liquidator/getProduct', 'CreditLiquidatorController@getProduct');
+    });
+
     Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');
     Route::put('/Administrator/{user}/profile', 'UserController@updateProfile')->name('user.profile.update');
 
@@ -280,7 +285,7 @@ Route::namespace('Admin')->group(function () {
         Route::resource('Administrator/LeadsEcommerce', 'LeadEcommerceController');
     });
 
-    // Panel Insurance
+    // Panel Seguros
     Route::namespace('LeadInsurances')->group(function () {
         Route::resource('Administrator/LeadsInsurance', 'LeadInsuranceController');
     });
