@@ -1,8 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Barlow:200,300,400,500,600,700,800,900);
+.father p{
+    font-family: Barlow;
+}
 .relative {
     position: relative;
 }
 
 .padding-reset {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+.padding-reset-two {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
 }
@@ -171,7 +179,7 @@
     color: #d20509;
     line-height: 18px;
     font-weight: bold;
-    margin-right: 4%;
+    margin-right: 1%;
 }
 
 .card-products-price {
@@ -207,7 +215,7 @@
 .card-products-card-black {
     position: absolute;
     width: 44px;
-    top: 41%;
+    top: 50%;
     right: 45px;
 }
 
@@ -276,6 +284,24 @@
     margin-right: auto;
     max-height: 67px;
 }
+
+@media screen and (min-width: 1200px) and (max-width: 1350px) {
+  .img-card-deal-product {
+    position: absolute;
+    width: 55px;
+    top: 3%;
+    right: 33px !important;
+}
+   }
+
+   @media screen and (min-width: 1000px) and (max-width: 1200px) {
+  .img-card-deal-product {
+    position: absolute;
+    width: 55px;
+    top: 3%;
+    right: 40px !important;
+}
+   }
 
 @media screen and (min-width: 1105px) and (max-width: 1325px) {
     .container-text-baner-initial {
@@ -459,7 +485,7 @@
     }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 750px) {
     .card-products-logo {
         max-height: 30px;
     }
@@ -493,6 +519,20 @@
     .container-snipet-benefits-title {
         font-size: 24px;
     }
+    .card-products-button{
+      font-size: 13px !important;
+    }
+    
+}
+
+@media screen and (min-width: 576px) and (max-width: 650px) {
+.card-products-card-black {
+    right: 15px !important;
+}
+.card-products-discount {
+    right: 13px;
+    font-size: 13px;
+}
 }
 
 @media screen and (min-width: 400px) and (max-width: 519px) {
@@ -1007,6 +1047,10 @@
     .padding-reset {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
+    }
+     .padding-reset-two {
+        padding-left: 0rem !important;
+        padding-right: 0rem !important;
     }
     .container-steps-products .col-4 {
         flex: 0 0 50%;

@@ -18,12 +18,6 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-8">
-                                    <label for="reference_show{{ $product->id }}">Referencia <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="reference" id="reference_show{{ $product->id }}"
-                                        class="form-control" value="{{ $product->reference }}" required>
-                                </div>
                                 <div class="col-4">
                                     <label for="sku_show{{ $product->id }}">Código <span
                                             class="text-danger">*</span></label>
@@ -32,15 +26,14 @@
                                 </div>
 
                                 <div class="col-8">
-                                    <label for="name_show{{ $product->id }}">Nombre <span
+                                    <label for="reference_show{{ $product->id }}">Referencia <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" name="name" id="name_show{{ $product->id }}" class="form-control"
-                                        value="{{ $product->name }}" required>
+                                    <input type="text" name="reference" id="reference_show{{ $product->id }}"
+                                        class="form-control" value="{{ $product->reference }}" required>
                                 </div>
 
                                 <div class="col-4">
                                     @if(!$brands->isEmpty())
-
                                     <label for="brand_id_show{{ $product->id }}">Marca </label>
                                     <select name="brand_id" id="brand_id_show{{ $product->id }}" class=" form-control ">
                                         <option value=""></option>
@@ -52,17 +45,11 @@
                                     @endif
                                 </div>
 
-                                <div class="col-6">
-                                    <label for="price_show{{ $product->id }}">Precio <span
+                                <div class="col-8">
+                                    <label for="name_show{{ $product->id }}">Nombre <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" name="price" id="price_show{{ $product->id }}"
-                                        class="form-control" value="{{ $product->price }}" required>
-                                </div>
-                                <div class="col-6">
-                                    <label for="price_show{{ $product->id }}">Precio Oferta <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" name="sale_price" id="sale_price_show{{ $product->id }}"
-                                        class="form-control" value="{{ $product->sale_price }}" required>
+                                    <input type="text" name="name" id="name_show{{ $product->id }}" class="form-control"
+                                        value="{{ $product->name }}" required>
                                 </div>
 
                                 <div class="col-6">
@@ -72,10 +59,10 @@
                                         class="form-control" value="{{ $product->months }}" required>
                                 </div>
                                 <div class="col-6">
-                                    <label for="pays_show{{ $product->id }}">Cuotas Mensuales<span
+                                    <label for="discount_show{{ $product->id }}">% de descuento<span
                                             class="text-danger">*</span></label>
-                                    <input type="text" name="pays" id="pays_show{{ $product->id }}" class="form-control"
-                                        value="{{ $product->pays }}" required>
+                                    <input type="text" name="discount" id="discount_show{{ $product->id }}"
+                                        class="form-control" value="{{ $product->discount }}" required>
                                 </div>
                             </div>
 

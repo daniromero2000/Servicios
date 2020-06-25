@@ -37,9 +37,13 @@ use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinanci
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
 use App\Entities\Brands\Repositories\BrandRepositoryInterface;
-use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Entities\Products\Transformations\ProductTransformable;
 use App\Entities\Products\Product;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
+use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
+use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
+use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +66,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
-	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface;
+	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $listProductInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -97,7 +101,11 @@ class OportuyaV2Controller extends Controller
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		TurnRepositoryInterface $turnRepositoryInterface,
-		AnalisisRepositoryInterface $analisisRepositoryInterface
+		AnalisisRepositoryInterface $analisisRepositoryInterface,
+		ProductListRepositoryInterface $productListRepositoryInterface,
+		ListProductRepositoryInterface $listProductRepositoryInterface,
+		ListGiveAwayRepositoryInterface $listGiveAwayRepositoryInterface,
+		FactorRepositoryInterface $factorRepositoryInterface
 
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
@@ -133,6 +141,10 @@ class OportuyaV2Controller extends Controller
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
 		$this->analisisInterface                 = $analisisRepositoryInterface;
+		$this->listProductInterface				 = $listProductRepositoryInterface;
+		$this->productListInterface 		     = $productListRepositoryInterface;
+		$this->giveAwayInterface   				 = $listGiveAwayRepositoryInterface;
+		$this->factorInterface      			 = $factorRepositoryInterface;
 	}
 
 	public function index()
@@ -144,7 +156,16 @@ class OportuyaV2Controller extends Controller
 		return view('oportuya.indexV2', ['images' => $images]);
 	}
 
-	public function catalog()
+	public function getSubsidiaryCustomer(Request $request)
+	{
+		if (request()->has('city')) {
+			return redirect()->route('catalogo.zona', request()->input('city'));
+		}
+
+		$cities = $this->subsidiaryInterface->getSubsidiaryForCities();
+		return view('oportuya.getSubsidiary', compact('cities'));
+	}
+	public function catalog($zone)
 	{
 		$list = $this->productRepo->listFrontProducts('id');
 
@@ -152,28 +173,65 @@ class OportuyaV2Controller extends Controller
 			return $this->transformProduct($item);
 		})->all();
 
-		$images = Imagenes::selectRaw('*')
-			->where('category', '=', '1')
-			->where('isSlide', '=', '1')
-			->get();
-
+		foreach ($products as $key => $value) {
+			$dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
+			$productCatalog[$key] = $dataProduct[$key];
+			$productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
+			if ($productListSku[$key]) {
+				$dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
+				foreach ($dataProduct[$key] as $key2 => $value2) {
+					$productList = $value2;
+				}
+				$products[$key]['price_old'] =  $productList['traditional_credit_price'];
+				$products[$key]['price_new'] =  $productList['traditional_credit_price'];
+				// $products[$key]['black_price'] =  $productList['black_public_price'];
+				$desc[$key] = $productList['traditional_credit_price'] - (($productCatalog[$key]->discount * $productList['traditional_credit_price']) / 100);
+				$products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+				$products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
+			}
+		}
 		return view('oportuya.catalog', [
-			'images'   => $images,
 			'products' => $products,
 			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
-			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+			'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc'),
+			'zone'     => $zone
 		]);
 	}
 
-	public function product($slug)
+	public function product($slug, $zone)
 	{
-		$images = Imagenes::selectRaw('*')
-			->where('category', '=', '1')
-			->where('isSlide', '=', '1')
-			->get();
+		$dataProduct 	= $this->productRepo->findProductBySlug($slug);
+		$productCatalog = $dataProduct;
+		$productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
+		$dataProduct 	= $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
+		foreach ($dataProduct as $key2 => $value2) {
+			$productList = $value2;
+		}
+		$desc 			= "";
+		$pays 			= "";
+		$desc 			= $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
+		$priceNew 		= $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
+		$pays	 		= round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+		$desc 			= round($desc, 2, PHP_ROUND_HALF_UP);
+		$images 		= $productCatalog->images()->get(['src']);
+		$imagenes 		= [];
+		$productImages 	= [];
+
+		array_push($productImages, $productCatalog->cover);
+		foreach ($images as $key => $value) {
+			array_push($productImages, $images[$key]->src);
+		}
+		foreach ($productImages as $key => $value) {
+			array_push($imagenes, [$productImages[$key], $key]);
+		}
+
 		return view('oportuya.product.show', [
-			'images'  => $images,
-			'product' => $this->productRepo->findProductBySlug($slug)
+			'product'   => $productCatalog,
+			'prices'    => $productList,
+			'pays'      => $pays,
+			'desc'      => $desc,
+			'imagenes'  => $imagenes,
+			'priceNew'  => $priceNew
 		]);
 	}
 
@@ -544,7 +602,6 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -569,8 +626,7 @@ class OportuyaV2Controller extends Controller
 		$codeUserVerificationOportudata['telephone']            = $celNumber;
 		$codeUserVerificationOportudata['type']                 = $type;
 
-		$codeVerification = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata);
-		$date = $codeVerification->created_at;
+		$date = $this->customerVerificationCodeInterface->createCustomerVerificationCode($codeUserVerificationOportudata)->created_at;
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
@@ -1027,7 +1083,7 @@ class OportuyaV2Controller extends Controller
 		if (!empty($getDataFosyga)) {
 			if ($getDataFosyga->fuenteFallo == 'SI') {
 				return ['resp' => -6];
-			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+			} elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				return ['resp' => -6];
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
@@ -1614,7 +1670,7 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 
-			if($policyCredit['resp'] == '-6'){
+			if ($policyCredit['resp'] == '-6') {
 				return ['resp' => -6];
 			}
 

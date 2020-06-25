@@ -32,7 +32,7 @@
                                             <th scope="col">Código</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Marca</th>
-                                            <th scope="col">Precio</th>
+                                            <th scope="col">Descuento</th>
                                             <th scope="col">Estado</th>
                                             <th scope="col">Opciones</th>
                                         </tr>
@@ -44,7 +44,7 @@
                                             <td>{{ $product->sku }}</td>
                                             <td> {{ $product->name }} </td>
                                             <td>{{ $product->brand_id->name }}</td>
-                                            <td>$ {{ number_format($product->price, 0, '.', ',') }}</td>
+                                            <td>{{ number_format($product->discount, 0, '.', ',') }}%</td>
                                             <td>
                                                 @if ($product->status == 1)
                                                 <span class="badge badge-success">Activo</span>
@@ -54,8 +54,10 @@
                                             </td>
                                             <td>
                                                 <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                                    data-target="#deleteProduct{{ $product->id }}"></i>
-                                                <i class="fas fa-edit cursor" data-toggle="modal"
+                                                    data-target="#deleteProduct{{ $product->id }}">
+                                                </i>
+                                                <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})"
+                                                    data-toggle="modal"
                                                     data-target="#updateProduct{{ $product->id }}"></i>
                                                 <i class="fas fa-eye cursor" data-toggle="modal"
                                                     data-target="#showProduct{{ $product->id }}"></i>
@@ -161,6 +163,7 @@
 @section('scriptsJs')
 <!-- bs-custom-file-input -->
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('js/admin/products/app.js')}}"></script>
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
 <script type="text/javascript">
@@ -252,8 +255,13 @@
       images.push(query[i]);
     };
 
+<<<<<<< HEAD
     // processScroll();
     addEventListener('click',processScroll);
+=======
+    processScroll();
+    addEventListener('scroll',processScroll);
+>>>>>>> release-sentings
 
 }(this);
 </script>

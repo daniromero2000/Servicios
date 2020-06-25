@@ -84,6 +84,9 @@ Route::namespace('Admin')->group(function () {
         Route::get('remove-image-thumb', 'ProductController@removeThumbnail')->name('product.remove.thumb');
         Route::resource('product-statuses', 'ProductStatusController');
     });
+    Route::namespace('Catalogs')->group(function () {
+        Route::resource('Administrator/catalog', 'CatalogController');
+    });
 
     Route::resource('Administrator/brands', 'Brands\BrandController');
 });
