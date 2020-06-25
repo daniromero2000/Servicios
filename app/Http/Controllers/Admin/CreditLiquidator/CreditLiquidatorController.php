@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\CreditLiquidator;
 
+use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
 use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 
 class CreditLiquidatorController extends Controller
 {
@@ -15,10 +15,12 @@ class CreditLiquidatorController extends Controller
 
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        ListProductRepositoryInterface $listProductRepositoryInterface
     ) {
-        $this->CustomerInterface = $CustomerRepositoryInterface;
-        $this->toolsInterface    = $toolRepositoryInterface;
+        $this->CustomerInterface        = $CustomerRepositoryInterface;
+        $this->toolsInterface           = $toolRepositoryInterface;
+        $this->listProductInterface     = $listProductRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -35,7 +37,12 @@ class CreditLiquidatorController extends Controller
     {
     }
 
-    public function getProduct(int $code)
+    public function getProduct($code)
     {
+        dd(auth()->user()->Assessor->subsidiary);
+        $zone = auth()->user()->Assessor->subsidiary->ZONA;
+        $dataProduct     = $this->listProductInterface->getPriceProductForZone($code, $zone);
+
+        return $dataProduct;
     }
 }

@@ -79,7 +79,7 @@
                         <div class="col-12 col-sm-4 form-group">
                             <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" validation-pattern="number"
-                                ng-model="liquidator.CODIGO" id="codeProduct" name="codeProduct">
+                                ng-model="liquidator.CODIGO" ng-blur="getProduct()" id="codeProduct" name="codeProduct">
                         </div>
                         <div class="col-12 col-sm-8 form-group">
                             <label for="nameProduct">Nombre</label>

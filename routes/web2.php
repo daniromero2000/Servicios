@@ -222,7 +222,7 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('CreditLiquidator')->group(function () {
         Route::resource('/Administrator/creditLiquidator', 'CreditLiquidatorController');
-        Route::resource('/api/liquidator/getProduct', 'CreditLiquidatorController@getProduct');
+        Route::get('/api/liquidator/getProduct/{id}', 'CreditLiquidatorController@getProduct');
     });
 
     Route::get('/Administrator/profile/users', 'UserController@profile')->name('user.profile');

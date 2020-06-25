@@ -69,32 +69,21 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }
         ];
 
-        $scope.getProduct() = function () {
+
+        $scope.getProduct = function () {
             if ($scope.liquidator.CODIGO > 0) {
                 $http({
                     method: 'GET',
-                    url: '/api/oportuya/validationLead/' + $scope.lead.CODIGO,
+                    url: '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO,
                 }).then(function successCallback(response) {
-                    hideLoader();
-                    if (response.data == -2) {
-                        $('#validationCustomer').modal('show');
-                        $scope.messageValidationLead = "En nuestra base de datos se registra que tienes una relación laboral con la organización, comunícate a nuestras líneas de atención, para conocer las opciones que tenemos para ti .";
-                    } else if (response.data == -3) {
-                        $('#validationCustomer').modal('show');
-                        $scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
-                    } else if (response.data == -4) {
-                        $('#validationCustomer').modal('show');
-                        $scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
-                    } else {
-                        $scope.getCustomer();
-                    }
+                    console.log(response.data);
+
                 }, function errorCallback(response) {
-                    hideLoader();
-                    response.url = '/api/oportuya/validationLead/' + $scope.lead.CODIGO;
-                    $scope.addError(response, $scope.lead.CODIGO);
+                    response.url = '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO;
+                    $scope.addError(response, $scope.liquidator.CODIGO);
                 });
             }
-        }
+        };
 
 
         $scope.getValidationCustomer = function () {
