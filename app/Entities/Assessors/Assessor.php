@@ -3,7 +3,11 @@
 namespace App\Entities\Assessors;
 
 use App\Entities\Intentions\Intention;
+<<<<<<< HEAD
 use App\Entities\Subsidiaries\Subsidiary;
+=======
+use App\User;
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 
@@ -53,5 +57,10 @@ class Assessor extends \Eloquent implements AuthenticatableContract
     public function creditCard()
     {
         return $this->hasOne(CreditCard::class, 'SOLICITUD');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'CODIGO', 'email');
     }
 }

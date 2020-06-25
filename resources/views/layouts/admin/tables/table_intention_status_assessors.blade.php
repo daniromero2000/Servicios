@@ -4,9 +4,10 @@
             <tr>
                 <th scope="col">Fecha</th>
                 <th scope="col">Sucursal</th>
-                <th scope="col">Asesor</th>
                 <th scope="col">Origen</th>
+                <th scope="col">Asesor</th>
                 <th scope="col">Estado</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Actividad</th>
                 <th scope="col">Estado Obligaciones</th>
                 @if (auth()->user()->idProfile == 5)

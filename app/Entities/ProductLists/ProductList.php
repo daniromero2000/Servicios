@@ -27,7 +27,10 @@ class ProductList extends Model
         'bond_blue',
         'percentage_credit_card_black',
         'bond_black',
-        'apply_protection'
+        'apply_protection',
+        'percentage_base_oportuya_customer',
+        'priority',
+        'percentage_public_price_promotion'
     ];
 
     protected $dates = [

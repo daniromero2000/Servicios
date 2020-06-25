@@ -96,7 +96,7 @@ class LeadLibranzaController extends Controller
             );
         }
         $listCount = $leadsOfMonth->count();
-
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
 
         $listAssessors = 18;
         return view('leadlibranza.list', [
@@ -112,7 +112,8 @@ class LeadLibranzaController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($listAssessors)
+            'listAssessors'       => $this->UserInterface->listUser($listAssessors),
+            'subsidaries'         => $subsidary
         ]);
     }
 }

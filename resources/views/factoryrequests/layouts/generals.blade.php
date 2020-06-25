@@ -39,7 +39,7 @@
             <td class="text-center">{{ $factoryRequest->PRODUC_W }}</td>
             <td class="text-center">{{ $factoryRequest->AVANCE_W }}</td>
             <td class="text-center"><span class="badge badge-primary">
-                {{ $factoryRequest->ESTADO }}</span></td>
+                {{ $factoryRequest->factoryRequestStatus->name }}</span></td>
           </tr>
         </tbody>
       </table>

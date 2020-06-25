@@ -1,9 +1,13 @@
 @extends('layouts.admin.app')
 <style type="text/css">
-  #header,
-  #preHeader,
-  #footer {
-    display: none;
+  .container-icon {
+    min-width: 70px;
+  }
+
+  @media (max-width:500px) {
+    .container-icon {
+      min-width: 60px;
+    }
   }
 </style>
 @php
@@ -28,12 +32,14 @@ $modules = session('modules');
   <div class="container">
     <div class="row d-flex justify-content-center justify-content-sm-start mt-3">
       @foreach ($modules as $module)
-      <div class="col-8 col-sm-6 col-lg-4 col-xl-3">
+      <div class="col-10 col-sm-6 col-lg-4 col-xl-3">
         <a class="cursor" data-toggle="tooltip" data-placement="top" title="Ir al panel" href="{{ $module->route}}">
           <div class="info-box info-box-reset">
-            <span class="info-box-icon info-icon-reset bg-primary elevation-1"><i class="{{ $module->icon}}"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text wellcomeDashboard text-dark ">{{ $module->name }}</span>
+            <span class="info-box-icon info-icon-reset bg-primary elevation-1 container-icon"><i
+                class="{{ $module->icon}}"></i></span>
+
+            <div class="card-body px-3 py-2">
+              <p class="card-text wellcomeDashboard text-dark">{{ $module->name }}</p>
             </div>
           </div>
         </a>

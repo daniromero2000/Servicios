@@ -68,9 +68,28 @@
                                         <option selected value> Selecciona Area </option>
                                         @if(!empty($areas))
                                         @foreach($areas as $area)
-                                        <option value="{{ $area->id }}" @if ($_GET && !empty($_GET['lead_area_id']) &&
-                                            $_GET['lead_area_id']==$area->id) selected @endif>
+                                        <option value="{{ $area->id }}" @if (request()->
+                                            input('lead_area_id')==$area->id) selected @endif>
                                             {{ $area->name }}
+                                        </option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg-3 col-xl-2 ml-xl-1" id="subsidiaryFilter">
+                                <div class="form-group">
+                                    <label for="expirationDateSoat">Sucursal</label>
+                                    <select name="subsidiary_id" id="subsidiaryCode"
+                                        class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                        data-select3-id="1" tabindex="-1" aria-hidden="true">
+                                        @if(!empty($subsidaries))
+                                        <option data-select3-id="" selected value> Selecciona Sucursal </option>
+                                        @foreach($subsidaries as $subsidary)
+                                        <option data-select3-id="{{ $subsidary->CODIGO }}" @if (request()->
+                                            input('subsidiary_id')==$subsidary->CODIGO) selected @endif
+                                            value="{{ $subsidary->CODIGO }}">
+                                            {{ $subsidary->CODIGO }}
                                         </option>
                                         @endforeach
                                         @endif
@@ -158,9 +177,11 @@
                     <div class="col-12">
                         <div class="col-12 d-flex ">
                             <span class="input-group-btn ml-auto btn-pr">
+                                @if (auth()->user()->idProfile != 15)
                                 <a class="btn btn-danger" href="{{$route}}">
                                     <i class="fas fa-times"></i> Restaurar filtros
                                 </a>
+                                @endif
                                 <button type="submit" id="search-btn" class="btn btn-primary"><i
                                         class="fa fa-search"></i>
                                     Buscar

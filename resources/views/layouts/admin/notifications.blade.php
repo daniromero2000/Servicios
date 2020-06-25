@@ -21,7 +21,7 @@
                 var user = <?php echo $user?>;
 
                 if (data.message.assessor_id && user.id === data.message.assessor_id) {
-                    console.log("si hay asesor")
+                              
                     if (Notification.permission !== "granted") {
                         Notification.requestPermission();
                     } else {
@@ -35,7 +35,7 @@
                     }
                 }
                 if (data.message.assessor_id === null && user.lead_area_id === data.message.lead_area_id) {
-                    console.log("si hay lead")
+                  
                     if (Notification.permission !== "granted") {
                         Notification.requestPermission();
                     } else {

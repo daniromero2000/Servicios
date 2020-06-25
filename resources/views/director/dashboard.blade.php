@@ -147,6 +147,8 @@
 
         </div>
       </div>
+      @include('digitalchannelleads.layouts.pie_services.pie_serviceSubsidiary')
+      @include('digitalchannelleads.layouts.pie_products.pie_products_subsidiary')
     </div>
     <div class=" order-md-first col-sm-12 col-md-5 col-lg-4">
       <div class="col-12 col-sm-12">
@@ -189,6 +191,30 @@
                 <span class="info-box-text text-right">
                   <a href="{{ route('director.index') }}" style="color: white; !important">Ver
                     Más</a></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12">
+            <div class="row d-flex justify-content-center">
+              <div class="col-12 ">
+                <div class="row">
+                  <div class="col-12 ">
+                    <div class="small-box bg-primary">
+                      <div class="inner">
+                        <h2>{{ $leadStatusSubsidiary[2] }}</h2>
+                        <p style="margin-bottom: -4px !important;">Leads en este mes</p>
+                      </div>
+                      <div class="icon mt-3">
+                        <i class="ion ion-stats-bars"></i>
+                      </div>
+                      <div class="text-right mr-2">
+                        <span class="info-box-text text-right">
+                          <a href="/Administrator/leads/director" style=" color: white; !important">Ver
+                            Más</a></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -303,6 +329,9 @@
             </div>
           </div>
         </div>
+        <div>
+        </div>
+
         <!-- AREA CHART debe ir oculta -->
         <div hidden class="card card-primary">
           <div class="card-header">
@@ -333,6 +362,9 @@
           <canvas id="pieChart2" style="height:200px; min-height:auto"></canvas>
         </div>
       </div>
+
+      @include('digitalchannelleads.layouts.pie_statuses.pie_statuses_subsidiary')
+      @include('digitalchannelleads.layouts.pie_subsidiary')
       <!-- AREA CHART DEBE IR OCULTA-->
       <div hidden class="card card-primary">
         <div class="card-header">
@@ -692,6 +724,15 @@ var webValues = [<?php echo '"'.implode('","', $webValues).'"' ?>];
 var StatusesColors = [<?php echo '"'.implode('","', $statusesColors).'"' ?>];
 var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
 
+var subsidiary = [<?php echo '"'.implode('","', $leadSubsidiary[0]).'"' ?>];
+var subsidiaryValues = [<?php echo '"'.implode('","', $leadSubsidiary[1]).'"' ?>];
+var serviceSubsidiary = [<?php echo '"'.implode('","', $leadServiceSubsidiary[0]).'"' ?>];
+var serviceSubsidiaryValues = [<?php echo '"'.implode('","', $leadServiceSubsidiary[1]).'"' ?>]
+var statusSubsidiary = [<?php echo '"'.implode('","', $leadStatusSubsidiary[0]).'"' ?>];
+var statusSubsidiaryValues = [<?php echo '"'.implode('","', $leadStatusSubsidiary[1]).'"' ?>];
+var leadSubsidiary = [<?php echo '"'.implode('","', $leadProductSubsidiary[0]).'"' ?>];
+var productSubsidiaryValues = [<?php echo '"'.implode('","', $leadProductSubsidiary[1]).'"' ?>];
+
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
     var areaChartData = {
@@ -788,8 +829,171 @@ var webColors = [<?php echo '"'.implode('","', $webColors).'"' ?>];
       type: 'doughnut',
       data: donutData,
       options: donutOptions
-      })
+     })
 
+//- PIE CHART - 38
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var pieChartCanvas = $('#pieChart38').get(0).getContext('2d')
+  var pieData = donutData38 = {
+  labels: subsidiary,
+  datasets: [
+  {
+  data: subsidiaryValues,
+  backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+  '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+  '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+  }
+  ]
+  };
+  var pieOptions = {
+  maintainAspectRatio : false,
+  responsive : true,
+  }
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  var pieChart = new Chart(pieChartCanvas, {
+  type: 'pie',
+  data: pieData,
+  options: pieOptions
+  });
+
+  //-------------
+      //- DONUT CHART - serviceDigitalChanels
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var donutChartCanvas35 = $('#donutChart35').get(0).getContext('2d')
+      var donutData35 = {
+      labels: leadSubsidiary,
+      datasets: [
+      {
+      data: productSubsidiaryValues,
+      backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+      '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+      '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+      }
+      ]
+      }
+      var donutOptions35 = {
+      maintainAspectRatio : false,
+      responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart35 = new Chart(donutChartCanvas35, {
+      type: 'doughnut',
+      data: donutData35,
+      options: donutOptions35
+      });
+
+      //-------------
+        //- DONUT CHART - serviceDigitalChanels
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var donutChartCanvas35 = $('#donutChart35').get(0).getContext('2d')
+        var donutData35 = {
+        labels: leadSubsidiary,
+        datasets: [
+        {
+        data: productSubsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        }
+        var donutOptions35 = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var donutChart35 = new Chart(donutChartCanvas35, {
+        type: 'doughnut',
+        data: donutData35,
+        options: donutOptions35
+        });
+
+        //- PIE CHART - 16
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart35').get(0).getContext('2d')
+        var pieData = donutData16 = {
+        labels: serviceSubsidiary,
+        datasets: [
+        {
+        data: serviceSubsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 37
+              //-------------
+              // Get context with jQuery - using jQuery's .get() method.
+              var pieChartCanvas = $('#pieChart37').get(0).getContext('2d')
+              var pieData = donutData37 = {
+              labels: serviceSubsidiary,
+              datasets: [
+              {
+              data: serviceSubsidiaryValues,
+              backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+              '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+              '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+              }
+              ]
+              };
+              var pieOptions = {
+              maintainAspectRatio : false,
+              responsive : true,
+              }
+              //Create pie or douhnut chart
+              // You can switch between pie and douhnut using the method below.
+              var pieChart = new Chart(pieChartCanvas, {
+              type: 'pie',
+              data: pieData,
+              options: pieOptions
+              });
+
+            //- PIE CHART - 36
+              //-------------
+              // Get context with jQuery - using jQuery's .get() method.
+              var pieChartCanvas = $('#pieChart36').get(0).getContext('2d')
+              var pieData = donutData36 = {
+              labels: statusSubsidiary,
+              datasets: [
+              {
+              data: statusSubsidiaryValues,
+              backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+              '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+              '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+              }
+              ]
+              };
+              var pieOptions = {
+              maintainAspectRatio : false,
+              responsive : true,
+              }
+              //Create pie or douhnut chart
+              // You can switch between pie and douhnut using the method below.
+              var pieChart = new Chart(pieChartCanvas, {
+              type: 'pie',
+              data: pieData,
+              options: pieOptions
+              });
 
     //-------------
     //- PIE CHART -

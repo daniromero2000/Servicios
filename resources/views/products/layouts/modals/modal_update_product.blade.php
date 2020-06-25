@@ -115,8 +115,14 @@
                                         <label for="cover_update{{ $product->id }}">Cover Principal <span
                                                 class="text-danger">*</span></label>
                                         <div>
+<<<<<<< HEAD
                                             <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->cover")}}" alt="">
+=======
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->cover")}}" alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -132,8 +138,14 @@
                                             <div class="row mx-0">
                                                 @foreach($product->images()->get(['src']) as $image)
                                                 <div class="col-4">
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$image->src")}}" alt="">
+=======
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$image->src")}}" alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                                     <a onclick="return confirm('¿Estás Seguro?')"
                                                         href="{{ route('product.remove.image', ['src' => $image->src]) }}"
                                                         class="btn btn-danger btn-sm btn-block">¿Eliminar?</a><br />
@@ -167,8 +179,15 @@
                                                 <label for="description_image1_update{{ $product->id }}">Imagen de
                                                     descripcion 1<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image1")}}" alt="">
+=======
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image1")}}"
+                                                        alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -190,8 +209,15 @@
                                                 <label for="description_image2_update{{ $product->id }}">Imagen de
                                                     descripcion 2<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image2")}}" alt="">
+=======
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image2")}}"
+                                                        alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -212,8 +238,15 @@
                                                 <label for="description_image3_update{{ $product->id }}">Imagen de
                                                     descripcion 3<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image3")}}" alt="">
+=======
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image3")}}"
+                                                        alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -235,8 +268,15 @@
                                                 <label for="description_image4_update{{ $product->id }}">Imagen de
                                                     descripcion 4<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image4")}}" alt="">
+=======
+                                                    <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image4")}}"
+                                                        alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -267,8 +307,14 @@
                                         <label for="specification_image_update{{ $product->id }}">Imagen de
                                             especificaciones<span class="text-danger">*</span></label>
                                         <div>
+<<<<<<< HEAD
                                             <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->specification_image")}}" alt="">
+=======
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->specification_image")}}" alt="">
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">

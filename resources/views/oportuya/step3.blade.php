@@ -349,18 +349,13 @@
 								cualquier consulta posterior
 							</p>
 						</div>
-						<div class="col-12" ng-if="estadoCliente == 'SIN COMERCIAL'">
-							<p class="textModal text-center">
-								<strong>Felicitaciones!!</strong>
-								<br>
-								Tu solictud fue creada exitosamente.
-							</p>
-							<p class="textModalNumSolic text-center">
-								Tu número de scolitud es <strong
-									style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br> guárdala para
-								cualquier consulta posterior
-							</p>
-						</div>
+						<div class="col-12 text-center containTextThankYouModal"
+                            ng-if="estadoCliente == 'SIN COMERCIAL'">
+                            <img src="{{ asset('images/asessors/revisandoIcon.jpg') }}" class="iconThankYouModal" />
+                            <p class="textTnakYouModal">
+                                <b>El aplicativo, está presentado un error, <br /> un asesor se pondra en contacto lo mas pronto posible.</b>
+                            </p>
+                        </div>
 					</div>
 					<div class="row resetRow containerFormModal">
 						<div class="col-sm-7 offset-sm-5">

@@ -8,6 +8,7 @@ use App\Entities\LeadStatuses\Repositories\Interfaces\LeadStatusRepositoryInterf
 use App\Entities\LeadProducts\Repositories\Interfaces\LeadProductRepositoryInterface;
 use App\Entities\Leads\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Entities\Services\Repositories\Interfaces\ServiceRepositoryInterface;
+use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\LeadAreas\Repositories\LeadAreaRepository;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -26,6 +27,7 @@ class LeadOportuyaController extends Controller
     public function __construct(
         LeadRepositoryInterface $LeadRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
+        SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         ChannelRepositoryInterface $channelRepositoryInterface,
         ServiceRepositoryInterface $serviceRepositoryInterface,
         CampaignRepositoryInterface $campaignRepositoryInterface,
@@ -38,6 +40,7 @@ class LeadOportuyaController extends Controller
     ) {
         $this->leadInterface         = $LeadRepositoryInterface;
         $this->toolsInterface        = $toolRepositoryInterface;
+        $this->subsidiaryInterface   = $subsidiaryRepositoryInterface;
         $this->channelInterface      = $channelRepositoryInterface;
         $this->serviceInterface      = $serviceRepositoryInterface;
         $this->campaignInterface     = $campaignRepositoryInterface;
@@ -87,7 +90,9 @@ class LeadOportuyaController extends Controller
             );
         }
         $listCount = $leadsOfMonth->count();
+        $subsidary   = $this->subsidiaryInterface->getSubsidiares();
         $listAssessors = 18;
+
         return view('leadoportuya.list', [
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
@@ -101,7 +106,8 @@ class LeadOportuyaController extends Controller
             'campaigns'           => $this->campaignInterface->getAllCampaignNames(),
             'lead_products'       => $this->leadProductInterface->getAllLeadProductNames(),
             'lead_statuses'       => $this->LeadStatusesInterface->getAllLeadStatusesNames(),
-            'listAssessors'       => $this->UserInterface->listUser($listAssessors)
+            'listAssessors'       => $this->UserInterface->listUser($listAssessors),
+            'subsidaries'         => $subsidary
         ]);
     }
 }

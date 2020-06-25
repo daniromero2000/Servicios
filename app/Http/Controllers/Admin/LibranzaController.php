@@ -40,8 +40,9 @@ class LibranzaController extends Controller
 
     public function store(Request $request)
     {
+        $request['lead_area_id'] = 7;
+        $request['status'] = 12;
         $lead = $this->leadInterface->createLead($request->input());
-
         $liquidator = new Liquidator;
         $liquidator->idCreditLine = $request->get('creditLine');
         $liquidator->idPagaduria = $request->get('pagaduria');
@@ -247,7 +248,7 @@ class LibranzaController extends Controller
                 'timeLimit'            => $lead->timeLimit,
                 'typeDocument'         => $lead->typeDocument,
                 'typeProduct'          => $lead->typeProduct,
-                'typeService'          => $lead->typeService
+                'typeService'          => $lead->typeService,
             ];
 
             $dataLeads[] = $data;

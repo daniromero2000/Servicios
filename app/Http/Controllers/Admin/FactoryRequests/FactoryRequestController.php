@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\FactoryRequests;
 
 use App\Http\Controllers\Controller;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\FactoryRequestStatusesLogs\Repositories\Interfaces\FactoryRequestStatusesLogRepositoryInterface;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
@@ -37,25 +38,25 @@ class FactoryRequestController extends Controller
         $listCount = $factoryRequestsTotals->count();
         $assessor = '';
         $subsidiary = '';
-        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequests($skip * 30);
 
         if (request()->has('q') && request()->input('from') == '' && request()->input('to') == '' && request()->input('subsidiary') != '') {
-            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), request()->input('subsidiary'));
-            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", request()->input('subsidiary'));
-            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", request()->input('subsidiary'));
-            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), request()->input('subsidiary'));
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), request()->input('subsidiary'));
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, request()->input('subsidiary'));
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, request()->input('subsidiary'));
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), request()->input('subsidiary'));
         }
         if (request()->has('q') && request()->input('from') != '' && request()->input('to') != '') {
-            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), request()->input('subsidiary'));
-            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", request()->input('subsidiary'));
-            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", request()->input('subsidiary'));
-            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), request()->input('subsidiary'));
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), request()->input('subsidiary'));
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, request()->input('subsidiary'));
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, request()->input('subsidiary'));
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor,  array(13, 15, 19, 16, 20, 14, 1), request()->input('subsidiary'));
         }
 
         if (request()->has('q')) {
@@ -80,8 +81,8 @@ class FactoryRequestController extends Controller
 
             $factoryRequestsTotal = $list->sum('GRAN_TOTAL');
         }
-        $estadosAprobados = $this->toolsInterface->extractValuesToArray($estadosAprobados);
-        $estadosNegados = $this->toolsInterface->extractValuesToArray($estadosNegados);
+        $estadosAprobados  = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+        $estadosNegados    = $this->toolsInterface->extractValuesToArray($estadosNegados);
         $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
         $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
 
@@ -121,21 +122,22 @@ class FactoryRequestController extends Controller
         foreach ($statusesPendientesValue as $key => $status) {
             $statusesPendientesValues +=  $statusesPendientesValue[$key];
         }
-
+        $statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
         $listCount = $factoryRequestsTotals->count();
 
         return view('factoryrequests.list', [
             'factoryRequests'            => $list,
-            'optionsRoutes'        => (request()->segment(2)),
-            'headers'              => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-            'listCount'            => $listCount,
-            'skip'                 => $skip,
-            'factoryRequestsTotal' => $factoryRequestsTotal,
-            'Subsidiarys'          => $Subsidiarys,
-            'statusesAprobadosValues'        => $statusesAprobadosValues,
-            'statusesNegadosValues'        => $statusesNegadosValues,
-            'statusesDesistidosValues'      => $statusesDesistidosValues,
-            'statusesPendientesValues'     => $statusesPendientesValues
+            'optionsRoutes'              => (request()->segment(2)),
+            'headers'                    => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'                  => $listCount,
+            'skip'                       => $skip,
+            'factoryRequestsTotal'       => $factoryRequestsTotal,
+            'Subsidiarys'                => $Subsidiarys,
+            'statusesAprobadosValues'    => $statusesAprobadosValues,
+            'statusesNegadosValues'      => $statusesNegadosValues,
+            'statusesDesistidosValues'   => $statusesDesistidosValues,
+            'statusesPendientesValues'   => $statusesPendientesValues,
+            'statuses'                   => $statuses
         ]);
     }
 
@@ -147,37 +149,51 @@ class FactoryRequestController extends Controller
             'fabrica' => 0,
             'sucursal' => 0
         ];
+        $weekMap = [
+            0 => 'SU',
+            1 => 'MO',
+            2 => 'TU',
+            3 => 'WE',
+            4 => 'TH',
+            5 => 'FR',
+            6 => 'SA',
+        ];
+
         foreach ($datas as $key => $value) {
-            $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key]->created_at);
+            $date1 =  $datas[$key]->created_at;
             if (isset($datas[$key + 1]->created_at)) {
-                $date2 = Carbon::createFromFormat('Y-m-d H:i:s', $datas[$key + 1]->created_at);
-                if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
-                    $data['fabrica'] += $date1->diffInSeconds($date2);
-                } else {
-                    $data['sucursal'] += $date1->diffInSeconds($date2);
+                $date2 =  $datas[$key + 1]->created_at;
+                $secondsDays = $date1->diffInSeconds($date2) / 28800;
+                if ($weekMap[$date1->dayOfWeek] != 'SU') {
+                    if ($datas[$key]->oportudataUser != "" && ($datas[$key]->oportudataUser->PERFIL  == 1 || $datas[$key]->oportudataUser->PERFIL  == 2)) {
+                        if ($secondsDays > 1 && $secondsDays < 3) {
+                            $secondsDays = $secondsDays - 1;
+                            $removeSeconds = $secondsDays * 28800;
+                            $data['fabrica'] += $date1->diffInSeconds($date2);
+                            $data['fabrica'] = $data['fabrica'] - $removeSeconds;
+                        } else {
+                            $data['fabrica'] += $date1->diffInSeconds($date2);
+                        }
+                    } else {
+                        if ($secondsDays > 1 && $secondsDays < 3) {
+                            $secondsDays = $secondsDays - 1;
+                            $removeSeconds = $secondsDays * 28800;
+                            $data['sucursal'] += $date1->diffInSeconds($date2);
+                            $data['sucursal'] = $data['sucursal'] - $removeSeconds;
+                        } else {
+                            $data['sucursal'] += $date1->diffInSeconds($date2);
+                        }
+                    }
                 }
             }
         }
 
-        if (($data['fabrica'] / 60) / 60 > 1) {
-            $timeFactory = [$data['fabrica'] / 60 / 60, 'Horas'];
-        } else {
-            $timeFactory = [$data['fabrica'] / 60, 'Minutos'];
-        }
-        if (($data['sucursal'] / 60) / 60 > 1) {
-            $timeSubsidiary = [$data['sucursal'] / 60 / 60, 'Horas'];
-        } else {
-            $timeSubsidiary = [$data['sucursal'] / 60, 'Minutos'];
-        }
 
-        $timeFactory[0] = round($timeFactory[0], 1);
-
-        $timeSubsidiary[0] = round($timeSubsidiary[0], 1);
 
         return view('factoryrequests.show', [
             'factoryRequest' => $this->factoryRequestInterface->findFactoryRequestByIdFull($id),
-            'timeFactory' => $timeFactory,
-            'timeSubsidiary' => $timeSubsidiary
+            'timeFactory'    => Carbon::now()->subSeconds($data['fabrica'])->diffForHumans(null, true, true, 3),
+            'timeSubsidiary' => Carbon::now()->subSeconds($data['sucursal'])->diffForHumans(null, true, true, 3)
         ]);
     }
 
@@ -185,6 +201,7 @@ class FactoryRequestController extends Controller
     {
         $factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($solicitud);
         $factoryRequest->ASESOR_DIG = auth()->user()->id;
+        $factoryRequest->CODASESOR = auth()->user()->id;
         return response()->json($factoryRequest->save());
     }
 
@@ -197,21 +214,21 @@ class FactoryRequestController extends Controller
         $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses($from, $to);
         $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests($from, $to);
         $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal($from, $to);
-        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array('APROBADO', 'EN FACTURACION'));
-        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "NEGADO");
-        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, "DESISTIDO");
-        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+        $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados($from, $to, array(19, 20));
+        $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, 16);
+        $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals($from, $to, array(15, 13));
+        $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes($from, $to,  array(13, 15, 19, 16, 20, 14, 1));
 
-        $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-        $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-        $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-        $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+        $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+        $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+        $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+        $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
 
         if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-            $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-            $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
-            $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
-            $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+            $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+            $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+            $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+            $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
         }
 
 
@@ -219,10 +236,23 @@ class FactoryRequestController extends Controller
             $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
             $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
             $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array('APROBADO', 'EN FACTURACION'));
-            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "NEGADO");
-            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), "DESISTIDO");
-            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'), array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array(19, 20));
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), 16);
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), array(15, 13));
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'),  array(13, 15, 19, 16, 20, 14, 1));
+        }
+
+
+        foreach ($estadosNames as $key => $status) {
+            if ($estadosNames[$key]->factoryRequestStatus) {
+                $estadosNames[$key]['ESTADO'] =  $estadosNames[$key]->factoryRequestStatus->name;
+            }
+        }
+
+        foreach ($webCounts as $key => $status) {
+            if ($webCounts[$key]->factoryRequestStatus) {
+                $webCounts[$key]['ESTADO'] =  $webCounts[$key]->factoryRequestStatus->name;
+            }
         }
 
         $estadosNames = $this->toolsInterface->extractValuesToArray($estadosNames);
@@ -271,6 +301,8 @@ class FactoryRequestController extends Controller
 
         $statusesNames  = [];
         $statusesValues = [];
+
+
         foreach ($estadosNames as $estadosName) {
             array_push($statusesNames, trim($estadosName['ESTADO']));
             array_push($statusesValues, trim($estadosName['total']));

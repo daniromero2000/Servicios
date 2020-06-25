@@ -99,19 +99,17 @@
                                 <div class="card-body container-list-img-product" style="display: none;">
                                     <label for="cover_show{{ $product->id }}">Cover Principal </label>
                                     <div class="w-100 ">
-                                        {{-- <div class="container-img-show-products"> --}}
-                                        <img class="img-fluid img-show-products"
-                                            src="{{asset("storage/$product->cover")}}" alt="">
-
-
-
+                                        <img class="img-fluid img-show-products lazy"
+                                            src="{{ asset('images/blank.jpg')}}"
+                                            data-src="{{asset("storage/$product->cover")}}" alt="">
                                     </div>
 
                                     <label for="image_show{{ $product->id }}">Images secundarias </label>
                                     <div class="w-100 ">
                                         @foreach($product->images()->get(['src']) as $image)
-                                        <img class="img-fluid img-show-products" src="{{asset("storage/$image->src")}}"
-                                            alt="">
+                                        <img class="img-fluid img-show-products lazy"
+                                            src="{{ asset('images/blank.jpg')}}"
+                                            data-src="{{asset("storage/$image->src")}}" alt="">
                                         @endforeach
                                     </div>
                                 </div>
@@ -133,28 +131,32 @@
                                         <div class="col-4">
                                             <label for="description_image1_show{{ $product->id }}">Imagen de
                                                 descripcion 1</label>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->description_image1")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->description_image1")}}" alt="">
                                         </div>
                                         <div class="col-4">
                                             <label for="description_image2_show{{ $product->id }}">Imagen de
                                                 descripcion 2</label>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->description_image2")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->description_image2")}}" alt="">
                                         </div>
 
                                         <div class="col-4">
                                             <label for="description_image3_show{{ $product->id }}">Imagen de
                                                 descripcion 3</label>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->description_image3")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->description_image3")}}" alt="">
                                         </div>
 
                                         <div class="col-4">
                                             <label for="description_image4_show{{ $product->id }}">Imagen de
                                                 descripcion 4</label>
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->description_image4")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->description_image4")}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -175,8 +177,9 @@
                                         especificaciones<span class="text-danger">*</span></label>
                                     <div class="row">
                                         <div class="col-4">
-                                            <img class="img-fluid img-show-products"
-                                                src="{{asset("storage/$product->specification_image")}}" alt="">
+                                            <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->specification_image")}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +197,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body p-0">
-                        <img class="img-fluid" src="{{asset("storage/$product->cover")}}" alt="">
+                        <img class="img-fluid" src="{{ asset('images/blank.jpg')}}"
+                            data-src="{{asset("storage/$product->cover")}}" alt="">
                     </div>
                 </div>
             </div>

@@ -255,8 +255,13 @@
       images.push(query[i]);
     };
 
+<<<<<<< HEAD
     processScroll();
     addEventListener('scroll',processScroll);
+=======
+    // processScroll();
+    addEventListener('click',processScroll);
+>>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
 
 }(this);
 </script>

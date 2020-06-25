@@ -12,5 +12,12 @@ class FactoryRequestStatus extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'color',
+        'grupo',
+        'secuencia',
+        'editable'
+    ];
 }

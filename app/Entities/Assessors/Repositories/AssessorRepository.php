@@ -183,4 +183,15 @@ class AssessorRepository implements AssessorRepositoryInterface
             dd($e);
         }
     }
+
+    public function listAsessorssForSubsidiaries($subsidiary)
+    {
+        try {
+            return $this->model->with('user')
+                ->where('SUCURSAL', $subsidiary)
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

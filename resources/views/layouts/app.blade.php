@@ -112,7 +112,7 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 			<div class="container-itemsPreHeader">
 				<a class="preHeader-item  borderLeftItems" href="/quienes-somos">Quiénes somos</a>
 				<a class="preHeader-item  borderLeftItems" href="/Nuestras-tiendas">Oficinas</a>
-				<a class="preHeader-item  borderLeftItems" href="#">01 8000 11 77 87 o (1) 484 2122 en Bogotá</a>
+				<a class="preHeader-item  borderLeftItems" href="#">01 8000 18 05 20 o (1) 484 2122 en Bogotá</a>
 				<a class="preHeader-item " href="/Terminos-y-condiciones">* Aplican condiciones y restricciones</a>
 				@if(Auth::guard('web')->check())
 				<div class="logoutButton mr-2">
@@ -270,10 +270,9 @@ $activeWarranty = ($_SERVER['REQUEST_URI'] == '/digitalWarranty') ? 'activeMenu'
 								class="img-fluid footer-imgNosotros" />
 							<p class="footer-textTelefonos">
 								@if( Request::path() == 'digitalWarranty')
-								<span class="footer-textTelefonosNal"> Línea nacional: 01 8000 11 77 87</span> <br />
+								<span class="footer-textTelefonosNal"> Línea nacional: 01 8000 18 05 20</span> <br />
 								@else
-								<span class="footer-textTelefonosNal"> Línea nacional: 57 (1)484 2122 - 01 8000 11 77
-									87</span> <br />
+								<span class="footer-textTelefonosNal"> Línea nacional: 57 (1)484 2122 - 01 8000 18 05 20</span> <br />
 								@endif
 								<span class="footer-textHorario">Lunes a Viernes 8:00 am a 5:00 pm</span>
 							</p>

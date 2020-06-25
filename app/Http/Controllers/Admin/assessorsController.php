@@ -44,6 +44,7 @@ use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInt
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 
 class assessorsController extends Controller
 {
@@ -95,40 +96,40 @@ class assessorsController extends Controller
 		FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
 		AnalisisRepositoryInterface $analisisRepositoryInterface
 	) {
-		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
-		$this->codebtorInterface               = $codebtorRepositoryInterface;
-		$this->kinshipInterface                = $kinshipRepositoryInterface;
-		$this->temporaryCustomerInterface      = $temporaryCustomerRepositoryInterface;
-		$this->customerProfessionInterface     = $customerProfessionRepositoryInterface;
-		$this->assessorInterface               = $AssessorRepositoryInterface;
-		$this->factoryInterface                = $factoryRequestRepositoryInterface;
-		$this->toolsInterface                  = $toolRepositoryInterface;
-		$this->consultationValidityInterface   = $consultationValidityRepositoryInterface;
-		$this->customerInterface               = $customerRepositoryInterface;
-		$this->subsidiaryInterface             = $subsidiaryRepositoryInterface;
-		$this->customerCellPhoneInterface      = $customerCellPhoneRepositoryInterface;
-		$this->fosygaInterface                 = $fosygaRepositoryInterface;
-		$this->webServiceInterface             = $WebServiceRepositoryInterface;
-		$this->registraduriaInterface          = $registraduriaRepositoryInterface;
-		$this->commercialConsultationInterface = $commercialConsultationRepositoryInterface;
-		$this->creditCardInterface             = $creditCardRepositoryInterface;
-		$this->UpToDateFinancialCifinInterface = $UpToDateFinancialCifinRepositoryInterface;
-		$this->CifinFinancialArrearsInterface  = $CifinFinancialArrearRepositoryInterface;
-		$this->cifinRealArrearsInterface       = $cifinRealArrearRepositoryInterface;
-		$this->cifinScoreInterface             = $cifinScoreRepositoryInterface;
-		$this->intentionInterface              = $intentionRepositoryInterface;
-		$this->extintFinancialCifinInterface   = $extintFinancialCifinRepositoryInterface;
-		$this->UpToDateRealCifinInterface      = $upToDateRealCifinsRepositoryInterface;
-		$this->extinctRealCifinInterface       = $extintRealCifinRepositoryInterface;
-		$this->ubicaInterface                  = $ubicaRepositoryInterface;
-		$this->ruafInterface                   = $ruafRepositoryInterface;
-		$this->cityInterface                   = $cityRepositoryInterface;
-		$this->cliCelInterface                 = $cliCelRepositoryInterface;
-		$this->policyInterface                 = $policyRepositoryInterface;
-		$this->OportuyaTurnInterface           = $oportuyaTurnRepositoryInterface;
-		$this->datosClienteInterface           = $datosClienteRepositoryInterface;
-		$this->fosygaTempInterface             = $fosygaTempRepositoryInterface;
-		$this->AnalisisInterface               = $analisisRepositoryInterface;
+		$this->secondCodebtorInterface            = $secondCodebtorRepositoryInterface;
+		$this->codebtorInterface                  = $codebtorRepositoryInterface;
+		$this->kinshipInterface                   = $kinshipRepositoryInterface;
+		$this->temporaryCustomerInterface         = $temporaryCustomerRepositoryInterface;
+		$this->customerProfessionInterface        = $customerProfessionRepositoryInterface;
+		$this->assessorInterface                  = $AssessorRepositoryInterface;
+		$this->factoryInterface                   = $factoryRequestRepositoryInterface;
+		$this->toolsInterface                     = $toolRepositoryInterface;
+		$this->consultationValidityInterface      = $consultationValidityRepositoryInterface;
+		$this->customerInterface                  = $customerRepositoryInterface;
+		$this->subsidiaryInterface                = $subsidiaryRepositoryInterface;
+		$this->customerCellPhoneInterface         = $customerCellPhoneRepositoryInterface;
+		$this->fosygaInterface                    = $fosygaRepositoryInterface;
+		$this->webServiceInterface                = $WebServiceRepositoryInterface;
+		$this->registraduriaInterface             = $registraduriaRepositoryInterface;
+		$this->commercialConsultationInterface    = $commercialConsultationRepositoryInterface;
+		$this->creditCardInterface                = $creditCardRepositoryInterface;
+		$this->UpToDateFinancialCifinInterface    = $UpToDateFinancialCifinRepositoryInterface;
+		$this->CifinFinancialArrearsInterface     = $CifinFinancialArrearRepositoryInterface;
+		$this->cifinRealArrearsInterface          = $cifinRealArrearRepositoryInterface;
+		$this->cifinScoreInterface                = $cifinScoreRepositoryInterface;
+		$this->intentionInterface                 = $intentionRepositoryInterface;
+		$this->extintFinancialCifinInterface      = $extintFinancialCifinRepositoryInterface;
+		$this->UpToDateRealCifinInterface         = $upToDateRealCifinsRepositoryInterface;
+		$this->extinctRealCifinInterface          = $extintRealCifinRepositoryInterface;
+		$this->ubicaInterface                     = $ubicaRepositoryInterface;
+		$this->ruafInterface                      = $ruafRepositoryInterface;
+		$this->cityInterface                      = $cityRepositoryInterface;
+		$this->cliCelInterface                    = $cliCelRepositoryInterface;
+		$this->policyInterface                    = $policyRepositoryInterface;
+		$this->OportuyaTurnInterface              = $oportuyaTurnRepositoryInterface;
+		$this->datosClienteInterface              = $datosClienteRepositoryInterface;
+		$this->fosygaTempInterface                = $fosygaTempRepositoryInterface;
+		$this->AnalisisInterface                  = $analisisRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -141,16 +142,16 @@ class assessorsController extends Controller
 		$skip         = $this->toolsInterface->getSkip($request->input('skip'));
 		$list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
 		$listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-			$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
-			$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
-			$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+			$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+			$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+			$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20), $subsidiary);
 		}
 		if (request()->has('q')) {
 			$list = $this->factoryInterface->searchFactoryAseessors(
@@ -215,18 +216,21 @@ class assessorsController extends Controller
 		}
 		$factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 		$listCount            = $listCount->count();
+		$statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
 
 		return view('assessors.assessors.list', [
-			'factoryRequests'     		   => $list,
-			'optionsRoutes'       		   => (request()->segment(2)),
-			'headers'             		   => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-			'listCount'           		   => $listCount,
-			'skip'                		   => $skip,
-			'factoryRequestsTotal'		   => $factoryRequestsTotal,
-			'statusesAprobadosValues'  => $statusesAprobadosValues,
-			'statusesNegadosValues' 	  => $statusesNegadosValues,
-			'statusesDesistidosValues' => $statusesDesistidosValues,
-			'statusesPendientesValues' => $statusesPendientesValues
+			'factoryRequests'                => $list,
+			'optionsRoutes'                  => (request()->segment(2)),
+			'headers'                        => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+			'listCount'                      => $listCount,
+			'skip'                           => $skip,
+			'factoryRequestsTotal'           => $factoryRequestsTotal,
+			'statusesAprobadosValues'         => $statusesAprobadosValues,
+			'statusesNegadosValues'        => $statusesNegadosValues,
+			'statusesDesistidosValues'        => $statusesDesistidosValues,
+			'statusesPendientesValues'     => $statusesPendientesValues,
+			'statuses'                     => $statuses
+
 		]);
 	}
 
@@ -362,7 +366,7 @@ class assessorsController extends Controller
 				];
 				$this->cliCelInterface->createCliCel($data);
 			}
-
+			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			if ($request->get('CIUD_EXP') != '') {
@@ -1268,7 +1272,7 @@ class assessorsController extends Controller
 		$lastName = $lastName[0];
 		$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		$estadoSolic = 'ANALISIS';
+		$estadoSolic = 3;
 		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 		$resultUbica = $this->validateConsultaUbica($identificationNumber);
 		if ($resultUbica == 0) {
@@ -1276,7 +1280,7 @@ class assessorsController extends Controller
 			if ($confronta == 1) {
 				$form = $this->getFormConfronta($identificationNumber);
 				if (empty($form)) {
-					$estadoSolic = "ANALISIS";
+					$estadoSolic = 3;
 				} else {
 					return [
 						'form' => $form,
@@ -1284,10 +1288,10 @@ class assessorsController extends Controller
 					];
 				}
 			} else {
-				$estadoSolic = 'ANALISIS';
+				$estadoSolic = 3;
 			}
 		} else {
-			$estadoSolic = 'APROBADO';
+			$estadoSolic = 19;
 		}
 
 		$policyCredit = [
@@ -1325,7 +1329,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 'ANALISIS' : $estadoSolic;
+		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
@@ -1435,9 +1439,9 @@ class assessorsController extends Controller
 		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
 
 		if ($getResultConfronta[0]->cod_resp == 1) {
-			$estadoSolic = "APROBADO";
+			$estadoSolic = 19;
 		} else {
-			$estadoSolic = "ANALISIS";
+			$estadoSolic = 3;
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
@@ -1458,7 +1462,7 @@ class assessorsController extends Controller
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
-		$estado = ($estadoSolic == "APROBADO") ? "APROBADO" : "PREAPROBADO";
+		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
 		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -1473,7 +1477,7 @@ class assessorsController extends Controller
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 'EN SUCURSAL';
+		$estadoSolic = 1;
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
@@ -1533,11 +1537,11 @@ class assessorsController extends Controller
 		$this->datosClienteInterface->addDatosCliente($data);
 		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
 		$infoLead        = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
-		if ($estadoSolic == "APROBADO") {
+		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
@@ -1556,7 +1560,7 @@ class assessorsController extends Controller
 					$infoLead->TARJETA
 				);
 			}
-		} elseif ($estadoSolic == "EN SUCURSAL") {
+		} elseif ($estadoSolic == 1) {
 			$debtor         = new DebtorInsurance();
 			$debtor->CEDULA = $identificationNumber;
 			$debtor->SOLIC  = $numSolic;
@@ -1575,7 +1579,7 @@ class assessorsController extends Controller
 		$customer->ESTADO = $estadoResult;
 		$customer->save();
 		$infoLead = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
@@ -1616,6 +1620,8 @@ class assessorsController extends Controller
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;
 		$this->codebtorInterface->createCodebtor($customerFactoryRequest);
 		$this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
+		$factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
+		$factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
 		return $customerFactoryRequest;
 	}
 
@@ -1694,34 +1700,33 @@ class assessorsController extends Controller
 		$to         = Carbon::now();
 		$from       = Carbon::now()->startOfMonth();
 		$subsidiary = '';
-
 		$estadosAssessors        = $this->factoryInterface->countAssessorFactoryRequestStatuses($from, $to, $assessor);
 		$webAssessorsCounts      = $this->factoryInterface->countWebAssessorFactory($from, $to, $assessor);
 		$factoryAssessorsTotal   = $this->factoryInterface->getAssessorFactoryTotal($from, $to, $assessor);
-		$estadosAprobados        = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'));
-		$estadosNegados          = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "NEGADO");
-		$estadosDesistidos       = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, "DESISTIDO");
-		$estadosPendientes       = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
-		$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-		$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "NEGADO", $subsidiary);
-		$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, "DESISTIDO", $subsidiary);
-		$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+		$estadosAprobados        = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors($from, $to, $assessor, array(19, 20));
+		$estadosNegados          = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, 16);
+		$estadosDesistidos       = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors($from, $to, $assessor, 15);
+		$estadosPendientes       = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20));
+		$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+		$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+		$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+		$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-			$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'), $subsidiary);
-			$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO", $subsidiary);
-			$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO", $subsidiary);
-			$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'), $subsidiary);
+			$valuesEstadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+			$valuesEstadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+			$valuesEstadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+			$valuesEstadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20), $subsidiary);
 		}
 
 		if (request()->has('from')) {
 			$estadosAssessors      = $this->factoryInterface->countAssessorFactoryRequestStatuses(request()->input('from'), request()->input('to'), $assessor);
 			$webAssessorsCounts    = $this->factoryInterface->countWebAssessorFactory(request()->input('from'), request()->input('to'), $assessor);
 			$factoryAssessorsTotal = $this->factoryInterface->getAssessorFactoryTotal(request()->input('from'), request()->input('to'), $assessor);
-			$estadosAprobados      = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array('APROBADO', 'EN FACTURACION'));
-			$estadosNegados        = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "NEGADO");
-			$estadosDesistidos     = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, "DESISTIDO");
-			$estadosPendientes     = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array('NEGADO', 'DESISTIDO', 'APROBADO', 'EN FACTURACION'));
+			$estadosAprobados      = $this->factoryInterface->countFactoryRequestsStatusesAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20));
+			$estadosNegados        = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16);
+			$estadosDesistidos     = $this->factoryInterface->countFactoryRequestsStatusesGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15);
+			$estadosPendientes     = $this->factoryInterface->countFactoryRequestsStatusesPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20));
 		}
 
 		$valuesEstadosAprobados  = $this->toolsInterface->extractValuesToArray($valuesEstadosAprobados);
@@ -1732,6 +1737,18 @@ class assessorsController extends Controller
 		$estadosNegados          = $this->toolsInterface->extractValuesToArray($estadosNegados);
 		$estadosDesistidos       = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
 		$estadosPendientes       = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+		foreach ($estadosAssessors as $key => $status) {
+			if ($estadosAssessors[$key]->factoryRequestStatus) {
+				$estadosAssessors[$key]['ESTADO'] =  $estadosAssessors[$key]->factoryRequestStatus->name;
+			}
+		}
+
+		foreach ($webAssessorsCounts as $key => $status) {
+			if ($webAssessorsCounts[$key]->factoryRequestStatus) {
+				$webAssessorsCounts[$key]['ESTADO'] =  $webAssessorsCounts[$key]->factoryRequestStatus->name;
+			}
+		}
 
 		$estadosAssessors     = $estadosAssessors->toArray();
 		$webAssessorsCounts   = $webAssessorsCounts->toArray();

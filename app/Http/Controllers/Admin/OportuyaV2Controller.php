@@ -541,6 +541,14 @@ class OportuyaV2Controller extends Controller
 				return $consultasLead;
 			}
 
+			if ($consultasLead['resp'] == '-5') {
+				return -5;
+			}
+
+			if ($consultasLead['resp'] == '-6') {
+				return -5;
+			}
+
 			if (isset($consultasLead['resp']['resp'])) {
 				if ($consultasLead['resp']['resp'] == 'false') {
 					return -2;
@@ -552,7 +560,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estado = $consultasLead['infoLead']->ESTADO;
-			if ($estado == 'PREAPROBADO' || $estado == 'SIN COMERCIAL' || $estado == 'APROBADO') {
+			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
 				$quotaApprovedAdvance = $consultasLead['quotaApprovedAdvance'];
 				return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $consultasLead['infoLead']->numSolic, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -642,7 +650,7 @@ class OportuyaV2Controller extends Controller
 		return $this->webServiceInterface->sendMessageSms($code, $identificationNumber, $dateNew, $celNumber);
 	}
 
-	
+
 	public function getCodeVerificationOportudata($identificationNumber, $celNumber, $type = "ORIGEN")
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
@@ -672,6 +680,8 @@ class OportuyaV2Controller extends Controller
 		$dateNew = date('Y-m-d H:i:s', strtotime($date));
 
 		$dataCode = $this->webServiceInterface->sendMessageSmsInfobip($code, $dateNew, $celNumber);
+		$data = $this->webServiceInterface->sendMessageSms($code, $dateNew, $celNumber);
+		$data = json_decode($data, true);
 		$dataCode = json_decode($dataCode, true);
 		$codeVerification['sms_status'] = $dataCode['messages'][0]['status']['groupName']; // groupName
 		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
@@ -1107,10 +1117,10 @@ class OportuyaV2Controller extends Controller
 			} else {
 				$customerIntention->ID_DEF  = '15';
 			}
-			$customer->ESTADO           = 'PREAPROBADO';
-			$tarjeta                    = "Crédito Tradicional";
-			$customerIntention->TARJETA = $tarjeta;
-			$customerIntention->ESTADO_INTENCION  = '2';
+			$customer->ESTADO                    = 'PREAPROBADO';
+			$tarjeta                             = "Crédito Tradicional";
+			$customerIntention->TARJETA          = $tarjeta;
+			$customerIntention->ESTADO_INTENCION = '2';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "-2"];
@@ -1121,8 +1131,10 @@ class OportuyaV2Controller extends Controller
 		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($identificationNumber);
 		if (!empty($getDataFosyga)) {
-			if (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
-				return ['resp' => "false"];
+			if ($getDataFosyga->fuenteFallo == 'SI') {
+				return ['resp' => -6];
+			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+				return ['resp' => -6];
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
 					$statusAfiliationCustomer = false;
@@ -1144,7 +1156,9 @@ class OportuyaV2Controller extends Controller
 		//3.1 Estado de documento
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($identificationNumber);
 		if (!empty($getDataRegistraduria)) {
-			if (!empty($getDataRegistraduria->estado)) {
+			if ($getDataRegistraduria->fuenteFallo == 'SI') {
+				return ['resp' => -6];
+			} elseif (!empty($getDataRegistraduria->estado)) {
 				if ($getDataRegistraduria->estado != 'VIGENTE') {
 					$customer->ESTADO                     = 'NEGADO';
 					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
@@ -1163,7 +1177,7 @@ class OportuyaV2Controller extends Controller
 
 		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';
-			$customerIntention->ID_DEF =  $idDef;
+			$customerIntention->ID_DEF = $idDef;
 			$customerIntention->ESTADO_INTENCION  = '1';
 			$customer->save();
 			$customerIntention->save();
@@ -1186,28 +1200,28 @@ class OportuyaV2Controller extends Controller
 				if ($tipoCliente == 'OPORTUNIDADES') {
 					$customer->ESTADO = 'PREAPROBADO';
 					$customer->save();
-					$customerIntention->TARJETA =  $tarjeta;
-					$customerIntention->ID_DEF =  '14';
-					$customerIntention->ESTADO_INTENCION  = '2';
+					$customerIntention->TARJETA          = $tarjeta;
+					$customerIntention->ID_DEF           = '14';
+					$customerIntention->ESTADO_INTENCION = '2';
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
-					$customer->ESTADO           = 'PREAPROBADO';
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '15';
-					$customerIntention->ESTADO_INTENCION  = '2';
+					$customer->ESTADO                    = 'PREAPROBADO';
+					$customerIntention->TARJETA          = $tarjeta;
+					$customerIntention->ID_DEF           = '15';
+					$customerIntention->ESTADO_INTENCION = '2';
 					$customer->save();
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
-					$customer->ESTADO           = 'PREAPROBADO';
-					$customerIntention->TARJETA = $tarjeta;
-					$customerIntention->ID_DEF  = '16';
-					$customerIntention->ESTADO_INTENCION  = '2';
+					$customer->ESTADO                    = 'PREAPROBADO';
+					$customerIntention->TARJETA          = $tarjeta;
+					$customerIntention->ID_DEF           = '16';
+					$customerIntention->ESTADO_INTENCION = '2';
 					$customer->save();
 					$customerIntention->save();
 					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
@@ -1215,19 +1229,19 @@ class OportuyaV2Controller extends Controller
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
 					if ($historialCrediticio == 1) {
-						$customer->ESTADO           = 'PREAPROBADO';
-						$customerIntention->TARJETA = $tarjeta;
-						$customerIntention->ID_DEF  = '17';
-						$customerIntention->ESTADO_INTENCION  = '2';
+						$customer->ESTADO                    = 'PREAPROBADO';
+						$customerIntention->TARJETA          = $tarjeta;
+						$customerIntention->ID_DEF           = '17';
+						$customerIntention->ESTADO_INTENCION = '2';
 						$customer->save();
 						$customerIntention->save();
 						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
 						$customer->save();
-						$customerIntention->TARJETA = 'Crédito Tradicional';
-						$customerIntention->ID_DEF =  '18';
-						$customerIntention->ESTADO_INTENCION  = '2';
+						$customerIntention->TARJETA          = 'Crédito Tradicional';
+						$customerIntention->ID_DEF           = '18';
+						$customerIntention->ESTADO_INTENCION = '2';
 						$customerIntention->save();
 						return ['resp' => "-2"];
 					}
@@ -1235,9 +1249,9 @@ class OportuyaV2Controller extends Controller
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '18';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '18';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
@@ -1247,17 +1261,17 @@ class OportuyaV2Controller extends Controller
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '19';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '19';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '20';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '20';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
@@ -1267,17 +1281,17 @@ class OportuyaV2Controller extends Controller
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '21';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '21';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '22';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '22';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			}
@@ -1287,16 +1301,16 @@ class OportuyaV2Controller extends Controller
 			if ($tipoCliente == 'OPORTUNIDADES' && $customerScore >= 275) {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '23';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '23';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' => "-2"];
 			} else {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
 				$customerIntention->TARJETA = '';
-				$customerIntention->ID_DEF =  '24';
+				$customerIntention->ID_DEF  = '24';
 				$customerIntention->ESTADO_INTENCION  = '1';
 				$customerIntention->save();
 				return ['resp' => "false"];
@@ -1307,26 +1321,26 @@ class OportuyaV2Controller extends Controller
 			if ($tipo5Especial == 1) {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '12';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '12';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
 			if ($tipoCliente == 'OPORTUNIDADES') {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '11';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '11';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			} else {
 				$customer->ESTADO = 'PREAPROBADO';
 				$customer->save();
-				$customerIntention->TARJETA = 'Crédito Tradicional';
-				$customerIntention->ID_DEF =  '13';
-				$customerIntention->ESTADO_INTENCION  = '2';
+				$customerIntention->TARJETA          = 'Crédito Tradicional';
+				$customerIntention->ID_DEF           = '13';
+				$customerIntention->ESTADO_INTENCION = '2';
 				$customerIntention->save();
 				return ['resp' =>  "-2"];
 			}
@@ -1342,8 +1356,8 @@ class OportuyaV2Controller extends Controller
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$identificationNumber = (string) $identificationNumber;
 		$data = [
-			'CEDULA' => $identificationNumber,
-			'ID_DEF' => $typeDenied,
+			'CEDULA'           => $identificationNumber,
+			'ID_DEF'           => $typeDenied,
 			'ESTADO_INTENCION' => 1
 		];
 
@@ -1352,7 +1366,7 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 			$dataIntention->ESTADO_INTENCION = 1;
-			$dataIntention->ID_DEF = $typeDenied;
+			$dataIntention->ID_DEF           = $typeDenied;
 			$dataIntention->save();
 		}
 
@@ -1398,12 +1412,12 @@ class OportuyaV2Controller extends Controller
 		AND preg.secuencia_preg = opcion.secuencia_preg", ['cedula' => $identificationNumber, 'cedula2' => $identificationNumber]);
 		$form = [];
 		foreach ($queryForm as $value) {
-			$form[$value->secuencia_preg]['secuencia'] = $value->secuencia_preg;
-			$form[$value->secuencia_preg]['pregunta'] = $value->texto_preg;
+			$form[$value->secuencia_preg]['secuencia']    = $value->secuencia_preg;
+			$form[$value->secuencia_preg]['pregunta']     = $value->texto_preg;
 			$form[$value->secuencia_preg]['cuestionario'] = $value->secuencia_cuest;
-			$form[$value->secuencia_preg]['cedula'] = $identificationNumber;
-			$form[$value->secuencia_preg]['consec'] = $value->consec;
-			$form[$value->secuencia_preg]['opciones'][] = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
+			$form[$value->secuencia_preg]['cedula']       = $identificationNumber;
+			$form[$value->secuencia_preg]['consec']       = $value->consec;
+			$form[$value->secuencia_preg]['opciones'][]   = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
 		}
 
 		return $form;
@@ -1434,9 +1448,9 @@ class OportuyaV2Controller extends Controller
 		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
 
 		if ($getResultConfronta[0]->cod_resp == 1) {
-			$estadoSolic = "APROBADO";
+			$estadoSolic = 19;
 		} else {
-			$estadoSolic = "ANALISIS";
+			$estadoSolic = 3;
 		}
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
@@ -1457,7 +1471,7 @@ class OportuyaV2Controller extends Controller
 
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
 
-		$estado = ($estadoSolic == "APROBADO") ? "APROBADO" : "PREAPROBADO";
+		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
 		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
 		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -1690,11 +1704,11 @@ class OportuyaV2Controller extends Controller
 				$this->intentionInterface->createIntention($dataIntention);
 			}
 
-			$estadoSolic = 'ANALISIS';
-			$policyCredit = [
+			$estadoSolic = 3;
+			return $policyCredit = [
 				'quotaApprovedProduct' => 0,
 				'quotaApprovedAdvance' => 0,
-				'resp' => 'true'
+				'resp'                 => -5
 			];
 		} else {
 			$policyCredit = [
@@ -1706,6 +1720,10 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 
+			if($policyCredit['resp'] == '-6'){
+				return ['resp' => -6];
+			}
+
 			if ($policyCredit['resp'] == 'false' || $policyCredit['resp'] == '-2') {
 				return [
 					'resp'     => $policyCredit,
@@ -1713,7 +1731,7 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
-			$estadoSolic = 'ANALISIS';
+			$estadoSolic = 3;
 			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
@@ -1721,7 +1739,7 @@ class OportuyaV2Controller extends Controller
 				if ($confronta == 1) {
 					$form = $this->getFormConfronta($identificationNumber);
 					if (empty($form)) {
-						$estadoSolic = "ANALISIS";
+						$estadoSolic = 3;
 					} else {
 						return [
 							'form' => $form,
@@ -1729,10 +1747,10 @@ class OportuyaV2Controller extends Controller
 						];
 					}
 				} else {
-					$estadoSolic = 'ANALISIS';
+					$estadoSolic = 3;
 				}
 			} else {
-				$estadoSolic = 'APROBADO';
+				$estadoSolic = 19;
 			}
 		}
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data);
@@ -1748,7 +1766,7 @@ class OportuyaV2Controller extends Controller
 		$lastName = $lastName[0];
 		$fechaExpIdentification = explode("-", $dateExpIdentification);
 		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		$estadoSolic = 'ANALISIS';
+		$estadoSolic = 3;
 		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
 		$resultUbica = $this->validateConsultaUbica($identificationNumber);
 		if ($resultUbica == 0) {
@@ -1756,7 +1774,7 @@ class OportuyaV2Controller extends Controller
 			if ($confronta == 1) {
 				$form = $this->getFormConfronta($identificationNumber);
 				if (empty($form)) {
-					$estadoSolic = "ANALISIS";
+					$estadoSolic = 3;
 				} else {
 					return [
 						'form' => $form,
@@ -1764,10 +1782,10 @@ class OportuyaV2Controller extends Controller
 					];
 				}
 			} else {
-				$estadoSolic = 'ANALISIS';
+				$estadoSolic = 3;
 			}
 		} else {
-			$estadoSolic = 'APROBADO';
+			$estadoSolic = 19;
 		}
 		$policyCredit = [
 			'quotaApprovedProduct' => $quotaApprovedProduct,
@@ -1792,7 +1810,7 @@ class OportuyaV2Controller extends Controller
 		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 'EN SUCURSAL';
+		$estadoSolic = 1;
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
@@ -1848,11 +1866,11 @@ class OportuyaV2Controller extends Controller
 		$this->datosClienteInterface->addDatosCliente($dataDatosCliente);
 		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
 		$infoLead           = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
-		if ($estadoSolic == "APROBADO") {
+		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
@@ -1860,7 +1878,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
 			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
-		} elseif ($estadoSolic == "EN SUCURSAL") {
+		} elseif ($estadoSolic == 1) {
 			$estadoResult = "PREAPROBADO";
 		} else {
 			$estadoResult = "PREAPROBADO";
@@ -1875,7 +1893,7 @@ class OportuyaV2Controller extends Controller
 		$customer->ESTADO = $estadoResult;
 		$customer->save();
 		$infoLead = (object) [];
-		if ($estadoSolic != 'ANALISIS') {
+		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
 		$infoLead->numSolic = $numSolic;
@@ -1915,7 +1933,8 @@ class OportuyaV2Controller extends Controller
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);
-
+		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
+		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
 		return $customerFactoryRequest;
 	}
 

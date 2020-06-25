@@ -45,7 +45,7 @@ class ListProductController extends Controller
                 if ($data[0] != 'CODIGO' && $data[1] != 'NOMBRE') {
                     $name = utf8_encode($data[1]);
                     $name = str_replace("\u00a0", '', $name);
-                    $product = ['sku' => $data[0], 'item' => $name, 'base_cost' => $data[2], 'iva_cost' => $data[3], 'cash_cost' => $data[4],'protection' => $data[5], 'min_tolerance' => $data[6], 'max_tolerance' => $data[7]];
+                    $product = ['sku' => $data[0], 'item' => $name, 'base_cost' => $data[2], 'iva_cost' => $data[3], 'cash_cost' => (isset($data[4]) && $data[4] != '') ? $data[4] : 0,'protection' => $data[5], 'min_tolerance' => $data[6], 'max_tolerance' => $data[7]];
                     $listProduct =  $this->listProductInterface->createlistProduct($product);
                 }
             }

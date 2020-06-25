@@ -52,6 +52,8 @@ interface FactoryRequestRepositoryInterface
 
   public function listFactoryDirector($totalView, $Director): Support;
 
+  public function countFactoryRequestsTotalGeneralsTurns($from, $to, $status);
+
   public function countFactoryRequestsStatusesAprobadosDirector($from, $to, $Director, $status);
 
   public function countFactoryRequestsStatusesPendientesDirector($from, $to, $Director, $status);
@@ -99,4 +101,6 @@ interface FactoryRequestRepositoryInterface
   public function getFactoryRequestsTotalTurn($from, $to);
 
   public function countFactoryRequestsStatusesTurn($from, $to);
+
+  public function listFactoryRequestsRecovering(): Support;
 }

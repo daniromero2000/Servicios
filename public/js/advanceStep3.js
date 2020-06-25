@@ -167,6 +167,13 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 				window.location = "/UsuarioPendiente";
 			}
 
+			if(response.data == -5){
+				$scope.estadoCliente = "SIN COMERCIAL";
+				setTimeout(() => {
+					$('#congratulations').modal('show');
+				}, 1800);
+			}
+
 			if (response.data.data == true) {
 				$scope.quota = response.data.quota;
 				$scope.quotaAdvance = response.data.quotaApprovedAdvance;

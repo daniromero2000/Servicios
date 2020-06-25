@@ -63,26 +63,25 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://nzzpz5.api.infobip.com/sms/2/text/single",
+            CURLOPT_URL => "https://nzzpz5.api.infobip.com/sms/2/text/advanced",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "{ \"from\":\"Lagobo\", \"to\":\"57$celNumber\", \"text\":\"$text\" }",
+            CURLOPT_POSTFIELDS => "{\r\n\t\"bulkId\":\"$code\",\r\n\t\"messages\":[\r\n\t\t{\r\n\t\t\t\"from\":\"InfoSMS\",\r\n\t\t\t\"destinations\":[\r\n\t\t\t\t{\r\n\t\t\t\t\t\"to\":\"57$celNumber\",\r\n\t\t\t\t\t\"messageId\":\"$code\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"text\":\"$text\",\r\n\t\t\t\"flash\":false,\r\n\t\t\t\"intermediateReport\":false,\r\n\t\t\t\"validityPeriod\": 15\r\n\t\t}\r\n\t],\r\n\t\"tracking\":{\r\n\t\t\"track\":\"SMS\",\r\n\t\t\"type\":\"MY_CAMPAIGN\"\r\n\t}\r\n}",
             CURLOPT_HTTPHEADER => array(
-                "accept: application/json",
-                "authorization: Basic ". base64_encode($username . ":" . $password),
-                "content-type: application/json"
+              "accept: application/json",
+              "authorization: Basic ". base64_encode($username . ":" . $password),
+              "content-type: application/json"
             ),
-        ));
+          ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
 
         curl_close($curl);
-
         return $response;
     }
 

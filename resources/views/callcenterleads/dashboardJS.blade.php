@@ -7,14 +7,8 @@
         var estados = [<?php echo '"'.implode('","', $leadStatusesNames).'"' ?>];
         var values = [<?php echo '"'.implode('","', $leadStatusesValues).'"' ?>];
 
-        var channels = [];
-        var channelsValues = [];
-
         var channels = [<?php echo '"'.implode('","', $leadChannelNames).'"' ?>];
         var channelsValues = [<?php echo '"'.implode('","', $leadChannelValues).'"' ?>];
-
-        var assessors = [];
-        var assessorsValues = [];
 
         var assessors = [<?php echo '"'.implode('","', $leadAssessorsNames).'"' ?>];
         var assessorsValues = [<?php echo '"'.implode('","', $leadAssessorsValues).'"' ?>];
@@ -25,6 +19,108 @@
         var service = [<?php echo '"'.implode('","', $leadServicesNames).'"' ?>];
         var serviceValues = [<?php echo '"'.implode('","', $leadServicesValues).'"' ?>];
 
+
+        var leadDigitalChanel = [<?php echo '"'.implode('","', $leadProductDigitalChanels[0]).'"' ?>];
+        var productDigitalChanelValues = [<?php echo '"'.implode('","', $leadProductDigitalChanels[1]).'"' ?>];
+
+        var leadInsurance = [<?php echo '"'.implode('","', $leadProductInsurances[0]).'"' ?>];
+        var productInsuranceValues = [<?php echo '"'.implode('","', $leadProductInsurances[1]).'"' ?>];
+
+        var productWarranties = [<?php echo '"'.implode('","', $leadProductWarranties[0]).'"' ?>];
+        var productWarrantiesValues = [<?php echo '"'.implode('","', $leadProductWarranties[1]).'"' ?>];
+   
+        var leadOportuya = [<?php echo '"'.implode('","', $leadProductOportuyas[0]).'"' ?>];
+        var productOportuyaValues = [<?php echo '"'.implode('","', $leadProductOportuyas[1]).'"' ?>];
+
+        var leadCallCenter = [<?php echo '"'.implode('","', $leadProductsCallCenter[0]).'"' ?>];
+        var productCallCenterValues = [<?php echo '"'.implode('","', $leadProductsCallCenter[1]).'"' ?>];
+
+        var leadAdvancedUnit = [<?php echo '"'.implode('","', $leadProductsAdvancedUnit[0]).'"' ?>];
+        var productAdvancedUnitValues = [<?php echo '"'.implode('","', $leadProductsAdvancedUnit[1]).'"' ?>];
+        
+        var productWallets = [<?php echo '"'.implode('","', $leadProductWallets[0]).'"' ?>];
+        var productWalletsValues = [<?php echo '"'.implode('","', $leadProductWallets[1]).'"' ?>];
+
+        var leadJuridical = [<?php echo '"'.implode('","', $leadProductJuridicales[0]).'"' ?>];
+        var productJuridicalValues = [<?php echo '"'.implode('","', $leadProductJuridicales[1]).'"' ?>];
+        
+        var leadLibranzas = [<?php echo '"'.implode('","', $leadProductLibranzas[0]).'"' ?>];
+        var productLibranzasValues = [<?php echo '"'.implode('","', $leadProductLibranzas[1]).'"' ?>];
+
+        var leadEcommerces = [<?php echo '"'.implode('","', $leadProductEcommerces[0]).'"' ?>];
+        var productEcommercesValues = [<?php echo '"'.implode('","', $leadProductEcommerces[1]).'"' ?>];
+
+        var leadSubsidiary = [<?php echo '"'.implode('","', $leadProductSubsidiary[0]).'"' ?>];
+        var productSubsidiaryValues = [<?php echo '"'.implode('","', $leadProductSubsidiary[1]).'"' ?>];
+        
+        var serviceDigitalChanels = [<?php echo '"'.implode('","', $leadServiceDigitalChanels[0]).'"' ?>];
+        var serviceDigitalChanelsValues = [<?php echo '"'.implode('","', $leadServiceDigitalChanels[1]).'"' ?>];
+
+        var serviceInsurances = [<?php echo '"'.implode('","', $leadServiceInsurances[0]).'"' ?>];
+        var serviceInsurancesValues = [<?php echo '"'.implode('","', $leadServiceInsurances[1]).'"' ?>];
+
+        var serviceWarranties = [<?php echo '"'.implode('","', $leadServiceWarranties[0]).'"' ?>];
+        var serviceWarrantiesValues = [<?php echo '"'.implode('","', $leadServiceWarranties[1]).'"' ?>];
+
+        var serviceOportuyas = [<?php echo '"'.implode('","', $leadServiceOportuyas[0]).'"' ?>];
+        var serviceOportuyasValues = [<?php echo '"'.implode('","', $leadServiceOportuyas[1]).'"' ?>];
+
+        var serviceCallCenter = [<?php echo '"'.implode('","', $leadServicesCallCenter[0]).'"' ?>];
+        var serviceCallCenterValues = [<?php echo '"'.implode('","', $leadServicesCallCenter[1]).'"' ?>];
+
+        var serviceAdvancedUnit = [<?php echo '"'.implode('","', $leadServicesAdvancedUnit[0]).'"' ?>];
+        var serviceAdvancedUnitValues = [<?php echo '"'.implode('","', $leadServicesAdvancedUnit[1]).'"' ?>];
+        
+        var serviceWallets = [<?php echo '"'.implode('","', $leadServiceWallets[0]).'"' ?>];
+        var serviceWalletsValues = [<?php echo '"'.implode('","', $leadServiceWallets[1]).'"' ?>];
+
+        var serviceJuridicales = [<?php echo '"'.implode('","', $leadServiceJuridicales[0]).'"' ?>];
+        var serviceJuridicalesValues = [<?php echo '"'.implode('","', $leadServiceJuridicales[1]).'"' ?>];
+        
+        var serviceLibranzas = [<?php echo '"'.implode('","', $leadServiceLibranzas[0]).'"' ?>];
+        var serviceLibranzasValues = [<?php echo '"'.implode('","', $leadServiceLibranzas[1]).'"' ?>];
+        
+        var serviceEcommerces = [<?php echo '"'.implode('","', $leadServiceEcommerces[0]).'"' ?>];
+        var serviceEcommercesValues = [<?php echo '"'.implode('","', $leadServiceEcommerces[1]).'"' ?>];
+
+        var serviceSubsidiary = [<?php echo '"'.implode('","', $leadServiceSubsidiary[0]).'"' ?>];
+        var serviceSubsidiaryValues = [<?php echo '"'.implode('","', $leadServiceSubsidiary[1]).'"' ?>];        
+
+        var statusDigitalChanels = [<?php echo '"'.implode('","', $leadStatusDigitalChanels[0]).'"' ?>];
+        var statusDigitalChanelsValues = [<?php echo '"'.implode('","', $leadStatusDigitalChanels[1]).'"' ?>];
+        
+        var statusInsurances = [<?php echo '"'.implode('","', $leadStatusInsurances[0]).'"' ?>];
+        var statusInsurancesValues = [<?php echo '"'.implode('","', $leadStatusInsurances[1]).'"' ?>];
+
+        var statusWarranties = [<?php echo '"'.implode('","', $leadStatusWarranties[0]).'"' ?>];
+        var statusWarrantiesValues = [<?php echo '"'.implode('","', $leadStatusWarranties[1]).'"' ?>];
+
+        var statusOportuyas = [<?php echo '"'.implode('","', $leadStatusOportuyas[0]).'"' ?>];
+        var statusOportuyasValues = [<?php echo '"'.implode('","', $leadStatusOportuyas[1]).'"' ?>];
+
+        var statusCallCenter = [<?php echo '"'.implode('","', $leadStatusCallCenter[0]).'"' ?>];
+        var statusCallCenterValues = [<?php echo '"'.implode('","', $leadStatusCallCenter[1]).'"' ?>];
+
+        var statusAdvancedUnit = [<?php echo '"'.implode('","', $leadStatusAdvancedUnit[0]).'"' ?>];
+        var statusAdvancedUnitValues = [<?php echo '"'.implode('","', $leadStatusAdvancedUnit[1]).'"' ?>];
+        
+        var statusWallets = [<?php echo '"'.implode('","', $leadStatusWallets[0]).'"' ?>];
+        var statusWalletsValues = [<?php echo '"'.implode('","', $leadStatusWallets[1]).'"' ?>];
+
+        var statusJuridicales = [<?php echo '"'.implode('","', $leadStatusJuridicales[0]).'"' ?>];
+        var statusJuridicalesValues = [<?php echo '"'.implode('","', $leadStatusJuridicales[1]).'"' ?>];
+        
+        var statusLibranzas = [<?php echo '"'.implode('","', $leadStatusLibranzas[0]).'"' ?>];
+        var statusLibranzasValues = [<?php echo '"'.implode('","', $leadStatusLibranzas[1]).'"' ?>];
+        
+        var statusEcommerces = [<?php echo '"'.implode('","', $leadStatusEcommerces[0]).'"' ?>];
+        var statusEcommercesValues = [<?php echo '"'.implode('","', $leadStatusEcommerces[1]).'"' ?>];
+
+        var statusSubsidiary = [<?php echo '"'.implode('","', $leadStatusSubsidiary[0]).'"' ?>];
+        var statusSubsidiaryValues = [<?php echo '"'.implode('","', $leadStatusSubsidiary[1]).'"' ?>];
+
+        var subsidiary = [<?php echo '"'.implode('","', $leadSubsidiary[0]).'"' ?>];
+        var subsidiaryValues = [<?php echo '"'.implode('","', $leadSubsidiary[1]).'"' ?>];
 
     //--------------
     //- AREA CHART -
@@ -83,7 +179,7 @@
       datasets: [
         {
           data: values,
-          backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+          backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
         }
       ]
     }
@@ -109,7 +205,7 @@
     datasets: [
     {
     data: channelsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -135,7 +231,7 @@
     datasets: [
     {
     data: assessorsValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -162,7 +258,7 @@
     datasets: [
     {
     data: productsValues,
-    backgroundColor : ['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', ],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -189,7 +285,7 @@
     datasets: [
     {
     data: serviceValues,
-    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#007BFF', '#E62E08'],
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
     }
     ]
     }
@@ -205,10 +301,325 @@
     options: donutOptions5
     })
 
+        //-------------
+    //- DONUT CHART  - productWarranties
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas6 = $('#donutChart6').get(0).getContext('2d')
+    var donutData6 = {
+    labels: productWarranties,
+    datasets: [
+    {
+    data: productWarrantiesValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions6 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart6 = new Chart(donutChartCanvas6, {
+    type: 'doughnut',
+    data: donutData6,
+    options: donutOptions6
+    })
 
 
+        //-------------
+    //- DONUT CHART - productWallets
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas7 = $('#donutChart7').get(0).getContext('2d')
+    var donutData7 = {
+    labels: productWallets,
+    datasets: [
+    {
+    data: productWalletsValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions7 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart7 = new Chart(donutChartCanvas7, {
+    type: 'doughnut',
+    data: donutData7,
+    options: donutOptions7
+    })
 
-    //- PIE CHART3 -
+       //-------------
+    //- DONUT CHART - leadInsurance
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas8 = $('#donutChart8').get(0).getContext('2d')
+    var donutData8 = {
+    labels: leadInsurance,
+    datasets: [
+    {
+    data: productInsuranceValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions8 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart8 = new Chart(donutChartCanvas8, {
+    type: 'doughnut',
+    data: donutData8,
+    options: donutOptions8
+    })
+
+      //-------------
+    //- DONUT CHART -  leadOportuya
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas9 = $('#donutChart9').get(0).getContext('2d')
+    var donutData9 = {
+    labels: leadOportuya,
+    datasets: [
+    {
+    data: productOportuyaValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions9 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart9 = new Chart(donutChartCanvas9, {
+    type: 'doughnut',
+    data: donutData9,
+    options: donutOptions9
+    })
+
+     //-------------
+    //- DONUT CHART - leadCallCenter
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas10 = $('#donutChart10').get(0).getContext('2d')
+    var donutData10 = {
+    labels: leadCallCenter,
+    datasets: [
+    {
+    data: productCallCenterValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions10 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart10 = new Chart(donutChartCanvas10, {
+    type: 'doughnut',
+    data: donutData10,
+    options: donutOptions10
+    })
+
+    //-------------
+    //- DONUT CHART - leadAdvancedUnit
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas11 = $('#donutChart11').get(0).getContext('2d')
+    var donutData11 = {
+    labels: leadAdvancedUnit,
+    datasets: [
+    {
+    data: productAdvancedUnitValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions11 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart11 = new Chart(donutChartCanvas11, {
+    type: 'doughnut',
+    data: donutData11,
+    options: donutOptions11
+    })
+
+      //-------------
+    //- DONUT CHART - leadJuridical
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas12 = $('#donutChart12').get(0).getContext('2d')
+    var donutData12 = {
+    labels: leadJuridical,
+    datasets: [
+    {
+    data: productJuridicalValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions12 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart12 = new Chart(donutChartCanvas12, {
+    type: 'doughnut',
+    data: donutData12,
+    options: donutOptions12
+    });
+
+     //-------------
+    //- DONUT CHART -  leadLibranzas
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas13 = $('#donutChart13').get(0).getContext('2d')
+    var donutData13 = {
+    labels: leadLibranzas,
+    datasets: [
+    {
+    data: productLibranzasValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions13 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart13 = new Chart(donutChartCanvas13, {
+    type: 'doughnut',
+    data: donutData13,
+    options: donutOptions13
+    });
+
+     //-------------
+    //- DONUT CHART - leadEcommerces
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas14 = $('#donutChart14').get(0).getContext('2d')
+    var donutData14 = {
+    labels: leadEcommerces,
+    datasets: [
+    {
+    data: productEcommercesValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions14 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart14 = new Chart(donutChartCanvas14, {
+    type: 'doughnut',
+    data: donutData14,
+    options: donutOptions14
+    });
+
+    
+     //-------------
+    //- DONUT CHART - leadEcommerces
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas14 = $('#donutChart14').get(0).getContext('2d')
+    var donutData14 = {
+    labels: leadEcommerces,
+    datasets: [
+    {
+    data: productEcommercesValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions14 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart14 = new Chart(donutChartCanvas14, {
+    type: 'doughnut',
+    data: donutData14,
+    options: donutOptions14
+    });
+
+    //-------------
+    //- DONUT CHART - serviceDigitalChanels
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas15 = $('#donutChart15').get(0).getContext('2d')
+    var donutData15 = {
+    labels: leadDigitalChanel,
+    datasets: [
+    {
+    data: productDigitalChanelValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions15 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart15 = new Chart(donutChartCanvas15, {
+    type: 'doughnut',
+    data: donutData15,
+    options: donutOptions15
+    });
+
+    //-------------
+    //- DONUT CHART - serviceDigitalChanels
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas35 = $('#donutChart35').get(0).getContext('2d')
+    var donutData35 = {
+    labels: leadSubsidiary,
+    datasets: [
+    {
+    data: productSubsidiaryValues,
+    backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+    '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+    '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+    }
+    ]
+    }
+    var donutOptions35 = {
+    maintainAspectRatio : false,
+    responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart35 = new Chart(donutChartCanvas35, {
+    type: 'doughnut',
+    data: donutData35,
+    options: donutOptions35
+    });
+    
+
+
+        //- PIE CHART3 -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart3').get(0).getContext('2d')
@@ -242,8 +653,6 @@
         options: pieOptions
         })
 
-
-
          //- PIE CHART5 -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
@@ -261,6 +670,781 @@
         options: pieOptions
         })
 
+        
+         //- PIE CHART - 6
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart6').get(0).getContext('2d')
+        var pieData = donutData6;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+        //- PIE CHART - 7
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart7').get(0).getContext('2d')
+        var pieData = donutData7;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+        //- PIE CHART - 8
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart8').get(0).getContext('2d')
+        var pieData = donutData8;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+         //- PIE CHART - 9
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart9').get(0).getContext('2d')
+        var pieData = donutData9;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+          //- PIE CHART - 10
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart10').get(0).getContext('2d')
+        var pieData = donutData10;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        })
+
+          //- PIE CHART - 11
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart11').get(0).getContext('2d')
+        var pieData = donutData11;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+        //- PIE CHART - 12
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart12').get(0).getContext('2d')
+        var pieData = donutData12;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 13
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart13').get(0).getContext('2d')
+        var pieData = donutData13;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        
+        //- PIE CHART - 14
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart14').get(0).getContext('2d')
+        var pieData = donutData14;
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        
+        //- PIE CHART - 15
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart15').get(0).getContext('2d')
+        var pieData = donutData15 = {
+        labels: serviceInsurances,
+        datasets: [
+        {
+        data: serviceInsurancesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         
+        //- PIE CHART - 16
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart16').get(0).getContext('2d')
+        var pieData = donutData16 = {
+        labels: serviceWarranties,
+        datasets: [
+        {
+        data: serviceWarrantiesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         
+        //- PIE CHART - 17
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart17').get(0).getContext('2d')
+        var pieData = donutData17 = {
+        labels: serviceOportuyas,
+        datasets: [
+        {
+        data: serviceOportuyasValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         //- PIE CHART - 18
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart18').get(0).getContext('2d')
+        var pieData = donutData18 = {
+        labels: serviceCallCenter,
+        datasets: [
+        {
+        data: serviceCallCenterValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         //- PIE CHART - 19
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart19').get(0).getContext('2d')
+        var pieData = donutData19 = {
+        labels: serviceAdvancedUnit,
+        datasets: [
+        {
+        data: serviceAdvancedUnitValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         //- PIE CHART - 20
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart20').get(0).getContext('2d')
+        var pieData = donutData20 = {
+        labels: serviceWallets,
+        datasets: [
+        {
+        data: serviceWalletsValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+            //- PIE CHART - 21
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart21').get(0).getContext('2d')
+        var pieData = donutData21 = {
+        labels: serviceJuridicales,
+        datasets: [
+        {
+        data: serviceJuridicalesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+          //- PIE CHART - 22
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart22').get(0).getContext('2d')
+        var pieData = donutData22 = {
+        labels: serviceLibranzas,
+        datasets: [
+        {
+        data: serviceLibranzasValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+          //- PIE CHART - 23
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart23').get(0).getContext('2d')
+        var pieData = donutData23 = {
+        labels: serviceEcommerces,
+        datasets: [
+        {
+        data: serviceEcommercesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+         //- PIE CHART - 24
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart24').get(0).getContext('2d')
+        var pieData = donutData24 = {
+        labels: statusInsurances,
+        datasets: [
+        {
+        data: statusInsurancesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        
+         //- PIE CHART - 25
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart25').get(0).getContext('2d')
+        var pieData = donutData25 = {
+        labels: statusWarranties,
+        datasets: [
+        {
+        data: statusWarrantiesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         //- PIE CHART - 26
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart26').get(0).getContext('2d')
+        var pieData = donutData26 = {
+        labels: statusOportuyas,
+        datasets: [
+        {
+        data: statusOportuyasValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 27
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart27').get(0).getContext('2d')
+        var pieData = donutData27 = {
+        labels: statusCallCenter,
+        datasets: [
+        {
+        data: statusCallCenterValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+        //- PIE CHART - 28
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart28').get(0).getContext('2d')
+        var pieData = donutData28 = {
+        labels: statusAdvancedUnit,
+        datasets: [
+        {
+        data: statusAdvancedUnitValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        
+        //- PIE CHART - 29
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart29').get(0).getContext('2d')
+        var pieData = donutData29 = {
+        labels: statusWallets,
+        datasets: [
+        {
+        data: statusWalletsValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+         //- PIE CHART - 30
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart30').get(0).getContext('2d')
+        var pieData = donutData30 = {
+        labels: statusJuridicales,
+        datasets: [
+        {
+        data: statusJuridicalesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+        //- PIE CHART - 31
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart31').get(0).getContext('2d')
+        var pieData = donutData31 = {
+        labels: statusLibranzas,
+        datasets: [
+        {
+        data: statusLibranzasValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+       //- PIE CHART - 32
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart32').get(0).getContext('2d')
+        var pieData = donutData32 = {
+        labels: statusEcommerces,
+        datasets: [
+        {
+        data: statusEcommercesValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 33
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart33').get(0).getContext('2d')
+        var pieData = donutData33 = {
+        labels: serviceDigitalChanels,
+        datasets: [
+        {
+        data: serviceDigitalChanelsValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 34
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart34').get(0).getContext('2d')
+        var pieData = donutData34 = {
+        labels: statusDigitalChanels,
+        datasets: [
+        {
+        data: statusDigitalChanelsValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B', '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ', '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+        
+
+        //- PIE CHART - 16
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart35').get(0).getContext('2d')
+        var pieData = donutData16 = {
+        labels: serviceSubsidiary,
+        datasets: [
+        {
+        data: serviceSubsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+
+        //- PIE CHART - 36
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart36').get(0).getContext('2d')
+        var pieData = donutData36 = {
+        labels: statusSubsidiary,
+        datasets: [
+        {
+        data: statusSubsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 37
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart37').get(0).getContext('2d')
+        var pieData = donutData37 = {
+        labels: serviceSubsidiary,
+        datasets: [
+        {
+        data: serviceSubsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+
+        //- PIE CHART - 38
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart38').get(0).getContext('2d')
+        var pieData = donutData38 = {
+        labels: subsidiary,
+        datasets: [
+        {
+        data: subsidiaryValues,
+        backgroundColor :['#007BFF', '#E62E08','#008F00','#F00909','#FF9100', '#9E0097','#215ACE', '#DD4477', '#E6194B',
+        '#F58231', '#3CB44B','#08DED4','#C9EA00','#FBBA03','#F856CE','#001BC2','#732E18', '#BC7020', '#20BC60', '#CC4AB1 ',
+        '#A50D31 ','#FA3E10', '#6C6B6B', '#46A0C2 ', '#F413B3', '#BFA315', '#6C4CD8'],
+        }
+        ]
+        };
+        var pieOptions = {
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+        });
+        
 
     //-------------
     //- PIE CHART -

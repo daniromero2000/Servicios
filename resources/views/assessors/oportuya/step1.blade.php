@@ -111,7 +111,7 @@
 						<div class="form-group">
 							<label for="city" class="control-label">Ciudad**</label>
 							<select ng-model="leadInfo.city" id="city" class="form-control inputsSteps inputSelect" required="" ng-options="city.value as city.label for city in cities" ng-disabled="disabledInputs">
-								
+
 							</select>
 						</div>
 					</div>
@@ -169,12 +169,12 @@
 									<div class="offset-5 col-7">
 									<p>
 										Actualmente ya cuentas <br>
-										con una tarejta <strong> Oportuya.</strong> 
+										con una tarejta <strong> Oportuya.</strong>
 										<br>
 										Te invitamos a que la utilices en <br>
 										cualquiera de nuestros puntos de venta! <br>
 										<br>Para más información comunicate  <br>
-										a la línea <strong>01 8000 11 77 87</strong>
+										a la línea <strong>01 8000 18 05 20</strong>
 									</p>
 									<div class="text-center">
 										<a class="btn btn-danger buttonBackCardExist" href="/assessor/step1">Regresar</a>
@@ -185,7 +185,7 @@
 						</div>
 						<div class="row resetRow containerFormModal">
 							<div class="col-sm-7 offset-sm-5">
-								
+
 							</div>
 						</div>
 					</div>

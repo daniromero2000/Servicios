@@ -10,6 +10,7 @@ use App\Entities\FactoryRequestComments\FactoryRequestComment;
 use App\Entities\FactoryRequestNotes\FactoryRequestNote;
 use App\Entities\FactoryRequestProducts\FactoryRequestProduct;
 use App\Entities\FactoryRequestProducts2\FactoryRequestProduct2;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\FactoryRequestStatusesLogs\FactoryRequestStatusesLog;
 use App\Entities\Subsidiaries\Subsidiary;
 use App\Entities\TurnoOportuyas\TurnoOportuya;
@@ -91,7 +92,7 @@ class FactoryRequest extends Model
     public function hasCustomer()
     {
         return $this->belongsTo(Customer::class, 'CLIENTE')
-            ->where('ESTADO', 'APROBADO');
+            ->where('ESTADO', 19);
     }
 
     public function customer()
@@ -129,6 +130,11 @@ class FactoryRequest extends Model
         return $this->hasMany(FactoryRequestProduct::class, 'SOLICITUD');
     }
 
+    public function factoryRequestStatus()
+    {
+        return $this->belongsTo(FactoryRequestStatus::class, 'ESTADO');
+    }
+
     public function factoryRequestProducts2()
     {
         return $this->hasMany(FactoryRequestProduct2::class, 'SOLICITUD');
@@ -162,5 +168,20 @@ class FactoryRequest extends Model
     public function factoryRequestCodebtor2()
     {
         return $this->hasOne(Customer::class, 'CEDULA', 'CODEUDOR2');
+    }
+
+    public function states()
+    {
+        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id');
+    }
+
+    public function recoveringStates()
+    {
+        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id')->orderBy('created_at', 'asc');
+    }
+
+    public function recoveringStates1()
+    {
+        return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');
     }
 }

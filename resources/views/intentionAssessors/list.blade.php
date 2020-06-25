@@ -59,6 +59,26 @@
                             @include('layouts.admin.pagination.pagination_null', [$skip])
                             @endif
                         </div>
+                        <div class=" mt-2 col-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <!-- /.info-box -->
+                                    <div class="small-box ">
+                                        <div class="inner">
+                                            <h2>{{ $listJarvis->count() }}</h2>
+                                            @if ($_GET)
+                                            <p>Total de Solicitudes sin finalizar</p>
+                                            @else
+                                            <p>Solicitudes sin finalizar en este mes</p>
+                                            @endif
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-body text-center pt-0 pb-0 ">
                             @if($listJarvis && $assessorId == 2)
                             @include('layouts.admin.tables.table_intention_status_assessors', [$headers, 'datas' =>

@@ -12,12 +12,12 @@
             <table class="table table-hover table-stripped leadTable">
                 <thead class="headTableLeads small">
                     <tr>
-                        <th scope="col">Articulo</th>
+                        <th scope="col">Artículo</th>
                         <th scope="col">SKU</th>
                         <th scope="col">Costo Base</th>
                         <th scope="col">Costo + IVA</th>
                         <th scope="col">Contado</th>
-                        <th scope="col">Proteccion</th>
+                        <th scope="col">Protección Sin IVA</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>

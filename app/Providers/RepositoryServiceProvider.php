@@ -148,11 +148,32 @@ use App\Entities\Analisis\Repositories\AnalisisRepository;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\AssessorQuotations\Repositories\AssessorQuotationRepository;
 use App\Entities\AssessorQuotations\Repositories\Interfaces\AssessorQuotationRepositoryInterface;
+use App\Entities\CreditBusiness\Repositories\CreditBusinesRepository;
+use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryInterface;
+use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetailRepositoryInterface;
+use App\Entities\CreditBusinesDetails\Repositories\CreditBusinesDetailRepository;
+use App\Entities\FactorsOportudata\Repositories\FactorsOportudataRepository;
+use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            FactorsOportudataRepositoryInterface::class,
+            FactorsOportudataRepository::class
+        );
+
+        $this->app->bind(
+            CreditBusinesDetailRepositoryInterface::class,
+            CreditBusinesDetailRepository::class
+        );
+
+        $this->app->bind(
+            CreditBusinesRepositoryInterface::class,
+            CreditBusinesRepository::class
+        );
+
         $this->app->bind(
             AssessorQuotationRepositoryInterface::class,
             AssessorQuotationRepository::class
