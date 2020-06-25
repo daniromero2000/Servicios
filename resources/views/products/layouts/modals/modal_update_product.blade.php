@@ -115,11 +115,6 @@
                                         <label for="cover_update{{ $product->id }}">Cover Principal <span
                                                 class="text-danger">*</span></label>
                                         <div>
-
-                                            <img class="img-fluid img-show-products lazy"
-                                                src="{{ asset('images/blank.jpg')}}"
-                                                data-src="{{asset("storage/$product->cover")}}" alt="">
-
                                             <img class="img-fluid img-show-products lazy"
                                                 src="{{ asset('images/blank.jpg')}}"
                                                 data-src="{{asset("storage/$product->cover")}}" alt="">
@@ -178,8 +173,6 @@
                                                 <label for="description_image1_update{{ $product->id }}">Imagen de
                                                     descripcion 1<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
-                                                    <img class=" img-fluid img-show-products"
-                                                        src="{{asset("storage/$product->description_image1")}}" alt="">
                                                     <img class="img-fluid img-show-products lazy"
                                                         src="{{ asset('images/blank.jpg')}}"
                                                         data-src="{{asset("storage/$product->description_image1")}}"
