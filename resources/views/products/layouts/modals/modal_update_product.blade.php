@@ -116,6 +116,7 @@
                                                 class="text-danger">*</span></label>
                                         <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->cover")}}" alt="">
 =======
@@ -123,6 +124,15 @@
                                                 src="{{ asset('images/blank.jpg')}}"
                                                 data-src="{{asset("storage/$product->cover")}}" alt="">
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+                                            <<<<<<< HEAD <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->cover")}}" alt="">
+                                                =======
+                                                <img class=" img-fluid img-show-products"
+                                                    src="{{asset("storage/$product->cover")}}" alt="">
+                                                >>>>>>> release-sentings
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -139,6 +149,7 @@
                                                 @foreach($product->images()->get(['src']) as $image)
                                                 <div class="col-4">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$image->src")}}" alt="">
 =======
@@ -149,6 +160,18 @@
                                                     <a onclick="return confirm('¿Estás Seguro?')"
                                                         href="{{ route('product.remove.image', ['src' => $image->src]) }}"
                                                         class="btn btn-danger btn-sm btn-block">¿Eliminar?</a><br />
+=======
+                                                    <<<<<<< HEAD <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$image->src")}}" alt="">
+                                                        =======
+                                                        <img class=" img-fluid img-show-products"
+                                                            src="{{asset("storage/$image->src")}}" alt="">
+                                                        >>>>>>> release-sentings
+                                                        <a onclick="return confirm('¿Estás Seguro?')"
+                                                            href="{{ route('product.remove.image', ['src' => $image->src]) }}"
+                                                            class="btn btn-danger btn-sm btn-block">¿Eliminar?</a><br />
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                 </div>
                                                 @endforeach
                                             </div>
@@ -180,6 +203,7 @@
                                                     descripcion 1<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image1")}}" alt="">
 =======
@@ -188,6 +212,17 @@
                                                         data-src="{{asset("storage/$product->description_image1")}}"
                                                         alt="">
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+                                                    <<<<<<< HEAD <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image1")}}"
+                                                        alt="">
+                                                        =======
+                                                        <img class=" img-fluid img-show-products"
+                                                            src="{{asset("storage/$product->description_image1")}}"
+                                                            alt="">
+                                                        >>>>>>> release-sentings
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -210,6 +245,7 @@
                                                     descripcion 2<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image2")}}" alt="">
 =======
@@ -218,6 +254,17 @@
                                                         data-src="{{asset("storage/$product->description_image2")}}"
                                                         alt="">
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+                                                    <<<<<<< HEAD <img class="img-fluid img-show-products lazy"
+                                                        src="{{ asset('images/blank.jpg')}}"
+                                                        data-src="{{asset("storage/$product->description_image2")}}"
+                                                        alt="">
+                                                        =======
+                                                        <img class=" img-fluid img-show-products"
+                                                            src="{{asset("storage/$product->description_image2")}}"
+                                                            alt="">
+                                                        >>>>>>> release-sentings
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -239,14 +286,20 @@
                                                     descripcion 3<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image3")}}" alt="">
 =======
+=======
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                     <img class="img-fluid img-show-products lazy"
                                                         src="{{ asset('images/blank.jpg')}}"
                                                         data-src="{{asset("storage/$product->description_image3")}}"
                                                         alt="">
+<<<<<<< HEAD
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -269,14 +322,20 @@
                                                     descripcion 4<span class="text-danger">*</span></label>
                                                 <div class="mb-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <img class=" img-fluid img-show-products"
                                                         src="{{asset("storage/$product->description_image4")}}" alt="">
 =======
+=======
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                     <img class="img-fluid img-show-products lazy"
                                                         src="{{ asset('images/blank.jpg')}}"
                                                         data-src="{{asset("storage/$product->description_image4")}}"
                                                         alt="">
+<<<<<<< HEAD
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="custom-file">
@@ -308,6 +367,7 @@
                                             especificaciones<span class="text-danger">*</span></label>
                                         <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             <img class=" img-fluid img-show-products"
                                                 src="{{asset("storage/$product->specification_image")}}" alt="">
 =======
@@ -315,6 +375,15 @@
                                                 src="{{ asset('images/blank.jpg')}}"
                                                 data-src="{{asset("storage/$product->specification_image")}}" alt="">
 >>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
+=======
+                                            <<<<<<< HEAD <img class="img-fluid img-show-products lazy"
+                                                src="{{ asset('images/blank.jpg')}}"
+                                                data-src="{{asset("storage/$product->specification_image")}}" alt="">
+                                                =======
+                                                <img class=" img-fluid img-show-products"
+                                                    src="{{asset("storage/$product->specification_image")}}" alt="">
+                                                >>>>>>> release-sentings
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">

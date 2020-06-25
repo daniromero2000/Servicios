@@ -31,7 +31,7 @@
         <h4 class="text-baner-initial">Comprar tus <br>electrodomésticos <br> a crédito jamás
             <br> fue tan facil</h4>
     </div>
-    <a href="/step1" class="btn button-baner-initial">
+    <a href="/step1" class="btn button-baner-initial" style=" background: #fff800; ">
         <div>
             Solicita tu crédito
         </div>

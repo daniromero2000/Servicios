@@ -92,8 +92,11 @@ class ListProductRepository implements ListProductRepositoryInterface
         return [];
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
+=======
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
 
     public function getPriceProductForAllCurrentList($product_id)
     {
@@ -111,31 +114,31 @@ class ListProductRepository implements ListProductRepositoryInterface
         $bond = 1 - ($factors[1]['value'] / 100);
         $optionalIncrement = 1 - ($factors[2]['value'] / 100);
         $cashPromotionLowZone = 0;
-        $percentageProtectionDividedPrice = round(($protectionVat / $product['iva_cost']) * 100 , 2);
+        $percentageProtectionDividedPrice = round(($protectionVat / $product['iva_cost']) * 100, 2);
         foreach ($currentProductLists as $key => $productList) {
-            if($productList['apply_protection'] == 1){
+            if ($productList['apply_protection'] == 1) {
                 $protectionVat = $protectionVat;
                 $percentageProtectionDividedPrice = $percentageProtectionDividedPrice;
-            }else{
+            } else {
                 $protectionVat = 0;
                 $percentageProtectionDividedPrice = 0;
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
             if ($productList['zone'] == 'MEDIA') {
-                if($percentageProtectionDividedPrice == 0){
+                if ($percentageProtectionDividedPrice == 0) {
                     $percentageProtection = 0;
-                }elseif($percentageProtectionDividedPrice <= 10){
+                } elseif ($percentageProtectionDividedPrice <= 10) {
                     $percentageProtection = 70;
-                }elseif($percentageProtectionDividedPrice > 10 && $percentageProtectionDividedPrice <= 20){
+                } elseif ($percentageProtectionDividedPrice > 10 && $percentageProtectionDividedPrice <= 20) {
                     $percentageProtection = 80;
-                }else{
+                } else {
                     $percentageProtection = 90;
                 }
                 $cashPromotion                   = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $promotionPublicPrice            = round(($product['iva_cost'] - ($protectionVat * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));;
                 $traditionalCreditPrice          = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $traditionalCreditBondPrice      = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                $basePublicPriceOportuyaCustomer = round(($product['iva_cost'] - $protectionVat)/((100 - $productList['percentage_base_oportuya_customer']) / 100));
+                $basePublicPriceOportuyaCustomer = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['percentage_base_oportuya_customer']) / 100));
                 $bluePublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
                 $blueBondPrice                   = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $blackPublicPrice                = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
@@ -180,29 +183,32 @@ class ListProductRepository implements ListProductRepositoryInterface
         return $dataProduct;
     }
 
-    private function extractPrices($listPrices, $prices){
+    private function extractPrices($listPrices, $prices)
+    {
         $data = [];
-        if(count($prices) > 0){
-            foreach($listPrices as $listName => $listPrice){
+        if (count($prices) > 0) {
+            foreach ($listPrices as $listName => $listPrice) {
                 foreach ($prices as $price) {
                     $data[$listName][$price] = $listPrice[$price];
                 }
             }
-        }else{
+        } else {
             $data = $listPrices;
         }
 
         return $data;
     }
 
-    public function getPriceProductForAllCurrentListEspecifiedPrices($product_id, $prices=[]){
+    public function getPriceProductForAllCurrentListEspecifiedPrices($product_id, $prices = [])
+    {
 
         $listPrices = $this->getPriceProductForAllCurrentList($product_id);
         $data = $this->extractPrices($listPrices, $prices);
         return $data;
     }
 
-    public function getPriceProductForZone($product_id, $zone){
+    public function getPriceProductForZone($product_id, $zone)
+    {
         $data = [];
 
         $list = $this->productListInterface->getCurrentProductListsForZone($zone);
@@ -212,10 +218,15 @@ class ListProductRepository implements ListProductRepositoryInterface
         return $data;
     }
 
-    public function getPriceProductForZoneEspecifiedPrices($product_id, $zone, $prices = []){
+    public function getPriceProductForZoneEspecifiedPrices($product_id, $zone, $prices = [])
+    {
         $listPrices = $this->getPriceProductForZone($product_id, $zone);
 
         return $this->extractPrices($listPrices, $prices);
     }
+<<<<<<< HEAD
 }
 >>>>>>> 2807f8870ec76370f84a241f431e8464d683fdae
+=======
+}
+>>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
