@@ -3,15 +3,8 @@
 namespace App\Entities\Assessors;
 
 use App\Entities\Intentions\Intention;
-<<<<<<< HEAD
-<<<<<<< HEAD
-use App\Entities\Subsidiaries\Subsidiary;
-=======
 use App\User;
->>>>>>> aec87e8db365792182ac9a8c48f003ce84eee30b
-=======
 use App\Entities\Subsidiaries\Subsidiary;
->>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 

@@ -91,13 +91,6 @@ class ListProductRepository implements ListProductRepositoryInterface
 
         return [];
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-=======
-=======
->>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
-
     public function getPriceProductForAllCurrentList($product_id)
     {
         $dataProduct = [];
@@ -224,9 +217,4 @@ class ListProductRepository implements ListProductRepositoryInterface
 
         return $this->extractPrices($listPrices, $prices);
     }
-<<<<<<< HEAD
 }
->>>>>>> 2807f8870ec76370f84a241f431e8464d683fdae
-=======
-}
->>>>>>> e0b9b72037d270bde3fe017da725cfc68b793823
