@@ -255,13 +255,8 @@
       images.push(query[i]);
     };
 
-<<<<<<< HEAD
     // processScroll();
     addEventListener('click',processScroll);
-=======
-    processScroll();
-    addEventListener('scroll',processScroll);
->>>>>>> release-sentings
 
 }(this);
 </script>
