@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my-modal">
-                            Launch demo modal
+                            Agregar producto
                         </button>
                     </div>
 
@@ -74,7 +74,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form ng-submit="createFactor()">
+                <form ng-submit="createItemLiquidator()">
                     <div class=" row pl-0 pr-0">
                         <div class="col-12 col-sm-4 form-group">
                             <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
@@ -106,10 +106,10 @@
                                 name="selection">
                         </div>
                     </div>
-                    <div class="text-right mt-2">
+                    {{-- <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>

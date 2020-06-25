@@ -148,7 +148,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                         @endif
                         <div class="container-price-deal">
                             <p class="card-text card-products-old-price mb-0"> <del>$
-                                    {{ number_format($prices['normal_public_price'])}}
+                                    {{ number_format($prices['traditional_credit_price'])}}
                                 </del></p>
                             <p class="card-text card-products-label mb-1">Precio antes</p>
 

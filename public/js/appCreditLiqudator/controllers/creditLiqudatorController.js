@@ -76,8 +76,17 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO,
                 }).then(function successCallback(response) {
-                    console.log(response.data);
-
+                    $scope.liquidator.ARTICULO = response.data.product[0].item;
+                    if ($scope.lead.latest_intention != '' && $scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') {
+                        if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
+                            $scope.liquidator.VALOR = response.data.price.black_public_price;
+                        } else {
+                            $scope.liquidator.VALOR = response.data.price.blue_public_price;
+                        }
+                    } else {
+                        $scope.liquidator.VALOR = response.data.price.traditional_credit_price;
+                    }
+                    $scope.liquidator.LISTA = response.data.price.list;
                 }, function errorCallback(response) {
                     response.url = '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO;
                     $scope.addError(response, $scope.liquidator.CODIGO);
@@ -119,7 +128,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 method: 'GET',
                 url: '/assessor/api/getInfoLead/' + $scope.lead.CEDULA,
             }).then(function successCallback(response) {
-                console.log(response.data);
                 $scope.lead = response.data;
                 $scope.tableLiquidator = true
             }, function errorCallback(response) {
@@ -127,6 +135,42 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.addError(response, $scope.lead.CEDULA);
             });
         };
+
+        $scope.createItemLiquidator = function () {
+            $http({
+                method: 'POST',
+                url: '/Administrator/creditLiquidator',
+                data: $scope.liquidator
+            }).then(function successCallback(response) {
+                if (response.data != false) {
+                    if (response.data == "23000") {
+                        document.getElementById('p').innerHTML = "La lista <b>" + $scope.productList.name + "</b>  ya se encuentra registrado en la base de datos";
+                        $("#alertProductList").show();
+                    } else if (response.data) {
+                        $scope.productList = "";
+                        $scope.resetDataProductList();
+                        $("#addProductListModal").modal("hide");
+                        showAlert('success', 'Creado Correctamente');
+                    }
+                }
+            }, function errorCallback(response) {
+            });
+        };
+
+
+        $scope.createRequest = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/createRequest/',
+                data: $scope.lead
+            }).then(function successCallback(response) {
+                if (response.data != false) {
+                    console.log(response)
+                }
+            }, function errorCallback(response) {
+            });
+        };
+
 
         $scope.addProductList = function () {
             $scope.productList = {};
@@ -181,26 +225,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
 
-        $scope.createProductList = function () {
-            $http({
-                method: 'POST',
-                url: '/api/productList',
-                data: $scope.productList
-            }).then(function successCallback(response) {
-                if (response.data != false) {
-                    if (response.data == "23000") {
-                        document.getElementById('p').innerHTML = "La lista <b>" + $scope.productList.name + "</b>  ya se encuentra registrado en la base de datos";
-                        $("#alertProductList").show();
-                    } else if (response.data) {
-                        $scope.productList = "";
-                        $scope.resetDataProductList();
-                        $("#addProductListModal").modal("hide");
-                        showAlert('success', 'Creado Correctamente');
-                    }
-                }
-            }, function errorCallback(response) {
-            });
-        };
 
         $scope.showUpdateDialog = function (productList) {
             $("#alertUpdate").hide();

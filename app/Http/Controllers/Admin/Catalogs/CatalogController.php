@@ -48,14 +48,12 @@ class CatalogController extends Controller
             $zone = auth()->user()->Assessor->subsidiary->ZONA;
             $dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
             foreach ($dataProduct[$key] as $key2 => $value2) {
-                $productList = $value2;
+                $productList[$key] = $value2;
             }
-            $products[$key]['price_old'] =  $productList['normal_public_price'];
-            $products[$key]['price_new'] =  $productList['traditional_credit_price'];
-            // $products[$key]['black_price'] =  $productList['black_public_price'];
-            $desc[$key] = $productList['normal_public_price'] - (($productCatalog[$key]->discount * $productList['normal_public_price']) / 100);
-            $products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
-            $products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
+            $products[$key]['price_old'] =  $productList[$key]['traditional_credit_price'];
+            $products[$key]['price_new'] =  $productList[$key]['traditional_credit_price'] - (($productCatalog[$key]->discount * $productList[$key]['traditional_credit_price']) / 100);
+            $products[$key]['pays'] = round($productList[$key]['black_public_price'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+            $products[$key]['desc'] = $productList[$key]['black_public_price'];
         }
 
         return view('catalogAssessors.catalog', [
@@ -77,9 +75,9 @@ class CatalogController extends Controller
         }
         $desc = "";
         $pays = "";
-        $desc = $productList['normal_public_price'] - (($productCatalog->discount * $productList['normal_public_price']) / 100);
         // dd($productList);
-        $priceNew = $productList['traditional_credit_price'];
+        $desc = $productList['black_public_price'];
+        $priceNew = $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
         $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
         $desc = round($desc, 2, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);

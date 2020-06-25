@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
-        <div class="row">
-            <div class="col-4">
+        <div class="row mt-2">
+            <div class="col-3">
                 <div class="form-group">
                     <label for=""> Numero de cedula</label>
                     <input type="text" class="form-control" validation-pattern="IdentificationNumber"
@@ -9,18 +9,31 @@
                         ng-model="lead.CEDULA" aria-describedby="helpId" placeholder="">
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="form-group">
                     <label for="">Nombres</label>
-                    <input class="form-control" id="nombres" validation-pattern="name" ng-model="lead.NOMBRES"
+                    <input class="form-control" id="nombres" readonly validation-pattern="name" ng-model="lead.NOMBRES"
                         type="text" required />
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="form-group">
                     <label for="">Apellidos</label>
-                    <input class="form-control" id="lastName" validation-pattern="name" type="text"
+                    <input class="form-control" id="lastName" readonly validation-pattern="name" type="text"
                         ng-model="lead.APELLIDOS" required />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="">Solicitud</label>
+                    <input class="form-control" id="lastName" readonly validation-pattern="name" type="text"
+                        ng-model="liquidator.SOLICITUD" required />
+                </div>
+            </div>
+            <div style=" position: absolute; top: 12px; right: 18px; ">
+                <div class="ml-auto my-auto">
+                    <button type="submit" ng-click="createRequest()" class="btn btn-primary btn-sm">Crear
+                        Solicitud</button>
                 </div>
             </div>
         </div>
