@@ -53,18 +53,21 @@ class FactoryRequestController extends Controller
             $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), request()->input('subsidiary'));
         }
         if (request()->has('q') && request()->input('from') != '' && request()->input('to') != '') {
-            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), request()->input('subsidiary'));
-            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, request()->input('subsidiary'));
-            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, request()->input('subsidiary'));
-            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor,  array(13, 15, 19, 16, 20, 14, 1), request()->input('subsidiary'));
+
+            $to = request()->input('to') . " 23:59:59";
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), $to, $assessor, array(19, 20), request()->input('subsidiary'));
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), $to, $assessor, 16, request()->input('subsidiary'));
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), $to, $assessor, 15, request()->input('subsidiary'));
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), request()->input('subsidiary'));
         }
 
         if (request()->has('q')) {
+            $to = request()->input('to') . " 23:59:59";
             $list = $this->factoryRequestInterface->searchFactoryRequest(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
-                request()->input('to'),
+                $to,
                 request()->input('status'),
                 request()->input('subsidiary'),
                 request()->input('soliWeb')
@@ -73,7 +76,7 @@ class FactoryRequestController extends Controller
                 request()->input('ñq'),
                 $skip,
                 request()->input('from'),
-                request()->input('to'),
+                $to,
                 request()->input('status'),
                 request()->input('subsidiary'),
                 request()->input('soliWeb')
@@ -225,21 +228,24 @@ class FactoryRequestController extends Controller
         $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
 
         if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
-            $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
-            $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
-            $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
-            $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
+
+            $to = request()->input('to') . " 23:59:59";
+            $valuesEstadosAprobados = $this->factoryRequestInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), $to, $assessor, array(19, 20), $subsidiary);
+            $valuesEstadosNegados = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), $to, $assessor, 16, $subsidiary);
+            $valuesEstadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), $to, $assessor, 15, $subsidiary);
+            $valuesEstadosPendientes = $this->factoryRequestInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), $to, $assessor,  array(13, 15, 19, 16, 20, 14, 1), $subsidiary);
         }
 
 
         if (request()->has('from')) {
-            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), request()->input('to'));
-            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), request()->input('to'));
-            $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), request()->input('to'));
-            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), request()->input('to'), array(19, 20));
-            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), 16);
-            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), request()->input('to'), array(15, 13));
-            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), request()->input('to'),  array(13, 15, 19, 16, 20, 14, 1));
+            $to = request()->input('to') . " 23:59:59";
+            $factoryRequestsTotal = $this->factoryRequestInterface->getFactoryRequestsTotal(request()->input('from'), $to);
+            $estadosNames = $this->factoryRequestInterface->countFactoryRequestsStatuses(request()->input('from'), $to);
+            $webCounts    = $this->factoryRequestInterface->countWebFactoryRequests(request()->input('from'), $to);
+            $estadosAprobados = $this->factoryRequestInterface->countFactoryRequestsStatusesAprobados(request()->input('from'), $to, array(19, 20));
+            $estadosNegados = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), $to, 16);
+            $estadosDesistidos = $this->factoryRequestInterface->countFactoryRequestsStatusesGenerals(request()->input('from'), $to, array(15, 13));
+            $estadosPendientes = $this->factoryRequestInterface->countFactoryRequestsStatusesPendientes(request()->input('from'), $to,  array(13, 15, 19, 16, 20, 14, 1));
         }
 
 
