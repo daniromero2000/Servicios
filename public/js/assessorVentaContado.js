@@ -339,7 +339,11 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				url: '/Administrator/temporaryCustomer',
 				data: $scope.lead,
 			}).then(function successCallback(response) {
-				$scope.getCodeVerification();
+				if(response.data == '-1'){
+					showAlert('error', 'La fecha de nacimiento es obligatoria');
+				}else{
+					$scope.getCodeVerification();
+				}
 			}, function errorCallback(response) {
 				response.url = '/Administrator/temporaryCustomer';
 				response.datos = $scope.lead;
@@ -456,12 +460,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 		}
 
 		$scope.getNumCel = function () {
+			$scope.disabledButton = true;
 			$scope.lead.CEL_VAL = 0;
 			$scope.lead.CELULAR = '';
 			$http({
 				method: 'GET',
 				url: '/api/oportuya/getNumLead/' + $scope.lead.CEDULA,
 			}).then(function successCallback(response) {
+				$scope.disabledButton = false;
 				if (typeof response.data.resp == 'number') {
 				} else {
 					var num = response.data.resp.NUM.substring(0, 6);
