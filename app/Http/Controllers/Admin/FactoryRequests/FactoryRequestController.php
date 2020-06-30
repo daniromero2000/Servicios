@@ -70,7 +70,7 @@ class FactoryRequestController extends Controller
                 request()->input('soliWeb')
             )->sortByDesc('FECHASOL');
             $factoryRequestsTotals = $this->factoryRequestInterface->searchFactoryRequest(
-                request()->input('q'),
+                request()->input('ñq'),
                 $skip,
                 request()->input('from'),
                 request()->input('to'),
