@@ -22,6 +22,7 @@
     </div>
 </div>
 <div ng-app="creditLiqudatorApp" ng-controller="creditLiqudatorController" ng-cloak onload="cargar()">
+    <input type="hidden" id="identification" ng-model="lead.CEDULA" value="{{$id}}">
     <div class="container-fluid">
         <div class="card card-primary card-outline card-outline-tabs">
             <div class="card-header p-0 border-bottom-0">
@@ -30,11 +31,11 @@
                         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }"
                             ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Liquidador de
                             crédito</a>
-                        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }"
+                        {{-- <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }"
                             ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Productos</a>
                         <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }"
                             ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-general">Calcular
-                            precio</a>
+                            precio</a> --}}
                     </div>
                 </nav>
             </div>

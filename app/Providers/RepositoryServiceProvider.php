@@ -154,11 +154,18 @@ use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetai
 use App\Entities\CreditBusinesDetails\Repositories\CreditBusinesDetailRepository;
 use App\Entities\FactorsOportudata\Repositories\FactorsOportudataRepository;
 use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
+use App\Entities\Plans\Repositories\PlanRepository;
+use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            PlanRepositoryInterface::class,
+            PlanRepository::class
+        );
+
         $this->app->bind(
             FactorsOportudataRepositoryInterface::class,
             FactorsOportudataRepository::class

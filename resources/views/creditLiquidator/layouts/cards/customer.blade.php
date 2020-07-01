@@ -1,14 +1,14 @@
 <div class="card">
     <div class="card-body">
         <div class="row mt-2">
-            <div class="col-3">
+            {{-- <div class="col-3">
                 <div class="form-group">
                     <label for=""> Numero de cedula</label>
                     <input type="text" class="form-control" validation-pattern="IdentificationNumber"
                         ng-blur="getValidationCustomer()" name="identificationNumber" id="identificationNumber"
                         ng-model="lead.CEDULA" aria-describedby="helpId" placeholder="">
                 </div>
-            </div>
+            </div> --}}
             <div class="col-3">
                 <div class="form-group">
                     <label for="">Nombres</label>
@@ -27,15 +27,25 @@
                 <div class="form-group">
                     <label for="">Solicitud</label>
                     <input class="form-control" id="lastName" readonly validation-pattern="name" type="text"
-                        ng-model="liquidator.SOLICITUD" required />
+                        ng-model="request.SOLICITUD" required />
                 </div>
             </div>
-            <div style=" position: absolute; top: 12px; right: 18px; ">
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="name">Plan <span class="text-danger">*</span></label>
+                    <select ng-model="request.PLAN" id="plan" name="plan" class="form-control select2" required>
+                        <option selected value> Selecciona Plan </option>
+                        <option ng-repeat="plan in plans" value="plan.CODIGO">
+                            @{{plan.PLAN}}</option>
+                    </select>
+                </div>
+            </div>
+            {{-- <div style=" position: absolute; top: 12px; right: 18px; ">
                 <div class="ml-auto my-auto">
                     <button type="submit" ng-click="createRequest()" class="btn btn-primary btn-sm">Crear
                         Solicitud</button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

@@ -7,7 +7,9 @@ use App\Entities\Customers\Repositories\Interfaces\CustomerRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
+use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreditLiquidatorController extends Controller
 {
-    private $CustomerInterface, $codebtorInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface;
+    private $CustomerInterface, $codebtorInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
 
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
@@ -24,22 +26,26 @@ class CreditLiquidatorController extends Controller
         AssessorRepositoryInterface $AssessorRepositoryInterface,
         SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
         CodebtorRepositoryInterface $codebtorRepositoryInterface,
+        FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
-        ListProductRepositoryInterface $listProductRepositoryInterface
+        ListProductRepositoryInterface $listProductRepositoryInterface,
+        PlanRepositoryInterface $planRepositoryInterface
     ) {
         $this->CustomerInterface        = $CustomerRepositoryInterface;
         $this->toolsInterface           = $toolRepositoryInterface;
         $this->assessorInterface        = $AssessorRepositoryInterface;
         $this->secondCodebtorInterface  = $secondCodebtorRepositoryInterface;
+        $this->factoryInterface         = $factoryRequestRepositoryInterface;
         $this->codebtorInterface        = $codebtorRepositoryInterface;
         $this->subsidiaryInterface      = $subsidiaryRepositoryInterface;
         $this->listProductInterface     = $listProductRepositoryInterface;
+        $this->planInterface            = $planRepositoryInterface;
         $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
-        return view('creditLiquidator.index');
+        //
     }
 
     public function store(Request $request)
@@ -48,6 +54,11 @@ class CreditLiquidatorController extends Controller
 
     public function show(int $id)
     {
+        return view('creditLiquidator.index', compact('id'));
+    }
+    public function getPlans()
+    {
+        return $this->planInterface->listPlan();
     }
 
     public function getProduct($code)
@@ -62,14 +73,19 @@ class CreditLiquidatorController extends Controller
         return ['price' => $dataProduct, 'product' => $productListSku];
     }
 
-    private function addSolicFab($customer)
+    public function addSolicFab(int $id, $city)
     {
+        $checkExistRequest = $this->factoryInterface->getFactoryRequestForCustomer($id);
+        if ($checkExistRequest && $checkExistRequest->ESTADO == 1) {
+            return $checkExistRequest;
+        }
+
         $authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
         if (Auth::user()) {
             $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
         }
         $assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-        $sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
+        $sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($city)->CODIGO;
         $assessorData = $this->assessorInterface->findAssessorById($assessorCode);
         if ($assessorData->SUCURSAL != 1) {
             $sucursal = trim($assessorData->SUCURSAL);
@@ -78,7 +94,7 @@ class CreditLiquidatorController extends Controller
         $requestData = [
             'AVANCE_W'      => 0,
             'PRODUC_W'      => 0,
-            'CLIENTE'       => $customer->CEDULA,
+            'CLIENTE'       => $id,
             'CODASESOR'     => $assessorCode,
             'id_asesor'     => $assessorCode,
             'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
@@ -89,8 +105,8 @@ class CreditLiquidatorController extends Controller
         $customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;
         $this->codebtorInterface->createCodebtor($customerFactoryRequest);
         $this->secondCodebtorInterface->createSecondCodebtor($customerFactoryRequest);
-        $factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
+        // $factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
         // $factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
-        return $customerFactoryRequest;
+        return ['SOLICITUD' => $customerFactoryRequest];
     }
 }

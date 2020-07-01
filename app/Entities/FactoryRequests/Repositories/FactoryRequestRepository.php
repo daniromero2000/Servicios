@@ -72,10 +72,28 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function getFactoryRequestForCustomer($identificationNumber)
+    {
+        $dateNow = date('Y-m-d');
+        $dateNow = strtotime("- 30 day", strtotime($dateNow));
+        $dateNow = date('Y-m-d', $dateNow);
+        try {
+            $checkExistRequest = $this->model->where('CLIENTE', $identificationNumber)
+                ->orderBy('SOLICITUD', 'desc')->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->get($this->columns)->first();
+            if (!is_null($checkExistRequest)) {
+                return $checkExistRequest;
+            } else {
+                return false; // No tiene solicitud
+            }
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getCustomerFactoryRequest($identificationNumber): FactoryRequest
     {
         try {
-            return $this->model->where('Cliente', $identificationNumber)
+            return $this->model->where('CLIENTE', $identificationNumber)
                 ->orderBy('SOLICITUD', 'desc')->get(['SOLICITUD'])->first();
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());

@@ -16,6 +16,8 @@ interface FactoryRequestRepositoryInterface
 
   public function getCustomerFactoryRequest($identificationNumber): FactoryRequest;
 
+  public function getFactoryRequestForCustomer($identificationNumber);
+
   public function listFactoryRequestDigitalChannel();
 
   public function checkCustomerHasFactoryRequest($identificationNumber, $timeRejectedVigency);
