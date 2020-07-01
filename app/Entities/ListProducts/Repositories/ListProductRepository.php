@@ -140,7 +140,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100) * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $blackBondPrice                  = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
             } else {
-                $cashPromotion                   = round($cashPromotionLowZone / ((100 - $productList['cash_margin']) / 100));
+                $cashPromotion                   = round((($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100))/(0.96));
                 $promotionPublicPrice            = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
                 $traditionalCreditPrice          = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $traditionalCreditBondPrice      = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
