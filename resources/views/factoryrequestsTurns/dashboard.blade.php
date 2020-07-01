@@ -45,7 +45,7 @@
         <div class="card">
           <div class="card-body">
             <div class="col-12">
-              @include('layouts.admin.date_filter', ['route' => route('factory_dashboard')])
+              @include('layouts.admin.date_filter', ['route' => route('factoryTurns_dashboard')])
             </div>
           </div>
         </div>
