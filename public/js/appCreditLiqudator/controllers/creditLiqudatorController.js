@@ -13,8 +13,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.showLiquidator = true;
         $scope.infoLiquidator = {};
 
-
-
         $scope.getCustomer = function () {
             $http({
                 method: 'GET',
@@ -30,7 +28,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
 
         };
-
 
         $scope.getPlans = function () {
             $http({
@@ -98,7 +95,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 }
             }, 500);
         }
-
 
 
         $scope.createItemLiquidator = function () {
