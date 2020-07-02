@@ -40,7 +40,7 @@ class FactoryRequesTurnController extends Controller
         $Subsidiarys = Subsidiary::all();
         $skip = $this->toolsInterface->getSkip($request->input('skip'));
         $list = $this->factoryRequestInterface->listFactoryRequestsTurns($skip * 30);
-        $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 30);
+        $recovering = $this->factoryRequestInterface->listFactoryRequestsRecovering($skip * 30)->sortBy('pivot_created_at');
 
 
         if (request()->has('skip')) {
