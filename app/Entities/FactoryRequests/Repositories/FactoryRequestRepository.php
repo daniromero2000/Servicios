@@ -930,15 +930,17 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->with(['recoveringStates' => function ($query) {
-                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18)->orderBy('created_at', 'desc');
+                $query->orderBy('pivot_created_at', 'asc');
             }])->where('state', 'A')
                 ->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
                 ->get($this->columns);
         } catch (QueryException $e) {
+            dd($e);
             abort(503, $e->getMessage());
         }
     }
+
 
     public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null, $action = null): Collection
     {
