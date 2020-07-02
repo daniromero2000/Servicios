@@ -929,9 +929,9 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequestsRecovering(): Support
     {
         try {
-            return  $this->model->whereHas('recoveringStates', function ($query) {
-                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
-            })->where('state', 'A')
+            return  $this->model->with(['recoveringStates' => function ($query) {
+                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18)->orderBy('created_at', 'desc');
+            }])->where('state', 'A')
                 ->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
                 ->get($this->columns);

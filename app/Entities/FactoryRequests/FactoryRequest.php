@@ -177,7 +177,7 @@ class FactoryRequest extends Model
 
     public function recoveringStates()
     {
-        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id')->orderBy('created_at', 'desc');
+        return $this->belongsToMany(FactoryRequestStatus::class, 'ESTADOSOLICITUDESSOLIC_FAB', 'solic_fab_id', 'estadosolicitudes_id')->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
     }
 
     public function recoveringStates1()
