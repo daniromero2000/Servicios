@@ -930,7 +930,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     {
         try {
             return  $this->model->with(['recoveringStates' => function ($query) {
-                $query->orderBy('pivot_created_at', 'asc');
+                $query->orderBy('pivot_created_at', 'desc');
             }])->where('state', 'A')
                 ->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
