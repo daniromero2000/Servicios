@@ -35,11 +35,12 @@
                     <label for="name">Plan <span class="text-danger">*</span></label>
                     <select ng-model="request.PLAN" id="plan" name="plan" class="form-control select2" required>
                         <option selected value> Selecciona Plan </option>
-                        <option ng-repeat="plan in plans" value="plan.CODIGO">
+                        <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
                             @{{plan.PLAN}}</option>
                     </select>
                 </div>
             </div>
+            <button ng-click="addItem()">Agregar item</button>
             {{-- <div style=" position: absolute; top: 12px; right: 18px; ">
                 <div class="ml-auto my-auto">
                     <button type="submit" ng-click="createRequest()" class="btn btn-primary btn-sm">Crear

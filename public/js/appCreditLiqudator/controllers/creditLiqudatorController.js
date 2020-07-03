@@ -3,15 +3,76 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
     .controller('creditLiqudatorController', function ($scope, $http, $timeout) {
 
         $scope.tabs = 1;
+        $scope.tabItem = 0;
         $scope.lead = {};
         $scope.plans = [];
-        $scope.tabItem = 1;
         $scope.items = [];
+        $scope.discount = [];
+        $scope.discounts = [];
         $scope.listTags = [];
         $scope.request = [];
-        $scope.liquidator = {};
-        $scope.showLiquidator = true;
+        $scope.liquidator = [];
         $scope.infoLiquidator = {};
+        $scope.listValue = [];
+        $scope.typeDiscount = [
+            { 'type': 'Tarjeta Oportuya' },
+            { 'type': 'Por lista' },
+            { 'type': 'Por traslado' },
+            { 'type': 'Otros' },
+        ];
+
+
+        $scope.listDiscount = function () {
+            for (let i = 1; i < 100; i++) {
+                $scope.listValue.push({ 'value': i });
+            }
+        };
+
+        $scope.addItem = function () {
+            var index = [[], []];
+            $scope.liquidator.push(index);
+            console.log($scope.liquidator)
+        };
+        // if ($scope.lead.latest_intention != '' && $scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') {
+        //     if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
+        //         $scope.liquidator[$scope.discount.key][1].push({ 'key': '' 'type': 'Tarjeta Oportuya', 'value': '10' });
+        //     } else {
+        //         $scope.liquidator[$scope.discount.key][1].push({ 'key': '' 'type': 'Tarjeta Oportuya', 'value': '10' });
+        //     }
+        // }
+        $scope.addProduct = function (key) {
+            $scope.items.key = key;
+            $('#addItem').modal('show');
+        };
+
+        $scope.addDiscount = function (key) {
+            $scope.discount.key = key;
+            $('#addDiscount').modal('show');
+        };
+
+        $scope.tabItems = [{ 'value': 1 }, { 'value': 2 }];
+
+        $scope.alterTab = function (value) {
+            $scope.tabItem = value
+        }
+
+
+        $scope.createItemLiquidator = function () {
+            $scope.items.SOLICITUD = $scope.request.SOLICITUD;
+            $scope.liquidator[$scope.items.key][0].push($scope.items);
+            console.log($scope.liquidator);
+            $scope.items = {};
+            $("#addItem").modal("hide");
+        };
+
+        $scope.createDiscountLiquidator = function () {
+            $scope.discount.SOLICITUD = $scope.request.SOLICITUD;
+            $scope.liquidator[$scope.discount.key][1].push($scope.discount);
+            console.log($scope.liquidator);
+            $scope.discount = {};
+            $("#addDiscount").modal("hide");
+        };
+
 
         $scope.getCustomer = function () {
             $http({
@@ -42,25 +103,25 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.getProduct = function () {
-            if ($scope.liquidator.CODIGO > 0) {
+            if ($scope.items.CODIGO > 0) {
                 $http({
                     method: 'GET',
-                    url: '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO,
+                    url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
                 }).then(function successCallback(response) {
-                    $scope.liquidator.ARTICULO = response.data.product[0].item;
+                    $scope.items.ARTICULO = response.data.product[0].item;
                     if ($scope.lead.latest_intention != '' && $scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') {
                         if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
-                            $scope.liquidator.VALOR = response.data.price.black_public_price;
+                            $scope.items.VALOR = response.data.price.black_public_price;
                         } else {
-                            $scope.liquidator.VALOR = response.data.price.blue_public_price;
+                            $scope.items.VALOR = response.data.price.blue_public_price;
                         }
                     } else {
-                        $scope.liquidator.VALOR = response.data.price.traditional_credit_price;
+                        $scope.items.VALOR = response.data.price.traditional_credit_price;
                     }
-                    $scope.liquidator.LISTA = response.data.price.list;
+                    $scope.items.LISTA = response.data.price.list;
                 }, function errorCallback(response) {
-                    response.url = '/api/liquidator/getProduct/' + $scope.liquidator.CODIGO;
-                    $scope.addError(response, $scope.liquidator.CODIGO);
+                    response.url = '/api/liquidator/getProduct/' + $scope.items.CODIGO;
+                    $scope.addError(response, $scope.items.CODIGO);
                 });
             }
         };
@@ -96,35 +157,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }, 500);
         }
 
-
-        $scope.createItemLiquidator = function () {
-            $scope.liquidator.SOLICITUD = $scope.request.SOLICITUD;
-            $scope.items.push($scope.liquidator)
-            console.log($scope.items);
-            $scope.liquidator = {};
-            $("#addItem").modal("hide");
-            // $("#plan").prop("disabled", true);
-            // $http({
-            //     method: 'POST',
-            //     url: '/Administrator/creditLiquidator',
-            //     data: $scope.liquidator
-            // }).then(function successCallback(response) {
-            //     if (response.data != false) {
-            //         if (response.data == "23000") {
-            //             document.getElementById('p').innerHTML = "La lista <b>" + $scope.productList.name + "</b>  ya se encuentra registrado en la base de datos";
-            //             $("#alertProductList").show();
-            //         } else if (response.data) {
-            //             $scope.productList = "";
-            //             $scope.resetDataProductList();
-            //             $("#addProductListModal").modal("hide");
-            //             showAlert('success', 'Creado Correctamente');
-            //         }
-            //     }
-            // }, function errorCallback(response) {
-            // });
-        };
-
-
         $scope.createRequest = function () {
             $http({
                 method: 'GET',
@@ -146,6 +178,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.getPlans();
         $scope.getValidationCustomer();
+        $scope.listDiscount();
 
         // $scope.getProductList();
         // $scope.getFactor();
