@@ -551,6 +551,7 @@ class assessorsController extends Controller
 				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 1;
 				$dataIntention->ID_DEF = 2;
+				$dataIntention->CREDIT_DECISION = 'Negado';
 				$dataIntention->save();
 			}
 
@@ -724,6 +725,7 @@ class assessorsController extends Controller
 				$idDef = '8';
 				$customerIntention->ID_DEF            = '8';
 				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -999,6 +1001,7 @@ class assessorsController extends Controller
 					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 					$customerIntention->ID_DEF            =  '4';
 					$customerIntention->ESTADO_INTENCION  = '1';
+					$customerIntention->CREDIT_DECISION = 'Negado';
 					$customer->save();
 					$customerIntention->save();
 					return ['resp' => "false"];
@@ -1014,6 +1017,7 @@ class assessorsController extends Controller
 			$customer->ESTADO          = 'NEGADO';
 			$customerIntention->ID_DEF =  $idDef;
 			$customerIntention->ESTADO_INTENCION  = '1';
+			$customerIntention->CREDIT_DECISION = 'Negado';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "false"];
@@ -1147,6 +1151,7 @@ class assessorsController extends Controller
 				$customerIntention->TARJETA = '';
 				$customerIntention->ID_DEF =  '24';
 				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
