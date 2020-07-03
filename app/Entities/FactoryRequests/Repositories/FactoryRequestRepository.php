@@ -20,7 +20,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'FECHASOL',
         'ESTADO',
         'GRAN_TOTAL',
-        'CODEUDOR1'
+        'CODEUDOR1',
+        'SOLICITUD_WEB'
     ];
 
     public function __construct(
