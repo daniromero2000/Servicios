@@ -150,13 +150,19 @@ AND sb.ASESOR_DIG is null
 
     private function getLeadsTradicional($request)
     {
-        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.`PERFIL_CREDITICIO`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
+        $queryTradicional = "SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.`PERFIL_CREDITICIO`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name, SOLIC_FAB.SOLICITUD
         FROM CLIENTE_FAB as cf,  TB_INTENCIONES
         LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         LEFT JOIN    products ON `TB_INTENCIONES`.product_id = products.id
+       left JOIN SOLIC_FAB on TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE
         where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
+        AND (SOLIC_FAB.CLIENTE = TB_INTENCIONES.CEDULA
+        OR SOLIC_FAB.CLIENTE is null)
+         AND (SOLIC_FAB.ESTADO = 1
+        OR SOLIC_FAB.ESTADO is null)
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
         AND `TB_INTENCIONES`.`deleted_at` is null
+        and TB_INTENCIONES.CREDIT_DECISION is null
          AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1088315168
        OR `TB_INTENCIONES`.`ASESOR` =  1088308622)
