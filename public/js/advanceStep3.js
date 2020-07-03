@@ -186,7 +186,7 @@ angular.module('appAdvacneStep3', ['moment-picker', 'ng-currency'])
 					$('#congratulations').modal('show');
 				}, 1800);
 			}
-			
+
 			if(response.data.data == false){
 				window.location = "/OPN_gracias_denied";
 			}

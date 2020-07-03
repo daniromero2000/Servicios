@@ -35,7 +35,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $data['FTP']           = 0;
         $data['STATE']         = "A";
         $data['GRAN_TOTAL']    = 0;
-        $data['SOLICITUD_WEB'] = 1;
 
         try {
             return $this->model->create($data);
