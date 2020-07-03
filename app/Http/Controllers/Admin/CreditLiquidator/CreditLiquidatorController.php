@@ -8,6 +8,7 @@ use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterf
 use App\Entities\SecondCodebtors\Repositories\Interfaces\SecondCodebtorRepositoryInterface;
 use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
+use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
@@ -29,7 +30,8 @@ class CreditLiquidatorController extends Controller
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         ListProductRepositoryInterface $listProductRepositoryInterface,
-        PlanRepositoryInterface $planRepositoryInterface
+        PlanRepositoryInterface $planRepositoryInterface,
+        FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface
     ) {
         $this->CustomerInterface        = $CustomerRepositoryInterface;
         $this->toolsInterface           = $toolRepositoryInterface;
@@ -40,6 +42,7 @@ class CreditLiquidatorController extends Controller
         $this->subsidiaryInterface      = $subsidiaryRepositoryInterface;
         $this->listProductInterface     = $listProductRepositoryInterface;
         $this->planInterface            = $planRepositoryInterface;
+        $this->factorsInterface         = $factorsOportudataRepositoryInterface;
         $this->middleware('auth');
     }
 
@@ -59,6 +62,11 @@ class CreditLiquidatorController extends Controller
     public function getPlans()
     {
         return $this->planInterface->listPlan();
+    }
+
+    public function getFactors()
+    {
+        return $this->factorsInterface->listFactorsOportudata();
     }
 
     public function getProduct($code)

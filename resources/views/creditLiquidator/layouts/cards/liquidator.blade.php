@@ -69,7 +69,7 @@
                                     <thead class="">
                                         <tr>
                                             <th>Tipo</th>
-                                            <th>Valor</th>
+                                            <th>%</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,6 +80,92 @@
                                     </tbody>
 
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="totalDiscount">Total Descuentos</label>
+                                    <input type="text" class="form-control" id="totalDiscount"
+                                        aria-describedby="totalDiscount" ng-model="liquidator[key][2]">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                        anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="initialFee">Cuota inicial</label>
+                                    <input type="text" class="form-control" id="initialFee"
+                                        ng-model="liquidator[key][3]" aria-describedby="initialFee">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                        anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
+                                    <select ng-model="fees.CUOTAINI" id="feeInitial" ng-blur="storeFee()"
+                                        name="feeInitial" class="form-control " required>
+                                        <option selected value> Selecciona una Cuota </option>
+                                        <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
+                                            @{{fees.CUOTA}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valueFees">Valor cuotas</label>
+                                    <input type="text" class="form-control" id="valueFees" aria-describedby="valueFees">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                        anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="timelyPayment">Pago oportuno</label>
+                                    <input type="text" class="form-control" id="timelyPayment"
+                                        aria-describedby="timelyPayment">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                        anyone else.</small> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="handlingFee">Cuota de manejo</label>
+                                    <input type="text" class="form-control" id="handlingFee"
+                                        aria-describedby="handlingFee">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                            anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="insurance">Seguro</label>
+                                    <input type="text" class="form-control" id="insurance" aria-describedby="insurance">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                                                                    anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="aval">Aval+Iva</label>
+                                    <input type="text" class="form-control" id="aval" aria-describedby="aval">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="Subtotal">Subtotal</label>
+                                    <input type="text" class="form-control" id="Subtotal" aria-describedby="Subtotal">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="iva">Iva</label>
+                                    <input type="text" class="form-control" id="iva" aria-describedby="iva">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="total">Total</label>
+                                    <input type="text" class="form-control" id="total" aria-describedby="total">
+                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                                                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,8 +253,8 @@
                         <div class="col-12 col-sm-8">
                             <div class="form-group">
                                 <label for="name">Tipo de descuento <span class="text-danger">*</span></label>
-                                <select ng-model="discount.type" id="type" name="type" class="form-control select2"
-                                    required>
+                                <select ng-model="discount.type" id="discountType" name="discountType"
+                                    class="form-control select2" required>
                                     <option selected value> Selecciona Plan </option>
                                     <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
                                         @{{type.type}}</option>
@@ -178,7 +264,8 @@
                         <div class="col-12 col-sm-4">
                             <div class="form-group">
                                 <label for="name">Descuento % <span class="text-danger">*</span></label>
-                                <select ng-model="discount.value" id="value" name="value" class="form-control" required>
+                                <select ng-model="discount.value" id="discountValue" name="discountValue"
+                                    class="form-control" required>
                                     <option selected value> Selecciona Plan </option>
                                     <option ng-repeat="value in listValue" value="@{{value.value}}">
                                         @{{value.value}}</option>

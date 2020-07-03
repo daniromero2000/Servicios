@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FactorsOportudata extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'FACTORES';
 
     protected $fillable = [

@@ -3,17 +3,20 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
     .controller('creditLiqudatorController', function ($scope, $http, $timeout) {
 
         $scope.tabs = 1;
-        $scope.tabItem = 0;
         $scope.lead = {};
+        $scope.fees = {};
         $scope.plans = [];
         $scope.items = [];
-        $scope.discount = [];
-        $scope.discounts = [];
-        $scope.listTags = [];
         $scope.request = [];
-        $scope.liquidator = [];
-        $scope.infoLiquidator = {};
+        $scope.tabItem = 0;
+        $scope.listTags = [];
+        $scope.discount = [];
         $scope.listValue = [];
+        $scope.discounts = [];
+        $scope.liquidator = [];
+        $scope.numberOfFees = [];
+        $scope.totalDiscount = 0;
+        $scope.infoLiquidator = {};
         $scope.typeDiscount = [
             { 'type': 'Tarjeta Oportuya' },
             { 'type': 'Por lista' },
@@ -23,23 +26,17 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
 
         $scope.listDiscount = function () {
-            for (let i = 1; i < 100; i++) {
+            for (let i = 1; i < 101; i++) {
                 $scope.listValue.push({ 'value': i });
             }
         };
 
         $scope.addItem = function () {
-            var index = [[], []];
+            var index = [[], [], [], []];
             $scope.liquidator.push(index);
             console.log($scope.liquidator)
         };
-        // if ($scope.lead.latest_intention != '' && $scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') {
-        //     if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
-        //         $scope.liquidator[$scope.discount.key][1].push({ 'key': '' 'type': 'Tarjeta Oportuya', 'value': '10' });
-        //     } else {
-        //         $scope.liquidator[$scope.discount.key][1].push({ 'key': '' 'type': 'Tarjeta Oportuya', 'value': '10' });
-        //     }
-        // }
+
         $scope.addProduct = function (key) {
             $scope.items.key = key;
             $('#addItem').modal('show');
@@ -56,23 +53,38 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.tabItem = value
         }
 
-
         $scope.createItemLiquidator = function () {
             $scope.items.SOLICITUD = $scope.request.SOLICITUD;
             $scope.liquidator[$scope.items.key][0].push($scope.items);
             console.log($scope.liquidator);
-            $scope.items = {};
             $("#addItem").modal("hide");
+            // $scope.sumDiscount($scope.items.key);
+            $scope.items = {};
         };
 
         $scope.createDiscountLiquidator = function () {
             $scope.discount.SOLICITUD = $scope.request.SOLICITUD;
             $scope.liquidator[$scope.discount.key][1].push($scope.discount);
             console.log($scope.liquidator);
-            $scope.discount = {};
             $("#addDiscount").modal("hide");
+            $scope.sumDiscount($scope.discount.key);
+            $scope.discount = {};
         };
 
+        $scope.sumDiscount = function (key) {
+            var total = 0;
+            var product = 0;
+            product = parseInt($scope.liquidator[key][0][0].VALOR);
+            $scope.liquidator[$scope.discount.key][2] = 0
+            $scope.liquidator[key][1].forEach(e => {
+                total = (parseInt(e.value) / 100) * product;
+                $scope.liquidator[$scope.discount.key][2] = parseInt($scope.liquidator[$scope.discount.key][2]) + Math.round(total)
+                product = product - total;
+                total = 0;
+            });
+
+            $scope.liquidator[$scope.discount.key][3] = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[$scope.discount.key][2])) * 0.1)
+        };
 
         $scope.getCustomer = function () {
             $http({
@@ -100,6 +112,22 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 response.url = '/api/liquidator/getPlans';
                 $scope.addError(response, $scope.lead.CEDULA);
             });
+        };
+
+        $scope.listOfFees = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getFactors',
+            }).then(function successCallback(response) {
+                $scope.numberOfFees = response.data
+            }, function errorCallback(response) {
+                response.url = '/api/liquidator/getFactors';
+                $scope.addError(response, $scope.lead.CEDULA);
+            });
+        };
+
+        $scope.storeFee = function () {
+            console.log($scope.fees.CUOTAINI);
         };
 
         $scope.getProduct = function () {
@@ -179,7 +207,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.getPlans();
         $scope.getValidationCustomer();
         $scope.listDiscount();
-
+        $scope.listOfFees();
         // $scope.getProductList();
         // $scope.getFactor();
         // $scope.getListProduct();

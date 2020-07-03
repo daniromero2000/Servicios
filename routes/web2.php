@@ -223,6 +223,7 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('CreditLiquidator')->group(function () {
         Route::resource('/Administrator/creditLiquidator', 'CreditLiquidatorController');
         Route::get('/api/liquidator/getPlans', 'CreditLiquidatorController@getPlans');
+        Route::get('/api/liquidator/getFactors', 'CreditLiquidatorController@getFactors');
         Route::get('/api/liquidator/getProduct/{id}', 'CreditLiquidatorController@getProduct');
         Route::get('/api/liquidator/createRequest/{id}/{city}', 'CreditLiquidatorController@addSolicFab');
     });

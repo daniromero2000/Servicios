@@ -4,6 +4,8 @@ namespace App\Entities\FactorsOportudata\Repositories\Interfaces;
 
 interface FactorsOportudataRepositoryInterface
 {
+    public function listFactorsOportudata();
+
     public function createFactorsOportudata($data);
 
     public function getAllFactorsOportudata();

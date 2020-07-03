@@ -26,7 +26,7 @@
             <div class="col-3">
                 <div class="form-group">
                     <label for="">Solicitud</label>
-                    <input class="form-control" id="lastName" readonly validation-pattern="name" type="text"
+                    <input class="form-control" id="request" readonly validation-pattern="name" type="text"
                         ng-model="request.SOLICITUD" required />
                 </div>
             </div>

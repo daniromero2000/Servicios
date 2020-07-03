@@ -20,6 +20,16 @@ class FactorsOportudataRepository implements FactorsOportudataRepositoryInterfac
         $this->model = $factorsOportudata;
     }
 
+    public function listFactorsOportudata()
+    {
+        try {
+            return $this->model->get($this->columns);
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
+
     public function createFactorsOportudata($data)
     {
         try {
