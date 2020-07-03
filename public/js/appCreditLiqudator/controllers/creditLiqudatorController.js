@@ -58,7 +58,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[$scope.items.key][0].push($scope.items);
             console.log($scope.liquidator);
             $("#addItem").modal("hide");
-            // $scope.sumDiscount($scope.items.key);
             $scope.items = {};
         };
 
