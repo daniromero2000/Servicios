@@ -453,7 +453,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estado = $consultasLead['infoLead']->ESTADO;
-			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19') {
+			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19' || $estado == '3') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
 				$quotaApprovedAdvance = $consultasLead['quotaApprovedAdvance'];
 				return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $consultasLead['infoLead']->numSolic, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
