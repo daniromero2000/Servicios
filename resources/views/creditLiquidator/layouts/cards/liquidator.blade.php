@@ -96,14 +96,14 @@
                                 <div class="form-group">
                                     <label for="initialFee">Cuota inicial</label>
                                     <input type="text" class="form-control" id="initialFee"
-                                        ng-model="liquidator[key][3]" aria-describedby="initialFee">
+                                        ng-model="liquidator[key][3].CUOTAINI" aria-describedby="initialFee">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                         anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                    <select ng-model="fees.CUOTAINI" id="feeInitial" ng-blur="storeFee()"
-                                        name="feeInitial" class="form-control " required>
+                                    <select ng-model="liquidator[key][3].NUMCUOTAS" id="feeInitial"
+                                        ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
                                         <option selected value> Selecciona una Cuota </option>
                                         <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
                                             @{{fees.CUOTA}}</option>
@@ -111,14 +111,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="valueFees">Valor cuotas</label>
-                                    <input type="text" class="form-control" id="valueFees" aria-describedby="valueFees">
+                                    <input type="text" class="form-control" id="valueFees"
+                                        ng-model="liquidator[key][3].VRCUOTA" aria-describedby="valueFees">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                         anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="timelyPayment">Pago oportuno</label>
-                                    <input type="text" class="form-control" id="timelyPayment"
-                                        aria-describedby="timelyPayment">
+                                    <input type="text" class="form-control" ng-model="liquidator[key][3].timelyPayment"
+                                        id="timelyPayment" aria-describedby="timelyPayment">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                         anyone else.</small> --}}
                                 </div>

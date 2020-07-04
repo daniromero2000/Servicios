@@ -82,7 +82,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 total = 0;
             });
 
-            $scope.liquidator[$scope.discount.key][3] = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[$scope.discount.key][2])) * 0.1)
+            $scope.liquidator[$scope.discount.key][3].CUOTAINI = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[$scope.discount.key][2])) * 0.1)
+        };
+
+        $scope.addFee = function (key) {
+            var factor = "";
+            $scope.numberOfFees.forEach(e => {
+                if (e.CUOTA == $scope.liquidator[key][3].NUMCUOTAS) {
+                    factor = e.FACTOR;
+                }
+            });
+            $scope.liquidator[key][3].VRCUOTA = Math.round(((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[key][2]) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
+            $scope.liquidator[key][3].timelyPayment = $scope.liquidator[key][3].VRCUOTA * 0.05;
         };
 
         $scope.getCustomer = function () {
@@ -125,12 +136,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
         };
 
-        $scope.storeFee = function () {
-            console.log($scope.fees.CUOTAINI);
-        };
-
         $scope.getProduct = function () {
-            if ($scope.items.CODIGO > 0) {
+            if ($scope.items.CODIGO != '') {
                 $http({
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
