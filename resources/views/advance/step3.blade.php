@@ -318,7 +318,7 @@
 						</div>
 					</div>
 					<div class="row resetRow">
-						<div class="col-12" ng-if="estadoCliente == 'APROBADO'">
+						<div class="col-12" ng-if="estadoCliente == '19'">
 							<p class="textModal text-center">
 								<strong>Felicitaciones!!</strong>
 								<br>
@@ -337,7 +337,7 @@
 								guárdala para cualquier consulta posterior
 							</p>
 						</div>
-						<div class="col-12" ng-if="estadoCliente == 'PREAPROBADO'">
+						<div class="col-12" ng-if="estadoCliente == '17'">
 							<p class="textModal text-center">
 								<strong>Felicitaciones!!</strong>
 								<br>
@@ -345,6 +345,16 @@
 							</p>
 							<p class="text-quotamodal text-center">
 								$@{{ quota | number:0 }}
+							</p>
+							<p class="textModalNumSolic text-center">
+								Tu número de scolitud es <strong
+									style="font-size:16px; color: #1b8acc">@{{ numSolic }}</strong> , <br>
+								guárdala para cualquier consulta posterior
+							</p>
+						</div>
+						<div class="col-12" ng-if="estadoCliente == '3'">
+							<p class="textModal text-center">
+								Tu solicitud ha sido creada exitosamente:
 							</p>
 							<p class="textModalNumSolic text-center">
 								Tu número de scolitud es <strong

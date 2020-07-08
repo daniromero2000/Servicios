@@ -150,18 +150,48 @@ AND sb.ASESOR_DIG is null
 
     private function getLeadsTradicional($request)
     {
-        $queryTradicional = "SELECT  cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`EMAIL`, cf.`ESTADO`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION` as CREACION, cf.`ORIGEN`, cf.`PLACA`, TB_DEFINICIONES.`DESCRIPCION`, TB_INTENCIONES.`PERFIL_CREDITICIO`, TB_INTENCIONES.FECHA_INTENCION,  products.sku, products.name
-        FROM CLIENTE_FAB as cf,  TB_INTENCIONES
-        LEFT JOIN TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
-        LEFT JOIN    products ON `TB_INTENCIONES`.product_id = products.id
-        where `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
+        $queryTradicional = "SELECT
+    cf.`NOMBRES`,
+    cf.`APELLIDOS`,
+    cf.`CELULAR`,
+    cf.`EMAIL`,
+    cf.`CIUD_UBI`,
+    TB_INTENCIONES.`CEDULA`,
+    cf.`ORIGEN`,
+    cf.`PLACA`,
+    TB_DEFINICIONES.`DESCRIPCION`,
+    TB_INTENCIONES.`PERFIL_CREDITICIO`,
+    TB_INTENCIONES.FECHA_INTENCION,
+    products.sku,
+    products.name
+FROM
+    CLIENTE_FAB AS cf,
+    TB_INTENCIONES
+        LEFT JOIN
+    TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
+        LEFT JOIN
+    products ON `TB_INTENCIONES`.product_id = products.id
+        LEFT JOIN
+    SOLIC_FAB ON TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE
+WHERE
+    TB_INTENCIONES.FECHA_INTENCION = (SELECT
+            MAX(`FECHA_INTENCION`)
+        FROM
+            `TB_INTENCIONES`
+        WHERE
+            `CEDULA` = `cf`.`CEDULA`)
+        AND TB_INTENCIONES.CREDIT_DECISION IS NULL
+        AND `TB_INTENCIONES`.`deleted_at` IS NULL
+        AND `TB_INTENCIONES`.`Tarjeta` = 'Crédito Tradicional'
         AND `TB_INTENCIONES`.`CEDULA` = cf.`CEDULA`
-        AND `TB_INTENCIONES`.`deleted_at` is null
-         AND (`TB_INTENCIONES`.`ASESOR` = 998877
+        AND (`TB_INTENCIONES`.`ASESOR` = 998877
         OR `TB_INTENCIONES`.`ASESOR` = 1088315168
-       OR `TB_INTENCIONES`.`ASESOR` =  1088308622)
-        AND cf.`CIUD_UBI` != 'BOGOTÁ'
-        AND TB_INTENCIONES.FECHA_INTENCION = (SELECT MAX(`FECHA_INTENCION`) FROM `TB_INTENCIONES` WHERE `CEDULA` = `cf`.`CEDULA`)";
+        OR `TB_INTENCIONES`.`ASESOR` = 1088308622)
+        AND (SOLIC_FAB.ESTADO = 1
+        OR SOLIC_FAB.ESTADO = 19
+        OR SOLIC_FAB.ESTADO = 20
+        OR SOLIC_FAB.ESTADO IS NULL)
+        AND cf.`CIUD_UBI` != 'BOGOTÁ'";
 
         if ($request['q'] != '') {
             $queryTradicional .= sprintf(

@@ -39,11 +39,12 @@ class IntentionAssessorController extends Controller
         $list = $this->intentionInterface->listIntentionAssessors($skip * 30, $assessor);
         $listJarvis = $this->intentionInterface->listJarvisIntentions($skip * 30);
         if (request()->has('q')) {
+            $to = request()->input('to') . " 23:59:59";
             $list = $this->intentionInterface->searchIntentionAssessors(
                 request()->input('q'),
                 $skip,
                 request()->input('from'),
-                request()->input('to'),
+                $to,
                 request()->input('creditprofile'),
                 request()->input('status'),
                 $assessor
@@ -83,9 +84,10 @@ class IntentionAssessorController extends Controller
         $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses($from, $to, $assessor);
 
         if (request()->has('from')) {
-            $creditProfiles    = $this->intentionInterface->countIntentionAssessorCreditProfiles(request()->input('from'), request()->input('to'), $assessor);
-            $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards(request()->input('from'), request()->input('to'), $assessor);
-            $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses(request()->input('from'), request()->input('to'), $assessor);
+            $to = request()->input('to') . " 23:59:59";
+            $creditProfiles    = $this->intentionInterface->countIntentionAssessorCreditProfiles(request()->input('from'), $to, $assessor);
+            $creditCards       = $this->intentionInterface->countIntentionAssessorCreditCards(request()->input('from'), $to, $assessor);
+            $intentionStatuses = $this->intentionInterface->countIntentionAssessorStatuses(request()->input('from'), $to, $assessor);
         }
 
         $intentionStatusesNames  = [];

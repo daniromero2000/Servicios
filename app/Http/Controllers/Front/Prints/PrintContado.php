@@ -1,23 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\TemporaryCustomer;
+namespace App\Http\Controllers;
 
-use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
-use App\Entities\TemporaryCustomers\Repositories\Interfaces\TemporaryCustomerRepositoryInterface;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-class TemporaryCustomerController extends Controller
+class PrintContado extends Controller
 {
-    private $temporaryCustomerInterface;
-
-    public function __construct(
-        TemporaryCustomerRepositoryInterface $temporaryCustomerRepositoryInterface
-    )
-    {
-        $this->temporaryCustomerInterface = $temporaryCustomerRepositoryInterface;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -46,12 +34,7 @@ class TemporaryCustomerController extends Controller
      */
     public function store(Request $request)
     {
-        if(!isset($request['FEC_NAC']) || $request['FEC_NAC'] == ''){
-            return "-1";
-        }
-        $request['FEC_ING'] = ($request['FEC_ING'] != '') ? $request['FEC_ING'].'-01' : '' ;
-        $request['FEC_CONST'] = ($request['FEC_CONST'] != '') ? $request['FEC_CONST'].'-01' : '' ;
-        return $this->temporaryCustomerInterface->updateOrCreateTemporaryCustomer($request->input());
+        //
     }
 
     /**
@@ -96,6 +79,6 @@ class TemporaryCustomerController extends Controller
      */
     public function destroy($id)
     {
-        return response()->json($this->temporaryCustomerInterface->deleteTemporaryCustomer($id));
+        //
     }
 }

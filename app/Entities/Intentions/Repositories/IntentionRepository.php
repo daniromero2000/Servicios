@@ -271,6 +271,7 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function searchIntentionAssessors(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection
     {
+        set_time_limit(0);
         if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile) && is_null($status)) {
             return $this->model->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
@@ -378,6 +379,7 @@ class IntentionRepository implements IntentionRepositoryInterface
 
     public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $subsidiaris): Collection
     {
+        set_time_limit(0);
         if (is_null($text) && is_null($from) && is_null($to) && is_null($creditprofile)  && is_null($status)) {
             return $this->model->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)

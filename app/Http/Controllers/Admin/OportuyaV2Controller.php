@@ -488,7 +488,6 @@ class OportuyaV2Controller extends Controller
 
 			$lastName = explode(" ", $oportudataLead->APELLIDOS);
 			$consultasLead = $this->execConsultasLead($oportudataLead->CEDULA, $oportudataLead->TIPO_DOC, 'PASOAPASO', $lastName[0], $fechaExpIdentification, $dataDatosCliente);
-
 			if ($consultasLead['resp'] == 'confronta') {
 				return $consultasLead;
 			}
@@ -512,7 +511,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estado = $consultasLead['infoLead']->ESTADO;
-			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19') {
+			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19' || $estado == '3') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
 				$quotaApprovedAdvance = $consultasLead['quotaApprovedAdvance'];
 				return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $consultasLead['infoLead']->numSolic, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
@@ -1864,6 +1863,7 @@ class OportuyaV2Controller extends Controller
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
+		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
 		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
@@ -1880,6 +1880,8 @@ class OportuyaV2Controller extends Controller
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $sucursal,
 			'ESTADO'        => $estado,
+			'SOLICITUD_WEB' => $customerIntention->id
+
 		];
 
 		$customerFactoryRequest = $this->factoryRequestInterface->addFactoryRequest($requestData);

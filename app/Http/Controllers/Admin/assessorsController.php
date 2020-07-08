@@ -551,6 +551,7 @@ class assessorsController extends Controller
 				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 1;
 				$dataIntention->ID_DEF = 2;
+				$dataIntention->CREDIT_DECISION = 'Negado';
 				$dataIntention->save();
 			}
 
@@ -724,6 +725,7 @@ class assessorsController extends Controller
 				$idDef = '8';
 				$customerIntention->ID_DEF            = '8';
 				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -999,6 +1001,7 @@ class assessorsController extends Controller
 					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 					$customerIntention->ID_DEF            =  '4';
 					$customerIntention->ESTADO_INTENCION  = '1';
+					$customerIntention->CREDIT_DECISION = 'Negado';
 					$customer->save();
 					$customerIntention->save();
 					return ['resp' => "false"];
@@ -1014,6 +1017,7 @@ class assessorsController extends Controller
 			$customer->ESTADO          = 'NEGADO';
 			$customerIntention->ID_DEF =  $idDef;
 			$customerIntention->ESTADO_INTENCION  = '1';
+			$customerIntention->CREDIT_DECISION = 'Negado';
 			$customer->save();
 			$customerIntention->save();
 			return ['resp' => "false"];
@@ -1147,6 +1151,7 @@ class assessorsController extends Controller
 				$customerIntention->TARJETA = '';
 				$customerIntention->ID_DEF =  '24';
 				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -1329,11 +1334,11 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		$estadoSolic = ($dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
+		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
 		$debtor->CEDULA = $identificationNumber;
 		$debtor->save();
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data, $intention->id);
 	}
 
 	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
@@ -1460,7 +1465,7 @@ class assessorsController extends Controller
 			];
 		}
 
-		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
+		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
 
 		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
@@ -1512,14 +1517,14 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data, $intention->id);
 	}
 
-	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
+	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
 	{
 		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
+		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
 		if (!empty($data)) {
 			$data['identificationNumber'] = $identificationNumber;
 			$data['numSolic']             = $numSolic;
@@ -1593,7 +1598,7 @@ class assessorsController extends Controller
 		];
 	}
 
-	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado)
+	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado, $intentionId)
 	{
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
@@ -1615,6 +1620,7 @@ class assessorsController extends Controller
 			'ID_EMPRESA'    => $assessorData->ID_EMPRESA,
 			'SUCURSAL'      => $sucursal,
 			'ESTADO'        => $estado,
+			'SOLICITUD_WEB' => $intentionId
 		];
 
 		$customerFactoryRequest = $this->factoryInterface->addFactoryRequest($requestData)->SOLICITUD;

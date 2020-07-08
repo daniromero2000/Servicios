@@ -20,7 +20,8 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         'FECHASOL',
         'ESTADO',
         'GRAN_TOTAL',
-        'CODEUDOR1'
+        'CODEUDOR1',
+        'SOLICITUD_WEB'
     ];
 
     public function __construct(
@@ -35,7 +36,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $data['FTP']           = 0;
         $data['STATE']         = "A";
         $data['GRAN_TOTAL']    = 0;
-        $data['SOLICITUD_WEB'] = 1;
 
         try {
             return $this->model->create($data);
@@ -947,16 +947,18 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function listFactoryRequestsRecovering(): Support
     {
         try {
-            return  $this->model->whereHas('recoveringStates', function ($query) {
-                $query->where('estadosolicitudes_id', 8)->orWhere('estadosolicitudes_id', 18);
-            })->where('state', 'A')
+            return  $this->model->with(['recoveringStates' => function ($query) {
+                $query->orderBy('pivot_created_at', 'desc');
+            }])->where('state', 'A')
                 ->where('ESTADO', 8)
                 ->orWhere('ESTADO', 18)
                 ->get($this->columns);
         } catch (QueryException $e) {
+            dd($e);
             abort(503, $e->getMessage());
         }
     }
+
 
     public function searchFactoryRequestTurns(string $text = null, $totalView,  $from = null,  $to = null,  $status = null,  $subsidiary = null, $soliWeb = null, $groupStatus = null, $customerLine = null, $analyst = null, $action = null): Collection
     {

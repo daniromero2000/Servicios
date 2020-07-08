@@ -44,11 +44,12 @@ class IntentionController extends Controller
             $cont = 0;
             switch ($request->input('action')) {
                 case 'search':
+                    $to = request()->input('to') . " 23:59:59";
                     $list = $this->intentionInterface->searchIntentions(
                         request()->input('q'),
                         $skip,
                         request()->input('from'),
-                        request()->input('to'),
+                        $to,
                         request()->input('creditprofile'),
                         request()->input('status')
                     )->sortByDesc('FECHA_INTENCION');
@@ -57,23 +58,24 @@ class IntentionController extends Controller
                         request()->input('q'),
                         $skip,
                         request()->input('from'),
-                        request()->input('to'),
+                        $to,
                         request()->input('creditprofile'),
                         request()->input('status')
                     )->sortByDesc('FECHA_INTENCION');
 
                     break;
                 case 'export':
+                    $to = request()->input('to') . " 23:59:59";
                     $list = $this->intentionInterface->exportIntentions(
                         request()->input('q'),
                         $skip,
                         request()->input('from'),
-                        request()->input('to'),
+                        $to,
                         request()->input('creditprofile'),
                         request()->input('status')
                     )->sortByDesc('FECHA_INTENCION');
 
-                    ini_set('memory_limit', "512M");
+                    ini_set('memory_limit', "700M");
 
                     foreach ($list as $key => $value) {
                         $cont++;
@@ -165,10 +167,11 @@ class IntentionController extends Controller
         $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser($from, $to);
 
         if (request()->has('from')) {
-            $creditProfiles           = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), request()->input('to'));
-            $creditCards              = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), request()->input('to'));
-            $intentionStatuses        = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), request()->input('to'));
-            $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), request()->input('to'));
+            $to = request()->input('to') . " 23:59:59";
+            $creditProfiles           = $this->intentionInterface->countIntentionsCreditProfiles(request()->input('from'), $to);
+            $creditCards              = $this->intentionInterface->countIntentionsCreditCards(request()->input('from'), $to);
+            $intentionStatuses        = $this->intentionInterface->countIntentionsStatuses(request()->input('from'), $to);
+            $dataIntenciosForBrowsers = $this->dataIntentionsRequest->countDataIntentionsForBrowser(request()->input('from'), $to);
         }
 
         $intentionStatusesNames  = [];
