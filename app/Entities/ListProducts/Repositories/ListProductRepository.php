@@ -181,7 +181,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             ];
         }
 
-        return $dataProduct;
+        return $dataProduct;3
     }
 
     private function extractPrices($listPrices, $prices){
