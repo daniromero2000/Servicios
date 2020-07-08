@@ -24,7 +24,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             { 'type': 'Otros' },
         ];
 
-
         $scope.listDiscount = function () {
             for (let i = 1; i < 101; i++) {
                 $scope.listValue.push({ 'value': i });
@@ -81,8 +80,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 product = product - total;
                 total = 0;
             });
-
             $scope.liquidator[$scope.discount.key][3].CUOTAINI = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[$scope.discount.key][2])) * 0.1)
+            // $scope.updateCharges(key);
         };
 
         $scope.addFee = function (key) {
@@ -93,7 +92,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 }
             });
             $scope.liquidator[key][3].VRCUOTA = Math.round(((parseInt($scope.liquidator[key][0][0].VALOR) - parseInt($scope.liquidator[key][2]) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
-            $scope.liquidator[key][3].timelyPayment = $scope.liquidator[key][3].VRCUOTA * 0.05;
+            $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
+            $scope.liquidator[key][3].MANEJO = 8000;
+            $scope.liquidator[key][3].SEGURO = 3000;
         };
 
         $scope.getCustomer = function () {
@@ -137,7 +138,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.getProduct = function () {
-            if ($scope.items.CODIGO != '') {
+            if ($scope.items.CODIGO != '' && $scope.items.COD_PROCESO == 1 || $scope.items.COD_PROCESO == 4) {
                 $http({
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
@@ -152,6 +153,26 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     } else {
                         $scope.items.VALOR = response.data.price.traditional_credit_price;
                     }
+                    $scope.items.PRECIO_P = response.data.price.normal_public_price;
+                    $scope.items.LISTA = response.data.price.list;
+                }, function errorCallback(response) {
+                    response.url = '/api/liquidator/getProduct/' + $scope.items.CODIGO;
+                    $scope.addError(response, $scope.items.CODIGO);
+                });
+            } else {
+                $http({
+                    method: 'GET',
+                    url: '/api/liquidator/getProduct/' + $scope.items.CODIGO,
+                }).then(function successCallback(response) {
+                    var key = $scope.items.key;
+                    $scope.items.ARTICULO = response.data.product[0].item;
+                    if ($scope.liquidator[key][2] != '') {
+                        $scope.items.VALOR = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
+                        $scope.items.PRECIO_P = Math.round((parseInt($scope.liquidator[key][0][0].VALOR) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
+                    } else {
+                        $scope.items.VALOR = Math.round(parseInt($scope.liquidator[key][0][0].VALOR) * (parseInt(response.data.product[0].base_cost) / 100));
+                        $scope.items.PRECIO_P = Math.round(parseInt($scope.liquidator[key][0][0].VALOR) * (parseInt(response.data.product[0].base_cost) / 100));
+                    }
                     $scope.items.LISTA = response.data.price.list;
                 }, function errorCallback(response) {
                     response.url = '/api/liquidator/getProduct/' + $scope.items.CODIGO;
@@ -160,6 +181,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }
         };
 
+
+        // $scope.updateCharges = function (key) {
+
+        // };
 
         $scope.getValidationCustomer = function () {
             $timeout(() => {

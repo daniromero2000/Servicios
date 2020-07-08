@@ -133,13 +133,14 @@
                                 <div class="form-group">
                                     <label for="handlingFee">Cuota de manejo</label>
                                     <input type="text" class="form-control" id="handlingFee"
-                                        aria-describedby="handlingFee">
+                                        ng-model="liquidator[key][3].MANEJO" aria-describedby="handlingFee">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                             anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="insurance">Seguro</label>
-                                    <input type="text" class="form-control" id="insurance" aria-describedby="insurance">
+                                    <input type="text" class="form-control" id="insurance"
+                                        ng-model="liquidator[key][3].SEGURO" aria-describedby="insurance">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                                                                     anyone else.</small> --}}
                                 </div>
@@ -198,15 +199,26 @@
             <div class="modal-body">
                 <form ng-submit="createItemLiquidator()">
                     <div class=" row pl-0 pr-0">
+                        <div class="col-12 col-sm-12 form-group">
+                            <label for="name">Tipo <span class="text-danger">*</span></label>
+                            <select ng-model="items.COD_PROCESO" id="action" name="action" class="form-control"
+                                required>
+                                <option selected value> Seleccione </option>
+                                <option value="1">Articulo</option>
+                                <option value="2">Cargo</option>
+                                <option value="3">Obsequio</option>
+                                <option value="4">Combo</option>
+                            </select>
+                        </div>
                         <div class="col-12 col-sm-4 form-group">
                             <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" validation-pattern="number" ng-model="items.CODIGO"
-                                ng-blur="getProduct()" id="codeProduct" name="codeProduct">
+                            <input type="text" class="form-control" ng-model="items.CODIGO" ng-blur="getProduct()"
+                                id="codeProduct" name="codeProduct">
                         </div>
                         <div class="col-12 col-sm-8 form-group">
                             <label for="nameProduct">Nombre</label>
-                            <input type="text" ng-model="items.ARTICULO" ng-blur="getProduct()" readonly
-                                id="nameProduct" name="nameProduct" class="form-control">
+                            <input type="text" ng-model="items.ARTICULO" readonly id="nameProduct" name="nameProduct"
+                                class="form-control">
                         </div>
                         <div class="col-12 col-sm-8 form-group">
                             <label for="value">Valor</label>
