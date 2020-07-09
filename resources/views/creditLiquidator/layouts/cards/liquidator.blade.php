@@ -32,7 +32,7 @@
                                 <table class="table">
                                     <thead class="">
                                         <tr>
-                                            <th>Cantidad @{{tab.value}}</th>
+                                            <th>Cantidad </th>
                                             <th>Lista</th>
                                             <th>Código</th>
                                             <th>Seleccion</th>
@@ -182,116 +182,122 @@
                 ng-class="{ 'show active': item  == 3 }">
 
             </div> --}}
+            <div id="addItem@{{key}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="my-modal-title">Title</h5>
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="createItemLiquidator()">
+                                <div class=" row pl-0 pr-0">
+                                    <div class="col-12 col-sm-12 form-group">
+                                        <label for="name">Tipo <span class="text-danger">*</span></label>
+                                        <select ng-if="tab[0].length != 0" ng-model="items.COD_PROCESO" id="action"
+                                            name="action" class="form-control" required>
+                                            <option selected value> Seleccione </option>
+                                            <option value="2">Cargo</option>
+                                            <option value="3">Obsequio</option>
+                                        </select>
+                                        <select ng-if="tab[0].length == 0" ng-model="items.COD_PROCESO" id="action"
+                                            name="action" class="form-control" required>
+                                            <option selected value> Seleccione </option>
+                                            <option value="1">Articulo</option>
+                                            <option value="4">Combo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-4 form-group">
+                                        <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" ng-model="items.CODIGO"
+                                            ng-blur="getProduct()" id="codeProduct" name="codeProduct">
+                                    </div>
+                                    <div class="col-12 col-sm-8 form-group">
+                                        <label for="nameProduct">Nombre</label>
+                                        <input type="text" ng-model="items.ARTICULO" readonly id="nameProduct"
+                                            name="nameProduct" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-sm-8 form-group">
+                                        <label for="value">Valor</label>
+                                        <input type="text" ng-model="items.VALOR" readonly id="value" name="value"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-12 col-sm-4 form-group">
+                                        <label for="quanty">Cantidad <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" ng-model="items.CANTIDAD" id="quanty"
+                                            name="quanty">
+                                    </div>
+                                    <div class="col-12 col-sm-4 form-group">
+                                        <label for="list">Lista <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" readonly ng-model="items.LISTA"
+                                            id="list" name="list">
+                                    </div>
+                                    <div class="col-12 col-sm-4 form-group">
+                                        <label for="selection">Seleccion <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" ng-model="items.SELECCION"
+                                            id="selection" name="selection">
+                                    </div>
+                                </div>
+                                <div class="text-right mt-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addDiscount@{{key}}" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="my-modal-title" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="my-modal-title">Title</h5>
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="createDiscountLiquidator()">
+                                <div class=" row pl-0 pr-0">
+                                    <div class="col-12 col-sm-8">
+                                        <div class="form-group">
+                                            <label for="name">Tipo de descuento <span
+                                                    class="text-danger">*</span></label>
+                                            <select ng-model="discount.type" id="discountType" name="discountType"
+                                                class="form-control select2" required>
+                                                <option selected value> Selecciona Plan </option>
+                                                <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
+                                                    @{{type.type}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group">
+                                            <label for="name">Descuento % <span class="text-danger">*</span></label>
+                                            <select ng-model="discount.value" id="discountValue" name="discountValue"
+                                                class="form-control" required>
+                                                <option selected value> Selecciona Plan </option>
+                                                <option ng-repeat="value in listValue" value="@{{value.value}}">
+                                                    @{{value.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
-
-<div id="addItem" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="my-modal-title">Title</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form ng-submit="createItemLiquidator()">
-                    <div class=" row pl-0 pr-0">
-                        <div class="col-12 col-sm-12 form-group">
-                            <label for="name">Tipo <span class="text-danger">*</span></label>
-                            <select ng-model="items.COD_PROCESO" id="action" name="action" class="form-control"
-                                required>
-                                <option selected value> Seleccione </option>
-                                <option value="1">Articulo</option>
-                                <option value="2">Cargo</option>
-                                <option value="3">Obsequio</option>
-                                <option value="4">Combo</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-sm-4 form-group">
-                            <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" ng-model="items.CODIGO" ng-blur="getProduct()"
-                                id="codeProduct" name="codeProduct">
-                        </div>
-                        <div class="col-12 col-sm-8 form-group">
-                            <label for="nameProduct">Nombre</label>
-                            <input type="text" ng-model="items.ARTICULO" readonly id="nameProduct" name="nameProduct"
-                                class="form-control">
-                        </div>
-                        <div class="col-12 col-sm-8 form-group">
-                            <label for="value">Valor</label>
-                            <input type="text" ng-model="items.VALOR" readonly id="value" name="value"
-                                class="form-control">
-                        </div>
-                        <div class="col-12 col-sm-4 form-group">
-                            <label for="quanty">Cantidad <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" ng-model="items.CANTIDAD" id="quanty" name="quanty">
-                        </div>
-                        <div class="col-12 col-sm-4 form-group">
-                            <label for="list">Lista <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" readonly ng-model="items.LISTA" id="list"
-                                name="list">
-                        </div>
-                        <div class="col-12 col-sm-4 form-group">
-                            <label for="selection">Seleccion <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" ng-model="items.SELECCION" id="selection"
-                                name="selection">
-                        </div>
-                    </div>
-                    <div class="text-right mt-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="addDiscount" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="my-modal-title">Title</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form ng-submit="createDiscountLiquidator()">
-                    <div class=" row pl-0 pr-0">
-                        <div class="col-12 col-sm-8">
-                            <div class="form-group">
-                                <label for="name">Tipo de descuento <span class="text-danger">*</span></label>
-                                <select ng-model="discount.type" id="discountType" name="discountType"
-                                    class="form-control select2" required>
-                                    <option selected value> Selecciona Plan </option>
-                                    <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
-                                        @{{type.type}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <div class="form-group">
-                                <label for="name">Descuento % <span class="text-danger">*</span></label>
-                                <select ng-model="discount.value" id="discountValue" name="discountValue"
-                                    class="form-control" required>
-                                    <option selected value> Selecciona Plan </option>
-                                    <option ng-repeat="value in listValue" value="@{{value.value}}">
-                                        @{{value.value}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right mt-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
