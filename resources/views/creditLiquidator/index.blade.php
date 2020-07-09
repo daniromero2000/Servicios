@@ -75,6 +75,10 @@
                         </div> --}}
                     </div>
                 </div>
+                <div class="ml-auto my-auto">
+                    <button type="button" ng-click="createLiquidator()" class="btn btn-primary btn-sm">Crear
+                        Liquidacion</button>
+                </div>
             </div>
             {{-- <div> @include('ProductList.layouts.Modals.ModalFactors') </div>
             <div> @include('ProductList.layouts.Modals.ModalProductLists')</div>

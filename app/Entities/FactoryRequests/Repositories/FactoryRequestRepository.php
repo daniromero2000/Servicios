@@ -72,6 +72,17 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function checkCustomerHasFactoryRequestLiquidator($identificationNumber)
+    {
+        $queryExistSolicFab = $this->getFactoryRequestForCustomer($identificationNumber);
+        // dd($queryExistSolicFab);
+        if (!empty($queryExistSolicFab) && $queryExistSolicFab->ESTADO != 1) {
+            return true; // Tiene Solictud
+        } else {
+            return false; // No tiene solicitud
+        }
+    }
+
     public function getFactoryRequestForCustomer($identificationNumber)
     {
         $dateNow = date('Y-m-d');

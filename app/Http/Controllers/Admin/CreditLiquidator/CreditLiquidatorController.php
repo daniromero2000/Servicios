@@ -10,6 +10,8 @@ use App\Entities\Codebtors\Repositories\Interfaces\CodebtorRepositoryInterface;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
+use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
 use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreditLiquidatorController extends Controller
 {
-    private $CustomerInterface, $codebtorInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
+    private $CustomerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
 
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
@@ -29,6 +31,10 @@ class CreditLiquidatorController extends Controller
         CodebtorRepositoryInterface $codebtorRepositoryInterface,
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
+        PunishmentRepositoryInterface $punishmentRepositoryInterface,
+
+        CreditCardRepositoryInterface $creditCardRepositoryInterface,
+
         ListProductRepositoryInterface $listProductRepositoryInterface,
         PlanRepositoryInterface $planRepositoryInterface,
         FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface
@@ -36,6 +42,8 @@ class CreditLiquidatorController extends Controller
         $this->CustomerInterface        = $CustomerRepositoryInterface;
         $this->toolsInterface           = $toolRepositoryInterface;
         $this->assessorInterface        = $AssessorRepositoryInterface;
+        $this->punishmentInterface               = $punishmentRepositoryInterface;
+
         $this->secondCodebtorInterface  = $secondCodebtorRepositoryInterface;
         $this->factoryInterface         = $factoryRequestRepositoryInterface;
         $this->codebtorInterface        = $codebtorRepositoryInterface;
@@ -43,6 +51,8 @@ class CreditLiquidatorController extends Controller
         $this->listProductInterface     = $listProductRepositoryInterface;
         $this->planInterface            = $planRepositoryInterface;
         $this->factorsInterface         = $factorsOportudataRepositoryInterface;
+        $this->creditCardInterface               = $creditCardRepositoryInterface;
+
         $this->middleware('auth');
     }
 
@@ -53,6 +63,7 @@ class CreditLiquidatorController extends Controller
 
     public function store(Request $request)
     {
+        dd($request[0][0]);
     }
 
     public function show(int $id)
@@ -116,5 +127,31 @@ class CreditLiquidatorController extends Controller
         // $factoryRequest = $this->factoryInterface->findFactoryRequestById($customerFactoryRequest);
         // $factoryRequest->states()->attach($estado, ['usuario' => $assessorData->NOMBRE]);
         return ['SOLICITUD' => $customerFactoryRequest];
+    }
+
+    public function validationLead($identificationNumber)
+    {
+        $existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
+        if ($existCard == true) {
+            return -1; // Tiene tarjeta
+        }
+
+        // $empleado = $this->employeeInterface->checkCustomerIsEmployee($identificationNumber);
+        // if ($empleado == true) {
+        //     return -2; // Es empleado
+        // }
+
+        $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
+
+        if ($existSolicFab == true) {
+            return -3; // Es empleado
+        }
+
+        $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
+        if ($existDefault == true) {
+            return -4; // Esta Castigado
+        }
+
+        return response()->json(true);
     }
 }

@@ -56,6 +56,8 @@ interface FactoryRequestRepositoryInterface
 
   public function countFactoryRequestsTotalGeneralsTurns($from, $to, $status);
 
+  public function checkCustomerHasFactoryRequestLiquidator($identificationNumber);
+
   public function countFactoryRequestsStatusesAprobadosDirector($from, $to, $Director, $status);
 
   public function countFactoryRequestsStatusesPendientesDirector($from, $to, $Director, $status);

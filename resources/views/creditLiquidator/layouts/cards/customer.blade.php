@@ -1,14 +1,6 @@
 <div class="card">
     <div class="card-body">
         <div class="row mt-2">
-            {{-- <div class="col-3">
-                <div class="form-group">
-                    <label for=""> Numero de cedula</label>
-                    <input type="text" class="form-control" validation-pattern="IdentificationNumber"
-                        ng-blur="getValidationCustomer()" name="identificationNumber" id="identificationNumber"
-                        ng-model="lead.CEDULA" aria-describedby="helpId" placeholder="">
-                </div>
-            </div> --}}
             <div class="col-3">
                 <div class="form-group">
                     <label for="">Nombres</label>
@@ -33,7 +25,7 @@
             <div class="col-3">
                 <div class="form-group">
                     <label for="name">Plan <span class="text-danger">*</span></label>
-                    <select ng-model="request.PLAN" id="plan" name="plan" class="form-control " required>
+                    <select ng-model="request.COD_PLAN" id="plan" name="plan" class="form-control " required>
                         <option selected value> Selecciona Plan </option>
                         <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
                             @{{plan.PLAN}}</option>
@@ -46,6 +38,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 

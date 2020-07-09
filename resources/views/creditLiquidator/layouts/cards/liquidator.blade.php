@@ -146,25 +146,29 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="aval">Aval+Iva</label>
-                                    <input type="text" class="form-control" id="aval" aria-describedby="aval">
+                                    <input type="text" class="form-control" ng-model="liquidator[key][4].TOTAL_AVAL"
+                                        id="aval" aria-describedby="aval">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                                                                                                     anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="Subtotal">Subtotal</label>
-                                    <input type="text" class="form-control" id="Subtotal" aria-describedby="Subtotal">
+                                    <input type="text" class="form-control" ng-model="liquidator[key][5].SUBTOTAL"
+                                        id="Subtotal" aria-describedby="Subtotal">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                                                                                                                                     anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="iva">Iva</label>
-                                    <input type="text" class="form-control" id="iva" aria-describedby="iva">
+                                    <input type="text" class="form-control" ng-model="liquidator[key][5].IVA" id="iva"
+                                        aria-describedby="iva">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                                                                                                                                                                     anyone else.</small> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="total">Total</label>
-                                    <input type="text" class="form-control" id="total" aria-describedby="total">
+                                    <input type="text" class="form-control" ng-model="liquidator[key][5].TOTAL"
+                                        id="total" aria-describedby="total">
                                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                                                                                                                                                                                                                                                                                                                                                                                     anyone else.</small> --}}
                                 </div>
