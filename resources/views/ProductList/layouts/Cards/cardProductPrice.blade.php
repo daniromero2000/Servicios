@@ -30,6 +30,8 @@
                                         class="productlist-card-price">$@{{ price.cash_promotion | number:0 }}</span>
                                     <label class="productlist-card-subtitle">Precio público promoción:</label> <span
                                         class="productlist-card-price">$@{{ price.promotion_public_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle">Porcentaje precio público promoción:</label> <span
+                                        class="productlist-card-price">@{{ price.percentage_promotion_public_price | number:2 }}%</span>
                                 </div>
                             </div>
                             <div class="icon">
@@ -43,6 +45,8 @@
                                 <div class="card-body">
                                     <label class="productlist-card-subtitle">Valor 12 cuotas con AVAL:</label> <span
                                         class="productlist-card-price">$@{{ price.traditional_credit_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle">Porcentaje valor 12 cuotas con AVAL:</label> <span
+                                        class="productlist-card-price">@{{ price.percentage_traditional_credit_price | number:2 }}%</span>
                                     <label class="productlist-card-subtitle">Valor 12 cuotas sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.traditional_credit_bond_price | number:0 }}</span>
                                 </div>
@@ -72,6 +76,9 @@
                                     <label class="productlist-card-subtitle" style="color: white">Precio público
                                         Blue A.F:</label> <span
                                         class="productlist-card-price">$@{{ price.blue_public_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle" style="color: white">Porcentaje Precio público
+                                            Blue A.F:</label> <span
+                                            class="productlist-card-price">@{{ price.percentage_blue_public_price | number:2 }}%</span>
                                     <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
                                         Blue sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.blue_bond_price | number:0 }}</span>
@@ -89,6 +96,9 @@
                                     <label class="productlist-card-subtitle" style="color: white">Precio público
                                         Black A.F:</label> <span
                                         class="productlist-card-price">$@{{ price.black_public_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle" style="color: white">Porcentaje precio público
+                                            Black A.F:</label> <span
+                                            class="productlist-card-price">@{{ price.percentage_black_public_price | number:2 }}%</span>
                                     <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
                                         Black sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.black_bond_price | number:0 }}</span>
