@@ -83,7 +83,7 @@ class LeadsController extends Controller
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND sb.ESTADO = 19
         AND sb.`GRAN_TOTAL` = 0
-        AND sb.SOLICITUD_WEB = 1
+        AND sb.SOLICITUD_WEB >= 1
         AND sb.STATE = 'A'
 AND sb.ASESOR_DIG is null
         AND (cf.`ESTADO` = 'APROBADO' OR cf.`ESTADO` = 'PREAPROBADO')
