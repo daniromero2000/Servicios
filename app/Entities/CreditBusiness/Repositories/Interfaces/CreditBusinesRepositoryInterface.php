@@ -10,4 +10,8 @@ use Illuminate\Database\Eloquent\Collection;
 interface CreditBusinesRepositoryInterface
 {
     public function listCreditBusiness($totalView): Support;
+
+    public function createItem($data): CreditBusines;
+
+    public function updateItem($data);
 }

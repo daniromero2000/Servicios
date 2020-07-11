@@ -30,4 +30,23 @@ class CreditBusinesRepository implements CreditBusinesRepositoryInterface
             dd($e);
         }
     }
+
+    public function createItem($data): CreditBusines
+    {
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            throw $e;
+        }
+    }
+
+    public function updateItem($data)
+    {
+        dd($data);
+        try {
+            return $this->model->updateOrCreate(['SOLICITUD' => $data['SOLICITUD']], $data);
+        } catch (QueryException $e) {
+            return $e;
+        }
+    }
 }

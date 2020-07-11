@@ -13,8 +13,11 @@ use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\Punishments\Repositories\Interfaces\PunishmentRepositoryInterface;
 use App\Entities\CreditCards\Repositories\Interfaces\CreditCardRepositoryInterface;
 use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
+use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetailRepositoryInterface;
+use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\CreditBusiness\CreditBusines;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 class CreditLiquidatorController extends Controller
 {
     private $CustomerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
-
+    private $creditBusinesDetailInterface, $creditBusinesInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
@@ -32,26 +35,27 @@ class CreditLiquidatorController extends Controller
         FactoryRequestRepositoryInterface $factoryRequestRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         PunishmentRepositoryInterface $punishmentRepositoryInterface,
-
         CreditCardRepositoryInterface $creditCardRepositoryInterface,
-
         ListProductRepositoryInterface $listProductRepositoryInterface,
         PlanRepositoryInterface $planRepositoryInterface,
-        FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface
+        FactorsOportudataRepositoryInterface $factorsOportudataRepositoryInterface,
+        CreditBusinesDetailRepositoryInterface $creditBusinesDetailRepositoryInterface,
+        CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface
     ) {
-        $this->CustomerInterface        = $CustomerRepositoryInterface;
-        $this->toolsInterface           = $toolRepositoryInterface;
-        $this->assessorInterface        = $AssessorRepositoryInterface;
-        $this->punishmentInterface               = $punishmentRepositoryInterface;
-
-        $this->secondCodebtorInterface  = $secondCodebtorRepositoryInterface;
-        $this->factoryInterface         = $factoryRequestRepositoryInterface;
-        $this->codebtorInterface        = $codebtorRepositoryInterface;
-        $this->subsidiaryInterface      = $subsidiaryRepositoryInterface;
-        $this->listProductInterface     = $listProductRepositoryInterface;
-        $this->planInterface            = $planRepositoryInterface;
-        $this->factorsInterface         = $factorsOportudataRepositoryInterface;
-        $this->creditCardInterface               = $creditCardRepositoryInterface;
+        $this->CustomerInterface            = $CustomerRepositoryInterface;
+        $this->toolsInterface               = $toolRepositoryInterface;
+        $this->assessorInterface            = $AssessorRepositoryInterface;
+        $this->punishmentInterface          = $punishmentRepositoryInterface;
+        $this->secondCodebtorInterface      = $secondCodebtorRepositoryInterface;
+        $this->factoryInterface             = $factoryRequestRepositoryInterface;
+        $this->codebtorInterface            = $codebtorRepositoryInterface;
+        $this->subsidiaryInterface          = $subsidiaryRepositoryInterface;
+        $this->listProductInterface         = $listProductRepositoryInterface;
+        $this->planInterface                = $planRepositoryInterface;
+        $this->factorsInterface             = $factorsOportudataRepositoryInterface;
+        $this->creditCardInterface          = $creditCardRepositoryInterface;
+        $this->creditBusinesDetailInterface = $creditBusinesDetailRepositoryInterface;
+        $this->creditBusinesInterface       = $creditBusinesRepositoryInterface;
 
         $this->middleware('auth');
     }
@@ -63,7 +67,73 @@ class CreditLiquidatorController extends Controller
 
     public function store(Request $request)
     {
-        dd($request[0][0]);
+        $liquidation = $request->input();
+
+        $items = [];
+        $items2 = [];
+        $products = [];
+        $discounts = [];
+        $totalDiscounts = [];
+        $aval = [];
+        $total = [];
+        $feeInitial = [];
+        $fees = [];
+        $plans = [];
+
+        foreach ($liquidation[0] as $key => $value) {
+            $items += $liquidation[$key];
+            foreach ($items as $key2 => $value2) {
+                $items2[$key2] = $items[$key2];
+            }
+        }
+
+        foreach ($items2 as $key => $value) {
+            $products[]       = $items2[$key][0][0];
+            $discounts[]      = $items2[$key][1];
+            $totalDiscounts[] = $items2[$key][2];
+            $aval[]           = $items2[$key][4][0];
+            $total[]          = $items2[$key][5][0];
+            $feeInitial[]     = $items2[$key][6][0];
+            $fees[]           = $items2[$key][7][0];
+            $plans[]          = $items2[$key][8][0];
+        }
+        // dd(
+        //     $products,
+        //     $discounts,
+        //     $totalDiscounts,
+        //     $aval,
+        //     $total,
+        //     $feeInitial,
+        //     $fees,
+        //     $plans
+        // );
+        $data = [];
+        foreach ($products as $key => $value) {
+            $products[$key]['CONSEC']  = $products[$key]['key'] + 1;
+            $products[$key]['CANT']  = $products[$key]['CANTIDAD'];
+            unset($products[$key]['key']);
+            unset($products[$key]['CANTIDAD']);
+            unset($products[$key]['COD_PROCESO']);
+            $hola = new CreditBusines();
+            $hola->fill($products[$key]);
+            $hola->fill($aval[$key]);
+            $hola->fill($total[$key]);
+            $hola->fill($feeInitial[$key]);
+            $hola->fill($fees[$key]);
+            $hola->fill($plans[$key]);
+            $hola->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
+            $hola->fill(['BONO' => 0]);
+            $hola->fill(['STATE' => 'A']);
+            $hola->fill(['PAPELERIA' => 'A']);
+            $hola->fill(['FEC_AUR' => '1900-01-01']);
+            $hola->save();
+        }
+        dd($hola);
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($request);
     }
 
     public function show(int $id)

@@ -47,7 +47,11 @@
                                             <td>@{{ item.CODIGO}}</td>
                                             <td>@{{ item.SELECCION }}</td>
                                             <td>@{{ item.ARTICULO }}</td>
-                                            <td>@{{ item.VALOR }}</td>
+                                            <td>@{{ item.PRECIO }}</td>
+                                            <td>
+                                                <span ng-if="item.CODIGO == 'IVAV'"> <button class="btn btn-primary"
+                                                        ng-click="updateIva(key)" type="button">Text</button> </span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -55,6 +59,19 @@
                         </div>
                     </div>
                     <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="name">Plan <span class="text-danger">*</span></label>
+                                    <select ng-model="liquidator[key][3].COD_PLAN" id="plan" ng-blur="createPlan(key)"
+                                        name="plan" class="form-control " required>
+                                        <option selected value> Selecciona Plan </option>
+                                        <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
+                                            @{{plan.PLAN}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card">
                             <div class="card-header d-flex justify-content-between ">
                                 <div>Descuentos</div>
@@ -102,8 +119,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                    <select ng-model="liquidator[key][3].NUMCUOTAS" id="feeInitial"
-                                        ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
+                                    <select ng-model="liquidator[key][3].PLAZO" id="feeInitial" ng-blur="addFee(key)"
+                                        name="feeInitial" class="form-control " required>
                                         <option selected value> Selecciona una Cuota </option>
                                         <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
                                             @{{fees.CUOTA}}</option>
@@ -226,7 +243,7 @@
                                     </div>
                                     <div class="col-12 col-sm-8 form-group">
                                         <label for="value">Valor</label>
-                                        <input type="text" ng-model="items.VALOR" readonly id="value" name="value"
+                                        <input type="text" ng-model="items.PRECIO" readonly id="value" name="value"
                                             class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-4 form-group">

@@ -22,16 +22,7 @@
                         ng-model="request.SOLICITUD" required />
                 </div>
             </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="name">Plan <span class="text-danger">*</span></label>
-                    <select ng-model="request.COD_PLAN" id="plan" name="plan" class="form-control " required>
-                        <option selected value> Selecciona Plan </option>
-                        <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
-                            @{{plan.PLAN}}</option>
-                    </select>
-                </div>
-            </div>
+
             <div style=" position: absolute; top: 12px; right: 18px; ">
                 <div class="ml-auto my-auto">
                     <button type="button" ng-click="addItem()" class="btn btn-primary btn-sm">Agregar item</button>
