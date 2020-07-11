@@ -14,11 +14,11 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         $this->model = $CifinFinancialArrear;
     }
 
-    public function checkCustomerHasCifinFinancialArrear($identificationNumber)
+    public function checkCustomerHasCifinFinancialArrear($identificationNumber, $lastConsult)
     {
         try {
             return  $this->model->where('fincedula', $identificationNumber)
-                ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
+                ->where('finconsul', $lastConsult)
                 ->where('fincalid', 'PRIN')
                 ->where('fintipocon', '!=', 'SRV')
                 ->where('finestob', '!=', '')
@@ -30,11 +30,11 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         }
     }
 
-    public function checkCustomerHasCifinFinancialDoubtful($identificationNumber)
+    public function checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastConsult)
     {
         try {
             return  $this->model->where('fincedula', $identificationNumber)
-                ->where('finconsul', $this->model->where('fincedula', $identificationNumber)->max('finconsul'))
+                ->where('finconsul', $lastConsult)
                 ->where('fincalid', '!=', 'CODE')
                 ->where('fintipocon', '!=', 'SRV')
                 ->where(function ($query) {

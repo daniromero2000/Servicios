@@ -4,11 +4,11 @@ namespace App\Entities\CifinFinancialArrears\Repositories\Interfaces;
 
 interface CifinFinancialArrearRepositoryInterface
 {
-  public function checkCustomerHasCifinFinancialArrear($identificationNumber);
+  public function checkCustomerHasCifinFinancialArrear($identificationNumber, $lastConsult);
 
   public function check12MonthsPaymentVector($identificationNumber);
 
-  public function checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+  public function checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastConsult);
 
   public function getCustomerEntityName($identificationNumber);
 
