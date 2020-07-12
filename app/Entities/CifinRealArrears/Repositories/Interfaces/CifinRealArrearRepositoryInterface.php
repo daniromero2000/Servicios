@@ -4,9 +4,9 @@ namespace App\Entities\CifinRealArrears\Repositories\Interfaces;
 
 interface CifinRealArrearRepositoryInterface
 {
-  public function checkCustomerHasCifinRealArrear($identificationNumber);
+  public function checkCustomerHasCifinRealArrear($identificationNumber, $lastConsult);
 
   public function check12MonthsPaymentVector($identificationNumber);
 
-  public function checkCustomerHasCifinRealDoubtful($identificationNumber);
+  public function checkCustomerHasCifinRealDoubtful($identificationNumber, $lastConsult);
 }

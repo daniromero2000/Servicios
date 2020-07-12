@@ -681,10 +681,12 @@ class assessorsController extends Controller
 		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
 
 		if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
-			$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
+			$customerScore = $lastCifinScore->score;
 		} else {
 			$resultado = $this->webServiceInterface->ConsultarInformacionComercial($identificationNumber);
-			$customerScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
+			$customerScore = $lastCifinScore->score;
 		}
 
 		$data = ['CEDULA' => $identificationNumber];
@@ -735,8 +737,8 @@ class assessorsController extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber)->sum('finvrmora');
-		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
+		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('finvrmora');
+		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('rmvrmora');
 		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
@@ -751,8 +753,8 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
-		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
-		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber, $lastCifinScore->scoconsul);
+		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastCifinScore->scoconsul);
 		if ($customerRealDoubtful->isNotEmpty()) {
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {
@@ -1006,7 +1008,8 @@ class assessorsController extends Controller
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
-			} else {
+			}
+			else {
 				$fuenteFallo = "true";
 			}
 		} else {
@@ -1571,7 +1574,8 @@ class assessorsController extends Controller
 			$debtor->SOLIC  = $numSolic;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
-		} else {
+		}
+		else {
 			$estadoResult  = "PREAPROBADO";
 			$respScoreLead = $customer->latestCifinScore;
 			$scoreLead     = 0;

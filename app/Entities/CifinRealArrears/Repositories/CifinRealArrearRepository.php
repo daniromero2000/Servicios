@@ -14,11 +14,11 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         $this->model = $cifinRealArrear;
     }
 
-    public function checkCustomerHasCifinRealArrear($identificationNumber)
+    public function checkCustomerHasCifinRealArrear($identificationNumber, $lastConsult)
     {
         try {
             return  $this->model->where('rmcedula', $identificationNumber)
-                ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
+                ->where('rmconsul', $lastConsult)
                 ->where('rmestob', '!=', '')
                 ->where('rmcalid', 'PRIN')
                 ->where('rmtipocon', '!=', 'SRV')
@@ -36,11 +36,11 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         }
     }
 
-    public function checkCustomerHasCifinRealDoubtful($identificationNumber)
+    public function checkCustomerHasCifinRealDoubtful($identificationNumber, $lastConsult)
     {
         try {
             return  $this->model->where('rmcedula', $identificationNumber)
-                ->where('rmconsul', $this->model->where('rmcedula', $identificationNumber)->max('rmconsul'))
+                ->where('rmconsul', $lastConsult)
                 ->where('rmtipoent', '!=', 'COMU')
                 ->where('rmcalid', 'PRIN')
                 ->where('rmtipocon', '!=', 'SRV')

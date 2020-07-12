@@ -18,7 +18,7 @@ class CifinScoreRepository implements CifinScoreRepositoryInterface
     {
         try {
             return $this->model->where('scocedula', $identificationNumber)
-                ->orderBy('scoconsul', 'desc')->get(['score'])->first();
+                ->orderBy('scoconsul', 'desc')->get(['scoconsul', 'score'])->first();
         } catch (\Throwable $th) {
             //throw $th;
         }
