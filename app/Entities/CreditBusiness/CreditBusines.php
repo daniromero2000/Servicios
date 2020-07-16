@@ -10,7 +10,7 @@ class CreditBusines extends Model
 
     protected $connection = 'oportudata';
 
-    protected $primaryKey = 'SOLICITUD';
+    protected $primaryKey = 'SOLICITUD, CONSEC';
 
     public $timestamps = false;
 

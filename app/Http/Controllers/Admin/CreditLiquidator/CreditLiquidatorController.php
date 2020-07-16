@@ -17,8 +17,10 @@ use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetai
 use App\Entities\CreditBusiness\Repositories\Interfaces\CreditBusinesRepositoryInterface;
 use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
+use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
 use App\Entities\CreditBusiness\CreditBusines;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,17 +88,20 @@ class CreditLiquidatorController extends Controller
                 $items2[$key2] = $items[$key2];
             }
         }
+        // dd($items2[0][2]);
 
-        foreach ($items2 as $key => $value) {
-            $products[]       = $items2[$key][0][0];
-            $discounts[]      = $items2[$key][1];
-            $totalDiscounts[] = $items2[$key][2];
-            $aval[]           = $items2[$key][4][0];
-            $total[]          = $items2[$key][5][0];
-            $feeInitial[]     = $items2[$key][6][0];
-            $fees[]           = $items2[$key][7][0];
-            $plans[]          = $items2[$key][8][0];
+        foreach ($items2 as $id => $value) {
+            $products[]       = $items2[$id][0][0];
+            $products2[]      = $items2[$id][0];
+            $discounts[]      = $items2[$id][1];
+            $totalDiscounts[] = $items2[$id][2];
+            $aval[]           = $items2[$id][4][0];
+            $total[]          = $items2[$id][5][0];
+            $feeInitial[]     = $items2[$id][6][0];
+            $fees[]           = $items2[$id][7][0];
+            $plans[]          = $items2[$id][8][0];
         }
+
         // dd(
         //     $products,
         //     $discounts,
@@ -107,6 +112,10 @@ class CreditLiquidatorController extends Controller
         //     $fees,
         //     $plans
         // );
+
+        // $dateInitial = Carbon::now();
+        // $dateInitial->addMonth();
+        // dd($dateInitial);
         $data = [];
         foreach ($products as $key => $value) {
             $products[$key]['CONSEC']  = $products[$key]['key'] + 1;
@@ -114,21 +123,41 @@ class CreditLiquidatorController extends Controller
             unset($products[$key]['key']);
             unset($products[$key]['CANTIDAD']);
             unset($products[$key]['COD_PROCESO']);
-            $hola = new CreditBusines();
-            $hola->fill($products[$key]);
-            $hola->fill($aval[$key]);
-            $hola->fill($total[$key]);
-            $hola->fill($feeInitial[$key]);
-            $hola->fill($fees[$key]);
-            $hola->fill($plans[$key]);
-            $hola->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
-            $hola->fill(['BONO' => 0]);
-            $hola->fill(['STATE' => 'A']);
-            $hola->fill(['PAPELERIA' => 'A']);
-            $hola->fill(['FEC_AUR' => '1900-01-01']);
-            $hola->save();
+            $data = new CreditBusines();
+            $data->fill($products[$key]);
+            $data->fill($aval[$key]);
+            $data->fill($total[$key]);
+            $data->fill($feeInitial[$key]);
+            $data->fill($fees[$key]);
+            $data->fill($plans[$key]);
+            $data->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
+            $data->fill(['BONO' => 0]);
+            $data->fill(['STATE' => 'A']);
+            $data->fill(['PAPELERIA' => 'A']);
+            $data->fill(['FEC_AUR' => '1900-01-01']);
+            $data->fill(['PRIMER_PAGO' => '1900-01-01']);
+            foreach ($discounts[$key] as $key2 => $value2) {
+                $position = $key2 + 1;
+                $data->fill(['DCTO' . $position => $discounts[$key][$key2]['value']]);
+            }
+            $data->save();
         }
-        dd($hola);
+        $super2 = [];
+        foreach ($products2 as $key => $value) {
+            foreach ($products2[$key] as $key2 => $value) {
+                $position = $key2 + 1;
+                $products2[$key][$key2]['CONSEC']  = $products2[$key][$key2]['key'] + 1;
+                $products2[$key][$key2]['CONSEC2']  = $position;
+                $products2[$key][$key2]['COD_ARTIC']  = $products2[$key][$key2]['CODIGO'];
+                $products2[$key][$key2]['SOLICITUD']  = $products2[$key][$key2]['SOLICITUD'];
+                unset($products2[$key][$key2]['key']);
+                unset($products2[$key][$key2]['CODIGO']);
+                $super2 = new CreditBusinesDetail();
+                $super2->fill($products2[$key][$key2]);
+                $super2->save();
+            }
+        }
+        dd($super2);
     }
 
     public function update(Request $request, $id)

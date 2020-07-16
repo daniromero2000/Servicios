@@ -38,6 +38,7 @@
                                             <th>Seleccion</th>
                                             <th>Articulo</th>
                                             <th>Valor</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -48,9 +49,11 @@
                                             <td>@{{ item.SELECCION }}</td>
                                             <td>@{{ item.ARTICULO }}</td>
                                             <td>@{{ item.PRECIO }}</td>
-                                            <td>
-                                                <span ng-if="item.CODIGO == 'IVAV'"> <button class="btn btn-primary"
-                                                        ng-click="updateIva(key)" type="button">Text</button> </span>
+                                            <td class="d-flex">
+                                                <button class="close mx-auto text-danger"
+                                                    ng-click="removeProduct(item)">
+                                                    <span>×</span>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -58,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class=" col-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
@@ -87,12 +90,19 @@
                                         <tr>
                                             <th>Tipo</th>
                                             <th>%</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="item in tab[1]">
                                             <td>@{{ item.type }}</td>
                                             <td>@{{ item.value }}</td>
+                                            <td class="d-flex">
+                                                <button class="close mx-auto text-danger"
+                                                    ng-click="removeDiscount(item)">
+                                                    <span>×</span>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
 
