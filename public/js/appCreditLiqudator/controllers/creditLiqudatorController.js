@@ -62,6 +62,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 if ($scope.discount.type) {
                     if ($scope.items.COD_PROCESO == 1 || $scope.items.COD_PROCESO == 4) {
                         console.log($scope.discount)
+                        $scope.liquidator[$scope.items.key][1] = [];
                         $scope.liquidator[$scope.items.key][1].push($scope.discount);
                         $scope.discount = {};
                         if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
@@ -185,31 +186,32 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     iva = e[i].PRECIO;
                 }
             }
-
             totalAval = Math.round(parseInt(aval) + parseInt(iva))
-            $scope.liquidator[key][3].VRCUOTA = Math.round(((((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
-            $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
-            $scope.liquidator[key][3].TASAEA = 26.97;
-            $scope.liquidator[key][3].TASAMORA = 2.01;
-            $scope.liquidator[key][3].TASANOM = 24.12;
-            $scope.liquidator[key][3].TASAMAX = 27.18;
-            $scope.liquidator[key][3].TASA_INT = 2.01;
 
-            if ($scope.liquidator[key][3].COD_PLAN != '20') {
-                if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
-                    $scope.liquidator[key][3].MANEJO = 9900;
-                    $scope.liquidator[key][3].SEGURO = 3000;
+            if ($scope.liquidator[key][3].PLAZO != null) {
+                $scope.liquidator[key][3].VRCUOTA = Math.round(((((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
+                $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
+                $scope.liquidator[key][3].TASAEA = 26.97;
+                $scope.liquidator[key][3].TASAMORA = 2.01;
+                $scope.liquidator[key][3].TASANOM = 24.12;
+                $scope.liquidator[key][3].TASAMAX = 27.18;
+                $scope.liquidator[key][3].TASA_INT = 2.01;
+
+                if ($scope.liquidator[key][3].COD_PLAN != '20') {
+                    if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                        $scope.liquidator[key][3].MANEJO = 9900;
+                        $scope.liquidator[key][3].SEGURO = 3000;
+                    } else {
+                        $scope.liquidator[key][3].MANEJO = 0;
+                        $scope.liquidator[key][3].SEGURO = 3000;
+                    }
                 } else {
                     $scope.liquidator[key][3].MANEJO = 0;
-                    $scope.liquidator[key][3].SEGURO = 3000;
+                    $scope.liquidator[key][3].SEGURO = 0;
                 }
-            } else {
-                $scope.liquidator[key][3].MANEJO = 0;
-                $scope.liquidator[key][3].SEGURO = 0;
+
+                $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAMORA': 26.97, 'TASANOM': 24.12, 'TASAMAX': 27.18, 'TASA_INT': 2.01 });
             }
-
-
-            $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO = 3000, 'FACTOR': factor, 'TASAMORA': 26.97, 'TASANOM': 24.12, 'TASAMAX': 27.18, 'TASA_INT': 2.01 });
 
             $scope.liquidator[key][4] = []
             $scope.liquidator[key][4].AVAL = aval
@@ -223,13 +225,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][5].SUBTOTAL = Math.round((parseInt($scope.liquidator[key][5].TOTAL) / 1.19))
             $scope.liquidator[key][5].IVA = Math.round(parseInt($scope.liquidator[key][5].TOTAL - parseInt($scope.liquidator[key][5].SUBTOTAL)))
             $scope.liquidator[key][5].SALDOFIN = Math.round((parseInt($scope.liquidator[key][4].TOTAL_AVAL) + parseInt($scope.liquidator[key][0][0].PRECIO)) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI)));
-            $scope.liquidator[key][5].push(
-                {
-                    'TOTAL': Math.round((parseInt($scope.liquidator[key][3].VRCUOTA) * parseInt($scope.liquidator[key][3].PLAZO)) + parseInt($scope.liquidator[key][3].CUOTAINI)),
-                    'IVA': Math.round((parseInt($scope.liquidator[key][5].TOTAL) * 0.19)),
-                    'SUBTOTAL': Math.round((parseInt($scope.liquidator[key][3].VRCUOTA) * parseInt($scope.liquidator[key][3].PLAZO)) + parseInt($scope.liquidator[key][3].CUOTAINI)) - Math.round((parseInt($scope.liquidator[key][5].TOTAL) * 0.19)),
-                    'SALDOFIN': $scope.liquidator[key][5].SALDOFIN
-                });
+            $scope.liquidator[key][5].push({
+                'TOTAL': $scope.liquidator[key][5].TOTAL, 'IVA': $scope.liquidator[key][5].IVA, 'SUBTOTAL': $scope.liquidator[key][5].SUBTOTAL, 'SALDOFIN': $scope.liquidator[key][5].SALDOFIN
+            });
 
         };
 
@@ -286,11 +284,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
                             $scope.discount.value = response.data.price.percentage_black_public_price;
-                            console.log($scope.liquidator);
                         } else {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
                             $scope.discount.value = response.data.price.percentage_blue_public_price;
-                            console.log($scope.liquidator);
                         }
                     } else {
                         $scope.items.PRECIO = response.data.price.traditional_credit_price;

@@ -253,8 +253,9 @@
                                     </div>
                                     <div class="col-12 col-sm-8 form-group">
                                         <label for="value">Valor</label>
-                                        <input type="text" ng-model="items.PRECIO" readonly id="value" name="value"
-                                            class="form-control">
+                                        <input type="text" ng-model="items.PRECIO"
+                                            ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 2)"
+                                            id="value" name="value" class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-4 form-group">
                                         <label for="quanty">Cantidad <span class="text-danger">*</span></label>
