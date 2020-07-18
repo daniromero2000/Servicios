@@ -128,18 +128,50 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     cuotaIni = 0
                     break;
                 case '5':
-                    cuotaIni = Math.round((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) * 0.1)
+                    var precio = parseInt($scope.liquidator[key][0][0].PRECIO)
+                    $scope.liquidator[key][0].forEach(e => {
+                        if (e.COD_PROCESO == 2) {
+                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
+                                precio = precio + e.PRECIO;
+                            }
+                        }
+                    });
+                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     //periodo de gracia = 2%
                     break;
                 case '6':
-                    cuotaIni = Math.round((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) * 0.1)
+                    var precio = parseInt($scope.liquidator[key][0][0].PRECIO)
+                    $scope.liquidator[key][0].forEach(e => {
+                        if (e.COD_PROCESO == 2) {
+                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
+                                precio = precio + e.PRECIO;
+                            }
+                        }
+                    });
+                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     //periodo de gracia = 4%
                     break;
                 case '7':
-                    cuotaIni = Math.round((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) * 0.1)
+                    var precio = parseInt($scope.liquidator[key][0][0].PRECIO)
+                    $scope.liquidator[key][0].forEach(e => {
+                        if (e.COD_PROCESO == 2) {
+                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
+                                precio = precio + e.PRECIO;
+                            }
+                        }
+                    });
+                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     break;
                 case '15':
-                    cuotaIni = Math.round((parseInt($scope.liquidator[key][0][0].PRECIO) - parseInt($scope.liquidator[key][2])) * 0.1)
+                    var precio = parseInt($scope.liquidator[key][0][0].PRECIO)
+                    $scope.liquidator[key][0].forEach(e => {
+                        if (e.COD_PROCESO == 2) {
+                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
+                                precio = precio + e.PRECIO;
+                            }
+                        }
+                    });
+                    cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
                     break;
                 case '16':
                     cuotaIni = 10000

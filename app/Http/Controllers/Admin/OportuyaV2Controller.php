@@ -182,10 +182,10 @@ class OportuyaV2Controller extends Controller
 				foreach ($dataProduct[$key] as $key2 => $value2) {
 					$productList = $value2;
 				}
-				$products[$key]['price_old'] =  $productList['traditional_credit_price'];
-				$products[$key]['price_new'] =  $productList['traditional_credit_price'];
-				// $products[$key]['black_price'] =  $productList['black_public_price'];
-				$desc[$key] = $productList['traditional_credit_price'] - (($productCatalog[$key]->discount * $productList['traditional_credit_price']) / 100);
+				$products[$key]['price_old'] =  $productList['normal_public_price'];
+				$products[$key]['price_new'] =  $productList['black_public_price'];
+				$products[$key]['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
+				$desc[$key] = $productList['black_public_price'];
 				$products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
 				$products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
 			}
@@ -209,8 +209,8 @@ class OportuyaV2Controller extends Controller
 		}
 		$desc 			= "";
 		$pays 			= "";
-		$desc 			= $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
-		$priceNew 		= $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
+		$desc 			= $productList['black_public_price'];
+		$priceNew 		= $productList['black_public_price'];
 		$pays	 		= round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
 		$desc 			= round($desc, 2, PHP_ROUND_HALF_UP);
 		$images 		= $productCatalog->images()->get(['src']);
@@ -227,7 +227,7 @@ class OportuyaV2Controller extends Controller
 
 		return view('oportuya.product.show', [
 			'product'   => $productCatalog,
-			'prices'    => $productList,
+			'prices'    => $productList['normal_public_price'],
 			'pays'      => $pays,
 			'desc'      => $desc,
 			'imagenes'  => $imagenes,

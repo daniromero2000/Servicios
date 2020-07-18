@@ -50,8 +50,9 @@ class CatalogController extends Controller
             foreach ($dataProduct[$key] as $key2 => $value2) {
                 $productList[$key] = $value2;
             }
-            $products[$key]['price_old'] =  $productList[$key]['traditional_credit_price'];
-            $products[$key]['price_new'] =  $productList[$key]['traditional_credit_price'] - (($productCatalog[$key]->discount * $productList[$key]['traditional_credit_price']) / 100);
+            $products[$key]['price_old'] =  $productList[$key]['normal_public_price'];
+            $products[$key]['price_new'] =  $productList[$key]['promotion_public_price'];
+            $products[$key]['discount'] =  round($productList[$key]['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
             $products[$key]['pays'] = round($productList[$key]['black_public_price'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
             $products[$key]['desc'] = $productList[$key]['black_public_price'];
         }
@@ -75,11 +76,11 @@ class CatalogController extends Controller
         }
         $desc = "";
         $pays = "";
-        // dd($productList);
         $desc = $productList['black_public_price'];
-        $priceNew = $productList['traditional_credit_price'] - (($productCatalog->discount * $productList['traditional_credit_price']) / 100);
+        $priceNew = $productList['promotion_public_price'];
         $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
         $desc = round($desc, 2, PHP_ROUND_HALF_UP);
+        $productCatalog['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);
         $imagenes = [];
         $productImages = [];

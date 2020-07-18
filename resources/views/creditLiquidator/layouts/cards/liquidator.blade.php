@@ -6,10 +6,6 @@
                     ng-click="alterTab(key)" ng-class="{ 'active': tabItem == key }" data-toggle="tab" role="tab"
                     aria-controls="nav-general@{{key}}">Item
                     @{{key + 1}}</a>
-                {{-- <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': item  == 2 }"
-                    ng-click="item  = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Item 2</a>
-                <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': item  == 3 }"
-                    ng-click="item  = 3" data-toggle="tab" role="tab" aria-controls="nav-general">Item 3</a> --}}
             </div>
         </nav>
     </div>
@@ -113,42 +109,47 @@
                     <div class="col-4">
                         <div class="card">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label for="totalDiscount">Total Descuentos</label>
-                                    <input type="text" class="form-control" id="totalDiscount"
-                                        aria-describedby="totalDiscount" ng-model="liquidator[key][2]">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                        anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="initialFee">Cuota inicial</label>
-                                    <input type="text" class="form-control" id="initialFee"
-                                        ng-model="liquidator[key][3].CUOTAINI" aria-describedby="initialFee">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                        anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                    <select ng-model="liquidator[key][3].PLAZO" id="feeInitial" ng-blur="addFee(key)"
-                                        name="feeInitial" class="form-control " required>
-                                        <option selected value> Selecciona una Cuota </option>
-                                        <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
-                                            @{{fees.CUOTA}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="valueFees">Valor cuotas</label>
-                                    <input type="text" class="form-control" id="valueFees"
-                                        ng-model="liquidator[key][3].VRCUOTA" aria-describedby="valueFees">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                        anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="timelyPayment">Pago oportuno</label>
-                                    <input type="text" class="form-control" ng-model="liquidator[key][3].timelyPayment"
-                                        id="timelyPayment" aria-describedby="timelyPayment">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                        anyone else.</small> --}}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="totalDiscount">Total Descuentos</label>
+                                            <input type="text" class="form-control" id="totalDiscount"
+                                                aria-describedby="totalDiscount" ng-model="liquidator[key][2]">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="initialFee">Cuota inicial</label>
+                                            <input type="text" class="form-control" id="initialFee"
+                                                ng-model="liquidator[key][3].CUOTAINI" aria-describedby="initialFee">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
+                                            <select ng-model="liquidator[key][3].PLAZO" id="feeInitial"
+                                                ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
+                                                <option selected value> Selecciona una Cuota </option>
+                                                <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
+                                                    @{{fees.CUOTA}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="valueFees">Valor cuotas</label>
+                                            <input type="text" class="form-control" id="SALARIO_CONYU"
+                                                ng-model="liquidator[key][3].VRCUOTA" aria-describedby="valueFees">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="timelyPayment">Pago oportuno</label>
+                                            <input type="text" class="form-control"
+                                                ng-model="liquidator[key][3].timelyPayment" id="timelyPayment"
+                                                aria-describedby="timelyPayment">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,63 +157,59 @@
                     <div class="col-4">
                         <div class="card">
                             <div class="card-body">
+                                <div class="row mx-0">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="handlingFee">Cuota de manejo</label>
+                                            <input type="text" class="form-control" id="handlingFee"
+                                                ng-model="liquidator[key][3].MANEJO" aria-describedby="handlingFee">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="insurance">Seguro</label>
+                                            <input type="text" class="form-control" id="insurance"
+                                                ng-model="liquidator[key][3].SEGURO" aria-describedby="insurance">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="aval">Aval+Iva</label>
+                                            <input type="text" class="form-control"
+                                                ng-model="liquidator[key][4].TOTAL_AVAL" id="aval"
+                                                aria-describedby="aval">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="Subtotal">Subtotal</label>
+                                            <input type="text" class="form-control"
+                                                ng-model="liquidator[key][5].SUBTOTAL" id="Subtotal"
+                                                aria-describedby="Subtotal">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="iva">Iva</label>
+                                            <input type="text" class="form-control" ng-model="liquidator[key][5].IVA"
+                                                id="iva" aria-describedby="iva">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="total">Total</label>
+                                            <input type="text" class="form-control" ng-model="liquidator[key][5].TOTAL"
+                                                id="total" aria-describedby="total">
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <div class="form-group">
-                                    <label for="handlingFee">Cuota de manejo</label>
-                                    <input type="text" class="form-control" id="handlingFee"
-                                        ng-model="liquidator[key][3].MANEJO" aria-describedby="handlingFee">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                            anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="insurance">Seguro</label>
-                                    <input type="text" class="form-control" id="insurance"
-                                        ng-model="liquidator[key][3].SEGURO" aria-describedby="insurance">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                                                                    anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="aval">Aval+Iva</label>
-                                    <input type="text" class="form-control" ng-model="liquidator[key][4].TOTAL_AVAL"
-                                        id="aval" aria-describedby="aval">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="Subtotal">Subtotal</label>
-                                    <input type="text" class="form-control" ng-model="liquidator[key][5].SUBTOTAL"
-                                        id="Subtotal" aria-describedby="Subtotal">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="iva">Iva</label>
-                                    <input type="text" class="form-control" ng-model="liquidator[key][5].IVA" id="iva"
-                                        aria-describedby="iva">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
-                                </div>
-                                <div class="form-group">
-                                    <label for="total">Total</label>
-                                    <input type="text" class="form-control" ng-model="liquidator[key][5].TOTAL"
-                                        id="total" aria-describedby="total">
-                                    {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                                                                                                                                                                                                                                                                                                                                                                    anyone else.</small> --}}
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
-                ng-class="{ 'show active': item  == 2 }">
-            </div>
-
-            <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab"
-                ng-class="{ 'show active': item  == 3 }">
-
-            </div> --}}
             <div id="addItem@{{key}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -251,16 +248,16 @@
                                         <input type="text" ng-model="items.ARTICULO" readonly id="nameProduct"
                                             name="nameProduct" class="form-control">
                                     </div>
-                                    <div class="col-12 col-sm-8 form-group">
-                                        <label for="value">Valor</label>
-                                        <input type="text" ng-model="items.PRECIO"
-                                            ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 2)"
-                                            id="value" name="value" class="form-control">
-                                    </div>
                                     <div class="col-12 col-sm-4 form-group">
                                         <label for="quanty">Cantidad <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" ng-model="items.CANTIDAD" id="quanty"
                                             name="quanty">
+                                    </div>
+                                    <div class="col-12 col-sm-8 form-group">
+                                        <label for="value">Valor</label>
+                                        <input type="text" ng-model="items.PRECIO"
+                                            ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 4) || (items.COD_PROCESO == 2 && (items.CODIGO == 'IVAV' || items.CODIGO == 'AV10' || items.CODIGO == 'AV12' || items.CODIGO == 'AV15'))"
+                                            id="value" name="value" class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-4 form-group">
                                         <label for="list">Lista <span class="text-danger">*</span></label>
@@ -302,7 +299,7 @@
                                                     class="text-danger">*</span></label>
                                             <select ng-model="discount.type" id="discountType" name="discountType"
                                                 class="form-control select2" required>
-                                                <option selected value> Selecciona Plan </option>
+                                                <option selected value> Selecciona Tipo de descuento </option>
                                                 <option ng-repeat="type in typeDiscount" value="@{{type.type}}">
                                                     @{{type.type}}</option>
                                             </select>
@@ -313,7 +310,7 @@
                                             <label for="name">Descuento % <span class="text-danger">*</span></label>
                                             <select ng-model="discount.value" id="discountValue" name="discountValue"
                                                 class="form-control" required>
-                                                <option selected value> Selecciona Plan </option>
+                                                <option selected value> Selecciona</option>
                                                 <option ng-repeat="value in listValue" value="@{{value.value}}">
                                                     @{{value.value}}</option>
                                             </select>
