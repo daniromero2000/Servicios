@@ -89,7 +89,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $dateNow = strtotime("- 30 day", strtotime($dateNow));
         $dateNow = date('Y-m-d', $dateNow);
         try {
-            $checkExistRequest = $this->model->where('CLIENTE', $identificationNumber)
+            $checkExistRequest = $this->model->with('super')->where('CLIENTE', $identificationNumber)
                 ->orderBy('SOLICITUD', 'desc')->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->get($this->columns)->first();
             if (!is_null($checkExistRequest)) {
                 return $checkExistRequest;

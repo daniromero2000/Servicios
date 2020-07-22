@@ -28,6 +28,7 @@ class CreditBusines extends Model
         'SEGURO',
         'SALDOFIN',
         'FPAGOINI',
+        'FPAGOFIN',
         'CODIGO',
         'ARTICULO',
         'PRECIO',

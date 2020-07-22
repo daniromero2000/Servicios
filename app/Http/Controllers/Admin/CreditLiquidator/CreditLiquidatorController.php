@@ -113,9 +113,12 @@ class CreditLiquidatorController extends Controller
         //     $plans
         // );
 
-        // $dateInitial = Carbon::now();
+        $date        = Carbon::now();
+        $dateInitial = $date->addMonth();
+        $dateInitial = $dateInitial->format('Y-m-d');
+
+        // $dateInitial = $dateInitial->format('d-m-Y');
         // $dateInitial->addMonth();
-        // dd($dateInitial);
         $data = [];
         foreach ($products as $key => $value) {
             $products[$key]['CONSEC']  = $products[$key]['key'] + 1;
@@ -134,6 +137,10 @@ class CreditLiquidatorController extends Controller
             $data->fill(['BONO' => 0]);
             $data->fill(['STATE' => 'A']);
             $data->fill(['PAPELERIA' => 'A']);
+            $data->fill(['FPAGOINI' => $dateInitial]);
+            $dateEnd = $date->addMonth($fees[$key]['PLAZO']);
+            $dateEnd = $dateEnd->format('Y-m-d');
+            $data->fill(['FPAGOFIN' => $dateEnd]);
             $data->fill(['FEC_AUR' => '1900-01-01']);
             $data->fill(['PRIMER_PAGO' => '1900-01-01']);
             foreach ($discounts[$key] as $key2 => $value2) {
@@ -194,7 +201,7 @@ class CreditLiquidatorController extends Controller
     public function addSolicFab(int $id, $city)
     {
         $checkExistRequest = $this->factoryInterface->getFactoryRequestForCustomer($id);
-        if ($checkExistRequest && $checkExistRequest->ESTADO == 1) {
+        if ($checkExistRequest && $checkExistRequest->ESTADO == 1 && empty($checkExistRequest->super->toArray())) {
             return $checkExistRequest;
         }
 
