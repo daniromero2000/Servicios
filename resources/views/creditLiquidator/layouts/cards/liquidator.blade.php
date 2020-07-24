@@ -13,7 +13,7 @@
             </div>
         </nav>
     </div>
-    <div class="card-body">
+    <div class="card-body" ng-if="key != 0">
         <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in liquidator">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel"
                 aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
@@ -29,39 +29,54 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Cantidad </th>
-                                            <th>Lista</th>
-                                            <th>Código</th>
-                                            <th>Seleccion</th>
-                                            <th>Articulo</th>
-                                            <th>Valor</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in tab[0]">
-                                            <td>@{{ item.CANTIDAD }}</td>
-                                            <td>@{{ item.LISTA }}</td>
-                                            <td>@{{ item.CODIGO}}</td>
-                                            <td>@{{ item.SELECCION }}</td>
-                                            <td>@{{ item.ARTICULO }}</td>
-                                            <td>@{{ item.PRECIO | currency }}</td>
-                                            <td class="d-flex">
-                                                <button class="close mx-auto text-danger"
-                                                    ng-click="removeProduct(item)">
-                                                    <span>×</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table text-sm" ng-if="tab[0] != ''" style="min-width: 800px;">
+                                        <thead class="">
+                                            <tr>
+                                                <th>Cantidad </th>
+                                                <th>Lista</th>
+                                                <th>Código</th>
+                                                <th>Seleccion</th>
+                                                <th>Articulo</th>
+                                                <th>Valor</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in tab[0]">
+                                                <td>@{{ item.CANTIDAD }}</td>
+                                                <td>@{{ item.LISTA }}</td>
+                                                <td>@{{ item.CODIGO}}</td>
+                                                <td>@{{ item.SELECCION }}</td>
+                                                <td>@{{ item.ARTICULO }}</td>
+                                                <td>@{{ item.PRECIO | currency }}</td>
+                                                <td class="d-flex">
+                                                    <button class="close mx-auto text-danger"
+                                                        ng-click="removeProduct(item)">
+                                                        <span>×</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div ng-if="tab[0] == ''">
+                                        <div class="alert alert-primary" role="alert">
+                                            No hay productos
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class=" col-4">
+                    <div class="col-12">
+                        <div class="mb-2 text-right" data-toggle="tooltip" data-placement="top"
+                            title="Actualizar liquidación">
+                            <a class="mr-3" href ng-click="refreshLiquidator(key)">
+                                <i class="fas fa-sync-alt rotate"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
@@ -85,39 +100,46 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Tipo</th>
-                                            <th>%</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in tab[1]">
-                                            <td>@{{ item.type }}</td>
-                                            <td>@{{ item.value }}</td>
-                                            <td class="d-flex">
-                                                <button class="close mx-auto text-danger"
-                                                    ng-click="removeDiscount(item)">
-                                                    <span>×</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                <div class="table-responsive">
+                                    <table class="table text-sm" ng-if="tab[1] != ''">
+                                        <thead class="">
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>%</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in tab[1]">
+                                                <td>@{{ item.type }}</td>
+                                                <td>@{{ item.value }}</td>
+                                                <td class="d-flex">
+                                                    <button class="close mx-auto text-danger"
+                                                        ng-click="removeDiscount(item)">
+                                                        <span>×</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                    <div ng-if="tab[1] == ''">
+                                        <div class="alert alert-primary" role="alert">
+                                            No hay descuentos
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="initialFee">Cuota inicial</label>
-                                            <input type="text" class="form-control" id="initialFee"
+                                            <input required type="text" class="form-control" id="initialFee"
                                                 ng-model="liquidator[key][3].CUOTAINI" ng-currency
                                                 aria-describedby="initialFee">
                                         </div>
@@ -125,7 +147,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="totalDiscount">Total Descuentos</label>
-                                            <input readonly type="text" class="form-control" id="totalDiscount"
+                                            <input required readonly type="text" class="form-control" id="totalDiscount"
                                                 aria-describedby="totalDiscount" ng-model="liquidator[key][2] "
                                                 ng-currency>
                                         </div>
@@ -145,7 +167,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="valueFees">Valor cuotas</label>
-                                            <input readonly type="text" class="form-control" id="SALARIO_CONYU"
+                                            <input required readonly type="text" class="form-control" id="SALARIO_CONYU"
                                                 ng-model="liquidator[key][3].VRCUOTA " ng-currency
                                                 aria-describedby="valueFees">
                                         </div>
@@ -153,7 +175,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="timelyPayment">Pago oportuno</label>
-                                            <input readonly type="text" class="form-control"
+                                            <input required readonly type="text" class="form-control"
                                                 ng-model="liquidator[key][3].timelyPayment " ng-currency
                                                 id="timelyPayment" aria-describedby="timelyPayment">
                                         </div>
@@ -162,14 +184,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mx-0">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="handlingFee">Cuota de manejo</label>
-                                            <input readonly type="text" class="form-control" id="handlingFee"
+                                            <input required readonly type="text" class="form-control" id="handlingFee"
                                                 ng-model="liquidator[key][3].MANEJO " ng-currency
                                                 aria-describedby="handlingFee">
                                         </div>
@@ -177,7 +199,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="insurance">Seguro</label>
-                                            <input readonly type="text" class="form-control" id="insurance"
+                                            <input required readonly type="text" class="form-control" id="insurance"
                                                 ng-model="liquidator[key][3].SEGURO " ng-currency
                                                 aria-describedby="insurance">
                                         </div>
@@ -185,7 +207,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="aval">Aval+Iva</label>
-                                            <input readonly type="text" class="form-control"
+                                            <input required readonly type="text" class="form-control"
                                                 ng-model="liquidator[key][4].TOTAL_AVAL " ng-currency id="aval"
                                                 aria-describedby="aval">
                                         </div>
@@ -193,7 +215,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="Subtotal">Subtotal</label>
-                                            <input readonly type="text" class="form-control"
+                                            <input required readonly type="text" class="form-control"
                                                 ng-model="liquidator[key][5].SUBTOTAL " ng-currency id="Subtotal"
                                                 aria-describedby="Subtotal">
                                         </div>
@@ -201,7 +223,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="iva">Iva</label>
-                                            <input readonly type="text" class="form-control"
+                                            <input required readonly type="text" class="form-control"
                                                 ng-model="liquidator[key][5].IVA " ng-currency id="iva"
                                                 aria-describedby="iva">
                                         </div>
@@ -209,7 +231,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="total">Total</label>
-                                            <input readonly type="text" class="form-control"
+                                            <input required readonly type="text" class="form-control"
                                                 ng-model="liquidator[key][5].TOTAL " ng-currency id="total"
                                                 aria-describedby="total">
                                         </div>
@@ -227,7 +249,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="my-modal-title">Title</h5>
+                            <h5 class="modal-title" id="my-modal-title">Agregar Producto</h5>
                             <button class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -235,7 +257,7 @@
                         <div class="modal-body">
                             <form ng-submit="createItemLiquidator()">
                                 <div class=" row pl-0 pr-0">
-                                    <div class="col-12 col-sm-12 form-group">
+                                    <div class="col-12 form-group">
                                         <label for="name">Tipo <span class="text-danger">*</span></label>
                                         <select ng-if="tab[0].length != 0" ng-model="items.COD_PROCESO" id="action"
                                             name="action" class="form-control" required>
@@ -250,35 +272,35 @@
                                             <option value="4">Combo</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 col-sm-4 form-group">
+                                    <div class="col-4 form-group">
                                         <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" ng-model="items.CODIGO"
+                                        <input required type="text" class="form-control" ng-model="items.CODIGO"
                                             ng-blur="getProduct()" id="codeProduct" name="codeProduct">
                                     </div>
-                                    <div class="col-12 col-sm-8 form-group">
+                                    <div class="col-8 form-group">
                                         <label for="nameProduct">Nombre</label>
-                                        <input type="text" ng-model="items.ARTICULO" readonly id="nameProduct"
+                                        <input required type="text" ng-model="items.ARTICULO" readonly id="nameProduct"
                                             name="nameProduct" class="form-control">
                                     </div>
-                                    <div class="col-12 col-sm-4 form-group">
+                                    <div class="col-4 form-group">
                                         <label for="quanty">Cantidad <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" ng-model="items.CANTIDAD" id="quanty"
-                                            name="quanty">
+                                        <input required type="text" class="form-control" ng-model="items.CANTIDAD"
+                                            id="quanty" name="quanty">
                                     </div>
-                                    <div class="col-12 col-sm-8 form-group">
+                                    <div class="col-8 form-group">
                                         <label for="value">Valor</label>
-                                        <input type="text" ng-model="items.PRECIO " ng-currency
+                                        <input required type="text" ng-model="items.PRECIO " ng-currency
                                             ng-disabled="(items.COD_PROCESO == 1) || (items.COD_PROCESO == 4) || (items.COD_PROCESO == 2 && (items.CODIGO == 'IVAV' || items.CODIGO == 'AV10' || items.CODIGO == 'AV12' || items.CODIGO == 'AV15'))"
                                             id="value" name="value" class="form-control">
                                     </div>
-                                    <div class="col-12 col-sm-4 form-group">
+                                    <div class="col-4 form-group">
                                         <label for="list">Lista <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" readonly ng-model="items.LISTA"
+                                        <input required type="text" class="form-control" readonly ng-model="items.LISTA"
                                             id="list" name="list">
                                     </div>
-                                    <div class="col-12 col-sm-4 form-group">
+                                    <div class="col-4 form-group">
                                         <label for="selection">Seleccion <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" ng-model="items.SELECCION"
+                                        <input required type="text" class="form-control" ng-model="items.SELECCION"
                                             id="selection" name="selection">
                                     </div>
                                 </div>
@@ -297,7 +319,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="my-modal-title">Title</h5>
+                            <h5 class="modal-title" id="my-modal-title">Ingresar Producto</h5>
                             <button class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -305,7 +327,7 @@
                         <div class="modal-body">
                             <form ng-submit="createDiscountLiquidator()">
                                 <div class=" row pl-0 pr-0">
-                                    <div class="col-12 col-sm-8">
+                                    <div class="col-8">
                                         <div class="form-group">
                                             <label for="name">Tipo de descuento <span
                                                     class="text-danger">*</span></label>
@@ -317,7 +339,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="name">Descuento % <span class="text-danger">*</span></label>
                                             <select ng-model="discount.value" id="discountValue" name="discountValue"

@@ -201,7 +201,7 @@ class CreditLiquidatorController extends Controller
     public function addSolicFab(int $id, $city)
     {
         $checkExistRequest = $this->factoryInterface->getFactoryRequestForCustomer($id);
-        if ($checkExistRequest && $checkExistRequest->ESTADO == 1 && empty($checkExistRequest->super->toArray())) {
+        if ($checkExistRequest && $checkExistRequest->ESTADO == 1) {
             return $checkExistRequest;
         }
 
@@ -242,15 +242,10 @@ class CreditLiquidatorController extends Controller
             return -1; // Tiene tarjeta
         }
 
-        // $empleado = $this->employeeInterface->checkCustomerIsEmployee($identificationNumber);
-        // if ($empleado == true) {
-        //     return -2; // Es empleado
-        // }
-
         $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
 
         if ($existSolicFab == true) {
-            return -3; // Es empleado
+            return -3; // Tiene Solictud en Sucursal
         }
 
         $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);

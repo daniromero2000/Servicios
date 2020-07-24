@@ -49,18 +49,13 @@
 
 
 
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <label for="months">Meses a Pagar<span class="text-danger">*</span></label>
                                         <select name="months" id="months" class=" form-control " required>
                                             <option value=""> Seleccione</option>
                                             <option value="12"> 12 meses</option>
                                             <option value="15"> 15 meses</option>
                                         </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="discount">% de descuento<span class="text-danger">*</span></label>
-                                        <input type="text" name="discount" id="discount" class="form-control"
-                                            value="{{ old('discount') }}" required>
                                     </div>
                                 </div>
 

@@ -56,7 +56,7 @@
                                     </div>
 
 
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <label for="months_update{{ $product->id }}">Meses a Pagar<span
                                                 class="text-danger">*</span></label>
                                         <select name="months" id="months_update{{ $product->id }}"
@@ -67,13 +67,6 @@
                                             <option value="15" @if ($product->months == 15) selected @endif> 15 meses
                                             </option>
                                         </select>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <label for="discount_update{{ $product->id }}">% de descuento<span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="discount" id="discount_update{{ $product->id }}"
-                                            class="form-control" value="{{ $product->discount }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12 px-0">

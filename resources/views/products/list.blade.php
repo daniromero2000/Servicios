@@ -3,7 +3,7 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 <link rel="stylesheet" href="{{asset('css/admin/main.css')}}">
-
+<link rel="stylesheet" href="{{ asset('css/admin/catalog/app.css')}}">
 @endsection
 @section('content')
 <section class="content">
@@ -32,7 +32,6 @@
                                             <th scope="col">Código</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Marca</th>
-                                            <th scope="col">Descuento</th>
                                             <th scope="col">Estado</th>
                                             <th scope="col">Opciones</th>
                                         </tr>
@@ -44,7 +43,6 @@
                                             <td>{{ $product->sku }}</td>
                                             <td> {{ $product->name }} </td>
                                             <td>{{ $product->brand_id->name }}</td>
-                                            <td>{{ number_format($product->discount, 0, '.', ',') }}%</td>
                                             <td>
                                                 @if ($product->status == 1)
                                                 <span class="badge badge-success">Activo</span>
@@ -164,6 +162,7 @@
 <!-- bs-custom-file-input -->
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('js/admin/products/app.js')}}"></script>
+<script src="{{asset('js/front/homeAppliances/app.js')}}"></script>
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
 <script type="text/javascript">
@@ -256,7 +255,7 @@
     };
 
     // processScroll();
-    addEventListener('click',processScroll);
+    addEventListener('load',processScroll);
 
 }(this);
 </script>

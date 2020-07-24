@@ -36,7 +36,6 @@ class Product extends Model
         'status',
         'months',
         'status',
-        'discount',
         'slug'
     ];
 
