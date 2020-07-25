@@ -635,7 +635,7 @@ class CallCenterLeadController extends Controller
             'leadsOfMonth'        => $leadsOfMonth,
             'digitalChannelLeads' => $list,
             'optionsRoutes'       => (request()->segment(2)),
-            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
+            'headers'             => ['', 'Estado', 'Lead', 'Asesor', 'Sucursal', 'Nombre', 'Celular', 'Ciudad', 'Canal', 'Area', 'Servicio', 'Producto', 'Fecha', 'Acciones'],
             'listCount'           => $listCount,
             'skip'                => $skip,
             'areas'               => $this->LeadAreaInterface->getLeadAreaDigitalChanel(),

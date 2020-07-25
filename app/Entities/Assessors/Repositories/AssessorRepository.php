@@ -189,6 +189,7 @@ class AssessorRepository implements AssessorRepositoryInterface
         try {
             return $this->model->with('user')
                 ->where('SUCURSAL', $subsidiary)
+                ->where('STATE', 'A')
                 ->get();
         } catch (QueryException $e) {
             dd($e);

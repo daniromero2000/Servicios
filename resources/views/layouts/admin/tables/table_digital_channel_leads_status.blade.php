@@ -36,6 +36,9 @@ use Carbon\Carbon;
           {{ $data->leadAssessor['name'] }}
           @endif
         </td>
+        <td>
+            {{ $data->subsidiary_id }}
+          </td>
         <td><a href="{{ route('digitalchannelleads.show', $data->id) }}" data-toggle="tooltip"
             title="Ver Cliente">{{ $data->name}} {{ $data->lastName}} </a></td>
         <td>{{ $data->telephone}}</td>

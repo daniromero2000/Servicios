@@ -180,26 +180,18 @@ class FactoryRequesTurnController extends Controller
                             $analista = '';
                         }
 
-                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FECHA)) {
-                            $fecha_ret = trim($value->turnoTradicional->FECHA);
-                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FECHA)) {
-                            $fecha_ret = trim($value->turnoOportuya->FECHA);
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_RET)) {
+                            $fecha_ret = trim($value->turnoTradicional->FEC_RET);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_RET)) {
+                            $fecha_ret = trim($value->turnoOportuya->FEC_RET);
                         } else {
                             $fecha_ret = '';
                         }
 
-                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_ASIG)) {
-                            $fecha_fin = trim($value->turnoTradicional->FEC_ASIG);
-                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_ASIG)) {
-                            $fecha_fin = trim($value->turnoOportuya->FEC_ASIG);
-                        } else {
-                            $fecha_fin = '';
-                        }
-
-                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_ASIG)) {
-                            $fecha_fin = trim($value->turnoTradicional->FEC_ASIG);
-                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_ASIG)) {
-                            $fecha_fin = trim($value->turnoOportuya->FEC_ASIG);
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_FIN)) {
+                            $fecha_fin = trim($value->turnoTradicional->FEC_FIN);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_FIN)) {
+                            $fecha_fin = trim($value->turnoOportuya->FEC_FIN);
                         } else {
                             $fecha_fin = '';
                         }
@@ -220,10 +212,10 @@ class FactoryRequesTurnController extends Controller
                             $tipoCliente = '';
                         }
 
-                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FECHA)) {
-                            $fechaAsignacion = trim($value->turnoTradicional->FECHA);
-                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FECHA)) {
-                            $fechaAsignacion = trim($value->turnoOportuya->FECHA);
+                        if ($value->turnoTradicional && !empty($value->turnoTradicional->FEC_ASIG)) {
+                            $fechaAsignacion = trim($value->turnoTradicional->FEC_ASIG);
+                        } elseif ($value->turnoOportuya && !empty($value->turnoOportuya->FEC_ASIG)) {
+                            $fechaAsignacion = trim($value->turnoOportuya->FEC_ASIG);
                         } else {
                             $fechaAsignacion = '';
                         }

@@ -6,7 +6,7 @@ interface CifinFinancialArrearRepositoryInterface
 {
   public function checkCustomerHasCifinFinancialArrear($identificationNumber, $lastConsult);
 
-  public function check12MonthsPaymentVector($identificationNumber);
+  public function check12MonthsPaymentVector($identificationNumber, $lastConsult);
 
   public function checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastConsult);
 
