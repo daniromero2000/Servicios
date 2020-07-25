@@ -24,6 +24,79 @@
         height: auto !important;
     }
 </style>
+<style>
+    .overlay {
+        background: #e9e9e9;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0.5;
+    }
+
+    .loader-products {
+        background: #e9e9e9;
+        border: 10px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 10px solid #007bff;
+        border-right: 10px solid #3094ff;
+        border-bottom: 10px solid #007bff;
+        border-left: 10px solid #3094ff;
+        width: 50px;
+        height: 50px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .text-loader {
+        margin: auto;
+        position: absolute;
+        top: 71px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 88px;
+        text-align: center;
+        height: 10px;
+        font-weight: bold;
+    }
+
+    .card .overlay {
+        background: rgba(255, 255, 255, .9) !important;
+    }
+
+    .overlay {
+        opacity: 0.8 !important;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 @endsection
 
 @section('content')
@@ -50,13 +123,11 @@
                         <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 1 }"
                                 ng-click="tabs = 1" data-toggle="tab" role="tab" aria-controls="nav-general">Liquidador
-                                de
-                                crédito</a>
-                            {{-- <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }"
-                            ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Productos</a>
-                        <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 3 }"
-                            ng-click="tabs = 3" data-toggle="tab" role="tab" aria-controls="nav-general">Calcular
-                            precio</a> --}}
+                                de crédito</a>
+                            <a class="nav-item nav-link cursor" id="nav-general-tab" ng-class="{ 'active': tabs == 2 }"
+                                ng-click="tabs = 2" data-toggle="tab" role="tab" aria-controls="nav-general">Buscar
+                                producto</a>
+
                         </div>
                     </nav>
                 </div>
@@ -71,11 +142,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="ml-auto my-auto">
+                            <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
+                                class="btn btn-primary btn-sm">Crear
+                                Liquidacion</button>
+                        </div>
                     </div>
-                    <div class="ml-auto my-auto">
-                        <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
-                            class="btn btn-primary btn-sm">Crear
-                            Liquidacion</button>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
+                            aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
+                            <div class="row">
+                                <div class="col-12">
+                                    Hola
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.liquidator = [];
         $scope.numberOfFees = [];
         $scope.totalDiscount = 0;
+        $scope.loader = false;
         $scope.infoLiquidator = {};
         $scope.typeDiscount = [
             { 'type': 'Por tipo de cliente' },
@@ -76,6 +77,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             $scope.liquidator[$scope.items.key][1].push($scope.discount);
                             $scope.discount = {};
                         }
+                        $scope.sumDiscount($scope.items.key);
                     }
                 }
                 // $scope.sumDiscount($scope.items.key);
@@ -132,10 +134,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '5':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
@@ -143,10 +145,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '6':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
@@ -154,20 +156,20 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '7':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
                     break;
                 case '15':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
@@ -177,10 +179,11 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '17':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.1)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            console.log(j.COD_PROCESO)
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
@@ -190,10 +193,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     break;
                 case '19':
                     cuotaIni = Math.round((precio - parseInt($scope.liquidator[key][2])) * 0.05)
-                    $scope.liquidator[key][0].forEach(e => {
-                        if (e.COD_PROCESO == 2) {
-                            if ((e.CODIGO != 'AV10') || (e.CODIGO != 'AV12') || (e.CODIGO != 'AV15')) {
-                                cuotaIni = cuotaIni + e.PRECIO;
+                    $scope.liquidator[key][0].forEach(j => {
+                        if (j.COD_PROCESO == 2) {
+                            if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
+                                cuotaIni = cuotaIni + j.PRECIO;
                             }
                         }
                     });
@@ -211,7 +214,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.refreshLiquidator = function (key) {
-            $scope.addFee(key);
+            $scope.sumDiscount(key);
             showAlert("success", "La liquidación ha sido actualizada");
         };
 
@@ -284,6 +287,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][5].push({
                 'TOTAL': $scope.liquidator[key][5].TOTAL, 'IVA': $scope.liquidator[key][5].IVA, 'SUBTOTAL': $scope.liquidator[key][5].SUBTOTAL, 'SALDOFIN': $scope.liquidator[key][5].SALDOFIN
             });
+            $scope.loader = false;
 
         };
 
@@ -493,7 +497,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     });
                 }
             }
-            $scope.addFee(key);
+            $scope.loader = true;
+            $timeout(() => {
+                $scope.addFee(key);
+            }, 3500);
         };
 
         $scope.getValidationCustomer = function () {

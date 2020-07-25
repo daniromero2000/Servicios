@@ -14,6 +14,13 @@
         </nav>
     </div>
     <div class="card-body" ng-if="key != 0">
+        <div class="overlay" data-ng-show="loader">
+            <div class="loader-products">
+            </div>
+            <div class="text-loader">
+                Cargando...
+            </div>
+        </div>
         <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in liquidator">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel"
                 aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
