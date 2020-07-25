@@ -56,10 +56,10 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         }
     }
 
-    public function check12MonthsPaymentVector($identificationNumber)
+    public function check12MonthsPaymentVector($identificationNumber, $lastConsult)
     {
         // Negacion, condicion 1, vectores comportamiento
-        $respVectores = $this->checkCustomerHasCifinRealArrear($identificationNumber);
+        $respVectores = $this->checkCustomerHasCifinRealArrear($identificationNumber, $lastConsult);
         $aprobado = false;
         foreach ($respVectores as $key => $payment) {
             $paymentArray = explode('|', $payment->fdcompor);

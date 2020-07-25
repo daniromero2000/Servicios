@@ -756,7 +756,8 @@ class OportuyaV2Controller extends Controller
 		$customerStatusDenied = false;
 		$idDef = "";
 		$customer          = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerScore     = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)->score;
+		$lastCifinScore     = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
+		$customerScore = $lastCifinScore->score;
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 
 		if (empty($customer)) {
@@ -786,8 +787,8 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber)->sum('finvrmora');
-		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber)->sum('rmvrmora');
+		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('finvrmora');
+		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('rmvrmora');
 		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
 		if ($totalValorMora > 100) {
@@ -802,8 +803,8 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
-		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber);
-		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber);
+		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber, $lastCifinScore->scoconsul);
+		$customerFinDoubtful = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastCifinScore->scoconsul);
 		if ($customerRealDoubtful->isNotEmpty()) {
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {
@@ -1026,7 +1027,7 @@ class OportuyaV2Controller extends Controller
 		if (!empty($getDataFosyga)) {
 			if ($getDataFosyga->fuenteFallo == 'SI') {
 				return ['resp' => -6];
-			}elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
+			} elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
 				return ['resp' => -6];
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
@@ -1613,7 +1614,7 @@ class OportuyaV2Controller extends Controller
 			$infoLead     = [];
 			$infoLead     = $this->getInfoLeadCreate($identificationNumber);
 
-			if($policyCredit['resp'] == '-6'){
+			if ($policyCredit['resp'] == '-6') {
 				return ['resp' => -6];
 			}
 
