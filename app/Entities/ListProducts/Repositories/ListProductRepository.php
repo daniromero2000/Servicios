@@ -129,7 +129,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 }
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $promotionPublicPrice             = round(($product['iva_cost'] - ($protectionVat * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));;
-                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
+                $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
                 $traditionalCreditBondPrice       = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
@@ -144,7 +144,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
-                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
+                $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
@@ -158,7 +158,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             } else {
                 $cashPromotion                    = round((($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100)) / (0.96));
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
-                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
+                $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
