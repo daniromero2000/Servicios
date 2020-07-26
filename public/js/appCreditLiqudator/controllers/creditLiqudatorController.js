@@ -350,13 +350,13 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                                 }
                             }
                         });
-                        if ($scope.liquidator[key][2] != '') {
-                            $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            $scope.items.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                        } else {
-                            $scope.items.PRECIO = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
-                            $scope.items.PRECIO_P = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
-                        }
+
+                        $scope.items.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
+                        $scope.items.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
+
+                        $scope.items.PRECIO = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
+                        $scope.items.PRECIO_P = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
+
                     } else if ($scope.items.CODIGO == 'GPG1' || $scope.items.CODIGO == 'GPG2') {
                         $scope.items.PRECIO = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
                         $scope.items.PRECIO_P = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
@@ -414,13 +414,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             item.SELECCION = product.SELECCION;
                             item.ARTICULO = response.data.product[0].item;
                             item.CODIGO = response.data.product[0].sku;
-                            if ($scope.liquidator[key][2] != '') {
-                                item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                                item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
-                            } else {
-                                item.PRECIO = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
-                                item.PRECIO_P = Math.round(precio * (parseInt(response.data.product[0].base_cost) / 100));
-                            }
+                            item.PRECIO = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100))
+                            item.PRECIO_P = Math.round((precio - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI))) * (parseInt(response.data.product[0].base_cost) / 100));
                             item.LISTA = response.data.price.list;
                             item.SOLICITUD = $scope.request.SOLICITUD;
                             $scope.liquidator[key][0].push(item);
