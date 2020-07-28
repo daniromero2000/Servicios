@@ -1,5 +1,6 @@
 
 angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker', 'ng-currency', 'ngSanitize', 'ngTagsInput'])
+
     .controller('creditLiqudatorController', function ($scope, $http, $timeout) {
 
         $scope.tabs = 1;
@@ -13,8 +14,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.discount = {};
         $scope.listValue = [];
         $scope.discounts = [];
+        $scope.code = '';
         $scope.liquidator = [];
         $scope.numberOfFees = [];
+        $scope.productPrices = [];
         $scope.totalDiscount = 0;
         $scope.loader = false;
         $scope.infoLiquidator = {};
@@ -587,9 +590,33 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             });
         };
 
+        $scope.getDataPriceProduct = function () {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getProduct/' + $scope.code
+            }).then(function successCallback(response) {
+                if (response.data != false) {
+                    console.log(response.data)
+                    $scope.productPrices = response.data;
+                    $scope.viewProductPrices = true;
+                }
+            }, function errorCallback(response) {
+
+            });
+        };
+
         $scope.getPlans();
         $scope.getValidationCustomer();
         $scope.listDiscount();
         $scope.listOfFees();
+
+        $scope.printToCart = function (printSectionId) {
+            var innerContents = document.getElementById(printSectionId).innerHTML;
+            var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+            popupWinindow.document.close();
+        }
+
 
     });

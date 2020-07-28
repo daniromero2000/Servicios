@@ -372,4 +372,4 @@
 
 </div>
 
-{{-- @include('creditLiquidator.layouts.cards.amortizacion') --}}
+@include('creditLiquidator.layouts.cards.amortizacion')

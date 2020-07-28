@@ -1,4 +1,4 @@
-<div style="width: 1300px;margin: auto;">
+<div id="printSectionId" style="width: 1300px;margin: auto;">
     <div class="w-100">
         <div
             style="position: relative; display: flex; flex-direction: column; min-width: 0; word-wrap: break-word; background-color: #fff; background-clip: border-box; border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 0.25rem; ">

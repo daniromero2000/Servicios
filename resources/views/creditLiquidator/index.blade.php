@@ -97,6 +97,11 @@
         }
     }
 </style>
+<script src="http://parall.ax/parallax/js/jspdf.js?1391533408"></script>
+<script>
+    document.write('<base href="' + document.location + '" />');
+</script>
+
 @endsection
 
 @section('content')
@@ -114,7 +119,11 @@
             </div>
         </div>
     </div>
+
+
     <div ng-app="creditLiqudatorApp" ng-controller="creditLiqudatorController" ng-cloak onload="cargar()">
+
+        <button ng-click="printToCart('printSectionId')" class="button">Print</button>
         <input type="hidden" id="identification" ng-model="lead.CEDULA" value="{{$id}}">
         <div class="container-fluid">
             <div class="card card-primary card-outline card-outline-tabs">
