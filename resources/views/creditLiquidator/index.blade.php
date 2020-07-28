@@ -153,7 +153,7 @@
                             aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 2 }">
                             <div class="row">
                                 <div class="col-12">
-                                    Hola
+                                    @include('creditLiquidator.layouts.cards.search_product')
                                 </div>
                             </div>
                         </div>

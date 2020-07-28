@@ -1192,7 +1192,7 @@
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
                                 <br>
-                                procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
+                                procede a ingresar los datos del negocio.
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">
@@ -1241,6 +1241,9 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
+                            <a ng-if="estadoCliente == 'TRADICIONAL'"
+                                href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"
+                                class="btn bg-primary buttonBackCardExist">Crear negocio @{{lead.CEDULA}}</a>
                         </div>
                     </div>
                 </div>

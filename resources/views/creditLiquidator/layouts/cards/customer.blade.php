@@ -54,7 +54,7 @@
                         <br>
                         <div class="row">
                             <div class="offset-4 offset-sm-4 col-sm-8 mt-5 offset-ld-1 col-8 text-center">
-                                <p ng-bind-html="messageValidationLead">
+                                <p ng-bind-html="messageValidationLead" style=" padding: 20px; ">
                                 </p>
                                 <div class="text-center">
                                     <a class="btn btn-danger buttonBackCardExist"

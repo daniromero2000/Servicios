@@ -237,7 +237,7 @@ class CreditLiquidatorController extends Controller
 
     public function validationLead($identificationNumber)
     {
-        $existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
+        $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
         if ($existCard == true) {
             return -1; // Tiene tarjeta
         }
