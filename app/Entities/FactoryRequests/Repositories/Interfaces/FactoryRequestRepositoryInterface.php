@@ -10,6 +10,8 @@ interface FactoryRequestRepositoryInterface
 {
   public function addFactoryRequest($data);
 
+  public function updateFactoryRequest($data);
+
   public function findFactoryRequestById(int $id): FactoryRequest;
 
   public function findFactoryRequestByIdFull(int $id): FactoryRequest;

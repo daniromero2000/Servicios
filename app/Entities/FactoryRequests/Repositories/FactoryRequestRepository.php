@@ -44,6 +44,22 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function updateFactoryRequest($data)
+    {
+        // dd($data);
+
+        // $data['FECHASOL']      = date("Y-m-d H:i:s");
+        // $data['FTP']           = 0;
+        // $data['STATE']         = "A";
+        // $data['GRAN_TOTAL']    = 0;
+
+        try {
+            return $this->model->updateOrCreate(['SOLICITUD' => $data['SOLICITUD']], $data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function findFactoryRequestById(int $id): FactoryRequest
     {
         try {

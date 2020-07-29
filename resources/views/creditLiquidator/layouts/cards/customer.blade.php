@@ -90,7 +90,8 @@
                         <img src="https://image.flaticon.com/icons/svg/845/845646.svg" alt=""
                             style=" width: 11%;margin-top: 1%;margin-right: 0%;margin-bottom: 1%;" />
                         <p class="textTnakYouModal">
-                            Liquidación <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                            La liquidación para la solicitud <strong
+                                style="font-size:18px">@{{ request.SOLICITUD }}</strong> fue creada
                             exitosamente,
                             <br>
                             procede en <strong>OPORTUDATA</strong> a terminar el proceso de crédito.

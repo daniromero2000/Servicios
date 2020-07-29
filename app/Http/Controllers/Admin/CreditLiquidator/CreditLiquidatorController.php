@@ -83,12 +83,8 @@ class CreditLiquidatorController extends Controller
         $plans = [];
 
         foreach ($liquidation[0] as $key => $value) {
-            $items += $liquidation[$key];
-            foreach ($items as $key2 => $value2) {
-                $items2[$key2] = $items[$key2];
-            }
+            $items2[$key] = $liquidation[0][$key];
         }
-        // dd($items2[0][2]);
 
         foreach ($items2 as $id => $value) {
             $products[]       = $items2[$id][0][0];
@@ -101,24 +97,10 @@ class CreditLiquidatorController extends Controller
             $fees[]           = $items2[$id][7][0];
             $plans[]          = $items2[$id][8][0];
         }
-
-        // dd(
-        //     $products,
-        //     $discounts,
-        //     $totalDiscounts,
-        //     $aval,
-        //     $total,
-        //     $feeInitial,
-        //     $fees,
-        //     $plans
-        // );
-
         $date        = Carbon::now();
         $dateInitial = $date->addMonth();
         $dateInitial = $dateInitial->format('Y-m-d');
-
-        // $dateInitial = $dateInitial->format('d-m-Y');
-        // $dateInitial->addMonth();
+        $sumTotal = 0;
         $data = [];
         foreach ($products as $key => $value) {
             $products[$key]['CONSEC']  = $products[$key]['key'] + 1;
@@ -134,7 +116,7 @@ class CreditLiquidatorController extends Controller
             $data->fill($fees[$key]);
             $data->fill($plans[$key]);
             $data->fill(['TOT_DCTO' => $totalDiscounts[$key]]);
-            $data->fill(['BONO' => 0]);
+            $data->fill(['BONO' => 1]);
             $data->fill(['STATE' => 'A']);
             $data->fill(['PAPELERIA' => 'A']);
             $data->fill(['FPAGOINI' => $dateInitial]);
@@ -148,8 +130,17 @@ class CreditLiquidatorController extends Controller
                 $data->fill(['DCTO' . $position => $discounts[$key][$key2]['value']]);
             }
             $data->save();
+
+            $sumTotal = $sumTotal + $total[$key]['TOTAL'];
         }
+        $user  = auth()->user()->codeOportudata;
         $super2 = [];
+        $factoryRequest = $liquidation[1][0];
+        $factoryRequest['GRAN_TOTAL'] = $sumTotal;
+        $factoryRequest['id_asesor'] = $user;
+        $factoryRequest['SOLICITUD_WEB']  = 1;
+        $customerFactoryRequest = $this->factoryInterface->updateFactoryRequest($factoryRequest);
+
         foreach ($products2 as $key => $value) {
             foreach ($products2[$key] as $key2 => $value) {
                 $position = $key2 + 1;

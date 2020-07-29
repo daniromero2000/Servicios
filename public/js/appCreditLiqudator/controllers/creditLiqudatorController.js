@@ -41,7 +41,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.addItem = function () {
             var index = [[], [], [], [], [], [], [], [], []];
             $scope.liquidator.push(index);
-
+            console.log($scope.liquidator);
         };
 
         $scope.addProduct = function (key) {

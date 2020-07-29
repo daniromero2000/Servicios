@@ -83,20 +83,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name">Plan <span class="text-danger">*</span></label>
-                                    <select ng-model="liquidator[key][3].COD_PLAN" id="plan" ng-blur="createPlan(key)"
-                                        name="plan" class="form-control " required>
-                                        <option selected value> Selecciona Plan </option>
-                                        <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
-                                            @{{plan.PLAN}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-lg-6 col-xl-4">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between ">
                                 <div>Descuentos</div>
@@ -139,36 +126,114 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="initialFee">Cuota inicial</label>
-                                            <input required type="text" class="form-control" id="initialFee"
-                                                ng-model="liquidator[key][3].CUOTAINI" ng-currency
-                                                aria-describedby="initialFee">
+                                {{-- <div class="row"> --}}
+                                <div class="form-group ">
+                                    <label for="name">Plan <span class="text-danger">*</span></label>
+                                    <select ng-model="liquidator[key][3].COD_PLAN" id="plan" ng-blur="createPlan(key)"
+                                        name="plan" class="form-control " required>
+                                        <option selected value> Selecciona Plan </option>
+                                        <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
+                                            @{{plan.PLAN}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="initialFee">Cuota inicial</label>
+                                    <input required type="text" class="form-control" id="initialFee"
+                                        ng-model="liquidator[key][3].CUOTAINI" ng-currency
+                                        aria-describedby="initialFee">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
+                                    <select ng-model="liquidator[key][3].PLAZO" id="feeInitial" ng-blur="addFee(key)"
+                                        name="feeInitial" class="form-control " required>
+                                        <option selected value> Selecciona una Cuota </option>
+                                        <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
+                                            @{{fees.CUOTA}}</option>
+                                    </select>
+                                </div>
+                                {{-- </div> --}}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-10 col-md-7 col-lg-6 col-xl-4 mx-auto">
+                        <div>
+                            <div class="row mx-0">
+                                <div class="card bg-white w-100">
+                                    <div class="card-header text-muted border-bottom-0">
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="row mx-0">
+                                            <div class="col-12">
+                                                <ul class="ml-4 mb-0 fa-ul text-muted mx-auto"
+                                                    style=" max-width: 280px; padding: 0px 20px;">
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-building"></i></span>
+                                                        Total
+                                                        Descuentos: <b> $
+                                                            @{{liquidator[key][2] | number:0 }}</b>
+                                                    </li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Valor cuotas:
+                                                        <b> $ @{{liquidator[key][3].VRCUOTA | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Pago
+                                                        oportuno:
+                                                        <b> $ @{{liquidator[key][3].timelyPayment | number:0}}</b>
+                                                    </li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Cuota de
+                                                        manejo:
+                                                        <b> $ @{{liquidator[key][3].MANEJO | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Seguro:
+                                                        <b> $ @{{liquidator[key][3].SEGURO | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Aval+Iva:
+                                                        <b> $ @{{liquidator[key][4].TOTAL_AVAL | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Subtotal:
+                                                        <b> $ @{{liquidator[key][5].SUBTOTAL | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Iva:
+                                                        <b> $ @{{liquidator[key][5].IVA | number:0}}</b></li>
+                                                    <li class="mt-2 small d-flex justify-content-between"><span
+                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                        Total:
+                                                        <b> $ @{{liquidator[key][5].TOTAL | number:0}}</b></li>
+                                                </ul>
+                                            </div>
+                                            {{-- <div class="col-5 text-center">
+                                                    <img src="../../dist/img/user1-128x128.jpg" alt=""
+                                                        class="img-circle img-fluid">
+                                                </div> --}}
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="card-footer">
+                                        <div class="text-right">
+                                            <a href="#" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-print"></i> Ver amortización
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-6">
                                         <div class="form-group">
                                             <label for="totalDiscount">Total Descuentos</label>
                                             <input required readonly type="text" class="form-control" id="totalDiscount"
                                                 aria-describedby="totalDiscount" ng-model="liquidator[key][2] "
                                                 ng-currency>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                            <select ng-model="liquidator[key][3].PLAZO" id="feeInitial"
-                                                ng-blur="addFee(key)" name="feeInitial" class="form-control " required>
-                                                <option selected value> Selecciona una Cuota </option>
-                                                <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
-                                                    @{{fees.CUOTA}}</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -186,12 +251,11 @@
                                                 ng-model="liquidator[key][3].timelyPayment " ng-currency
                                                 id="timelyPayment" aria-describedby="timelyPayment">
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mx-0">
@@ -247,7 +311,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -372,4 +436,4 @@
 
 </div>
 
-@include('creditLiquidator.layouts.cards.amortizacion')
+{{-- @include('creditLiquidator.layouts.cards.amortizacion') --}}
