@@ -150,12 +150,13 @@
                                     @include('creditLiquidator.layouts.cards.liquidator')
                                 </div>
                             </div>
+                            <div class="ml-auto my-auto">
+                                <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
+                                    class="btn btn-primary btn-sm">Crear
+                                    Liquidacion</button>
+                            </div>
                         </div>
-                        <div class="ml-auto my-auto">
-                            <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
-                                class="btn btn-primary btn-sm">Crear
-                                Liquidacion</button>
-                        </div>
+
                     </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"

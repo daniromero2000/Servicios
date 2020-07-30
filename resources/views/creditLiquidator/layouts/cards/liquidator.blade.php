@@ -172,44 +172,46 @@
                                                 <ul class="ml-4 mb-0 fa-ul text-muted mx-auto"
                                                     style=" max-width: 280px; padding: 0px 20px;">
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-building"></i></span>
+                                                            class="fa-li"><i class="fas fa-percent"></i></span>
                                                         Total
                                                         Descuentos: <b> $
                                                             @{{liquidator[key][2] | number:0 }}</b>
                                                     </li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i
+                                                                class="fas fa-money-bill-wave-alt"></i></span>
                                                         Valor cuotas:
                                                         <b> $ @{{liquidator[key][3].VRCUOTA | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i
+                                                                class="fas fa-money-bill-wave-alt"></i></span>
                                                         Pago
                                                         oportuno:
                                                         <b> $ @{{liquidator[key][3].timelyPayment | number:0}}</b>
                                                     </li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="far fa-credit-card"></i></span>
                                                         Cuota de
                                                         manejo:
                                                         <b> $ @{{liquidator[key][3].MANEJO | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="fas fa-shield-alt"></i></span>
                                                         Seguro:
                                                         <b> $ @{{liquidator[key][3].SEGURO | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="fas fa-store-alt"></i></span>
                                                         Aval+Iva:
                                                         <b> $ @{{liquidator[key][4].TOTAL_AVAL | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Subtotal:
                                                         <b> $ @{{liquidator[key][5].SUBTOTAL | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Iva:
                                                         <b> $ @{{liquidator[key][5].IVA | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
-                                                            class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                                                            class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Total:
                                                         <b> $ @{{liquidator[key][5].TOTAL | number:0}}</b></li>
                                                 </ul>
