@@ -143,6 +143,7 @@ Route::resource('api/factors', 'Admin\Factors\FactorController');
 Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
 
 Route::resource('products', 'Admin\ProductsController');
+Route::get('api/getProducts/{sku}', 'Admin\Products\ProductController@getProduct');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}', 'Admin\OportuyaV2Controller@encrypt');
 Route::get('api/checkIfExistNum/{cellPhone}/{identificationNumber}', 'Admin\OportuyaV2Controller@checkIfExistNum');

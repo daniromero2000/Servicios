@@ -222,13 +222,13 @@
                                                 </div> --}}
                                         </div>
                                     </div>
-                                    <div class="card-footer">
+                                    {{-- <div class="card-footer">
                                         <div class="text-right">
                                             <a href="#" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-print"></i> Ver amortización
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 {{-- <div class="col-6">
                                         <div class="form-group">
@@ -392,7 +392,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="my-modal-title">Ingresar Producto</h5>
+                            <h5 class="modal-title" id="my-modal-title">Ingresar Descuento</h5>
                             <button class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

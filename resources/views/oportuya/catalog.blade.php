@@ -139,7 +139,7 @@
                         <p class="card-text card-products-old-price mb-0"> <del>${{ number_format($product->price_old)}}
                             </del></p>
                         <p class="card-text card-products-label mb-2">* Precio antes</p>
-                        <p class="card-text card-products-new-price mb-0">${{ number_format($product->desc)}}
+                        <p class="card-text card-products-new-price mb-0">${{ number_format($product->price_new)}}
                         </p>
                         <p class="card-text card-products-label mb-2">* Precio ahora</p>
                         <p class="card-text card-products-text">Llévalo a <b> {{$product->months}}
@@ -155,8 +155,8 @@
                         <a href="/credito-electrodomesticos/catalogo/{{ $product->slug}}/{{$zone}}"
                             class="btn card-products-button btn-primary" style="">Ver
                             más</a>
-                        <a href="/step1?productId={{ $product->id}}" class="btn card-products-button btn-danger">Cotizar
-                            aqui</a>
+                        <a href="/step1?productId={{ $product->id}}"
+                            class="btn card-products-button btn-danger">Solicitar aqui</a>
                     </div>
 
 

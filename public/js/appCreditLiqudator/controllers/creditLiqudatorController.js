@@ -15,6 +15,9 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.listValue = [];
         $scope.discounts = [];
         $scope.code = '';
+        $scope.productImg = [];
+        $scope.viewProductImg = false;
+        $scope.img = [];
         $scope.liquidator = [];
         $scope.numberOfFees = [];
         $scope.productPrices = [];
@@ -219,6 +222,8 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     }
                 }
             });
+
+
             if ($scope.liquidator[key][3].PLAZO != null) {
                 $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
                 $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
@@ -242,6 +247,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 }
 
                 $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': 26.97, 'TASAMORA': 2.01, 'TASANOM': 24.12, 'TASAMAX': 27.18, 'TASA_INT': 2.01 });
+                $scope.getTerms($scope.liquidator[key][3].PLAZO, key);
             }
 
             $scope.liquidator[key][4] = []
@@ -596,9 +602,39 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 url: '/api/liquidator/getProduct/' + $scope.code
             }).then(function successCallback(response) {
                 if (response.data != false) {
-                    console.log(response.data)
                     $scope.productPrices = response.data;
                     $scope.viewProductPrices = true;
+                    $scope.getImgProduct();
+                }
+            }, function errorCallback(response) {
+
+            });
+        };
+
+        $scope.getImgProduct = function () {
+            $http({
+                method: 'GET',
+                url: '/api/getProducts/' + $scope.code
+            }).then(function successCallback(response) {
+                if (response.data != false) {
+                    $scope.productImg = response.data;
+                    $scope.img = response.data.images;
+                    $scope.viewProductImg = true;
+                }
+            }, function errorCallback(response) {
+
+            });
+        };
+
+        $scope.getTerms = function (val, key) {
+            $http({
+                method: 'GET',
+                url: '/api/liquidator/getTerms/' + val
+            }).then(function successCallback(response) {
+                if (response.data != false) {
+                    $scope.liquidator[key][3].FECHA = response.data[0];
+                    $scope.liquidator[key][3].FECHAINI = response.data[1]
+                    $scope.liquidator[key][3].FECHAFIN = response.data[2];
                 }
             }, function errorCallback(response) {
 

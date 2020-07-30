@@ -45,16 +45,18 @@ class CatalogController extends Controller
             $dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
             $productCatalog[$key] = $dataProduct[$key];
             $productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
-            $zone = auth()->user()->Assessor->subsidiary->ZONA;
-            $dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
-            foreach ($dataProduct[$key] as $key2 => $value2) {
-                $productList[$key] = $value2;
+            if (!empty($productListSku[$key]->toArray())) {
+                $zone = auth()->user()->Assessor->subsidiary->ZONA;
+                $dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
+                foreach ($dataProduct[$key] as $key2 => $value2) {
+                    $productList[$key] = $value2;
+                }
+                $products[$key]['price_old'] =  $productList[$key]['normal_public_price'];
+                $products[$key]['price_new'] =  $productList[$key]['promotion_public_price'];
+                $products[$key]['discount'] =  round($productList[$key]['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
+                $products[$key]['pays'] = round($productList[$key]['black_public_price'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+                $products[$key]['desc'] = $productList[$key]['black_public_price'];
             }
-            $products[$key]['price_old'] =  $productList[$key]['normal_public_price'];
-            $products[$key]['price_new'] =  $productList[$key]['promotion_public_price'];
-            $products[$key]['discount'] =  round($productList[$key]['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
-            $products[$key]['pays'] = round($productList[$key]['black_public_price'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
-            $products[$key]['desc'] = $productList[$key]['black_public_price'];
         }
 
         return view('catalogAssessors.catalog', [
@@ -69,18 +71,19 @@ class CatalogController extends Controller
         $dataProduct = $this->productRepo->findProductBySlug($slug);
         $productCatalog = $dataProduct;
         $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
+        $productList = [];
         $zone = auth()->user()->Assessor->subsidiary->ZONA;
-        $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
-        foreach ($dataProduct as $key2 => $value2) {
-            $productList = $value2;
+        if (!empty($productListSku->toArray())) {
+            $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
+            foreach ($dataProduct as $key2 => $value2) {
+                $productList = $value2;
+            }
+            $productCatalog['price_old'] =  $productList['normal_public_price'];
+            $productCatalog['price_new'] =  $productList['promotion_public_price'];
+            $productCatalog['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
+            $productCatalog['pays'] = round($productList['black_public_price'] / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+            $productCatalog['desc'] = $productList['black_public_price'];
         }
-        $desc = "";
-        $pays = "";
-        $desc = $productList['black_public_price'];
-        $priceNew = $productList['promotion_public_price'];
-        $pays = round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
-        $desc = round($desc, 2, PHP_ROUND_HALF_UP);
-        $productCatalog['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
         $images = $productCatalog->images()->get(['src']);
         $imagenes = [];
         $productImages = [];
@@ -93,11 +96,7 @@ class CatalogController extends Controller
         }
         return view('catalogAssessors.product.show', [
             'product'   => $productCatalog,
-            'prices'    => $productList,
-            'pays'      => $pays,
-            'desc'      => $desc,
-            'imagenes'  => $imagenes,
-            'priceNew'  => $priceNew
+            'imagenes'  => $imagenes
         ]);
     }
 }

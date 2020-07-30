@@ -16,12 +16,18 @@
     }
 
     .main-header {
-        min-width: 540px !important;
+        min-width: 440px !important;
     }
 
     .modal-backdrop {
         width: 100% !important;
         height: auto !important;
+    }
+
+    @media(max-width:440px) {
+        .card-body {
+            padding: 1.25rem 10px !important;
+        }
     }
 </style>
 <style>
@@ -105,7 +111,7 @@
 @endsection
 
 @section('content')
-<section style="min-width: 540px">
+<section style="min-width: 440px">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">

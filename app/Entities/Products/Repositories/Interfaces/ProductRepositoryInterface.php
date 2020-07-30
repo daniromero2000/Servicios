@@ -19,6 +19,8 @@ interface ProductRepositoryInterface
 
     public function findProductById(int $id): Product;
 
+    public function findProductBySku(int $id): Product;
+
     public function deleteProduct(Product $product): bool;
 
     public function removeProduct(): bool;

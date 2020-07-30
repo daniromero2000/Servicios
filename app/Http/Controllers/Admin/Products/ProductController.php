@@ -193,4 +193,9 @@ class ProductController extends Controller
             return $validator;
         }
     }
+
+    public function getProduct(int $id)
+    {
+        return $product = $this->productRepo->findProductBySku($id);
+    }
 }

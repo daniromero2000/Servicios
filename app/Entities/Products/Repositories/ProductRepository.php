@@ -65,6 +65,15 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
+    public function findProductBySku(int $id): Product
+    {
+        try {
+            return $this->model->with('images')->where('sku', $id)->first(['id', 'sku', 'description', 'cover']);
+        } catch (ModelNotFoundException $e) {
+            throw new ProductNotFoundException($e);
+        }
+    }
+
     public function deleteProduct(Product $product): bool
     {
         $product->images()->delete();

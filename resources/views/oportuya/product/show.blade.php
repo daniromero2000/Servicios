@@ -148,12 +148,12 @@ array_push($imagenes, [$productImages[$key], $key]);
                         @endif
                         <div class="container-price-deal">
                             <p class="card-text card-products-old-price mb-0"> <del>$
-                                    {{ number_format($prices)}}
+                                    {{ number_format($product->price_old)}}
                                 </del></p>
                             <p class="card-text card-products-label mb-1">Precio antes</p>
 
                             <p class="card-text card-products-new-price mb-0">$
-                                {{ number_format($desc)}}
+                                {{ number_format($product->price_new)}}
                             </p>
                             <p class="card-text card-products-label mb-3">Precio ahora</p>
                         </div>
@@ -171,7 +171,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                         </p>
                         <div class="container-dues-deal-product">
                             <p class="card-text card-products-price">
-                                $ {{ number_format($pays)}}
+                                $ {{ number_format($product->pays)}}
                             </p>
                             <p class="card-text text-dues-deal-product">* Cuota semanal</p>
                             <a href="/step1?productId={{ $product->id}}" class="btn card-products-button btn-primary"

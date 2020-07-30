@@ -1,38 +1,21 @@
 <div class="card">
-    <div class="card-body">
-        <div class="row mt-2">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Nombres</label>
-                    <input class="form-control" id="nombres" readonly validation-pattern="name" ng-model="lead.NOMBRES"
-                        type="text" required />
-                </div>
+    <div class="card-body" style="display: block;">
+        <div class="row" style=" max-width: 600px; margin: auto; ">
+            <div class="col-md-6 text-gray px-2">
+                <b>Solicitud:</b> @{{ request.SOLICITUD }}
             </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Apellidos</label>
-                    <input class="form-control" id="lastName" readonly validation-pattern="name" type="text"
-                        ng-model="lead.APELLIDOS" required />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="">Solicitud</label>
-                    <input class="form-control" id="request" readonly validation-pattern="name" type="text"
-                        ng-model="request.SOLICITUD" required />
-                </div>
-            </div>
-
-            <div style=" position: absolute; top: 12px; right: 18px; ">
-                <div class="ml-auto my-auto">
-                    <button type="button" ng-disabled="!request.SOLICITUD" ng-click="addItem()"
-                        class="btn btn-primary btn-sm">Agregar item</button>
-                </div>
+            <div class="col-md-6 text-gray px-2">
+                <b>Cliente:</b> @{{ lead.NOMBRES }} @{{ lead.APELLIDOS }}
             </div>
         </div>
-
-
     </div>
+    <div style=" position: absolute; top: 12px; right: 18px; ">
+        <div class="ml-auto my-auto">
+            <button type="button" ng-disabled="!request.SOLICITUD" ng-click="addItem()"
+                class="btn btn-primary btn-sm">Agregar item</button>
+        </div>
+    </div>
+
 </div>
 
 <div class="modal modalCardExist fade hide" data-backdrop="static" data-keyboard="false" id="validationCustomer"

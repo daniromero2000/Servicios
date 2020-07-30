@@ -155,7 +155,7 @@ class CreditLiquidatorController extends Controller
                 $super2->save();
             }
         }
-        dd($super2);
+        return response()->json(true);
     }
 
     public function update(Request $request, $id)
@@ -245,5 +245,18 @@ class CreditLiquidatorController extends Controller
         }
 
         return response()->json(true);
+    }
+
+    public function getDate($term)
+    {
+
+        $date        = Carbon::now();
+        $dateFirst   = $date->format('Y-m-d');
+        $dateInitial = $date->addMonth();
+        $dateInitial = $dateInitial->format('Y-m-d');
+        $dateEnd     = $date->addMonth($term);
+        $dateEnd     = $dateEnd->format('Y-m-d');
+
+        return [$dateFirst, $dateInitial, $dateEnd];
     }
 }

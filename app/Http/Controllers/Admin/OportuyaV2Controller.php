@@ -177,17 +177,15 @@ class OportuyaV2Controller extends Controller
 			$dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
 			$productCatalog[$key] = $dataProduct[$key];
 			$productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
-			if ($productListSku[$key]) {
+			if (!empty($productListSku[$key]->toArray())) {
 				$dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
 				foreach ($dataProduct[$key] as $key2 => $value2) {
 					$productList = $value2;
 				}
 				$products[$key]['price_old'] =  $productList['normal_public_price'];
 				$products[$key]['price_new'] =  $productList['black_public_price'];
-				$products[$key]['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
-				$desc[$key] = $productList['black_public_price'];
-				$products[$key]['pays'] = round($desc[$key] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
-				$products[$key]['desc'] = round($desc[$key], 2, PHP_ROUND_HALF_UP);
+				$products[$key]['discount'] =  round($productList['percentage_black_public_price'], 0, PHP_ROUND_HALF_UP);
+				$products[$key]['pays'] = round($products[$key]['price_new'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
 			}
 		}
 		return view('oportuya.catalog', [
@@ -203,16 +201,17 @@ class OportuyaV2Controller extends Controller
 		$dataProduct 	= $this->productRepo->findProductBySlug($slug);
 		$productCatalog = $dataProduct;
 		$productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
-		$dataProduct 	= $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
-		foreach ($dataProduct as $key2 => $value2) {
-			$productList = $value2;
+
+		if (!empty($productListSku->toArray())) {
+			$dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
+			foreach ($dataProduct as $key2 => $value2) {
+				$productList = $value2;
+			}
+			$productCatalog['price_old'] =  $productList['normal_public_price'];
+			$productCatalog['price_new'] =  $productList['black_public_price'];
+			$productCatalog['discount'] =  round($productList['percentage_black_public_price'], 0, PHP_ROUND_HALF_UP);
+			$productCatalog['pays'] = round($productCatalog['price_new'] / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
 		}
-		$desc 			= "";
-		$pays 			= "";
-		$desc 			= $productList['black_public_price'];
-		$priceNew 		= $productList['black_public_price'];
-		$pays	 		= round($desc / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
-		$desc 			= round($desc, 2, PHP_ROUND_HALF_UP);
 		$images 		= $productCatalog->images()->get(['src']);
 		$imagenes 		= [];
 		$productImages 	= [];
@@ -227,11 +226,7 @@ class OportuyaV2Controller extends Controller
 
 		return view('oportuya.product.show', [
 			'product'   => $productCatalog,
-			'prices'    => $productList['normal_public_price'],
-			'pays'      => $pays,
-			'desc'      => $desc,
 			'imagenes'  => $imagenes,
-			'priceNew'  => $priceNew
 		]);
 	}
 
