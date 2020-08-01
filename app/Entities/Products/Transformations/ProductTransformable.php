@@ -29,6 +29,7 @@ trait ProductTransformable
         $prod->quantity = $product->quantity;
         $prod->status = $product->status;
         $prod->months = $product->months;
+        $prod->order = $product->order;
         $brandsRepo = new BrandRepository(new Brand());
         $prod->brand_id = $brandsRepo->findBrandById($product->brand_id);
         return $prod;

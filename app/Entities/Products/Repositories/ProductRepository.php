@@ -28,12 +28,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function listProducts(): Collection
     {
-        return $this->model->all();
+        return $this->model->orderBy('order', 'ASC')->get();
     }
 
     public function listFrontProducts(): Collection
     {
-        return $this->model->where('status', 1)->get();
+        return $this->model->where('status', 1)->orderBy('order', 'ASC')->get();
     }
 
     public function createProduct(array $data): Product

@@ -160,12 +160,8 @@ array_push($imagenes, [$productImages[$key], $key]);
 
                     </div>
                     <div class="relative">
-
                         <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.jpg')}}"
                             src="{{ asset('images/blank.jpg')}}" class="img-card-deal-product lazy">
-
-
-
                         <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
                                 meses </b> con tu tarjeta oportuya:
                         </p>
@@ -178,9 +174,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 style="margin-left: 15px;">Solicitar
                                 aqui</a>
                         </div>
-
                     </div>
-
                     <div class="relative">
                         <ol class="container-ol-steps-deal-product">
                             <li>Diligencia la solicitud de crédito en linea</li>

@@ -36,7 +36,8 @@ class Product extends Model
         'status',
         'months',
         'status',
-        'slug'
+        'slug',
+        'order'
     ];
 
     protected $hidden = [];

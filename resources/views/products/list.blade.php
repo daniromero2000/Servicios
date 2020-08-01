@@ -24,55 +24,46 @@
                         </div>
                         <div class="card-body">
                             @if(!is_null($products))
-                            <div class=" table-responsive p-0 height-table">
 
-                                <table class="table text-center table-hover table-head-fixed">
-                                    <thead class="header-table">
-                                        <tr>
-                                            <th scope="col">Código</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Marca</th>
-                                            <th scope="col">Estado</th>
-                                            <th scope="col">Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="body-table">
-                                        @if ($products)
-                                        @foreach ($products as $product)
-                                        <tr>
-                                            <td>{{ $product->sku }}</td>
-                                            <td> {{ $product->name }} </td>
-                                            <td>{{ $product->brand_id->name }}</td>
-                                            <td>
-                                                @if ($product->status == 1)
-                                                <span class="badge badge-success">Activo</span>
-                                                @else
-                                                <span class="badge badge-danger">Inactivo</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                                    data-target="#deleteProduct{{ $product->id }}">
-                                                </i>
-                                                <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})"
-                                                    data-toggle="modal"
-                                                    data-target="#updateProduct{{ $product->id }}"></i>
-                                                <i class="fas fa-eye cursor" data-toggle="modal"
-                                                    data-target="#showProduct{{ $product->id }}"></i>
-                                            </td>
-                                        </tr>
-
-                                        @include('products.layouts.modals.modal_update_product')
-
-                                        @include('products.layouts.modals.modal_delete_product')
-                                        @include('products.layouts.modals.modal_show_product')
-
-                                        @endforeach
+                            @if ($products)
+                            <ul class="todo-list" data-widget="todo-list">
+                                @foreach ($products as $product)
+                                <li class="data">
+                                    <span class="handle" onchange="updateOrder({{ $product->sku }})">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <input value="{{ $product->order }}" class="order" type="hidden">
+                                    <input value="{{ $product->sku }}" class="sku" type="hidden">
+                                    <td>{{ $product->sku }}</td>
+                                    <td> {{ $product->name }} </td>
+                                    <td>{{ $product->brand_id->name }}</td>
+                                    <td>
+                                        @if ($product->status == 1)
+                                        <span class="badge badge-success">Activo</span>
+                                        @else
+                                        <span class="badge badge-danger">Inactivo</span>
                                         @endif
-                                    </tbody>
-                                </table>
-                                @endif
-                            </div>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-trash-alt cursor" data-toggle="modal"
+                                            data-target="#deleteProduct{{ $product->id }}">
+                                        </i>
+                                        <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})"
+                                            data-toggle="modal" data-target="#updateProduct{{ $product->id }}"></i>
+                                        <i class="fas fa-eye cursor" data-toggle="modal"
+                                            data-target="#showProduct{{ $product->id }}"></i>
+                                    </td>
+                                    @include('products.layouts.modals.modal_update_product')
+                                    @include('products.layouts.modals.modal_delete_product')
+                                    @include('products.layouts.modals.modal_show_product')
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                            {{-- </tbody>
+                                </table> --}}
+                            @endif
                             <div class="text-right mt-2">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"
                                     data-target="#addProduct">Agregar
@@ -258,5 +249,26 @@
     addEventListener('load',processScroll);
 
 }(this);
+</script>
+
+<script>
+    function updateOrder(id){
+        alert(id);
+   }
+  
+</script>
+<script>
+    $('.todo-list').sortable({
+       stop: function () {
+      var data = $('.data').toArray()
+      var update = [];
+      var sku = "";
+      for (let i = 0; i < data.length; i++) {
+        sku = data[i].childNodes[5].value
+        update[i] = [i + 1, sku]
+      }
+      console.log(update)
+    }
+  })
 </script>
 @endsection
