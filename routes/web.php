@@ -140,6 +140,7 @@ Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
 Route::resource('api/factors', 'Admin\Factors\FactorController');
+Route::get('api/listFactors', 'Admin\Factors\FactorController@getFactors');
 Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
 
 Route::resource('products', 'Admin\ProductsController');

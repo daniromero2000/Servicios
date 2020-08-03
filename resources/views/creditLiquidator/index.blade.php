@@ -129,7 +129,7 @@
 
     <div ng-app="creditLiqudatorApp" ng-controller="creditLiqudatorController" ng-cloak onload="cargar()">
 
-        {{-- <button ng-click="printToCart('printSectionId')" class="button">Print</button> --}}
+        <button ng-click="printToCart('printSectionId')" class="button">Print</button>
         <input type="hidden" id="identification" ng-model="lead.CEDULA" value="{{$id}}">
         <div class="container-fluid">
             <div class="card card-primary card-outline card-outline-tabs">

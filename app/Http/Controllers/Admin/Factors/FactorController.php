@@ -24,10 +24,17 @@ class FactorController extends Controller
         return response()->json($factors);
     }
 
+    public function getFactors(Request $request)
+    {
+        $factors = $this->factorInterface->getFactorsForLiquidator();
+        return response()->json($factors);
+    }
+
     public function store(Request $request)
     {
         // dd($request->input());
         $data = $request->input();
+        // dd($data);
         $data['creation_user_id'] = auth()->user()->id;
         // dd($data);
 

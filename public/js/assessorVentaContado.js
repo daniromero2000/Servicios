@@ -612,14 +612,14 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				if (response.data.resp == -5) {
 					$scope.estadoCliente = "SIN COMERCIAL";
 					var request = [];
+					setTimeout(() => {
+						$('#congratulations').modal('show');
+					}, 1800);
 					request.data.message = response.data.resp
 					request.data.file = "";
 					request.data.line = "";
 					request.datos = "";
 					$scope.addError(request, $scope.lead.CEDULA);
-					setTimeout(() => {
-						$('#congratulations').modal('show');
-					}, 1800);
 				}
 			}, function errorCallback(response) {
 				response.url = '/assessor/api/execConsultasLead/' + identificationNumber;

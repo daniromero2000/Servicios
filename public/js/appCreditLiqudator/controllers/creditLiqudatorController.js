@@ -15,6 +15,11 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.listValue = [];
         $scope.discounts = [];
         $scope.code = '';
+        $scope.tasaea = 0;
+        $scope.tasamora = 0;
+        $scope.tasanom = 0;
+        $scope.tasamax = 0;
+        $scope.tasaint = 0;
         $scope.productImg = [];
         $scope.viewProductImg = false;
         $scope.img = [];
@@ -227,11 +232,11 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             if ($scope.liquidator[key][3].PLAZO != null) {
                 $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
                 $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
-                $scope.liquidator[key][3].TASAEA = 26.97;
-                $scope.liquidator[key][3].TASAMORA = 2.01;
-                $scope.liquidator[key][3].TASANOM = 24.12;
-                $scope.liquidator[key][3].TASAMAX = 27.18;
-                $scope.liquidator[key][3].TASA_INT = 2.01;
+                $scope.liquidator[key][3].TASAEA = $scope.tasaea;
+                $scope.liquidator[key][3].TASAMORA = $scope.tasamora;
+                $scope.liquidator[key][3].TASANOM = $scope.tasanom;
+                $scope.liquidator[key][3].TASAMAX = $scope.tasamax;
+                $scope.liquidator[key][3].TASA_INT = $scope.tasaint;
 
                 if ($scope.liquidator[key][3].COD_PLAN != '20') {
                     if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
@@ -307,6 +312,39 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.numberOfFees = response.data
             }, function errorCallback(response) {
                 response.url = '/api/liquidator/getFactors';
+                $scope.addError(response, $scope.lead.CEDULA);
+            });
+        };
+
+        $scope.getFactor = function () {
+            $http({
+                method: 'GET',
+                url: '/api/listFactors'
+            }).then(function successCallback(response) {
+                if (response != false) {
+                    angular.forEach(response.data, function (value) {
+                        switch (response.data.name) {
+                            case 'Tasa':
+                                tasaint = response.data.value
+                                break;
+                            case 'Efectiva anual':
+                                tasaea = response.data.value
+                                break;
+                            case 'Nominal vencida':
+                                tasanom = response.data.value
+                                break;
+                            case 'Mensual vencida':
+                                tasamora = response.data.value
+                                break;
+                            case 'Tasa maxima legal':
+                                tasamax = response.data.value
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }
+            }, function errorCallback(response) {
                 $scope.addError(response, $scope.lead.CEDULA);
             });
         };
@@ -645,6 +683,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         $scope.getValidationCustomer();
         $scope.listDiscount();
         $scope.listOfFees();
+        $scope.getFactor();
 
         $scope.printToCart = function (printSectionId) {
             var innerContents = document.getElementById(printSectionId).innerHTML;
