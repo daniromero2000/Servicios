@@ -25,7 +25,6 @@ use App\Entities\CustomerVerificationCodes\Repositories\Interfaces\CustomerVerif
 use App\Entities\Employees\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Entities\ExtintFinancialCifins\Repositories\Interfaces\ExtintFinancialCifinRepositoryInterface;
 use App\Entities\ExtintRealCifins\Repositories\Interfaces\ExtintRealCifinRepositoryInterface;
-use App\Entities\FactoryRequests\FactoryRequest;
 use App\Entities\FactoryRequests\Repositories\Interfaces\FactoryRequestRepositoryInterface;
 use App\Entities\Subsidiaries\Repositories\Interfaces\SubsidiaryRepositoryInterface;
 use App\Entities\Fosygas\Repositories\Interfaces\FosygaRepositoryInterface;
@@ -51,6 +50,7 @@ use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInt
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -65,7 +65,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $confrontaSelectinterface;
-	private $confrontaResultInterface;
+	private $confrontaResultInterface, $toolInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -102,7 +102,8 @@ class OportuyaV2Controller extends Controller
 		TurnRepositoryInterface $turnRepositoryInterface,
 		AnalisisRepositoryInterface $analisisRepositoryInterface,
 		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
-		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface
+		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
+		ToolRepositoryInterface $toolRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -137,8 +138,9 @@ class OportuyaV2Controller extends Controller
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
 		$this->analisisInterface                 = $analisisRepositoryInterface;
-		$this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
-		$this->confrontaResultInterface = $confrontaResultRepositoryInterface;
+		$this->confrontaSelectinterface          = $confrontaSelectRepositoryInterface;
+		$this->confrontaResultInterface          = $confrontaResultRepositoryInterface;
+		$this->toolInterface = $toolRepositoryInterface;
 	}
 
 	public function index()
@@ -760,26 +762,24 @@ class OportuyaV2Controller extends Controller
 	{
 		// 5	Puntaje y 3.4 Calificacion Score
 		$customerStatusDenied = false;
-		$idDef = "";
-		$customer          = $this->customerInterface->findCustomerById($identificationNumber);
-		$lastCifinScore     = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
-		$customerScore = $lastCifinScore->score;
+		$idDef                = "";
+		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
+
+		if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
+			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
+			$customerScore = $lastCifinScore->score;
+		} else {
+			$this->webServiceInterface->ConsultarInformacionComercial($identificationNumber);
+			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
+			$customerScore = $lastCifinScore->score;
+		}
+
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			if ($customerScore <= -8) {
-				$customer->ESTADO = 'NEGADO';
-				$customer->save();
-				$customerStatusDenied = true;
-				$idDef = '8';
-				$customerIntention->ID_DEF            = '8';
-				$customerIntention->ESTADO_INTENCION  = '1';
-				$customerIntention->PERFIL_CREDITICIO = 'TIPO 7';
-				$customerIntention->save();
-				return ['resp' => "false"];
-			}
+			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
 
 			if ($customerScore >= 1 && $customerScore <= 275) {
 				$customerStatusDenied = true;
@@ -787,7 +787,17 @@ class OportuyaV2Controller extends Controller
 				$perfilCrediticio = 'TIPO D';
 			}
 
-			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
+			if ($perfilCrediticio == 'TIPO 7') {
+				$customer->ESTADO = 'NEGADO';
+				$customer->save();
+				$idDef = '8';
+				$customerIntention->ID_DEF            = '8';
+				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION = 'Negado';
+				$customerIntention->save();
+				return ['resp' => "false"];
+			}
+
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 			$customerIntention->save();
 		}
@@ -1289,42 +1299,14 @@ class OportuyaV2Controller extends Controller
 		return $consultaUbica;
 	}
 
-	public function getFormConfronta($identificationNumber)
-	{
-		$queryForm = DB::connection('oportudata')->select("SELECT cws.consec, preg.secuencia_cuest, preg.secuencia_preg, preg.texto_preg, opcion.secuencia_resp, opcion.texto_resp
-		FROM confronta_ws as cws, confronta_preg as preg, confronta_opcion as opcion
-		WHERE cws.cedula = :cedula AND cws.consec = (SELECT MAX(consec) FROM confronta_ws WHERE cedula = :cedula2 )
-		AND preg.consec = cws.consec AND opcion.consec=cws.consec
-		AND preg.secuencia_preg = opcion.secuencia_preg", ['cedula' => $identificationNumber, 'cedula2' => $identificationNumber]);
-		$form = [];
-		foreach ($queryForm as $value) {
-			$form[$value->secuencia_preg]['secuencia']    = $value->secuencia_preg;
-			$form[$value->secuencia_preg]['pregunta']     = $value->texto_preg;
-			$form[$value->secuencia_preg]['cuestionario'] = $value->secuencia_cuest;
-			$form[$value->secuencia_preg]['cedula']       = $identificationNumber;
-			$form[$value->secuencia_preg]['consec']       = $value->consec;
-			$form[$value->secuencia_preg]['opciones'][]   = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
-		}
-
-		return $form;
-	}
-
 	public function validateFormConfronta(Request $request)
 	{
-		$confronta = $request->confronta;
-		$cedula = "";
-		$cuestionario = "";
-		$consec = "";
-		foreach ($confronta as $pregunta) {
-			$insertSelec = DB::connection('oportudata')->select(
-				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
-			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
-				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
-			);
-			$cedula = $pregunta['cedula'];
-			$cuestionario = $pregunta['cuestionario'];
-			$consec = $pregunta['consec'];
-		}
+		$confronta    = $request->confronta;
+		$cedula       = $confronta[0]['cedula'];
+		$cuestionario = $confronta[0]['cuestionario'];
+		$consec       = $confronta[0]['consec'];
+
+		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
 
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
@@ -1608,7 +1590,7 @@ class OportuyaV2Controller extends Controller
 			if ($resultUbica == 0) {
 				$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
 				if ($confronta == 1) {
-					$form = $this->getFormConfronta($identificationNumber);
+					$form = $this->toolInterface->getFormConfronta($identificationNumber);
 					if (empty($form)) {
 						$estadoSolic = 3;
 					} else {
@@ -1643,7 +1625,7 @@ class OportuyaV2Controller extends Controller
 		if ($resultUbica == 0) {
 			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
-				$form = $this->getFormConfronta($identificationNumber);
+				$form = $this->toolInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
 					$estadoSolic = 3;
 				} else {
