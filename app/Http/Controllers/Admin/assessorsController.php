@@ -1444,12 +1444,8 @@ class assessorsController extends Controller
 		}
 
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
-
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
-
-		$getResultConfronta = DB::connection('oportudata')->select("SELECT `cod_resp`
-		FROM `confronta_result`
-		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
+		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
 
 		if ($getResultConfronta[0]->cod_resp == 1) {
 			$estadoSolic = 19;
@@ -1676,20 +1672,6 @@ class assessorsController extends Controller
 		$this->OportuyaTurnInterface->addOportuyaTurn($turnData);
 
 		return "true";
-	}
-
-	private function execEvaluarConfronta($cedula, $cuestionario)
-	{
-		$dataEvaluar = DB::connection('oportudata')->select("SELECT * FROM `confronta_selec` WHERE `cedula` = :cedula AND `secuencia_cuest` = :cuestionario", ['cedula' => $cedula, 'cuestionario' => $cuestionario]);
-		try {
-			// 2050 Confronta Pruebas
-			$port = config('portsWs.confronta');
-			$ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
-			$result = $ws->evaluarCuestionario(['Code' => 7081, 'question1' => $dataEvaluar[0]->secuencia_preg, 'answer1' => $dataEvaluar[0]->secuencia_resp, 'question2' => $dataEvaluar[1]->secuencia_preg, 'answer2' => $dataEvaluar[1]->secuencia_resp, 'question3' => $dataEvaluar[2]->secuencia_preg, 'answer3' => $dataEvaluar[2]->secuencia_resp, 'question4' => $dataEvaluar[3]->secuencia_preg, 'answer4' => $dataEvaluar[3]->secuencia_resp, 'secuence' => $cuestionario]);  // correcta
-			return 1;
-		} catch (\Throwable $th) {
-			return 0;
-		}
 	}
 
 	public function getFormVentaContado()
