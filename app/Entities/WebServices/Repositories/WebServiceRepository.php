@@ -200,8 +200,6 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             ]);  // correcta
             return 1;
         } catch (\Throwable $th) {
-
-            dd($th);
             return 0;
         }
     }

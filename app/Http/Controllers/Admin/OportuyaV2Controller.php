@@ -1311,7 +1311,6 @@ class OportuyaV2Controller extends Controller
 
 	public function validateFormConfronta(Request $request)
 	{
-		$leadInfo = $request->leadInfo;
 		$confronta = $request->confronta;
 		$cedula = "";
 		$cuestionario = "";
@@ -1330,36 +1329,23 @@ class OportuyaV2Controller extends Controller
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
-
-
-		if ($getResultConfronta[0]->cod_resp == 1) {
-			$estadoSolic = 19;
-		} else {
-			$estadoSolic = 3;
-		}
+		$estadoSolic = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
+		$leadInfo = $request->leadInfo;
 		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
-		if ($customerIntention->TARJETA == 'Tarjeta Black') {
-			$policyCredit = [
-				'quotaApprovedProduct' => 1900000,
-				'quotaApprovedAdvance' => 500000,
-				'resp' => 'true'
-			];
-		} elseif ($customerIntention->TARJETA == 'Tarjeta Gray') {
-			$policyCredit = [
-				'quotaApprovedProduct' => 1600000,
-				'quotaApprovedAdvance' => 200000,
-				'resp' => 'true'
-			];
-		}
-
+		$policyCredit = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
-
 		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
-		$quotaApprovedProduct = $solicCredit['quotaApprovedProduct'];
-		$quotaApprovedAdvance = $solicCredit['quotaApprovedAdvance'];
-		return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $solicCredit['infoLead']->numSolic, 'textPreaprobado' => 2, 'quotaAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
+
+		return response()->json([
+			'data'            => true,
+			'quota'           => $solicCredit['quotaApprovedProduct'],
+			'numSolic'        => $solicCredit['infoLead']->numSolic,
+			'textPreaprobado' => 2,
+			'quotaAdvance' => $solicCredit['quotaApprovedAdvance'],
+			'estado'          => $estado
+		]);
 	}
 
 	public function validateConsultaUbica($identificationNumber)
