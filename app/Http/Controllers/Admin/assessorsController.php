@@ -1414,7 +1414,7 @@ class assessorsController extends Controller
 		$consec       = $confronta[0]['consec'];
 
 		foreach ($confronta as $pregunta) {
-			 DB::connection('oportudata')->select(
+			DB::connection('oportudata')->select(
 				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
 			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
 				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
