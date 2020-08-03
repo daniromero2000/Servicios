@@ -1301,7 +1301,7 @@ class OportuyaV2Controller extends Controller
 
 	public function validateFormConfronta(Request $request)
 	{
-		$confronta    = $request->confronta;
+		$confronta = $request->confronta;
 		foreach ($confronta as $pregunta) {
 			$cedula       = $pregunta['cedula'];
 			$cuestionario = $pregunta['cuestionario'];
@@ -1309,7 +1309,6 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
-
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);

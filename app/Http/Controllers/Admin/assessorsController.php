@@ -1408,19 +1408,14 @@ class assessorsController extends Controller
 
 	public function validateFormConfronta(Request $request)
 	{
-		$confronta    = $request->confronta;
-		$cedula       = $confronta[0]['cedula'];
-		$cuestionario = $confronta[0]['cuestionario'];
-		$consec       = $confronta[0]['consec'];
-
+		$confronta = $request->confronta;
 		foreach ($confronta as $pregunta) {
-			DB::connection('oportudata')->select(
-				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
-			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
-				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
-			);
+			$cedula       = $pregunta['cedula'];
+			$cuestionario = $pregunta['cuestionario'];
+			$consec       = $pregunta['consec'];
 		}
 
+		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
