@@ -1302,9 +1302,11 @@ class OportuyaV2Controller extends Controller
 	public function validateFormConfronta(Request $request)
 	{
 		$confronta    = $request->confronta;
-		$cedula       = $confronta[0]['cedula'];
-		$cuestionario = $confronta[0]['cuestionario'];
-		$consec       = $confronta[0]['consec'];
+		foreach ($confronta as $pregunta) {
+			$cedula       = $pregunta['cedula'];
+			$cuestionario = $pregunta['cuestionario'];
+			$consec       = $pregunta['consec'];
+		}
 
 		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
 
