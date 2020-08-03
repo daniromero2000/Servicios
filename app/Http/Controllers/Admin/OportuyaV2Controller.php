@@ -1331,6 +1331,8 @@ class OportuyaV2Controller extends Controller
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
 
+		dd($getResultConfronta);
+
 		if ($getResultConfronta[0]->cod_resp == 1) {
 			$estadoSolic = 19;
 		} else {
