@@ -91,12 +91,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect('1088019814', '112038534');
-
-        dd($this->webServiceInterface->execEvaluarConfronta('112038534', $dataEvaluar));
-
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
