@@ -9,11 +9,13 @@ use Illuminate\Database\QueryException;
 class ConfrontaResultRepository implements ConfrontaResultRepositoryInterface
 {
     private $columns = [
-        'id',
-        'confron_form_id',
-        'hits',
-        'created_at',
-        'updated_at',
+        'consec',
+        'cedula',
+        'cod_resp',
+        'aciertos',
+        'respuesta',
+        'resultado',
+        'score'
     ];
 
     public function __construct(
@@ -28,6 +30,18 @@ class ConfrontaResultRepository implements ConfrontaResultRepositoryInterface
             return $this->model->get();
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
+        }
+    }
+
+    public function getCustomerConfrontaResult($consec, $cedula)
+    {
+        try {
+            return $this->model
+                ->where('consec', $consec)
+                ->where('cedula', $cedula)
+                ->get($this->columns);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
