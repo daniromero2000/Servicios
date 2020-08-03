@@ -1328,7 +1328,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 
-		dd($consec);
+		dd($cedula);
 
 
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
