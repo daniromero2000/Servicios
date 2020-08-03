@@ -94,7 +94,7 @@ class AdvanceController extends Controller
 
         $dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect('1088019814', '112038534');
 
-        dd($this->webServiceInterface->execEvaluarConfronta('112038534', $dataEvaluar));
+        //dd($this->webServiceInterface->execEvaluarConfronta('112038534', $dataEvaluar));
 
 
         return view('advance.index', [

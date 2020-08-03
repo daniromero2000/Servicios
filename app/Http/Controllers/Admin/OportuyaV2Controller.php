@@ -1352,8 +1352,6 @@ class OportuyaV2Controller extends Controller
 
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 
-		$this->execEvaluarConfronta($cuestionario, $dataEvaluar);
-
 		$getResultConfronta = DB::connection('oportudata')->select("SELECT `cod_resp`
 		FROM `confronta_result`
 		WHERE `consec` = :consec AND `cedula` = :cedula", ['consec' => $consec, 'cedula' => $cedula]);
