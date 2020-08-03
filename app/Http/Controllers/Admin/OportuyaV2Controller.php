@@ -1327,10 +1327,6 @@ class OportuyaV2Controller extends Controller
 			$consec = $pregunta['consec'];
 		}
 
-
-		dd($cedula);
-
-
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
