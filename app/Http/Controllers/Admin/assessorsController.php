@@ -688,22 +688,22 @@ class assessorsController extends Controller
 			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
 			$customerScore = $lastCifinScore->score;
 		} else {
-			$resultado = $this->webServiceInterface->ConsultarInformacionComercial($identificationNumber);
+			$this->webServiceInterface->ConsultarInformacionComercial($identificationNumber);
 			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
 			$customerScore = $lastCifinScore->score;
 		}
-
-		$data = ['CEDULA' => $identificationNumber];
 
 		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
 		if (Auth::user()) {
 			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
 		}
 		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-		$data['ASESOR'] = $assessorCode;
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+
+		$data = ['CEDULA' => $identificationNumber];
+		$data['ASESOR'] = $assessorCode;
 
 		if ($lastIntention == "true") {
 			$customerIntention =	$this->intentionInterface->createIntention($data);
@@ -1289,7 +1289,7 @@ class assessorsController extends Controller
 		if ($resultUbica == 0) {
 			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
-				$form = $this->getFormConfronta($identificationNumber);
+				$form = $this->toolsInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
 					$estadoSolic = 3;
 				} else {
@@ -1406,40 +1406,19 @@ class assessorsController extends Controller
 		return $aprobo;
 	}
 
-	public function getFormConfronta($identificationNumber)
-	{
-		$queryForm = DB::connection('oportudata')->select("SELECT cws.consec, preg.secuencia_cuest, preg.secuencia_preg, preg.texto_preg, opcion.secuencia_resp, opcion.texto_resp
-		FROM confronta_ws as cws, confronta_preg as preg, confronta_opcion as opcion
-		WHERE cws.cedula = :cedula AND cws.consec = (SELECT MAX(consec) FROM confronta_ws WHERE cedula = :cedula2 )
-		AND preg.consec = cws.consec AND opcion.consec=cws.consec
-		AND preg.secuencia_preg = opcion.secuencia_preg", ['cedula' => $identificationNumber, 'cedula2' => $identificationNumber]);
-		$form = [];
-		foreach ($queryForm as $value) {
-			$form[$value->secuencia_preg]['secuencia'] = $value->secuencia_preg;
-			$form[$value->secuencia_preg]['pregunta'] = $value->texto_preg;
-			$form[$value->secuencia_preg]['cuestionario'] = $value->secuencia_cuest;
-			$form[$value->secuencia_preg]['cedula'] = $identificationNumber;
-			$form[$value->secuencia_preg]['consec'] = $value->consec;
-			$form[$value->secuencia_preg]['opciones'][] = ['secuencia_resp' => $value->secuencia_resp, 'opcion' => $value->texto_resp];
-		}
-		return $form;
-	}
-
 	public function validateFormConfronta(Request $request)
 	{
 		$confronta    = $request->confronta;
-		$cedula       = "";
-		$cuestionario = "";
-		$consec       = "";
+		$cedula       = $confronta[0]['cedula'];
+		$cuestionario = $confronta[0]['cuestionario'];
+		$consec       = $confronta[0]['consec'];
+
 		foreach ($confronta as $pregunta) {
-			$insertSelec = DB::connection('oportudata')->select(
+			 DB::connection('oportudata')->select(
 				'INSERT INTO `confronta_selec` (`consec`, `cedula`, `secuencia_cuest`, `secuencia_preg`, `secuencia_resp`)
 			VALUES (:consec, :cedula, :secuencia_cuest, :secuencia_preg, :secuencia_resp)',
 				['consec' => $pregunta['consec'], 'cedula' => $pregunta['cedula'], 'secuencia_cuest' => $pregunta['cuestionario'], 'secuencia_preg' => $pregunta['secuencia'], 'secuencia_resp' => $pregunta['opcion']]
 			);
-			$cedula       = $pregunta['cedula'];
-			$cuestionario = $pregunta['cuestionario'];
-			$consec       = $pregunta['consec'];
 		}
 
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);

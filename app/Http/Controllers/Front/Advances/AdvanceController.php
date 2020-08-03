@@ -20,7 +20,6 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use Illuminate\Support\Carbon;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
@@ -31,12 +30,13 @@ use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
-    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface;
+    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface;
 
 
     public function __construct(
@@ -62,7 +62,8 @@ class AdvanceController extends Controller
         AnalisisRepositoryInterface $analisisRepositoryInterface,
         RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
         ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
-        ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface
+        ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
+        ToolRepositoryInterface $toolRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -87,6 +88,7 @@ class AdvanceController extends Controller
         $this->registraduriaInterface = $registraduriaRepositoryInterface;
         $this->confrontaResultInterface = $confrontaResultRepositoryInterface;
         $this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
+        $this->toolInterface = $toolRepositoryInterface;
     }
 
     public function index()
