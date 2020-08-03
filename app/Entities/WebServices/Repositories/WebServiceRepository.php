@@ -185,7 +185,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             // 2050 Confronta Pruebas
             $port = config('portsWs.confronta');
-            $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl"); //correcta
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
             $result = $ws->evaluarCuestionario([
                 'Code'      => 7081,
                 'question1' => $dataEvaluar[0]->secuencia_preg,
