@@ -45,6 +45,7 @@ use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInt
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
+use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -59,6 +60,7 @@ class assessorsController extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
+	private $confrontaSelectinterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -94,7 +96,8 @@ class assessorsController extends Controller
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
-		AnalisisRepositoryInterface $analisisRepositoryInterface
+		AnalisisRepositoryInterface $analisisRepositoryInterface,
+		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface
 	) {
 		$this->secondCodebtorInterface            = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface                  = $codebtorRepositoryInterface;
@@ -130,6 +133,7 @@ class assessorsController extends Controller
 		$this->datosClienteInterface              = $datosClienteRepositoryInterface;
 		$this->fosygaTempInterface                = $fosygaTempRepositoryInterface;
 		$this->AnalisisInterface                  = $analisisRepositoryInterface;
+		$this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1008,8 +1012,7 @@ class assessorsController extends Controller
 					$customerIntention->save();
 					return ['resp' => "false"];
 				}
-			}
-			else {
+			} else {
 				$fuenteFallo = "true";
 			}
 		} else {
@@ -1440,7 +1443,9 @@ class assessorsController extends Controller
 			$consec       = $pregunta['consec'];
 		}
 
-		$this->execEvaluarConfronta($cedula, $cuestionario);
+		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
+
+		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
 
 		$getResultConfronta = DB::connection('oportudata')->select("SELECT `cod_resp`
 		FROM `confronta_result`
@@ -1574,8 +1579,7 @@ class assessorsController extends Controller
 			$debtor->SOLIC  = $numSolic;
 			$debtor->save();
 			$estadoResult = "PREAPROBADO";
-		}
-		else {
+		} else {
 			$estadoResult  = "PREAPROBADO";
 			$respScoreLead = $customer->latestCifinScore;
 			$scoreLead     = 0;
@@ -1680,7 +1684,7 @@ class assessorsController extends Controller
 		try {
 			// 2050 Confronta Pruebas
 			$port = config('portsWs.confronta');
-			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl"); //correcta
+			$ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
 			$result = $ws->evaluarCuestionario(['Code' => 7081, 'question1' => $dataEvaluar[0]->secuencia_preg, 'answer1' => $dataEvaluar[0]->secuencia_resp, 'question2' => $dataEvaluar[1]->secuencia_preg, 'answer2' => $dataEvaluar[1]->secuencia_resp, 'question3' => $dataEvaluar[2]->secuencia_preg, 'answer3' => $dataEvaluar[2]->secuencia_resp, 'question4' => $dataEvaluar[3]->secuencia_preg, 'answer4' => $dataEvaluar[3]->secuencia_resp, 'secuence' => $cuestionario]);  // correcta
 			return 1;
 		} catch (\Throwable $th) {
