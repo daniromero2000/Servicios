@@ -49,6 +49,7 @@ use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
+use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -62,7 +63,7 @@ class OportuyaV2Controller extends Controller
 	private $cifinScoreInterface, $intentionInterface, $extintFinancialCifinInterface;
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
-	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface;
+	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $confrontaSelectinterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -97,7 +98,8 @@ class OportuyaV2Controller extends Controller
 		OportuyaTurnRepositoryInterface $oportuyaTurnRepositoryInterface,
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		TurnRepositoryInterface $turnRepositoryInterface,
-		AnalisisRepositoryInterface $analisisRepositoryInterface
+		AnalisisRepositoryInterface $analisisRepositoryInterface,
+		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface
 
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
@@ -133,6 +135,7 @@ class OportuyaV2Controller extends Controller
 		$this->OportuyaTurnInterface             = $oportuyaTurnRepositoryInterface;
 		$this->turnInterface                     = $turnRepositoryInterface;
 		$this->analisisInterface                 = $analisisRepositoryInterface;
+		$this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
 	}
 
 	public function index()
@@ -1283,14 +1286,24 @@ class OportuyaV2Controller extends Controller
 		return $consultaUbica;
 	}
 
-	private function execEvaluarConfronta($cedula, $cuestionario)
+	private function execEvaluarConfronta($cuestionario, $dataEvaluar)
 	{
-		$dataEvaluar = DB::connection('oportudata')->select("SELECT * FROM `confronta_selec` WHERE `cedula` = :cedula AND `secuencia_cuest` = :cuestionario", ['cedula' => $cedula, 'cuestionario' => $cuestionario]);
 		try {
 			// 2050 Confronta Pruebas
 			$port = config('portsWs.confronta');
 			$ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl"); //correcta
-			$result = $ws->evaluarCuestionario(['Code' => 7081, 'question1' => $dataEvaluar[0]->secuencia_preg, 'answer1' => $dataEvaluar[0]->secuencia_resp, 'question2' => $dataEvaluar[1]->secuencia_preg, 'answer2' => $dataEvaluar[1]->secuencia_resp, 'question3' => $dataEvaluar[2]->secuencia_preg, 'answer3' => $dataEvaluar[2]->secuencia_resp, 'question4' => $dataEvaluar[3]->secuencia_preg, 'answer4' => $dataEvaluar[3]->secuencia_resp, 'secuence' => $cuestionario]);  // correcta
+			$result = $ws->evaluarCuestionario([
+				'Code'      => 7081,
+				'question1' => $dataEvaluar[0]->secuencia_preg,
+				'answer1'   => $dataEvaluar[0]->secuencia_resp,
+				'question2' => $dataEvaluar[1]->secuencia_preg,
+				'answer2'   => $dataEvaluar[1]->secuencia_resp,
+				'question3' => $dataEvaluar[2]->secuencia_preg,
+				'answer3'   => $dataEvaluar[2]->secuencia_resp,
+				'question4' => $dataEvaluar[3]->secuencia_preg,
+				'answer4'   => $dataEvaluar[3]->secuencia_resp,
+				'secuence'  => $cuestionario
+			]);  // correcta
 			return 1;
 		} catch (\Throwable $th) {
 			return 0;
@@ -1335,7 +1348,11 @@ class OportuyaV2Controller extends Controller
 			$consec = $pregunta['consec'];
 		}
 
-		$this->execEvaluarConfronta($cedula, $cuestionario);
+		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
+
+		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
+
+		$this->execEvaluarConfronta($cuestionario, $dataEvaluar);
 
 		$getResultConfronta = DB::connection('oportudata')->select("SELECT `cod_resp`
 		FROM `confronta_result`

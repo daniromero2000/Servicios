@@ -29,12 +29,14 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
-    private $registraduriaInterface;
+    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface;
 
 
     public function __construct(
@@ -58,7 +60,9 @@ class AdvanceController extends Controller
         AssessorRepositoryInterface $assessorRepositoryInterface,
         FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
         AnalisisRepositoryInterface $analisisRepositoryInterface,
-        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface
+        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
+        ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
+        ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -81,10 +85,18 @@ class AdvanceController extends Controller
         $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
         $this->AnalisisInterface = $analisisRepositoryInterface;
         $this->registraduriaInterface = $registraduriaRepositoryInterface;
+        $this->confrontaResultInterface = $confrontaResultRepositoryInterface;
+        $this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
     }
 
     public function index()
     {
+
+        $dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect('1088019814', '112038534');
+
+        dd($this->webServiceInterface->execEvaluarConfronta('112038534', $dataEvaluar));
+
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
