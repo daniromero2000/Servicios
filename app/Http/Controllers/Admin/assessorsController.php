@@ -49,7 +49,6 @@ use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectReposit
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 
-
 class assessorsController extends Controller
 {
 	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
@@ -1056,7 +1055,13 @@ class assessorsController extends Controller
 					$customerIntention->ID_DEF =  '14';
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente,
+						'fuenteFallo'          => $fuenteFallo
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
@@ -1066,7 +1071,13 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente,
+						'fuenteFallo'          => $fuenteFallo
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
@@ -1076,7 +1087,13 @@ class assessorsController extends Controller
 					$customerIntention->ESTADO_INTENCION  = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente,
+						'fuenteFallo'          => $fuenteFallo
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -1087,7 +1104,13 @@ class assessorsController extends Controller
 						$customerIntention->ESTADO_INTENCION  = '2';
 						$customer->save();
 						$customerIntention->save();
-						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente, 'fuenteFallo' => $fuenteFallo];
+						return [
+							'resp'                 => "true",
+							'quotaApprovedProduct' => $quotaApprovedProduct,
+							'quotaApprovedAdvance' => $quotaApprovedAdvance,
+							'estadoCliente'        => $estadoCliente,
+							'fuenteFallo'          => $fuenteFallo
+						];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
 						$customer->save();
@@ -1530,7 +1553,7 @@ class assessorsController extends Controller
 			$existCard = $this->creditCardInterface->checkCustomerHasCreditCard($identificationNumber);
 			if ($existCard == true) {
 			} else {
-				$tarjeta = $this->creditCardInterface->createCreditCard(
+				$this->creditCardInterface->createCreditCard(
 					$numSolic,
 					$identificationNumber,
 					$policyCredit['quotaApprovedProduct'],
