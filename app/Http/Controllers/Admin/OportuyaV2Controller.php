@@ -343,7 +343,7 @@ class OportuyaV2Controller extends Controller
 			$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 			if ($lastIntention == "true") {
-				$customerIntention =  $this->intentionInterface->createIntention($data);
+				$this->intentionInterface->createIntention($data);
 			}
 
 			return "1";
@@ -471,7 +471,13 @@ class OportuyaV2Controller extends Controller
 			if ($estado == '17' || $estado == 'SIN COMERCIAL' || $estado == '19' || $estado == '3') {
 				$quotaApprovedProduct = $consultasLead['quotaApprovedProduct'];
 				$quotaApprovedAdvance = $consultasLead['quotaApprovedAdvance'];
-				return response()->json(['data' => true, 'quota' => $quotaApprovedProduct, 'numSolic' => $consultasLead['infoLead']->numSolic, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estado' => $estado]);
+				return response()->json([
+					'data'                 => true,
+					'quota'                => $quotaApprovedProduct,
+					'numSolic'             => $consultasLead['infoLead']->numSolic,
+					'quotaApprovedAdvance' => $quotaApprovedAdvance,
+					'estado'               => $estado
+				]);
 			}
 		}
 
@@ -656,7 +662,11 @@ class OportuyaV2Controller extends Controller
 		$resultadoPolitica->RESULTADO = json_encode($result);
 		$resultadoPolitica->save();
 
-		return response()->json(['leads' => $result, 'noExist' => $noExists, 'idResultado' => $resultadoPolitica->ID]);
+		return response()->json([
+			'leads'       => $result,
+			'noExist'     => $noExists,
+			'idResultado' => $resultadoPolitica->ID
+		]);
 	}
 
 	public function downloadResultadoPolitica($id)
@@ -720,9 +730,65 @@ class OportuyaV2Controller extends Controller
 
 			$cont++;
 			if ($cont == 1) {
-				$printExcel[] = ['FECHA Y HORA DEL PROCESO', 'TIPO DE DOCUMENTO', 'CEDULA', 'NOMBRE TERCERO', 'RESULTADO', 'MOTIVO RECHAZO', 'FECHA DE EXPEDICIÓN DOCUMENTO', 'SUCURSAL', 'ZONA RIESGO', 'SCORE', 'CALIFICACION', 'FECHA DE NACIMIENTO', 'EDAD', 'ACTIVIDAD ECONOMICA', 'TIEMPO EN LABOR', 'INGRESOS', 'INGRESOS ADICIONALES', 'TIPO DE CLIENTE', 'DEFINICION CLIENTE', 'CLIENTE TIPO AAA', 'CLIENTE TIPO 5 ESPECIAL', 'HISTORIAL DE CREDITO', 'TARJETA APLICABLE', 'VISITA OCULAR', 'DIRECCION', 'CELULAR', 'TIPO DE VIVIENDA'];
+				$printExcel[] = [
+					'FECHA Y HORA DEL PROCESO',
+					'TIPO DE DOCUMENTO',
+					'CEDULA',
+					'NOMBRE TERCERO',
+					'RESULTADO',
+					'MOTIVO RECHAZO',
+					'FECHA DE EXPEDICIÓN DOCUMENTO',
+					'SUCURSAL',
+					'ZONA RIESGO',
+					'SCORE',
+					'CALIFICACION',
+					'FECHA DE NACIMIENTO',
+					'EDAD',
+					'ACTIVIDAD ECONOMICA',
+					'TIEMPO EN LABOR',
+					'INGRESOS',
+					'INGRESOS ADICIONALES',
+					'TIPO DE CLIENTE',
+					'DEFINICION CLIENTE',
+					'CLIENTE TIPO AAA',
+					'CLIENTE TIPO 5 ESPECIAL',
+					'HISTORIAL DE CREDITO',
+					'TARJETA APLICABLE',
+					'VISITA OCULAR',
+					'DIRECCION',
+					'CELULAR',
+					'TIPO DE VIVIENDA'
+				];
 			}
-			$printExcel[] = [$value->FECHA_INTENCION, $tipoDoc, $value->CEDULA, $value->NOMBRES, $value->ESTADO, $motivoRechazo, $value->FEC_EXP, $value->SUC, $value->ZONA_RIESGO, $value->score, $value->PERFIL_CREDITICIO, $value->FEC_NAC, $value->EDAD, $value->ACTIVIDAD, $tiempoLabor, $ingresos, $value->OTROS_ING, $value->TIPO_CLIENTE, $value->DESCRIPCION . "/" . $value->ID_DEF, ($value->TARJETA == 'Tarjeta Black') ? 'Aplica' : 'No Aplica', ($value->TIPO_5_ESPECIAL == '1') ? 'Aplica' : 'No Aplica', ($value->HISTORIAL_CREDITO == '1') ? 'Aplica' : 'No Aplica', $value->TARJETA, ($value->INSPECCION_OCULAR == '1') ? 'Aplica' : 'No Aplica', $value->DIRECCION, $value->CELULAR, $value->TIPOV];
+			$printExcel[] = [
+				$value->FECHA_INTENCION,
+				$tipoDoc,
+				$value->CEDULA,
+				$value->NOMBRES,
+				$value->ESTADO,
+				$motivoRechazo,
+				$value->FEC_EXP,
+				$value->SUC,
+				$value->ZONA_RIESGO,
+				$value->score,
+				$value->PERFIL_CREDITICIO,
+				$value->FEC_NAC,
+				$value->EDAD,
+				$value->ACTIVIDAD,
+				$tiempoLabor,
+				$ingresos,
+				$value->OTROS_ING,
+				$value->TIPO_CLIENTE,
+				$value->DESCRIPCION . "/" . $value->ID_DEF,
+				($value->TARJETA == 'Tarjeta Black') ? 'Aplica' : 'No Aplica',
+				($value->TIPO_5_ESPECIAL == '1') ? 'Aplica' : 'No Aplica',
+				($value->HISTORIAL_CREDITO == '1') ? 'Aplica' : 'No Aplica',
+				$value->TARJETA,
+				($value->INSPECCION_OCULAR == '1') ? 'Aplica' : 'No Aplica',
+				$value->DIRECCION,
+				$value->CELULAR,
+				$value->TIPOV
+			];
 		}
 		$export = new ExportToExcel($printExcel);
 
@@ -1121,7 +1187,12 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->ID_DEF           = '14';
 					$customerIntention->ESTADO_INTENCION = '2';
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PRESTACIÓN DE SERVICIOS') {
@@ -1131,7 +1202,12 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->ESTADO_INTENCION = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'PENSIONADO') {
@@ -1141,7 +1217,12 @@ class OportuyaV2Controller extends Controller
 					$customerIntention->ESTADO_INTENCION = '2';
 					$customer->save();
 					$customerIntention->save();
-					return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+					return [
+						'resp'                 => "true",
+						'quotaApprovedProduct' => $quotaApprovedProduct,
+						'quotaApprovedAdvance' => $quotaApprovedAdvance,
+						'estadoCliente'        => $estadoCliente
+					];
 				}
 
 				if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
@@ -1152,7 +1233,12 @@ class OportuyaV2Controller extends Controller
 						$customerIntention->ESTADO_INTENCION = '2';
 						$customer->save();
 						$customerIntention->save();
-						return ['resp' => "true", 'quotaApprovedProduct' => $quotaApprovedProduct, 'quotaApprovedAdvance' => $quotaApprovedAdvance, 'estadoCliente' => $estadoCliente];
+						return [
+							'resp'                 => "true",
+							'quotaApprovedProduct' => $quotaApprovedProduct,
+							'quotaApprovedAdvance' => $quotaApprovedAdvance,
+							'estadoCliente'        => $estadoCliente
+						];
 					} else {
 						$customer->ESTADO = 'PREAPROBADO';
 						$customer->save();
@@ -1721,7 +1807,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
-			$tarjeta = $this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
+			$this->creditCardInterface->createCreditCard($numSolic, $identificationNumber, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $infoLead->SUC, $infoLead->TARJETA);
 		} elseif ($estadoSolic == 1) {
 			$estadoResult = "PREAPROBADO";
 		} else {
