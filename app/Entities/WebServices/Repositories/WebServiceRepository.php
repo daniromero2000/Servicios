@@ -3,6 +3,7 @@
 namespace App\Entities\WebServices\Repositories;
 
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
+use SoapClient;
 
 class WebServiceRepository implements WebServiceRepositoryInterface
 {
@@ -55,8 +56,9 @@ class WebServiceRepository implements WebServiceRepositoryInterface
 
         return response()->json(true);
     }
-    
-    public function sendMessageSmsInfobip($code, $date, $celNumber){
+
+    public function sendMessageSmsInfobip($code, $date, $celNumber)
+    {
         $text = 'El token de verificacion para Servicios Oportunidades es ' . $code . " el cual tiene una vigencia de 15 minutos. Aplica TyC http://bit.ly/2HX67DR - " . $date;
         $username = "Lagobo.Distribuciones";
         $password = "Distribuciones2020";
@@ -72,11 +74,11 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => "{\r\n\t\"bulkId\":\"$code\",\r\n\t\"messages\":[\r\n\t\t{\r\n\t\t\t\"from\":\"InfoSMS\",\r\n\t\t\t\"destinations\":[\r\n\t\t\t\t{\r\n\t\t\t\t\t\"to\":\"57$celNumber\",\r\n\t\t\t\t\t\"messageId\":\"$code\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"text\":\"$text\",\r\n\t\t\t\"flash\":false,\r\n\t\t\t\"intermediateReport\":false,\r\n\t\t\t\"validityPeriod\": 15\r\n\t\t}\r\n\t],\r\n\t\"tracking\":{\r\n\t\t\"track\":\"SMS\",\r\n\t\t\"type\":\"MY_CAMPAIGN\"\r\n\t}\r\n}",
             CURLOPT_HTTPHEADER => array(
-              "accept: application/json",
-              "authorization: Basic ". base64_encode($username . ":" . $password),
-              "content-type: application/json"
+                "accept: application/json",
+                "authorization: Basic " . base64_encode($username . ":" . $password),
+                "content-type: application/json"
             ),
-          ));
+        ));
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
@@ -172,6 +174,30 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
             $result = $ws->ConsultarInformacionComercial($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
+
+    public function execEvaluarConfronta($cuestionario, $dataEvaluar)
+    {
+        try {
+            // 2050 Confronta Pruebas
+            $port = config('portsWs.confronta');
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
+            $result = $ws->evaluarCuestionario([
+                'Code'      => 7081,
+                'question1' => $dataEvaluar[0]->secuencia_preg,
+                'answer1'   => $dataEvaluar[0]->secuencia_resp,
+                'question2' => $dataEvaluar[1]->secuencia_preg,
+                'answer2'   => $dataEvaluar[1]->secuencia_resp,
+                'question3' => $dataEvaluar[2]->secuencia_preg,
+                'answer3'   => $dataEvaluar[2]->secuencia_resp,
+                'question4' => $dataEvaluar[3]->secuencia_preg,
+                'answer4'   => $dataEvaluar[3]->secuencia_resp,
+                'secuence'  => $cuestionario
+            ]);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entities\ConfrontaResults;
+namespace App\Entities\ConfrontaSelects;
 
 use App\Entities\Customers\Customer;
 use Illuminate\Database\Eloquent\Model;
 
-class ConfrontaResult extends Model
+class ConfrontaSelect extends Model
 {
-    protected $table = 'confronta_result';
+    protected $table = 'confronta_selec';
 
     protected $connection = 'oportudata';
 
@@ -18,11 +18,9 @@ class ConfrontaResult extends Model
     protected $fillable = [
         'consec',
         'cedula',
-        'cod_resp',
-        'aciertos',
-        'respuesta',
-        'resultado',
-        'score'
+        'secuencia_cuest',
+        'secuencia_preg',
+        'secuencia_resp',
     ];
 
     public function customer()

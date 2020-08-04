@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 //libranza routes
 Route::resource('libranzaV2', 'Admin\LibranzaV2Controller');
 
