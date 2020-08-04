@@ -99,6 +99,21 @@ class AdvanceController extends Controller
 
     public function index()
     {
+
+        $telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec(3102710189, 1250);
+
+        if ($telConsultaUbica->isNotEmpty()) {
+
+            dd('entre');
+            $aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+        } else {
+            dd('no entre');
+            $aprobo = 0;
+        }
+
+
+
+        dd($telConsultaUbica);
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
