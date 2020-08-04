@@ -1319,7 +1319,7 @@ class OportuyaV2Controller extends Controller
 		$consec = $customer->lastUbicaConsultation->consec;
 		$telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
 
-		if (!empty($telConsultaUbica)) {
+		if ($telConsultaUbica->isNotEmpty()) {
 			$aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
 			$aprobo = 0;
@@ -1343,7 +1343,7 @@ class OportuyaV2Controller extends Controller
 			// Validacion Correo
 			if ($customer->EMAIL != '') {
 				$emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
-				if (!empty($emailConsultaUbica)) {
+				if ($emailConsultaUbica->isNotEmpty()) {
 					$aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
 				}
 			} else {
