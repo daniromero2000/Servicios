@@ -52,6 +52,7 @@ use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectReposit
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 
 
 class OportuyaV2Controller extends Controller
@@ -67,7 +68,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $confrontaSelectinterface;
-	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface;
+	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -106,7 +107,8 @@ class OportuyaV2Controller extends Controller
 		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
 		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
 		ToolRepositoryInterface $toolRepositoryInterface,
-		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface
+		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
+		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -143,8 +145,9 @@ class OportuyaV2Controller extends Controller
 		$this->analisisInterface                 = $analisisRepositoryInterface;
 		$this->confrontaSelectinterface          = $confrontaSelectRepositoryInterface;
 		$this->confrontaResultInterface          = $confrontaResultRepositoryInterface;
-		$this->toolInterface = $toolRepositoryInterface;
-		$this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
+		$this->toolInterface                     = $toolRepositoryInterface;
+		$this->ubicaMailInterface                = $ubicaEmailRepositoryInterface;
+		$this->ubicaCellPhoneInterfac            = $ubicaCellPhoneRepositoryInterface;
 	}
 
 	public function index()
