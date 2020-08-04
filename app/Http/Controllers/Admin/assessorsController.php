@@ -46,6 +46,8 @@ use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterfa
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+
 
 class assessorsController extends Controller
 {
@@ -60,7 +62,7 @@ class assessorsController extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
-	private $confrontaSelectinterface;
+	private $confrontaSelectinterface, $ubicaMailInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -97,7 +99,8 @@ class assessorsController extends Controller
 		DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
 		FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
 		AnalisisRepositoryInterface $analisisRepositoryInterface,
-		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface
+		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
+		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface
 	) {
 		$this->secondCodebtorInterface            = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface                  = $codebtorRepositoryInterface;
@@ -134,6 +137,7 @@ class assessorsController extends Controller
 		$this->fosygaTempInterface                = $fosygaTempRepositoryInterface;
 		$this->AnalisisInterface                  = $analisisRepositoryInterface;
 		$this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
+		$this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -1361,17 +1365,18 @@ class assessorsController extends Controller
 
 	public function validateConsultaUbica($identificationNumber)
 	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerUbicaConsultation = $customer->lastUbicaConsultation;
-		$consec = $customerUbicaConsultation->consec;
-		$aprobo = 0;
-		$celLead = 0;
-		$customerPhone =  $customer->checkedPhone;
+		$customer      = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerPhone = $customer->checkedPhone;
+		$celLead       = 0;
+
 		if (!empty($customerPhone)) {
 			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
 		}
 
-		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
+		$aprobo = 0;
+		$consec = $customer->lastUbicaConsultation->consec;
+		$telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
+
 		if (!empty($telConsultaUbica)) {
 			$aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
 		} else {
@@ -1395,7 +1400,7 @@ class assessorsController extends Controller
 		if ($aprobo == 0) {
 			// Validacion Correo
 			if ($customer->EMAIL != '') {
-				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $customer->EMAIL]);
+				$emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
 				if (!empty($emailConsultaUbica)) {
 					$aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
 				}
@@ -1418,15 +1423,15 @@ class assessorsController extends Controller
 		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
+
+		$customerIntention  = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
+		$policyCredit       = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
-		$estadoSolic = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
-		$leadInfo     = $request->leadInfo;
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
+		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
-		$policyCredit = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
+		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente, $customerIntention->id);
-		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 
 		return response()->json([
 			'data'            => true,
@@ -1434,7 +1439,7 @@ class assessorsController extends Controller
 			'numSolic'        => $solicCredit['infoLead']->numSolic,
 			'textPreaprobado' => 2,
 			'quotaAdvance'    => $solicCredit['quotaApprovedAdvance'],
-			'estado'          => $estado
+			'estado'          => ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO"
 		]);
 	}
 
@@ -1490,6 +1495,7 @@ class assessorsController extends Controller
 		$this->webServiceInterface->execMigrateCustomer($identificationNumber);
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
+
 		if (!empty($data)) {
 			$data['identificationNumber'] = $identificationNumber;
 			$data['numSolic']             = $numSolic;

@@ -51,6 +51,8 @@ use App\Entities\Turnos\Repositories\Interfaces\TurnRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+
 
 class OportuyaV2Controller extends Controller
 {
@@ -65,7 +67,7 @@ class OportuyaV2Controller extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $cifinBasicDataInterface;
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $confrontaSelectinterface;
-	private $confrontaResultInterface, $toolInterface;
+	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -103,7 +105,8 @@ class OportuyaV2Controller extends Controller
 		AnalisisRepositoryInterface $analisisRepositoryInterface,
 		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
 		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
-		ToolRepositoryInterface $toolRepositoryInterface
+		ToolRepositoryInterface $toolRepositoryInterface,
+		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -141,6 +144,7 @@ class OportuyaV2Controller extends Controller
 		$this->confrontaSelectinterface          = $confrontaSelectRepositoryInterface;
 		$this->confrontaResultInterface          = $confrontaResultRepositoryInterface;
 		$this->toolInterface = $toolRepositoryInterface;
+		$this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
 	}
 
 	public function index()
@@ -1295,8 +1299,55 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$consultaUbica = 1;
 		}
-
 		return $consultaUbica;
+	}
+
+	public function validateConsultaUbica($identificationNumber)
+	{
+		$customer      = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerPhone = $customer->checkedPhone;
+		$celLead       = 0;
+
+		if (!empty($customerPhone)) {
+			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
+		}
+
+		$aprobo = 0;
+		$consec = $customer->lastUbicaConsultation->consec;
+		$telConsultaUbica = $this->ubicaCellPhoneInterfac->getUbicaCellPhoneByConsec($celLead, $consec);
+
+		if (!empty($telConsultaUbica)) {
+			$aprobo = $this->ubicaInterface->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
+		} else {
+			$aprobo = 0;
+		}
+
+		if ($aprobo == 0) {
+			// Validacion Telefono empresarial
+			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
+				if (!empty($telEmpConsultaUbica)) {
+					$aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
+				} else {
+					$aprobo = 0;
+				}
+			} else {
+				$aprobo = 0;
+			}
+		}
+
+		if ($aprobo == 0) {
+			// Validacion Correo
+			if ($customer->EMAIL != '') {
+				$emailConsultaUbica = $this->ubicaMailInterface->getUbicaEmailByConsec($customer->EMAIL, $consec);
+				if (!empty($emailConsultaUbica)) {
+					$aprobo = $this->ubicaInterface->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
+				}
+			} else {
+				$aprobo = 0;
+			}
+		}
+		return $aprobo;
 	}
 
 	public function validateFormConfronta(Request $request)
@@ -1311,89 +1362,24 @@ class OportuyaV2Controller extends Controller
 		$this->confrontaSelectinterface->insertCustomerConfronta($confronta);
 		$dataEvaluar = $this->confrontaSelectinterface->getAllConfrontaSelect($cedula, $cuestionario);
 		$this->webServiceInterface->execEvaluarConfronta($cuestionario, $dataEvaluar);
+
+		$customerIntention  = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
+		$policyCredit       = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
 		$getResultConfronta = $this->confrontaResultInterface->getCustomerConfrontaResult($consec, $cedula);
-		$estadoSolic = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
-		$leadInfo = $request->leadInfo;
-		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
+		$estadoSolic        = $this->intentionInterface->getConfrontaIntentionStatus($getResultConfronta[0]->cod_resp);
+		$leadInfo           = $request->leadInfo;
 		$leadInfo['identificationNumber'] = (isset($leadInfo['identificationNumber'])) ? $leadInfo['identificationNumber'] : $leadInfo['CEDULA'];
-		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($cedula);
-		$policyCredit = $this->intentionInterface->defineConfrontaCardValues($customerIntention->TARJETA);
+		$dataDatosCliente = ['NOM_REFPER' => $leadInfo['NOM_REFPER'], 'TEL_REFPER' => $leadInfo['TEL_REFPER'], 'NOM_REFFAM' => $leadInfo['NOM_REFFAM'], 'TEL_REFFAM' => $leadInfo['TEL_REFFAM']];
 		$solicCredit = $this->addSolicCredit($leadInfo['identificationNumber'], $policyCredit, $estadoSolic, "PASOAPASO", $dataDatosCliente);
-		$estado = ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO";
 
 		return response()->json([
 			'data'            => true,
 			'quota'           => $solicCredit['quotaApprovedProduct'],
 			'numSolic'        => $solicCredit['infoLead']->numSolic,
 			'textPreaprobado' => 2,
-			'quotaAdvance' => $solicCredit['quotaApprovedAdvance'],
-			'estado'          => $estado
+			'quotaAdvance'    => $solicCredit['quotaApprovedAdvance'],
+			'estado'          => ($estadoSolic == 19) ? "APROBADO" : "PREAPROBADO"
 		]);
-	}
-
-	public function validateConsultaUbica($identificationNumber)
-	{
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerUbicaConsultation = $customer->lastUbicaConsultation;
-		$consec = $customerUbicaConsultation->consec;
-		$aprobo = 0;
-		$celLead = 0;
-
-		$customerPhone =  $customer->checkedPhone;
-		if (!empty($customerPhone)) {
-			$celLead =	$customerPhone =  $customer->checkedPhone->NUM;
-		}
-
-		$telConsultaUbica = DB::connection('oportudata')->select("SELECT `ubicelular`, `ubiprimerrep` FROM `ubica_celular` WHERE `ubicelular` = :celular AND `ubiconsul` = :consec ", ['celular' => $celLead, 'consec' => $consec]);
-		if (!empty($telConsultaUbica)) {
-			$aprobo = $this->validateDateUbica($telConsultaUbica[0]->ubiprimerrep);
-		} else {
-			$aprobo = 0;
-		}
-
-		if ($aprobo == 0) {
-			// Validacion Telefono empresarial
-			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
-				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
-				if (!empty($telEmpConsultaUbica)) {
-					$aprobo = $this->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
-				} else {
-					$aprobo = 0;
-				}
-			} else {
-				$aprobo = 0;
-			}
-		}
-
-		if ($aprobo == 0) {
-			// Validacion Correo
-			if ($customer->EMAIL != '') {
-				$emailConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_mail` WHERE `ubiconsul` = :consec AND `ubicorreo` = :correo ", ['consec' => $consec, 'correo' => $customer->EMAIL]);
-				if (!empty($emailConsultaUbica)) {
-					$aprobo = $this->validateDateUbica($emailConsultaUbica[0]->ubiprimerrep);
-				}
-			} else {
-				$aprobo = 0;
-			}
-		}
-		return $aprobo;
-	}
-
-	private function validateDateUbica($fecha)
-	{
-		$fechaTelConsultaUbica = explode("/", $fecha);
-		$fechaTelConsultaUbica = "20" . $fechaTelConsultaUbica[2] . "-" . $fechaTelConsultaUbica[1] . "-" . $fechaTelConsultaUbica[0];
-		$fechaTelConsultaUbica = strtotime($fechaTelConsultaUbica);
-		$dateNow = date('Y-m-d');
-		$dateNew = strtotime("- 12 month", strtotime($dateNow));
-		$dateNew = date('Y-m-d', $dateNew);
-		if ($fechaTelConsultaUbica < strtotime($dateNew)) {
-			$aprobo = 1;
-		} else {
-			$aprobo = 0;
-		}
-
-		return $aprobo;
 	}
 
 	public function execConsultasleadAsesores($identificationNumber)
@@ -1697,6 +1683,7 @@ class OportuyaV2Controller extends Controller
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
 		$factoryRequest = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic);
 		$numSolic = $factoryRequest->SOLICITUD;
+
 		if (!empty($data)) {
 			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,

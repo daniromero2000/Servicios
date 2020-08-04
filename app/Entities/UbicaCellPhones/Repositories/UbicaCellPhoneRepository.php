@@ -25,14 +25,15 @@ class UbicaCellPhoneRepository implements UbicaCellPhoneRepositoryInterface
         }
     }
 
-    public function getCellPhones($customerCellPhone){
-		try {
-			return  $this->model->whereNotIn('ubicelular',$customerCellPhone)->groupBy('ubicelular')->orderByRaw("RAND()")->limit(4)->get(['ubicelular']);
-		} catch (QueryException $e) {
-			dd($e);
-			//throw $th;
-		}
-	}
+    public function getCellPhones($customerCellPhone)
+    {
+        try {
+            return  $this->model->whereNotIn('ubicelular', $customerCellPhone)->groupBy('ubicelular')->orderByRaw("RAND()")->limit(4)->get(['ubicelular']);
+        } catch (QueryException $e) {
+            dd($e);
+            //throw $th;
+        }
+    }
 
     public function validateDateConsultaUbicaCellPhone($identificationNumber, $daysToIncrement)
     {
@@ -126,5 +127,16 @@ class UbicaCellPhoneRepository implements UbicaCellPhoneRepositoryInterface
         }
 
         return $coincide;
+    }
+
+    public function getUbicaCellPhoneByConsec($cellPhone, $consec)
+    {
+        try {
+            return $this->model
+                ->where('ubicelular', $cellPhone)
+                ->where('ubiconsul', $consec)->get(['ubicelular', 'ubiprimerrep']);
+        } catch (QueryException $e) {
+            dd($e);
+        }
     }
 }

@@ -31,13 +31,15 @@ use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryI
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
-    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface;
-
+    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
+    private $ubicaMailInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -63,7 +65,9 @@ class AdvanceController extends Controller
         RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
         ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
         ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
-        ToolRepositoryInterface $toolRepositoryInterface
+        ToolRepositoryInterface $toolRepositoryInterface,
+        UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
+        UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -89,6 +93,8 @@ class AdvanceController extends Controller
         $this->confrontaResultInterface = $confrontaResultRepositoryInterface;
         $this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
         $this->toolInterface = $toolRepositoryInterface;
+        $this->ubicaCellPhoneInterfac = $ubicaCellPhoneRepositoryInterface;
+        $this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
     }
 
     public function index()
