@@ -158,11 +158,18 @@ use App\Entities\ConfrontaResults\Repositories\ConfrontaResultRepository;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\UbicaEmailRepository;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            UbicaEmailRepositoryInterface::class,
+            UbicaEmailRepository::class
+        );
+
         $this->app->bind(
             ConfrontaSelectRepositoryInterface::class,
             ConfrontaSelectRepository::class
