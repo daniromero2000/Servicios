@@ -64,14 +64,14 @@ class ListProductRepository implements ListProductRepositoryInterface
         }
     }
 
-    // public function findListProductBySku($sku)
-    // {
-    //     try {
-    //         return $this->model->where('sku', $sku)->get();
-    //     } catch (QueryException $e) {
-    //         abort(503, $e->getMessage());
-    //     }
-    // }
+    public function findListProductBySku($sku)
+    {
+        try {
+            return $this->model->where('sku', $sku)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 
 
     public function updateListProduct($data)
@@ -143,7 +143,6 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
             } elseif ($productList['zone'] == 'BAJA') {
-                // dd($productList);
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
@@ -226,7 +225,6 @@ class ListProductRepository implements ListProductRepositoryInterface
         $list = $this->productListInterface->getCurrentProductListsForZone($zone);
         $listPrices = $this->getPriceProductForAllCurrentList($product_id);
         $data[$list[0]->name] = $listPrices[$list[0]->name];
-
         return $data;
     }
 

@@ -370,7 +370,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         if (response.data.price.percentage_promotion_public_price != '0') {
                             $scope.discount.key = $scope.items.key
                             $scope.discount.type = 'Por lista';
-                            $scope.discount.value = response.data.price.percentage_promotion_public_price;
+                            $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
                         }
                         $scope.items.PRECIO = response.data.price.normal_public_price;
                     }
