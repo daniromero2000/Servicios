@@ -46,6 +46,7 @@ use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterfa
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 
@@ -62,7 +63,7 @@ class assessorsController extends Controller
 	private $UpToDateRealCifinInterface, $extinctRealCifinInterface, $datosClienteInterface;
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
-	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
+	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac, $confrontaResultInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -101,7 +102,8 @@ class assessorsController extends Controller
 		AnalisisRepositoryInterface $analisisRepositoryInterface,
 		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
-		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface
+		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
+		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -140,6 +142,7 @@ class assessorsController extends Controller
 		$this->confrontaSelectinterface        = $confrontaSelectRepositoryInterface;
 		$this->ubicaMailInterface              = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac          = $ubicaCellPhoneRepositoryInterface;
+		$this->confrontaResultInterface = $confrontaResultRepositoryInterface;
 		$this->middleware('auth');
 	}
 
