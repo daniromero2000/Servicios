@@ -611,7 +611,7 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 
 				if (response.data.resp == -5) {
 					$scope.estadoCliente = "SIN COMERCIAL";
-					var request = [];
+					var request = {};
 					setTimeout(() => {
 						$('#congratulations').modal('show');
 					}, 1800);

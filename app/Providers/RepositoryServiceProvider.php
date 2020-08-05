@@ -156,6 +156,12 @@ use App\Entities\FactorsOportudata\Repositories\FactorsOportudataRepository;
 use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
 use App\Entities\Plans\Repositories\PlanRepository;
 use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
+use App\Entities\ConfrontaResults\Repositories\ConfrontaResultRepository;
+use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
+use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\UbicaEmailRepository;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -164,6 +170,21 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PlanRepositoryInterface::class,
             PlanRepository::class
+        );
+
+        $this->app->bind(
+            UbicaEmailRepositoryInterface::class,
+            UbicaEmailRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontaSelectRepositoryInterface::class,
+            ConfrontaSelectRepository::class
+        );
+
+        $this->app->bind(
+            ConfrontaResultRepositoryInterface::class,
+            ConfrontaResultRepository::class
         );
 
         $this->app->bind(

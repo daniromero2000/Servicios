@@ -13,4 +13,6 @@ interface UbicaCellPhoneRepositoryInterface
     public function validateConsultaUbicaCellPhone($identificationNumber, $names, $lastName, $dateExpedition);
 
     public function validateDateConsultaUbicaCellPhone($identificationNumber, $daysToIncrement);
+
+    public function getUbicaCellPhoneByConsec($cellPhone, $consec);
 }

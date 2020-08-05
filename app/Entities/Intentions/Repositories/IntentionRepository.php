@@ -477,4 +477,30 @@ class IntentionRepository implements IntentionRepositoryInterface
             }
         }
     }
+
+    public function getConfrontaIntentionStatus($resultConfronta)
+    {
+        if ($resultConfronta == 1) {
+            return 19;
+        } else {
+            return 3;
+        }
+    }
+
+    public function defineConfrontaCardValues($tarjeta)
+    {
+        if ($tarjeta == 'Tarjeta Black') {
+            return $policyCredit = [
+                'quotaApprovedProduct' => 1900000,
+                'quotaApprovedAdvance' => 500000,
+                'resp' => 'true'
+            ];
+        } elseif ($tarjeta == 'Tarjeta Gray') {
+            return  $policyCredit = [
+                'quotaApprovedProduct' => 1600000,
+                'quotaApprovedAdvance' => 200000,
+                'resp' => 'true'
+            ];
+        }
+    }
 }

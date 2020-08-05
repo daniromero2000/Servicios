@@ -20,4 +20,6 @@ interface WebServiceRepositoryInterface
   public function execMigrateCustomer($identificationNumber);
 
   public function ConsultarInformacionComercial($identificationNumber);
+
+  public function execEvaluarConfronta($cuestionario, $dataEvaluar);
 }

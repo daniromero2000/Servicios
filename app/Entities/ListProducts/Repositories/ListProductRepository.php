@@ -117,7 +117,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageProtectionDividedPrice = 0;
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
-            if ($productList['zone'] == 'MEDIA') {
+            if ($productList['zone'] == 'ALTA') {
                 if ($percentageProtectionDividedPrice == 0) {
                     $percentageProtection = 0;
                 } elseif ($percentageProtectionDividedPrice <= 10) {
@@ -129,9 +129,9 @@ class ListProductRepository implements ListProductRepositoryInterface
                 }
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $promotionPublicPrice             = round(($product['iva_cost'] - ($protectionVat * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100));;
-                $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
+                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
+                $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))) * -1, 2);
                 $traditionalCreditBondPrice       = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['percentage_base_oportuya_customer']) / 100));
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
@@ -140,13 +140,13 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-            } elseif ($productList['zone'] == 'BAJA') {
+            } elseif ($productList['zone'] == 'MEDIA') {
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
                 $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
+                $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))) * -1, 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer  = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
@@ -158,9 +158,9 @@ class ListProductRepository implements ListProductRepositoryInterface
             } else {
                 $cashPromotion                    = round((($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100)) / (0.96));
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
-                $percentagePublicPrice            = round(($normalPublicPrice - $promotionPublicPrice) * 100, 2);
+                $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                $percentageTraditionalCreditPrice = round(100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice)), 2);
+                $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))) * -1, 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer  = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
