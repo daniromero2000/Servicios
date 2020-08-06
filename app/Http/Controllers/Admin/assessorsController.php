@@ -649,10 +649,10 @@ class assessorsController extends Controller
 			if ($perfilCrediticio == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$idDef = '8';
-				$customerIntention->ID_DEF            = '8';
-				$customerIntention->ESTADO_INTENCION  = '1';
-				$customerIntention->CREDIT_DECISION = 'Negado';
+				$idDef                               = '8';
+				$customerIntention->ID_DEF           = '8';
+				$customerIntention->ESTADO_INTENCION = '1';
+				$customerIntention->CREDIT_DECISION  = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -1218,21 +1218,20 @@ class assessorsController extends Controller
 
 	public function decisionCreditCard(Request $request, $identificationNumber)
 	{
-		$dataLead = $request['lead'];
-		$dataPolicy = $request['policyResult'];
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
+		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
-		$tipoDoc = 1;
-		$lastName = explode(" ", $dataLead['APELLIDOS']);
-		$lastName = $lastName[0];
-		$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
-		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-		$estadoSolic = 3;
-		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
-		$resultUbica = $this->validateConsultaUbica($identificationNumber);
+		$estadoSolic            = 3;
+		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$this->ubicaInterface->doConsultaUbica($customer, $this->daysToIncrement);
+		$resultUbica = $this->validateConsultaUbica($customer);
+
 		if ($resultUbica == 0) {
-			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
+			$dataLead               = $request['lead'];
+			$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
+			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $customer->APELLIDOS);
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
@@ -1250,6 +1249,7 @@ class assessorsController extends Controller
 			$estadoSolic = 19;
 		}
 
+		$dataPolicy = $request['policyResult'];
 		$policyCredit = [
 			'quotaApprovedProduct' => $dataPolicy['quotaApprovedProduct'],
 			'quotaApprovedAdvance' => $dataPolicy['quotaApprovedAdvance'],
@@ -1277,10 +1277,10 @@ class assessorsController extends Controller
 			'CIU_REFPE2' => '',
 			'BAR_REFFAM' => '',
 			'BAR_REFFA2' => '',
-			'CON_CLI1' => '',
-			'CON_CLI2' => '',
-			'CON_CLI3' => '',
-			'CON_CLI4' => '',
+			'CON_CLI1'   => '',
+			'CON_CLI2'   => '',
+			'CON_CLI3'   => '',
+			'CON_CLI4'   => '',
 			'EDIT_RFCLI' => '',
 			'EDIT_RFCL2' => ''
 		];
@@ -1292,21 +1292,8 @@ class assessorsController extends Controller
 		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data, $intention->id);
 	}
 
-	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
+	public function validateConsultaUbica($customer)
 	{
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaUbica == 'true') {
-			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
-		} else {
-			$consultaUbica = 1;
-		}
-		return $consultaUbica;
-	}
-
-	public function validateConsultaUbica($identificationNumber)
-	{
-		$customer      = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerPhone = $customer->checkedPhone;
 		$celLead       = 0;
 
@@ -1390,7 +1377,7 @@ class assessorsController extends Controller
 		$customer->TIPOCLIENTE = "NUEVO";
 		$customer->SUBTIPO     = "NUEVO";
 		$customer->save();
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
 		$estadoSolic = 1;

@@ -15,27 +15,27 @@ class PolicyRepository implements PolicyRepositoryInterface
     public function CheckScorePolicy($customerScore)
     {
         if ($customerScore >= -7 && $customerScore <= 0) {
-            return $perfilCrediticio = 'TIPO 5';
+            return 'TIPO 5';
         }
 
         if ($customerScore >= 275 && $customerScore <= 527) {
-            return $perfilCrediticio = 'TIPO D';
+            return 'TIPO D';
         }
 
         if ($customerScore >= 528 && $customerScore <= 624) {
-            return  $perfilCrediticio = 'TIPO C';
+            return  'TIPO C';
         }
 
         if ($customerScore >= 625 && $customerScore <= 674) {
-            return $perfilCrediticio = 'TIPO B';
+            return 'TIPO B';
         }
 
         if ($customerScore >= 675 && $customerScore <= 1000) {
-            return $perfilCrediticio = 'TIPO A';
+            return  'TIPO A';
         }
 
         if ($customerScore <= -8) {
-            return $perfilCrediticio = 'TIPO 7';
+            return 'TIPO 7';
         }
     }
 }
