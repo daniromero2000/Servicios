@@ -1593,7 +1593,7 @@ class OportuyaV2Controller extends Controller
 
 			$estadoSolic = 3;
 			$this->ubicaInterface->doConsultaUbica($customer, $this->daysToIncrement);
-			$resultUbica = $this->validateConsultaUbica($identificationNumber);
+			$resultUbica = $this->validateConsultaUbica($customer);
 			if ($resultUbica == 0) {
 				$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
 				if ($confronta == 1) {
