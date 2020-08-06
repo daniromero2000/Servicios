@@ -608,6 +608,10 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
+		$customerStatusDenied = false;
+		$idDef                = "";
+		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
+
 		if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
 			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
 			$customerScore = $lastCifinScore->score;
@@ -617,10 +621,20 @@ class assessorsController extends Controller
 			$customerScore = $lastCifinScore->score;
 		}
 
-		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerIntention    = $customer->latestIntention;
-		$customerStatusDenied = false;
-		$idDef                = "";
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$assessorCode = $this->userInterface->getAssessorCode();
+		$data = ['CEDULA' => $identificationNumber];
+		$data['ASESOR'] = $assessorCode;
+
+		if ($lastIntention == "true") {
+			$customerIntention =	$this->intentionInterface->createIntention($data);
+		} else {
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ASESOR = $assessorCode;
+			$customerIntention->save();
+		}
 
 		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
