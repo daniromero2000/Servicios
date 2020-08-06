@@ -1452,10 +1452,8 @@ class assessorsController extends Controller
 		];
 
 		if ($fosygaTemp) {
-			$analisisData = [
-				'paz_cli' => $fosygaTemp->paz_cli,
-				'fos_cliente' => $fosygaTemp->fos_cliente
-			];
+			$analisisData['paz_cli']  = $fosygaTemp->paz_cli;
+			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
 		}
 
 		$this->AnalisisInterface->addAnalisis($analisisData);
