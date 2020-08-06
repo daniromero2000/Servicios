@@ -253,13 +253,7 @@ class assessorsController extends Controller
 
 	public function store(Request $request)
 	{
-		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-
-		if (Auth::user()) {
-			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-		}
-
-		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$assessorCode = $this->userInterface->getAssessorCode();
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		$sucursal     = trim($request->get('CIUD_UBI'));
 
@@ -530,16 +524,13 @@ class assessorsController extends Controller
 
 	public function execConsultasleadAsesores($identificationNumber)
 	{
-		$oportudataLead = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
-		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
-		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
-
-		// Registraduria
-		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
-
+		$oportudataLead         = $this->customerInterface->findCustomerByIdForFosyga($identificationNumber);
+		$dateExpIdentification  = explode("-", $oportudataLead->FEC_EXP);
+		$dateExpIdentification  = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention          = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$assessorCode           = $this->userInterface->getAssessorCode();
+		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 		if ($consultasRegistraduria == "-1") {
 			$oportudataLead->ESTADO = "NEGADO";
@@ -569,7 +560,8 @@ class assessorsController extends Controller
 			return ['resp' => $consultasRegistraduria];
 		}
 
-		$consultaComercial = $this->execConsultaComercialLead($identificationNumber, $oportudataLead->TIPO_DOC);
+		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($oportudataLead, $this->daysToIncrement);
+
 		if ($consultaComercial == 0) {
 			$oportudataLead->ESTADO = "SIN COMERCIAL";
 			$oportudataLead->save();
@@ -594,7 +586,6 @@ class assessorsController extends Controller
 				'resp'                 => -5
 			];
 		} else {
-
 			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			$policyCredit = [
@@ -615,18 +606,6 @@ class assessorsController extends Controller
 		}
 	}
 
-	private function execConsultaComercialLead($identificationNumber, $tipoDoc)
-	{
-		$dateConsultaComercial = $this->commercialConsultationInterface->validateDateConsultaComercial($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaComercial == 'true') {
-			$consultaComercial = $this->webServiceInterface->execConsultaComercial($identificationNumber, $tipoDoc);
-		} else {
-			$consultaComercial = 1;
-		}
-
-		return $consultaComercial;
-	}
-
 	private function validatePolicyCredit_new($identificationNumber)
 	{
 		$customerStatusDenied = false;
@@ -642,11 +621,7 @@ class assessorsController extends Controller
 			$customerScore = $lastCifinScore->score;
 		}
 
-		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-		if (Auth::user()) {
-			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-		}
-		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$assessorCode = $this->userInterface->getAssessorCode();
 
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
@@ -1540,12 +1515,8 @@ class assessorsController extends Controller
 
 	private function addSolicFab($customer, $quotaApprovedProduct = 0, $quotaApprovedAdvance = 0, $estado, $intentionId)
 	{
-		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-		if (Auth::user()) {
-			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-		}
-		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
+		$assessorCode = $this->userInterface->getAssessorCode();
+		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
@@ -1587,12 +1558,8 @@ class assessorsController extends Controller
 
 	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
 	{
-		$sucursal = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
-		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-		if (Auth::user()) {
-			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-		}
-		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
+		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
+		$assessorCode = $this->userInterface->getAssessorCode();
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);

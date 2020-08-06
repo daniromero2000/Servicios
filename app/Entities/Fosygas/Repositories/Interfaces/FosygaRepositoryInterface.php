@@ -6,6 +6,8 @@ interface FosygaRepositoryInterface
 {
     public function doFosygaConsult($oportudataLead, $days);
 
+    public function execWebServiceFosyga($oportudataLead,  $idConsultaWebService);
+
     public function getLastFosygaConsultation($identificationNumber);
 
     public function getLastFosygaConsultationPolicy($identificationNumber);

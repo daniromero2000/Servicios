@@ -73,14 +73,14 @@ class CustomerController extends Controller
     {
         $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
 
-        $infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $customer->TIPO_DOC, "");
+        $infoBdua = $this->fosygaInterface->execWebServiceFosyga($customer, '23948865');
         $infoBdua = (array) $infoBdua;
-        $consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
+        $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
         if ($infoBdua['original']['fuenteFallo'] == 'SI') {
             $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
             return redirect()->back();
         } else {
-            $validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, trim($customer->NOMBRES), trim($customer->APELLIDOS), $customer->FEC_EXP);
+            $validateConsultaFosyga = $this->fosygaInterface->validateConsultaFosyga($identificationNumber, $customer->FEC_EXP);
             if ($validateConsultaFosyga < 0) {
                 $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
                 return redirect()->back();
@@ -95,15 +95,15 @@ class CustomerController extends Controller
     {
         $customer = $this->customerInterface->findCustomerByIdFull($identificationNumber);
 
-        $infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $customer->TIPO_DOC, $customer->FEC_EXP);
+        $infoEstadoCedula = $this->registraduriaInterface->execWebServiceFosygaRegistraduria($customer, '91891024');
         $infoEstadoCedula = (array) $infoEstadoCedula;
-        $consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
+        $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $customer->CEDULA);
 
         if ($infoEstadoCedula['original']['fuenteFallo'] == 'SI') {
             $this->request->session()->flash('error', 'No se pudo realizar la consulta, por favor inténtalo más tarde!');
             return redirect()->back();
         } else {
-            $validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, strtolower(trim($customer->NOMBRES)), strtolower(trim($customer->APELLIDOS)), $customer->FEC_EXP);
+            $validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($customer);
             if ($validateConsultaRegistraduria < 0) {
                 $this->request->session()->flash('error', 'Los datos ingresados no pertenecen a esta cédula, por favor verifícalos!');
                 return redirect()->back();
