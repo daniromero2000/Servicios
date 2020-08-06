@@ -231,7 +231,11 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
             if ($scope.liquidator[key][3].PLAZO != null) {
                 $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
-                $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
+                if ($scope.liquidator[key][3].COD_PLAN != '15') {
+                    $scope.liquidator[key][3].timelyPayment = 0;
+                } else {
+                    $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);
+                }
                 $scope.liquidator[key][3].TASAEA = $scope.tasaea;
                 $scope.liquidator[key][3].TASAMORA = $scope.tasamora;
                 $scope.liquidator[key][3].TASANOM = $scope.tasanom;
@@ -251,7 +255,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.liquidator[key][3].SEGURO = 0;
                 }
 
-                $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': 26.97, 'TASAMORA': 2.01, 'TASANOM': 24.12, 'TASAMAX': 27.18, 'TASA_INT': 2.01 });
+                $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': $scope.tasaea, 'TASAMORA': $scope.tasamora, 'TASANOM': $scope.tasanom, 'TASAMAX': $scope.tasamax, 'TASA_INT': $scope.tasaint });
                 $scope.getTerms($scope.liquidator[key][3].PLAZO, key);
             }
 
@@ -264,11 +268,13 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             $scope.liquidator[key][5] = [];
             $scope.liquidator[key][5].TOTAL = Math.round((parseInt($scope.liquidator[key][3].VRCUOTA) * parseInt($scope.liquidator[key][3].PLAZO)) + parseInt
                 ($scope.liquidator[key][3].CUOTAINI))
-            if ($scope.liquidator[key][0][0].SELECCION == 95) {
-                var div = 1
-            } else {
+
+            if ($scope.liquidator[key][3].check) {
                 var div = 1.19
+            } else {
+                var div = 1
             }
+
             $scope.liquidator[key][5].SUBTOTAL = Math.round((parseInt($scope.liquidator[key][5].TOTAL) / div))
             $scope.liquidator[key][5].IVA = Math.round(parseInt($scope.liquidator[key][5].TOTAL - parseInt($scope.liquidator[key][5].SUBTOTAL)))
             $scope.liquidator[key][5].SALDOFIN = Math.round((parseInt($scope.liquidator[key][4].TOTAL_AVAL) + precio) - (parseInt($scope.liquidator[key][2]) + parseInt($scope.liquidator[key][3].CUOTAINI)));

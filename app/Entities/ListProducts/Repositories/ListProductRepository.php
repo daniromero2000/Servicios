@@ -119,7 +119,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageProtectionDividedPrice = 0;
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
-            if ($productList['zone'] == 'MEDIA') {
+            if ($productList['zone'] == 'ALTA') {
                 if ($percentageProtectionDividedPrice == 0) {
                     $percentageProtection = 0;
                 } elseif ($percentageProtectionDividedPrice <= 10) {
@@ -142,7 +142,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-            } elseif ($productList['zone'] == 'BAJA') {
+            } elseif ($productList['zone'] == 'MEDIA') {
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);

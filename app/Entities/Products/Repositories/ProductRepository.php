@@ -144,4 +144,18 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return $this->model->brand;
     }
+
+    public function updateOrder($data)
+    {
+        try {
+            foreach ($data as $key => $value) {
+                // dd($data[$key]);
+                $product = $this->model->where('sku', $data[$key]['sku'])->first();
+                $action = $product->update($data[$key]);
+            }
+            return 'true';
+        } catch (ModelNotFoundException $e) {
+            throw new ProductNotFoundException($e);
+        }
+    }
 }

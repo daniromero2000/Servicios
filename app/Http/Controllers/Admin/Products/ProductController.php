@@ -198,4 +198,17 @@ class ProductController extends Controller
     {
         return $product = $this->productRepo->findProductBySku($id);
     }
+
+    public function updateOrder(Request $request, int $id)
+    {
+        $data =  $request->input('update');
+        $dataOportudata = [];
+        foreach ($data as $key => $value) {
+            $dataOportudata[] = ['order' => $value[0], 'sku' => $value[1]];
+        }
+
+        return $this->productRepo->updateOrder($dataOportudata);
+
+        dd($dataOportudata);
+    }
 }

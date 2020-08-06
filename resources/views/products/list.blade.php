@@ -7,145 +7,153 @@
 @endsection
 @section('content')
 <section class="content">
-    @include('layouts.errors-and-messages')
+  @include('layouts.errors-and-messages')
 
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title">Productos</h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card card-default">
+            <div class="card-header">
+              <h3 class="card-title">Productos</h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            @if(!is_null($products))
-
-                            @if ($products)
-                            <ul class="todo-list" data-widget="todo-list">
-                                @foreach ($products as $product)
-                                <li class="data">
-                                    <span class="handle" onchange="updateOrder({{ $product->sku }})">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </span>
-                                    <input value="{{ $product->order }}" class="order" type="hidden">
-                                    <input value="{{ $product->sku }}" class="sku" type="hidden">
-                                    <td>{{ $product->sku }}</td>
-                                    <td> {{ $product->name }} </td>
-                                    <td>{{ $product->brand_id->name }}</td>
-                                    <td>
-                                        @if ($product->status == 1)
-                                        <span class="badge badge-success">Activo</span>
-                                        @else
-                                        <span class="badge badge-danger">Inactivo</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                            data-target="#deleteProduct{{ $product->id }}">
-                                        </i>
-                                        <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})"
-                                            data-toggle="modal" data-target="#updateProduct{{ $product->id }}"></i>
-                                        <i class="fas fa-eye cursor" data-toggle="modal"
-                                            data-target="#showProduct{{ $product->id }}"></i>
-                                    </td>
-                                    @include('products.layouts.modals.modal_update_product')
-                                    @include('products.layouts.modals.modal_delete_product')
-                                    @include('products.layouts.modals.modal_show_product')
-                                </li>
-                                @endforeach
-                            </ul>
-                            @endif
-                            {{-- </tbody>
-                                </table> --}}
-                            @endif
-                            <div class="text-right mt-2">
-                                <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addProduct">Agregar
-                                    Producto</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title">Marcas</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            @if(!is_null($brands))
-                            <div class=" table-responsive p-0 height-table">
-
-                                <table class="table text-center table-hover table-head-fixed">
-                                    <thead class="header-table">
-                                        <tr>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="body-table">
-                                        @if ($brands)
-                                        @foreach ($brands as $brand)
-
-                                        <tr>
-                                            <td>
-                                                {{ $brand->name }}</a>
-                                            </td>
-                                            <td>
-                                                <i class="fas fa-trash-alt cursor" data-toggle="modal"
-                                                    data-target="#deletebrand{{ $brand->id }}"></i>
-                                                <i class="fas fa-edit cursor" data-toggle="modal"
-                                                    data-target="#updatebrand{{ $brand->id }}"></i>
-                                            </td>
-                                        </tr>
-                                        <div>
-                                            <div>
-                                                @include('products.layouts.modals.modal_update_brand')
-                                            </div>
-                                            @include('products.layouts.modals.modal_delete_brand')
-
-                                        </div>
-                                        @endforeach
-                                        @endif
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            @else
-
-                            <p class="alert alert-warning">No hay marcas creadas aun. <a
-                                    href="{{ route('brands.create') }}">Crea una!</a></p>
-                            @endif
-                            <div class="text-right mt-2">
-                                <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addbrand">Agregar Marca</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus"></i></button>
+              </div>
             </div>
+            <div class="card-body">
+              @if(!is_null($products))
+              <div class=" table-responsive p-0 height-table">
+
+                <table class="table text-center table-hover table-head-fixed">
+                  <thead class="header-table">
+                    <tr>
+                      <th scope="col">Código</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Marca</th>
+                      <th scope="col">Estado</th>
+                      <th scope="col">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="body-table" id="sortProducts">
+                    @if ($products)
+                    @foreach ($products as $product)
+                    <tr>
+                      <input type="hidden" value="{{$product->sku}}" class="data">
+                      <td>{{ $product->sku }}</td>
+                      <td> {{ $product->name }} </td>
+                      <td>{{ $product->brand_id->name }}</td>
+                      <td>
+                        @if ($product->status == 1)
+                        <span class="badge badge-success">Activo</span>
+                        @else
+                        <span class="badge badge-danger">Inactivo</span>
+                        @endif
+                      </td>
+                      <td>
+                        <i class="fas fa-trash-alt cursor" data-toggle="modal"
+                          data-target="#deleteProduct{{ $product->id }}">
+                        </i>
+                        <i class="fas fa-edit cursor" onclick="idproduct({{$product->id}})" data-toggle="modal"
+                          data-target="#updateProduct{{ $product->id }}"></i>
+                        <i class="fas fa-eye cursor" data-toggle="modal"
+                          data-target="#showProduct{{ $product->id }}"></i>
+                      </td>
+                    </tr>
+
+                    @include('products.layouts.modals.modal_update_product')
+
+                    @include('products.layouts.modals.modal_delete_product')
+                    @include('products.layouts.modals.modal_show_product')
+
+                    @endforeach
+                    @endif
+                  </tbody>
+                </table>
+                @endif
+              </div>
+              <div class="text-right mt-2">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProduct">Agregar
+                  Producto</button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-    <div>
-        @include('products.layouts.modals.modal_create_brand')
+        <div class="col-md-4">
+          <div class="card card-default">
+            <div class="card-header">
+              <h3 class="card-title">Marcas</h3>
 
-    </div>
-    <div>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              @if(!is_null($brands))
+              <div class=" table-responsive p-0 height-table">
 
-        @include('products.layouts.modals.modal_create_product')
+                <table class="table text-center table-hover table-head-fixed">
+                  <thead class="header-table">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="body-table">
+                    @if ($brands)
+                    @foreach ($brands as $brand)
+
+                    <tr>
+                      <td>
+                        {{ $brand->name }}</a>
+                      </td>
+                      <td>
+                        <i class="fas fa-trash-alt cursor" data-toggle="modal"
+                          data-target="#deletebrand{{ $brand->id }}"></i>
+                        <i class="fas fa-edit cursor" data-toggle="modal"
+                          data-target="#updatebrand{{ $brand->id }}"></i>
+                      </td>
+                    </tr>
+                    <div>
+                      <div>
+                        @include('products.layouts.modals.modal_update_brand')
+                      </div>
+                      @include('products.layouts.modals.modal_delete_brand')
+
+                    </div>
+                    @endforeach
+                    @endif
+
+
+                  </tbody>
+                </table>
+              </div>
+
+              @else
+
+              <p class="alert alert-warning">No hay marcas creadas aun. <a href="{{ route('brands.create') }}">Crea
+                  una!</a></p>
+              @endif
+              <div class="text-right mt-2">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addbrand">Agregar
+                  Marca</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div>
+    @include('products.layouts.modals.modal_create_brand')
+
+  </div>
+  <div>
+
+    @include('products.layouts.modals.modal_create_product')
+  </div>
 
 </section>
 @endsection
@@ -157,12 +165,12 @@
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+  $(document).ready(function () {
       bsCustomFileInput.init();
     });
 </script>
 <script type="text/javascript">
-    $( document ).ready(function() {
+  $( document ).ready(function() {
     $("[rel='tooltip']").tooltip();
 
     $('.thumbnail').hover(
@@ -176,7 +184,7 @@
 });
 </script>
 <script type="text/javascript">
-    !function(window){
+  !function(window){
   var $q = function(q, res){
         if (document.querySelectorAll) {
           res = document.querySelectorAll(q);
@@ -252,23 +260,27 @@
 </script>
 
 <script>
-    function updateOrder(id){
-        alert(id);
-   }
-  
-</script>
-<script>
-    $('.todo-list').sortable({
+  $('#sortProducts').sortable({
        stop: function () {
-      var data = $('.data').toArray()
-      var update = [];
-      var sku = "";
-      for (let i = 0; i < data.length; i++) {
-        sku = data[i].childNodes[5].value
-        update[i] = [i + 1, sku]
-      }
-      console.log(update)
+        var data = $('.data')
+        var update = [];
+        var sku = "";
+        for (let i = 0; i < data.length; i++) {
+          sku = data[i].value
+          update[i] = [i + 1, sku]
+        }
+        console.log(update)
+       $.ajax({
+                url: '/api/updateProducts/1',
+                type: 'PUT',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                data: {update},
+                success: function (response) {
+                   console.log(response)
+                }
+            });
     }
   })
 </script>
+
 @endsection

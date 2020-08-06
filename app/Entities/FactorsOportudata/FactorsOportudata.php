@@ -17,5 +17,7 @@ class FactorsOportudata extends Model
         'FACTOR'
     ];
 
+    protected $primaryKey = 'CUOTA';
+
     public $timestamps = false;
 }
