@@ -1716,7 +1716,20 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$this->datosClienteInterface->addDatosCliente($dataDatosCliente);
-		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
+		$fosygaTemp = $customer->customerFosygaTemps->first();
+
+		$analisisData = [
+			'solicitud'      => $numSolic,
+		];
+
+		if ($fosygaTemp) {
+			$analisisData = [
+				'paz_cli' => $fosygaTemp->paz_cli,
+				'fos_cliente' => $fosygaTemp->fos_cliente
+			];
+		}
+
+		$this->AnalisisInterface->addAnalisis($analisisData);
 
 		$infoLead           = (object) [];
 		if ($estadoSolic != 3) {
@@ -1789,20 +1802,6 @@ class OportuyaV2Controller extends Controller
 		$factoryRequest = $this->factoryRequestInterface->findFactoryRequestById($customerFactoryRequest->SOLICITUD);
 		$factoryRequest->states()->attach($estado, ['usuario' => $assessorCode]);
 		return $customerFactoryRequest;
-	}
-
-	private function addAnalisis($numSolic, $fosygaTemp)
-	{
-		$analisisData = [
-			'solicitud'      => $numSolic,
-		];
-
-		if ($fosygaTemp) {
-			$analisisData['paz_cli']  = $fosygaTemp->paz_cli;
-			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
-		}
-
-		$this->analisisInterface->addAnalisis($analisisData);
 	}
 
 	private function addTurnos($identificationNumber, $numSolic)

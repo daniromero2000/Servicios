@@ -236,17 +236,17 @@ class assessorsController extends Controller
 		$statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
 
 		return view('assessors.assessors.list', [
-			'factoryRequests'                => $list,
-			'optionsRoutes'                  => (request()->segment(2)),
-			'headers'                        => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
-			'listCount'                      => $listCount,
-			'skip'                           => $skip,
-			'factoryRequestsTotal'           => $factoryRequestsTotal,
-			'statusesAprobadosValues'         => $statusesAprobadosValues,
-			'statusesNegadosValues'        => $statusesNegadosValues,
-			'statusesDesistidosValues'        => $statusesDesistidosValues,
-			'statusesPendientesValues'     => $statusesPendientesValues,
-			'statuses'                     => $statuses
+			'factoryRequests'          => $list,
+			'optionsRoutes'            => (request()->segment(2)),
+			'headers'                  => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+			'listCount'                => $listCount,
+			'skip'                     => $skip,
+			'factoryRequestsTotal'     => $factoryRequestsTotal,
+			'statusesAprobadosValues'  => $statusesAprobadosValues,
+			'statusesNegadosValues'    => $statusesNegadosValues,
+			'statusesDesistidosValues' => $statusesDesistidosValues,
+			'statusesPendientesValues' => $statusesPendientesValues,
+			'statuses'                 => $statuses
 
 		]);
 	}
@@ -367,6 +367,7 @@ class assessorsController extends Controller
 
 			unset($dataOportudata['tipoCliente']);
 			$leadOportudata->updateOrCreate(['CEDULA' => trim($request->get('CEDULA'))], $dataOportudata)->save();
+
 			if ($this->cliCelInterface->checkIfPhoneNumExists(trim($request->get('CEDULA')), trim($request->get('CELULAR'))) == 0) {
 				$data = [
 					'IDENTI'  => trim($request->get('CEDULA')),
@@ -377,7 +378,9 @@ class assessorsController extends Controller
 				];
 				$this->cliCelInterface->createCliCel($data);
 			}
+
 			$this->webServiceInterface->execMigrateCustomer($request->get('CEDULA'));
+
 			return $dataOportudata;
 		} elseif ($request->tipoCliente == 'CREDITO') {
 			if ($request->get('CIUD_EXP') != '') {
@@ -1442,7 +1445,20 @@ class assessorsController extends Controller
 		}
 
 		$this->datosClienteInterface->addDatosCliente($data);
-		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
+		$fosygaTemp = $customer->customerFosygaTemps->first();
+
+		$analisisData = [
+			'solicitud'      => $numSolic,
+		];
+
+		if ($fosygaTemp) {
+			$analisisData = [
+				'paz_cli' => $fosygaTemp->paz_cli,
+				'fos_cliente' => $fosygaTemp->fos_cliente
+			];
+		}
+
+		$this->AnalisisInterface->addAnalisis($analisisData);
 
 		$infoLead        = (object) [];
 		if ($estadoSolic != 3) {
@@ -1531,19 +1547,6 @@ class assessorsController extends Controller
 		return $customerFactoryRequest;
 	}
 
-	private function addAnalisis($numSolic, $fosygaTemp)
-	{
-		$analisisData = [
-			'solicitud'      => $numSolic,
-		];
-
-		if ($fosygaTemp) {
-			$analisisData['paz_cli']  = $fosygaTemp->paz_cli;
-			$analisisData['fos_cliente']     = $fosygaTemp->fos_cliente;
-		}
-
-		$this->AnalisisInterface->addAnalisis($analisisData);
-	}
 
 	private function addTurnosOportuya($customer, $scoreLead, $numSolic)
 	{
