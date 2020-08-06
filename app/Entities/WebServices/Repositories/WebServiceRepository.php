@@ -74,7 +74,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             $port = config('portsWs.pagosCliente');
             $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
+            $ws->ConsultaUbicaPlus($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -93,7 +93,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             // 2040 Ubica Pruebas
             $port = config('portsWs.confronta');
             $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->obtenerCuestionario($obj);  // correcta
+            $ws->obtenerCuestionario($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -106,7 +106,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         $obj->cedula = trim($identificationNumber);
         try {
             $ws = new \SoapClient("http://10.238.14.151:2816/Conector.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarCliente($obj);  // correcta
+            $ws->ConsultarCliente($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -119,7 +119,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             // 2050 Confronta Pruebas
             $port = config('portsWs.confronta');
             $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
-            $result = $ws->evaluarCuestionario([
+            $ws->evaluarCuestionario([
                 'Code'      => 7081,
                 'question1' => $dataEvaluar[0]->secuencia_preg,
                 'answer1'   => $dataEvaluar[0]->secuencia_resp,

@@ -1669,15 +1669,16 @@ class OportuyaV2Controller extends Controller
 		$customer->TIPOCLIENTE = "NUEVO";
 		$customer->SUBTIPO = "NUEVO";
 		$customer->save();
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 1;
+
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
 			'resp' => 'true'
 		];
+
 		$data = [
 			'NOM_REFPER' => $nom_refper,
 			'TEL_REFPER' => $tel_refper,
@@ -1685,7 +1686,7 @@ class OportuyaV2Controller extends Controller
 			'TEL_REFFAM' => $tel_reffam
 		];
 
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, 1, "", $data);
 	}
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data)
@@ -1716,15 +1717,17 @@ class OportuyaV2Controller extends Controller
 
 		$this->datosClienteInterface->addDatosCliente($dataDatosCliente);
 		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
+
 		$infoLead           = (object) [];
 		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
+
 		$infoLead->numSolic = $numSolic;
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention = $customer->latestIntention;
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
