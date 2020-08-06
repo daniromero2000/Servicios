@@ -130,20 +130,6 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         }
     }
 
-    public function ConsultarInformacionComercial($identificationNumber)
-    {
-        $obj = new \stdClass();
-        $obj->typeDocument = 1;
-        $obj->identificationNumber = trim($identificationNumber);
-        try {
-            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
-            return 1;
-        } catch (\Throwable $th) {
-            return 0;
-        }
-    }
-
     public function execEvaluarConfronta($cuestionario, $dataEvaluar)
     {
         try {
