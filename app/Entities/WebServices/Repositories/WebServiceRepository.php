@@ -3,17 +3,16 @@
 namespace App\Entities\WebServices\Repositories;
 
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use SoapClient;
 
 class WebServiceRepository implements WebServiceRepositoryInterface
 {
-    public function execWebServiceFosygaRegistraduria($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "")
+    public function execWebServiceFosygaRegistraduria($oportudataLead,  $idConsultaWebService)
     {
         set_time_limit(0);
-        $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
+        $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $oportudataLead->TIPO_DOC, $oportudataLead->CEDULA);
         //$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
-        if ($dateExpeditionDocument != '') {
-            $urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
+        if ($oportudataLead->FEC_EXP != '') {
+            $urlConsulta .= sprintf('&hgu=%s', $oportudataLead->FEC_EXP);
         }
         $curl_handle = curl_init();
         curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);

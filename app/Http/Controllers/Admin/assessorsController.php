@@ -49,6 +49,7 @@ use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectReposit
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
 class assessorsController extends Controller
 {
@@ -64,6 +65,7 @@ class assessorsController extends Controller
 	private $codebtorInterface, $secondCodebtorInterface, $assessorInterface;
 	private $cityInterface, $cliCelInterface, $policyInterface, $OportuyaTurnInterface;
 	private $confrontaSelectinterface, $ubicaMailInterface, $ubicaCellPhoneInterfac, $confrontaResultInterface;
+	private $userInterface;
 
 	public function __construct(
 		SecondCodebtorRepositoryInterface $secondCodebtorRepositoryInterface,
@@ -103,7 +105,8 @@ class assessorsController extends Controller
 		ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
 		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
-		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface
+		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
+		UserRepositoryInterface $userRepositoryInterface
 	) {
 		$this->secondCodebtorInterface         = $secondCodebtorRepositoryInterface;
 		$this->codebtorInterface               = $codebtorRepositoryInterface;
@@ -142,7 +145,8 @@ class assessorsController extends Controller
 		$this->confrontaSelectinterface        = $confrontaSelectRepositoryInterface;
 		$this->ubicaMailInterface              = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac          = $ubicaCellPhoneRepositoryInterface;
-		$this->confrontaResultInterface = $confrontaResultRepositoryInterface;
+		$this->confrontaResultInterface        = $confrontaResultRepositoryInterface;
+		$this->userInterface                   = $userRepositoryInterface;
 		$this->middleware('auth');
 	}
 
@@ -530,22 +534,12 @@ class assessorsController extends Controller
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
-		$consultasRegistraduria = $this->execConsultaRegistraduriaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
+		// Registraduria
+		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
-		$authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
-		if (Auth::user()) {
-			$authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
-		}
-		$assessorCode = ($authAssessor !== NULL) ? $authAssessor : 998877;
-
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention          = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$assessorCode           = $this->userInterface->getAssessorCode();
 
 		if ($consultasRegistraduria == "-1") {
 			$oportudataLead->ESTADO = "NEGADO";
@@ -601,11 +595,7 @@ class assessorsController extends Controller
 			];
 		} else {
 
-			$this->execConsultaFosygaLead(
-				$identificationNumber,
-				$oportudataLead->TIPO_DOC,
-				$oportudataLead->FEC_EXP
-			);
+			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -623,56 +613,6 @@ class assessorsController extends Controller
 				'infoLead'             => $infoLead
 			];
 		}
-	}
-
-	private function execConsultaRegistraduriaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
-	{
-		// Registraduria
-		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
-		if ($dateConsultaRegistraduria == "true") {
-			$infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $typeDocument, $dateDocument);
-			$infoEstadoCedula = (array) $infoEstadoCedula;
-			$consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
-		} else {
-			$consultaRegistraduria = 1;
-		}
-
-		$validateConsultaRegistraduria = 0;
-		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
-		} else {
-			$validateConsultaRegistraduria = 1;
-		}
-
-		if ($validateConsultaRegistraduria == -1) {
-			return -1;
-		}
-
-		if ($validateConsultaRegistraduria < 0) {
-			return "-3";
-		}
-
-		return "true";
-	}
-
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
-	{
-		// Fosyga
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaFosyga == "true") {
-			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
-			$infoBdua = (array) $infoBdua;
-			$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
-		} else {
-			$consultaFosyga = 1;
-		}
-
-		if ($consultaFosyga > 0) {
-			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
-		}
-
-		return "true";
 	}
 
 	private function execConsultaComercialLead($identificationNumber, $tipoDoc)

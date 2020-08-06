@@ -33,6 +33,8 @@ use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectReposit
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
 class AdvanceController extends Controller
 {
@@ -40,6 +42,7 @@ class AdvanceController extends Controller
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
     private $ubicaMailInterface;
+    private $userInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -67,7 +70,8 @@ class AdvanceController extends Controller
         ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
         ToolRepositoryInterface $toolRepositoryInterface,
         UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
-        UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface
+        UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -95,10 +99,12 @@ class AdvanceController extends Controller
         $this->toolInterface = $toolRepositoryInterface;
         $this->ubicaCellPhoneInterfac = $ubicaCellPhoneRepositoryInterface;
         $this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
+        $this->userInterface = $userRepositoryInterface;
     }
 
     public function index()
     {
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()

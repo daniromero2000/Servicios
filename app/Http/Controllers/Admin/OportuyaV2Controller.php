@@ -53,7 +53,7 @@ use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultReposit
 use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
-
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
 class OportuyaV2Controller extends Controller
 {
@@ -69,6 +69,7 @@ class OportuyaV2Controller extends Controller
 	private $ubicaInterface, $productRepo, $brandRepo, $datosClienteInterface;
 	private $assessorInterface, $policyInterface, $OportuyaTurnInterface,  $turnInterface, $confrontaSelectinterface;
 	private $confrontaResultInterface, $toolInterface, $ubicaMailInterface, $ubicaCellPhoneInterfac;
+	private $userInterface;
 
 	public function __construct(
 		ConfirmationMessageRepositoryInterface $confirmationMessageRepositoryInterface,
@@ -108,7 +109,8 @@ class OportuyaV2Controller extends Controller
 		ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
 		ToolRepositoryInterface $toolRepositoryInterface,
 		UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
-		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface
+		UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
+		UserRepositoryInterface $userRepositoryInterface
 	) {
 		$this->confirmationMessageInterface      = $confirmationMessageRepositoryInterface;
 		$this->subsidiaryInterface               = $subsidiaryRepositoryInterface;
@@ -148,6 +150,7 @@ class OportuyaV2Controller extends Controller
 		$this->toolInterface                     = $toolRepositoryInterface;
 		$this->ubicaMailInterface                = $ubicaEmailRepositoryInterface;
 		$this->ubicaCellPhoneInterfac            = $ubicaCellPhoneRepositoryInterface;
+		$this->userInterface                     = $userRepositoryInterface;
 	}
 
 	public function index()
@@ -304,7 +307,7 @@ class OportuyaV2Controller extends Controller
 				'MEDIO_PAGO'            => 12,
 			];
 
-			$this->customerInterface->updateOrCreateCustomer($dataOportudata);
+			$oportudataLead =	$this->customerInterface->updateOrCreateCustomer($dataOportudata);
 
 			if ($request->get('CEL_VAL') == 0 && empty($this->customerCellPhoneInterface->checkIfExists($identificationNumber, $request->get('telephone')))) {
 				$clienteCelular            = [];
@@ -316,13 +319,8 @@ class OportuyaV2Controller extends Controller
 				$this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
 			}
 
-			$consultasRegistraduria = $this->execConsultaRegistraduriaLead(
-				$identificationNumber,
-				$request->get('typeDocument'),
-				$request->get('dateDocumentExpedition'),
-				$request->get('name'),
-				$request->get('lastName')
-			);
+			// Registraduria
+			$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
 			if ($consultasRegistraduria == "-3") {
 				return "-3";
@@ -383,11 +381,9 @@ class OportuyaV2Controller extends Controller
 
 			$oportudataLead->update($dataLead);
 
-			$this->execConsultaFosygaLead(
-				$identificationNumber,
-				$request->get('typeDocument'),
-				$request->get('dateDocumentExpedition')
-			);
+			$consultasRegistraduria = $this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
+
+
 
 			return response()->json([true]);
 		}
@@ -1477,16 +1473,12 @@ class OportuyaV2Controller extends Controller
 		$dateExpIdentification = explode("-", $oportudataLead->FEC_EXP);
 		$dateExpIdentification = $dateExpIdentification[2] . "/" . $dateExpIdentification[1] . "/" . $dateExpIdentification[0];
 
-		$consultasRegistraduria = $this->execConsultaRegistraduriaLead(
-			$identificationNumber,
-			$oportudataLead->TIPO_DOC,
-			$oportudataLead->FEC_EXP,
-			$oportudataLead->NOMBRES,
-			$oportudataLead->APELLIDOS
-		);
+		// Registraduria
+		$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention          = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$assessorCode           = $this->userInterface->getAssessorCode();
 
 		if ($consultasRegistraduria == "-1") {
 			$oportudataLead->ESTADO = "NEGADO";
@@ -1502,8 +1494,10 @@ class OportuyaV2Controller extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 1;
 				$dataIntention->ID_DEF = 2;
+				$dataIntention->CREDIT_DECISION = 'Negado';
 				$dataIntention->save();
 			}
 
@@ -1528,6 +1522,7 @@ class OportuyaV2Controller extends Controller
 				$dataIntention =	$this->intentionInterface->createIntention($dataIntention);
 			} else {
 				$dataIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+				$dataIntention->ASESOR = $assessorCode;
 				$dataIntention->ESTADO_INTENCION = 3;
 				$dataIntention->save();
 			}
@@ -1539,11 +1534,7 @@ class OportuyaV2Controller extends Controller
 			];
 		} else {
 
-			$this->execConsultaFosygaLead(
-				$identificationNumber,
-				$oportudataLead->TIPO_DOC,
-				$oportudataLead->FEC_EXP
-			);
+			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			$policyCredit = [
 				'quotaApprovedProduct' => 0,
@@ -1561,56 +1552,6 @@ class OportuyaV2Controller extends Controller
 				'infoLead'             => $infoLead
 			];
 		}
-	}
-
-	private function execConsultaRegistraduriaLead($identificationNumber, $typeDocument, $dateDocument, $name, $lastName)
-	{
-		// Registraduria
-		$dateConsultaRegistraduria = $this->registraduriaInterface->validateDateConsultaRegistraduria($identificationNumber,  $this->daysToIncrement);
-		if ($dateConsultaRegistraduria == "true") {
-			$infoEstadoCedula = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '91891024', $typeDocument, $dateDocument);
-			$infoEstadoCedula = (array) $infoEstadoCedula;
-			$consultaRegistraduria = $this->registraduriaInterface->createConsultaRegistraduria($infoEstadoCedula, $identificationNumber);
-		} else {
-			$consultaRegistraduria = 1;
-		}
-
-		$validateConsultaRegistraduria = 0;
-		if ($consultaRegistraduria > 0) {
-			$validateConsultaRegistraduria = $this->registraduriaInterface->validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateDocument);
-		} else {
-			$validateConsultaRegistraduria = 1;
-		}
-
-		if ($validateConsultaRegistraduria == -1) {
-			return -1;
-		}
-
-		if ($validateConsultaRegistraduria < 0) {
-			return "-3";
-		}
-
-		return "true";
-	}
-
-	private function execConsultaFosygaLead($identificationNumber, $typeDocument, $dateDocument)
-	{
-		// Fosyga
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dateConsultaFosyga = $this->fosygaInterface->validateDateConsultaFosyga($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaFosyga == "true") {
-			$infoBdua = $this->webServiceInterface->execWebServiceFosygaRegistraduria($identificationNumber, '23948865', $typeDocument, "");
-			$infoBdua = (array) $infoBdua;
-			$consultaFosyga =  $this->fosygaInterface->createConsultaFosyga($infoBdua, $identificationNumber);
-		} else {
-			$consultaFosyga = 1;
-		}
-
-		if ($consultaFosyga > 0) {
-			$this->fosygaInterface->validateConsultaFosyga($identificationNumber, $dateDocument);
-		}
-
-		return "true";
 	}
 
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
