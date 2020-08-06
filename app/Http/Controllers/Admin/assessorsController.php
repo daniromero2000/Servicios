@@ -1380,12 +1380,13 @@ class assessorsController extends Controller
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tradicional';
 		$intention->save();
-		$estadoSolic = 1;
+
 		$policyCredit = [
 			'quotaApprovedProduct' => 0,
 			'quotaApprovedAdvance' => 0,
 			'resp'                 => 'true'
 		];
+
 		$data = [
 			'NOM_REFPER' => (isset($request['NOM_REFPER']) && $request['NOM_REFPER'] != '') ? $request['NOM_REFPER'] : '',
 			'DIR_REFPER' => (isset($request['DIR_REFPER']) && $request['DIR_REFPER'] != '') ? $request['DIR_REFPER'] : '',
@@ -1415,7 +1416,7 @@ class assessorsController extends Controller
 			'EDIT_RFCL2' => ''
 		];
 
-		return $this->addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, "", $data, $intention->id);
+		return $this->addSolicCredit($identificationNumber, $policyCredit, 1, "", $data, $intention->id);
 	}
 
 	private function addSolicCredit($identificationNumber, $policyCredit, $estadoSolic, $tipoCreacion, $data, $intentionId)
@@ -1425,10 +1426,12 @@ class assessorsController extends Controller
 		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
 
 		if (!empty($data)) {
-			$data['identificationNumber'] = $identificationNumber;
-			$data['numSolic']             = $numSolic;
+			$data = [
+				'identificationNumber' => $identificationNumber,
+				'numSolic' => $numSolic
+			];
 		} else {
-			$dataDatosCliente = [
+			$data = [
 				'identificationNumber' => $identificationNumber,
 				'numSolic'             => $numSolic,
 				'NOM_REFPER'           => 'NA',
@@ -1440,15 +1443,17 @@ class assessorsController extends Controller
 
 		$this->datosClienteInterface->addDatosCliente($data);
 		$this->addAnalisis($numSolic, $customer->customerFosygaTemps->first());
+
 		$infoLead        = (object) [];
 		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
+
 		$infoLead->numSolic = $numSolic;
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention = $customer->latestIntention;
 			$customerIntention->ESTADO_INTENCION = 4;
 			$customerIntention->save();
 			$estadoResult = "APROBADO";
