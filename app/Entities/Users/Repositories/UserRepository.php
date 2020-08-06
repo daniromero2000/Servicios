@@ -5,7 +5,9 @@ namespace App\Entities\Users\Repositories;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -51,5 +53,14 @@ class UserRepository implements UserRepositoryInterface
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }
+    }
+
+    public function getAssessorCode()
+    {
+        $authAssessor = (Auth::guard('assessor')->check()) ? Auth::guard('assessor')->user()->CODIGO : NULL;
+        if (Auth::user()) {
+            $authAssessor = (Auth::user()->codeOportudata != NULL) ? Auth::user()->codeOportudata : $authAssessor;
+        }
+        return ($authAssessor !== NULL) ? $authAssessor : 998877;
     }
 }
