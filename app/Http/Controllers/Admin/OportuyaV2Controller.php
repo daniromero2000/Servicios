@@ -847,6 +847,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
+		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
@@ -854,17 +855,17 @@ class OportuyaV2Controller extends Controller
 
 			if ($customerScore >= 1 && $customerScore <= 275) {
 				$customerStatusDenied = true;
-				$idDef = '5';
-				$perfilCrediticio = 'TIPO D';
+				$idDef                = '5';
+				$perfilCrediticio     = 'TIPO D';
 			}
 
 			if ($perfilCrediticio == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$idDef = '8';
-				$customerIntention->ID_DEF            = '8';
-				$customerIntention->ESTADO_INTENCION  = '1';
-				$customerIntention->CREDIT_DECISION = 'Negado';
+				$idDef                               = '8';
+				$customerIntention->ID_DEF           = '8';
+				$customerIntention->ESTADO_INTENCION = '1';
+				$customerIntention->CREDIT_DECISION  = 'Negado';
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
@@ -872,6 +873,7 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 			$customerIntention->save();
 		}
+
 
 		// 3.3 Estado de obligaciones
 		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('finvrmora');
@@ -931,8 +933,10 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+
 		//4.1 Zona de riesgo
 		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
+
 		// 4.2 Tipo de cliente
 		$tipoCliente = '';
 		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
@@ -1377,21 +1381,8 @@ class OportuyaV2Controller extends Controller
 		return "true";
 	}
 
-	private function execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName)
+	public function validateConsultaUbica($customer)
 	{
-		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$dateConsultaUbica = $this->ubicaInterface->validateDateConsultaUbica($identificationNumber, $this->daysToIncrement);
-		if ($dateConsultaUbica == 'true') {
-			$consultaUbica = $this->webServiceInterface->execConsultaUbica($identificationNumber, $tipoDoc, $lastName);
-		} else {
-			$consultaUbica = 1;
-		}
-		return $consultaUbica;
-	}
-
-	public function validateConsultaUbica($identificationNumber)
-	{
-		$customer      = $this->customerInterface->findCustomerById($identificationNumber);
 		$customerPhone = $customer->checkedPhone;
 		$celLead       = 0;
 
@@ -1556,9 +1547,9 @@ class OportuyaV2Controller extends Controller
 	public function execConsultasLead($identificationNumber, $tipoDoc, $tipoCreacion, $lastName, $dateExpIdentification, $data = [])
 	{
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-		$consultaComercial = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
+		$consultaComercial     = $this->commercialConsultationInterface->doConsultaComercial($customer, $this->daysToIncrement);
+		$lastIntention         = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 		if ($consultaComercial == 0) {
 			$customer->ESTADO = "SIN COMERCIAL";
@@ -1601,7 +1592,7 @@ class OportuyaV2Controller extends Controller
 			}
 
 			$estadoSolic = 3;
-			$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
+			$this->ubicaInterface->doConsultaUbica($customer, $this->daysToIncrement);
 			$resultUbica = $this->validateConsultaUbica($identificationNumber);
 			if ($resultUbica == 0) {
 				$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $dateExpIdentification, $lastName);
@@ -1627,19 +1618,19 @@ class OportuyaV2Controller extends Controller
 
 	public function decisionCreditCard($lastName, $identificationNumber, $quotaApprovedProduct, $quotaApprovedAdvance, $dateExpIdentification, $nom_refper, $tel_refper, $nom_reffam, $tel_reffam)
 	{
-		$intention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+		$customer  = $this->customerInterface->findCustomerById($identificationNumber);
+		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
-		$tipoDoc = 1;
-		$lastName = explode(" ", $lastName);
-		$lastName = $lastName[0];
-		$fechaExpIdentification = explode("-", $dateExpIdentification);
-		$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
 		$estadoSolic = 3;
-		$this->execConsultaUbicaLead($identificationNumber, $tipoDoc, $lastName);
-		$resultUbica = $this->validateConsultaUbica($identificationNumber);
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$this->ubicaInterface->doConsultaUbica($customer, $this->daysToIncrement);
+		$resultUbica = $this->validateConsultaUbica($customer);
+
 		if ($resultUbica == 0) {
-			$confronta = $this->webServiceInterface->execConsultaConfronta($tipoDoc, $identificationNumber, $fechaExpIdentification, $lastName);
+			$fechaExpIdentification = explode("-", $dateExpIdentification);
+			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $customer->APELLIDOS);
 			if ($confronta == 1) {
 				$form = $this->toolInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
@@ -1656,11 +1647,13 @@ class OportuyaV2Controller extends Controller
 		} else {
 			$estadoSolic = 19;
 		}
+
 		$policyCredit = [
 			'quotaApprovedProduct' => $quotaApprovedProduct,
 			'quotaApprovedAdvance' => $quotaApprovedAdvance,
 			'resp' => 'true'
 		];
+
 		$data = [
 			'NOM_REFPER' => $nom_refper,
 			'TEL_REFPER' => $tel_refper,

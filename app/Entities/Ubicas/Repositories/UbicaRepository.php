@@ -15,6 +15,19 @@ class UbicaRepository implements UbicaRepositoryInterface
         $this->model = $Ubica;
     }
 
+    public function doConsultaUbica($customer, $days)
+    {
+        $dateConsultaUbica = $this->validateDateConsultaUbica($customer->CEDULA, $days);
+        $lastName               = explode(" ", $customer->APELLIDOS);
+        $lastName               = $lastName[0];
+        if ($dateConsultaUbica == 'true') {
+            $consultaUbica = $this->execConsultaUbica($customer->CEDULA, $customer->TIPO_DOC, $lastName);
+        } else {
+            $consultaUbica = 1;
+        }
+        return $consultaUbica;
+    }
+
     public function getLastUbicaConsultation($identificationNumber)
     {
         try {
@@ -50,6 +63,23 @@ class UbicaRepository implements UbicaRepositoryInterface
             } else {
                 return 'false';
             }
+        }
+    }
+
+    public function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
+    {
+        $obj = new \stdClass();
+        $obj->typeDocument = trim($typeDocument);
+        $obj->identificationNumber = trim($identificationNumber);
+        $obj->lastName = trim($lastName);
+        try {
+            // 2040 Ubica Pruebas
+            $port = config('portsWs.ubica');
+            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
+            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
+            return 1;
+        } catch (\Throwable $th) {
+            return 0;
         }
     }
 
