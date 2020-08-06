@@ -631,7 +631,6 @@ class assessorsController extends Controller
 			$customerIntention =	$this->intentionInterface->createIntention($data);
 		} else {
 			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
 			$customerIntention->ASESOR = $assessorCode;
 			$customerIntention->save();
 		}
