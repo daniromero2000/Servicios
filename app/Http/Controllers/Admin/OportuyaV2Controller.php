@@ -830,10 +830,22 @@ class OportuyaV2Controller extends Controller
 			$customerScore = $lastCifinScore->score;
 		}
 
-		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
-		$customerIntention    = $customer->latestIntention;
 		$customerStatusDenied = false;
 		$idDef                = "";
+		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
+		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$assessorCode = $this->userInterface->getAssessorCode();
+		$data = ['CEDULA' => $identificationNumber];
+		$data['ASESOR'] = $assessorCode;
+
+		if ($lastIntention == "true") {
+			$customerIntention =	$this->intentionInterface->createIntention($data);
+		} else {
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention->ASESOR = $assessorCode;
+			$customerIntention->save();
+		}
 
 		if (empty($customer)) {
 			return ['resp' => "false"];

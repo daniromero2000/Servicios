@@ -608,10 +608,6 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		$customerStatusDenied = false;
-		$idDef                = "";
-		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
-
 		if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
 			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
 			$customerScore = $lastCifinScore->score;
@@ -621,6 +617,9 @@ class assessorsController extends Controller
 			$customerScore = $lastCifinScore->score;
 		}
 
+		$customerStatusDenied = false;
+		$idDef                = "";
+		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 		$assessorCode = $this->userInterface->getAssessorCode();
