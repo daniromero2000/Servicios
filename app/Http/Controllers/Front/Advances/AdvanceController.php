@@ -35,6 +35,7 @@ use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositor
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
 
 class AdvanceController extends Controller
 {
@@ -42,7 +43,7 @@ class AdvanceController extends Controller
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
     private $ubicaMailInterface;
-    private $userInterface;
+    private $userInterface, $datosClienteInterface;
 
     public function __construct(
         LeadRepositoryInterface $leadRepositoryInterface,
@@ -71,7 +72,8 @@ class AdvanceController extends Controller
         ToolRepositoryInterface $toolRepositoryInterface,
         UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
         UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
-        UserRepositoryInterface $userRepositoryInterface
+        UserRepositoryInterface $userRepositoryInterface,
+        DatosClienteRepositoryInterface $datosClienteRepositoryInterface
     ) {
         $this->leadInterface       = $leadRepositoryInterface;
         $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
@@ -100,6 +102,7 @@ class AdvanceController extends Controller
         $this->ubicaCellPhoneInterfac = $ubicaCellPhoneRepositoryInterface;
         $this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
         $this->userInterface = $userRepositoryInterface;
+        $this->datosClienteInterface = $datosClienteRepositoryInterface;
     }
 
     public function index()
