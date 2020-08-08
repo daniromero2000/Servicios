@@ -1432,7 +1432,7 @@ class assessorsController extends Controller
 			$data['identificationNumber'] = $identificationNumber;
 			$data['numSolic']             = $numSolic;
 		} else {
-			$data = [
+			$dataDatosCliente = [
 				'identificationNumber' => $identificationNumber,
 				'numSolic'             => $numSolic,
 				'NOM_REFPER'           => 'NA',
