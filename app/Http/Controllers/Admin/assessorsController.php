@@ -1429,10 +1429,8 @@ class assessorsController extends Controller
 		$numSolic = $this->addSolicFab($customer, $policyCredit['quotaApprovedProduct'],  $policyCredit['quotaApprovedAdvance'], $estadoSolic, $intentionId);
 
 		if (!empty($data)) {
-			$data = [
-				'identificationNumber' => $identificationNumber,
-				'numSolic' => $numSolic
-			];
+			$data['identificationNumber'] = $identificationNumber;
+			$data['numSolic']             = $numSolic;
 		} else {
 			$data = [
 				'identificationNumber' => $identificationNumber,
