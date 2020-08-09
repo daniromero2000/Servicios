@@ -15,11 +15,9 @@ class UbicaRepository implements UbicaRepositoryInterface
         $this->model = $Ubica;
     }
 
-    public function doConsultaUbica($customer, $days)
+    public function doConsultaUbica($customer, $lastName, $days)
     {
         $dateConsultaUbica = $this->validateDateConsultaUbica($customer->CEDULA, $days);
-        $lastName               = explode(" ", $customer->APELLIDOS);
-        $lastName               = $lastName[0];
         if ($dateConsultaUbica == 'true') {
             $consultaUbica = $this->execConsultaUbica($customer->CEDULA, $customer->TIPO_DOC, $lastName);
         } else {

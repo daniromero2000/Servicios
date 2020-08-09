@@ -38,4 +38,72 @@ class PolicyRepository implements PolicyRepositoryInterface
             return 'TIPO 7';
         }
     }
+
+    public function validateCustomerAge($customer, $customerStatusDenied, $customerIntention)
+    {
+        // 4.3 Edad.
+        if ($customer->EDAD == false || empty($customer->EDAD)) {
+            if ($customerStatusDenied == false && empty($idDef)) {
+                $customerStatusDenied = true;
+                $idDef = "9";
+            }
+            $customerIntention->EDAD = 0;
+            $customerIntention->save();
+        }
+
+        if ($customer->EDAD > 80) {
+            if ($customerStatusDenied == false && empty($idDef)) {
+                $customerStatusDenied = true;
+                $idDef = "9";
+            }
+            $customerIntention->EDAD = 0;
+            $customerIntention->save();
+        } else {
+            $validateTipoCliente = TRUE;
+            if ($customer->ACTIVIDAD == 'PENSIONADO') {
+                $validateTipoCliente = FALSE;
+                if ($customer->EDAD >= 18 && $customer->EDAD <= 80) {
+                    $customerIntention->EDAD = 1;
+                    $customerIntention->save();
+                } else {
+                    if ($customerStatusDenied == false && empty($idDef)) {
+                        $customerStatusDenied = true;
+                        $idDef = "9";
+                    }
+                    $customerIntention->EDAD = 0;
+                    $customerIntention->save();
+                }
+            }
+
+            if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
+                if ($customer->EDAD >= 18 && $customer->EDAD <= 75) {
+                    $customerIntention->EDAD = 1;
+                    $customerIntention->save();
+                } else {
+                    if ($customerStatusDenied == false && empty($idDef)) {
+                        $customerStatusDenied = true;
+                        $idDef = "9";
+                    }
+                    $customerIntention->EDAD = 0;
+                    $customerIntention->save();
+                }
+            }
+
+            if ($customerIntention->TIPO_CLIENTE == 'NUEVO' && $validateTipoCliente == TRUE) {
+                if ($customer->EDAD >= 18 && $customer->EDAD <= 70) {
+                    $customerIntention->EDAD = 1;
+                    $customerIntention->save();
+                } else {
+                    if ($customerStatusDenied == false && empty($idDef)) {
+                        $customerStatusDenied = true;
+                        $idDef = "9";
+                    }
+                    $customerIntention->EDAD = 0;
+                    $customerIntention->save();
+                }
+            }
+        }
+
+        return true;
+    }
 }

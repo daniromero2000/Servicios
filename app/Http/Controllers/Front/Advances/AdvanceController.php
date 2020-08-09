@@ -36,13 +36,14 @@ use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterfa
 use Illuminate\Support\Facades\Auth;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
     private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
-    private $ubicaMailInterface;
+    private $ubicaMailInterface, $policyInterface;
     private $userInterface, $datosClienteInterface;
 
     public function __construct(
@@ -73,40 +74,51 @@ class AdvanceController extends Controller
         UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
         UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
         UserRepositoryInterface $userRepositoryInterface,
-        DatosClienteRepositoryInterface $datosClienteRepositoryInterface
+        DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
+        PolicyRepositoryInterface $policyRepositoryInterface
     ) {
-        $this->leadInterface       = $leadRepositoryInterface;
-        $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
-        $this->intentionInterface = $intentionRepositoryInterface;
-        $this->customerInterface = $customerRepositoryInterface;
+        $this->leadInterface                  = $leadRepositoryInterface;
+        $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
+        $this->intentionInterface             = $intentionRepositoryInterface;
+        $this->customerInterface              = $customerRepositoryInterface;
         $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
-        $this->cifinRealArrearsInterface = $cifinRealArrearRepositoryInterface;
-        $this->upToDate = $UpToDateFinancialCifinRepositoryInterface;
-        $this->extint = $extintFinancialCifinRepositoryInterface;
-        $this->real = $upToDateRealCifinsRepositoryInterface;
-        $this->extintreal = $extintRealCifinRepositoryInterface;
-        $this->cifinBasic = $cifinBasicDataRepositoryInterface;
-        $this->ubica = $ubicaRepositoryInterface;
-        $this->webServiceInterface = $webServiceRepositoryInterface;
-        $this->cityInterface = $cityRepositoryInterface;
-        $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
-        $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
-        $this->factoryInterface = $factoryRequestRepositoryInterface;
-        $this->assessorInterface = $assessorRepositoryInterface;
-        $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
-        $this->AnalisisInterface = $analisisRepositoryInterface;
-        $this->registraduriaInterface = $registraduriaRepositoryInterface;
-        $this->confrontaResultInterface = $confrontaResultRepositoryInterface;
-        $this->confrontaSelectinterface = $confrontaSelectRepositoryInterface;
-        $this->toolInterface = $toolRepositoryInterface;
-        $this->ubicaCellPhoneInterfac = $ubicaCellPhoneRepositoryInterface;
-        $this->ubicaMailInterface = $ubicaEmailRepositoryInterface;
-        $this->userInterface = $userRepositoryInterface;
-        $this->datosClienteInterface = $datosClienteRepositoryInterface;
+        $this->cifinRealArrearsInterface      = $cifinRealArrearRepositoryInterface;
+        $this->upToDate                       = $UpToDateFinancialCifinRepositoryInterface;
+        $this->extint                         = $extintFinancialCifinRepositoryInterface;
+        $this->real                           = $upToDateRealCifinsRepositoryInterface;
+        $this->extintreal                     = $extintRealCifinRepositoryInterface;
+        $this->cifinBasic                     = $cifinBasicDataRepositoryInterface;
+        $this->ubica                          = $ubicaRepositoryInterface;
+        $this->webServiceInterface            = $webServiceRepositoryInterface;
+        $this->cityInterface                  = $cityRepositoryInterface;
+        $this->cifinScoreInterface            = $cifinScoreRepositoryInterface;
+        $this->OportuyaTurnInterface          = $oportuyaTurnRepositoryInterface;
+        $this->factoryInterface               = $factoryRequestRepositoryInterface;
+        $this->assessorInterface              = $assessorRepositoryInterface;
+        $this->fosygaTempInterface            = $fosygaTempRepositoryInterface;
+        $this->AnalisisInterface              = $analisisRepositoryInterface;
+        $this->registraduriaInterface         = $registraduriaRepositoryInterface;
+        $this->confrontaResultInterface       = $confrontaResultRepositoryInterface;
+        $this->confrontaSelectinterface       = $confrontaSelectRepositoryInterface;
+        $this->toolInterface                  = $toolRepositoryInterface;
+        $this->ubicaCellPhoneInterfac         = $ubicaCellPhoneRepositoryInterface;
+        $this->ubicaMailInterface             = $ubicaEmailRepositoryInterface;
+        $this->userInterface                  = $userRepositoryInterface;
+        $this->datosClienteInterface          = $datosClienteRepositoryInterface;
+        $this->policyInterface                = $policyRepositoryInterface;
     }
 
     public function index()
     {
+
+        // $customer = $this->customerInterface->findCustomerById(1088019814);
+
+        // $customerIntention = $customer->latestIntention;
+
+        // $customerStatusDenied = false;
+
+        // $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $customerIntention);
+
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
