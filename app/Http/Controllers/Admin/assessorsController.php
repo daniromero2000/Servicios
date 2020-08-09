@@ -686,9 +686,8 @@ class assessorsController extends Controller
 		// 3.3 Estado de obligaciones
 		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('finvrmora');
 		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('rmvrmora');
-		$totalValorMora          = $respValorMoraFinanciero + $respValorMoraReal;
 
-		if ($totalValorMora > 100) {
+		if (($respValorMoraFinanciero + $respValorMoraReal) > 100) {
 			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "6";
