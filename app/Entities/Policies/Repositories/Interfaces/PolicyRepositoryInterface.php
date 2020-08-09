@@ -8,4 +8,8 @@ interface PolicyRepositoryInterface
     public function CheckScorePolicy($customerScore);
 
     public function validateCustomerAge($customer, $customerStatusDenied, $customerIntention);
+
+    public function validateLabourTime($customer, $customerStatusDenied);
+
+    public function validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
 }

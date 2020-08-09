@@ -111,13 +111,21 @@ class AdvanceController extends Controller
     public function index()
     {
 
-        // $customer = $this->customerInterface->findCustomerById(1088019814);
+        $customer = $this->customerInterface->findCustomerById(1088019814);
 
-        // $customerIntention = $customer->latestIntention;
+        $customerIntention = $customer->latestIntention;
 
-        // $customerStatusDenied = false;
+        $customerStatusDenied = "false";
 
-        // $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $customerIntention);
+        $tipoCliente = 'NUEVO';
+
+        $perfilCrediticio = 'TIPO C';
+
+
+        $ocular = $this->policyInterface->validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
+
+
+        dd($ocular);
 
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),

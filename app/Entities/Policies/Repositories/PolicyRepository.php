@@ -39,71 +39,116 @@ class PolicyRepository implements PolicyRepositoryInterface
         }
     }
 
-    public function validateCustomerAge($customer, $customerStatusDenied, $customerIntention)
+    public function validateCustomerAge($customer, $customerStatusDenied, $tipoCliente)
     {
+        $idDef = "";
+        $edad = 0;
         // 4.3 Edad.
         if ($customer->EDAD == false || empty($customer->EDAD)) {
             if ($customerStatusDenied == false && empty($idDef)) {
                 $customerStatusDenied = true;
                 $idDef = "9";
             }
-            $customerIntention->EDAD = 0;
-            $customerIntention->save();
+            $edad = 0;
         }
 
         if ($customer->EDAD > 80) {
+
             if ($customerStatusDenied == false && empty($idDef)) {
                 $customerStatusDenied = true;
                 $idDef = "9";
             }
-            $customerIntention->EDAD = 0;
-            $customerIntention->save();
+            $edad = 0;
         } else {
             $validateTipoCliente = TRUE;
             if ($customer->ACTIVIDAD == 'PENSIONADO') {
                 $validateTipoCliente = FALSE;
                 if ($customer->EDAD >= 18 && $customer->EDAD <= 80) {
-                    $customerIntention->EDAD = 1;
-                    $customerIntention->save();
+                    $edad = 1;
                 } else {
                     if ($customerStatusDenied == false && empty($idDef)) {
                         $customerStatusDenied = true;
                         $idDef = "9";
                     }
-                    $customerIntention->EDAD = 0;
-                    $customerIntention->save();
+                    $edad = 0;
                 }
             }
 
-            if ($customerIntention->TIPO_CLIENTE == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
+            if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
                 if ($customer->EDAD >= 18 && $customer->EDAD <= 75) {
-                    $customerIntention->EDAD = 1;
-                    $customerIntention->save();
+                    $edad = 1;
                 } else {
                     if ($customerStatusDenied == false && empty($idDef)) {
                         $customerStatusDenied = true;
                         $idDef = "9";
                     }
-                    $customerIntention->EDAD = 0;
-                    $customerIntention->save();
+                    $edad = 0;
                 }
             }
 
-            if ($customerIntention->TIPO_CLIENTE == 'NUEVO' && $validateTipoCliente == TRUE) {
+            if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
+
                 if ($customer->EDAD >= 18 && $customer->EDAD <= 70) {
-                    $customerIntention->EDAD = 1;
-                    $customerIntention->save();
+                    $edad = 1;
                 } else {
                     if ($customerStatusDenied == false && empty($idDef)) {
                         $customerStatusDenied = true;
                         $idDef = "9";
                     }
-                    $customerIntention->EDAD = 0;
-                    $customerIntention->save();
+                    $edad = 0;
                 }
             }
         }
 
-        return true;
+        return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'edad' => $edad];
+    }
+
+    public function validateLabourTime($customer, $customerStatusDenied)
+    {
+        $idDef = "";
+        $labor = 0;
+        // 4.5 Tiempo en Labor
+        if ($customer->ACTIVIDAD == 'PENSIONADO') {
+            $labor = 1;
+        } else {
+            if ($customer->ACTIVIDAD == 'RENTISTA' || $customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+                if ($customer->EDAD_INDP >= 4) {
+                    $labor = 1;
+                } else {
+                    if ($customerStatusDenied == false && empty($idDef)) {
+                        $customerStatusDenied = true;
+                        $idDef = "10";
+                    }
+                    $labor = 0;
+                }
+            } else {
+                if ($customer->ANTIG >= 4) {
+                    $labor = 1;
+                } else {
+                    if ($customerStatusDenied == false && empty($idDef)) {
+                        $customerStatusDenied = true;
+                        $idDef = "10";
+                    }
+                    $labor = 0;
+                }
+            }
+        }
+
+        return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'labor' => $labor];
+    }
+
+
+    public function validaOccularInspection($customer, $tipoCliente, $perfilCrediticio)
+    {
+        $ocular = 0;
+        // 4.7 Inspecciones Oculares
+        if ($tipoCliente == 'NUEVO') {
+            if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
+                if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
+                    $ocular = 1;
+                }
+            }
+        }
+        return  $ocular;
     }
 }
