@@ -811,15 +811,6 @@ class OportuyaV2Controller extends Controller
 
 	private function validatePolicyCredit_new($customer)
 	{
-		if ($customer->latestCifinScore) {
-			$lastCifinScore = $customer->latestCifinScore;
-			$customerScore  = $lastCifinScore->score;
-		} else {
-			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
-			$lastCifinScore = $customer->latestCifinScore;
-			$customerScore  = $lastCifinScore->score;
-		}
-
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
 		$assessorCode          = $this->userInterface->getAssessorCode();
@@ -833,8 +824,38 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->save();
 		}
 
+		//3.1 Estado de documento
+		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($customer->CEDULA);
+		if (!empty($getDataRegistraduria)) {
+			if ($getDataRegistraduria->fuenteFallo == 'SI') {
+				return ['resp' => -6];
+			} elseif (!empty($getDataRegistraduria->estado)) {
+				if ($getDataRegistraduria->estado != 'VIGENTE') {
+					$customer->ESTADO = 'NEGADO';
+					$customer->save();
+					$customerIntention->ID_DEF            =  '4';
+					$customerIntention->ESTADO_INTENCION  = '1';
+					$customerIntention->save();
+					return ['resp' => "false"];
+				}
+			} else {
+				return ['resp' => "false"];
+			}
+		} else {
+			$estadoCliente = "PREAPROBADO";
+		}
+
 		$customerStatusDenied  = false;
 		$idDef                 = "";
+
+		if ($customer->latestCifinScore) {
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
+		} else {
+			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
+		}
 
 		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
@@ -1023,28 +1044,6 @@ class OportuyaV2Controller extends Controller
 
 		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
 		$customerIntention->save();
-
-		//3.1 Estado de documento
-		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultation($customer->CEDULA);
-		if (!empty($getDataRegistraduria)) {
-			if ($getDataRegistraduria->fuenteFallo == 'SI') {
-				return ['resp' => -6];
-			} elseif (!empty($getDataRegistraduria->estado)) {
-				if ($getDataRegistraduria->estado != 'VIGENTE') {
-					$customer->ESTADO                     = 'NEGADO';
-					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
-					$customerIntention->ID_DEF            =  '4';
-					$customerIntention->ESTADO_INTENCION  = '1';
-					$customer->save();
-					$customerIntention->save();
-					return ['resp' => "false"];
-				}
-			} else {
-				return ['resp' => "false"];
-			}
-		} else {
-			$estadoCliente = "PREAPROBADO";
-		}
 
 		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';

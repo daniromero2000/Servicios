@@ -615,16 +615,6 @@ class assessorsController extends Controller
 	private function validatePolicyCredit_new($identificationNumber)
 	{
 		$customer = $this->customerInterface->findCustomerById($identificationNumber);
-
-		if ($customer->latestCifinScore) {
-			$lastCifinScore = $customer->latestCifinScore;
-			$customerScore  = $lastCifinScore->score;
-		} else {
-			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
-			$lastCifinScore = $customer->latestCifinScore;
-			$customerScore  = $lastCifinScore->score;
-		}
-
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
 		$assessorCode          = $this->userInterface->getAssessorCode();
@@ -638,8 +628,39 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
+		//3.1 Estado de documento
+		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
+		if (!empty($getDataRegistraduria)) {
+			if ($getDataRegistraduria->fuenteFallo == 'SI') {
+				$fuenteFallo = "true";
+			} elseif (!empty($getDataRegistraduria->estado)) {
+				if ($getDataRegistraduria->estado != 'VIGENTE') {
+					$customer->ESTADO  = 'NEGADO';
+					$customer->save();
+					$customerIntention->ID_DEF            =  '4';
+					$customerIntention->ESTADO_INTENCION  = '1';
+					$customerIntention->CREDIT_DECISION = 'Negado';
+					$customerIntention->save();
+					return ['resp' => "false"];
+				}
+			} else {
+				$fuenteFallo = "true";
+			}
+		} else {
+			$estadoCliente = "PREAPROBADO";
+		}
+
 		$customerStatusDenied  = false;
 		$idDef                 = "";
+
+		if ($customer->latestCifinScore) {
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
+		} else {
+			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
+		}
 
 		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
@@ -825,29 +846,6 @@ class assessorsController extends Controller
 
 		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
 		$customerIntention->save();
-
-		//3.1 Estado de documento
-		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
-		if (!empty($getDataRegistraduria)) {
-			if ($getDataRegistraduria->fuenteFallo == 'SI') {
-				$fuenteFallo = "true";
-			} elseif (!empty($getDataRegistraduria->estado)) {
-				if ($getDataRegistraduria->estado != 'VIGENTE') {
-					$customer->ESTADO                     = 'NEGADO';
-					$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
-					$customerIntention->ID_DEF            =  '4';
-					$customerIntention->ESTADO_INTENCION  = '1';
-					$customerIntention->CREDIT_DECISION = 'Negado';
-					$customer->save();
-					$customerIntention->save();
-					return ['resp' => "false"];
-				}
-			} else {
-				$fuenteFallo = "true";
-			}
-		} else {
-			$estadoCliente = "PREAPROBADO";
-		}
 
 		if ($customerStatusDenied == true) {
 			$customer->ESTADO          = 'NEGADO';
