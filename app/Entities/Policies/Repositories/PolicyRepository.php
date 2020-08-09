@@ -14,29 +14,42 @@ class PolicyRepository implements PolicyRepositoryInterface
 
     public function CheckScorePolicy($customerScore)
     {
+        $customerStatusDenied  = false;
+        $idDef                 = "";
+        $perfilCrediticio = "";
+
         if ($customerScore >= -7 && $customerScore <= 0) {
-            return 'TIPO 5';
+            $perfilCrediticio = 'TIPO 5';
+        }
+
+        if ($customerScore >= 1 && $customerScore <= 275) {
+            $customerStatusDenied = true;
+            $idDef                = '5';
+            $perfilCrediticio     = 'TIPO D';
         }
 
         if ($customerScore >= 275 && $customerScore <= 527) {
-            return 'TIPO D';
+            $perfilCrediticio =  'TIPO D';
         }
 
         if ($customerScore >= 528 && $customerScore <= 624) {
-            return  'TIPO C';
+            $perfilCrediticio =  'TIPO C';
         }
 
         if ($customerScore >= 625 && $customerScore <= 674) {
-            return 'TIPO B';
+            $perfilCrediticio =  'TIPO B';
         }
 
         if ($customerScore >= 675 && $customerScore <= 1000) {
-            return  'TIPO A';
+            $perfilCrediticio =  'TIPO A';
         }
 
         if ($customerScore <= -8) {
-            return 'TIPO 7';
+            $idDef                 = '8';
+            $perfilCrediticio =  'TIPO 7';
         }
+
+        return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'perfilCrediticio' => $perfilCrediticio];
     }
 
     public function validateCustomerAge($customer, $customerStatusDenied, $tipoCliente)

@@ -862,26 +862,20 @@ class OportuyaV2Controller extends Controller
 			return ['resp' => "false"];
 		} else {
 			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
-
-			if ($customerScore >= 1 && $customerScore <= 275) {
-				$customerStatusDenied = true;
-				$idDef                = '5';
-				$perfilCrediticio     = 'TIPO D';
-			}
+			$customerStatusDenied = $perfilCrediticio['customerStatusDenied'];
+			$idDef                = $perfilCrediticio['idDef'];
+			$perfilCrediticio     = $perfilCrediticio['perfilCrediticio'];
 
 			if ($perfilCrediticio == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$idDef                               = '8';
-				$customerIntention->ID_DEF           = '8';
+				$customerIntention->ID_DEF           = $idDef;
 				$customerIntention->ESTADO_INTENCION = '1';
 				$customerIntention->CREDIT_DECISION  = 'Negado';
+				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 				$customerIntention->save();
 				return ['resp' => "false"];
 			}
-
-			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
-			$customerIntention->save();
 		}
 
 		// 3.3 Estado de obligaciones
@@ -968,6 +962,7 @@ class OportuyaV2Controller extends Controller
 		$customerIntention->EDAD              = $edad['edad'];
 		$customerIntention->TIEMPO_LABOR      = $labor['labor'];
 		$customerIntention->INSPECCION_OCULAR = $ocular;
+		$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 		$customerIntention->save();
 
 		// 3.6 Tarjeta Black
