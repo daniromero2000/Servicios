@@ -625,14 +625,16 @@ class assessorsController extends Controller
 			$customerScore = $lastCifinScore->score;
 		}
 
-		$customerStatusDenied = false;
-		$idDef                = "";
-		$customer             = $this->customerInterface->findCustomerById($identificationNumber);
+		$customerStatusDenied  = false;
+		$idDef                 = "";
+		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
-		$assessorCode = $this->userInterface->getAssessorCode();
-		$data = ['CEDULA' => $identificationNumber];
-		$data['ASESOR'] = $assessorCode;
+		$lastIntention         = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$assessorCode          = $this->userInterface->getAssessorCode();
+		$data                  = [
+			'CEDULA' => $identificationNumber,
+			'ASESOR' => $assessorCode
+		];
 
 		if ($lastIntention == "true") {
 			$customerIntention =	$this->intentionInterface->createIntention($data);
@@ -1243,9 +1245,11 @@ class assessorsController extends Controller
 
 		if ($resultUbica == 0) {
 			$dataLead               = $request['lead'];
+			$lastName               = explode(" ", $customer->APELLIDOS);
+			$lastName               = $lastName[0];
 			$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
 			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
-			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $customer->APELLIDOS);
+			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($identificationNumber);
 				if (empty($form)) {
