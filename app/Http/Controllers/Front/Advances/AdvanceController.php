@@ -110,41 +110,6 @@ class AdvanceController extends Controller
 
     public function index()
     {
-
-        $customer = $this->customerInterface->findCustomerById(1088019814);
-
-        $customerIntention = $customer->latestIntention;
-
-        $lastCifinScore = $customer->latestCifinScore;
-        $customerScore  = $lastCifinScore->score;
-
-        $customerStatusDenied = "false";
-
-        $tipoCliente = 'NUEVO';
-
-        $perfilCrediticio = 'TIPO C';
-
-        $score = -10;
-
-
-        $perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
-
-        dd($perfilCrediticio == 'TIPO 7');
-
-        if ($perfilCrediticio['perfilCrediticio'] == 'TIPO 7') {
-            dd('entre a tiopo 7');
-            $customer->ESTADO = 'NEGADO';
-            $customer->save();
-            $idDef                               = '8';
-            $customerIntention->ID_DEF           = '8';
-            $customerIntention->ESTADO_INTENCION = '1';
-            $customerIntention->CREDIT_DECISION  = 'Negado';
-            $customerIntention->save();
-            return ['resp' => "false"];
-        }
-
-
-
         return view('advance.index', [
             'images' => Imagenes::selectRaw('*')->where('category', '=', '3')->where('isSlide', '=', '1')->get(),
             'cities' => $this->subsidiaryInterface->getAllSubsidiaryCityNames()
