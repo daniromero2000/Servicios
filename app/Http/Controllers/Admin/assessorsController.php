@@ -233,7 +233,6 @@ class assessorsController extends Controller
 		}
 		$factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
 		$listCount            = $listCount->count();
-		$statuses = FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get();
 
 		return view('assessors.assessors.list', [
 			'factoryRequests'          => $list,
@@ -246,7 +245,7 @@ class assessorsController extends Controller
 			'statusesNegadosValues'    => $statusesNegadosValues,
 			'statusesDesistidosValues' => $statusesDesistidosValues,
 			'statusesPendientesValues' => $statusesPendientesValues,
-			'statuses'                 => $statuses
+			'statuses'                 => FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get()
 
 		]);
 	}
@@ -521,7 +520,13 @@ class assessorsController extends Controller
 			$lastName = explode(" ", trim($request->get('APELLIDOS')));
 			$fechaExpIdentification = strtotime(trim($request->get('FEC_EXP')));
 			$fechaExpIdentification = date("d/m/Y", $fechaExpIdentification);
-			return ['identificationNumber' => trim($request->get('CEDULA')), 'tipoDoc' => trim($request->get('TIPO_DOC')), 'tipoCreacion' => $request->tipoCliente, 'lastName' => $lastName[0], 'dateExpIdentification' => $fechaExpIdentification];
+			return [
+				'identificationNumber'  => trim($request->get('CEDULA')),
+				'tipoDoc'               => trim($request->get('TIPO_DOC')),
+				'tipoCreacion'          => $request->tipoCliente,
+				'lastName'              => $lastName[0],
+				'dateExpIdentification' => $fechaExpIdentification
+			];
 		}
 	}
 
@@ -1172,7 +1177,13 @@ class assessorsController extends Controller
 
 		$professions = $this->customerProfessionInterface->listCustomerProfessions();
 		$kinships = $this->kinshipInterface->listKinships();
-		return response()->json(['ubicationsCities' => $resp, 'cities' => $resp2, 'banks' => $resp3, 'professions' => $professions->toArray(), 'kinships' => $kinships->toArray()]);
+		return response()->json([
+			'ubicationsCities' => $resp,
+			'cities' => $resp2,
+			'banks' => $resp3,
+			'professions' => $professions->toArray(),
+			'kinships' => $kinships->toArray()
+		]);
 	}
 
 	public function getinfoLeadVentaContado($cedula)
@@ -1317,7 +1328,12 @@ class assessorsController extends Controller
 		if ($aprobo == 0) {
 			// Validacion Telefono empresarial
 			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
-				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep`
+				FROM `ubica_telefono`
+				WHERE `ubitipoubi` LIKE '%LAB%'
+				AND `ubiconsul` = :consec
+				AND (`ubitelefono` = :tel_emp
+				OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
 				if (!empty($telEmpConsultaUbica)) {
 					$aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
 				} else {

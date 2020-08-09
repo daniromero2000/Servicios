@@ -41,7 +41,6 @@ use App\Entities\Products\Transformations\ProductTransformable;
 use App\Entities\Products\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
 use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
@@ -258,19 +257,16 @@ class OportuyaV2Controller extends Controller
 	{
 		//get step one request from data sent by form
 		if (($request->get('step')) == 1) {
-			$paso = "PASO1";
 			$identificationNumber = trim($request->get('identificationNumber'));
 			$customer             = $this->customerInterface->checkIfExists($identificationNumber);
-			$clienteWeb           = 1;
-			$usuarioActualizacion = "";
-			$assessorCode           = $this->userInterface->getAssessorCode();
+			$assessorCode         = $this->userInterface->getAssessorCode();
 			$usuarioCreacion      = (string) $assessorCode;
+			$clienteWeb           = 1;
 			$clienteWeb = (isset($customer->CLIENTE_WEB)) ? $customer->CLIENTE_WEB : 1;
 			$usuarioCreacion = (isset($customer->USUARIO_CREACION)) ? $customer->USUARIO_CREACION : (string) $assessorCode;
-			$usuarioActualizacion = (string) $assessorCode;
 			$subsidiaryCityName = $this->subsidiaryInterface->getSubsidiaryCityByCode($request->get('city'))->CIUDAD;
 			$city               = $this->cityInterface->getCityByName($subsidiaryCityName);
-			$estado             = "";
+
 			$dataOportudata = [
 				'TIPO_DOC'              => $request->get('typeDocument'),
 				'CEDULA'                => $identificationNumber,
@@ -287,13 +283,13 @@ class OportuyaV2Controller extends Controller
 				'SUBTIPO'               => 'WEB',
 				'STATE'                 => 'A',
 				'SUC'                   => $request->get('city'),
-				'ESTADO'                => $estado,
-				'PASO'                  => $paso,
+				'ESTADO'                => "",
+				'PASO'                  => "PASO1",
 				'ORIGEN'                => $request->get('typeService'),
 				'CLIENTE_WEB'           => $clienteWeb,
 				'TRAT_DATOS'            => "SI",
 				'USUARIO_CREACION'      => $usuarioCreacion,
-				'USUARIO_ACTUALIZACION' => $usuarioActualizacion,
+				'USUARIO_ACTUALIZACION' => $assessorCode,
 				'FECHA_ACTUALIZACION'   => date('Y-m-d H: i: s'),
 				'ID_CIUD_UBI'           => trim($city->ID_DIAN),
 				'MEDIO_PAGO'            => 12,
@@ -341,10 +337,8 @@ class OportuyaV2Controller extends Controller
 
 		if ($request->get('step') == 2) {
 			$identificationNumber = trim($request->get('identificationNumber'));
-			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "PASO2";
-
 			$getIdcityExp = $this->cityInterface->getCityByName(trim($request->get('cityExpedition')));
+
 			$dataLead = [
 				'CEDULA' 			=> $identificationNumber,
 				'DIRECCION' 		=> trim(strtoupper($request->get('addres'))),
@@ -368,29 +362,25 @@ class OportuyaV2Controller extends Controller
 				'SALARIO_CONYU' 	=> ($request->get('spouseSalary') != '') ? trim($request->get('spouseSalary')) : '0',
 				'CELULAR_CONYU' 	=> ($request->get('spouseTelephone') != '') ? trim($request->get('spouseTelephone')) : '0',
 				'ESTRATO' 			=> $request->get('stratum'),
-				'PASO' 				=> $paso
+				'PASO' 				=> "PASO2"
 			];
 
+			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			$oportudataLead->update($dataLead);
-
-			$consultasRegistraduria = $this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
+			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			return response()->json([true]);
 		}
 
 		if ($request->get('step') == 3) {
-			$identificationNumber = $request->get('identificationNumber');
-			$identificationNumber = (string) $identificationNumber;
-			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-			$paso = "PASO3";
-
+			$identificationNumber = (string) $request->get('identificationNumber');
 			$this->timeRejectedVigency = $this->consultationValidityInterface->getRejectedValidity()->rechazado_vigencia;
-			$existSolicFab = $this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency);
 
-			if ($existSolicFab == true) {
+			if ($this->factoryRequestInterface->checkCustomerHasFactoryRequest($identificationNumber, $this->timeRejectedVigency) == true) {
 				return -3; // Tiene solicitud
 			}
 
+			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			if (trim($oportudataLead->ACTIVIDAD) == 'SOLDADO-MILITAR-POLICÍA' || trim($oportudataLead->ACTIVIDAD) == 6) return -2;
 
 			$customerJobStart = new Carbon($request->get('admissionDate'));
@@ -415,7 +405,7 @@ class OportuyaV2Controller extends Controller
 				'EDAD_INDP' =>  $customerIndependentStart->diffInMonths(Carbon::now()),
 				'SUELDOIND' => ($request->get('salaryInd') != '') ? trim($request->get('salaryInd')) : 0,
 				'BANCOP' 	=> ($request->get('bankSavingsAccount') != '') ? trim($request->get('bankSavingsAccount')) : 'NA',
-				'PASO' 		=> $paso
+				'PASO' 		=> "PASO3"
 			];
 
 			// Update/save information in CLIENTE_FAB table
@@ -614,7 +604,10 @@ class OportuyaV2Controller extends Controller
 
 	public function getContactData($identificationNumber)
 	{
-		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation FROM `CLIENTE_FAB` WHERE `CEDULA` = %s LIMIT 1 ", trim($identificationNumber));
+		$query = sprintf("SELECT `NOMBRES` as name, `APELLIDOS` as lastName, `EMAIL` as email, `TELFIJO` as telephone, `CIUD_UBI` as city, `TIPO_DOC` as typeDocument, `CEDULA` as identificationNumber, `ACTIVIDAD` as occupation
+		FROM `CLIENTE_FAB`
+		WHERE `CEDULA` = %s
+		LIMIT 1 ", trim($identificationNumber));
 		$resp = DB::connection('oportudata')->select($query);
 
 		return response()->json($resp[0]);
@@ -657,7 +650,9 @@ class OportuyaV2Controller extends Controller
 
 	public function downloadResultadoPolitica($id)
 	{
-		$queryResultado = DB::connection('oportudata')->select("SELECT `RESULTADO` FROM `TB_RESULTADO_POLITICA` WHERE `ID` = :id ", ['id' => $id]);
+		$queryResultado = DB::connection('oportudata')->select("SELECT `RESULTADO`
+		FROM `TB_RESULTADO_POLITICA`
+		WHERE `ID` = :id ", ['id' => $id]);
 		$resultado = json_decode($queryResultado[0]->RESULTADO);
 		$resultado = (array) $resultado;
 		$printExcel = [];
@@ -1401,7 +1396,12 @@ class OportuyaV2Controller extends Controller
 		if ($aprobo == 0) {
 			// Validacion Telefono empresarial
 			if ($customer->TEL_EMP != '' && $customer->TEL_EMP != '0') {
-				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep` FROM `ubica_telefono` WHERE `ubitipoubi` LIKE '%LAB%' AND `ubiconsul` = :consec AND (`ubitelefono` = :tel_emp OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
+				$telEmpConsultaUbica = DB::connection('oportudata')->select("SELECT `ubiprimerrep`
+				FROM `ubica_telefono`
+				WHERE `ubitipoubi` LIKE '%LAB%'
+				AND `ubiconsul` = :consec
+				AND (`ubitelefono` = :tel_emp
+				OR `ubitelefono` = :tel2_emp ) ", ['consec' => $consec, 'tel_emp' => $customer->TEL_EMP, 'tel2_emp' => $customer->TEL2_EMP]);
 				if (!empty($telEmpConsultaUbica)) {
 					$aprobo = $this->ubicaInterface->validateDateUbica($telEmpConsultaUbica[0]->ubiprimerrep);
 				} else {
@@ -1733,6 +1733,7 @@ class OportuyaV2Controller extends Controller
 		}
 
 		$infoLead->numSolic = $numSolic;
+
 		if ($estadoSolic == 19) {
 			$customer->ESTADO = "APROBADO";
 			$customer->save();
@@ -1753,12 +1754,15 @@ class OportuyaV2Controller extends Controller
 
 			$this->addTurnosOportuya($customer, $scoreLead, $numSolic);
 		}
+
 		$customer->ESTADO = $estadoResult;
 		$customer->save();
 		$infoLead = (object) [];
+
 		if ($estadoSolic != 3) {
 			$infoLead = $this->getInfoLeadCreate($identificationNumber);
 		}
+
 		$infoLead->numSolic = $numSolic;
 		$infoLead->ESTADO = $factoryRequest->ESTADO;
 
@@ -1777,6 +1781,7 @@ class OportuyaV2Controller extends Controller
 		$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
 		$sucursal          = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorData      = $this->assessorInterface->findAssessorById($assessorCode);
+
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
@@ -1802,23 +1807,25 @@ class OportuyaV2Controller extends Controller
 
 	private function addTurnos($identificationNumber, $numSolic)
 	{
-		$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
-		$respScoreLead = $oportudataLead->latestCifinScore->score;
-		$scoreLead = 0;
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+		$respScoreLead  = $customer->latestCifinScore->score;
+		$scoreLead      = 0;
+
 		if (!empty($respScoreLead)) {
 			$scoreLead = $respScoreLead->score;
 		}
 
-		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($oportudataLead->CIUD_UBI)->CODIGO;
+		$sucursal     = $this->subsidiaryInterface->getSubsidiaryCodeByCity($customer->CIUD_UBI)->CODIGO;
 		$assessorCode = $this->userInterface->getAssessorCode();
 		$assessorData = $this->assessorInterface->findAssessorById($assessorCode);
+
 		if ($assessorData->SUCURSAL != 1) {
 			$sucursal = trim($assessorData->SUCURSAL);
 		}
 
 		$turnData = [
 			'SOLICITUD' => $numSolic,
-			'CEDULA'    => $oportudataLead->CEDULA,
+			'CEDULA'    => $customer->CEDULA,
 			'SUC'       => $sucursal,
 			'SCORE'     => $scoreLead,
 		];
@@ -1886,7 +1893,11 @@ class OportuyaV2Controller extends Controller
 
 	public function getDataStep1()
 	{
-		$query = "SELECT CODIGO as value, CIUDAD as label FROM SUCURSALES WHERE PRINCIPAL = 1 AND STATE='A' ORDER BY CIUDAD ASC";
+		$query = "SELECT CODIGO as value, CIUDAD as label
+		FROM SUCURSALES
+		WHERE PRINCIPAL = 1
+		AND STATE='A'
+		ORDER BY CIUDAD ASC";
 		$resp = DB::connection('oportudata')->select($query);
 
 		return $resp;
@@ -1896,7 +1907,9 @@ class OportuyaV2Controller extends Controller
 	{
 		$data = [];
 		$query2 = "SELECT `CODIGO` as value, `NOMBRE` as label FROM `CIUDADES` WHERE `STATE` = 'A' ORDER BY NOMBRE ";
-		$queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum FROM CLIENTE_FAB WHERE CEDULA = %s ", $identificationNumber);
+		$queryOportudataLead = sprintf("SELECT NOMBRES as name, APELLIDOS as lastName, SUC as branchOffice, CEDULA as identificationNumber, SEXO as gender, DIRECCION as addres, FEC_NAC as birthdate, CIUD_EXP as cityExpedition, ESTADOCIVIL as civilStatus, PROPIETARIO as housingOwner, TIPOV as housingType, TIEMPO_VIV as housingTime, TELFIJO as housingTelephone, VRARRIENDO as leaseValue, EPS_CONYU as spouseEps, NOMBRE_CONYU as spouseName, CEDULA_C as spouseIdentificationNumber, TRABAJO_CONYU as spouseJob, CARGO_CONYU as spouseJobName, PROFESION_CONYU as spouseProfession, SALARIO_CONYU as spouseSalary, CELULAR_CONYU as spouseTelephone, ESTRATO as stratum
+		FROM CLIENTE_FAB
+		WHERE CEDULA = %s ", $identificationNumber);
 		$respOportudataLead = DB::connection('oportudata')->select($queryOportudataLead);
 		$resp2 = DB::connection('oportudata')->select($query2);
 		$digitalAnalysts = [['name' => 'Mariana', 'img' => 'images/analista3.png']];
