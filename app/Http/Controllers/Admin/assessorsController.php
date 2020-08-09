@@ -628,6 +628,7 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
+		$estadoCliente = "PREAPROBADO";
 		//3.1 Estado de documento
 		$getDataRegistraduria = $this->registraduriaInterface->getLastRegistraduriaConsultationPolicy($customer->CEDULA);
 		if (!empty($getDataRegistraduria)) {
@@ -818,7 +819,6 @@ class assessorsController extends Controller
 		}
 
 		// 2. WS Fosyga
-		$estadoCliente = "PREAPROBADO";
 		$fuenteFallo = "false";
 		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultationPolicy($identificationNumber);
@@ -833,11 +833,7 @@ class assessorsController extends Controller
 		}
 
 		// 4.6 Tipo 5 Especial
-		$tipo5Especial = 0;
-		if ($perfilCrediticio == 'TIPO 5' && ($customer->ACTIVIDAD == 'EMPLEADO' || $customer->ACTIVIDAD == 'PENSIONADO') && $statusAfiliationCustomer == true) {
-			$tipo5Especial = 1;
-		}
-
+		$tipo5Especial = $this->policyInterface->validateTipoEspecial($perfilCrediticio, $customer->ACTIVIDAD, $statusAfiliationCustomer);
 		$customerIntention->TIPO_5_ESPECiAL = $tipo5Especial;
 		$customerIntention->save();
 

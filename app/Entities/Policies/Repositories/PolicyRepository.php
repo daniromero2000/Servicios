@@ -164,4 +164,15 @@ class PolicyRepository implements PolicyRepositoryInterface
         }
         return  $ocular;
     }
+
+    public function validateTipoEspecial($perfilCrediticio, $actividad, $statusAfiliationCustomer)
+    {
+        // 4.6 Tipo 5 Especial
+        $tipo5Especial = 0;
+        if ($perfilCrediticio == 'TIPO 5' && ($actividad == 'EMPLEADO' || $actividad == 'PENSIONADO') && $statusAfiliationCustomer == true) {
+            $tipo5Especial = 1;
+        }
+
+        return      $tipo5Especial;
+    }
 }
