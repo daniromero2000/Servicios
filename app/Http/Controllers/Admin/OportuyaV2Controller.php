@@ -820,8 +820,6 @@ class OportuyaV2Controller extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
-		$customerStatusDenied  = false;
-		$idDef                 = "";
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
 		$assessorCode          = $this->userInterface->getAssessorCode();
@@ -834,6 +832,9 @@ class OportuyaV2Controller extends Controller
 			$customerIntention->ASESOR = $assessorCode;
 			$customerIntention->save();
 		}
+
+		$customerStatusDenied  = false;
+		$idDef                 = "";
 
 		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
@@ -932,116 +933,21 @@ class OportuyaV2Controller extends Controller
 			$tipoCliente = 'NUEVO';
 		}
 
+		$edad = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $tipoCliente);
+		$customerStatusDenied = $edad['customerStatusDenied'];
+		$idDef                = $edad['idDef'];
+		$labor = $this->policyInterface->validateLabourTime($customer, $customerStatusDenied);
+		$customerStatusDenied = $labor['customerStatusDenied'];
+		$idDef                = $labor['idDef'];
+		$ocular = $this->policyInterface->validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
+
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
 		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
 		$customerIntention->TIPO_CLIENTE      = $tipoCliente;
+		$customerIntention->EDAD              = $edad['edad'];
+		$customerIntention->TIEMPO_LABOR      = $labor['labor'];
+		$customerIntention->INSPECCION_OCULAR = $ocular;
 		$customerIntention->save();
-
-		// 4.3 Edad.
-		$customerAge = $customer->EDAD;
-		if ($customerAge == false || empty($customerAge)) {
-			if ($customerStatusDenied == false && empty($idDef)) {
-				$customerStatusDenied = true;
-				$idDef = "9";
-			}
-			$customerIntention->EDAD = 0;
-			$customerIntention->save();
-		}
-
-		if ($customerAge > 80) {
-			if ($customerStatusDenied == false && empty($idDef)) {
-				$customerStatusDenied = true;
-				$idDef = "9";
-			}
-			$customerIntention->EDAD = 0;
-			$customerIntention->save();
-		} else {
-			$validateTipoCliente = TRUE;
-			if ($customer->ACTIVIDAD == 'PENSIONADO') {
-				$validateTipoCliente = FALSE;
-				if ($customerAge >= 18 && $customerAge <= 80) {
-					$customerIntention->EDAD = 1;
-					$customerIntention->save();
-				} else {
-					if ($customerStatusDenied == false && empty($idDef)) {
-						$customerStatusDenied = true;
-						$idDef = "9";
-					}
-					$customerIntention->EDAD = 0;
-					$customerIntention->save();
-				}
-			}
-
-			if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
-				if ($customerAge >= 18 && $customerAge <= 75) {
-					$customerIntention->EDAD = 1;
-					$customerIntention->save();
-				} else {
-					if ($customerStatusDenied == false && empty($idDef)) {
-						$customerStatusDenied = true;
-						$idDef = "9";
-					}
-					$customerIntention->EDAD = 0;
-					$customerIntention->save();
-				}
-			}
-
-			if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
-				if ($customerAge >= 18 && $customerAge <= 70) {
-					$customerIntention->EDAD = 1;
-					$customerIntention->save();
-				} else {
-					if ($customerStatusDenied == false && empty($idDef)) {
-						$customerStatusDenied = true;
-						$idDef = "9";
-					}
-					$customerIntention->EDAD = 0;
-					$customerIntention->save();
-				}
-			}
-		}
-
-		// 4.5 Tiempo en Labor
-		if ($customer->ACTIVIDAD == 'PENSIONADO') {
-			$customerIntention->TIEMPO_LABOR = 1;
-			$customerIntention->save();
-		} else {
-			if ($customer->ACTIVIDAD == 'RENTISTA' || $customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($customer->EDAD_INDP >= 4) {
-					$customerIntention->TIEMPO_LABOR = 1;
-					$customerIntention->save();
-				} else {
-					if ($customerStatusDenied == false && empty($idDef)) {
-						$customerStatusDenied = true;
-						$idDef = "10";
-					}
-					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->save();
-				}
-			} else {
-				if ($customer->ANTIG >= 4) {
-					$customerIntention->TIEMPO_LABOR = 1;
-					$customerIntention->save();
-				} else {
-					if ($customerStatusDenied == false && empty($idDef)) {
-						$customerStatusDenied = true;
-						$idDef = "10";
-					}
-					$customerIntention->TIEMPO_LABOR = 0;
-					$customerIntention->save();
-				}
-			}
-		}
-
-		// 4.7 Inspecciones Oculares
-		if ($tipoCliente == 'NUEVO') {
-			if ($customer->ACTIVIDAD == 'INDEPENDIENTE CERTIFICADO' || $customer->ACTIVIDAD == 'NO CERTIFICADO') {
-				if ($perfilCrediticio == 'TIPO C' || $perfilCrediticio == 'TIPO D' || $perfilCrediticio == 'TIPO 5') {
-					$customerIntention->INSPECCION_OCULAR = 1;
-					$customerIntention->save();
-				}
-			}
-		}
 
 		// 3.6 Tarjeta Black
 		$tarjeta = '';
