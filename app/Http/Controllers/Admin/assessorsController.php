@@ -51,6 +51,7 @@ use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterfa
 use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
 use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
 
+
 class assessorsController extends Controller
 {
 	private $kinshipInterface, $subsidiaryInterface, $ubicaInterface;
@@ -517,15 +518,12 @@ class assessorsController extends Controller
 				$this->cliCelInterface->createCliCel($data);
 			}
 
-			$lastName = explode(" ", trim($request->get('APELLIDOS')));
-			$fechaExpIdentification = strtotime(trim($request->get('FEC_EXP')));
-			$fechaExpIdentification = date("d/m/Y", $fechaExpIdentification);
 			return [
 				'identificationNumber'  => trim($request->get('CEDULA')),
 				'tipoDoc'               => trim($request->get('TIPO_DOC')),
 				'tipoCreacion'          => $request->tipoCliente,
-				'lastName'              => $lastName[0],
-				'dateExpIdentification' => $fechaExpIdentification
+				'lastName'              => $this->customerInterface->getcustomerFirstLastName($request->get('APELLIDOS')),
+				'dateExpIdentification' => $this->toolsInterface->getConfrontaDateFormat($request->get('FEC_EXP'))
 			];
 		}
 	}
@@ -616,30 +614,28 @@ class assessorsController extends Controller
 
 	private function validatePolicyCredit_new($identificationNumber)
 	{
-		if ($this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber)) {
-			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
-			$customerScore = $lastCifinScore->score;
+		$customer = $this->customerInterface->findCustomerById($identificationNumber);
+
+		if ($customer->latestCifinScore) {
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
 		} else {
-			$this->commercialConsultationInterface->ConsultarInformacionComercial($identificationNumber);
-			$lastCifinScore = $this->cifinScoreInterface->getCustomerLastCifinScore($identificationNumber);
-			$customerScore = $lastCifinScore->score;
+			$this->commercialConsultationInterface->ConsultarInformacionComercial($customer->CEDULA);
+			$lastCifinScore = $customer->latestCifinScore;
+			$customerScore  = $lastCifinScore->score;
 		}
 
 		$customerStatusDenied  = false;
 		$idDef                 = "";
-		$customer              = $this->customerInterface->findCustomerById($identificationNumber);
 		$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$lastIntention         = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
+		$lastIntention         = $this->intentionInterface->validateDateIntention($customer->CEDULA,  $this->daysToIncrement);
 		$assessorCode          = $this->userInterface->getAssessorCode();
-		$data                  = [
-			'CEDULA' => $identificationNumber,
-			'ASESOR' => $assessorCode
-		];
 
 		if ($lastIntention == "true") {
-			$customerIntention =	$this->intentionInterface->createIntention($data);
+			$intentionData     = ['CEDULA' => $customer->CEDULA, 'ASESOR' => $assessorCode];
+			$customerIntention = $this->intentionInterface->createIntention($intentionData);
 		} else {
-			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($identificationNumber);
+			$customerIntention = $this->intentionInterface->findLatestCustomerIntentionByCedula($customer->CEDULA);
 			$customerIntention->ASESOR = $assessorCode;
 			$customerIntention->save();
 		}
@@ -690,6 +686,7 @@ class assessorsController extends Controller
 
 		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber, $lastCifinScore->scoconsul);
 		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastCifinScore->scoconsul);
+
 		if ($customerRealDoubtful->isNotEmpty()) {
 			if ($customerRealDoubtful[0]->rmsaldob > 0) {
 				if ($customerStatusDenied == false && empty($idDef)) {
@@ -728,16 +725,10 @@ class assessorsController extends Controller
 			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
 		}
 
-		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
-
-		//4.1 Zona de riesgo
-		$customerIntention->ZONA_RIESGO =  $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
-
-		// 4.2 Tipo de cliente
 		$tipoCliente = '';
 		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
 		FROM TB_CLIENTES_ACTIVOS
-		WHERE `CEDULA` = %s AND FECHA >= date_add(NOW(), INTERVAL -24 MONTH)", $identificationNumber);
+		WHERE `CEDULA` = %s AND FECHA >= date_add(NOW(), INTERVAL -24 MONTH)", $customer->CEDULA);
 
 		$respClienteActivo = DB::connection('oportudata')->select($queryGetClienteActivo);
 		if ($respClienteActivo[0]->tipoCliente == 1) {
@@ -746,12 +737,14 @@ class assessorsController extends Controller
 			$tipoCliente = 'NUEVO';
 		}
 
-		$customerIntention->TIPO_CLIENTE = $tipoCliente;
+		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
+		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
+		$customerIntention->TIPO_CLIENTE      = $tipoCliente;
 		$customerIntention->save();
 
 		// 4.3 Edad.
-		$queryEdad = $customer->EDAD;
-		if ($queryEdad == false || empty($queryEdad)) {
+		$customerAge = $customer->EDAD;
+		if ($customerAge == false || empty($customerAge)) {
 			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "9";
@@ -760,7 +753,7 @@ class assessorsController extends Controller
 			$customerIntention->save();
 		}
 
-		if ($queryEdad > 80) {
+		if ($customerAge > 80) {
 			if ($customerStatusDenied == false && empty($idDef)) {
 				$customerStatusDenied = true;
 				$idDef = "9";
@@ -771,7 +764,7 @@ class assessorsController extends Controller
 			$validateTipoCliente = TRUE;
 			if ($customer->ACTIVIDAD == 'PENSIONADO') {
 				$validateTipoCliente = FALSE;
-				if ($queryEdad >= 18 && $queryEdad <= 80) {
+				if ($customerAge >= 18 && $customerAge <= 80) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
@@ -785,7 +778,7 @@ class assessorsController extends Controller
 			}
 
 			if ($tipoCliente == 'OPORTUNIDADES' && $validateTipoCliente == TRUE) {
-				if ($queryEdad >= 18 && $queryEdad <= 75) {
+				if ($customerAge >= 18 && $customerAge <= 75) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
@@ -799,7 +792,7 @@ class assessorsController extends Controller
 			}
 
 			if ($tipoCliente == 'NUEVO' && $validateTipoCliente == TRUE) {
-				if ($queryEdad >= 18 && $queryEdad <= 70) {
+				if ($customerAge >= 18 && $customerAge <= 70) {
 					$customerIntention->EDAD = 1;
 					$customerIntention->save();
 				} else {
@@ -1238,17 +1231,15 @@ class assessorsController extends Controller
 		$intention = $customer->latestIntention;
 		$intention->CREDIT_DECISION = 'Tarjeta Oportuya';
 		$intention->save();
-		$estadoSolic            = 3;
+		$estadoSolic = 3;
+		$lastName = $this->customerInterface->getcustomerFirstLastName($customer->APELLIDOS);
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
-		$this->ubicaInterface->doConsultaUbica($customer, $this->daysToIncrement);
+		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
 		$resultUbica = $this->validateConsultaUbica($customer);
 
 		if ($resultUbica == 0) {
 			$dataLead               = $request['lead'];
-			$lastName               = explode(" ", $customer->APELLIDOS);
-			$lastName               = $lastName[0];
-			$fechaExpIdentification = explode("-", $dataLead['FEC_EXP']);
-			$fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
 				$form = $this->toolsInterface->getFormConfronta($identificationNumber);

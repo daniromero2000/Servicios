@@ -64,4 +64,13 @@ class ToolRepository implements ToolRepositoryInterface
     }
     return $form;
   }
+
+  public function getConfrontaDateFormat($fecha)
+  {
+    $fechaExpIdentification = strtotime(trim($fecha));
+    return  $fechaExpIdentification = date("d/m/Y", $fechaExpIdentification);
+
+    // $fechaExpIdentification = explode("-", $fecha);
+    // $fechaExpIdentification = $fechaExpIdentification[2] . "/" . $fechaExpIdentification[1] . "/" . $fechaExpIdentification[0];
+  }
 }
