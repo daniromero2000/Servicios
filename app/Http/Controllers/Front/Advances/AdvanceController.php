@@ -47,6 +47,8 @@ class AdvanceController extends Controller
     private $userInterface, $datosClienteInterface;
 
     public function __construct(
+
+    
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         IntentionRepositoryInterface $intentionRepositoryInterface,
