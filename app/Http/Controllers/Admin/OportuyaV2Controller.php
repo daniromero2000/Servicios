@@ -307,6 +307,8 @@ class OportuyaV2Controller extends Controller
 				$this->customerCellPhoneInterface->createCustomerCellPhone($clienteCelular);
 			}
 
+			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
+
 			// Registraduria
 			$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
@@ -325,7 +327,6 @@ class OportuyaV2Controller extends Controller
 				];
 			}
 
-			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 			$lastIntention = $this->intentionInterface->validateDateIntention($identificationNumber,  $this->daysToIncrement);
 
 			if ($lastIntention == "true") {
@@ -982,16 +983,18 @@ class OportuyaV2Controller extends Controller
 		}
 
 		// 2. WS Fosyga
+		$fuenteFallo = "false";
 		$statusAfiliationCustomer = true;
 		$getDataFosyga = $this->fosygaInterface->getLastFosygaConsultation($customer->CEDULA);
 		if (!empty($getDataFosyga)) {
 			if ($getDataFosyga->fuenteFallo == 'SI') {
-				return ['resp' => -6];
+				$fuenteFallo = "true";
 			} elseif (empty($getDataFosyga->estado) || empty($getDataFosyga->regimen) || empty($getDataFosyga->tipoAfiliado)) {
-				return ['resp' => -6];
+				$fuenteFallo = "true";
 			} else {
 				if ($getDataFosyga->estado != 'ACTIVO' || $getDataFosyga->regimen != 'CONTRIBUTIVO' || $getDataFosyga->tipoAfiliado != 'COTIZANTE') {
 					$statusAfiliationCustomer = false;
+					$fuenteFallo = "false";
 				}
 			}
 		} else {
