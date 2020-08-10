@@ -368,6 +368,7 @@ class OportuyaV2Controller extends Controller
 
 			$oportudataLead = $this->customerInterface->findCustomerById($identificationNumber);
 			$oportudataLead->update($dataLead);
+			$this->daysToIncrement = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 			$this->fosygaInterface->doFosygaConsult($oportudataLead, $this->daysToIncrement);
 
 			return response()->json([true]);
