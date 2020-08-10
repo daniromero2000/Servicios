@@ -16,7 +16,7 @@ class CreditBusinesDetailRepository implements CreditBusinesDetailRepositoryInte
         $this->model = $creditBusinesDetail;
     }
 
-    public function listCreditBusiness($totalView): Support
+    public function listCreditBusinesDetail($totalView): Support
     {
         try {
             return  $this->model
@@ -26,6 +26,15 @@ class CreditBusinesDetailRepository implements CreditBusinesDetailRepositoryInte
                 ->get();
         } catch (QueryException $e) {
             dd($e);
+        }
+    }
+
+    public function createProductList($data)
+    {
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $e) {
+            throw $e;
         }
     }
 }

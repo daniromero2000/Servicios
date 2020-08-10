@@ -25,7 +25,7 @@ class CommentController extends Controller
     {
         unset($request['state']);
         $request['idLogin'] = auth()->user()->id;
-        $this->commentInterface->createComment($request->input());
+        $this->commentInterface->createComment($request->except(['_token']));
         $lead = $this->leadInterface->findLeadById($request->idLead);
         $lead->leadStatus()->attach(4, ['user_id' => $request['idLogin']]);
         $lead->state = 4;

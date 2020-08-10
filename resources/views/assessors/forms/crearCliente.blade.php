@@ -937,7 +937,7 @@
                             <h2 class="decisionCredit-title text-center" style="color: #dc3545;">Información errónea
                             </h2>
                             <p class="textModal text-center">
-                                Por favor verifica la información sumistrada
+                                Por favor verifica la información suministrada
                             </p>
                         </div>
                     </div>
@@ -1188,6 +1188,12 @@
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
+                            {{-- <p class="textTnakYouModal">
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                            exitosamente,
+                            <br>
+                            procede a ingresar los datos del negocio.
+                            </p> --}}
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
@@ -1241,6 +1247,9 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
+                            {{-- <a ng-if="estadoCliente == 'TRADICIONAL'"
+                                href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"
+                            class="btn bg-primary buttonBackCardExist">Crear negocio @{{lead.CEDULA}}</a> --}}
                         </div>
                     </div>
                 </div>

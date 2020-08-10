@@ -8,4 +8,6 @@ use Illuminate\Support\Collection as Support;
 interface CreditBusinesDetailRepositoryInterface
 {
     public function listCreditBusinesDetail($totalView): Support;
+
+    public function createProductList($data);
 }

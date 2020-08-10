@@ -12,6 +12,8 @@ class Product extends Model
 {
     use SearchableTrait;
 
+    protected $table = 'productsv2';
+
     protected $searchable = [
         'columns' => [
             'products.sku' => 10,
@@ -32,14 +34,12 @@ class Product extends Model
         'description_image3',
         'description_image4',
         'specification_image',
-        'price',
         'brand_id',
         'status',
         'months',
-        'pays',
         'status',
-        'sale_price',
         'slug',
+        'order'
     ];
 
     protected $hidden = [];

@@ -126,4 +126,17 @@ class SubsidiaryRepository implements SubsidiaryRepositoryInterface
             dd($e);
         }
     }
+    public function getSubsidiaryForCities()
+    {
+        try {
+            return  $this->model->select('CIUDAD', 'ZONA')
+                ->where('STATE', 'A')
+                ->where('ALMACEN', '1')
+                ->orderBy('CIUDAD', 'asc')
+                ->groupBy('CIUDAD')
+                ->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
 }

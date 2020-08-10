@@ -64,6 +64,16 @@ class ListProductRepository implements ListProductRepositoryInterface
         }
     }
 
+    public function findListProductBySku($sku)
+    {
+        try {
+            return $this->model->where('sku', $sku)->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+
     public function updateListProduct($data)
     {
         try {
@@ -215,7 +225,6 @@ class ListProductRepository implements ListProductRepositoryInterface
         $list = $this->productListInterface->getCurrentProductListsForZone($zone);
         $listPrices = $this->getPriceProductForAllCurrentList($product_id);
         $data[$list[0]->name] = $listPrices[$list[0]->name];
-
         return $data;
     }
 

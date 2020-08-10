@@ -44,6 +44,22 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function updateFactoryRequest($data)
+    {
+        // dd($data);
+
+        // $data['FECHASOL']      = date("Y-m-d H:i:s");
+        // $data['FTP']           = 0;
+        // $data['STATE']         = "A";
+        // $data['GRAN_TOTAL']    = 0;
+
+        try {
+            return $this->model->updateOrCreate(['SOLICITUD' => $data['SOLICITUD']], $data);
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
     public function findFactoryRequestById(int $id): FactoryRequest
     {
         try {
@@ -72,10 +88,38 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         }
     }
 
+    public function checkCustomerHasFactoryRequestLiquidator($identificationNumber)
+    {
+        $queryExistSolicFab = $this->getFactoryRequestForCustomer($identificationNumber);
+        if (!empty($queryExistSolicFab) && $queryExistSolicFab->ESTADO != 1 || (!empty($queryExistSolicFab) && !empty($queryExistSolicFab->super->toArray()))) {
+            return true; // Tiene Solictud en Sucursal
+        } else {
+            return false; // No tiene solicitud
+        }
+    }
+
+    public function getFactoryRequestForCustomer($identificationNumber)
+    {
+        $dateNow = date('Y-m-d');
+        $dateNow = strtotime("- 30 day", strtotime($dateNow));
+        $dateNow = date('Y-m-d', $dateNow);
+        try {
+            $checkExistRequest = $this->model->with('super')->where('CLIENTE', $identificationNumber)
+                ->orderBy('SOLICITUD', 'desc')->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->get($this->columns)->first();
+            if (!is_null($checkExistRequest)) {
+                return $checkExistRequest;
+            } else {
+                return false; // No tiene solicitud
+            }
+        } catch (ModelNotFoundException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
     public function getCustomerFactoryRequest($identificationNumber): FactoryRequest
     {
         try {
-            return $this->model->where('Cliente', $identificationNumber)
+            return $this->model->where('CLIENTE', $identificationNumber)
                 ->orderBy('SOLICITUD', 'desc')->get(['SOLICITUD'])->first();
         } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());

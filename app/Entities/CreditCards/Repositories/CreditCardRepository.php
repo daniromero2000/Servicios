@@ -8,14 +8,15 @@ use Illuminate\Database\QueryException;
 
 class CreditCardRepository implements CreditCardRepositoryInterface
 {
-    public function __construct(
-        CreditCard $creditCard
-    ) {
-        $this->model = $creditCard;
-    }
+	public function __construct(
+		CreditCard $creditCard
+	) {
+		$this->model = $creditCard;
+	}
 
-    public function createCreditCard($numSolic, $identificationNumber, $cupoCompra, $cupoAvance, $sucursal, $tipoTarjetaAprobada){
-        $tipoTarjeta = "";
+	public function createCreditCard($numSolic, $identificationNumber, $cupoCompra, $cupoAvance, $sucursal, $tipoTarjetaAprobada)
+	{
+		$tipoTarjeta = "";
 		if ($tipoTarjetaAprobada == 'Tarjeta Black') {
 			$tipoTarjeta = 'BLACK';
 		} elseif ($tipoTarjetaAprobada == 'Tarjeta Gray') {
@@ -66,26 +67,40 @@ class CreditCardRepository implements CreditCardRepositoryInterface
 		$tarjeta['TOKEN_CE']   = "";
 		$tarjeta['CELULAR_CE'] = "";
 		$tarjeta['STATE']      = "A";
-        $tarjeta['ANALISTA']   = "SI";
+		$tarjeta['ANALISTA']   = "SI";
 
-        try {
-            return $this->model->create($tarjeta);
-        } catch (QueryException $e) {
-            //throw $th;
-        }
-    }
+		try {
+			return $this->model->create($tarjeta);
+		} catch (QueryException $e) {
+			//throw $th;
+		}
+	}
 
-    public function checkCustomerHasCreditCard($identificationNumber)
-    {
-        try {
-            $queryExistCard = $this->model->where('CLIENTE', $identificationNumber)->get()->first();
-            if (!empty($queryExistCard)) {
-                return true; // Tiene tarjeta
-            } else {
-                return false; // No tiene tarjeta
-            }
-        } catch (QueryException $e) {
-            //throw $th;
-        }
-    }
+	public function checkCustomerHasCreditCard($identificationNumber)
+	{
+		try {
+			$queryExistCard = $this->model->where('CLIENTE', $identificationNumber)->get()->first();
+			if (!empty($queryExistCard)) {
+				return true; // Tiene tarjeta
+			} else {
+				return false; // No tiene tarjeta
+			}
+		} catch (QueryException $e) {
+			//throw $th;
+		}
+	}
+
+	public function checkCustomerHasCreditCardActive($identificationNumber)
+	{
+		try {
+			$queryExistCard = $this->model->where('CLIENTE', $identificationNumber)->where('STATE', 'A')->whereNotIn('ESTADO', ['A', 'P'])->get(['NUMERO', 'ESTADO', 'TIPO_TAR', 'STATE'])->first();
+			if (!empty($queryExistCard)) {
+				return true; // Tiene tarjeta Inactiva
+			} else {
+				return false; // No tiene tarjeta Inactiva
+			}
+		} catch (QueryException $e) {
+			//throw $th;
+		}
+	}
 }

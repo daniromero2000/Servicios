@@ -124,13 +124,15 @@ Route::get('/validateEmails', 'Admin\OportuyaV2Controller@validateEmail');
 
 Route::resource('pages', 'Admin\PageController');
 Route::resource('oportuya', 'Admin\OportuyaV2Controller');
-Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@catalog');
-Route::get('credito-electrodomesticos/catalogo/{product}', 'Admin\OportuyaV2Controller@product');
+Route::get('credito-electrodomesticos/catalogo', 'Admin\OportuyaV2Controller@getSubsidiaryCustomer');
+Route::get('/credito-electrodomesticos/catalogo/{zona}', 'Admin\OportuyaV2Controller@catalog')->name('catalogo.zona');
+Route::get('credito-electrodomesticos/catalogo/{product}/{zona}', 'Admin\OportuyaV2Controller@product');
 Route::resource('libranza', 'Admin\LibranzaController');
 Route::resource('leads', 'Admin\LeadsController');
 Route::get('/view-products', function () {
     return view('oportuya.viewProducts');
 });
+
 
 Route::resource('Nuestras-tiendas', 'Admin\ourStoresController');
 Route::resource('oportuyaV2', 'Admin\OportuyaV2Controller');
@@ -139,9 +141,12 @@ Route::resource('brands', 'Admin\BrandsController');
 Route::resource('lines', 'Admin\LinesController');
 Route::resource('profiles', 'Admin\ProfilesController');
 Route::resource('api/factors', 'Admin\Factors\FactorController');
+Route::get('api/listFactors', 'Admin\Factors\FactorController@getFactors');
 Route::resource('api/listGiveAways', 'Admin\ListGiveAways\ListGiveAwayController');
 
 Route::resource('products', 'Admin\ProductsController');
+Route::get('api/getProducts/{sku}', 'Admin\Products\ProductController@getProduct');
+Route::put('api/updateProducts/{sku}', 'Admin\Products\ProductController@updateOrder');
 Route::get('preguntas-frecuentes', 'Admin\FaqsController@indexPublic')->name('preguntas.frecuentes');
 Route::get('api/encryptText/{string}', 'Admin\OportuyaV2Controller@encrypt');
 Route::get('api/checkIfExistNum/{cellPhone}/{identificationNumber}', 'Admin\OportuyaV2Controller@checkIfExistNum');
@@ -202,6 +207,8 @@ Route::group(['prefix' => 'api/'], function () {
     Route::get('oportuya/getDataStep3/{identificationNumber}', 'Admin\OportuyaV2Controller@getDataStep3');
     Route::get('oportuya/execConsultasLead/{identificationNumber}', 'Admin\OportuyaV2Controller@execConsultasleadAsesores');
     Route::get('oportuya/deniedLeadForFecExp/{identificationNumber}/{typeDenied}', 'Admin\OportuyaV2Controller@deniedLeadForFecExp');
+    // Administrador de catalogo
+    Route::get('getProduct/productList/{sku}', 'Admin\ListProducts\ListProductController@getProduct');
     // Administrador de politicas de credito
     Route::post('AdminCreditPolicy/addCredit', 'Admin\CreditPolicyController@store');
     Route::group(['prefix' => 'listProducts'], function () {
