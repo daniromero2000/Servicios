@@ -3,29 +3,9 @@
 namespace App\Entities\WebServices\Repositories;
 
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use SoapClient;
 
 class WebServiceRepository implements WebServiceRepositoryInterface
 {
-    public function execWebServiceFosygaRegistraduria($identificationNumber, $idConsultaWebService, $tipoDocumento, $dateExpeditionDocument = "")
-    {
-        set_time_limit(0);
-        $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $tipoDocumento, $identificationNumber);
-        //$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
-        if ($dateExpeditionDocument != '') {
-            $urlConsulta .= sprintf('&hgu=%s', $dateExpeditionDocument);
-        }
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);
-        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-        $buffer = curl_exec($curl_handle);
-        curl_close($curl_handle);
-        $persona = json_decode($buffer, true);
-
-        return response()->json($persona);
-    }
-
     public function sendMessageSms($code, $date, $celNumber)
     {
         $url = 'https://api.hablame.co/sms/envio/';
@@ -87,39 +67,6 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         return $response;
     }
 
-    public function execConsultaComercial($identificationNumber, $typeDocument)
-    {
-        $obj = new \stdClass();
-        $obj->typeDocument = trim($typeDocument);
-        $obj->identificationNumber = trim($identificationNumber);
-        try {
-            $port = config('portsWs.creditVision');
-            // 2801 CreditVision Produccion, 2020 CreditVision Pruebas
-            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
-            return 1;
-        } catch (\Throwable $th) {
-            return 0;
-        }
-    }
-
-    public function execConsultaUbica($identificationNumber, $typeDocument, $lastName)
-    {
-        $obj = new \stdClass();
-        $obj->typeDocument = trim($typeDocument);
-        $obj->identificationNumber = trim($identificationNumber);
-        $obj->lastName = trim($lastName);
-        try {
-            // 2040 Ubica Pruebas
-            $port = config('portsWs.ubica');
-            $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
-            return 1;
-        } catch (\Throwable $th) {
-            return 0;
-        }
-    }
-
     public function execCheckCutomerPays($identificationNumber)
     {
         $obj = new \stdClass();
@@ -127,7 +74,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         try {
             $port = config('portsWs.pagosCliente');
             $ws = new \SoapClient("http://10.238.14.181:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultaUbicaPlus($obj);  // correcta
+            $ws->ConsultaUbicaPlus($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -146,7 +93,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             // 2040 Ubica Pruebas
             $port = config('portsWs.confronta');
             $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->obtenerCuestionario($obj);  // correcta
+            $ws->obtenerCuestionario($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -159,21 +106,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
         $obj->cedula = trim($identificationNumber);
         try {
             $ws = new \SoapClient("http://10.238.14.151:2816/Conector.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarCliente($obj);  // correcta
-            return 1;
-        } catch (\Throwable $th) {
-            return 0;
-        }
-    }
-
-    public function ConsultarInformacionComercial($identificationNumber)
-    {
-        $obj = new \stdClass();
-        $obj->typeDocument = 1;
-        $obj->identificationNumber = trim($identificationNumber);
-        try {
-            $ws = new \SoapClient("http://10.238.14.151:9999/Service1.svc?singleWsdl", array()); //correcta
-            $result = $ws->ConsultarInformacionComercial($obj);  // correcta
+            $ws->ConsultarCliente($obj);  // correcta
             return 1;
         } catch (\Throwable $th) {
             return 0;
@@ -186,7 +119,7 @@ class WebServiceRepository implements WebServiceRepositoryInterface
             // 2050 Confronta Pruebas
             $port = config('portsWs.confronta');
             $ws = new \SoapClient("http://10.238.14.151:" . $port . "/Service1.svc?singleWsdl"); //correcta
-            $result = $ws->evaluarCuestionario([
+            $ws->evaluarCuestionario([
                 'Code'      => 7081,
                 'question1' => $dataEvaluar[0]->secuencia_preg,
                 'answer1'   => $dataEvaluar[0]->secuencia_resp,

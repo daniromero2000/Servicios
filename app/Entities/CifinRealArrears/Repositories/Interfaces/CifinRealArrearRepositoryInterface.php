@@ -9,4 +9,6 @@ interface CifinRealArrearRepositoryInterface
   public function check12MonthsPaymentVector($identificationNumber, $lastConsult);
 
   public function checkCustomerHasCifinRealDoubtful($identificationNumber, $lastConsult);
+
+  public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef);
 }

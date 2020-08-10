@@ -117,7 +117,7 @@
                 <td class="text-center">{{ $reference->DIR_REFFA2 }}</td>
                 <td class="text-center">{{ $reference->BAR_REFFA2 }}</td>
                 <td class="text-center">{{ $reference->TEL_REFFA2 }}</td>
-                <td class="text-center">{{ $reference->CIU_REFFA2 }}</td>
+                <td class="text-center">{{ $reference->PARENTESCO }}</td>
               </tr>
               @endforeach
 
@@ -150,7 +150,6 @@
                 <th class="text-center" scope="col">Barrio</th>
                 <th class="text-center" scope="col">Celular</th>
                 <th class="text-center" scope="col">Parentesco</th>
-
               </tr>
             </thead>
             <tbody class="body-table">
@@ -161,7 +160,7 @@
                 <td class="text-center">{{ $reference->DIR_REFFAM}}</td>
                 <td class="text-center">{{ $reference->BAR_REFFAM }}</td>
                 <td class="text-center">{{ $reference->TEL_REFFAM }}</td>
-                <td class="text-center">{{ $reference->CIU_REFFAM }}</td>
+                <td class="text-center">{{ $reference->PARENTESC2 }}</td>
               </tr>
               @endforeach
 

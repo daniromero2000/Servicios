@@ -15,27 +15,17 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         $this->model = $registraduria;
     }
 
-    public function getLastRegistraduriaConsultation($identificationNumber)
+    public function doFosygaRegistraduriaConsult($oportudataLead, $days)
     {
-        try {
-            return $this->model->where('cedula', $identificationNumber)
-                ->where('fuenteFallo', 'NO')
-                ->orderBy('idEstadoCedula', 'desc')->get()
-                ->first();
-        } catch (QueryException $e) {
-            dd($e);
+        if ($this->validateDateConsultaRegistraduria($oportudataLead->CEDULA,  $days) == "true") {
+            $infoEstadoCedula      = $this->execWebServiceFosygaRegistraduria($oportudataLead, '91891024');
+            $infoEstadoCedula      = (array) $infoEstadoCedula;
+            $consultaRegistraduria = $this->createConsultaRegistraduria($infoEstadoCedula, $oportudataLead->CEDULA);
+        } else {
+            $consultaRegistraduria = 1;
         }
-    }
 
-    public function getLastRegistraduriaConsultationPolicy($identificationNumber)
-    {
-        try {
-            return $this->model->where('cedula', $identificationNumber)
-                ->orderBy('idEstadoCedula', 'desc')->get()
-                ->first();
-        } catch (QueryException $e) {
-            dd($e);
-        }
+        return $this->validateRegistraduria($consultaRegistraduria, $oportudataLead);
     }
 
     public function validateDateConsultaRegistraduria($identificationNumber,  $daysToIncrement)
@@ -61,6 +51,25 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
                 return 'false';
             }
         }
+    }
+
+    public function execWebServiceFosygaRegistraduria($oportudataLead,  $idConsultaWebService)
+    {
+        set_time_limit(0);
+        $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $oportudataLead->TIPO_DOC, $oportudataLead->CEDULA);
+        //$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
+        if ($oportudataLead->FEC_EXP != '') {
+            $urlConsulta .= sprintf('&hgu=%s', $oportudataLead->FEC_EXP);
+        }
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        $buffer = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        $persona = json_decode($buffer, true);
+
+        return response()->json($persona);
     }
 
     public function createConsultaRegistraduria($infoEstadoCedula, $identificationNumber)
@@ -91,10 +100,53 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
         return 1;
     }
 
-    public function validateConsultaRegistraduria($identificationNumber, $name, $lastName, $dateExpedition)
+
+    public function getLastRegistraduriaConsultation($identificationNumber)
+    {
+        try {
+            return $this->model->where('cedula', $identificationNumber)
+                ->where('fuenteFallo', 'NO')
+                ->orderBy('idEstadoCedula', 'desc')->get()
+                ->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function getLastRegistraduriaConsultationPolicy($identificationNumber)
+    {
+        try {
+            return $this->model->where('cedula', $identificationNumber)
+                ->orderBy('idEstadoCedula', 'desc')->get()
+                ->first();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
+
+    public function validateRegistraduria($consultaRegistraduria, $oportudataLead)
+    {
+        $validateConsultaRegistraduria = 0;
+        if ($consultaRegistraduria > 0) {
+            $validateConsultaRegistraduria = $this->validateConsultaRegistraduria($oportudataLead);
+        } else {
+            $validateConsultaRegistraduria = 1;
+        }
+
+        if ($validateConsultaRegistraduria == -1) {
+            return -1;
+        }
+
+        if ($validateConsultaRegistraduria < 0) {
+            return "-3";
+        }
+    }
+
+
+    public function validateConsultaRegistraduria($oportudataLead)
     {
         // Registraduria
-        $respEstadoCedula =  $this->getLastRegistraduriaConsultation($identificationNumber);
+        $respEstadoCedula =  $this->getLastRegistraduriaConsultation($oportudataLead->CEDULA);
         if ($respEstadoCedula->fechaExpedicion != '') {
             $dateExpEstadoCedula = $respEstadoCedula->fechaExpedicion;
             $dateExpEstadoCedula = str_replace(" DE ", "/", $dateExpEstadoCedula);
@@ -105,10 +157,10 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
             $dateExplode = explode("/", $dateExpEstadoCedula);
             $dateExpEstadoCedula = $dateExplode[2] . "/" . $dateExplode[1] . "/" . $dateExplode[0];
 
-            DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`) VALUES (:identificationNumber)', ['identificationNumber' => $identificationNumber]);
+            DB::connection('oportudata')->select('INSERT INTO `temp_consultaFosyga` (`cedula`) VALUES (:identificationNumber)', ['identificationNumber' => $oportudataLead->CEDULA]);
 
-            if (strtotime($dateExpedition) != strtotime($dateExpEstadoCedula)) {
-                DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+            if (strtotime($oportudataLead->FEC_EXP) != strtotime($dateExpEstadoCedula)) {
+                DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $oportudataLead->CEDULA]);
                 return -4; // Fecha de expedicion no coincide
             }
         }
@@ -117,17 +169,17 @@ class RegistraduriaRepository implements RegistraduriaRepositoryInterface
             return -1; // Cedula no vigente
         }
 
-        $nameComplete = $name . ' ' . $lastName;
+        $nameComplete = $oportudataLead->NOMBRES . ' ' . $oportudataLead->APELLIDOS;
         $nameDataLead = explode(" ", $nameComplete);
         $nameBdua = explode(" ", $respEstadoCedula->primerNombre);
         $coincideNames = $this->compareNamesLastNames($nameDataLead, $nameBdua);
 
         if ($coincideNames == 0) {
-            DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+            DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "NO COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $oportudataLead->CEDULA]);
             return -4; // Nombres y/o apellidos no coinciden
         }
 
-        DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $identificationNumber]);
+        DB::connection('oportudata')->select('UPDATE `temp_consultaFosyga` SET `paz_cli` = "COINCIDE" WHERE `cedula` = :identificationNumber ORDER BY id DESC LIMIT 1', ['identificationNumber' => $oportudataLead->CEDULA]);
         return 1;
     }
 
