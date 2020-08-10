@@ -1,0 +1,45 @@
+th, tr{
+  line-height:0.5em;
+  font-size: small;
+  color: #131111;
+  text-align: center;
+}
+
+td{
+color: #FFFFFF;
+}
+
+.navbar{
+  width: 1200px;
+  margin-left: 1cm;
+  border-radius: 0.2cm;
+}
+
+.card {
+  margin-bottom: 0rem;
+}
+
+#ejecutar {
+  position: relative;
+  top:-30%;
+}
+
+table{
+  margin-left: 0.5cm;  
+}
+
+h3{
+margin-top: -0.3cm;
+}
+
+h5{
+  text-align: right;
+  }
+
+.row{
+  height: 15px;
+}
+
+
+
+

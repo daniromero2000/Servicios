@@ -38,6 +38,8 @@ class AdvanceController extends Controller
 
 
     public function __construct(
+
+    
         LeadRepositoryInterface $leadRepositoryInterface,
         SubsidiaryRepositoryInterface $subsidiaryRepositoryInterface,
         IntentionRepositoryInterface $intentionRepositoryInterface,

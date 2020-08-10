@@ -8,7 +8,8 @@
     | contains the "web" middleware group. Now create something great!
 */
 
-
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::resource('confrontInHouse', 'ConfrontController');
 
@@ -513,11 +514,12 @@ Route::group(['prefix' => '/campaigns'], function () {
 
 Route::get('/campaigns/auteco2');
 
-
 Route::namespace('Admin')->group(function () {
     Route::namespace('FactoryRequestsComments')->group(function () {
         Route::resource('factoryRequestsComments', 'FactoryRequestsCommentController');
     });
 });
+
+
 include "web2.php";
 include "web3.php";
