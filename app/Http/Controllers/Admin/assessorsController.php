@@ -651,9 +651,6 @@ class assessorsController extends Controller
 			$estadoCliente = "PREAPROBADO";
 		}
 
-		$customerStatusDenied  = false;
-		$idDef                 = "";
-
 		if ($customer->latestCifinScore) {
 			$lastCifinScore = $customer->latestCifinScore;
 			$customerScore  = $lastCifinScore->score;
@@ -663,21 +660,24 @@ class assessorsController extends Controller
 			$customerScore  = $lastCifinScore->score;
 		}
 
+		$customerStatusDenied  = false;
+		$idDef                 = "";
 		// 5	Puntaje y 3.4 Calificacion Score
 		if (empty($customer)) {
 			return ['resp' => "false"];
 		} else {
-			$perfilCrediticio = $this->policyInterface->CheckScorePolicy($customerScore);
-			$customerStatusDenied = $perfilCrediticio['customerStatusDenied'];
-			$idDef                = $perfilCrediticio['idDef'];
-			$perfilCrediticio     = $perfilCrediticio['perfilCrediticio'];
+			$perfilCrediticio                     = $this->policyInterface->CheckScorePolicy($customerScore);
+			$customerStatusDenied                 = $perfilCrediticio['customerStatusDenied'];
+			$idDef                                = $perfilCrediticio['idDef'];
+			$perfilCrediticio                     = $perfilCrediticio['perfilCrediticio'];
+			$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 
 			if ($perfilCrediticio == 'TIPO 7') {
 				$customer->ESTADO = 'NEGADO';
 				$customer->save();
-				$customerIntention->ID_DEF           = $idDef;
-				$customerIntention->ESTADO_INTENCION = '1';
-				$customerIntention->CREDIT_DECISION  = 'Negado';
+				$customerIntention->ID_DEF            = $idDef;
+				$customerIntention->ESTADO_INTENCION  = '1';
+				$customerIntention->CREDIT_DECISION   = 'Negado';
 				$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
 				$customerIntention->save();
 				return ['resp' => "false"];
@@ -685,89 +685,57 @@ class assessorsController extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-		$respValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('finvrmora');
-		$respValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($identificationNumber, $lastCifinScore->scoconsul)->sum('rmvrmora');
+		$ValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('finvrmora');
+		$ValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('rmvrmora');
+		$obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
+		$customerStatusDenied                   = $obligaciones['customerStatusDenied'];
+		$idDef                                  = $obligaciones['idDef'];
+		$customerIntention->ESTADO_OBLIGACIONES = $obligaciones['arreas'];
 
-		if (($respValorMoraFinanciero + $respValorMoraReal) > 100) {
-			if ($customerStatusDenied == false && empty($idDef)) {
-				$customerStatusDenied = true;
-				$idDef = "6";
-			}
-			$customerIntention->ESTADO_OBLIGACIONES = 0;
-			$customerIntention->save();
-		} else {
-			$customerIntention->ESTADO_OBLIGACIONES = 1;
-			$customerIntention->save();
-		}
+		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$customerStatusDenied                   = $realDoubtful['customerStatusDenied'];
+		$idDef                                  = $realDoubtful['idDef'];
+		$customerIntention->ESTADO_OBLIGACIONES = $realDoubtful['doubtful'];
 
-		$customerRealDoubtful = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealDoubtful($identificationNumber, $lastCifinScore->scoconsul);
-		$customerFinDoubtful  = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastCifinScore->scoconsul);
-
-		if ($customerRealDoubtful->isNotEmpty()) {
-			if ($customerRealDoubtful[0]->rmsaldob > 0) {
-				if ($customerStatusDenied == false && empty($idDef)) {
-					$customerStatusDenied = true;
-					$idDef                = "6";
-				}
-				$customerIntention->ESTADO_OBLIGACIONES = 0;
-				$customerIntention->save();
-			}
-		}
-
-		if ($customerFinDoubtful->isNotEmpty()) {
-			if ($customerFinDoubtful[0]->finsaldob > 0) {
-				if ($customerStatusDenied == false && empty($idDef)) {
-					$customerStatusDenied = true;
-					$idDef                = "6";
-				}
-				$customerIntention->ESTADO_OBLIGACIONES = 0;
-				$customerIntention->save();
-			}
-		}
+		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$customerStatusDenied                   = $finDoubtful['customerStatusDenied'];
+		$idDef                                  = $finDoubtful['idDef'];
+		$customerIntention->ESTADO_OBLIGACIONES = $finDoubtful['doubtful'];
 
 		//3.5 Historial de Crédito
 		$historialCrediticio = 0;
-		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
+		$historialCrediticio = $this->UpToDateFinancialCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
 
 		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($identificationNumber);
-		}
-
-		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+			$historialCrediticio = $this->extintFinancialCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
 		}
 
 		if ($historialCrediticio == 0) {
-			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($identificationNumber);
+			$historialCrediticio = $this->UpToDateRealCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
 		}
 
-		$tipoCliente = '';
-		$queryGetClienteActivo = sprintf("SELECT COUNT(`CEDULA`) as tipoCliente
-		FROM TB_CLIENTES_ACTIVOS
-		WHERE `CEDULA` = %s AND FECHA >= date_add(NOW(), INTERVAL -24 MONTH)", $customer->CEDULA);
-
-		$respClienteActivo = DB::connection('oportudata')->select($queryGetClienteActivo);
-		if ($respClienteActivo[0]->tipoCliente == 1) {
-			$tipoCliente = 'OPORTUNIDADES';
-		} else {
-			$tipoCliente = 'NUEVO';
+		if ($historialCrediticio == 0) {
+			$historialCrediticio = $this->extinctRealCifinInterface->check6MonthsPaymentVector($customer->CEDULA);
 		}
-
-		$edad = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $tipoCliente);
-		$customerStatusDenied = $edad['customerStatusDenied'];
-		$idDef                = $edad['idDef'];
-		$labor = $this->policyInterface->validateLabourTime($customer, $customerStatusDenied);
-		$customerStatusDenied = $labor['customerStatusDenied'];
-		$idDef                = $labor['idDef'];
-		$ocular = $this->policyInterface->validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
 
 		$customerIntention->HISTORIAL_CREDITO = $historialCrediticio;
-		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
-		$customerIntention->TIPO_CLIENTE      = $tipoCliente;
-		$customerIntention->EDAD              = $edad['edad'];
-		$customerIntention->TIEMPO_LABOR      = $labor['labor'];
+
+		$tipoCliente                     = 'NUEVO';
+		$customerIntention->TIPO_CLIENTE = $tipoCliente;
+
+		$edad                    = $this->policyInterface->validateCustomerAge($customer, $customerStatusDenied, $tipoCliente, $idDef);
+		$customerStatusDenied    = $edad['customerStatusDenied'];
+		$idDef                   = $edad['idDef'];
+		$customerIntention->EDAD = $edad['edad'];
+
+		$labor                           = $this->policyInterface->validateLabourTime($customer, $customerStatusDenied, $idDef);
+		$customerStatusDenied            = $labor['customerStatusDenied'];
+		$idDef                           = $labor['idDef'];
+		$customerIntention->TIEMPO_LABOR = $labor['labor'];
+
+		$ocular  = $this->policyInterface->validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
 		$customerIntention->INSPECCION_OCULAR = $ocular;
-		$customerIntention->PERFIL_CREDITICIO = $perfilCrediticio;
+		$customerIntention->ZONA_RIESGO       = $this->subsidiaryInterface->getSubsidiaryRiskZone($customer->SUC)->ZONA;
 		$customerIntention->save();
 
 		// 3.6 Tarjeta Black

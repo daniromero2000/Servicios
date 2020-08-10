@@ -7,11 +7,13 @@ interface PolicyRepositoryInterface
 {
     public function CheckScorePolicy($customerScore);
 
-    public function validateCustomerAge($customer, $customerStatusDenied, $customerIntention);
+    public function validateCustomerAge($customer, $customerStatusDenied, $customerIntention, $idDef);
 
-    public function validateLabourTime($customer, $customerStatusDenied);
+    public function validateLabourTime($customer, $customerStatusDenied, $idDef);
 
     public function validaOccularInspection($customer, $tipoCliente, $perfilCrediticio);
 
     public function validateTipoEspecial($perfilCrediticio, $actividad, $statusAfiliationCustomer);
+
+    public function validateCustomerArreas($respValorMoraFinanciero, $respValorMoraReal, $customerStatusDenied, $idDef);
 }
