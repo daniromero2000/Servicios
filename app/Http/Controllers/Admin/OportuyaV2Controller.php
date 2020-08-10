@@ -310,7 +310,7 @@ class OportuyaV2Controller extends Controller
 			// Registraduria
 			$consultasRegistraduria = $this->registraduriaInterface->doFosygaRegistraduriaConsult($oportudataLead, $this->daysToIncrement);
 
-			if ($consultasRegistraduria == "-3") {
+			if ($consultasRegistraduria == "-1") {
 				return "-3";
 			}
 
