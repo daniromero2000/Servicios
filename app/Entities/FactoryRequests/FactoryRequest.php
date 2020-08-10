@@ -3,6 +3,8 @@
 namespace App\Entities\FactoryRequests;
 
 use App\Assessor;
+use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
+use App\Entities\CreditBusiness\CreditBusines;
 use App\Entities\CreditCards\CreditCard;
 use App\Entities\CustomerReferences\CustomerReference;
 use App\Entities\Customers\Customer;
@@ -36,7 +38,7 @@ class FactoryRequest extends Model
         'STATE',
         'GRAN_TOTAL',
         'SOLICITUD_WEB',
-        'CODEUDOR1',
+        'CODEUDOR1'
     ];
 
     protected $table = 'SOLIC_FAB';
@@ -183,5 +185,15 @@ class FactoryRequest extends Model
     public function recoveringStates1()
     {
         return $this->hasMany(FactoryRequestStatusesLog::class, 'solic_fab_id');
+    }
+
+    public function super()
+    {
+        return $this->hasMany(CreditBusines::class, 'SOLICITUD');
+    }
+
+    public function super2()
+    {
+        return $this->hasMany(CreditBusinesDetail::class, 'SOLICITUD');
     }
 }

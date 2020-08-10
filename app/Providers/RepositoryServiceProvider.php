@@ -154,6 +154,8 @@ use App\Entities\CreditBusinesDetails\Repositories\Interfaces\CreditBusinesDetai
 use App\Entities\CreditBusinesDetails\Repositories\CreditBusinesDetailRepository;
 use App\Entities\FactorsOportudata\Repositories\FactorsOportudataRepository;
 use App\Entities\FactorsOportudata\Repositories\Interfaces\FactorsOportudataRepositoryInterface;
+use App\Entities\Plans\Repositories\PlanRepository;
+use App\Entities\Plans\Repositories\Interfaces\PlanRepositoryInterface;
 use App\Entities\ConfrontaResults\Repositories\ConfrontaResultRepository;
 use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
 use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
@@ -165,6 +167,11 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            PlanRepositoryInterface::class,
+            PlanRepository::class
+        );
+
         $this->app->bind(
             UbicaEmailRepositoryInterface::class,
             UbicaEmailRepository::class

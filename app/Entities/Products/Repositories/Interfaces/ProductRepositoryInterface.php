@@ -19,6 +19,8 @@ interface ProductRepositoryInterface
 
     public function findProductById(int $id): Product;
 
+    public function findProductBySku(int $id): Product;
+
     public function deleteProduct(Product $product): bool;
 
     public function removeProduct(): bool;
@@ -40,4 +42,6 @@ interface ProductRepositoryInterface
     public function saveBrand(Brand $brand);
 
     public function findBrand();
+
+    public function updateOrder($data);
 }

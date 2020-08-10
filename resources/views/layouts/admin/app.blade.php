@@ -75,7 +75,6 @@
   </div>
 </body>
 
-@yield('scriptsJs')
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -99,6 +98,7 @@
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+@yield('scriptsJs')
 <script>
   $(function () {
   $('[data-toggle="tooltip"]').tooltip()

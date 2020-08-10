@@ -8,6 +8,8 @@ interface FactorRepositoryInterface
 
     public function getAllFactors();
 
+    public function getFactorsForLiquidator();
+
     public function findFactorById($id);
 
     public function updateFactor($data);

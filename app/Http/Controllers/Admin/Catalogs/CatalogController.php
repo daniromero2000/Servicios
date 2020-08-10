@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Catalogs;
+
+use App\Http\Controllers\Controller;
+use App\Entities\Products\Product;
+use App\Entities\Products\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Entities\ListProducts\Repositories\Interfaces\ListProductRepositoryInterface;
+use App\Entities\ProductLists\Repositories\Interfaces\ProductListRepositoryInterface;
+use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
+use App\Entities\ListGiveAways\Repositories\Interfaces\ListGiveAwayRepositoryInterface;
+use App\Entities\Products\Transformations\ProductTransformable;
+use App\Entities\Brands\Repositories\BrandRepositoryInterface;
+
+class CatalogController extends Controller
+{
+    use ProductTransformable;
+    private $productRepo, $brandRepo, $listProduct;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepository,
+        BrandRepositoryInterface $brandRepository,
+        ProductListRepositoryInterface $productListRepositoryInterface,
+        ListProductRepositoryInterface $listProductRepositoryInterface,
+        ListGiveAwayRepositoryInterface $listGiveAwayRepositoryInterface,
+        FactorRepositoryInterface $factorRepositoryInterface
+    ) {
+        $this->productListInterface = $productListRepositoryInterface;
+        $this->productRepo          = $productRepository;
+        $this->listProductInterface = $listProductRepositoryInterface;
+        $this->giveAwayInterface    = $listGiveAwayRepositoryInterface;
+        $this->factorInterface      = $factorRepositoryInterface;
+        $this->brandRepo            = $brandRepository;
+    }
+
+    public function index()
+    {
+        $list = $this->productRepo->listFrontProducts('id');
+
+        $products = $list->map(function (Product $item) {
+            return $this->transformProduct($item);
+        })->all();
+
+        foreach ($products as $key => $value) {
+            $dataProduct[$key] = $this->productRepo->findProductBySlug($products[$key]->slug);
+            $productCatalog[$key] = $dataProduct[$key];
+            $productListSku[$key] = $this->listProductInterface->findListProductBySku($products[$key]->sku);
+            if (!empty($productListSku[$key]->toArray())) {
+                $zone = auth()->user()->Assessor->subsidiary->ZONA;
+                $dataProduct[$key] = $this->listProductInterface->getPriceProductForZone($productListSku[$key][0]->id, $zone);
+                foreach ($dataProduct[$key] as $key2 => $value2) {
+                    $productList[$key] = $value2;
+                }
+                $products[$key]['price_old'] =  $productList[$key]['normal_public_price'];
+                $products[$key]['price_new'] =  $productList[$key]['promotion_public_price'];
+                $products[$key]['discount'] =  round($productList[$key]['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
+                $products[$key]['pays'] = round($productList[$key]['black_public_price'] / ($productCatalog[$key]->months * 4), 2, PHP_ROUND_HALF_UP);
+                $products[$key]['desc'] = $productList[$key]['black_public_price'];
+            }
+        }
+
+        return view('catalogAssessors.catalog', [
+            'products' => $products,
+            'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')->all(),
+            'brands'   => $this->brandRepo->listBrands(['*'], 'name', 'asc')
+        ]);
+    }
+
+    public function show($slug)
+    {
+        $dataProduct = $this->productRepo->findProductBySlug($slug);
+        $productCatalog = $dataProduct;
+        $productListSku = $this->listProductInterface->findListProductBySku($dataProduct->sku);
+        $productList = [];
+        $zone = auth()->user()->Assessor->subsidiary->ZONA;
+        if (!empty($productListSku->toArray())) {
+            $dataProduct     = $this->listProductInterface->getPriceProductForZone($productListSku[0]->id, $zone);
+            foreach ($dataProduct as $key2 => $value2) {
+                $productList = $value2;
+            }
+            $productCatalog['price_old'] =  $productList['normal_public_price'];
+            $productCatalog['price_new'] =  $productList['promotion_public_price'];
+            $productCatalog['discount'] =  round($productList['percentage_promotion_public_price'], 0, PHP_ROUND_HALF_UP);
+            $productCatalog['pays'] = round($productList['black_public_price'] / ($productCatalog->months * 4), 2, PHP_ROUND_HALF_UP);
+            $productCatalog['desc'] = $productList['black_public_price'];
+        }
+        $images = $productCatalog->images()->get(['src']);
+        $imagenes = [];
+        $productImages = [];
+        array_push($productImages, $productCatalog->cover);
+        foreach ($images as $key => $value) {
+            array_push($productImages, $images[$key]->src);
+        }
+        foreach ($productImages as $key => $value) {
+            array_push($imagenes, [$productImages[$key], $key]);
+        }
+        return view('catalogAssessors.product.show', [
+            'product'   => $productCatalog,
+            'imagenes'  => $imagenes
+        ]);
+    }
+}

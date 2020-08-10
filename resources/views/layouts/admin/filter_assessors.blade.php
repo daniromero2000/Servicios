@@ -7,8 +7,6 @@
     <div class="col-12 mt-2">
         <form action="{{$route}}" method="get" id="admin-search">
             <div class="input-group">
-
-
                 <div class="row w-100 d-flex justify-content-center">
                     <div class="col-6 col-sm-6 col-md-3">
                         <label class="label-reset" for="q">Buscar: Solicitud / Cedula</label>

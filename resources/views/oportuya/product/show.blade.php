@@ -139,36 +139,29 @@ array_push($imagenes, [$productImages[$key], $key]);
         <div class="row">
             <div class="card border-0 container-deal-product">
                 <div class="card-body pt-0 pr-4 pl-4">
-                    @php
-                    $desc = ($product->price - $product->sale_price);
-                    $desc= round(($desc / $product->price)*100 );
-                    @endphp
                     <div class="relative text-center  container-desc-deal">
-
+                        @if ($product->discount && $product->discount > 0)
                         <div class="card-products-discount">
-                            <p>{{$desc}}%</p>
+                            <p>{{$product->discount}}%</p>
                             <p>Dcto</p>
                         </div>
+                        @endif
                         <div class="container-price-deal">
                             <p class="card-text card-products-old-price mb-0"> <del>$
-                                    {{ number_format($product->price)}}
+                                    {{ number_format($product->price_old)}}
                                 </del></p>
                             <p class="card-text card-products-label mb-1">Precio antes</p>
 
                             <p class="card-text card-products-new-price mb-0">$
-                                {{ number_format($product->sale_price)}}
+                                {{ number_format($product->price_new)}}
                             </p>
                             <p class="card-text card-products-label mb-3">Precio ahora</p>
                         </div>
 
                     </div>
                     <div class="relative">
-
                         <img data-src="{{ asset('images/Front/OportuyaCustomers/Fotos Productos/TV LG 43/Tarjeta.jpg')}}"
                             src="{{ asset('images/blank.jpg')}}" class="img-card-deal-product lazy">
-
-
-
                         <p class="card-text term-deal-product">Llévalo a <b> {{$product->months}}
                                 meses </b> con tu tarjeta oportuya:
                         </p>
@@ -181,9 +174,7 @@ array_push($imagenes, [$productImages[$key], $key]);
                                 style="margin-left: 15px;">Solicitar
                                 aqui</a>
                         </div>
-
                     </div>
-
                     <div class="relative">
                         <ol class="container-ol-steps-deal-product">
                             <li>Diligencia la solicitud de crédito en linea</li>
