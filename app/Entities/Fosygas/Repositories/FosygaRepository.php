@@ -86,7 +86,7 @@ class FosygaRepository implements FosygaRepositoryInterface
         if (empty($dateLastConsultaFosyga)) {
             return 'true';
         } else {
-            if ($dateLastConsultaFosyga->fuenteFallo == "SI") {
+            if ($dateLastConsultaFosyga->fuenteFallo == "SI" || stripos($dateLastConsultaFosyga->estado, 'BDUA') == true) {
                 return 'true';
             }
 
