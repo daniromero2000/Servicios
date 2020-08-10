@@ -12,6 +12,8 @@ class Product extends Model
 {
     use SearchableTrait;
 
+    protected $table = 'productsv2';
+
     protected $searchable = [
         'columns' => [
             'products.sku' => 10,
