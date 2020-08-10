@@ -52,9 +52,8 @@ class PolicyRepository implements PolicyRepositoryInterface
         return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'perfilCrediticio' => $perfilCrediticio];
     }
 
-    public function validateCustomerAge($customer, $customerStatusDenied, $tipoCliente)
+    public function validateCustomerAge($customer, $customerStatusDenied, $tipoCliente, $idDef)
     {
-        $idDef = "";
         $edad = 0;
         // 4.3 Edad.
         if ($customer->EDAD == false || empty($customer->EDAD)) {
@@ -116,9 +115,8 @@ class PolicyRepository implements PolicyRepositoryInterface
         return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'edad' => $edad];
     }
 
-    public function validateLabourTime($customer, $customerStatusDenied)
+    public function validateLabourTime($customer, $customerStatusDenied, $idDef)
     {
-        $idDef = "";
         $labor = 0;
         // 4.5 Tiempo en Labor
         if ($customer->ACTIVIDAD == 'PENSIONADO') {
@@ -174,5 +172,21 @@ class PolicyRepository implements PolicyRepositoryInterface
         }
 
         return      $tipo5Especial;
+    }
+
+    public function validateCustomerArreas($respValorMoraFinanciero, $respValorMoraReal, $customerStatusDenied, $idDef)
+    {
+        $arreas = 0;
+        if (($respValorMoraFinanciero + $respValorMoraReal) > 100) {
+            if ($customerStatusDenied == false && empty($idDef)) {
+                $customerStatusDenied = true;
+                $idDef = "6";
+            }
+            $arreas = 0;
+        } else {
+            $arreas = 1;
+        }
+
+        return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'arreas' => $arreas];
     }
 }

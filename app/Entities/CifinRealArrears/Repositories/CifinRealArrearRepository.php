@@ -36,6 +36,23 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         }
     }
 
+    public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef)
+    {
+        $customerRealDoubtful = $this->checkCustomerHasCifinRealDoubtful($identificationNumber, $consultaScore);
+        $doubtful = 1;
+        if ($customerRealDoubtful->isNotEmpty()) {
+            if ($customerRealDoubtful[0]->rmsaldob > 0) {
+                if ($customerStatusDenied == false && empty($idDef)) {
+                    $customerStatusDenied = true;
+                    $idDef                = "6";
+                }
+                $doubtful = 0;
+            }
+        }
+
+        return ['customerStatusDenied' => $customerStatusDenied, 'idDef' => $idDef, 'doubtful' => $doubtful];
+    }
+
     public function checkCustomerHasCifinRealDoubtful($identificationNumber, $lastConsult)
     {
         try {
