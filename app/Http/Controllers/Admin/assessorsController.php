@@ -1098,9 +1098,9 @@ class assessorsController extends Controller
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
 		$resultUbica = $this->validateConsultaUbica($customer);
+		$dataLead               = $request['lead'];
 
 		if ($resultUbica == 0) {
-			$dataLead               = $request['lead'];
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {
@@ -1155,6 +1155,8 @@ class assessorsController extends Controller
 			'EDIT_RFCLI' => '',
 			'EDIT_RFCL2' => ''
 		];
+
+		return dd($dataLead);
 
 		$estadoSolic = (isset($dataPolicy['policy']['fuenteFallo']) && $dataPolicy['policy']['fuenteFallo'] == 'true') ? 3 : $estadoSolic;
 		$debtor = new DebtorInsuranceOportuya;
