@@ -937,7 +937,7 @@
                             <h2 class="decisionCredit-title text-center" style="color: #dc3545;">Información errónea
                             </h2>
                             <p class="textModal text-center">
-                                Por favor verifica la información sumistrada
+                                Por favor verifica la información suministrada
                             </p>
                         </div>
                     </div>
