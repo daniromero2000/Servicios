@@ -627,7 +627,7 @@ class OportuyaV2Controller extends Controller
 		$codeVerification['sms_response'] = $dataCode['messages'][0]['status']['name']; // name
 		$codeVerification['sms_send_description'] = $dataCode['messages'][0]['status']['description']; // description
 		$codeVerification['sms_id'] = $dataCode['messages'][0]['messageId']; // messageId
-		$codeVerification = $codeVerification->toArray();
+		// $codeVerification = $codeVerification->toArray();
 		$this->customerVerificationCodeInterface->updateCustomerVerificationCode($codeVerification);
 		return "true";
 	}
