@@ -8,6 +8,8 @@ interface CifinFinancialArrearRepositoryInterface
 
   public function check12MonthsPaymentVector($identificationNumber, $lastConsult);
 
+  public function validateFinDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef);
+
   public function checkCustomerHasCifinFinancialDoubtful($identificationNumber, $lastConsult);
 
   public function getCustomerEntityName($identificationNumber);

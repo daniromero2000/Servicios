@@ -15,6 +15,45 @@ class FosygaRepository implements FosygaRepositoryInterface
         $this->model = $fosyga;
     }
 
+    public function doFosygaConsult($oportudataLead, $days)
+    {
+        // Fosyga
+        $dateConsultaFosyga = $this->validateDateConsultaFosyga($oportudataLead->CEDULA,  $days);
+        if ($dateConsultaFosyga == "true") {
+            $infoBdua = $this->execWebServiceFosyga($oportudataLead, '23948865');
+            $infoBdua = (array) $infoBdua;
+            $consultaFosyga =  $this->createConsultaFosyga($infoBdua, $oportudataLead->CEDULA);
+        } else {
+            $consultaFosyga = 1;
+        }
+
+        if ($consultaFosyga > 0) {
+            $this->validateConsultaFosyga($oportudataLead->CEDULA, $oportudataLead->FEC_EXP);
+        }
+
+        return "true";
+    }
+
+    public function execWebServiceFosyga($oportudataLead,  $idConsultaWebService)
+    {
+        set_time_limit(0);
+        $urlConsulta = sprintf('http://produccion.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4g0b0$&jor=%s&icf=%s&thy=co&klm=%s', $idConsultaWebService, $oportudataLead->TIPO_DOC, $oportudataLead->CEDULA);
+        //$urlConsulta = sprintf('http://test.konivin.com:32564/konivin/servicio/persona/consultar?lcy=lagobo&vpv=l4G0bo&jor=%s&icf=%s&thy=co&klm=ND1098XX', $idConsultaWebService, $tipoDocumento);
+        if ($oportudataLead->FEC_EXP != '') {
+            $urlConsulta .= sprintf('&hgu=%s', $oportudataLead->FEC_EXP);
+        }
+        $curl_handle = curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL, $urlConsulta);
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        $buffer = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        $persona = json_decode($buffer, true);
+
+        return response()->json($persona);
+    }
+
+
     public function getLastFosygaConsultation($identificationNumber)
     {
         try {
@@ -47,7 +86,7 @@ class FosygaRepository implements FosygaRepositoryInterface
         if (empty($dateLastConsultaFosyga)) {
             return 'true';
         } else {
-            if ($dateLastConsultaFosyga->fuenteFallo == "SI") {
+            if ($dateLastConsultaFosyga->fuenteFallo == "SI" || stripos($dateLastConsultaFosyga->estado, 'BDUA') == true) {
                 return 'true';
             }
 

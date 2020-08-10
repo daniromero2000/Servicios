@@ -4,8 +4,6 @@ namespace App\Entities\Customers\Repositories\Interfaces;
 
 use App\Entities\Customers\Customer;
 use Illuminate\Support\Collection as Support;
-use Illuminate\Database\Eloquent\Collection;
-
 
 interface CustomerRepositoryInterface
 {
@@ -36,4 +34,6 @@ interface CustomerRepositoryInterface
   public function calculateCustomerAge($date);
 
   public function calculateCustomerCompanyTime($fechaIngreso);
+
+  public function getcustomerFirstLastName($lastName);
 }
