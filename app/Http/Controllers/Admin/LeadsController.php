@@ -78,7 +78,7 @@ class LeadsController extends Controller
     {
         $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, products.sku, products.name
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
-        LEFT JOIN  products ON `ti`.product_id = products.id
+        LEFT JOIN  productsv2 ON `ti`.product_id = products.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND sb.ESTADO = 19
@@ -170,7 +170,7 @@ FROM
         LEFT JOIN
     TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         LEFT JOIN
-    products ON `TB_INTENCIONES`.product_id = products.id
+    productsv2 ON `TB_INTENCIONES`.product_id = products.id
         LEFT JOIN
     SOLIC_FAB ON TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE
 WHERE
