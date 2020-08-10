@@ -16,7 +16,8 @@ class FosygaRepository implements FosygaRepositoryInterface
     }
 
     public function doFosygaConsult($oportudataLead, $days)
-    {    // Fosyga
+    {
+        // Fosyga
         $dateConsultaFosyga = $this->validateDateConsultaFosyga($oportudataLead->CEDULA,  $days);
         if ($dateConsultaFosyga == "true") {
             $infoBdua = $this->execWebServiceFosyga($oportudataLead, '23948865');
