@@ -47,7 +47,8 @@
 
                                         <div class="container">
 
-                                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                            <div id="myCarousel{{ $product->id }}" class="carousel slide"
+                                                data-ride="carousel">
                                                 {{-- <div style="height: 20px;">
                                             <img src="{{asset('storage/'.$product->brand->cover)}}"
                                                 class="card-products-deal-logo" style=" z-index: 99; ">
@@ -69,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div id="carousel-thumbs" class="carousel slide" data-ride="carousel">
+                            <div id="carousel-thumbs{{ $product->id }}" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="row mx-0">
@@ -77,7 +78,8 @@
 
                                             <div id="carousel-selector-{{$image[1]}}" @if ($image[1]==0)
                                                 class="thumb col-4 col-sm-3 px-0 py-2 selected" @else
-                                                class="thumb col-4 col-sm-3 px-0 py-2" @endif data-target="#myCarousel"
+                                                class="thumb col-4 col-sm-3 px-0 py-2" @endif
+                                                data-target="#myCarousel{{ $product->id }}"
                                                 data-slide-to="{{$image[1]}}">
                                                 <img data-src="{{asset('storage/'.$image[0])}}"
                                                     src="{{ asset('images/blank.jpg')}}" class="img-fluid lazy"
@@ -87,12 +89,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a class="carousel-control-prev" href="#carousel-thumbs" role="button"
+                                <a class="carousel-control-prev" href="#carousel-thumbs{{ $product->id }}" role="button"
                                     data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                 </a>
-                                <a class="carousel-control-next" href="#carousel-thumbs" role="button"
+                                <a class="carousel-control-next" href="#carousel-thumbs{{ $product->id }}" role="button"
                                     data-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
@@ -219,16 +221,19 @@
                 <div class="mt-5" style="max-width: 1300px;margin: 0px auto;margin-bottom: 5%;">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link link-nav-description active" id="home-tab" data-toggle="tab" href="#home"
-                                role="tab" aria-controls="home" aria-selected="true">Descripción del producto</a>
+                            <a class="nav-link link-nav-description active" id="home-tab{{ $product->id }}"
+                                data-toggle="tab" href="#home{{ $product->id }}" role="tab"
+                                aria-controls="home{{ $product->id }}" aria-selected="true">Descripción del producto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link-nav-description" id="profile-tab" data-toggle="tab" href="#profile"
-                                role="tab" aria-controls="profile" aria-selected="false">Especificaciones</a>
+                            <a class="nav-link link-nav-description" id="profile-tab{{ $product->id }}"
+                                data-toggle="tab" href="#profile{{ $product->id }}" role="tab"
+                                aria-controls="profile{{ $product->id }}" aria-selected="false">Especificaciones</a>
                         </li>
                     </ul>
                     <div class="tab-content padding-responsive" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="home{{ $product->id }}" role="tabpanel"
+                            aria-labelledby="home-tab{{ $product->id }}">
                             <div class="card shadow-none border-0 padding-responsive padding-reset"
                                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                                 <div class="card-body padding-responsive">
@@ -257,7 +262,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="profile{{ $product->id }}" role="tabpanel"
+                            aria-labelledby="profile-tab{{ $product->id }}">
                             <div class="card shadow-none border-0 padding-reset padding-responsive"
                                 style="box-shadow: 0 .4rem 1rem rgba(0,0,0,0.08)!important;">
                                 <div class="card-body padding-responsive">
