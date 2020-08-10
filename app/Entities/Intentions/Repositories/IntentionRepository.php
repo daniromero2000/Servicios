@@ -259,6 +259,7 @@ class IntentionRepository implements IntentionRepositoryInterface
         try {
             return  $this->model->with(['customer', 'definition'])->where('ASESOR', 998877)
                 ->where('ID_DEF', null)
+                ->where('CREDIT_DECISION', null)
                 ->where('FECHA_INTENCION', '>', '2020-05-01 00:00:00')
                 ->orderBy('FECHA_INTENCION', 'desc')
                 ->skip($totalView)
@@ -475,6 +476,32 @@ class IntentionRepository implements IntentionRepositoryInterface
             } else {
                 return 'false';
             }
+        }
+    }
+
+    public function getConfrontaIntentionStatus($resultConfronta)
+    {
+        if ($resultConfronta == 1) {
+            return 19;
+        } else {
+            return 3;
+        }
+    }
+
+    public function defineConfrontaCardValues($tarjeta)
+    {
+        if ($tarjeta == 'Tarjeta Black') {
+            return $policyCredit = [
+                'quotaApprovedProduct' => 1900000,
+                'quotaApprovedAdvance' => 500000,
+                'resp' => 'true'
+            ];
+        } elseif ($tarjeta == 'Tarjeta Gray') {
+            return  $policyCredit = [
+                'quotaApprovedProduct' => 1600000,
+                'quotaApprovedAdvance' => 200000,
+                'resp' => 'true'
+            ];
         }
     }
 }

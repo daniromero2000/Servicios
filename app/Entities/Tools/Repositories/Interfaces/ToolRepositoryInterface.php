@@ -12,4 +12,8 @@ interface ToolRepositoryInterface
   public function extractValuesToArray($data);
 
   public function upperCase($string);
+
+  public function getFormConfronta($identificationNumber);
+
+  public function getConfrontaDateFormat($fecha);
 }

@@ -286,4 +286,10 @@ class CustomerRepository implements CustomerRepositoryInterface
         $dateDiff    = floor((strtotime($fechaActual) - strtotime($fechaIngreso)) / (60 * 60 * 24 * 30));
         return $dateDiff;
     }
+
+    public function getcustomerFirstLastName($lastName)
+    {
+        $lastName = explode(" ", $lastName);
+        return   $lastName = $lastName[0];
+    }
 }

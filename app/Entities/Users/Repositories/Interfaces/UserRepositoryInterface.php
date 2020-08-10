@@ -13,4 +13,6 @@ interface UserRepositoryInterface
     public function updateUser(array $params): bool;
 
     public function listUser($profile);
+
+    public function getAssessorCode();
 }

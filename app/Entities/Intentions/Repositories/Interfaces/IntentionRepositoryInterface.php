@@ -56,4 +56,8 @@ interface IntentionRepositoryInterface
   public function searchIntentionDirector(string $text = null, $totalView,  $from = null,  $to = null,  $creditprofile = null, $status = null, $assessor): Collection;
 
   public function validateDateIntention($identificationNumber, $daysToIncrement);
+
+  public function getConfrontaIntentionStatus($resultConfronta);
+
+  public function defineConfrontaCardValues($cedula);
 }

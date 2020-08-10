@@ -20,7 +20,6 @@ use App\Entities\Ubicas\Repositories\Interfaces\UbicaRepositoryInterface;
 use App\Entities\UpToDateFinancialCifins\Repositories\Interfaces\UpToDateFinancialCifinRepositoryInterface;
 use App\Entities\UpToDateRealCifins\Repositories\Interfaces\UpToDateRealCifinRepositoryInterface;
 use App\Entities\WebServices\Repositories\Interfaces\WebServiceRepositoryInterface;
-use Illuminate\Support\Carbon;
 use App\Entities\Cities\Repositories\Interfaces\CityRepositoryInterface;
 use App\Entities\CifinScores\Repositories\Interfaces\CifinScoreRepositoryInterface;
 use App\Entities\OportuyaTurns\Repositories\Interfaces\OportuyaTurnRepositoryInterface;
@@ -29,13 +28,23 @@ use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\FosygaTemps\Repositories\Interfaces\FosygaTempRepositoryInterface;
 use App\Entities\Analisis\Repositories\Interfaces\AnalisisRepositoryInterface;
 use App\Entities\Registradurias\Repositories\Interfaces\RegistraduriaRepositoryInterface;
+use App\Entities\ConfrontaResults\Repositories\Interfaces\ConfrontaResultRepositoryInterface;
+use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
+use App\Entities\Tools\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Entities\UbicaCellPhones\Repositories\Interfaces\UbicaCellPhoneRepositoryInterface;
+use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
+use App\Entities\Users\Repositories\Interfaces\UserRepositoryInterface;
+use App\Entities\DatosClientes\Repositories\Interfaces\DatosClienteRepositoryInterface;
+use App\Entities\Policies\Repositories\Interfaces\PolicyRepositoryInterface;
 
 class AdvanceController extends Controller
 {
     private $leadInterface, $subsidiaryInterface, $customerInterface, $cliCelInterface, $cityInterface, $cifinScoreInterface;
     private $OportuyaTurnInterface, $factoryInterface, $assessorInterface, $fosygaTempInterface, $AnalisisInterface, $intentionInterface;
-    private $registraduriaInterface;
-
+    private $registraduriaInterface, $confrontaResultInterface, $confrontaSelectinterface, $toolInterface, $ubicaCellPhoneInterfac;
+    private $ubicaMailInterface, $policyInterface;
+    private $userInterface, $datosClienteInterface;
 
     public function __construct(
 
@@ -60,29 +69,45 @@ class AdvanceController extends Controller
         AssessorRepositoryInterface $assessorRepositoryInterface,
         FosygaTempRepositoryInterface $fosygaTempRepositoryInterface,
         AnalisisRepositoryInterface $analisisRepositoryInterface,
-        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface
+        RegistraduriaRepositoryInterface $registraduriaRepositoryInterface,
+        ConfrontaResultRepositoryInterface $confrontaResultRepositoryInterface,
+        ConfrontaSelectRepositoryInterface $confrontaSelectRepositoryInterface,
+        ToolRepositoryInterface $toolRepositoryInterface,
+        UbicaCellPhoneRepositoryInterface $ubicaCellPhoneRepositoryInterface,
+        UbicaEmailRepositoryInterface $ubicaEmailRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface,
+        DatosClienteRepositoryInterface $datosClienteRepositoryInterface,
+        PolicyRepositoryInterface $policyRepositoryInterface
     ) {
-        $this->leadInterface       = $leadRepositoryInterface;
-        $this->subsidiaryInterface = $subsidiaryRepositoryInterface;
-        $this->intentionInterface = $intentionRepositoryInterface;
-        $this->customerInterface = $customerRepositoryInterface;
+        $this->leadInterface                  = $leadRepositoryInterface;
+        $this->subsidiaryInterface            = $subsidiaryRepositoryInterface;
+        $this->intentionInterface             = $intentionRepositoryInterface;
+        $this->customerInterface              = $customerRepositoryInterface;
         $this->CifinFinancialArrearsInterface = $CifinFinancialArrearRepositoryInterface;
-        $this->cifinRealArrearsInterface = $cifinRealArrearRepositoryInterface;
-        $this->upToDate = $UpToDateFinancialCifinRepositoryInterface;
-        $this->extint = $extintFinancialCifinRepositoryInterface;
-        $this->real = $upToDateRealCifinsRepositoryInterface;
-        $this->extintreal = $extintRealCifinRepositoryInterface;
-        $this->cifinBasic = $cifinBasicDataRepositoryInterface;
-        $this->ubica = $ubicaRepositoryInterface;
-        $this->webServiceInterface = $webServiceRepositoryInterface;
-        $this->cityInterface = $cityRepositoryInterface;
-        $this->cifinScoreInterface = $cifinScoreRepositoryInterface;
-        $this->OportuyaTurnInterface = $oportuyaTurnRepositoryInterface;
-        $this->factoryInterface = $factoryRequestRepositoryInterface;
-        $this->assessorInterface = $assessorRepositoryInterface;
-        $this->fosygaTempInterface = $fosygaTempRepositoryInterface;
-        $this->AnalisisInterface = $analisisRepositoryInterface;
-        $this->registraduriaInterface = $registraduriaRepositoryInterface;
+        $this->cifinRealArrearsInterface      = $cifinRealArrearRepositoryInterface;
+        $this->upToDate                       = $UpToDateFinancialCifinRepositoryInterface;
+        $this->extint                         = $extintFinancialCifinRepositoryInterface;
+        $this->real                           = $upToDateRealCifinsRepositoryInterface;
+        $this->extintreal                     = $extintRealCifinRepositoryInterface;
+        $this->cifinBasic                     = $cifinBasicDataRepositoryInterface;
+        $this->ubica                          = $ubicaRepositoryInterface;
+        $this->webServiceInterface            = $webServiceRepositoryInterface;
+        $this->cityInterface                  = $cityRepositoryInterface;
+        $this->cifinScoreInterface            = $cifinScoreRepositoryInterface;
+        $this->OportuyaTurnInterface          = $oportuyaTurnRepositoryInterface;
+        $this->factoryInterface               = $factoryRequestRepositoryInterface;
+        $this->assessorInterface              = $assessorRepositoryInterface;
+        $this->fosygaTempInterface            = $fosygaTempRepositoryInterface;
+        $this->AnalisisInterface              = $analisisRepositoryInterface;
+        $this->registraduriaInterface         = $registraduriaRepositoryInterface;
+        $this->confrontaResultInterface       = $confrontaResultRepositoryInterface;
+        $this->confrontaSelectinterface       = $confrontaSelectRepositoryInterface;
+        $this->toolInterface                  = $toolRepositoryInterface;
+        $this->ubicaCellPhoneInterfac         = $ubicaCellPhoneRepositoryInterface;
+        $this->ubicaMailInterface             = $ubicaEmailRepositoryInterface;
+        $this->userInterface                  = $userRepositoryInterface;
+        $this->datosClienteInterface          = $datosClienteRepositoryInterface;
+        $this->policyInterface                = $policyRepositoryInterface;
     }
 
     public function index()
