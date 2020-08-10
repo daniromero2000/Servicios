@@ -1188,11 +1188,17 @@
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'TRADICIONAL'">
                             <img src="{{ asset('images/asessors/tarjetaIcon.jpg') }}" class="iconThankYouModal" />
+                            {{-- <p class="textTnakYouModal">
+                                Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
+                            exitosamente,
+                            <br>
+                            procede a ingresar los datos del negocio.
+                            </p> --}}
                             <p class="textTnakYouModal">
                                 Solictud <strong style="font-size:18px">@{{ numSolic }}</strong> creada
                                 exitosamente,
                                 <br>
-                                procede a ingresar los datos del negocio.
+                                procede en <strong>OPORTUDATA</strong> a ingresar los datos del negocio.
                             </p>
                         </div>
                         <div class="col-12 text-center containTextThankYouModal" ng-if="estadoCliente == 'APROBADO'">

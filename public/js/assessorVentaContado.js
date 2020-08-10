@@ -627,8 +627,6 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$scope.addError(response, $scope.lead.CEDULA);
 			});
 		};
-		$('#congratulations').modal('show');
-		$scope.estadoCliente = 'TRADICIONAL';
 
 		$scope.desistCredit = function () {
 			var opcion = confirm("Desea desistir la solicitud de crédito ?");
