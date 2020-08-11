@@ -685,7 +685,6 @@ class assessorsController extends Controller
 		}
 
 		// 3.3 Estado de obligaciones
-
 		$ValorMoraFinanciero = $this->CifinFinancialArrearsInterface->checkCustomerHasCifinFinancialArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('finvrmora');
 		$ValorMoraReal       = $this->cifinRealArrearsInterface->checkCustomerHasCifinRealArrear($customer->CEDULA, $lastCifinScore->scoconsul)->sum('rmvrmora');
 		$obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
