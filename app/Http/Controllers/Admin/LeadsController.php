@@ -76,9 +76,9 @@ class LeadsController extends Controller
 
     private function getLeadsCanalDigital($request)
     {
-        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, products.sku, products.name
+        $query = sprintf("SELECT cf.`NOMBRES`, cf.`APELLIDOS`, cf.`CELULAR`, cf.`CIUD_UBI`, cf.`CEDULA`, cf.`CREACION`, cf.`ORIGEN`, cf.`PLACA`, sb.`SOLICITUD`, sb.`ASESOR_DIG`,tar.`CUP_COMPRA`, tar.`CUPO_EFEC`, sb.`SUCURSAL`, ti.TARJETA, sb.FECHASOL, productsv2.sku, productsv2.name
         FROM `CLIENTE_FAB` as cf, `SOLIC_FAB` as sb, `TARJETA` as tar,  TB_INTENCIONES as ti
-        LEFT JOIN  productsv2 ON `ti`.product_id = products.id
+        LEFT JOIN  productsv2 ON `ti`.product_id = productsv2.id
         WHERE sb.`CLIENTE` = cf.`CEDULA`
         AND tar.`CLIENTE` = cf.`CEDULA`
         AND sb.ESTADO = 19
@@ -104,6 +104,7 @@ AND sb.ASESOR_DIG is null
                 '%' . $request['q'] . '%'
             );
         }
+
 
         if ($request['qtipoTarjetaAprobados'] != '') {
             $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
@@ -162,15 +163,15 @@ AND sb.ASESOR_DIG is null
     TB_DEFINICIONES.`DESCRIPCION`,
     TB_INTENCIONES.`PERFIL_CREDITICIO`,
     TB_INTENCIONES.FECHA_INTENCION,
-    products.sku,
-    products.name
+    productsv2.sku,
+    productsv2.name
 FROM
     CLIENTE_FAB AS cf,
     TB_INTENCIONES
         LEFT JOIN
     TB_DEFINICIONES ON TB_INTENCIONES.ID_DEF = TB_DEFINICIONES.id
         LEFT JOIN
-    productsv2 ON `TB_INTENCIONES`.product_id = products.id
+    productsv2 ON `TB_INTENCIONES`.product_id = productsv2.id
         LEFT JOIN
     SOLIC_FAB ON TB_INTENCIONES.CEDULA = SOLIC_FAB.CLIENTE
 WHERE
