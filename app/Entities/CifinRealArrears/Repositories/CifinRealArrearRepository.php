@@ -36,10 +36,10 @@ class CifinRealArrearRepository implements CifinRealArrearRepositoryInterface
         }
     }
 
-    public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef)
+    public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef, $mora)
     {
         $customerRealDoubtful = $this->checkCustomerHasCifinRealDoubtful($identificationNumber, $consultaScore);
-        $doubtful = 1;
+        $doubtful = $mora;
         if ($customerRealDoubtful->isNotEmpty()) {
             if ($customerRealDoubtful[0]->rmsaldob > 0) {
                 if ($customerStatusDenied == false && empty($idDef)) {

@@ -10,5 +10,5 @@ interface CifinRealArrearRepositoryInterface
 
   public function checkCustomerHasCifinRealDoubtful($identificationNumber, $lastConsult);
 
-  public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef);
+  public function validateRealDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef, $mora);
 }

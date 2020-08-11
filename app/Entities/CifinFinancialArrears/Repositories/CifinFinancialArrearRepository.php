@@ -30,10 +30,10 @@ class CifinFinancialArrearRepository implements CifinFinancialArrearRepositoryIn
         }
     }
 
-    public function validateFinDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef)
+    public function validateFinDoubtful($identificationNumber, $consultaScore, $customerStatusDenied, $idDef, $mora)
     {
         $customerRealDoubtful = $this->checkCustomerHasCifinFinancialDoubtful($identificationNumber, $consultaScore);
-        $doubtful = 1;
+        $doubtful = $mora;
         if ($customerRealDoubtful->isNotEmpty()) {
             if ($customerRealDoubtful[0]->rmsaldob > 0) {
                 if ($customerStatusDenied == false && empty($idDef)) {
