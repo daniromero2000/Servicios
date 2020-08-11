@@ -941,14 +941,16 @@ class OportuyaV2Controller extends Controller
 		$obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
 		$customerStatusDenied                   = $obligaciones['customerStatusDenied'];
 		$idDef                                  = $obligaciones['idDef'];
+		$mora = $obligaciones['arreas'];
 		$customerIntention->ESTADO_OBLIGACIONES = $obligaciones['arreas'];
 
-		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $realDoubtful['customerStatusDenied'];
 		$idDef                                  = $realDoubtful['idDef'];
+		$mora = $realDoubtful['doubtful'];
 		$customerIntention->ESTADO_OBLIGACIONES = $realDoubtful['doubtful'];
 
-		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $finDoubtful['customerStatusDenied'];
 		$idDef                                  = $finDoubtful['idDef'];
 		$customerIntention->ESTADO_OBLIGACIONES = $finDoubtful['doubtful'];
