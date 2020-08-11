@@ -10,9 +10,8 @@ class Obligation extends Model
 
     public function scopeidentification($query, $identificationNumber)
     {
-        if (($identificationNumber) != "")
-        {
-            $query->where('identificationNumber', "LIKE","%$identificationNumber%");
+        if (($identificationNumber) != "") {
+            $query->where('identificationNumber', "LIKE", "%$identificationNumber%");
         }
     }
 }
