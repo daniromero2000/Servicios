@@ -105,6 +105,7 @@ AND sb.ASESOR_DIG is null
             );
         }
 
+
         if ($request['qtipoTarjetaAprobados'] != '') {
             $query .= sprintf(" AND (ti.`TARJETA` = '%s') ", $request['qtipoTarjetaAprobados']);
         }
