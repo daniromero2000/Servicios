@@ -229,7 +229,7 @@ class CreditLiquidatorController extends Controller
     public function validationLead($identificationNumber)
     {
         $customer = $this->customerInterface->findCustomerById($identificationNumber);
-
+        $zone = auth()->user()->Assessor->subsidiary->ZONA;
         $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
         if ($existDefault == true) {
             return -4; // Esta Castigado
@@ -247,7 +247,7 @@ class CreditLiquidatorController extends Controller
                 }
                 break;
             case 'Tarjeta Oportuya':
-                if ($existSolicFab[1] != false && $existSolicFab[1]->AVANCE_W > 0) {
+                if ($existSolicFab[1] != false && $existSolicFab[1]->AVANCE_W > 0 || $existSolicFab[1] != false && $existSolicFab[1]->ESTADO == 1) {
                     $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
                     if ($existCard == true) {
                         return -1; // Tiene tarjeta
@@ -262,7 +262,7 @@ class CreditLiquidatorController extends Controller
                 break;
         }
 
-        return response()->json(true);
+        return $zone;
     }
 
     public function getDate($term)

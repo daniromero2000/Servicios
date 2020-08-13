@@ -34,14 +34,15 @@ class ProductListController extends Controller
         return $productList;
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $subsidiariesReturn = [];
 
         $productList = $this->productListInterface->findProductListById($id);
 
         $subsidiaries = $productList->sudsidiaries;
 
-        foreach ($subsidiaries as $subsidiary){
+        foreach ($subsidiaries as $subsidiary) {
             $subsidiariesReturn[] = ['text' => $subsidiary['CODIGO']];
         }
 
@@ -67,7 +68,8 @@ class ProductListController extends Controller
     {
     }
 
-    public function addSubsidiariesToProductList(Request $request, $id){
+    public function addSubsidiariesToProductList(Request $request, $id)
+    {
         DB::table('product_list_subsidiary')->where('product_list_id', $id)->delete();
         $productList = $this->productListInterface->findProductListById($id);
         foreach ($request->input() as $subsidiary) {

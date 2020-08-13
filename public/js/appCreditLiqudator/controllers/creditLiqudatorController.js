@@ -62,6 +62,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }).then(function successCallback(response) {
                 $scope.lead = response.data;
                 $scope.createRequest();
+                $scope.loader = false;
             }, function errorCallback(response) {
                 response.url = '/assessor/api/getInfoLead/' + $scope.lead.CEDULA;
                 $scope.addError(response, $scope.lead.CEDULA);
@@ -81,10 +82,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.zone = response.data.zone;
                         if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
-                            $scope.discount.value = response.data.price.percentage_black_public_price;
+                            $scope.discount.value = Math.floor(response.data.price.percentage_black_public_price);
                         } else {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
-                            $scope.discount.value = response.data.price.percentage_blue_public_price;
+                            $scope.discount.value = Math.floor(response.data.price.percentage_blue_public_price);
                         }
                     } else {
                         if (response.data.price.percentage_promotion_public_price != '0') {
@@ -189,6 +190,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
         $scope.getValidationCustomer = function () {
             $timeout(() => {
+                $scope.loader = true;
                 $scope.lead.CEDULA = $("#identification").val();
                 if ($scope.lead.CEDULA > 0) {
                     $http({
@@ -196,18 +198,23 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         url: '/api/liquidator/validationLead/' + $scope.lead.CEDULA,
                     }).then(function successCallback(response) {
                         if (response.data == -1) {
+                            $scope.loader = false;
                             $('#validationCustomer').modal('show');
                             $scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que cuenta con una tarjeta inactiva, has el proceso de pre activación para poder continuar.";
                         } else if (response.data == -3) {
+                            $scope.loader = false;
                             $('#validationCustomer').modal('show');
                             $scope.messageValidationLead = "Actualmente ya cuentas con una solicitud que está siendo procesada.";
                         } else if (response.data == -4) {
+                            $scope.loader = false;
                             $('#validationCustomer').modal('show');
                             $scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que presenta mora con Almacenes Oportunidades.";
                         } else if (response.data == -5) {
+                            $scope.loader = false;
                             $('#validationCustomer').modal('show');
                             $scope.messageValidationLead = "Estimado usuario, no es posible continuar con el proceso de crédito ya que no ha culminado con el proceso de consulta. <br> Por favor termina con este proceso para continuar";
                         } else {
+                            $scope.zone = response.data;
                             $scope.getCustomer();
                         }
                     }, function errorCallback(response) {
@@ -287,9 +294,18 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             $scope.discount.key = $scope.items.key
                             $scope.discount.type = 'Tarjeta Oportuya';
                             if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
-                                $scope.discount.value = 10;
+                                if ($scope.zone == 'ALTA') {
+                                    $scope.discount.value = 5;
+                                } else {
+                                    $scope.discount.value = 15;
+                                }
                             } else {
-                                $scope.discount.value = 10;
+                                if ($scope.zone == 'ALTA') {
+                                    $scope.discount.value = 3;
+                                } else {
+                                    $scope.discount.value = 10;
+                                }
+
                             }
                             $scope.liquidator[$scope.items.key][1].push($scope.discount);
                             $scope.discount = {};
@@ -378,7 +394,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
 
             if ($scope.liquidator[key][3].PLAZO != null) {
                 $scope.liquidator[key][3].VRCUOTA = Math.round(((((precio - parseInt($scope.liquidator[key][2])) + (totalAval)) - (parseInt($scope.liquidator[key][3].CUOTAINI))) * factor))
-                if ($scope.liquidator[key][3].COD_PLAN != '15') {
+                if ($scope.zone == 'ALTA') {
                     $scope.liquidator[key][3].timelyPayment = 0;
                 } else {
                     $scope.liquidator[key][3].timelyPayment = Math.round($scope.liquidator[key][3].VRCUOTA * 0.05);

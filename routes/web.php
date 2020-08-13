@@ -219,6 +219,7 @@ Route::group(['prefix' => 'api/'], function () {
     });
     Route::group(['prefix' => 'productList'], function () {
         Route::resource('/', 'Admin\ProductList\ProductListController');
+        Route::delete('/delete/{id}', 'Admin\ProductList\ProductListController@destroy');
         Route::get('/{id}', 'Admin\ProductList\ProductListController@show');
         Route::put('/addSubsidiariesToProductList/{id}', 'Admin\ProductList\ProductListController@addSubsidiariesToProductList');
         Route::put('/{id}', 'Admin\ProductList\ProductListController@update');

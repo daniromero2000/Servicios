@@ -184,7 +184,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			});
 		};
 
-		$scope.getSubsidiariesForProductList = function(productListId){
+		$scope.getSubsidiariesForProductList = function (productListId) {
 			$scope.productListSubsidiaries = [];
 			$http({
 				method: 'GET',
@@ -203,7 +203,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 		$scope.deleteProductList = function (idProductList) {
 			$http({
 				method: 'DELETE',
-				url: '/api/productList/' + idProductList
+				url: '/api/productList/delete/' + idProductList,
 			}).then(function successCallback(response) {
 				if (response.data != false) {
 					$("#Delete").modal("hide");
