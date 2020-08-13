@@ -38,7 +38,7 @@ class FactoryRequest extends Model
         'STATE',
         'GRAN_TOTAL',
         'SOLICITUD_WEB',
-        'CODEUDOR1'
+        'CODEUDOR1',
     ];
 
     protected $table = 'SOLIC_FAB';

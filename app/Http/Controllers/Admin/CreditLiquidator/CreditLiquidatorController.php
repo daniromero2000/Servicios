@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreditLiquidatorController extends Controller
 {
-    private $CustomerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
+    private $customerInterface, $punishmentInterface, $codebtorInterface, $creditCardInterface, $secondCodebtorInterface, $subsidiaryInterface, $toolsInterface, $assessorInterface, $planInterface;
     private $creditBusinesDetailInterface, $creditBusinesInterface;
     public function __construct(
         CustomerRepositoryInterface $CustomerRepositoryInterface,
@@ -44,7 +44,7 @@ class CreditLiquidatorController extends Controller
         CreditBusinesDetailRepositoryInterface $creditBusinesDetailRepositoryInterface,
         CreditBusinesRepositoryInterface $creditBusinesRepositoryInterface
     ) {
-        $this->CustomerInterface            = $CustomerRepositoryInterface;
+        $this->customerInterface            = $CustomerRepositoryInterface;
         $this->toolsInterface               = $toolRepositoryInterface;
         $this->assessorInterface            = $AssessorRepositoryInterface;
         $this->punishmentInterface          = $punishmentRepositoryInterface;
@@ -186,13 +186,13 @@ class CreditLiquidatorController extends Controller
             $dataProduct =  $dataProduct[$key];
         }
 
-        return ['price' => $dataProduct, 'product' => $productListSku];
+        return ['price' => $dataProduct, 'product' => $productListSku, 'zone' =>  auth()->user()->Assessor->subsidiary->ZONA];
     }
 
     public function addSolicFab(int $id, $city)
     {
         $checkExistRequest = $this->factoryInterface->getFactoryRequestForCustomer($id);
-        if ($checkExistRequest && $checkExistRequest->ESTADO == 1) {
+        if ($checkExistRequest && ($checkExistRequest->ESTADO == 1)) {
             return $checkExistRequest;
         }
 
@@ -228,20 +228,38 @@ class CreditLiquidatorController extends Controller
 
     public function validationLead($identificationNumber)
     {
-        $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
-        if ($existCard == true) {
-            return -1; // Tiene tarjeta
-        }
-
-        $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
-
-        if ($existSolicFab == true) {
-            return -3; // Tiene Solictud en Sucursal
-        }
+        $customer = $this->customerInterface->findCustomerById($identificationNumber);
 
         $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
         if ($existDefault == true) {
             return -4; // Esta Castigado
+        }
+
+        $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
+        if ($existSolicFab[0] == true) {
+            return -3; // Tiene Solictud diferente a en Sucursal
+        }
+
+        switch ($customer->latestIntention->CREDIT_DECISION) {
+            case 'Tradicional':
+                if ($existSolicFab[1] != false && $existSolicFab[1]->ESTADO != 1) {
+                    return -3;
+                }
+                break;
+            case 'Tarjeta Oportuya':
+                if ($existSolicFab[1] != false && $existSolicFab[1]->AVANCE_W > 0) {
+                    $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
+                    if ($existCard == true) {
+                        return -1; // Tiene tarjeta
+                    }
+                } else {
+                    return -3;
+                }
+
+                break;
+            default:
+                return -5;
+                break;
         }
 
         return response()->json(true);

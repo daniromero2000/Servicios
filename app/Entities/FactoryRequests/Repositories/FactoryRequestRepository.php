@@ -91,10 +91,10 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
     public function checkCustomerHasFactoryRequestLiquidator($identificationNumber)
     {
         $queryExistSolicFab = $this->getFactoryRequestForCustomer($identificationNumber);
-        if (!empty($queryExistSolicFab) && $queryExistSolicFab->ESTADO != 1 || (!empty($queryExistSolicFab) && !empty($queryExistSolicFab->super->toArray()))) {
-            return true; // Tiene Solictud en Sucursal
+        if (!empty($queryExistSolicFab) && ($queryExistSolicFab->ESTADO != 1 && $queryExistSolicFab->ESTADO != 19 && $queryExistSolicFab->ESTADO != 3) || (!empty($queryExistSolicFab) && !empty($queryExistSolicFab->super->toArray()))) {
+            return [true, $queryExistSolicFab]; // Tiene Solictud diferente a en Sucursal, Analisis o Aprobado
         } else {
-            return false; // No tiene solicitud
+            return [false, $queryExistSolicFab]; // valido para seguir
         }
     }
 
@@ -105,7 +105,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $dateNow = date('Y-m-d', $dateNow);
         try {
             $checkExistRequest = $this->model->with('super')->where('CLIENTE', $identificationNumber)
-                ->orderBy('SOLICITUD', 'desc')->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->get($this->columns)->first();
+                ->orderBy('SOLICITUD', 'desc')->whereNotIn('ESTADO', [15, 16, 20])->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
             if (!is_null($checkExistRequest)) {
                 return $checkExistRequest;
             } else {

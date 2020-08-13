@@ -120,6 +120,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             }
             $normalPublicPrice = round(($product['iva_cost'] + $priceGiveAway) / ((100 - $productList['public_price_percentage']) / 100) / 0.95);
             if ($productList['zone'] == 'ALTA') {
+                //Especial
                 if ($percentageProtectionDividedPrice == 0) {
                     $percentageProtection = 0;
                 } elseif ($percentageProtectionDividedPrice <= 10) {
@@ -143,6 +144,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
             } elseif ($productList['zone'] == 'MEDIA') {
+                //Resto del pais
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
                 $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
@@ -158,6 +160,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
             } else {
+                //Pueblos
                 $cashPromotion                    = round((($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100)) / (0.96));
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);

@@ -172,7 +172,8 @@
                                     <div class="card-body pt-0">
                                         <div class="form-group ">
                                             <label>Aplica IVA?
-                                                <input type="checkbox" ng-model="liquidator[key][3].check">
+                                                <input type="checkbox" ng-model="liquidator[key][3].check"
+                                                    ng-click="sumDiscount(key)">
                                             </label>
                                         </div>
                                         <div class="row mx-0">
