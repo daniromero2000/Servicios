@@ -16,6 +16,18 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:description"
 	content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, crédito moto, crédito viajes, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
+<style>
+	.content-covid {
+		left: 20% !important;
+		top: 80% !important;
+	}
+
+	@media(max-width: 500px) {
+		.content-covid {
+			margin-top: 3%;
+		}
+	}
+</style>
 @endsection()
 
 
@@ -35,13 +47,22 @@
 					<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button"
 						style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
 				</div>
+				@elseif($slider['position_text'] == 'left2')
+				<div class="content-covid sliderPrincipal-containTextLeft ">
+					@php
+					echo $slider['texto'];
+					@endphp
+					<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button"
+						style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
+				</div>
 				@else
 				<div class="sliderPrincipal-containTextLeft">
 					@php
 					echo $slider['texto'];
 					@endphp
 					<a href="{{ $slider['enlace'] }}" class="sliderPrincipal-button"
-						style="background: {{$slider['color']}}">@php echo $slider['textoBoton'] @endphp</a>
+						style="background: {{$slider['color']}}">@php echo
+						$slider['textoBoton'] @endphp</a>
 				</div>
 				@endif
 			</div>
@@ -49,11 +70,11 @@
 		@endforeach
 	</div>
 	<a class="slideNext" href="#sliderPrincipal" role="button" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="carousel-control-prev-icon m-auto" aria-hidden="true"></span>
 		<span class="sr-only">Previous</span>
 	</a>
 	<a class="slidePrev" href="#sliderPrincipal" role="button" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="carousel-control-next-icon m-auto" aria-hidden="true"></span>
 		<span class="sr-only">Next</span>
 	</a>
 </div>
