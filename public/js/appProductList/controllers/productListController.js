@@ -195,6 +195,7 @@ angular.module('productListApp', ['angucomplete-alt', 'flow', 'moment-picker', '
 			});
 		};
 
+
 		$scope.showDialogDelete = function (productList) {
 			$("#Delete").modal("show");
 			$scope.productList = productList;
