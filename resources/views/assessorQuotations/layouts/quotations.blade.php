@@ -45,7 +45,6 @@
                                                 <th>Cantidad </th>
                                                 <th>Lista</th>
                                                 <th>Código</th>
-                                                <th>Seleccion</th>
                                                 <th>Articulo</th>
                                                 <th>Valor</th>
                                                 <th></th>

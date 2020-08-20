@@ -107,7 +107,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 }).then(function successCallback(response) {
                     var key = $scope.items.key;
                     $scope.items.article = response.data.product[0].item;
-                    var precio = parseInt($scope.liquidator[key][0][0].price)
+                    var precio = parseInt($scope.liquidator[key][0][0].price) * parseInt($scope.liquidator[key][0][0].quantity)
                     if ($scope.items.sku == 'AV10' || $scope.items.sku == 'AV12' || $scope.items.sku == 'AV15') {
                         $scope.liquidator[key][0].forEach(j => {
                             if (j.cod_proceso == 2) {
@@ -200,7 +200,6 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         }
 
         $scope.createItemLiquidator = function () {
-            $scope.items.price = parseInt($scope.items.price);
             $scope.liquidator[$scope.items.key][0].push($scope.items);
             if ($scope.discount.length != '') {
                 if ($scope.discount.type) {
@@ -255,7 +254,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             var iva = 0;
             var aval = 0;
             var totalAval = 0;
-            var precio = parseInt($scope.liquidator[key][0][0].price);
+            var precio = parseInt($scope.liquidator[key][0][0].price) * parseInt($scope.liquidator[key][0][0].quantity);
             var e = $scope.liquidator[key][0];
             for (let i = 0; i < e.length; i++) {
                 if (((e[i].sku == 'AV10') || (e[i].sku == 'AV12') || (e[i].sku == 'AV15')) && (e[i].cod_proceso == 2)) {
@@ -311,7 +310,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
             var product = 0;
             var precio = 0;
             if ($scope.liquidator[key][0][0].price != 0) {
-                precio = parseInt($scope.liquidator[key][0][0].price)
+                precio = parseInt($scope.liquidator[key][0][0].price) * parseInt($scope.liquidator[key][0][0].quantity)
             }
             $scope.liquidator[key][0].forEach(j => {
                 if (j.cod_proceso == 2) {
@@ -391,7 +390,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                             method: 'GET',
                             url: '/api/liquidator/getProduct/' + product.sku,
                         }).then(function successCallback(response) {
-                            var precio = parseInt($scope.liquidator[key][0][0].price)
+                            var precio = parseInt($scope.liquidator[key][0][0].price) * parseInt($scope.liquidator[key][0][0].quantity)
                             $scope.liquidator[key][0].forEach(j => {
                                 if (j.cod_proceso == 2) {
                                     if ((j.sku != 'AV10') && (j.sku != 'AV12') && (j.sku != 'AV15') && (j.sku != 'IVAV')) {
