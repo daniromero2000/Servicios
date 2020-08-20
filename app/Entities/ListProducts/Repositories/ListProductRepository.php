@@ -190,7 +190,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
-                $traditionalCreditBondPrice       = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $traditionalCreditBondPrice       = round(($promotionPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['percentage_base_oportuya_customer']) / 100));
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
