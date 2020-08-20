@@ -534,7 +534,6 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             url: '/api/liquidator/getProduct/' + product.CODIGO,
                         }).then(function successCallback(response) {
                             var precio = parseInt($scope.liquidator[key][0][0].PRECIO)
-                            console.log(precio)
                             $scope.liquidator[key][0].forEach(j => {
                                 if (j.COD_PROCESO == 2) {
                                     if ((j.CODIGO != 'AV10') && (j.CODIGO != 'AV12') && (j.CODIGO != 'AV15') && (j.CODIGO != 'IVAV')) {
@@ -617,14 +616,12 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
         };
 
         $scope.removeProduct = function (product) {
-            key = product.key
-            $scope.liquidator[key][0].splice($scope.liquidator[key][0].indexOf(product), 1);
+            $scope.liquidator[product.key][0].splice($scope.liquidator[product.key][0].indexOf(product), 1);
             showAlert("success", "El producto se ha eliminado correctamente");
         };
 
         $scope.removeDiscount = function (discount) {
-            key = discount.key
-            $scope.liquidator[key][1].splice($scope.liquidator[key][1].indexOf(discount), 1);
+            $scope.liquidator[discount.key][1].splice($scope.liquidator[discount.key][1].indexOf(discount), 1);
             showAlert("success", "El descuento se ha eliminado correctamente");
         };
 

@@ -262,7 +262,7 @@ class CreditLiquidatorController extends Controller
                 break;
         }
 
-        return $zone;
+        return response()->json($zone);
     }
 
     public function getDate($term)

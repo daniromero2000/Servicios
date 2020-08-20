@@ -18,6 +18,7 @@ class AssesorQuotationController extends Controller
     ) {
         $this->assessorQuotationRepositoryInterface = $assessorQuotationRepositoryInterface;
         $this->toolsInterface = $toolRepositoryInterface;
+        $this->middleware('auth');
     }
 
     public function index(Request $request)
