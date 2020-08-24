@@ -108,7 +108,6 @@
 @section('content')
 <section style="min-width: 540px">
   @include('layouts.errors-and-messages')
-  @if(!is_null($assessorQuotations))
   <div class="mx-auto" style="max-width: 1450px;">
     <div class="content-header">
       <div class="container-fluid">
@@ -241,7 +240,7 @@
                       @include('assessorQuotations.layouts.quotations')
 
                       <div class="ml-auto my-auto">
-                        <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
+                        <button type="button" ng-if="quotations[0]" ng-click="createLiquidator()"
                           class="btn btn-primary btn-sm">Crear
                           Cotización</button>
                       </div>
@@ -272,7 +271,6 @@
 
   </div>
 
-  @endif
 </section>
 @endsection
 

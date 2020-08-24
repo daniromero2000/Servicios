@@ -2,7 +2,7 @@
     <div class="card-header p-0 border-bottom-0">
         <nav>
             <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link cursor" id="nav-general-tab@{{key}}" ng-repeat="(key, tab) in liquidator"
+                <a class="nav-item nav-link cursor" id="nav-general-tab@{{key}}" ng-repeat="(key, tab) in quotations"
                     ng-click="alterTab(key)" ng-class="{ 'active': tabItem == key }" data-toggle="tab" role="tab"
                     aria-controls="nav-general@{{key}}">Item <td class="d-flex">
                         <button class="close mx-auto text-danger" ng-click="removeItem(key)">
@@ -15,7 +15,7 @@
     </div>
     <div class="card-body" ng-if="key != 0">
 
-        <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in liquidator">
+        <div class="tab-content" id="nav-tabContent@{{key}}" ng-repeat="(key, tab) in quotations">
             <div class="tab-pane mb-4 border-0" id="nav-general@{{key}}" role="tabpanel"
                 aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabItem  == key }">
                 <div class="row">
@@ -125,7 +125,7 @@
                                 <div class="row">
                                     <div class="form-group col-4">
                                         <label for="name">Plan <span class="text-danger">*</span></label>
-                                        <select ng-model="liquidator[key][3].plan_id" id="plan"
+                                        <select ng-model="quotations[key][3].plan_id" id="plan"
                                             ng-blur="createPlan(key)" name="plan" class="form-control " required>
                                             <option selected value> Selecciona Plan </option>
                                             <option ng-repeat="plan in plans" value="@{{plan.CODIGO}}">
@@ -135,12 +135,12 @@
                                     <div class="form-group col-4">
                                         <label for="initialFee">Cuota inicial</label>
                                         <input required type="text" class="form-control" id="initialFee"
-                                            ng-model="liquidator[key][3].initial_fee" ng-currency
+                                            ng-model="quotations[key][3].initial_fee" ng-currency
                                             aria-describedby="initialFee">
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="name">N° de Cuotas <span class="text-danger">*</span></label>
-                                        <select ng-model="liquidator[key][3].term" id="feeInitial" ng-blur="addFee(key)"
+                                        <select ng-model="quotations[key][3].term" id="feeInitial" ng-blur="addFee(key)"
                                             name="feeInitial" class="form-control " required>
                                             <option selected value> Selecciona una Cuota </option>
                                             <option ng-repeat="fees in numberOfFees" value="@{{fees.CUOTA}}">
@@ -160,7 +160,7 @@
                                     <div class="card-body pt-0">
                                         <div class="form-group ">
                                             <label>Aplica IVA?
-                                                <input type="checkbox" ng-model="liquidator[key][3].check"
+                                                <input type="checkbox" ng-model="quotations[key][3].check"
                                                     ng-click="sumDiscount(key)">
                                             </label>
                                         </div>
@@ -172,29 +172,29 @@
                                                             class="fa-li"><i class="fas fa-percent"></i></span>
                                                         Total
                                                         Descuentos: <b> $
-                                                            @{{liquidator[key][2] | number:0 }}</b>
+                                                            @{{quotations[key][2] | number:0 }}</b>
                                                     </li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
                                                             class="fa-li"><i
                                                                 class="fas fa-money-bill-wave-alt"></i></span>
                                                         Valor cuotas:
-                                                        <b> $ @{{liquidator[key][3].value_fee | number:0}}</b></li>
+                                                        <b> $ @{{quotations[key][3].value_fee | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
                                                             class="fa-li"><i class="fas fa-store-alt"></i></span>
                                                         Aval+Iva:
-                                                        <b> $ @{{liquidator[key][4].total_aval | number:0}}</b></li>
+                                                        <b> $ @{{quotations[key][4].total_aval | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
                                                             class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Subtotal:
-                                                        <b> $ @{{liquidator[key][5].subtotal | number:0}}</b></li>
+                                                        <b> $ @{{quotations[key][5].subtotal | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
                                                             class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Iva:
-                                                        <b> $ @{{liquidator[key][5].iva | number:0}}</b></li>
+                                                        <b> $ @{{quotations[key][5].iva | number:0}}</b></li>
                                                     <li class="mt-2 small d-flex justify-content-between"><span
                                                             class="fa-li"><i class="fas fa-dollar-sign"></i></span>
                                                         Total:
-                                                        <b> $ @{{liquidator[key][5].total | number:0}}</b></li>
+                                                        <b> $ @{{quotations[key][5].total | number:0}}</b></li>
                                                 </ul>
                                             </div>
                                         </div>

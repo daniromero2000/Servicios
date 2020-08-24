@@ -104,6 +104,9 @@
                                     <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
                                         Black sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.black_bond_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
+                                        Black con bono:</label> <span
+                                        class="productlist-card-price">$@{{ price.black_bond_on_price | number:0 }}</span>
                                 </div>
                             </div>
                             <div class="icon">

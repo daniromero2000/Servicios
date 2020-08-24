@@ -26,4 +26,14 @@ class AssessorQuotationRepository implements AssessorQuotationRepositoryInterfac
             dd($e);
         }
     }
+
+    public function createAssessorQuotations($data)
+    {
+        try {
+            return $this->model->create($data)
+                ->get();
+        } catch (QueryException $e) {
+            dd($e);
+        }
+    }
 }

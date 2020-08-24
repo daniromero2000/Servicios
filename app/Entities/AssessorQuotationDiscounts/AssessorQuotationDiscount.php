@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entities\AssessorQuotations;
+namespace App\Entities\AssessorQuotationDiscounts;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AssessorQuotation extends Model
+class AssessorQuotationDiscount extends Model
 {
-    protected $table = 'assesor_quotations';
+    protected $table = 'assesor_quotation_discounts';
 
     protected $connection = 'oportudata';
 
@@ -16,6 +16,8 @@ class AssessorQuotation extends Model
         'cedula',
         'phone',
         'email',
+        'product_id',
+        'product_price',
         'termsAndConditions',
         'assessor_id'
     ];

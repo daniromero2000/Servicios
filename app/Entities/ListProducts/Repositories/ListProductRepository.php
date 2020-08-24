@@ -143,6 +143,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
+                $blackBondOnPrice                 = 0;
             } elseif ($productList['zone'] == 'MEDIA') {
                 //Resto del pais
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
@@ -159,7 +160,8 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100) * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round(($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
-            } elseif ($productList['zone'] == 'MEDIA') {
+                $blackBondOnPrice                 = round((($blackPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond) *  0.95);
+            } elseif ($productList['zone'] == 'BAJA') {
                 //Pueblos
                 $cashPromotion                    = round((($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100)) / (0.96));
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
@@ -174,6 +176,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackPublicPrice                 = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_black']) / 100) * ((100 - $productList['percentage_credit_card_black']) / 100));
                 $percentageBlackPublicPrice       = round(100 - (($blackPublicPrice * 100) / $normalPublicPrice), 2);
                 $blackBondPrice                   = round($blackPublicPrice * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
+                $blackBondOnPrice                 = 0;
             } else {
                 //Volanteo
                 if ($percentageProtectionDividedPrice == 0) {
@@ -215,6 +218,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 'black_public_price'                  => $blackPublicPrice,
                 'percentage_black_public_price'       => $percentageBlackPublicPrice,
                 'black_bond_price'                    => $blackBondPrice * 12,
+                'black_bond_on_price'                 => $blackBondOnPrice * 12,
                 'zone'                                => $productList['zone']
             ];
         }
