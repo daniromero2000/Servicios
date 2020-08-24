@@ -92,6 +92,7 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                     method: 'GET',
                     url: '/api/liquidator/getProduct/' + $scope.items.sku,
                 }).then(function successCallback(response) {
+                    $scope.items.product_id = response.data.product[0].id;
                     $scope.items.article = response.data.product[0].item;
                     $scope.items.price = response.data.price.normal_public_price;
                     $scope.items.list = response.data.price.list;

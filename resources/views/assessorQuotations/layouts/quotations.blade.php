@@ -234,6 +234,8 @@
                                             <option value="4">Combo</option>
                                         </select>
                                     </div>
+                                    <input required type="hidden" class="form-control" ng-model="items.product_id"
+                                        id="product_id" name="product_id">
                                     <div class="col-4 form-group">
                                         <label for="codeProduct">Codigo <span class="text-danger">*</span></label>
                                         <input required type="text" class="form-control" ng-model="items.sku"

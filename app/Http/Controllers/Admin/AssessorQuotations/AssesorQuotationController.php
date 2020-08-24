@@ -52,31 +52,33 @@ class AssesorQuotationController extends Controller
     {
         $quotations = $request->input();
         $customer = [
-            'name'               => $quotations[1]->NOMBRES,
-            'lastName'           => $quotations[1]->APELLIDOS,
-            'cedula'             => $quotations[1]->CEDULA,
-            'phone'              => $quotations[1]->CELULAR,
-            'email'              => $quotations[1]->EMAIL,
+            'name'               => $quotations[1]['NOMBRES'],
+            'lastName'           => $quotations[1]['APELLIDOS'],
+            'cedula'             => $quotations[1]['CEDULA'],
+            'phone'              => $quotations[1]['CELULAR'],
+            'email'              => $quotations[1]['EMAIL'],
             'termsAndConditions' => 1,
             'assessor_id'        => auth()->user()->codeOportudata
         ];
-        $list = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
-        dd($customer);
+        // $list = $this->assessorQuotationRepositoryInterface->createAssessorQuotations($customer);
+        // dd($list);
+
 
         foreach ($quotations[0] as $key => $value) {
             $items2[$key] = $quotations[0][$key];
         }
+        foreach ($items2 as $id => $value) {
+            $products[]       = $items2[$id][0][0];
+            $discounts[]      = $items2[$id][1];
+            // $totalDiscounts[] = $items2[$id][2];
+            $aval[]           = $items2[$id][4][0];
+            $total[]          = $items2[$id][5][0];
+            $feeInitial[]     = $items2[$id][6][0];
+            $fees[]           = $items2[$id][7][0];
+            $plans[]          = $items2[$id][8][0];
+        }
 
-        // foreach ($items2 as $id => $value) {
-        //     $products[]       = $items2[$id][0][0];
-        //     $discounts[]      = $items2[$id][1];
-        //     $totalDiscounts[] = $items2[$id][2];
-        //     $aval[]           = $items2[$id][4][0];
-        //     $total[]          = $items2[$id][5][0];
-        //     $feeInitial[]     = $items2[$id][6][0];
-        //     $fees[]           = $items2[$id][7][0];
-        //     $plans[]          = $items2[$id][8][0];
-        // }
+        dd($products);
 
         // $sumTotal = 0;
         // $data = [];
