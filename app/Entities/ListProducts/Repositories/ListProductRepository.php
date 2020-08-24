@@ -189,12 +189,12 @@ class ListProductRepository implements ListProductRepositoryInterface
                     $percentageProtection = 90;
                 }
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
-                $promotionPublicPrice             = round(($product['iva_cost'] - ($protectionVat * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);;
+                $promotionPublicPrice             = round(($product['iva_cost'] - (($protectionVat * 0.5) * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);;
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
                 $traditionalCreditBondPrice       = round(($promotionPublicPrice * 0.95) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
-                $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
+                $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - ($protectionVat * 1.5)) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
                 $blueBondPrice                    = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond);
