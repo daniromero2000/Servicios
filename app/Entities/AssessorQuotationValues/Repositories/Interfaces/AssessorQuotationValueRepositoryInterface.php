@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface AssessorQuotationValueRepositoryInterface
 {
-  public function listAssessorQuotationValues($from, $to);
+  public function createAssessorQuotationValues($data);
 }

@@ -6,19 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class AssessorQuotationValue extends Model
 {
-    protected $table = 'assesor_quotations_values';
+    protected $table = 'assesor_quotation_values';
 
     protected $connection = 'oportudata';
 
     protected $fillable = [
-        'name',
-        'lastName',
-        'cedula',
-        'phone',
-        'email',
+        'assesor_quotation_id',
         'product_id',
-        'product_price',
-        'termsAndConditions',
-        'assessor_id'
+        'quantity',
+        'article',
+        'price',
+        'list',
+        'discount_id',
+        'total_aval',
+        'total',
+        'iva',
+        'subtotal',
+        'initial_fee',
+        'term',
+        'value_fee',
+        'plan_id'
     ];
 }

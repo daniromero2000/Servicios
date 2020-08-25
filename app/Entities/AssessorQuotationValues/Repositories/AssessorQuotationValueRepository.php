@@ -17,10 +17,10 @@ class AssessorQuotationValueRepository implements AssessorQuotationValueReposito
         $this->model = $assessorQuotation;
     }
 
-    public function listAssessorQuotationValues($from, $to)
+    public function createAssessorQuotationValues($data)
     {
         try {
-            return $this->model->whereBetween('created_at', [$from, $to])
+            return $this->model->create($data)
                 ->get();
         } catch (QueryException $e) {
             dd($e);

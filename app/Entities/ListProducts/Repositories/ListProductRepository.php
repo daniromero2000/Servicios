@@ -179,17 +179,9 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $blackBondOnPrice                 = 0;
             } else {
                 //Volanteo
-                if ($percentageProtectionDividedPrice == 0) {
-                    $percentageProtection = 0;
-                } elseif ($percentageProtectionDividedPrice <= 10) {
-                    $percentageProtection = 70;
-                } elseif ($percentageProtectionDividedPrice > 10 && $percentageProtectionDividedPrice <= 20) {
-                    $percentageProtection = 80;
-                } else {
-                    $percentageProtection = 90;
-                }
+
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
-                $promotionPublicPrice             = round(($product['iva_cost'] - (($protectionVat * 0.5) * ($percentageProtection / 100))) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);;
+                $promotionPublicPrice             = round(($product['iva_cost'] - ($protectionVat * 0.5)) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);

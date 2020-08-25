@@ -9,5 +9,5 @@ interface AssessorQuotationRepositoryInterface
 {
   public function listAssessorQuotations($from, $to);
 
-  public function createAssessorQuotations($data);
+  public function createAssessorQuotations($data): AssessorQuotation;
 }

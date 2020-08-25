@@ -162,11 +162,18 @@ use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\UbicaEmailRepository;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
+use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->bind(
+            AssessorQuotationValueRepositoryInterface::class,
+            AssessorQuotationValueRepository::class
+        );
+
         $this->app->bind(
             PlanRepositoryInterface::class,
             PlanRepository::class
