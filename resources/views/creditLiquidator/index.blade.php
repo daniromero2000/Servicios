@@ -32,7 +32,7 @@
 </style>
 <style>
     .overlay {
-        background: #e9e9e9;
+        background: #ffffff;
         display: block;
         position: absolute;
         top: 0;
@@ -40,18 +40,20 @@
         bottom: 0;
         left: 0;
         opacity: 0.5;
+        z-index: 999999;
+        max-height: 100%;
     }
 
     .loader-products {
-        background: #e9e9e9;
+        background: #ffffff;
         border: 10px solid #f3f3f3;
         border-radius: 50%;
-        border-top: 10px solid #007bff;
-        border-right: 10px solid #3094ff;
-        border-bottom: 10px solid #007bff;
-        border-left: 10px solid #3094ff;
-        width: 50px;
-        height: 50px;
+        border-top: 6px solid #007bff;
+        border-right: 6px solid #3094ff;
+        border-bottom: 6px solid #007bff;
+        border-left: 6px solid #3094ff;
+        width: 35px;
+        height: 35px;
         -webkit-animation: spin 2s linear infinite;
         animation: spin 2s linear infinite;
         position: absolute;
@@ -148,6 +150,13 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="nav-tabContent">
+                        <div class="overlay" data-ng-show="loader">
+                            <div class="loader-products">
+                            </div>
+                            <div class="text-loader">
+                                Cargando...
+                            </div>
+                        </div>
                         <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
                             aria-labelledby="nav-general-tab" ng-class="{ 'show active': tabs == 1 }">
                             <div class="row">

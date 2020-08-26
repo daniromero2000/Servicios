@@ -758,7 +758,8 @@ angular.module('asessorVentaContadoApp', ['moment-picker', 'ng-currency', 'ngSan
 				$('#congratulations').modal('show');
 			}, 1500);
 		};
-
+		// $('#congratulations').modal('show');
+		// $scope.estadoCliente = "PREAPROBADO";
 		$scope.resetInfoLead = function () {
 			showLoader();
 			hideLoader();

@@ -63,6 +63,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                 $scope.lead = response.data;
                 $scope.createRequest();
                 $scope.loader = false;
+                $scope.addItem();
             }, function errorCallback(response) {
                 response.url = '/assessor/api/getInfoLead/' + $scope.lead.CEDULA;
                 $scope.addError(response, $scope.lead.CEDULA);
@@ -83,9 +84,16 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
                             $scope.discount.value = Math.floor(response.data.price.percentage_black_public_price);
-                        } else {
+                        } else if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Gray' || $scope.lead.latest_intention.TARJETA == 'Tarjeta Blue') {
                             $scope.items.PRECIO = response.data.price.normal_public_price;
                             $scope.discount.value = Math.floor(response.data.price.percentage_blue_public_price);
+                        } else {
+                            if (response.data.price.percentage_promotion_public_price != '0') {
+                                $scope.discount.key = $scope.items.key
+                                $scope.discount.type = 'Por lista';
+                                $scope.discount.value = Math.floor(response.data.price.percentage_promotion_public_price);
+                            }
+                            $scope.items.PRECIO = response.data.price.normal_public_price;
                         }
                     } else {
                         if (response.data.price.percentage_promotion_public_price != '0') {
@@ -162,21 +170,21 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
             }).then(function successCallback(response) {
                 if (response != false) {
                     angular.forEach(response.data, function (value) {
-                        switch (response.data.name) {
+                        switch (value.name) {
                             case 'Tasa':
-                                tasaint = response.data.value
+                                $scope.tasaint = value.value
                                 break;
                             case 'Efectiva anual':
-                                tasaea = response.data.value
+                                $scope.tasaea = value.value
                                 break;
                             case 'Nominal vencida':
-                                tasanom = response.data.value
+                                $scope.tasanom = value.value
                                 break;
                             case 'Mensual vencida':
-                                tasamora = response.data.value
+                                $scope.tasamora = value.value
                                 break;
                             case 'Tasa maxima legal':
-                                tasamax = response.data.value
+                                $scope.tasamax = value.value
                                 break;
                             default:
                                 break;
@@ -289,7 +297,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.liquidator[$scope.items.key][1] = [];
                         $scope.liquidator[$scope.items.key][1].push($scope.discount);
                         $scope.discount = {};
-                        if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya')) {
+                        if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') && $scope.lead.latest_intention.TARJETA != 'Crédito Tradicional') {
                             $scope.discount.key = $scope.items.key
                             $scope.discount.type = 'Tarjeta Oportuya';
                             if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
@@ -416,7 +424,7 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                     $scope.liquidator[key][3].MANEJO = 0;
                     $scope.liquidator[key][3].SEGURO = 0;
                 }
-
+                console.log($scope.tasamax)
                 $scope.liquidator[key][7].push({ 'PLAZO': $scope.liquidator[key][3].PLAZO, 'VRCUOTA': $scope.liquidator[key][3].VRCUOTA, 'MANEJO': $scope.liquidator[key][3].MANEJO, 'SEGURO': $scope.liquidator[key][3].SEGURO, 'FACTOR': factor, 'TASAEA': $scope.tasaea, 'TASAMORA': $scope.tasamora, 'TASANOM': $scope.tasanom, 'TASAMAX': $scope.tasamax, 'TASA_INT': $scope.tasaint });
                 $scope.getTerms($scope.liquidator[key][3].PLAZO, key);
             }

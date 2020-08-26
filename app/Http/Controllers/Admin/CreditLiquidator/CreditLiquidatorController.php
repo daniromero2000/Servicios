@@ -70,7 +70,6 @@ class CreditLiquidatorController extends Controller
     public function store(Request $request)
     {
         $liquidation = $request->input();
-
         $items = [];
         $items2 = [];
         $products = [];
@@ -236,13 +235,13 @@ class CreditLiquidatorController extends Controller
         }
 
         $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
-        if ($existSolicFab[0] == true) {
+        if ($existSolicFab[0] == 'true') {
             return -3; // Tiene Solictud diferente a en Sucursal
         }
 
         switch ($customer->latestIntention->CREDIT_DECISION) {
             case 'Tradicional':
-                if ($existSolicFab[1] != false && $existSolicFab[1]->ESTADO != 1) {
+                if ($existSolicFab[1] != false && ($existSolicFab[1]->ESTADO != 1)) {
                     return -3;
                 }
                 break;
@@ -253,6 +252,7 @@ class CreditLiquidatorController extends Controller
                         return -1; // Tiene tarjeta
                     }
                 } else {
+                    // dd('hola');
                     return -3;
                 }
 

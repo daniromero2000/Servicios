@@ -1247,9 +1247,9 @@
                         <div class="col-12 text-center">
                             <a class="btn btn-danger buttonBackCardExist" href="/Administrator/crearCliente">Nuevo
                                 Registro</a>
-                            {{-- <a ng-if="estadoCliente == 'TRADICIONAL'"
+                            {{-- <a ng-if="estadoCliente == 'TRADICIONAL' || estadoCliente == 'PREAPROBADO'"
                                 href="/Administrator/creditLiquidator/@{{lead.CEDULA}}"
-                            class="btn bg-primary buttonBackCardExist">Crear negocio @{{lead.CEDULA}}</a> --}}
+                            class="btn bg-primary buttonBackCardExist">Crear negocio</a> --}}
                         </div>
                     </div>
                 </div>
