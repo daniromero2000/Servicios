@@ -15,7 +15,6 @@ use App\Entities\Tools\UploadableTrait;
 
 class BrandRepository implements BrandRepositoryInterface
 {
-
     use UploadableTrait;
 
     public function __construct(Brand $brand)

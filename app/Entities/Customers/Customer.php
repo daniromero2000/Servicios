@@ -3,6 +3,9 @@
 namespace App\Entities\Customers;
 
 use App\codeUserVerificationOportudata;
+use App\Entities\CurrentCredits\PaymentTime;
+use App\Entities\CurrentCredits\CustomerType;
+use App\Entities\CurrentCredits\CurrentCredit;
 use App\Entities\CliCels\CliCel;
 use App\Entities\CifinFinancialArrears\CifinFinancialArrear;
 use App\Entities\CifinRealArrears\CifinRealArrear;
@@ -303,5 +306,35 @@ class Customer extends Model
     public function codeUserVerification()
     {
         return $this->hasMany(codeUserVerificationOportudata::class, 'identificationNumber');
+    }
+
+    public function currentCredits()
+    {
+        return $this->hasMany(CurrentCredit::class, 'identificationNumber');
+    }
+
+    public function expiredCredits()
+    {
+        return $this->hasMany(ExpiredCredit::class, 'identificationNumber');
+    }
+
+    public function obligations()
+    {
+        return $this->hasMany(Obligation::class, 'identificationNumber');
+    }
+
+    public function paymentTimes()
+    {
+        return $this->hasMany(PaymentTime::class, 'identificationNumber');
+    }
+
+    public function summaryCredit()
+    {
+        return $this->hasOne(SummaryCredit::class, 'identificationNumber');
+    }
+
+    public function customerType()
+    {
+        return $this->hasOne(CustomerType::class, 'identificationNumber');
     }
 }

@@ -13,7 +13,6 @@ class CifinScoreRepository implements CifinScoreRepositoryInterface
         $this->model = $cifinScore;
     }
 
-
     public function getCustomerLastCifinScore($identificationNumber)
     {
         try {

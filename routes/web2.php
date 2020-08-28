@@ -130,14 +130,8 @@ Route::namespace('Admin')->group(function () {
 
     Route::namespace('CustomerTypes')->group(function () {    
         Route::get('/Administrator/parametros', 'CreditController@index')->name('inicio');
-        Route::get('/Administrator/obligations', 'ObligationController@index')->name('obligation');
-        Route::get('/Administrator/currentcredits', 'CurrentCreditController@index')->name('current');
-        Route::get('/Administrator/expiredcredits', 'ExpiredCreditController@index')->name('expired');
-        Route::get('/Administrator/customertype', 'CustomerTypeController@index')->name('customer');
-        Route::get('/Administrator/paymenttime', 'PaymentController@index')->name('payment');
-        Route::get('/Administrator/wscarterai' , 'WsCarteraController@index')->name('wscarterai');
-        Route::get('/Administrator/wscartera' , 'WsCarteraController@wscartera')->name('wscartera');
-        Route::get('/Administrator/summary' , 'SummaryController@index')->name('summary');
+        Route::get('/Administrator/wscartera', 'WsCarteraController@wscartera')->name('wscartera');
+        Route::get('/Administrator/currentcredits/{identificationNumber}', 'CurrentCreditController@show')->name('current');
     });
 
 

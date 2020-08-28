@@ -160,6 +160,18 @@ use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\UbicaEmailRepository;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
+use App\Entities\CurrentCredits\Repositories\CurrentCreditRepository;
+use App\Entities\CurrentCredits\Repositories\Interfaces\CurrentCreditRepositoryInterface;
+use App\Entities\CustomerTypes\Repositories\CustomerTypeRepository;
+use App\Entities\CustomerTypes\Repositories\Interfaces\CustomerTypeRepositoryInterface;
+use App\Entities\ExpiredCredits\Repositories\ExpiredCreditRepository;
+use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
+use App\Entities\Obligations\Repositories\ObligationRepository;
+use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterface;
+use App\Entities\PaymentTimes\Repositories\PaymentTimeRepository;
+use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
+use App\Entities\SummaryCredits\Repositories\SummaryCreditRepository;
+use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -559,6 +571,36 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PunishmentRepositoryInterface::class,
             PunishmentRepository::class
+        );
+
+        $this->app->bind(
+            CurrentCreditRepositoryInterface::class,
+            CurrentCreditRepository::class
+        );
+
+        $this->app->bind(
+            CustomerTypeRepositoryInterface::class,
+            CustomerTypeRepository::class
+        );
+
+        $this->app->bind(
+            ExpiredCreditRepositoryInterface::class,
+            ExpiredCreditRepository::class
+        );
+
+        $this->app->bind(
+            ObligationRepositoryInterface::class,
+            ObligationRepository::class
+        );
+
+        $this->app->bind(
+            PaymentTimeRepositoryInterface::class,
+            PaymentTimeRepository::class
+        );
+
+        $this->app->bind(
+            SummaryCreditRepositoryInterface::class,
+            SummaryCreditRepository::class
         );
     }
 }

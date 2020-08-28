@@ -2,23 +2,44 @@
 
 namespace App\Http\Controllers\Admin\CustomerTypes;
 
-use Illuminate\Http\Request;
-use App\CurrentCredit;
 use App\Http\Controllers\Controller;
+use App\Entities\CurrentCredits\Repositories\Interfaces\CurrentCreditRepositoryInterface;
+use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterface;
+use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
+use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
+use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
+use App\Entities\CustomerTypes\Repositories\Interfaces\CustomerTypeRepositoryInterface;
 
 class CurrentCreditController extends Controller
 {
-    public function index(Request $request)
-    {
-        $identification = $request->get('identificationNumber');
-       
-        $current=CurrentCredit::identification($request->get('identificationNumber'))->orderBy('id','ASC')->paginate(10);
+    private $currentcreditInterface, $obligationInterface, $expiredcreditInterface, $paymentInterface, $customertypeInterface, $summarycreditInterface;
 
-        return view ('currentcredit.show')->with(compact('current'));
+    public function __construct(
+        CurrentCreditRepositoryInterface $currentcreditRepositoryInterface,
+        ObligationRepositoryInterface $obligationRepositoryInterface,
+        ExpiredCreditRepositoryInterface $expiredcreditRepositoryInterface,
+        PaymentTimeRepositoryInterface $paymentRepositoryInterface,
+        SummaryCreditRepositoryInterface $summarycreditRepositoryInterface,      
+        CustomerTypeRepositoryInterface $customertypeRepositoryInterface
+    ) {
+        $this->currentcreditInterface = $currentcreditRepositoryInterface;
+        $this->obligationInterface = $obligationRepositoryInterface;
+        $this->expiredcreditInterface = $expiredcreditRepositoryInterface;
+        $this->paymentInterface = $paymentRepositoryInterface;
+        $this->customertypeInterface = $customertypeRepositoryInterface;
+        $this->summarycreditInterface = $summarycreditRepositoryInterface;
     }
 
-    public function show(CurrentCredit $current)
+    public function show($identificationNumber)
     {
-        return view ('currentcredit.show', compact('current'));
+        return view('customertype.show', [
+            'obligation' =>  $this->obligationInterface->findObligation($identificationNumber),
+            'currentcredit' =>  $this->currentcreditInterface->findCurrentCredit($identificationNumber),
+            'expiredcredit' =>  $this->expiredcreditInterface->findExpiredCredit($identificationNumber), 
+            'payment' =>  $this->paymentInterface->findPaymentTime($identificationNumber),
+            'customertype' =>  $this->customertypeInterface->findCustomerType($identificationNumber),                       
+            'summary' =>  $this->summarycreditInterface->findSummaryCredit($identificationNumber) 
+        ]);
     }   
 }
+
