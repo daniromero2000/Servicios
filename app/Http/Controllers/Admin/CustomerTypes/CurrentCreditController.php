@@ -8,6 +8,7 @@ use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterfa
 use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 use App\Entities\CustomerTypes\Repositories\Interfaces\CustomerTypeRepositoryInterface;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
 
 class CurrentCreditController extends Controller

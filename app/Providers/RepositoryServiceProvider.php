@@ -181,6 +181,12 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
+
+        $this->app->bind(
+            PaymentTimeRepositoryInterface::class,
+            PaymentTimeRepository::class
+        );
+
         $this->app->bind(
             AssessorQuotationValueRepositoryInterface::class,
             AssessorQuotationValueRepository::class
@@ -605,11 +611,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ObligationRepositoryInterface::class,
             ObligationRepository::class
-        );
-
-        $this->app->bind(
-            PaymentTimeRepositoryInterface::class,
-            PaymentTimeRepository::class
         );
 
         $this->app->bind(
