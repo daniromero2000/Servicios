@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Entities\CurrentCredits\Repositories\Interfaces\CurrentCreditRepositoryInterface;
 use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterface;
 use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
-use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 use App\Entities\CustomerTypes\Repositories\Interfaces\CustomerTypeRepositoryInterface;
+use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
 
 class CurrentCreditController extends Controller
 {
@@ -19,7 +19,7 @@ class CurrentCreditController extends Controller
         ObligationRepositoryInterface $obligationRepositoryInterface,
         ExpiredCreditRepositoryInterface $expiredcreditRepositoryInterface,
         PaymentTimeRepositoryInterface $paymentRepositoryInterface,
-        SummaryCreditRepositoryInterface $summarycreditRepositoryInterface,      
+        SummaryCreditRepositoryInterface $summarycreditRepositoryInterface,
         CustomerTypeRepositoryInterface $customertypeRepositoryInterface
     ) {
         $this->currentcreditInterface = $currentcreditRepositoryInterface;
@@ -35,11 +35,10 @@ class CurrentCreditController extends Controller
         return view('customertype.show', [
             'obligation' =>  $this->obligationInterface->findObligation($identificationNumber),
             'currentcredit' =>  $this->currentcreditInterface->findCurrentCredit($identificationNumber),
-            'expiredcredit' =>  $this->expiredcreditInterface->findExpiredCredit($identificationNumber), 
+            'expiredcredit' =>  $this->expiredcreditInterface->findExpiredCredit($identificationNumber),
             'payment' =>  $this->paymentInterface->findPaymentTime($identificationNumber),
-            'customertype' =>  $this->customertypeInterface->findCustomerType($identificationNumber),                       
-            'summary' =>  $this->summarycreditInterface->findSummaryCredit($identificationNumber) 
+            'customertype' =>  $this->customertypeInterface->findCustomerType($identificationNumber),
+            'summary' =>  $this->summarycreditInterface->findSummaryCredit($identificationNumber)
         ]);
-    }   
+    }
 }
-

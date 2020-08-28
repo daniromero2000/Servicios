@@ -3,7 +3,7 @@
 namespace App\Entities\PaymentTimes\Repositories;
 
 use App\Entities\PaymentTimes\PaymentTime;
-use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
+use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentTimeRepository implements PaymentTimeRepositoryInterface
@@ -22,12 +22,12 @@ class PaymentTimeRepository implements PaymentTimeRepositoryInterface
         $this->model =  $paymenttime;
     }
 
-    public function findPaymentTime($identificationNumber) 
+    public function findPaymentTime($identificationNumber)
     {
         try {
-            return $this->model->where('identificationNumber',$identificationNumber)->get($this->columns);
-         } catch (ModelNotFoundException $e) {
+            return $this->model->where('identificationNumber', $identificationNumber)->get($this->columns);
+        } catch (ModelNotFoundException $e) {
             abort(503, $e->getMessage());
         }
-    }    
+    }
 }

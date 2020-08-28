@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\PaymentTimes\Repositories\Interfaces;
+namespace App\Entities\PaymentTimes\Repositories;
 
 use App\Entities\PaymentTimes\PaymentTime;
 
