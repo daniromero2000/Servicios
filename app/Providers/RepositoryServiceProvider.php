@@ -616,5 +616,10 @@ class RepositoryServiceProvider extends ServiceProvider
             SummaryCreditRepositoryInterface::class,
             SummaryCreditRepository::class
         );
+
+        $this->app->bind(
+            AssessorQuotationValueRepositoryInterface::class,
+            AssessorQuotationValueRepository::class
+        );
     }
 }
