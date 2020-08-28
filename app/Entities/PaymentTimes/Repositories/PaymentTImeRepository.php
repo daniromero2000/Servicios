@@ -6,7 +6,7 @@ use App\Entities\PaymentTimes\PaymentTime;
 use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class PaymentTimeRepository implements PaymentTimeRepositoryInterface
+class PaymentTimeRepository
 {
     private $columns = [
         'identificationNumber',
