@@ -44,7 +44,7 @@
                             <div class="inner">
                                 <p class="productlist-card-title">Crédito tradicional</p>
                                 <div class="card-body">
-                                    <label class="productlist-card-subtitle">Valor 12 cuotas con AVAL:</label> <span
+                                    <label class="productlist-card-subtitle">Valor 12 cuotas:</label> <span
                                         class="productlist-card-price">$@{{ price.traditional_credit_price | number:0 }}</span>
                                     <label class="productlist-card-subtitle">Valor 12 cuotas sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.traditional_credit_bond_price | number:0 }}</span>
@@ -83,6 +83,9 @@
                                     <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
                                         Blue sin bono:</label> <span
                                         class="productlist-card-price">$@{{ price.blue_bond_price | number:0 }}</span>
+                                    <label class="productlist-card-subtitle" style="color: white">Valor 12 cuotas
+                                        Blue con bono:</label> <span
+                                        class="productlist-card-price">$@{{ price.blue_bond_on_price | number:0 }}</span>
                                 </div>
                             </div>
                             <div class="icon">
@@ -93,7 +96,6 @@
                             <div class="inner">
                                 <p class="productlist-card-title text-white">Tarjeta Black</p>
                                 <div class="card-body">
-
                                     <label class="productlist-card-subtitle" style="color: white">Precio público
                                         Black A.F:</label> <span
                                         class="productlist-card-price">$@{{ price.black_public_price | number:0 }}</span>

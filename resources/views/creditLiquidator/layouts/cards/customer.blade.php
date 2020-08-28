@@ -1,11 +1,20 @@
 <div class="card">
     <div class="card-body" style="display: block;">
-        <div class="row" style=" max-width: 600px; margin: auto; ">
-            <div class="col-md-6 text-gray px-2">
+        <div class="row py-3">
+            <div class="text-gray px-4">
                 <b>Solicitud:</b> @{{ request.SOLICITUD }}
             </div>
-            <div class="col-md-6 text-gray px-2">
+            <div class="text-gray px-4">
                 <b>Cliente:</b> @{{ lead.NOMBRES }} @{{ lead.APELLIDOS }}
+            </div>
+            <div class="text-gray px-4">
+                <b>Tipo de crédito:</b> @{{ lead.latest_intention.CREDIT_DECISION }}
+            </div>
+            <div ng-if="lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya'" class="text-gray px-4">
+                <b>Tipo de tarjeta:</b> @{{ lead.latest_intention.TARJETA }}
+            </div>
+            <div class="text-gray px-4">
+                <b>Definición:</b> @{{ lead.latest_intention.definition.DESCRIPCION }}
             </div>
         </div>
     </div>

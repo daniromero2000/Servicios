@@ -19,6 +19,7 @@ use App\Entities\OportudataLogs\OportudataLog;
 use App\Entities\Assessors\Repositories\Interfaces\AssessorRepositoryInterface;
 use App\Entities\CreditBusinesDetails\CreditBusinesDetail;
 use App\Entities\CreditBusiness\CreditBusines;
+use App\Entities\FactoryRequestStatuses\FactoryRequestStatus;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -64,7 +65,107 @@ class CreditLiquidatorController extends Controller
 
     public function index(Request $request)
     {
-        //
+
+        if (request()->has('customer')) {
+            return redirect()->route('creditLiquidator.show', request()->input('customer'));
+        }
+
+        $to                = Carbon::now();
+        $from              = Carbon::now()->startOfMonth();
+        $assessor          = auth()->user()->email;
+        $subsidiary        = '';
+        $skip              = $this->toolsInterface->getSkip($request->input('skip'));
+        $list              = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
+        $listCount         = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
+        $estadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+        $estadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+        $estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+        $estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
+
+        if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
+            $estadosAprobados  = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
+            $estadosNegados    = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 16, $subsidiary);
+            $estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors(request()->input('from'), request()->input('to'), $assessor, 15, $subsidiary);
+            $estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors(request()->input('from'), request()->input('to'), $assessor, array(16, 15, 19, 20), $subsidiary);
+        }
+        if (request()->has('q')) {
+            $list = $this->factoryInterface->searchFactoryAseessors(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary'),
+                $assessor
+            )->sortByDesc('FECHASOL');
+            $listCount = $this->factoryInterface->searchFactoryAseessors(
+                request()->input('q'),
+                $skip,
+                request()->input('from'),
+                request()->input('to'),
+                request()->input('status'),
+                request()->input('subsidiary'),
+                $assessor
+            )->sortByDesc('FECHASOL');
+        }
+
+        $estadosAprobados  = $this->toolsInterface->extractValuesToArray($estadosAprobados);
+        $estadosNegados    = $this->toolsInterface->extractValuesToArray($estadosNegados);
+        $estadosDesistidos = $this->toolsInterface->extractValuesToArray($estadosDesistidos);
+        $estadosPendientes = $this->toolsInterface->extractValuesToArray($estadosPendientes);
+
+        $statusesAprobadosValue = [];
+        foreach ($estadosAprobados as $estadosAprobado) {
+            array_push($statusesAprobadosValue, trim($estadosAprobado['total']));
+        }
+        $statusesAprobadosValues = 0;
+        foreach ($statusesAprobadosValue as $key => $status) {
+            $statusesAprobadosValues +=  $statusesAprobadosValue[$key];
+        }
+
+        $statusesNegadosValue = [];
+        foreach ($estadosNegados as $estadosNegado) {
+            array_push($statusesNegadosValue, trim($estadosNegado['total']));
+        }
+        $statusesNegadosValues = 0;
+        foreach ($statusesNegadosValue as $key => $status) {
+            $statusesNegadosValues +=  $statusesNegadosValue[$key];
+        }
+
+        $statusesDesistidosValue = [];
+        foreach ($estadosDesistidos as $estadosDesistido) {
+            array_push($statusesDesistidosValue, trim($estadosDesistido['total']));
+        }
+        $statusesDesistidosValues = 0;
+        foreach ($statusesDesistidosValue as $key => $status) {
+            $statusesDesistidosValues +=  $statusesDesistidosValue[$key];
+        }
+
+        $statusesPendientesValue = [];
+        foreach ($estadosPendientes as $estadosPendiente) {
+            array_push($statusesPendientesValue, trim($estadosPendiente['total']));
+        }
+        $statusesPendientesValues = 0;
+        foreach ($statusesPendientesValue as $key => $status) {
+            $statusesPendientesValues +=  $statusesPendientesValue[$key];
+        }
+        $factoryRequestsTotal = $listCount->sum('GRAN_TOTAL');
+        $listCount            = $listCount->count();
+
+        return view('assessors.assessors.list', [
+            'factoryRequests'          => $list,
+            'optionsRoutes'            => (request()->segment(2)),
+            'headers'                  => ['Cliente', 'Solicitud', 'Asesor', 'Sucursal', 'Fecha', 'Estado', 'Total'],
+            'listCount'                => $listCount,
+            'skip'                     => $skip,
+            'factoryRequestsTotal'     => $factoryRequestsTotal,
+            'statusesAprobadosValues'  => $statusesAprobadosValues,
+            'statusesNegadosValues'    => $statusesNegadosValues,
+            'statusesDesistidosValues' => $statusesDesistidosValues,
+            'statusesPendientesValues' => $statusesPendientesValues,
+            'statuses'                 => FactoryRequestStatus::select('id', 'name')->orderBy('name', 'ASC')->get()
+
+        ]);
     }
 
     public function store(Request $request)
@@ -229,10 +330,6 @@ class CreditLiquidatorController extends Controller
     {
         $customer = $this->customerInterface->findCustomerById($identificationNumber);
         $zone = auth()->user()->Assessor->subsidiary->ZONA;
-        $existDefault = $this->punishmentInterface->checkCustomerIsPunished($identificationNumber);
-        if ($existDefault == true) {
-            return -4; // Esta Castigado
-        }
 
         $existSolicFab = $this->factoryInterface->checkCustomerHasFactoryRequestLiquidator($identificationNumber);
         if ($existSolicFab[0] == 'true') {

@@ -156,5 +156,6 @@
                 </div>
             </div>
         </div>
+        @include('layouts.admin.button_float')
 </section>
 @endsection
