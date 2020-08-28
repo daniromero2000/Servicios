@@ -162,7 +162,6 @@ use App\Entities\ConfrontaSelects\Repositories\ConfrontaSelectRepository;
 use App\Entities\ConfrontaSelects\Repositories\Interfaces\ConfrontaSelectRepositoryInterface;
 use App\Entities\UbicaEmails\Repositories\UbicaEmailRepository;
 use App\Entities\UbicaEmails\Repositories\Interfaces\UbicaEmailRepositoryInterface;
-<<<<<<< HEAD
 use App\Entities\CurrentCredits\Repositories\CurrentCreditRepository;
 use App\Entities\CurrentCredits\Repositories\Interfaces\CurrentCreditRepositoryInterface;
 use App\Entities\CustomerTypes\Repositories\CustomerTypeRepository;
@@ -175,10 +174,8 @@ use App\Entities\PaymentTimes\Repositories\PaymentTimeRepository;
 use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
 use App\Entities\SummaryCredits\Repositories\SummaryCreditRepository;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
-=======
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
 use App\Entities\AssessorQuotationValues\Repositories\AssessorQuotationValueRepository;
->>>>>>> 8923a8839087f60a1cb822f35e23b1005b789ea7
 
 class RepositoryServiceProvider extends ServiceProvider
 {
