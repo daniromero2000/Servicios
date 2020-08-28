@@ -170,8 +170,6 @@ use App\Entities\ExpiredCredits\Repositories\ExpiredCreditRepository;
 use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
 use App\Entities\Obligations\Repositories\ObligationRepository;
 use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterface;
-use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
-use App\Entities\PaymentTimes\Repositories\PaymentTimeRepository;
 use App\Entities\SummaryCredits\Repositories\SummaryCreditRepository;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 use App\Entities\AssessorQuotationValues\Repositories\Interfaces\AssessorQuotationValueRepositoryInterface;
@@ -181,11 +179,6 @@ class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
     {
-
-        $this->app->bind(
-            PaymentTimeRepositoryInterface::class,
-            PaymentTimeRepository::class
-        );
 
         $this->app->bind(
             AssessorQuotationValueRepositoryInterface::class,
