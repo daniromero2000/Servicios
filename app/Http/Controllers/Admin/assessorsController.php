@@ -153,17 +153,17 @@ class assessorsController extends Controller
 
 	public function index(Request $request)
 	{
-		$to = Carbon::now();
-		$from = Carbon::now()->startOfMonth();
-		$assessor = auth()->user()->email;
-		$subsidiary = '';
-		$skip         = $this->toolsInterface->getSkip($request->input('skip'));
-		$list         = $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
-		$listCount = $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
-		$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
-		$estadosNegados = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
-		$estadosDesistidos = $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
-		$estadosPendientes = $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
+		$to 				= Carbon::now();
+		$from 				= Carbon::now()->startOfMonth();
+		$assessor 			= auth()->user()->email;
+		$subsidiary 		= '';
+		$skip         		= $this->toolsInterface->getSkip($request->input('skip'));
+		$list         		= $this->factoryInterface->listFactoryAssessors($skip * 30, $assessor);
+		$listCount 	 		= $this->factoryInterface->listFactoryAssessorsTotal($from, $to, $assessor);
+		$estadosAprobados 	= $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors($from, $to, $assessor, array(19, 20), $subsidiary);
+		$estadosNegados 	= $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 16, $subsidiary);
+		$estadosDesistidos 	= $this->factoryInterface->countFactoryRequestsTotalGeneralsAssessors($from, $to, $assessor, 15, $subsidiary);
+		$estadosPendientes 	= $this->factoryInterface->countFactoryRequestsTotalPendientesAssessors($from, $to, $assessor, array(16, 15, 19, 20), $subsidiary);
 
 		if (request()->has('from') && request()->input('from') != '' && request()->input('to') != '') {
 			$estadosAprobados = $this->factoryInterface->countFactoryRequestsTotalAprobadosAssessors(request()->input('from'), request()->input('to'), $assessor, array(19, 20), $subsidiary);
@@ -289,80 +289,80 @@ class assessorsController extends Controller
 		$replace = ['Ñ', 'Á', 'É', 'Í', 'Ó', 'Ú'];
 		if ($request->tipoCliente == 'CONTADO') {
 			$dataOportudata = [
-				'TIPO_DOC'    			       => trim($request->get('TIPO_DOC')),
-				'CEDULA'      			       => trim($request->get('CEDULA')),
-				'FEC_EXP'     			       => '1980-01-01',
-				'NOMBRES'   			         => ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
-				'APELLIDOS'   			       => ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
-				'EMAIL'       			       => trim($request->get('EMAIL')),
-				'TELFIJO'     			       => ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO'))  : '0',
-				'CELULAR'     			       => trim($request->get('CELULAR')),
-				'PROFESION'   			       => 'NO APLICA',
-				'PERSONAS'  			         => 0,
-				'TIPOV'       			       => '',
-				'TIEMPO_VIV'  			       => '',
-				'PROPIETARIO' 			       => '',
-				'VRARRIENDO'  			       => 0,
-				'ESTUDIOS'  			         => '',
-				'ESTRATO'     			       => '',
-				'SEXO'        			       => trim($request->get('SEXO')),
-				'DIRECCION'   			       => ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
-				'VCON_NOM1'   			       => ($request->get('VCON_NOM1') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM1')))) : 'NA',
-				'VCON_CED1'   			       => ($request->get('VCON_CED1') != '') ? trim($request->get('VCON_CED1')) : 'NA',
-				'VCON_TEL1'   			       => ($request->get('VCON_TEL1') != '') ? trim($request->get('VCON_TEL1')) : 'NA',
-				'VCON_NOM2'   			       => ($request->get('VCON_NOM2') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM2')))) : 'NA',
-				'VCON_CED2'   			       => ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
-				'VCON_TEL2'   			       => ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
-				'VCON_DIR'   			        => ($request->get('VCON_DIR') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_DIR')))) : 'NA',
-				'TRAT_DATOS'  			       => trim($request->get('TRAT_DATOS')),
-				'TIPOCLIENTE' 			       => 'NUEVO',
-				'SUBTIPO'     			       => 'NUEVO',
-				'FEC_NAC'	  			         => '1900-01-01',
-				'EDAD'        			       => 0,
-				'CIUD_UBI'    			       => trim($subsidiaryCityName),
-				'DEPTO'       			       => trim($city->DEPARTAMENTO),
-				'ID_CIUD_UBI' 			       => trim($city->ID_DIAN),
-				'ID_CIUD_EXP' 			       => '',
-				'MEDIO_PAGO'  			       => 00,
-				'CIUD_EXP'    			       => '',
-				'ORIGEN'      			       => 'ASESORES-CONTADO',
-				'CLIENTE_WEB' 			       => $clienteWeb,
-				'SUC'         			       => $sucursal,
-				'PASO'        			       => '',
-				'ESTADOCIVIL'           => '',
-				'NIT_EMP'               => '',
-				'RAZON_SOC'             => '',
-				'DIR_EMP'               => '',
-				'TEL_EMP'               => '',
-				'TEL2_EMP'              => '',
-				'ACT_ECO'               => '',
-				'CARGO'                 => '',
-				'FEC_ING'               => '1900-01-01',
-				'ANTIG'                 => '',
-				'SUELDO'                => '',
-				'TIPO_CONT'             => '',
-				'PLACA' 				            => 'NA',
-				'OTROS_ING'             => '',
-				'CAMARAC'               => 'NO',
-				'NIT_IND'               => '',
-				'RAZON_IND'             => 'NA',
-				'ACT_IND'               => '0',
-				'FEC_CONST'             => '1900-01-01',
-				'EDAD_INDP'             => '0',
-				'SUELDOIND'             => '',
-				'BANCOP'                => 'NA',
-				'USUARIO_CREACION'      => $usuarioCreacion,
-				'USUARIO_ACTUALIZACION' => $assessorCode,
-				'EPS_CONYU' 			         => '',
-				'CEDULA_C' 				         => '',
-				'DIRECCION4'			         => 'NA',
-				'TRABAJO_CONYU' 		      => '',
-				'CARGO_CONYU' 			       => '',
-				'NOMBRE_CONYU' 			      => '',
-				'PROFESION_CONYU'		     => '',
-				'SALARIO_CONYU' 		      => '',
-				'CELULAR_CONYU' 		      => '',
-				'STATE' 				            => 'A'
+				'TIPO_DOC'    			 	=> trim($request->get('TIPO_DOC')),
+				'CEDULA'      			 	=> trim($request->get('CEDULA')),
+				'FEC_EXP'     			 	=> '1980-01-01',
+				'NOMBRES'   			 	=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
+				'APELLIDOS'   			 	=> ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
+				'EMAIL'       			 	=> trim($request->get('EMAIL')),
+				'TELFIJO'     			 	=> ($request->get('TELFIJO') != '') ? trim($request->get('TELFIJO'))  : '0',
+				'CELULAR'     			 	=> trim($request->get('CELULAR')),
+				'PROFESION'   			 	=> 'NO APLICA',
+				'PERSONAS'  			 	=> 0,
+				'TIPOV'       			 	=> '',
+				'TIEMPO_VIV'  			 	=> '',
+				'PROPIETARIO' 			 	=> '',
+				'VRARRIENDO'  			 	=> 0,
+				'ESTUDIOS'  			 	=> '',
+				'ESTRATO'     			 	=> '',
+				'SEXO'        			 	=> trim($request->get('SEXO')),
+				'DIRECCION'   			 	=> ($request->get('DIRECCION') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('DIRECCION')))) : 'NA',
+				'VCON_NOM1'   			 	=> ($request->get('VCON_NOM1') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM1')))) : 'NA',
+				'VCON_CED1'   			 	=> ($request->get('VCON_CED1') != '') ? trim($request->get('VCON_CED1')) : 'NA',
+				'VCON_TEL1'   			 	=> ($request->get('VCON_TEL1') != '') ? trim($request->get('VCON_TEL1')) : 'NA',
+				'VCON_NOM2'   			 	=> ($request->get('VCON_NOM2') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_NOM2')))) : 'NA',
+				'VCON_CED2'   			 	=> ($request->get('VCON_CED2') != '') ? trim($request->get('VCON_CED2')) : 'NA',
+				'VCON_TEL2'   			 	=> ($request->get('VCON_TEL2') != '') ? trim($request->get('VCON_TEL2')) : 'NA',
+				'VCON_DIR'   			 	=> ($request->get('VCON_DIR') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('VCON_DIR')))) : 'NA',
+				'TRAT_DATOS'  			 	=> trim($request->get('TRAT_DATOS')),
+				'TIPOCLIENTE' 			 	=> 'NUEVO',
+				'SUBTIPO'     			 	=> 'NUEVO',
+				'FEC_NAC'	  			 	=> '1900-01-01',
+				'EDAD'        			 	=> 0,
+				'CIUD_UBI'    			 	=> trim($subsidiaryCityName),
+				'DEPTO'       			 	=> trim($city->DEPARTAMENTO),
+				'ID_CIUD_UBI' 			 	=> trim($city->ID_DIAN),
+				'ID_CIUD_EXP' 			 	=> '',
+				'MEDIO_PAGO'  			 	=> 00,
+				'CIUD_EXP'    			 	=> '',
+				'ORIGEN'      			 	=> 'ASESORES-CONTADO',
+				'CLIENTE_WEB' 			 	=> $clienteWeb,
+				'SUC'         			 	=> $sucursal,
+				'PASO'        			 	=> '',
+				'ESTADOCIVIL'          		=> '',
+				'NIT_EMP'              		=> '',
+				'RAZON_SOC'            		=> '',
+				'DIR_EMP'              		=> '',
+				'TEL_EMP'              		=> '',
+				'TEL2_EMP'             		=> '',
+				'ACT_ECO'              		=> '',
+				'CARGO'                		=> '',
+				'FEC_ING'              		=> '1900-01-01',
+				'ANTIG'                		=> '',
+				'SUELDO'               		=> '',
+				'TIPO_CONT'            		=> '',
+				'PLACA' 					=> 'NA',
+				'OTROS_ING'            		=> '',
+				'CAMARAC'              		=> 'NO',
+				'NIT_IND'              		=> '',
+				'RAZON_IND'            		=> 'NA',
+				'ACT_IND'              		=> '0',
+				'FEC_CONST'            		=> '1900-01-01',
+				'EDAD_INDP'            		=> '0',
+				'SUELDOIND'            		=> '',
+				'BANCOP'               		=> 'NA',
+				'USUARIO_CREACION'     		=> $usuarioCreacion,
+				'USUARIO_ACTUALIZACION'		=> $assessorCode,
+				'EPS_CONYU' 			 	=> '',
+				'CEDULA_C' 				 	=> '',
+				'DIRECCION4'			 	=> 'NA',
+				'TRABAJO_CONYU' 		 	=> '',
+				'CARGO_CONYU' 			 	=> '',
+				'NOMBRE_CONYU' 			 	=> '',
+				'PROFESION_CONYU'		 	=> '',
+				'SALARIO_CONYU' 		 	=> '',
+				'CELULAR_CONYU' 		 	=> '',
+				'STATE' 				 	=> 'A'
 			];
 
 			unset($dataOportudata['tipoCliente']);
@@ -405,13 +405,13 @@ class assessorsController extends Controller
 			}
 
 			$dataOportudata = [
-				'TIPO_DOC' => trim($request->get('TIPO_DOC')),
-				'CEDULA'   => trim($request->get('CEDULA')),
+				'TIPO_DOC' 				=> trim($request->get('TIPO_DOC')),
+				'CEDULA'   				=> trim($request->get('CEDULA')),
 				'APELLIDOS'   			=> ($request->get('APELLIDOS') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('APELLIDOS')))) : 'NA',
 				'NOMBRES'   			=> ($request->get('NOMBRES') != '') ? strtoupper(trim(str_replace($search, $replace, $request->get('NOMBRES')))) : 'NA',
-				'TIPOCLIENTE' => 'OPORTUYA',
-				'SUBTIPO'     => 'WEB',
-				'EDAD'        => $age,
+				'TIPOCLIENTE' 		    => 'OPORTUYA',
+				'SUBTIPO'               => 'WEB',
+				'EDAD'       		 	=> $age,
 				'FEC_EXP'     			=> ($request->get('FEC_EXP') != '') ?  trim($request->get('FEC_EXP')) : '1900-01-01',
 				'CIUD_EXP'              => ($request->get('CIUD_EXP') != '') ? trim($getNameCiudadExp->NOMBRE) : '',
 				'SEXO'  				=> ($request->get('SEXO') != '') ? trim($request->get('SEXO')) : '',
@@ -690,14 +690,16 @@ class assessorsController extends Controller
 		$obligaciones        = $this->policyInterface->validateCustomerArreas($ValorMoraFinanciero, $ValorMoraReal, $customerStatusDenied, $idDef);
 		$customerStatusDenied                   = $obligaciones['customerStatusDenied'];
 		$idDef                                  = $obligaciones['idDef'];
+		$mora = $obligaciones['arreas'];
 		$customerIntention->ESTADO_OBLIGACIONES = $obligaciones['arreas'];
 
-		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$realDoubtful = $this->cifinRealArrearsInterface->validateRealDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $realDoubtful['customerStatusDenied'];
 		$idDef                                  = $realDoubtful['idDef'];
+		$mora = $realDoubtful['doubtful'];
 		$customerIntention->ESTADO_OBLIGACIONES = $realDoubtful['doubtful'];
 
-		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef);
+		$finDoubtful = $this->CifinFinancialArrearsInterface->validateFinDoubtful($customer->CEDULA, $lastCifinScore->scoconsul, $customerStatusDenied, $idDef, $mora);
 		$customerStatusDenied                   = $finDoubtful['customerStatusDenied'];
 		$idDef                                  = $finDoubtful['idDef'];
 		$customerIntention->ESTADO_OBLIGACIONES = $finDoubtful['doubtful'];
@@ -1098,9 +1100,9 @@ class assessorsController extends Controller
 		$this->daysToIncrement  = $this->consultationValidityInterface->getConsultationValidity()->pub_vigencia;
 		$this->ubicaInterface->doConsultaUbica($customer, $lastName, $this->daysToIncrement);
 		$resultUbica = $this->validateConsultaUbica($customer);
+		$dataLead               = $request['lead'];
 
 		if ($resultUbica == 0) {
-			$dataLead               = $request['lead'];
 			$fechaExpIdentification = $this->toolsInterface->getConfrontaDateFormat($customer->FEC_EXP);
 			$confronta = $this->webServiceInterface->execConsultaConfronta($customer->TIPO_DOC, $identificationNumber, $fechaExpIdentification, $lastName);
 			if ($confronta == 1) {

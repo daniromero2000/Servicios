@@ -28,12 +28,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function listProducts(): Collection
     {
-        return $this->model->all();
+        return $this->model->orderBy('order', 'ASC')->get();
     }
 
     public function listFrontProducts(): Collection
     {
-        return $this->model->where('status', 1)->get();
+        return $this->model->where('status', 1)->orderBy('order', 'ASC')->get();
     }
 
     public function createProduct(array $data): Product
@@ -60,6 +60,15 @@ class ProductRepository implements ProductRepositoryInterface
     {
         try {
             return $this->transformProduct($this->model->findOrFail($id));
+        } catch (ModelNotFoundException $e) {
+            throw new ProductNotFoundException($e);
+        }
+    }
+
+    public function findProductBySku(int $id): Product
+    {
+        try {
+            return $this->model->with('images')->where('sku', $id)->first(['id', 'sku', 'description', 'cover']);
         } catch (ModelNotFoundException $e) {
             throw new ProductNotFoundException($e);
         }
@@ -134,5 +143,19 @@ class ProductRepository implements ProductRepositoryInterface
     public function findBrand()
     {
         return $this->model->brand;
+    }
+
+    public function updateOrder($data)
+    {
+        try {
+            foreach ($data as $key => $value) {
+                // dd($data[$key]);
+                $product = $this->model->where('sku', $data[$key]['sku'])->first();
+                $action = $product->update($data[$key]);
+            }
+            return 'true';
+        } catch (ModelNotFoundException $e) {
+            throw new ProductNotFoundException($e);
+        }
     }
 }

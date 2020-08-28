@@ -4,6 +4,7 @@ namespace App\Entities\Factors\Repositories;
 
 use App\Entities\Factors\Factor;
 use App\Entities\Factors\Repositories\Interfaces\FactorRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection as Support;
 
@@ -38,6 +39,24 @@ class FactorRepository implements FactorRepositoryInterface
     {
         try {
             return $this->model->with('userChecked')->get();
+        } catch (QueryException $e) {
+            abort(503, $e->getMessage());
+        }
+    }
+
+    public function getFactorsForLiquidator()
+    {
+        $date = Carbon::now();
+        $search = ['Tasa', 'Efectiva anual', 'Nominal vencida', 'Mensual vencida', 'Tasa maxima legal'];
+        try {
+            $data = $this->model->whereIn('name', $search)->get(['name', 'value', 'checked', 'end_date']);
+            $request = [];
+            foreach ($data as $key => $value) {
+                if ($data[$key]->end_date >= $date && $data[$key]->checked == 1) {
+                    $request[] = $data[$key];
+                }
+            }
+            return $request;
         } catch (QueryException $e) {
             abort(503, $e->getMessage());
         }

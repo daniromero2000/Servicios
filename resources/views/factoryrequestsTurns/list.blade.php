@@ -5,6 +5,7 @@
     min-width: 540px !important;
   }
 </style>
+
 @endsection
 @section('content')
 <section style="min-width: 540px">
@@ -139,6 +140,5 @@
 @endsection
 
 @section('scriptsJs')
-
 
 @endsection

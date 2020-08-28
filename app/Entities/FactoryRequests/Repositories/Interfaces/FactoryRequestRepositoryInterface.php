@@ -10,11 +10,15 @@ interface FactoryRequestRepositoryInterface
 {
   public function addFactoryRequest($data);
 
+  public function updateFactoryRequest($data);
+
   public function findFactoryRequestById(int $id): FactoryRequest;
 
   public function findFactoryRequestByIdFull(int $id): FactoryRequest;
 
   public function getCustomerFactoryRequest($identificationNumber): FactoryRequest;
+
+  public function getFactoryRequestForCustomer($identificationNumber);
 
   public function listFactoryRequestDigitalChannel();
 
@@ -53,6 +57,8 @@ interface FactoryRequestRepositoryInterface
   public function listFactoryDirector($totalView, $Director): Support;
 
   public function countFactoryRequestsTotalGeneralsTurns($from, $to, $status);
+
+  public function checkCustomerHasFactoryRequestLiquidator($identificationNumber);
 
   public function countFactoryRequestsStatusesAprobadosDirector($from, $to, $Director, $status);
 

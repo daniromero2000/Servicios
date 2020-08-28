@@ -52,7 +52,6 @@
 
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
-
   <script type="text/javascript" src="{{ asset('js/slick.min.js')}}"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
   </script>
@@ -75,7 +74,6 @@
   </div>
 </body>
 
-@yield('scriptsJs')
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -99,6 +97,7 @@
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="{{ asset('js/front/loader.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+@yield('scriptsJs')
 <script>
   $(function () {
   $('[data-toggle="tooltip"]').tooltip()

@@ -129,6 +129,8 @@ class WebServiceRepository implements WebServiceRepositoryInterface
                 'answer3'   => $dataEvaluar[2]->secuencia_resp,
                 'question4' => $dataEvaluar[3]->secuencia_preg,
                 'answer4'   => $dataEvaluar[3]->secuencia_resp,
+                'question5' => $dataEvaluar[4]->secuencia_preg,
+                'answer5'   => $dataEvaluar[4]->secuencia_resp,
                 'secuence'  => $cuestionario
             ]);  // correcta
             return 1;

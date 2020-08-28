@@ -179,8 +179,7 @@
               </div>
               <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('assessors.index') }}" class="textCardNumberForTotals"
-                    style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" class="" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>
@@ -201,8 +200,7 @@
               </div>
               <div class="text-right mr-2">
                 <span class="info-box-text text-right">
-                  <a href="{{ route('assessors.index') }}" class="textCardNumberForTotals"
-                    style="color: white; !important">Ver
+                  <a href="{{ route('assessors.index') }}" class="" style="color: white; !important">Ver
                     Más</a></span>
               </div>
             </div>

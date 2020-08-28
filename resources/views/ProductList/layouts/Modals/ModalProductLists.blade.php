@@ -16,8 +16,8 @@
 
                         <div class="col-sm-4 col-12">
                             <label for="priority">Prioridad <span class="text-danger">*</span> </label>
-                            <input type="text" ng-model="productList.priority" id="priority"
-                                name="bond_traditional" class="form-control" required>
+                            <input type="text" ng-model="productList.priority" id="priority" name="bond_traditional"
+                                class="form-control" required>
                         </div>
 
                         <div class="col-12 col-sm-4 form-group">
@@ -33,26 +33,32 @@
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
+                                <option value="VOLANTE"> VOLANTE </option>
                             </select>
                         </div>
 
                         <div class="col-sm-6 col-12  form-group">
                             <label for="apply_protection">Aplica protección <span class="text-danger">*</span></label>
-                            <select ng-model="productList.apply_protection" id="apply_protection" name="zone" class="form-control select2"
-                                required ng-options="protection.value as protection.text for protection in protections">
+                            <select ng-model="productList.apply_protection" id="apply_protection" name="zone"
+                                class="form-control select2" required
+                                ng-options="protection.value as protection.text for protection in protections">
                             </select>
                         </div>
 
                         <div class="col-sm-6 col-12">
-                            <label for="percentage_public_price_promotion">% Precio público promoción <span class="text-danger">*</span> </label>
-                            <input type="text" ng-model="productList.percentage_public_price_promotion" id="percentage_public_price_promotion"
-                                name="bond_traditional" class="form-control" required>
+                            <label for="percentage_public_price_promotion">% Precio público promoción <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_public_price_promotion"
+                                id="percentage_public_price_promotion" name="bond_traditional" class="form-control"
+                                required>
                         </div>
 
                         <div class="col-sm-6 col-12">
-                            <label for="percentage_base_oportuya_customer">% Base cliente oportuya <span class="text-danger">*</span> </label>
-                            <input type="text" ng-model="productList.percentage_base_oportuya_customer" id="percentage_base_oportuya_customer"
-                                name="bond_traditional" class="form-control" required>
+                            <label for="percentage_base_oportuya_customer">% Base cliente oportuya <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_base_oportuya_customer"
+                                id="percentage_base_oportuya_customer" name="bond_traditional" class="form-control"
+                                required>
                         </div>
 
                         <div class="col-12 col-sm-6 form-group">
@@ -66,8 +72,8 @@
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_blue">% Tarjeta blue <span
-                                    class="text-danger">*</span> </label>
+                            <label for="percentage_credit_card_blue">% Tarjeta blue <span class="text-danger">*</span>
+                            </label>
                             <input type="text" ng-model="productList.percentage_credit_card_blue"
                                 id="percentage_credit_card_blue" name="percentage_credit_card_blue"
                                 class="form-control">
@@ -78,8 +84,8 @@
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_black">% Tarjeta black <span
-                                    class="text-danger">*</span> </label>
+                            <label for="percentage_credit_card_black">% Tarjeta black <span class="text-danger">*</span>
+                            </label>
                             <input type="text" ng-model="productList.percentage_credit_card_black"
                                 id="percentage_credit_card_black" name="percentage_credit_card_black"
                                 class="form-control">
@@ -163,25 +169,31 @@
                                 <option value="ALTA"> ALTA </option>
                                 <option value="MEDIA"> MEDIA </option>
                                 <option value="BAJA"> BAJA </option>
+                                <option value="VOLANTE"> VOLANTE </option>
                             </select>
                         </div>
                         <div class="col-sm-6 col-12  form-group">
                             <label for="name">Aplica protección <span class="text-danger">*</span></label>
-                            <select ng-model="productList.apply_protection" id="apply_protection_edt" name="zone" class="form-control select2"
-                                required ng-options="protection.value as protection.text for protection in protections">
+                            <select ng-model="productList.apply_protection" id="apply_protection_edt" name="zone"
+                                class="form-control select2" required
+                                ng-options="protection.value as protection.text for protection in protections">
                             </select>
                         </div>
 
                         <div class="col-sm-6 col-12">
-                            <label for="percentage_public_price_promotion_update">% Precio público promoción <span class="text-danger">*</span> </label>
-                            <input type="text" ng-model="productList.percentage_public_price_promotion" id="percentage_public_price_promotion_update"
-                                name="bond_traditional" class="form-control" required>
+                            <label for="percentage_public_price_promotion_update">% Precio público promoción <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_public_price_promotion"
+                                id="percentage_public_price_promotion_update" name="bond_traditional"
+                                class="form-control" required>
                         </div>
 
                         <div class="col-sm-6 col-12">
-                            <label for="percentage_base_oportuya_customer_update">% Base cliente oportuya <span class="text-danger">*</span> </label>
-                            <input type="text" ng-model="productList.percentage_base_oportuya_customer" id="percentage_base_oportuya_customer_update"
-                                name="bond_traditional" class="form-control" required>
+                            <label for="percentage_base_oportuya_customer_update">% Base cliente oportuya <span
+                                    class="text-danger">*</span> </label>
+                            <input type="text" ng-model="productList.percentage_base_oportuya_customer"
+                                id="percentage_base_oportuya_customer_update" name="bond_traditional"
+                                class="form-control" required>
                         </div>
 
                         <div class="col-12 col-sm-6 form-group">
@@ -195,8 +207,8 @@
                                 name="cash_margin" class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_blue">% Tarjeta blue <span
-                                    class="text-danger">*</span> </label>
+                            <label for="percentage_credit_card_blue">% Tarjeta blue <span class="text-danger">*</span>
+                            </label>
                             <input type="text" ng-model="productList.percentage_credit_card_blue"
                                 id="percentage_credit_card_blue_update" name="percentage_credit_card_blue"
                                 class="form-control">
@@ -207,8 +219,8 @@
                                 class="form-control">
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label for="percentage_credit_card_black">% Tarjeta black <span
-                                    class="text-danger">*</span> </label>
+                            <label for="percentage_credit_card_black">% Tarjeta black <span class="text-danger">*</span>
+                            </label>
                             <input type="text" ng-model="productList.percentage_credit_card_black"
                                 id="percentage_credit_card_black_update" name="percentage_credit_card_black"
                                 class="form-control">
@@ -263,7 +275,8 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-12 text-center">
-                        <button class="btn btn-primary" ng-disabled="disabledButtonAddSubsidiary" ng-click="addSubsidiariesToProductList()">Guardar</button>
+                        <button class="btn btn-primary" ng-disabled="disabledButtonAddSubsidiary"
+                            ng-click="addSubsidiariesToProductList()">Guardar</button>
                     </div>
                 </div>
             </div>

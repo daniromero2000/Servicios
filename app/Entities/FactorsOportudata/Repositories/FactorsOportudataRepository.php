@@ -20,69 +20,25 @@ class FactorsOportudataRepository implements FactorsOportudataRepositoryInterfac
         $this->model = $factorsOportudata;
     }
 
-    public function createFactorsOportudata($data)
+    public function listFactorsOportudata()
     {
         try {
-            return $this->model->create($data);
+            return $this->model->get($this->columns);
         } catch (QueryException $e) {
             throw $e;
-        }
-    }
-
-    public function getAllFactorsOportudata()
-    {
-        try {
-            return $this->model->with('userChecked')->get();
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function findFactorsOportudataById($id)
-    {
-        try {
-            return $this->model->find($id);
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
         }
     }
 
     public function updateFactorsOportudata($data)
     {
         try {
-            return $this->model->updateOrCreate(['id' => $data['id']], $data);
+            foreach ($data as $key => $value) {
+                $cuota = $this->model->find($data[$key]['CUOTA']);
+                $accion =  $cuota->update($data[$key]);
+            }
+            return $accion;
         } catch (QueryException $e) {
             return $e;
-        }
-    }
-
-    public function deleteFactorsOportudata($id)
-    {
-        $data = $this->findFactorsOportudataById($id);
-        if ($data) {
-            return $data->delete();
-        }
-
-        return [];
-    }
-
-    public function getAllCurrentFactorsOportudata()
-    {
-        $dateNow = date("Y-m-d");
-        try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->get();
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
-        }
-    }
-
-    public function getCurrentFactorsOportudataForZone($zone)
-    {
-        $dateNow = date("Y-m-d");
-        try {
-            return $this->model->where('start_date', '<=', $dateNow)->where('end_date', '>=', $dateNow)->where('checked', 1)->where('zone', $zone)->get();
-        } catch (QueryException $e) {
-            abort(503, $e->getMessage());
         }
     }
 }

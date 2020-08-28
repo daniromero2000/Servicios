@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface AssessorQuotationRepositoryInterface
 {
   public function listAssessorQuotations($from, $to);
+
+  public function createAssessorQuotations($data): AssessorQuotation;
 }

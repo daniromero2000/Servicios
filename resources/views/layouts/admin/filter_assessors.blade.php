@@ -1,21 +1,15 @@
 <!-- search form -->
 <div class="row">
-    <div class="col-12 text-center">
-        <h3 class="title-filter" style="color: #007bff;">Filtrar</h3>
-    </div>
-
     <div class="col-12 mt-2">
         <form action="{{$route}}" method="get" id="admin-search">
             <div class="input-group">
-
-
-                <div class="row w-100 d-flex justify-content-center">
-                    <div class="col-6 col-sm-6 col-md-3">
+                <div class="row mx-0 w-100 d-flex justify-content-center">
+                    <div class="col-md-12 col-sm-5 col-6">
                         <label class="label-reset" for="q">Buscar: Solicitud / Cedula</label>
                         <input type="text" name="q" class="form-control input-reset" placeholder=" Buscar..."
                             value="{!! request()->input('q') !!}">
                     </div>
-                    <div class="col-6 col-sm-6 col-md-3">
+                    <div class="col-md-12 col-sm-5 col-6">
                         <div class="form-group form-group-reset">
                             <label class="label-reset" for="status">Estado</label>
                             <select class="form-control  select2bs4" id="status" name="status" {!!
@@ -30,12 +24,12 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-3">
+                    <div class="col-md-12 col-sm-5 col-6">
                         <label class="label-reset" for="from">Desde</label>
                         <input type="date" name="from" class="form-control input-reset"
                             value="{!! request()->input('from') !!}">
                     </div>
-                    <div class="col-6 col-sm-6 col-md-3">
+                    <div class="col-md-12 col-sm-5 col-6">
                         <label class="label-reset" for="to">Hasta</label>
                         <input type="date" name="to" class="form-control input-reset"
                             value="{!! request()->input('to') !!}">
