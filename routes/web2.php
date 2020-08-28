@@ -134,7 +134,6 @@ Route::namespace('Admin')->group(function () {
         Route::get('/Administrator/currentcredits/{identificationNumber}', 'CurrentCreditController@show')->name('current');
     });
 
-
     Route::namespace('Subsidiaries')->group(function () {
         Route::get('/subsidiaries/cities', 'SubsidiaryController@getSubsidiariesCity');
         Route::get('/api/subsidiaries/', 'SubsidiaryController@getSubsidiaries');
