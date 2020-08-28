@@ -8,7 +8,7 @@ use App\Entities\Obligations\Repositories\Interfaces\ObligationRepositoryInterfa
 use App\Entities\ExpiredCredits\Repositories\Interfaces\ExpiredCreditRepositoryInterface;
 use App\Entities\SummaryCredits\Repositories\Interfaces\SummaryCreditRepositoryInterface;
 use App\Entities\CustomerTypes\Repositories\Interfaces\CustomerTypeRepositoryInterface;
-use App\Entities\PaymentTimes\Repositories\PaymentTimeRepository;
+use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
 
 class CurrentCreditController extends Controller
 {
@@ -18,7 +18,7 @@ class CurrentCreditController extends Controller
         CurrentCreditRepositoryInterface $currentcreditRepositoryInterface,
         ObligationRepositoryInterface $obligationRepositoryInterface,
         ExpiredCreditRepositoryInterface $expiredcreditRepositoryInterface,
-        PaymentTimeRepository $paymentRepositoryInterface,
+        PaymentTimeRepositoryInterface $paymentRepositoryInterface,
         SummaryCreditRepositoryInterface $summarycreditRepositoryInterface,
         CustomerTypeRepositoryInterface $customertypeRepositoryInterface
     ) {

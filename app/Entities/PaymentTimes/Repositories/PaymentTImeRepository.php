@@ -3,10 +3,10 @@
 namespace App\Entities\PaymentTimes\Repositories;
 
 use App\Entities\PaymentTimes\PaymentTime;
-use App\Entities\PaymentTimes\Repositories\PaymentTimeRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Entities\PaymentTimes\Repositories\Interfaces\PaymentTimeRepositoryInterface;
 
-class PaymentTimeRepository
+class PaymentTimeRepository implements PaymentTimeRepositoryInterface
 {
     private $columns = [
         'identificationNumber',
