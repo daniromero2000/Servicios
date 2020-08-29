@@ -46,13 +46,6 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
 
     public function updateFactoryRequest($data)
     {
-        // dd($data);
-
-        // $data['FECHASOL']      = date("Y-m-d H:i:s");
-        // $data['FTP']           = 0;
-        // $data['STATE']         = "A";
-        // $data['GRAN_TOTAL']    = 0;
-
         try {
             return $this->model->updateOrCreate(['SOLICITUD' => $data['SOLICITUD']], $data);
         } catch (QueryException $e) {
@@ -105,7 +98,7 @@ class FactoryRequestRepository implements FactoryRequestRepositoryInterface
         $dateNow = date('Y-m-d', $dateNow);
         try {
             $checkExistRequest = $this->model->with('super')->where('CLIENTE', $identificationNumber)
-                ->orderBy('SOLICITUD', 'desc')->whereNotIn('ESTADO', [15, 16, 20])->where('STATE', 'A')->where('FECHASOL', '>', $dateNow)->first();
+                ->orderBy('SOLICITUD', 'desc')->whereNotIn('ESTADO', [15, 16, 20])->where('FECHASOL', '>', $dateNow)->where('STATE', 'A')->first();
             if (!is_null($checkExistRequest)) {
                 return $checkExistRequest;
             } else {

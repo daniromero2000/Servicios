@@ -236,6 +236,7 @@ class CreditLiquidatorController extends Controller
         $user  = auth()->user()->codeOportudata;
         $super2 = [];
         $factoryRequest = $liquidation[1][0];
+        $factoryRequest += $liquidation[1][1];
         $factoryRequest['GRAN_TOTAL'] = $sumTotal;
         $factoryRequest['id_asesor'] = $user;
         $factoryRequest['SOLICITUD_WEB']  = 1;
@@ -338,21 +339,17 @@ class CreditLiquidatorController extends Controller
 
         switch ($customer->latestIntention->CREDIT_DECISION) {
             case 'Tradicional':
-                if ($existSolicFab[1] != false && ($existSolicFab[1]->ESTADO != 1)) {
+                if ($existSolicFab[1] != 'false' && ($existSolicFab[1]->ESTADO != 1)) {
                     return -3;
                 }
                 break;
             case 'Tarjeta Oportuya':
-                if ($existSolicFab[1] != false && $existSolicFab[1]->AVANCE_W > 0 || $existSolicFab[1] != false && $existSolicFab[1]->ESTADO == 1) {
+                if ($existSolicFab[1] != 'false' && $existSolicFab[1]->AVANCE_W > 0 || $existSolicFab[1] != 'false' && $existSolicFab[1]->ESTADO == 1) {
                     $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
                     if ($existCard == true) {
                         return -1; // Tiene tarjeta
                     }
-                } else {
-                    // dd('hola');
-                    return -3;
                 }
-
                 break;
             default:
                 return -5;

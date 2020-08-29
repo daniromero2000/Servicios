@@ -49,6 +49,16 @@
                             <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
                                 ng-model="listProduct.cash_cost" class="form-control">
                         </div>
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="typeProductCreateListProduct">Tipo de producto</label>
+                            <select ng-model="listProduct.type_product" id="typeProductCreateListProduct"
+                                name="typeProductCreateListProduct" class="form-control select2" required>
+                                <option selected value> Seleccione</option>
+                                <option value="1"> Articulo o Cargo </option>
+                                <option value="2"> Seguro </option>
+                                <option value="3"> Garantía </option>
+                            </select>
+                        </div>
                     </div>
                     <div class="text-right mt-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -175,9 +185,19 @@
                         </div>
 
                         <div class="col-sm-6 col-12  form-group">
-                            <label for="protectionCreateListProduct">Contado</label>
-                            <input type="text" id="protectionCreateListProduct" name="protectionCreateListProduct"
+                            <label for="protectionUpdateListProduct">Contado</label>
+                            <input type="text" id="protectionUpdateListProduct" name="protectionUpdateListProduct"
                                 ng-model="listProduct.cash_cost" class="form-control">
+                        </div>
+                        <div class="col-sm-6 col-12  form-group">
+                            <label for="typeProductUpdateListProduct">Tipo de producto</label>
+                            <select ng-model="listProduct.type_product" id="typeProductUpdateListProduct"
+                                name="typeProductUpdateListProduct" class="form-control" required>
+                                <option selected value> Seleccione</option>
+                                <option value="1"> Articulo o Cargo </option>
+                                <option value="2"> Seguro </option>
+                                <option value="3"> Garantía </option>
+                            </select>
                         </div>
                     </div>
                     <div class="text-right mt-2">

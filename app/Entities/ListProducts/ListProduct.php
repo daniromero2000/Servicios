@@ -18,6 +18,7 @@ class ListProduct extends Model
         'protection',
         'min_tolerance',
         'max_tolerance',
+        'type_product'
     ];
 
     protected $dates = [

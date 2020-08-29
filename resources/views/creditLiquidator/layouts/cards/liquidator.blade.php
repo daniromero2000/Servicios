@@ -123,8 +123,6 @@
                     <div class="col-lg-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
-                                {{-- <div class="row"> --}}
-
                                 <div class="form-group ">
                                     <label for="name">Plan <span class="text-danger">*</span></label>
                                     <select ng-model="liquidator[key][3].COD_PLAN" id="plan" ng-blur="createPlan(key)"
@@ -149,12 +147,8 @@
                                             @{{fees.CUOTA}}</option>
                                     </select>
                                 </div>
-
-
-                                {{-- </div> --}}
                             </div>
                         </div>
-
                     </div>
 
                     <div class="col-sm-10 col-md-7 col-lg-6 col-xl-4 mx-auto">
@@ -219,104 +213,12 @@
                                                         <b> $ @{{liquidator[key][5].TOTAL | number:0}}</b></li>
                                                 </ul>
                                             </div>
-                                            {{-- <div class="col-5 text-center">
-                                                    <img src="../../dist/img/user1-128x128.jpg" alt=""
-                                                        class="img-circle img-fluid">
-                                                </div> --}}
                                         </div>
                                     </div>
-                                    {{-- <div class="card-footer">
-                                        <div class="text-right">
-                                            <a href="#" class="btn btn-sm btn-primary">
-                                                <i class="fas fa-print"></i> Ver amortización
-                                            </a>
-                                        </div>
-                                    </div> --}}
                                 </div>
-                                {{-- <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="totalDiscount">Total Descuentos</label>
-                                            <input required readonly type="text" class="form-control" id="totalDiscount"
-                                                aria-describedby="totalDiscount" ng-model="liquidator[key][2] "
-                                                ng-currency>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="valueFees">Valor cuotas</label>
-                                            <input required readonly type="text" class="form-control" id="SALARIO_CONYU"
-                                                ng-model="liquidator[key][3].VRCUOTA " ng-currency
-                                                aria-describedby="valueFees">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="timelyPayment">Pago oportuno</label>
-                                            <input required readonly type="text" class="form-control"
-                                                ng-model="liquidator[key][3].timelyPayment " ng-currency
-                                                id="timelyPayment" aria-describedby="timelyPayment">
-                                        </div>
-                                    </div> --}}
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mx-0">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="handlingFee">Cuota de manejo</label>
-                                            <input required readonly type="text" class="form-control" id="handlingFee"
-                                                ng-model="liquidator[key][3].MANEJO " ng-currency
-                                                aria-describedby="handlingFee">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="insurance">Seguro</label>
-                                            <input required readonly type="text" class="form-control" id="insurance"
-                                                ng-model="liquidator[key][3].SEGURO " ng-currency
-                                                aria-describedby="insurance">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="aval">Aval+Iva</label>
-                                            <input required readonly type="text" class="form-control"
-                                                ng-model="liquidator[key][4].TOTAL_AVAL " ng-currency id="aval"
-                                                aria-describedby="aval">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="Subtotal">Subtotal</label>
-                                            <input required readonly type="text" class="form-control"
-                                                ng-model="liquidator[key][5].SUBTOTAL " ng-currency id="Subtotal"
-                                                aria-describedby="Subtotal">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="iva">Iva</label>
-                                            <input required readonly type="text" class="form-control"
-                                                ng-model="liquidator[key][5].IVA " ng-currency id="iva"
-                                                aria-describedby="iva">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="total">Total</label>
-                                            <input required readonly type="text" class="form-control"
-                                                ng-model="liquidator[key][5].TOTAL " ng-currency id="total"
-                                                aria-describedby="total">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
 

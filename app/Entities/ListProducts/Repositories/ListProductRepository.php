@@ -14,15 +14,7 @@ class ListProductRepository implements ListProductRepositoryInterface
     private $productListInterface;
     private $giveAwayInterface;
     private $factorInterface;
-    private $columns = [
-        'sku',
-        'item',
-        'base_cost',
-        'iva_cost',
-        'protection',
-        'min_tolerance',
-        'max_tolerance',
-    ];
+
 
     public function __construct(
         ListProduct $ListProduct,
@@ -108,7 +100,8 @@ class ListProductRepository implements ListProductRepositoryInterface
         $monthlyRate = ($factors[0]['value'] / 100);
         $bond = 1 - ($factors[1]['value'] / 100);
         $optionalIncrement = 1 - ($factors[2]['value'] / 100);
-        $cashPromotionLowZone = 0;
+        // $cashPromotionLowZone = 0;
+        $product['iva_cost'] = $product['iva_cost'] == 0 ? 1 : $product['iva_cost'];
         $percentageProtectionDividedPrice = round(($protectionVat / $product['iva_cost']) * 100, 2);
         foreach ($currentProductLists as $key => $productList) {
             if ($productList['apply_protection'] == 1) {
@@ -148,7 +141,7 @@ class ListProductRepository implements ListProductRepositoryInterface
             } elseif ($productList['zone'] == 'MEDIA') {
                 //Resto del pais
                 $cashPromotion                    = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['cash_margin']) / 100));
-                $cashPromotionLowZone             = $cashPromotion;
+                // $cashPromotionLowZone             = $cashPromotion;
                 $promotionPublicPrice             = round((($product['iva_cost'] - ($protectionVat * 0.5)) + $priceGiveAway) / ((100 - $productList['percentage_public_price_promotion']) / 100) / $bond);
                 $percentagePublicPrice            = round(100 - (($promotionPublicPrice * 100) / $normalPublicPrice), 2);
                 $traditionalCreditPrice           = round(($promotionPublicPrice * 1) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));

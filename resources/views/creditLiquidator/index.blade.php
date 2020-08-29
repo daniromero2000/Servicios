@@ -165,13 +165,24 @@
                                     @include('creditLiquidator.layouts.cards.liquidator')
                                 </div>
                             </div>
-                            <div class="ml-auto my-auto">
-                                <button type="button" ng-if="liquidator[0]" ng-click="createLiquidator()"
-                                    class="btn btn-primary btn-sm">Crear
-                                    Liquidacion</button>
+                            <div class="ml-auto my-auto d-flex justify-content-end">
+                                <div class="d-block mx-2" ng-if="liquidator[0]">
+                                    <label for="">¿Se ofrece garantía extendida?</label>
+                                    <select name="action" class="form-control" required ng-model="request.EXTENDID"
+                                        style=" max-width: 190px; ">
+                                        <option selected value> Seleccione </option>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex" ng-if="liquidator[0]">
+                                    <button type="button" ng-disabled="!request.EXTENDID" ng-click="createLiquidator()"
+                                        class="btn btn-primary btn-sm"
+                                        style=" margin-bottom: 2px; margin-top: auto; ">Crear
+                                        Liquidacion</button>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane mb-4 border-0" id="nav-general" role="tabpanel"
