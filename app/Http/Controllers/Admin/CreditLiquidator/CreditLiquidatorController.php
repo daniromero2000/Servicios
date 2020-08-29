@@ -339,12 +339,12 @@ class CreditLiquidatorController extends Controller
 
         switch ($customer->latestIntention->CREDIT_DECISION) {
             case 'Tradicional':
-                if ($existSolicFab[1] != 'false' && ($existSolicFab[1]->ESTADO != 1)) {
+                if ($existSolicFab[1] != 'false' && ($existSolicFab[1]['ESTADO'] != 1)) {
                     return -3;
                 }
                 break;
             case 'Tarjeta Oportuya':
-                if ($existSolicFab[1] != 'false' && $existSolicFab[1]->AVANCE_W > 0 || $existSolicFab[1] != 'false' && $existSolicFab[1]->ESTADO == 1) {
+                if ($existSolicFab[1] != 'false' && $existSolicFab[1]['AVANCE_W'] > 0 || $existSolicFab[1] != 'false' && $existSolicFab[1]['ESTADO'] == 1) {
                     $existCard = $this->creditCardInterface->checkCustomerHasCreditCardActive($identificationNumber);
                     if ($existCard == true) {
                         return -1; // Tiene tarjeta
