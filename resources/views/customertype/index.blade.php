@@ -15,31 +15,31 @@
    function FormSubmit() {
       document.forms["formulario"].action = "wscartera";
       document.forms["formulario"].submit();
-   }
+   }  
 </script>
 
-<hr>
-<div class="row">
-   <div class="col-md-5">
-      <h3 style="margin-left: 1cm;"><i class="fas fa-poll-h" aria-hidden="true"></i> Información Créditos</h3>
-   </div>
+<br>
+<div class="col-md-12">
+   <h3 style= "text-align:center"><i class="fas fa-poll-h"></i> Información Créditos</h3>
 </div>
 
-<hr>
-
-<form name="formulario" id="formulario" method="get" action="">
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-         <input type="text" style="width : 200px" name="identificationNumber" class="form-control mr-sm-2" placeholder="Digite la Cedula" aria-label="Search" required>
-         <input type="button" class="btn btn-primary" class="btn btn-outline-secondary" id="wscartera" value="ConsultarWS" name="consultar" onclick="JavaScript:FormSubmit();" />
-      </div>
-   </nav>
-</form>
-
-<hr>
-
+<div class="row">
+   <div class="col col-lg-4"></div>
+      <div class="card" style="margin-left: 1.7cm">
+        <div class="shadow p-3 mb-0 bg-white rounded text-black">
+         <div class="card-body">
+            <form name="formulario" id="formulario" method="get" action="">
+                <label style="margin-left: 0.2cm">Número de identificación</label>
+                <input style="margin-left: 0.2cm" type="text" name="identificationNumber" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" required>
+                <br>  
+                <button style="margin-left: 2cm" type="submit" class="btn btn-primary" class="btn-sm-reset" class="btn btn-outline-secondary" id="wscartera" value="Buscar" name="consultar" onclick="JavaScript:FormSubmit();">
+                <i class="fa fa-search"> </i>
+                Buscar
+                </button>                
+            </form>
+          </div>
+        </div>  
+    </div>
+   <div class="col col-lg-5"></div>
+</div>
 @stop
