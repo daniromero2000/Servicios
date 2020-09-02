@@ -305,22 +305,30 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                         $scope.discount = {};
                         if (($scope.lead.latest_intention != '') && ($scope.lead.latest_intention.CREDIT_DECISION == 'Tarjeta Oportuya') && $scope.lead.latest_intention.TARJETA != 'Crédito Tradicional') {
                             $scope.discount.key = $scope.items.key
-                            $scope.discount.type = 'Tarjeta Oportuya';
+                            $scope.discount.type = 'Cliente Oportuya';
                             if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                                 if ($scope.zone == 'ALTA') {
                                     $scope.discount.value = 5;
+                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
                                 } else {
-                                    $scope.discount.value = 15;
+                                    $scope.discount.value = 10;
+                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
+                                    $scope.discount = {};
+                                    $scope.discount.key = $scope.items.key
+                                    $scope.discount.type = 'Tarjeta Black';
+                                    $scope.discount.value = 5;
+                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
                                 }
                             } else {
                                 if ($scope.zone == 'ALTA') {
                                     $scope.discount.value = 3;
+                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
                                 } else {
                                     $scope.discount.value = 10;
+                                    $scope.liquidator[$scope.items.key][1].push($scope.discount);
                                 }
 
                             }
-                            $scope.liquidator[$scope.items.key][1].push($scope.discount);
                             $scope.discount = {};
                         }
                         $scope.sumDiscount($scope.items.key);
