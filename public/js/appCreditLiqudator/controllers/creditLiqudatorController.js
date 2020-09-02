@@ -84,10 +84,10 @@ angular.module('creditLiqudatorApp', ['angucomplete-alt', 'flow', 'moment-picker
                             $scope.zone = response.data.zone;
                             if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Black') {
                                 $scope.items.PRECIO = response.data.price.normal_public_price;
-                                $scope.discount.value = Math.floor(response.data.price.percentage_black_public_price);
+                                $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
                             } else if ($scope.lead.latest_intention.TARJETA == 'Tarjeta Gray' || $scope.lead.latest_intention.TARJETA == 'Tarjeta Blue') {
                                 $scope.items.PRECIO = response.data.price.normal_public_price;
-                                $scope.discount.value = Math.floor(response.data.price.percentage_blue_public_price);
+                                $scope.discount.value = Math.floor(response.data.price.percentage_oportuya_customer);
                             } else {
                                 if (response.data.price.percentage_promotion_public_price != '0') {
                                     $scope.discount.key = $scope.items.key

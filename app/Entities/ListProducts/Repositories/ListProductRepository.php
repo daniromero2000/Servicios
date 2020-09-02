@@ -130,6 +130,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
                 $traditionalCreditBondPrice       = round(($promotionPublicPrice * 1.119) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - $protectionVat) / ((100 - $productList['percentage_base_oportuya_customer']) / 100));
+                $percentageBaseOportuyaCustomer   = round(100 - (($basePublicPriceOportuyaCustomer * 100) / $normalPublicPrice), 2);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
                 $blueBondPrice                    = round(($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) /  0.95);
@@ -148,6 +149,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer  = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
+                $percentageBaseOportuyaCustomer   = round(100 - (($basePublicPriceOportuyaCustomer * 100) / $normalPublicPrice), 2);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
                 $blueBondPrice                    = round((($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond) /  0.95);
@@ -165,6 +167,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
                 $traditionalCreditBondPrice       = round($traditionalCreditPrice * (1 - ($productList['bond_traditional'] / 100)));
                 $basePublicPriceOportuyaCustomer  = round((($product['iva_cost'] - ($protectionVat * 1.5)) + $priceGiveAway) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
+                $percentageBaseOportuyaCustomer   = round(100 - (($basePublicPriceOportuyaCustomer * 100) / $normalPublicPrice), 2);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * $optionalIncrement);
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
                 $blueBondPrice                    = round((($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond) /  0.95);
@@ -182,6 +185,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 $percentageTraditionalCreditPrice = round((100 - ((($traditionalCreditPrice * 12) * 100) / ($normalPublicPrice))), 2);
                 $traditionalCreditBondPrice       = round(($promotionPublicPrice * 0.95) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))));
                 $basePublicPriceOportuyaCustomer  = round(($product['iva_cost'] - ($protectionVat * 1.5)) / ((100 - $productList['percentage_base_oportuya_customer']) / 100) / $bond);
+                $percentageBaseOportuyaCustomer   = round(100 - (($basePublicPriceOportuyaCustomer * 100) / $normalPublicPrice), 2);
                 $bluePublicPrice                  = round($basePublicPriceOportuyaCustomer * ((100 - $productList['percentage_credit_card_blue']) / 100));
                 $percentageBluePublicPrice        = round(100 - (($bluePublicPrice * 100) / $normalPublicPrice), 2);
                 $blueBondPrice                    = round((($bluePublicPrice) * ($monthlyRate / (1 - pow((1 + $monthlyRate), -12))) * $bond) /  0.95);
@@ -201,6 +205,7 @@ class ListProductRepository implements ListProductRepositoryInterface
                 'percentage_traditional_credit_price' => $percentageTraditionalCreditPrice,
                 'traditional_credit_bond_price'       => $traditionalCreditBondPrice * 12,
                 'base_public_price_oportuya_customer' => round($basePublicPriceOportuyaCustomer, -1, PHP_ROUND_HALF_UP),
+                'percentage_oportuya_customer'        => $percentageBaseOportuyaCustomer,
                 'blue_public_price'                   => $bluePublicPrice,
                 'percentage_blue_public_price'        => $percentageBluePublicPrice,
                 'blue_bond_price'                     => $blueBondPrice * 12,
