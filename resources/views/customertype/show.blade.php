@@ -2,7 +2,31 @@
 
 @section('content')
 
- {{-- Obligaciones  --}}
+<style type="text/css">
+  #buscarws{
+    text-align: right; 
+  }
+
+  #formws{
+    display: inline-block; 
+    vertical-align: middle; 
+    line-height: 14px; 
+    margin-right: 3cm;
+  }  
+</style> 
+
+<div id="buscarws">
+  <form name="formws" id="formws" class="form-inline" method="get" action = /Administrator/wscartera>
+    <input class="form-control sm-2" name="identificationNumber" type="text" placeholder="Nueva Búsqueda" aria-label="Search">
+    <button class="btn btn-primary" class="btn-sm-reset" class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">
+      <i class="fa fa-search"></i>
+       Buscar</button>
+  </form>
+</div>
+<br>
+  
+  {{-- Obligaciones  --}}
+
 <div class="col-md-11">
   <div class="card" style="margin-left:1cm">
     <div class="shadow p-3 mb-0 bg-white rounded text-black">
