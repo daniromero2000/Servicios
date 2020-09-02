@@ -22,6 +22,7 @@ class CreateListProductsTable extends Migration
             $table->integer('protection');
             $table->integer('min_tolerance');
             $table->integer('max_tolerance');
+            $table->string('type_product');
             $table->timestamps();
             $table->softDeletes();
         });

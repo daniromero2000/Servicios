@@ -317,6 +317,11 @@ Route::namespace('Front')->group(function () {
         Route::resource('covid', 'CovidDataController');
     });
 
+    Route::namespace('payPse')->group(function () {
+        Route::resource('payPse', 'payPseController');
+    });
+
+
     Route::namespace('Newsletters')->group(function () {
         Route::resource('newsletter', 'newsletterController');
     });

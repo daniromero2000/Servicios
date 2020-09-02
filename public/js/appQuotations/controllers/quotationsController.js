@@ -68,6 +68,8 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
         ];
         $scope.typeDiscount =
             [
+                { 'type': 'Por Lista' },
+                { 'type': 'Por Tipo de cliente' },
                 { 'type': 'Por traslado' },
                 { 'type': 'Otros' },
             ];
@@ -94,7 +96,11 @@ angular.module('appQuotations', ['angucomplete-alt', 'flow', 'moment-picker', 'n
                 }).then(function successCallback(response) {
                     $scope.items.product_id = response.data.product[0].id;
                     $scope.items.article = response.data.product[0].item;
-                    $scope.items.price = response.data.price.normal_public_price;
+                    if (response.data.product[0].type_product == 1) {
+                        $scope.items.price = response.data.price.normal_public_price;
+                    } else {
+                        $scope.items.price = response.data.product[0].cash_cost;
+                    }
                     $scope.items.list = response.data.price.list;
                 }, function errorCallback(response) {
                     response.url = '/api/liquidator/getProduct/' + $scope.items.sku;

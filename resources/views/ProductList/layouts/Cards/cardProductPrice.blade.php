@@ -62,6 +62,9 @@
                                     <label class="productlist-card-subtitle" style="color: white">Precio público
                                         base:</label> <span
                                         class="productlist-card-price">$@{{ price.base_public_price_oportuya_customer | number:0 }}</span>
+                                    <label class="productlist-card-subtitle" style="color: white">Porcentaje cliente
+                                        Oportuya:</label> <span
+                                        class="productlist-card-price">@{{ price.percentage_oportuya_customer | number:2 }}%</span>
                                 </div>
                             </div>
                             <div class="icon">
