@@ -27,6 +27,12 @@
 			margin-top: 3%;
 		}
 	}
+
+	@media (max-width: 1700px) {
+		.icon-pse {
+			width: 47px !important;
+		}
+	}
 </style>
 @endsection()
 
@@ -83,7 +89,19 @@
 	<h2 class="conoce-title">Conoce todos los servicios <br> que tenemos para ti</h2>
 	<div class="row resetRow scroll-animations">
 		<div
-			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-1 col-xl-2 offset-xl-3 conoce-containTarjeta text-center animated">
+			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-2 conoce-containTarjeta text-center animated">
+			<div class="conoce-creditoLibranza">
+				<h3 class="conoce-titleTarjetaSeguros"><strong>Haz tus pagos por PSE</strong></h3>
+				<img src="/images/PSE.png" class="img-fluid conoce-tarjetasImg icon-pse" alt="pse">
+			</div>
+
+			<div class="conoce-containButton">
+				<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Click aqui</a>
+			</div>
+			<img src="/images/imagen-bg.png" alt="Conoce nuestros créditos de libranza" class="img-fluid" />
+		</div>
+		<div
+			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-1 col-xl-2 offset-xl-0  conoce-containTarjeta text-center animated">
 			<div class="conoce-TarjetaOportuya">
 				<h3 class="conoce-titleTarjeta">Tarjeta de <strong>crédito Oportuya</strong></h3>
 				<img src="/images/servicios_CreditoOportuyaIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
@@ -134,7 +152,7 @@
 		</div>
 
 		<div
-			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
+			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-1 col-xl-2 offset-xl-0 conoce-containTarjeta text-center animated">
 			<div class="conoce-seguros">
 				<h3 class="conoce-titleTarjetaSeguros"><strong>Seguros</strong></h3>
 				<img src="/images/servicios_segurosIcon.png" class="img-fluid conoce-tarjetasImg" alt="">
