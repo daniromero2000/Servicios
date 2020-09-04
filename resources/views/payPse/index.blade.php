@@ -29,7 +29,7 @@
 	})(window,document,'script','https://u.heatmap.it/log.js');
     </script>
 
-    <title>Ser</title>
+    <title>Servicios Financieros Oportunidades - Crédito para todo</title>
     @yield('metaTags')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -43,6 +43,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/oportunidadesServicios.ico') }}' />
+
+    <link rel="canonical" href="https://www.serviciosoportunidades.com/">
+    <meta name="description"
+        content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
+    <meta property="og:title" content="Servicios Financieros Oportunidades - Crédito para todo">
+    <meta property="og:url" content="https://www.serviciosoportunidades.com/">
+    <meta property="og:type" content="Website">
     <script>
         function hideLoader(){
 
@@ -159,9 +166,10 @@
             }
         }
 
-        @media (min-width: 900px) and (max-width: 990px) {
+        @media (min-width: 820px) and (max-width: 990px) {
             .container-text {
                 left: 3%;
+                top: 9%;
             }
 
             .text-principal {
@@ -193,10 +201,132 @@
             }
         }
 
-        @media (min-width: 320px) and (max-width: 900px) {
+        @media (min-width: 750px) and (max-width: 819px) {
+            .container-text {
+                left: 3%;
+                top: 9%;
+            }
+
+            .text-principal {
+                font-size: 1.5rem !important;
+            }
+
+            .title-pay {
+                font-size: 1rem;
+            }
+
+            .title-third {
+                font-size: 1.5rem;
+            }
+
+            .btn-reset {
+                font-size: 13px;
+            }
+
+            .view {
+                font-size: .8rem;
+                margin-top: 2rem;
+            }
+
+            .pay {
+                width: 58px;
+            }
+
+            .conoce-tarjetasImg {
+                width: 33px;
+            }
+
+            .btn-reset {
+                padding: 5px 12px;
+            }
+        }
+
+        @media (min-width: 310px) and (max-width: 750px) {
             .container-text {
                 position: initial;
             }
+        }
+
+        @media (min-width: 441px) and (max-width: 750px) {
+            .container-text {
+                padding: 23px 10px;
+            }
+
+            .text-principal {
+                font-size: 1.9rem !important;
+            }
+
+            .title-pay {
+                font-size: 1.2rem;
+            }
+
+            .title-third {
+                font-size: 1.9rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .conoce-tarjetasImg {
+                width: 35px;
+            }
+
+            .btn-reset {
+                font-size: 14px;
+            }
+
+            .view {
+                font-size: .9rem;
+                margin-top: 2rem;
+            }
+
+            .pay {
+                width: 60px;
+            }
+        }
+
+        @media (min-width: 310px) and (max-width: 440px) {
+            .container-text {
+                padding: 23px 10px;
+            }
+
+            .text-principal {
+                font-size: 1.5rem !important;
+
+            }
+
+            .title-pay {
+                font-size: 1rem;
+            }
+
+            .title-third {
+                font-size: 1.5rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .conoce-tarjetasImg {
+                width: 35px;
+            }
+
+            .btn-reset {
+                font-size: 14px;
+            }
+
+            .view {
+                font-size: .9rem;
+                margin-top: 2rem;
+            }
+
+            .pay {
+                width: 55px;
+            }
+        }
+
+        .cursor {
+            cursor: pointer;
+        }
+
+        .cursor:hover {
+            cursor: pointer;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -219,17 +349,50 @@
                     <b>línea</b></h2>
 
                 <img src="/images/PSE.png" class="img-fluid conoce-tarjetasImg icon-pse" alt="pse">
-                <button class="btn-reset btn btn-danger" type="button">Paga tu cuota aqui</button>
+                <a class="btn-reset btn btn-danger" href="https://www.zonapagos.com/t_Lagobo">Paga tu cuota aqui</a>
 
                 <p class="view">Aprende como <b>hacer tu pago:</b> <br>
                     mira el
                     video</p>
-                <img class="img-fluid pay" src="{{ asset('images/Front/payPse/icon-video.png')}}" alt="pagos por PSE">
+                <a class="cursor" data-toggle="modal" data-target="#exampleModal"><img class="img-fluid pay"
+                        src="{{ asset('images/Front/payPse/icon-video.png')}}" alt="pagos por PSE"></a>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <iframe style="max-height:400px; height: 100vh;" src="https://www.youtube.com/embed/qGuzAU0BgiY"
+                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
     <script src="{{ asset('editor/contentbuilder/jquery-ui.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        window.sr = ScrollReveal();
+            sr.reveal('.container-text', {
+            duration: 1000,
+            origin: 'left',
+            distance: '30%',
+            delay: 1000,
+        });
+
+    </script>
     @yield('scriptsJs')
 </body>
 
