@@ -30,7 +30,7 @@
 
 	@media (max-width: 1700px) {
 		.icon-pse {
-			width: 47px !important;
+			width: 40px !important;
 		}
 	}
 </style>
@@ -90,15 +90,17 @@
 	<div class="row resetRow scroll-animations">
 		<div
 			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-2 col-xl-2 offset-xl-2 conoce-containTarjeta text-center animated">
-			<div class="conoce-creditoLibranza">
-				<h3 class="conoce-titleTarjetaSeguros"><strong>Haz tus pagos por PSE</strong></h3>
-				<img src="/images/PSE.png" class="img-fluid conoce-tarjetasImg icon-pse" alt="pse">
-			</div>
+			<a href="/payPse">
+				<div class="conoce-creditoLibranza">
+					<h3 class="conoce-titleTarjetaSeguros"><strong>Haz tus pagos por PSE</strong></h3>
+					<img src="/images/PSE.png" class="img-fluid conoce-tarjetasImg icon-pse" alt="pse">
+				</div>
 
-			<div class="conoce-containButton">
-				<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Click aqui</a>
-			</div>
-			<img src="/images/imagen-bg.png" alt="Conoce nuestros créditos de libranza" class="img-fluid" />
+				<div class="conoce-containButton">
+					<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Click aqui</a>
+				</div>
+				<img src="/images/imagen-bg.png" alt="Conoce nuestros créditos de libranza" class="img-fluid" />
+			</a>
 		</div>
 		<div
 			class="col-sm-8 offset-sm-3 col-lg-4 offset-lg-1 col-xl-2 offset-xl-0  conoce-containTarjeta text-center animated">
