@@ -97,7 +97,7 @@
 				</div>
 
 				<div class="conoce-containButton">
-					<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Click aqui</a>
+					<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Clic aquí</a>
 				</div>
 				<img src="/images/imagen-bg.png" alt="Conoce nuestros créditos de libranza" class="img-fluid" />
 			</a>

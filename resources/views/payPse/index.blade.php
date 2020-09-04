@@ -320,6 +320,11 @@
             }
         }
 
+        .header-containerLogo {
+            background: #f5f4fe;
+            padding: 5px 0 5px 5px;
+        }
+
         .cursor {
             cursor: pointer;
         }
@@ -336,6 +341,14 @@
         <div id="loader"></div>
     </div>
     <div id="ex-global-content" class="ex-loader-blur relative">
+        <nav class="nav bg-white p-3">
+            <div class="header-containerLogo container bg-white text center ">
+                <a href="/">
+                    <img src="{{ asset('images/Front/payPse/logo.png')}}" alt="Oportunidades Servicios Financieros"
+                        class="img-fluid">
+                </a>
+            </div>
+        </nav>
         <div class="relative">
             <img class=" img-fluid" src="{{ asset('images/Front/payPse/banner.jpg')}}" alt="pagos por PSE">
             <div class="container-text">
@@ -352,7 +365,7 @@
                 <a class="btn-reset btn btn-danger" href="https://www.zonapagos.com/t_Lagobo">Paga tu cuota aqui</a>
 
                 <p class="view">Aprende como <b>hacer tu pago:</b> <br>
-                    mira el
+                    Mira el
                     video</p>
                 <a class="cursor" data-toggle="modal" data-target="#exampleModal"><img class="img-fluid pay"
                         src="{{ asset('images/Front/payPse/icon-video.png')}}" alt="pagos por PSE"></a>
