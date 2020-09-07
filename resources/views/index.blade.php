@@ -16,38 +16,6 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:description"
 	content="Tenemos el crédito para todo lo que necesitas, electrodomésticos, crédito moto, crédito viajes, tarjeta de crédito , libranzas y seguros; encuentra todo en un mismo lugar y siempre con los mejores precios.">
-<style>
-	.content-covid {
-		left: 20% !important;
-		top: 80% !important;
-	}
-
-	.conoce-containTarjeta {
-		padding: 10px;
-		width: 320px;
-		position: relative;
-	}
-
-	@media (min-width: 990px) and (max-width: 1290px) {
-		.conoce-containTarjeta {
-			padding: 10px;
-			width: 25%;
-			position: relative;
-		}
-	}
-
-	@media(max-width: 500px) {
-		.content-covid {
-			margin-top: 3%;
-		}
-	}
-
-	@media (max-width: 1700px) {
-		.icon-pse {
-			width: 40px !important;
-		}
-	}
-</style>
 @endsection()
 
 
@@ -112,8 +80,8 @@
 				<div class="conoce-containButton">
 					<a href="/payPse" target="blank" class="conoce-button button-creditoLibranza">Clic aquí</a>
 				</div>
-				<img src="/images/imagen-bg.png" style=" height: 100%; " alt="Conoce nuestros créditos de libranza"
-					class="img-fluid" />
+				<img src="/images/imagen-bg.png" alt="Conoce nuestros créditos de libranza"
+					class="img-fluid height-reset" />
 			</a>
 		</div>
 		<div class=" conoce-containTarjeta text-center animated">
