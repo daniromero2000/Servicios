@@ -13,6 +13,7 @@
 <link rel="stylesheet"
     href="https://rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css">
 @stop
+@section('title', 'Servicios Financieros Oportunidades - Crédito para todo')
 
 
 
